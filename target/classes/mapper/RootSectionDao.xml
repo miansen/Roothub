@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <!-- Mybatis会动态实现daoImpl,不过需要在mapper文件夹下创建BookDao.xml和AppointmentDao.xml
+  		spring-dao.xml文件会自动扫描mapper文件夹下的配置 -->
+    <!-- 
+    1.namespace是该xml对应的接口的全名
+    2.select和update中的id对应方法名
+    3.resultType是返回值类型
+    4.parameterType是参数类型(可选)    
+    5.#{...}填写的是方法的参数 
+    6.parameterType:输入参数类型
+    7.resultType:输出参数类型
+    -->
+<mapper namespace="priv.sen.root.dao.RootSectionDao">
+	<!-- 目的：为dao接口方法提供sql语句配置 -->
+    <resultMap id="BaseResultMap" type="priv.sen.root.entity.RootSection">
+        <id column="section_id" jdbcType="INTEGER" property="sectionId"/>
+        <result column="section_name" jdbcType="VARCHAR" property="sectionName"/>
+        <result column="section_tab" jdbcType="VARCHAR" property="sectionTab"/>
+        <result column="show_status" jdbcType="BIT" property="showStatus"/>
+        <result column="display_index" jdbcType="INTEGER" property="displayIndex"/>
+        <result column="default_show" jdbcType="BIT" property="defaultShow"/>
+        <result column="pid" jdbcType="INTEGER" property="pid"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="status_cd" jdbcType="VARCHAR" property="statusCd"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        section_id, section_name, section_tab, show_status, display_index, default_show, pid,create_date,
+        update_date,status_cd
+    </sql>
+    <!-- 查询所有板块 -->
+    <select id="selectAll" resultType="RootSection">
+        select
+        <include refid="Base_Column_List"/>
+        from root_section
+    </select>
+    <!-- 根据ID查询板块 -->
+    <select id="selectBySectionId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from root_section
+        where section_id = #{sectionId,jdbcType=INTEGER}
+    </select>
+    <!-- 根据名称查询板块 -->
+    <select id="selectBySectionName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from root_section
+        where section_name = #{sectionName}
+    </select>
+    <!-- 根据是否显示状态查询板块 -->
+    <select id="selectByShowStatus" parameterType="java.lang.Boolean" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from root_section
+        where show_status = #{showStatus,jdbcType=BIT}
+        order by display_index
+    </select>
+    <!-- 根据板块标签查询板块 -->
+    <select id="selectByShowTab" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from root_section
+        where section_tab = #{sectionTab,jdbcType=VARCHAR}
+    </select>
+    <!-- 添加板块 -->
+    <insert id="insert" parameterType="priv.sen.root.entity.RootSection" keyProperty="sectionId" useGeneratedKeys="true">
+        insert into root_section 
+        (section_id, 
+        section_name, 
+        section_tab, 
+        show_status, 
+        display_index, 
+        default_show, 
+        pid,
+        create_date)
+        values 
+        (#{sectionId,jdbcType=INTEGER}, 
+        #{sectionName,jdbcType=VARCHAR}, 
+        #{sectionTab,jdbcType=VARCHAR},
+        #{showStatus,jdbcType=BIT}, 
+        #{displayIndex,jdbcType=INTEGER}, 
+        #{defaultShow,jdbcType=BIT},
+        #{pid,jdbcType=INTEGER},
+        #{createDate,jdbcType=TIMESTAMP})
+    </insert>
+    <!-- 根据ID更新板块 -->
+    <update id="updateBySectionId" parameterType="priv.sen.root.entity.RootSection">
+        update root_section
+        set section_name = #{sectionName,jdbcType=VARCHAR},
+        section_tab = #{sectionTab,jdbcType=VARCHAR},
+        show_status = #{showStatus,jdbcType=BIT},
+        display_index = #{displayIndex,jdbcType=INTEGER},
+        default_show = #{defaultShow,jdbcType=BIT},
+        pid = #{pid,jdbcType=INTEGER},
+        update_date = {#updateDate,jdbcType=TIMESTAMP}
+        where section_id = #{sectionId,jdbcType=INTEGER}
+    </update>
+    <!-- 根据ID删除板块 -->
+    <delete id="deleteBySectionId" parameterType="java.lang.Integer">
+        delete from root_section
+        where section_id = #{sectionId,jdbcType=INTEGER}
+    </delete>
+</mapper>

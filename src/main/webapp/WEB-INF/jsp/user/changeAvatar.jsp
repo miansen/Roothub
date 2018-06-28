@@ -18,7 +18,7 @@
   <div class="list-group">
     <a href="/user/settings/profile" class="list-group-item ">个人设置</a>
     <a href="/user/settings/changeAvatar" class="list-group-item active">修改头像</a>
-    <!-- <a href="/user/settings/changePassword" class="list-group-item ">修改密码</a> -->
+    <a href="/user/settings/changePassword" class="list-group-item ">修改密码</a>
     <!-- <a href="/user/settings/accessToken" class="list-group-item ">用户令牌</a> -->
     <!-- <a href="/user/settings/log" class="list-group-item ">日志记录</a> -->
   </div>

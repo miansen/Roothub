@@ -90,12 +90,8 @@ public class RootUserServiceImpl implements RootUserService{
 	@Override
 	public RootUserExecution updateUser(RootUser user) {
 		try {
-			//RootUser userName = rootUserDao.selectByUserName(user.getUserName());
-			//RootUser email = rootUserDao.selectByEmail(user.getEmail());
 			if(user == null) {
 				throw new OperationRepeaException("用户不存在");
-			}else if(user.getEmail() == null) {
-				throw new OperationRepeaException("邮箱不存在");
 			}else {
 				int updateUser = rootUserDao.updateUser(user);
 				RootUser rootUser = rootUserDao.selectByUserName(user.getUserName());
@@ -111,7 +107,7 @@ public class RootUserServiceImpl implements RootUserService{
 			throw e2;
 		}catch (Exception e) {
 			logger.error(e.getMessage(),e);
-			throw new OperationSystemException("update RootUser erroe"+e.getMessage());
+			throw new OperationSystemException("update RootUser erroe "+e.getMessage());
 		}
 	}
 

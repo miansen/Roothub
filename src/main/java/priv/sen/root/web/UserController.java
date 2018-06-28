@@ -1,15 +1,14 @@
 package priv.sen.root.web;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import priv.sen.root.dto.PageDataBody;
 import priv.sen.root.dto.Result;
 import priv.sen.root.dto.RootUserExecution;
@@ -35,7 +33,7 @@ import priv.sen.root.util.Base64Util;
 import priv.sen.root.util.CookieAndSessionUtil;
 
 @Controller
-public class UserController {
+public class UserController extends BaseController{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
@@ -49,14 +47,16 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/user/{name}", method = RequestMethod.GET)
-	private String detail(@PathVariable String name, Model model,@RequestParam(value = "tp", defaultValue = "1") Integer tp,@RequestParam(value = "rp", defaultValue = "1") Integer rp) {
+	private String detail(@PathVariable String name, Model model,@RequestParam(value = "tp", defaultValue = "1") Integer tp,@RequestParam(value = "rp", defaultValue = "1") Integer rp,HttpServletRequest request) {
 		if(name == null) {
 			return "error-page/404.html";
 		}
 		RootUser user = rootUserService.findByName(name);
+		RootUser user2 = getUser(request);//当前用户
 		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
 		PageDataBody<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, rp, 20);
 		model.addAttribute("user", user);
+		model.addAttribute("user2", user2);
 		model.addAttribute("replyPage", replyPage);
 		model.addAttribute("topicPage", topicPage);
 		return "user/detail";
@@ -192,5 +192,30 @@ public class UserController {
  			e.printStackTrace();
 		}
 		return new Result<RootUserExecution>(true,updateUser); 
+	}
+	
+	/**
+	 * 进入修改密码界面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/user/settings/changePassword",method = RequestMethod.GET)
+	private String changePassword(HttpServletRequest request) {
+		return isLogin(request, "error-page/500", "user/changePassword");
+	}
+	
+	@RequestMapping(value = "/user/setting/changePassword",method = RequestMethod.POST)
+	@ResponseBody
+	private Result<RootUserExecution> changePassword(HttpServletRequest request,String oldPassword,String newPassword){
+		if(newPassword == null) {
+			return new Result<>(false,"密码不能为空");
+		}
+		RootUser user = getUser(request);
+		if(!user.getPassword().equals(oldPassword)) {
+			return new Result<>(false,"旧密码不正确");
+		}
+		user.setPassword(newPassword);
+		RootUserExecution updateUser = rootUserService.updateUser(user);
+		return new Result<RootUserExecution>(true,updateUser);
 	}
 }

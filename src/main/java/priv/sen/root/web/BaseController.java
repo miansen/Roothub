@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import priv.sen.root.dto.ResponseDataBody;
 import priv.sen.root.entity.RootUser;
 import priv.sen.root.service.RootUserService;
+import priv.sen.root.util.Base64Util;
+import priv.sen.root.util.CookieAndSessionUtil;
 import priv.sen.root.util.WebUtil;
 
 @Controller
@@ -19,5 +21,24 @@ public class BaseController {
 	@Autowired
 	private RootUserService rootUserService;
 	
+	public RootUser getUser(HttpServletRequest request) {
+		RootUser user = new RootUser();
+		user = CookieAndSessionUtil.getSession(request, "user");
+		if(user == null) {
+			String cookie = CookieAndSessionUtil.getCookie(request, "user");
+			if(cookie != null) {
+				user = rootUserService.findByName(Base64Util.decode(cookie));
+				return user;
+			}
+		}
+		return user;
+	}
 	
+	public String isLogin(HttpServletRequest request,String errorPage,String suesscePage) {
+		RootUser user = getUser(request);
+		if(user == null ) {
+			return errorPage;
+		}
+		return suesscePage;
+	}
 }

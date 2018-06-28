@@ -71,7 +71,7 @@
     <div class="panel panel-default" id="session">
     <c:if test="${user == null}">
       <div class="panel-body" id="nologin">
-        <h5>属于Java语言的bbs</h5><p>在这里，您可以提问，回答，分享，诉说，这是个属于Java程序员的社区，欢迎您的加入！</p>
+        <h5>属于技术与资讯的社区</h5><p>在这里你可以学习、分享、提问、回答、诉说，这是一个小众且优雅的社区，欢迎你的加入！</p>
       </div>
       </c:if>
       <c:if test="${user != null}">
@@ -98,7 +98,7 @@
             <div class="panel-footer" style="background-color: white">
               <div class="row">
                 <span class="col-md-6"><a href="/notification/list"><span id="n_count">${notReadNotice}</span> 条未读消息</a></span>
-                <!-- <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span> -->
+                <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span>
               </div>
             </div>
             </c:if>
@@ -113,7 +113,7 @@
           <td width="24" valign="middle" align="center">
                 <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
             </td>
-            <td><a href="/topic/${item.topicId}">${item.title}</a></td>
+            <td><a href="/topic/${item.topicId}" style="color:#778087">${item.title}</a></td>
             <%-- <td align="right" class="ago"><fmt:formatDate type="date" 
                   value="${item.createDate}" /></td> --%>
           </tr>

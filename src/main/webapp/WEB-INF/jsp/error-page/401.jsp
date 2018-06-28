@@ -5,7 +5,7 @@
 <c:set value="${pageContext.request.contextPath}" var="path" scope="page"></c:set>
 <html>
 <head>
-  <title>roothub-出错啦</title>
+  <title>roothub-401</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -18,9 +18,8 @@
   <br>
   <div class="panel panel-default">
     <div class="panel-body">
-      <!-- <h1>: (</h1> -->
-      <h3>╮(╯▽╰)╭</h3>
-      <p>这个页面登录之后才能操作哦~点击去<a href="/login">登录</a></p>
+      <h1>: (</h1>
+      <p>啊哦，你没有权限访问这个链接~~</p>
     </div>
   </div>
 </div>

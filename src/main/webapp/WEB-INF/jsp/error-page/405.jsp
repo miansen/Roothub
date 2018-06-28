@@ -5,7 +5,7 @@
 <c:set value="${pageContext.request.contextPath}" var="path" scope="page"></c:set>
 <html>
 <head>
-  <title>roothub-出错啦</title>
+  <title>roothub-405</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -13,16 +13,6 @@
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
 </head>
 <body>
-<div class="container">
-  <br>
-  <br>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <!-- <h1>: (</h1> -->
-      <h3>╮(╯▽╰)╭</h3>
-      <p>这个页面登录之后才能操作哦~点击去<a href="/login">登录</a></p>
-    </div>
-  </div>
-</div>
+<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8" homePageUrl="/" homePageName="回到我的主页"></script>
 </body>
 </html>

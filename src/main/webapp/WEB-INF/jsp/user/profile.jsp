@@ -18,7 +18,7 @@
   <div class="list-group">
     <a href="/user/settings/profile" class="list-group-item active">个人设置</a>
     <a href="/user/settings/changeAvatar" class="list-group-item ">修改头像</a>
-    <!-- <a href="/user/settings/changePassword" class="list-group-item ">修改密码</a> -->
+    <a href="/user/settings/changePassword" class="list-group-item ">修改密码</a>
     <!-- <a href="/user/settings/log" class="list-group-item ">日志记录</a> -->
   </div>
 </div>
@@ -63,7 +63,7 @@
             <input type="checkbox" name="replyEmail" id="replyEmail" checked="">
             <label for="replyEmail">评论被回复邮件提醒</label>
           </div> -->
-            <button type="button" id="userProfileUpdateBtn" onclick="updateUserProfile()" class="btn btn-default">保存设置
+            <button type="button" id="userProfileUpdateBtn" onclick="updateUserProfile()" class="btn btn-primary">保存设置
             </button>
           <span id="error_message"></span>
         </form>

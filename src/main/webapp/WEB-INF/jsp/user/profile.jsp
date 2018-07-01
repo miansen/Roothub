@@ -76,9 +76,15 @@
     var errors = 0;
     var em = $("#error_message");
     var signature = $("#signature").val();
-    if (signature.length > 1000) {
+    var email = $("#email").val();
+    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (signature.length > 20) {
       errors++;
-      em.html("个性签名不能超过1000个字");
+      em.html("个性签名不能超过20个字");
+    }
+    if(!myreg.test(email)){
+    	errors++;
+    	em.html("邮箱格式不正确");
     }
     if (errors === 0) {
       var form = $("#userProfileForm");

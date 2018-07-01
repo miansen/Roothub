@@ -17,12 +17,12 @@
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">搜索结果</div>
-        <div class="panel-body">
+        <div class="panel-body paginate-bot">
 
   <c:forEach var="item" items="${pageLike.list}">
           <div class="media" id="topic">
             <div class="media-left">
-              <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar" alt=""></a>
+              <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""></a>
             </div>
             <div class="media-body">
               <div class="title">
@@ -56,14 +56,18 @@
               <div class="divide mar-top-5"></div>
             </div>
           </c:forEach>
-    
-            <ul class="pagination pagination-sm pagination2"></ul>
-          
+      </div>
+      <div class="panel-footer">
+          <ul class="pagination pagination-sm pagination2"></ul>
       </div>
     </div>
   </div>
 </div>
   </div>
+  <div id="back2Top" class="backTop___6Q-ki" style="display:none">
+		<div class="line___F1WY0"></div>
+		<div class="arrow___3UCwo"></div>
+	</div>
 </div>
 <jsp:include page="components/foot.jsp"></jsp:include>
 <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
@@ -72,6 +76,7 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
 <script src="/resources/js/pagination2.js"></script>
+<script src="/resources/js/goTop.js"></script>
 <script type="text/javascript">
   var search = "${search}";
   var url = "/search?s="+search+"&";

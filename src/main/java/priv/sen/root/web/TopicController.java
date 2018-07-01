@@ -22,6 +22,7 @@ import priv.sen.root.dto.RootTopicExecution;
 import priv.sen.root.entity.RootReply;
 import priv.sen.root.entity.RootTopic;
 import priv.sen.root.entity.RootUser;
+import priv.sen.root.service.CollectService;
 import priv.sen.root.service.RootNoticeService;
 import priv.sen.root.service.RootReplyService;
 import priv.sen.root.service.RootSectionService;
@@ -31,7 +32,7 @@ import priv.sen.root.util.Base64Util;
 import priv.sen.root.util.CookieAndSessionUtil;
 
 @Controller
-public class TopicController {
+public class TopicController extends BaseController{
 
 private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -43,6 +44,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private RootSectionService rootSectionService;
 	@Autowired
 	private RootReplyService rootReplyService;
+	@Autowired
+	private CollectService collectDaoService;
 	
 	/**
 	 * 话题详情
@@ -51,8 +54,9 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 * @return
 	 */
 	@RequestMapping(value = "/topic/{id}", method = RequestMethod.GET)
-	private String detail(@PathVariable Integer id, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p) {
+	private String detail(@PathVariable Integer id, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
 		RootTopic topic = rootTopicService.findByTopicId(id);
+		RootUser user = getUser(request);
 		if(topic == null) {
 			return "error-page/500";
 		}
@@ -61,8 +65,11 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		rootTopicService.updateTopic(topic);//更新话题数据
 		//分页查询回复
 		PageDataBody<RootReply> replyPage = rootReplyService.page(p, 100, id);
+		int countByTid = collectDaoService.countByTid(id);//话题被收藏的数量
 		model.addAttribute("topic", topic);
 		model.addAttribute("replyPage", replyPage);
+		model.addAttribute("user", user);
+		model.addAttribute("countByTid", countByTid);
 		return "topic/detail";
 	}
 	

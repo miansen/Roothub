@@ -16,9 +16,9 @@
 <%int i=1;%>
 <c:forEach var="item" items="${replyPage.list}">
     <div id="r_${item.replyId}" class="cell">
-    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%" class="pinglun_table">
         <tbody><tr>
-            <td width="48" valign="top" align="center"><a href="/user/${item.replyAuthorName}"><img src="/resources/images/${item.avatar}" class="avatar" alt=""/></a>
+            <td width="48" valign="top" align="center"><a href="/user/${item.replyAuthorName}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""/></a>
             <td width="10" valign="top"></td>
             <td width="auto" valign="top" align="left"><div class="fr"> &nbsp; &nbsp; <span class="no"><%=i++%></span></div>
                 <div class="sep3"></div>
@@ -32,7 +32,9 @@
     </tbody></table>
 </div>
 </c:forEach>
- <ul class="pagination pagination-sm pagination2" style="padding-left: 20;"></ul>
+<div class="panel-footer">
+   <ul class="pagination pagination-sm pagination2"></ul>
+</div>
 </div>
 <!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
 <script src="/resources/js/jquery.js"></script>

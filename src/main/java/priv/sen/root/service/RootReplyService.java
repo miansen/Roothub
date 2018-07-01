@@ -85,4 +85,10 @@ public interface RootReplyService {
 	 * @return
 	 */
 	int countAll();
+	
+	/**
+	 * 根据用户昵称统计评论数
+	 * @return
+	 */
+	int countByName(String name);
 }

@@ -133,4 +133,12 @@ public class RootReplyServiceImpl implements RootReplyService{
 	public int countAll() {
 		return rootReplyDao.countAll();
 	}
+
+	/**
+	 * 根据用户昵称统计评论数
+	 */
+	@Override
+	public int countByName(String name) {
+		return rootReplyDao.countByName(name);
+	}
 }

@@ -26,6 +26,8 @@ import priv.sen.root.dto.RootUserExecution;
 import priv.sen.root.entity.ReplyAndTopicByName;
 import priv.sen.root.entity.RootTopic;
 import priv.sen.root.entity.RootUser;
+import priv.sen.root.service.CollectService;
+import priv.sen.root.service.RootNoticeService;
 import priv.sen.root.service.RootReplyService;
 import priv.sen.root.service.RootTopicService;
 import priv.sen.root.service.RootUserService;
@@ -42,23 +44,37 @@ public class UserController extends BaseController{
 	private RootUserService rootUserService;
 	@Autowired
 	private RootTopicService rootTopicService;
+	@Autowired
+	private CollectService collectDaoService;
+	@Autowired
+	private RootNoticeService rootNoticeService;
 	/**
-	 * 用户详情
+	 * 用户主页
 	 * @return
 	 */
 	@RequestMapping(value = "/user/{name}", method = RequestMethod.GET)
 	private String detail(@PathVariable String name, Model model,@RequestParam(value = "tp", defaultValue = "1") Integer tp,@RequestParam(value = "rp", defaultValue = "1") Integer rp,HttpServletRequest request) {
 		if(name == null) {
-			return "error-page/404.html";
+			return "error-page/404.jsp";
 		}
-		RootUser user = rootUserService.findByName(name);
+		RootUser user = null;
+		user = rootUserService.findByName(name);
+		if(user == null) {
+			return "error-page/404.jsp";
+		}
 		RootUser user2 = getUser(request);//当前用户
 		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
 		PageDataBody<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, rp, 20);
+		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
+		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
+		int countReply = rootReplyService.countByName(name);//评论的数量
 		model.addAttribute("user", user);
 		model.addAttribute("user2", user2);
 		model.addAttribute("replyPage", replyPage);
 		model.addAttribute("topicPage", topicPage);
+		model.addAttribute("countTopic", countTopic);
+		model.addAttribute("countCollect", countCollect);
+		model.addAttribute("countReply", countReply);
 		return "user/detail";
 	}
 	
@@ -70,14 +86,30 @@ public class UserController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/user/{name}/topics", method = RequestMethod.GET)
-	private String topics(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p) {
+	private String topics(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
 		if(name == null) {
-			return "error-page/404.html";
+			return "error-page/404.jsp";
 		}
-		RootUser user = rootUserService.findByName(name);
+		RootUser user = null;
+		user = rootUserService.findByName(name);
+		if(user == null) {
+			return "error-page/404.jsp";
+		}
+		RootUser user2 = getUser(request);//当前用户
 		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(p, 50, name);
+		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
+		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
+		int countReply = rootReplyService.countByName(user.getUserName());//评论的数量
 		model.addAttribute("user", user);
+		model.addAttribute("user2", user2);
 		model.addAttribute("topicPage", topicPage);
+		model.addAttribute("countTopic", countTopic);
+		model.addAttribute("countCollect", countCollect);
+		model.addAttribute("countReply", countReply);
+		//model.addAttribute("countCollect", getCountCollect(request));
+		//model.addAttribute("countTopicByUserName", getCountTopicByUserName(request));
+		//model.addAttribute("notReadNotice", getNotReadNotice(request));
+		//model.addAttribute("myUser", getUser(request));
 		return "user/topics";
 	}
 	
@@ -89,14 +121,30 @@ public class UserController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/user/{name}/replys", method = RequestMethod.GET)
-	private String replys(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p) {
+	private String replys(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
 		if(name == null) {
-			return "error-page/404.html";
+			return "error-page/404.jsp";
 		}
-		RootUser user = rootUserService.findByName(name);
+		RootUser user = null;
+		user = rootUserService.findByName(name);
+		if(user == null) {
+			return "error-page/404.jsp";
+		}
+		RootUser user2 = getUser(request);//当前用户
 		PageDataBody<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, p, 20);
+		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
+		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
+		int countReply = rootReplyService.countByName(user.getUserName());//评论的数量
 		model.addAttribute("user", user);
+		model.addAttribute("user2", user2);
 		model.addAttribute("replyPage", replyPage);
+		model.addAttribute("countTopic", countTopic);
+		model.addAttribute("countCollect", countCollect);
+		model.addAttribute("countReply", countReply);
+		//model.addAttribute("countCollect", getCountCollect(request));
+		//model.addAttribute("countTopicByUserName", getCountTopicByUserName(request));
+		//model.addAttribute("notReadNotice", getNotReadNotice(request));
+		//model.addAttribute("myUser", getUser(request));
 		return "user/replys";
 	}
 	
@@ -188,6 +236,9 @@ public class UserController extends BaseController{
 		user.setUpdateDate(new Date());
 		updateUser = rootUserService.updateUser(user);
 		rootTopicService.updateTopicAvatar(user);
+		RootUser user2 = rootUserService.findByName(user.getUserName());
+		CookieAndSessionUtil.removeSession(request, "user");
+		CookieAndSessionUtil.setSession(request, "user", user2);
 		} catch (IOException e) {
  			e.printStackTrace();
 		}

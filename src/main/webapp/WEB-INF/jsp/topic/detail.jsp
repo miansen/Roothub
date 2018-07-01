@@ -45,7 +45,7 @@
 					<div class="media-right">
 						<img
 							src="/resources/images/${topic.avatar}"
-							class="avatar-lg">
+							class="avatar-lg img-circle">
 					</div>
 				</div>
 			</div>
@@ -56,11 +56,11 @@
 					<a href="/topic/tag/${topic.tag}"><span class="label label-success">${topic.tag}</span></a>
 				</div>
 			</div>
-			<div class="panel-footer">
+			<div class="panel-footer" style="display: none" id="collect">
 				<a
-					href="javascript:window.open('http://service.weibo.com/share/share.php?url=https://yiiu.co//topic/1?r=public&amp;title=YIIU功能一览图', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');">分享微博</a>&nbsp;
-				<a href="javascript:;" class="collectTopic">加入收藏</a> <span
-					class="pull-right"><span id="collectCount">2</span>个收藏</span>
+					href="javascript:window.open('http://service.weibo.com/share/share.php?url=http://roothub.co//topic/${topic.topicId}?r=${topic.author}&amp;title=${topic.title}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');">分享微博</a>&nbsp;
+				<a href="javascript:void(0);" class="collectTopic" onclick="save()"></a> <span
+					class="pull-right"><span id="collectCount">${countByTid}</span>个收藏</span>
 			</div>
 		</div>
 		<c:if test="${topic.replyCount == 0}">
@@ -73,7 +73,7 @@
 		</c:if>
 		<div class="panel panel-default" id="pinglun" style="display: none">
 			<div class="panel-heading">
-				添加一条新评论 <a href="javascript:;" id="goTop" class="pull-right">回到顶部</a>
+				添加一条新评论 <a href="javascript:void(0);" id="goTop" class="pull-right" onclick="goTop()">回到顶部</a>
 			</div>
 			<div class="panel-body">
 				<input type="hidden" id="commentId" value="">
@@ -99,6 +99,7 @@
 	<script src="/resources/js/bootstrap.min.js"></script>
 	<script src="/resources/wangEditor/wangEditor.min.js"></script>
 	<script type="text/javascript">
+	/* 获取登录信息 */
       $.ajax({
         type:"get",
         url:"/session",
@@ -106,6 +107,7 @@
         success:function(data){
           if(data.success != null && data.success == true){
                 $("#pinglun").show();
+                $("#collect").show();
           }
           if(data.success != null && data.success == false){
             
@@ -143,7 +145,7 @@
       $("#commentId").val("");
       $("#replyP").addClass("hidden");
     }
-    
+    /* 回复话题 */
     $("#btn").click(function () {
         var contentHtml = editor.txt.html();
         var contentText = editor.txt.text();
@@ -170,6 +172,58 @@
         })
       }
     });
+    var tid = ${topic.topicId};
+    $.ajax({
+    	url:"/collect/isCollect",
+    	type:"get",
+    	dataType:"json",
+    	data:{tid:tid},
+    	success:function(data){
+    		if(data.success != null && data.success == true){
+				$(".collectTopic").text("取消收藏");
+			}else{
+				$(".collectTopic").text("加入收藏");
+			}
+    	},
+    	error:function(data){
+    		
+    	}
+    });
+    /* 收藏和取消收藏话题 */
+    function save(){
+    	var collectTopic = $(".collectTopic").text();
+        //console.log(collectTopic);
+    	var url;
+    	if(collectTopic == "加入收藏"){
+			url = "/collect/save";
+		}
+    	if(collectTopic == "取消收藏"){
+			url = "/collect/delete";
+		}
+    	//alert("collectTopic："+collectTopic+"  url："+url);
+    	$.ajax({
+    		url:url,
+    		type:"post",
+    		dataType:"json",
+    		data:{tid:tid},
+    		success:function(data){
+    			if(data.success != null && data.success == true && data.error == "收藏成功"){
+    				//alert(JSON.stringify(data));
+    				$(".collectTopic").text("取消收藏");
+    			}
+    			if(data.success != null && data.success == true && data.error == "取消收藏成功"){
+    				//alert(JSON.stringify(data));
+    				$(".collectTopic").text("加入收藏");
+    			}
+    		},
+    		error:function(data){
+    			
+    		}
+    	})
+    }
+    function goTop(){
+    	$('body,html').animate({scrollTop:0},500);
+    }
   </script>
 </body>
 </html>

@@ -21,6 +21,7 @@ import priv.sen.root.entity.RootSection;
 import priv.sen.root.entity.RootTopic;
 import priv.sen.root.entity.RootUser;
 import priv.sen.root.entity.Tag;
+import priv.sen.root.service.CollectService;
 import priv.sen.root.service.RootNoticeService;
 import priv.sen.root.service.RootReplyService;
 import priv.sen.root.service.RootSectionService;
@@ -47,6 +48,8 @@ public class IndexController {
 	private RootNoticeService rootNoticeService;
 	@Autowired
 	private RootReplyService rootReplyService;
+	@Autowired
+	private CollectService collectDaoService;
 
 	/**
 	 * 首页
@@ -65,10 +68,14 @@ public class IndexController {
 		int countAllReply = rootReplyService.countAll();//所有评论的数量
 		RootUser user = null;
     	String cookie = CookieAndSessionUtil.getCookie(request, "user");
-    	int notReadNotice = 0;
+    	int notReadNotice = 0;//未读通知的数量
+    	int countCollect = 0;//用户收藏话题的数量
+    	int countTopicByUserName = 0;//用户发布的主题的数量
     	if(cookie != null) {
     		user = rootUserService.findByName(Base64Util.decode(cookie));
-    		notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
+    		notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());
+    		countCollect = collectDaoService.count(user.getUserId());
+    		countTopicByUserName = rootTopicService.countByUserName(user.getUserName());
     		request.setAttribute("user", user);
     	}
 		request.setAttribute("page", page);
@@ -80,6 +87,8 @@ public class IndexController {
 		request.setAttribute("countUserAll", countUserAll);
 		request.setAttribute("countAllTopic", countAllTopic);
 		request.setAttribute("countAllReply", countAllReply);
+		request.setAttribute("countCollect", countCollect);
+		request.setAttribute("countTopicByUserName", countTopicByUserName);
 		return "index";
 	}
 	

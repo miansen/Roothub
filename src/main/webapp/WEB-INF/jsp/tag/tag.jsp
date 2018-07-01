@@ -15,6 +15,7 @@
 <jsp:include page="../components/head.jsp"></jsp:include>
 <div class="row">
   <div class="panel panel-default">
+  <div class="panel-heading">全部标签</div>
     <div class="panel-body">
       <div class="row">
       <c:forEach var="item" items="${tag.list}">
@@ -25,11 +26,12 @@
             <span class="text-muted">x ${item.number}</span>
             <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
           </div>
-          </c:forEach>       
+          </c:forEach> 
       </div>
-  <div class="divide mar-top-5"></div>
-<ul class="pagination pagination-sm pagination2"></ul>
     </div>
+    <div class="panel-footer">
+   <ul class="pagination pagination-sm pagination2"></ul>
+	</div>
   </div>
 </div>
   </div>

@@ -14,6 +14,79 @@
 	<div class="wrapper">
 		<jsp:include page="../components/head.jsp"></jsp:include>
 		<div class="row">
+		<!-- 小屏幕显示 -->
+		            <div class="col-md-3 hidden-md hidden-lg">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="border-bottom: 1px solid #e3e3e3;">
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="/resources/images/${user.avatar}" class="avatar-lg img-circle"
+                                alt="">
+                            </div>
+                            <div class="media-body">
+                                <h3 style="margin-top: 0" title="${user.userId}" id="user_id">${user.userName}</h3>
+                                
+                                <i>${user.signature}</i>
+                            </div>
+                            <c:if test="${user.userName != user2.userName && user2 != null}">
+                            <div class="opt-box d-flex justify-content-center flex-column media-body">
+                                <span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()"></a>
+                                </span>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
+                
+                <div class="data-info d-flex item-tiling">
+                    <dl class="text-center" title="${countTopic}">
+                        <dt><a href="/user/${user.userName}/topics">主题</a></dt>
+                        <dd><a href="/user/${user.userName}/topics"><span class="count">${countTopic}</span></a></dd>
+                    </dl>
+                    <dl class="text-center" title="${countReply}">
+                        <dt><a href="/user/${user.userName}/replys">评论</a></dt>
+                        <dd><a href="/user/${user.userName}/replys"><span class="count">${countReply}</span></a></dd>
+                    </dl>
+                    <dl class="text-center" title="4">
+                        <dt>粉丝</dt>
+                        <dd><span class="count" id="fan">4</span></dd>
+                    </dl>
+                    <dl class="text-center" title="18">
+                        <dt>关注</dt>
+                        <dd><span class="count">18</span></dd>
+                    </dl>
+                </div>
+
+                <div class="grade-box clearfix" style="display: flex !important;">
+                    <dl>
+                        <dt>声望：</dt>
+                        <dd>10</dd>
+                    </dl>
+                    <dl>
+                        <dt><a href="/collect/topics">收藏：</a></dt>
+                        <dd title="${countCollect}">${countCollect}</dd>
+                    </dl>
+                    
+                    
+                </div>
+                
+                
+                <div class="grade-box clearfix" style="display: flex !important;padding-top: 0px;">
+                    
+                    <dl>
+                        <dt>访问：</dt>
+                        <dd title="360">13</dd>
+                    </dl>
+                    <dl title="228945">
+                        <dt>入驻：</dt>
+                        <dd><fmt:formatDate type="date" value="${user.createDate}" /></dd>
+                    </dl>
+                </div>
+                
+                
+            </div>
+        </div>
+        <!-- 小屏幕显示 -->
 			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading">${user.userName}创建的话题</div>
@@ -78,18 +151,20 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
+			<!-- 大屏幕显示 -->
+			<div class="col-md-3 hidden-sm hidden-xs">
 				<div class="panel panel-default">
-					<div class="panel-body">
+					<div class="panel-body" style="border-bottom: 1px solid #e3e3e3;">
 						<div class="media">
 							<div class="media-left">
-								<img src="/resources/images/${user.avatar}" class="avatar-lg"
+								<img src="/resources/images/${user.avatar}" class="avatar-lg img-circle"
 									alt="">
 							</div>
 							<div class="media-body">
-								<h3 style="margin-top: 0">${user.userName}</h3>
+								<h3 style="margin-top: 0" title="${user.userId}" id="user_id">${user.userName}</h3>
+								
 								<i>${user.signature}</i>
-								<div class="cell" style="border-bottom: 0px solid #e2e2e2;">
+					<%-- 			<div class="cell" style="border-bottom: 0px solid #e2e2e2;">
 									<table cellpadding="5" cellspacing="0" border="0" width="100%">
 										<tbody style="font-size: 14px;">
 											<c:if test="${user.userName != user2.userName && user2 != null}">
@@ -131,13 +206,72 @@
 											</tr>
 										</tbody>
 									</table>
-								</div>
+								</div> --%>
 							</div>
+							<c:if test="${user.userName != user2.userName && user2 != null}">
+							<div class="opt-box d-flex justify-content-center flex-column media-body">
+            <span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
+                                <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()"></a>
+                            </span>
+                    </div>
+							</c:if>
 						</div>
 					</div>
+					
+					<div class="data-info d-flex item-tiling">
+    <dl class="text-center" title="${countTopic}">
+        <dt><a href="/user/${user.userName}/topics">主题</a></dt>
+        <dd><a href="/user/${user.userName}/topics"><span class="count">${countTopic}</span></a></dd>
+    </dl>
+    <dl class="text-center" title="${countReply}">
+        <dt><a href="/user/${user.userName}/replys">评论</a></dt>
+        <dd><a href="/user/${user.userName}/replys"><span class="count">${countReply}</span></a></dd>
+    </dl>
+    <dl class="text-center" title="4">
+        <dt>粉丝</dt>
+        <dd><span class="count" id="fan">4</span></dd>
+    </dl>
+    <dl class="text-center" title="18">
+        <dt>关注</dt>
+        <dd><span class="count">18</span></dd>
+    </dl>
+</div>
+
+<div class="grade-box clearfix" style="display: flex !important;">
+        <dl>
+            <dt>声望：</dt>
+            <dd>10</dd>
+        </dl>
+        <dl>
+            <dt><a href="/collect/topics">收藏：</a></dt>
+            <dd title="${countCollect}">${countCollect}</dd>
+        </dl>
+        
+        
+    </div>
+    
+    
+    <div class="grade-box clearfix" style="display: flex !important;padding-top: 0px;">
+        
+        <dl>
+            <dt>访问：</dt>
+            <dd title="360">13</dd>
+        </dl>
+        <dl title="228945">
+            <dt>入驻：</dt>
+            <dd><fmt:formatDate type="date" value="${user.createDate}" /></dd>
+        </dl>
+    </div>
+    
+					
 				</div>
 			</div>
+			<!-- 大屏幕显示 -->
 		</div>
+	</div>
+	<div id="back2Top" class="backTop___6Q-ki" style="display:none">
+		<div class="line___F1WY0"></div>
+		<div class="arrow___3UCwo"></div>
 	</div>
 	</div>
 	<jsp:include page="../components/foot.jsp"></jsp:include>
@@ -145,10 +279,8 @@
 	<script src="/resources/js/jquery.js"></script>
 	<!-- 引入 Bootstrap -->
 	<script src="/resources/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-  $(function(){
-    $("#loginuser").addClass("active");
-  });
-</script>
+	<!-- 缓慢回到顶部 -->
+	<script src="/resources/js/goTop.js"></script>
+	<script src="/resources/js/user_detail.js"></script>
 </body>
 </html>

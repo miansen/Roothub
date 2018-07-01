@@ -182,12 +182,11 @@ public class RootTopicServiceImpl implements RootTopicService{
 	}
 
 	/**
-	 * 查询用户收藏的数量
+	 * 查询用户发布主题的数量
 	 */
 	@Override
-	public Long countByUserId(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public int countByUserName(String userName) {
+		return rootTopicDao.countAllByName(userName);
 	}
 
 	/**

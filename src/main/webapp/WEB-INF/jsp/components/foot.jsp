@@ -17,7 +17,7 @@
 				target="_blank">API</a>&nbsp;|&nbsp; <a href="/admin/login"
 				target="_blank">后台登录</a> -->
 		</p>
-		<p style="color: #999;">去<a href="https://github.com/miansen" target="_blank">鼓励</a>我并获取<a href="https://github.com/miansen" target="_blank">源码</a>，你的☆start将是我源源不断的动力</p>
+		<p style="color: #999;">去<a href="https://github.com/miansen" target="_blank">鼓励</a>我并获取<a href="https://github.com/miansen" target="_blank">源码</a>，你的☆star将是我源源不断的动力</p>
 		<p style="color: #999;">兴趣使然的无名小站</p>
 		<p><a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow" style="color: #778087;text-decoration: none;word-break: break-all;">琼ICP备18002390号</a></p>
 		<!-- <script async=""

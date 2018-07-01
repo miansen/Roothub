@@ -148,11 +148,11 @@ public interface RootTopicService {
 	PageDataBody<RootTopic> findById(Integer pageNumber, Integer pageSize, Integer uid);
 	
 	/**
-	 * 根据用户ID统计用户收藏的话题
+	 * 查询用户发布主题的数量
 	 * @param userId
 	 * @return
 	 */
-	Long countByUserId(Integer userId);
+	int countByUserName(String userName);
 
 	/**
 	 * 分组统计所有标签

@@ -1,6 +1,5 @@
 package priv.sen.root.web;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import priv.sen.root.dto.PageDataBody;
 import priv.sen.root.dto.Result;
 import priv.sen.root.dto.RootUserExecution;

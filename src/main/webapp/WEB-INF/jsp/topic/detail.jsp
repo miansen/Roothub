@@ -15,6 +15,8 @@
 <body>
 	<div class="wrapper">
 		<jsp:include page="../components/head.jsp"></jsp:include>
+	  <div class="row">
+       <div class="col-md-9">
 		<div class="panel panel-default">
 			<div class="panel-body topic-detail-header">
 				<div class="media">
@@ -73,7 +75,7 @@
 		</c:if>
 		<div class="panel panel-default" id="pinglun" style="display: none">
 			<div class="panel-heading">
-				添加一条新评论 <a href="javascript:void(0);" id="goTop" class="pull-right" onclick="goTop()">回到顶部</a>
+				添加一条新评论 <!-- <a href="javascript:void(0);" id="goTop" class="pull-right" onclick="goTop()">回到顶部</a> -->
 			</div>
 			<div class="panel-body">
 				<input type="hidden" id="commentId" value="">
@@ -87,9 +89,64 @@
 				<button id="btn" class="btn btn-sm btn-default">
 					<!-- <span class="glyphicon glyphicon-send"></span> --> 评论
 				</button>
+				<div class="fr">
+					<a href="/">← Roothub</a>
+				</div>
 			</div>
 		</div>
 	</div>
+	
+	  <div class="col-md-3 hidden-sm hidden-xs">
+  	<div class="panel panel-default" id="session">
+  	<c:if test="${user == null}">
+      <div class="panel-body" id="nologin">
+        <h5>属于技术与资讯的社区</h5><p>在这里你可以学习、分享、提问、回答、诉说，这是一个小众且优雅的社区，欢迎你的加入！</p>
+      </div>
+      </c:if>
+  	 <c:if test="${user != null}">
+       <div class="panel-body">
+              <div class="media">
+                <div class="media-left">
+                  <a href="/user/${user.userName}">
+                    <img src="/resources/images/${user.avatar}" title="" class="avatar img-circle">
+                  </a>
+                </div>
+                <div class="media-body">
+                  <div class="media-heading">
+                    <strong><a href="/user/${user.userName}">${user.userName}</a></strong>
+                    <div style="color: #7A7A7A; font-size: 12px; margin-top:5px;">
+                      <i>${user.signature}</i>
+                    </div>
+                  </div>
+                </div>
+                <div style="margin-top: 15px;">
+                  <a href="/topic/create"><span class="glyphicon glyphicon-pencil"></span>发布话题</a>
+                </div>
+              </div>
+             <div class="sep10" style="height: 10px;"></div>
+	<table cellpadding="0" cellspacing="0" border="0" width="100%" class="table_fade" style="font-size: 14px;">
+    	<tbody><tr>
+        	<td width="33%" align="center"><a href="/user/${user.userName}/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
+        	<td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="/collect/topics" class="dark" style="display: block;"><span class="bigger">${countCollect}</span><div class="sep3"></div><span class="fade">我的收藏</span></a></td>
+        	<td width="33%" align="center"><a href="/" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
+    	</tr>
+	</tbody></table>
+            </div>
+            <div class="panel-footer" style="background-color: white">
+              <div class="row">
+                <span class="col-md-6"><a href="/notification/list"><span id="n_count">${notReadNotice}</span> 条未读消息</a></span>
+                <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span>
+              </div>
+            </div>
+            </c:if>
+    </div>
+  </div>
+	</div>
+	</div>
+	</div>
+	<div id="back2Top" class="backTop___6Q-ki" style="display:none">
+		<div class="line___F1WY0"></div>
+		<div class="arrow___3UCwo"></div>
 	</div>
 	</div>
 	<jsp:include page="../components/foot.jsp"></jsp:include>
@@ -98,6 +155,7 @@
 	<!-- 引入 Bootstrap -->
 	<script src="/resources/js/bootstrap.min.js"></script>
 	<script src="/resources/wangEditor/wangEditor.min.js"></script>
+	<script src="/resources/js/goTop.js"></script>
 	<script type="text/javascript">
 	/* 获取登录信息 */
       $.ajax({

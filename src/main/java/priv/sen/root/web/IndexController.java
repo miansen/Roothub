@@ -133,6 +133,8 @@ public class IndexController {
 		rootUser.setIsBlock(false);
 		rootUser.setStatusCd("1000");
 		rootUser.setUserType("2");
+		rootUser.setAvatar("69290780aaafb00aa37ff2a61342dded.png");
+		rootUser.setSignature("这家伙很懒，什么都没留下");
 		RootUserExecution save = rootUserService.save(rootUser);
 		return new Result<RootUserExecution>(true, save);
 	}
@@ -214,6 +216,9 @@ public class IndexController {
      */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     private String search(HttpServletRequest request,@RequestParam("s") String search,@RequestParam(value = "p", defaultValue = "1") Integer p) {
+    	if(search == null || search.equals("")) {
+    		return "search";
+    	}
     	PageDataBody<RootTopic> pageLike = rootTopicService.pageLike(p, 50, search);
     	request.setAttribute("pageLike", pageLike);
     	request.setAttribute("search", search);

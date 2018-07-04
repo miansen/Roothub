@@ -24,14 +24,14 @@
                                 alt="">
                             </div>
                             <div class="media-body">
-                                <h3 style="margin-top: 0" title="${user.userId}" id="user_id">${user.userName}</h3>
+                                <h3 style="margin-top: 0" title="${user.userId}" id="user_id" class= "user_id">${user.userName}</h3>
                                 
                                 <i>${user.signature}</i>
                             </div>
                             <c:if test="${user.userName != user2.userName && user2 != null}">
                             <div class="opt-box d-flex justify-content-center flex-column media-body">
                                 <span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()"></a>
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()" id="follow"></a>
                                 </span>
                             </div>
                         </c:if>
@@ -51,9 +51,9 @@
                         <dt>粉丝</dt>
                         <dd><span class="count" id="fan">4</span></dd>
                     </dl>
-                    <dl class="text-center" title="18">
+                    <dl class="text-center" title="" id="follow_dl">
                         <dt>关注</dt>
-                        <dd><span class="count">18</span></dd>
+                        <dd><span class="follow_count_to"></span></dd>
                     </dl>
                 </div>
 
@@ -63,7 +63,7 @@
                         <dd>10</dd>
                     </dl>
                     <dl>
-                        <dt><a href="/collect/topics">收藏：</a></dt>
+                        <dt title="${user.userName}的收藏"><a href="/collect/topics">收藏：</a></dt>
                         <dd title="${countCollect}">${countCollect}</dd>
                     </dl>
                     
@@ -77,7 +77,7 @@
                         <dt>访问：</dt>
                         <dd title="360">13</dd>
                     </dl>
-                    <dl title="228945">
+                    <dl title="${user.userName}加入roothub的时间">
                         <dt>入驻：</dt>
                         <dd><fmt:formatDate type="date" value="${user.createDate}" /></dd>
                     </dl>
@@ -161,7 +161,7 @@
 									alt="">
 							</div>
 							<div class="media-body">
-								<h3 style="margin-top: 0" title="${user.userId}" id="user_id">${user.userName}</h3>
+								<h3 style="margin-top: 0" title="${user.userId}" id="user_id" class= "user_id">${user.userName}</h3>
 								
 								<i>${user.signature}</i>
 					<%-- 			<div class="cell" style="border-bottom: 0px solid #e2e2e2;">
@@ -211,7 +211,7 @@
 							<c:if test="${user.userName != user2.userName && user2 != null}">
 							<div class="opt-box d-flex justify-content-center flex-column media-body">
             <span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
-                                <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()"></a>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()" id="follow"></a>
                             </span>
                     </div>
 							</c:if>
@@ -231,9 +231,9 @@
         <dt>粉丝</dt>
         <dd><span class="count" id="fan">4</span></dd>
     </dl>
-    <dl class="text-center" title="18">
+    <dl class="text-center" title="关注${user.userName}的数量" id="follow_dl">
         <dt>关注</dt>
-        <dd><span class="count">18</span></dd>
+        <dd><span class="follow_count_to"></span></dd>
     </dl>
 </div>
 
@@ -243,7 +243,7 @@
             <dd>10</dd>
         </dl>
         <dl>
-            <dt><a href="/collect/topics">收藏：</a></dt>
+            <dt title="${user.userName}的收藏"><a href="/collect/topics">收藏：</a></dt>
             <dd title="${countCollect}">${countCollect}</dd>
         </dl>
         
@@ -257,7 +257,7 @@
             <dt>访问：</dt>
             <dd title="360">13</dd>
         </dl>
-        <dl title="228945">
+        <dl title="${user.userName}加入roothub的时间">
             <dt>入驻：</dt>
             <dd><fmt:formatDate type="date" value="${user.createDate}" /></dd>
         </dl>

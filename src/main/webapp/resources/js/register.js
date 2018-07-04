@@ -11,7 +11,7 @@
             return false;
           }
           if(!pattern.test(username)){
-        	  alert("你的用户名只能为0-9a-zA-Z格式");
+        	  alert("您的用户名只能为0-9a-zA-Z格式");
               return false;
           }
           if (username.length < 2) {
@@ -24,6 +24,10 @@
           }
           if (password.length < 6) {
               alert('密码的长度不能少于6位');
+              return false;
+            }
+          if (password.length > 16) {
+              alert('密码的长度不能大于16位');
               return false;
             }
           if (!email) {

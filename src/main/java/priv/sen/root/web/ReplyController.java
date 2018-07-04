@@ -75,7 +75,7 @@ public class ReplyController {
 				notice.setTargetAuthorName(findByTopicId.getAuthor());//要通知用户的昵称
 				notice.setCreateDate(new Date());//创建时间
 				notice.setUpdateDate(new Date());//更新时间
-				notice.setNoticeAction("");//通知动作
+				notice.setNoticeAction("reply");//通知动作
 				notice.setTopicId(findByTopicId.getTopicId());//话题ID
 				notice.setNoticeContent(content);//通知内容
 				notice.setStatusCd("1000");//通知状态 1000:有效 1100:无效 1200:未生效

@@ -123,7 +123,7 @@ hr{border-bottom-color:#eee}
 .comment-detail-content img{max-width:100%}
 body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif}
 .wrapper{width:100%;background-color:#e5e5e5}
-.title a:visited{color:#ccc}
+.title a:visited{color:/* #ccc */ #778087}
 .avatar{/* border-radius:4px; */max-width:48px}
 .avatar-sm{/* border-radius:4px; */max-width:24px}
 .avatar-lg{/* border-radius:4px; */max-width:64px}
@@ -402,4 +402,8 @@ a:link {
 }
 .media .label{
 	color: #fff;
+}
+.fr {
+    float: right;
+    text-align: right;
 }

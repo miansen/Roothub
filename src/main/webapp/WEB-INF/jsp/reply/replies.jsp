@@ -15,7 +15,7 @@
 <div class="cell"><span class="gray">${topic.replyCount} 回复</span></div>
 <%int i=1;%>
 <c:forEach var="item" items="${replyPage.list}">
-    <div id="r_${item.replyId}" class="cell">
+    <div id="r_${item.replyId}" class="cell" style="padding-bottom: 0px;">
     <table cellpadding="0" cellspacing="0" border="0" width="100%" class="pinglun_table">
         <tbody><tr>
             <td width="48" valign="top" align="center"><a href="/user/${item.replyAuthorName}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""/></a>

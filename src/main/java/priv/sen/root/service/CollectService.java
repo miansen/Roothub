@@ -4,6 +4,12 @@ import priv.sen.root.dto.PageDataBody;
 import priv.sen.root.entity.Collect;
 import priv.sen.root.entity.RootTopic;
 
+/**
+ * @author sen
+ * 2018年7月3日
+ * 上午10:14:57
+ * TODO
+ */
 public interface CollectService {
 
 	/**

@@ -46,6 +46,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private RootReplyService rootReplyService;
 	@Autowired
 	private CollectService collectDaoService;
+	@Autowired
+	private RootNoticeService rootNoticeService;
 	
 	/**
 	 * 话题详情
@@ -58,7 +60,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		RootTopic topic = rootTopicService.findByTopicId(id);
 		RootUser user = getUser(request);
 		if(topic == null) {
-			return "error-page/500";
+			return "error-page/404";
 		}
 		//浏览量+1
 		topic.setViewCount(topic.getViewCount()+ 1);
@@ -66,10 +68,21 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		//分页查询回复
 		PageDataBody<RootReply> replyPage = rootReplyService.page(p, 100, id);
 		int countByTid = collectDaoService.countByTid(id);//话题被收藏的数量
+		int countTopicByUserName = 0;
+		int countCollect = 0;
+		int notReadNotice = 0;
+		if(user != null) {
+			countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
+			countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
+			notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//统计未读通知的数量
+		}
 		model.addAttribute("topic", topic);
 		model.addAttribute("replyPage", replyPage);
 		model.addAttribute("user", user);
 		model.addAttribute("countByTid", countByTid);
+		request.setAttribute("countTopicByUserName", countTopicByUserName);
+		request.setAttribute("countCollect", countCollect);
+		request.setAttribute("notReadNotice", notReadNotice);
 		return "topic/detail";
 	}
 	

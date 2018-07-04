@@ -22,6 +22,12 @@ import priv.sen.root.service.CollectService;
 import priv.sen.root.service.RootNoticeService;
 import priv.sen.root.service.RootTopicService;
 
+/**
+ * @author sen
+ * 2018年7月3日
+ * 上午10:15:28
+ * TODO
+ */
 @Controller
 public class CollectController extends BaseController{
 

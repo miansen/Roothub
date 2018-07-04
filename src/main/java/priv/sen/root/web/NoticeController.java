@@ -57,7 +57,7 @@ public class NoticeController {
 		int countByAuthor = rootNoticeService.countByAuthor(user.getUserName());//统计所有通知的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//统计未读通知的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
-		int countCollect = collectDaoService.countByTid(user.getUserId());//用户收藏话题的数量
+		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		PageDataBody<RootNotice> page = rootNoticeService.pageByAuthor(p, 20, user.getUserName());//查询所有通知
 		rootNoticeService.updateIsRead(user.getUserName());//将通知都置为已读
 		request.setAttribute("countByAuthor", countByAuthor);

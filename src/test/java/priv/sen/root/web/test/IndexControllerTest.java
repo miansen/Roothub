@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import priv.sen.root.dto.Result;
-import priv.sen.root.web.IndexController;
+import cn.roothub.dto.Result;
+import cn.roothub.web.front.IndexController;
 
 public class IndexControllerTest {
 

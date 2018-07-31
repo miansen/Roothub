@@ -14,9 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
   -->
-  <mapper namespace="priv.sen.root.dao.RootNoticeDao">
+  <mapper namespace="cn.roothub.dao.RootNoticeDao">
    <!-- 目的：为dao接口方法提供sql语句配置 -->
-   <resultMap id="BaseResultMap" type="priv.sen.root.entity.RootNotice">
+   <resultMap id="BaseResultMap" type="cn.roothub.entity.RootNotice">
     <id column="notice_id" jdbcType="INTEGER" property="noticeId"/>
     <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle"/>
     <result column="is_read" jdbcType="BIT" property="isRead"/>
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where notice_id = #{noticeId}
   </select>
   <!-- 添加通知 -->
-  <insert id="insert" parameterType="priv.sen.root.entity.RootNotice" keyProperty="notice_id" useGeneratedKeys="true">
+  <insert id="insert" parameterType="cn.roothub.entity.RootNotice" keyProperty="notice_id" useGeneratedKeys="true">
     insert into 
     root_notice 
     (notice_id, 

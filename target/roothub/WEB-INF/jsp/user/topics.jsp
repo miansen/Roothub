@@ -46,7 +46,12 @@
           </div>
         </div>
       </div>
+      <jsp:include page="../components/right.jsp"></jsp:include>
     </div>
+  </div>
+  <div id="back2Top" class="backTop___6Q-ki" style="display:none">
+		<div class="line___F1WY0"></div>
+		<div class="arrow___3UCwo"></div>
   </div>
 </div>
 <jsp:include page="../components/foot.jsp"></jsp:include>
@@ -56,6 +61,7 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
 <script src="/resources/js/pagination2.js"></script>
+<script src="/resources/js/goTop.js"></script>
 <script type="text/javascript">
 	var url = "/user/${user.userName}/topics?";
 	$(".pagination2").pagination("${topicPage.pageNumber}","${topicPage.totalPage}",10);

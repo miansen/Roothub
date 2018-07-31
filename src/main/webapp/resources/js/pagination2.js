@@ -1,4 +1,9 @@
 (function ($) {
+	/**
+	 * curr:当前页
+	 * all:总页数
+	 * count:显示的页数
+	 */
     $.fn.pagination = function (curr, all, count) {
         //容错处理
         if (all <= 0) {

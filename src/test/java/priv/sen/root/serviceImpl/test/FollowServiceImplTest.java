@@ -7,11 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.roothub.dto.PageDataBody;
+import cn.roothub.entity.Follow;
+import cn.roothub.entity.RootTopic;
+import cn.roothub.entity.RootUser;
+import cn.roothub.service.FollowService;
 import priv.sen.root.dao.test.BaseTest;
-import priv.sen.root.dto.PageDataBody;
-import priv.sen.root.entity.Follow;
-import priv.sen.root.entity.RootUser;
-import priv.sen.root.service.FollowService;
 
 public class FollowServiceImplTest extends BaseTest{
 
@@ -93,5 +94,15 @@ public class FollowServiceImplTest extends BaseTest{
 	public void followMeTest() throws Exception{
 		PageDataBody<RootUser> followMe = followService.followMe(1, 10, 1);
 		logger.info(followMe.toString());
+	}
+	
+	/**
+	 * 关注人的主题
+	 * @throws Exception
+	 */
+	@Test
+	public void pageTopicTest() throws Exception{
+		PageDataBody<RootTopic> pageTopic = followService.pageTopic(1, 20, 1);
+		logger.info(pageTopic.toString());
 	}
 }

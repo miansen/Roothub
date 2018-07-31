@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>roothub</title>
+  <title>Roothub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
           <c:forEach var="item" items="${page.list}">
           <div class="media" id="topic">
             <div class="media-left">
-              <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar" alt=""></a>
+              <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""></a>
             </div>
             <div class="media-body">
               <div class="title">
@@ -45,9 +45,9 @@
 			  </c:if>
                 <span><a href="/user/${item.author}">${item.author}</a></span>
                 <span class="hidden-sm hidden-xs">•</span>
-                <span class="hidden-sm hidden-xs"><a href="/topic/41">${item.replyCount}个评论</a></span>
+                <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
                 <span class="hidden-sm hidden-xs">•</span>
-                <span class="hidden-sm hidden-xs">${item.viewCount}次浏览</span>
+                <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
                 <span>•</span>
                 <span><fmt:formatDate type="date" 
                   value="${item.createDate}" /></span>
@@ -62,16 +62,17 @@
               <div class="divide mar-top-5"></div>
             </div>
           </c:forEach>
-          <ul class="pagination pagination-sm pagination2">
-        </ul>
       </div>
+      <div class="panel-footer">
+          <ul class="pagination pagination-sm pagination2"></ul>
+          </div>
     </div>
   </div>
   <div class="col-md-3 hidden-sm hidden-xs">
     <div class="panel panel-default" id="session">
     <c:if test="${user == null}">
       <div class="panel-body" id="nologin">
-        <h5>属于Java语言的bbs</h5><p>在这里，您可以提问，回答，分享，诉说，这是个属于Java程序员的社区，欢迎您的加入！</p>
+        <h5>属于技术与资讯的社区</h5><p>在这里你可以学习、分享、提问、回答、诉说，这是一个小众且优雅的社区，欢迎你的加入！</p>
       </div>
       </c:if>
       <c:if test="${user != null}">
@@ -79,29 +80,37 @@
               <div class="media">
                 <div class="media-left">
                   <a href="/user/${user.userName}">
-                    <img src="/resources/images/${user.avatar}" title="" class="avatar">
+                    <img src="/resources/images/${user.avatar}" title="" class="avatar img-circle">
                   </a>
                 </div>
                 <div class="media-body">
                   <div class="media-heading">
-                    <a href="/user/public">${user.userName}</a>
+                    <strong><a href="/user/${user.userName}">${user.userName}</a></strong>
                     <div style="color: #7A7A7A; font-size: 12px; margin-top:5px;">
                       <i>${user.signature}</i>
                     </div>
                   </div>
                 </div>
                 <div style="margin-top: 15px;">
-                  <a href="/topic/create" style="text-decoration: underline"><span class="glyphicon glyphicon-pencil"></span><i>发布话题</i></a>
+                  <a href="/topic/create" style="font-size: 14px;"><span class="glyphicon glyphicon-pencil"></span>发布话题</a>
                 </div>
               </div>
-            </div>
+              <div class="sep10" style="height: 10px;"></div>
+              <table cellpadding="0" cellspacing="0" border="0" width="100%" class="table_fade" style="font-size: 14px;">
+    <tbody><tr>
+        <td width="33%" align="center"><a href="/user/${user.userName}/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
+        <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="/collect/topics" class="dark" style="display: block;"><span class="bigger">${countCollect}</span><div class="sep3"></div><span class="fade">我的收藏</span></a></td>
+        <td width="33%" align="center"><a href="/" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
+    </tr>
+</tbody></table>
+       </div>
             <div class="panel-footer" style="background-color: white">
               <div class="row">
                 <span class="col-md-6"><a href="/notification/list"><span id="n_count">${notReadNotice}</span> 条未读消息</a></span>
-                <!-- <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span> -->
+                <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span>
               </div>
             </div>
-            </c:if>
+           </c:if>
     </div>
     <!-- 今日热议主题 -->
     <div class="panel panel-default">
@@ -111,9 +120,9 @@
         <c:forEach var="item" items="${findHot}">
           <tr>
           <td width="24" valign="middle" align="center">
-                <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
+                <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
             </td>
-            <td><a href="/topic/${item.topicId}">${item.title}</a></td>
+            <td><a href="/topic/${item.topicId}" style="color:#778087">${item.title}</a></td>
             <%-- <td align="right" class="ago"><fmt:formatDate type="date" 
                   value="${item.createDate}" /></td> --%>
           </tr>
@@ -165,6 +174,10 @@
  <!-- 社区运行状况 -->
   </div>
 </div>
+</div>
+<div id="back2Top" class="backTop___6Q-ki" style="display:none">
+<div class="line___F1WY0"></div>
+<div class="arrow___3UCwo"></div>
 </div>
 </div>
 <jsp:include page="components/foot.jsp"></jsp:include>

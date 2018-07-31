@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="priv.sen.root.dao.RootTopicDao">
+<mapper namespace="cn.roothub.dao.RootTopicDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="priv.sen.root.entity.RootTopic">
+	<resultMap id="BaseResultMap" type="cn.roothub.entity.RootTopic">
         <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
@@ -46,7 +46,32 @@
         <include refid="Base_Column_List"/>
 		FROM
 			root_topic
+		WHERE is_delete = '0'
+		<if test="ptab != null">
+		AND ptab = #{ptab}
+		</if>
 		order by top desc, last_reply_time desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     <!-- 根据昵称和板块查询话题 -->
+	<select id="selectAllByPtabAndAuthor" resultType="RootTopic">
+		SELECT
+        <include refid="Base_Column_List"/>
+		FROM
+			root_topic
+		WHERE is_delete = '0'
+		<if test="ptab != null">
+		AND ptab = #{ptab}
+		</if>
+		<if test="author != null">
+		AND author = #{author}
+		</if>
+		order by create_date desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -75,6 +100,10 @@
         <include refid="Base_Column_List"/>
 		FROM
 			root_topic
+		WHERE is_delete = '0'
+		<if test="ptab != null">
+		AND ptab = #{ptab}
+		</if>
 		order by create_date desc,last_reply_time desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
@@ -105,6 +134,10 @@
 		FROM
 			root_topic
 		where good = 1
+		AND is_delete = '0'
+		<if test="ptab != null">
+		AND ptab = #{ptab}
+		</if>
 		order by top desc, last_reply_time desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
@@ -120,6 +153,10 @@
 		FROM
 			root_topic
 		where reply_count = 0
+		AND is_delete = '0'
+		<if test="ptab != null">
+		AND ptab = #{ptab}
+		</if>
 		order by top desc, last_reply_time desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
@@ -218,10 +255,11 @@
 		and content = #{content}
      </select>
      <!-- 发布话题 -->
-     <insert id="insert" parameterType="priv.sen.root.entity.RootTopic" keyProperty="topic_id" useGeneratedKeys="true">
+     <insert id="insert" parameterType="cn.roothub.entity.RootTopic" keyProperty="topic_id" useGeneratedKeys="true">
     insert into 
            root_topic 
-           (topic_id, 
+           (topic_id,
+            ptab,
             tab, 
             title, 
             tag, 
@@ -240,7 +278,8 @@
             content,
             avatar)
             values 
-            (#{topicId}, 
+            (#{topicId},
+             #{ptab},
              #{tab}, 
              #{title}, 
              #{tag}, 
@@ -259,7 +298,7 @@
              #{content},
              #{avatar})
   </insert>
-    <update id="updateByTopicId" parameterType="priv.sen.root.entity.RootTopic">
+    <update id="updateByTopicId" parameterType="cn.roothub.entity.RootTopic">
       update root_topic
       set tab = #{tab,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
@@ -281,7 +320,7 @@
     where topic_id = #{topicId,jdbcType=INTEGER}
     </update>
     <!-- 更新主题的头像 -->
-	<update id="updateTopicAvatar" parameterType="priv.sen.root.entity.RootUser">
+	<update id="updateTopicAvatar" parameterType="cn.roothub.entity.RootUser">
         update root_topic
         set avatar = #{avatar}
         where author = #{userName}
@@ -296,6 +335,9 @@
         select count(topic_id)
         from root_topic t
         where t.is_delete = 0
+        <if test="ptab != null">
+        and t.ptab = #{ptab}
+        </if>
     </select>
     <!-- 统计模糊查询 -->
     <select id="countLike" resultType="java.lang.Integer">
@@ -307,7 +349,11 @@
     <select id="countAllTopicGood" resultType="java.lang.Integer">
         select count(topic_id)
         from root_topic t
-        where t.is_delete = 0 and t.good = 1
+        where t.is_delete = 0 
+        and t.good = 1
+        <if test="ptab != null">
+        and t.ptab = #{ptab}
+        </if>
     </select>
     <!-- 根据板块统计话题 -->
     <select id="countTopicByTab" resultType="java.lang.Integer">
@@ -319,13 +365,29 @@
     <select id="countAllTopicNoReply" resultType="java.lang.Integer">
         select count(topic_id)
         from root_topic t
-        where t.is_delete = 0 and t.reply_count = 0
+        where t.is_delete = 0 
+        and t.reply_count = 0
+        <if test="ptab != null">
+        and t.ptab = #{ptab}
+        </if>
     </select>
     <!-- 根据昵称统计所有话题 -->
     <select id="countAllByName" resultType="java.lang.Integer">
         select count(1)
         from root_topic t
         where t.is_delete = 0 and t.author = #{name}
+    </select>
+    <!-- 根据昵称和板块统计话题 -->
+    <select id="countAllByNameAndPtab" resultType="java.lang.Integer">
+        select count(1)
+        from root_topic t
+        where t.is_delete = 0 
+        <if test="name != null">
+        and t.author = #{name}
+        </if>
+        <if test="ptab != null">
+        and t.ptab = #{ptab}
+        </if>
     </select>
     <!-- 分组统计所有标签的数量 -->
     <select id="countTag" resultType="java.lang.Integer">

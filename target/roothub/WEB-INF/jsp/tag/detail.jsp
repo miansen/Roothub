@@ -15,7 +15,7 @@
 <jsp:include page="../components/head.jsp"></jsp:include>
 <div class="row">
   <div class="panel panel-default">
-    <div class="panel-body">
+    <%-- <div class="panel-body">
       <h4 style="margin-top: 0; margin-bottom: 10px;">
         ${tagName}
         <small>共有${pageByTag.totalRow}篇话题</small>
@@ -23,12 +23,16 @@
       <small></small>
       <span></span>
     </div>
-    <div class="divide"></div>
+    <div class="divide"></div> --%>
+    <div class="panel-heading"><h4 style="margin-top: 0; margin-bottom: 0px;">
+        ${tagName}
+        <small>共有${pageByTag.totalRow}篇话题</small>
+      </h4></div>
     <div class="panel-body paginate-bot">
     <c:forEach var="item" items="${pageByTag.list}">
     <div class="media">
       <div class="media-left">
-        <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar" alt=""></a>
+        <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""></a>
       </div>
       <div class="media-body">
         <div class="title">
@@ -55,10 +59,17 @@
       <div class="divide mar-top-5"></div>
       </c:forEach>
     </div>
-<ul class="pagination pagination-sm pagination2" style="padding-left: 20;"></ul>
+    <div class="panel-footer">
+   <ul class="pagination pagination-sm pagination2"></ul>
+</div>
+<!-- <ul class="pagination pagination-sm pagination2" style="padding-left: 20;"></ul> -->
     </div>
   </div>
 </div>
+  </div>
+  <div id="back2Top" class="backTop___6Q-ki" style="display:none">
+		<div class="line___F1WY0"></div>
+		<div class="arrow___3UCwo"></div>
   </div>
 </div>
 <jsp:include page="../components/foot.jsp"></jsp:include>
@@ -68,6 +79,7 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
 <script src="/resources/js/pagination2.js"></script>
+<script src="/resources/js/goTop.js"></script>
 <script type="text/javascript">
 	$("#biaoqian").addClass("active");
 	var url = "/topic/tag/${tagName}?";

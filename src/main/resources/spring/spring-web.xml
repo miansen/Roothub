@@ -33,5 +33,6 @@
     </bean>
 
 	<!-- 4.扫描web相关的bean -->
-	<context:component-scan base-package="priv.sen.root.web" />
+	<context:component-scan base-package="cn.roothub.web.front" />
+	<context:component-scan base-package="cn.roothub.web.api" />
 </beans>

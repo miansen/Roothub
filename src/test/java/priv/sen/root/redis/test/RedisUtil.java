@@ -2,11 +2,14 @@ package priv.sen.root.redis.test;
 
 import java.nio.charset.Charset;
 
+import org.springframework.data.redis.core.RedisTemplate;
+
 import redis.clients.jedis.Jedis;
 
 public class RedisUtil {
 
-	private static final Charset UTF_8 = Charset.forName("utf-8");  
+	private static final Charset UTF_8 = Charset.forName("utf-8");
+	private RedisTemplate<String, Object> redisTemplate;
 	  
     /** 
      * 向redis新增字符串键值对 
@@ -34,7 +37,7 @@ public class RedisUtil {
           
         Jedis jedis = RedisTool.getJedis();  
         String statusCode = jedis.set(key, value);  
-        System.out.println("状态码:(" + statusCode + ")");  
+        //System.out.println("状态码:(" + statusCode + ")");  
         RedisTool.returnResource(jedis);  
         return true;  
     }  
@@ -98,6 +101,13 @@ public class RedisUtil {
           
         byte[] k = key.getBytes(UTF_8);  
         return del(k);  
-    }  
-      
+    }
+
+	public RedisTemplate<String, Object> getRedisTemplate() {
+		return redisTemplate;
+	}
+
+	public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
+		this.redisTemplate = redisTemplate;
+	}    
 }

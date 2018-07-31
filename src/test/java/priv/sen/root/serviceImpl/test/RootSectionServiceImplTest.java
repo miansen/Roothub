@@ -7,10 +7,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.roothub.dto.RootSectionExecution;
+import cn.roothub.entity.RootSection;
+import cn.roothub.service.RootSectionService;
 import priv.sen.root.dao.test.BaseTest;
-import priv.sen.root.dto.RootSectionExecution;
-import priv.sen.root.entity.RootSection;
-import priv.sen.root.service.RootSectionService;
 
 public class RootSectionServiceImplTest extends BaseTest{
 

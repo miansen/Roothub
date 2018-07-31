@@ -8,9 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import priv.sen.root.dao.CollectDao;
-import priv.sen.root.entity.Collect;
-import priv.sen.root.entity.RootTopic;
+import cn.roothub.dao.CollectDao;
+import cn.roothub.entity.Collect;
+import cn.roothub.entity.RootTopic;
 
 public class CollectDaoTest extends BaseTest{
 

@@ -3,8 +3,9 @@ package priv.sen.root.dao.test;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import priv.sen.root.dao.RootTopicDao;
-import priv.sen.root.entity.RootTopic;
+
+import cn.roothub.dao.RootTopicDao;
+import cn.roothub.entity.RootTopic;
 
 public class RootTopicDaoTest extends BaseTest {
 

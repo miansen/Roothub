@@ -60,7 +60,7 @@
 			</div>
 			<div class="panel-footer" style="display: none" id="collect">
 				<a
-					href="javascript:window.open('http://service.weibo.com/share/share.php?url=http://roothub.co//topic/${topic.topicId}?r=${topic.author}&amp;title=${topic.title}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');">分享微博</a>&nbsp;
+					href="javascript:window.open('http://service.weibo.com/share/share.php?url=https://roothub.cn//topic/${topic.topicId}?r=${topic.author}&amp;title=${topic.title}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');">分享微博</a>&nbsp;
 				<a href="javascript:void(0);" class="collectTopic" onclick="save()"></a> <span
 					class="pull-right"><span id="collectCount">${countByTid}</span>个收藏</span>
 			</div>
@@ -120,7 +120,7 @@
                   </div>
                 </div>
                 <div style="margin-top: 15px;">
-                  <a href="/topic/create"><span class="glyphicon glyphicon-pencil"></span>发布话题</a>
+                  <a href="/topic/create"><button class="btn btn-success">发布话题</button></a>
                 </div>
               </div>
              <div class="sep10" style="height: 10px;"></div>

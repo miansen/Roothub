@@ -14,9 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
   -->
-  <mapper namespace="priv.sen.root.dao.RootReplyDao">
+  <mapper namespace="cn.roothub.dao.RootReplyDao">
    <!-- 目的：为dao接口方法提供sql语句配置 -->
-   <resultMap id="BaseResultMap" type="priv.sen.root.entity.RootReply">
+   <resultMap id="BaseResultMap" type="cn.roothub.entity.RootReply">
     <id column="reply_id" jdbcType="INTEGER" property="replyId"/>
     <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
     <result column="topic_author_id" jdbcType="INTEGER" property="topicAuthorId"/>
@@ -131,7 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <!-- 添加评论 -->
-  <insert id="insert" parameterType="priv.sen.root.entity.RootReply" keyProperty="reply_id" useGeneratedKeys="true">
+  <insert id="insert" parameterType="cn.roothub.entity.RootReply" keyProperty="reply_id" useGeneratedKeys="true">
     insert into 
     root_reply 
     (reply_id, 
@@ -169,7 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{statusCd})
   </insert>
   <!-- 根据ID更新评论 -->
-  <update id="update" parameterType="priv.sen.root.entity.RootReply">
+  <update id="update" parameterType="cn.roothub.entity.RootReply">
     update root_reply
     set topic_id = #{replyId},
     topic_author_id = #{topicAuthorId},

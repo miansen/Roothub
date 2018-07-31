@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="priv.sen.root.dao.RootUserDao">
+<mapper namespace="cn.roothub.dao.RootUserDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="priv.sen.root.entity.RootUser">
+	<resultMap id="BaseResultMap" type="cn.roothub.entity.RootUser">
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -117,7 +117,7 @@
 		root_user
 	</select>
 	<!-- 添加用户 -->
-	<insert id="insertUser" parameterType="priv.sen.root.entity.RootUser" keyProperty="userId" useGeneratedKeys="true">
+	<insert id="insertUser" parameterType="cn.roothub.entity.RootUser" keyProperty="userId" useGeneratedKeys="true">
 		INSERT INTO root_user
 		(user_id,
 		user_name,
@@ -172,7 +172,7 @@
 		VALUES (#{userName}, #{password},#{email})
 	</insert>
 	<!-- 更新用户 -->
-	<update id="updateUser" parameterType="priv.sen.root.entity.RootUser">
+	<update id="updateUser" parameterType="cn.roothub.entity.RootUser">
         update root_user
         set user_name = #{userName},
         password = #{password},

@@ -8,15 +8,15 @@
 <!-- 引入 Bootstrap -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
-<script src="/resources/js/logout.js"></script>
+<!-- <script src="/resources/js/logout.js"></script> -->
 <script>
-	var _hmt = _hmt || [];
-	(function() {
-		var hm = document.createElement("script");
-		hm.src = "https://hm.baidu.com/hm.js?f0543f7ed0d9239755f96bdb3d8f732c";
-		var s = document.getElementsByTagName("script")[0];
-		s.parentNode.insertBefore(hm, s);
-	})();
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e988748e1cd0adcffabdb560cc3df84d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>
 </head>
 <body>
@@ -53,7 +53,7 @@
 					
 						<li class="hidden-md hidden-lg"><a href="/topic/create">发布话题</a>
 						</li>
-						<li id="loginuser" style="display:none"><a href="/user/public"> public <span
+						<li id="loginuser" style="display:none"><a href="/user/public"><span
 								class="badge" id="badge"></span>
 						</a></li>
 						<li id="shezhili" style="display:none"><a href="/user/settings/profile">设置</a></li>

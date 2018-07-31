@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="priv.sen.root.dao.RootSectionDao">
+<mapper namespace="cn.roothub.dao.RootSectionDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-    <resultMap id="BaseResultMap" type="priv.sen.root.entity.RootSection">
+    <resultMap id="BaseResultMap" type="cn.roothub.entity.RootSection">
         <id column="section_id" jdbcType="INTEGER" property="sectionId"/>
         <result column="section_name" jdbcType="VARCHAR" property="sectionName"/>
         <result column="section_tab" jdbcType="VARCHAR" property="sectionTab"/>
@@ -68,7 +68,7 @@
         where section_tab = #{sectionTab,jdbcType=VARCHAR}
     </select>
     <!-- 添加板块 -->
-    <insert id="insert" parameterType="priv.sen.root.entity.RootSection" keyProperty="sectionId" useGeneratedKeys="true">
+    <insert id="insert" parameterType="cn.roothub.entity.RootSection" keyProperty="sectionId" useGeneratedKeys="true">
         insert into root_section 
         (section_id, 
         section_name, 
@@ -89,7 +89,7 @@
         #{createDate,jdbcType=TIMESTAMP})
     </insert>
     <!-- 根据ID更新板块 -->
-    <update id="updateBySectionId" parameterType="priv.sen.root.entity.RootSection">
+    <update id="updateBySectionId" parameterType="cn.roothub.entity.RootSection">
         update root_section
         set section_name = #{sectionName,jdbcType=VARCHAR},
         section_tab = #{sectionTab,jdbcType=VARCHAR},

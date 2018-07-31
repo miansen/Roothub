@@ -191,7 +191,7 @@
     </update>
     <!-- 通过昵称修改昵称、邮箱、个人主页、个性签名、邮件是否接受社区消息 -->
 	<update id="updateUserByUserName">
-        update tb_user
+        update root_user
         set user_name = #{newUserName},
         email = #{email},
         url = #{url},
@@ -201,7 +201,7 @@
     </update>
     <!-- 通过ID修改昵称、邮箱、个人主页、个性签名、邮件是否接受社区消息 -->
 	<update id="updateAvatarByUserId">
-        update tb_user
+        update root_user
         set user_name = #{newUserName},
         email = #{email},
         url = #{url},
@@ -211,7 +211,7 @@
     </update>
     <!-- 通过昵称修改头像 -->
 	<update id="updateAvatarByUserName">
-        update tb_user
+        update root_user
         set avatar = #{avatar}
         where user_name = #{userName}
     </update>

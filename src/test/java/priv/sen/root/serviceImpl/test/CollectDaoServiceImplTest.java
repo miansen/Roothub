@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.roothub.dto.PageDataBody;
+import cn.roothub.entity.RootTopic;
+import cn.roothub.service.CollectService;
 import priv.sen.root.dao.test.BaseTest;
-import priv.sen.root.dto.PageDataBody;
-import priv.sen.root.entity.RootTopic;
-import priv.sen.root.service.CollectService;
 
 public class CollectDaoServiceImplTest extends BaseTest{
 

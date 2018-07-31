@@ -10,13 +10,13 @@
 <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
 <script src="/resources/js/logout.js"></script>
 <script>
-	var _hmt = _hmt || [];
-	(function() {
-		var hm = document.createElement("script");
-		hm.src = "https://hm.baidu.com/hm.js?f0543f7ed0d9239755f96bdb3d8f732c";
-		var s = document.getElementsByTagName("script")[0];
-		s.parentNode.insertBefore(hm, s);
-	})();
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?e988748e1cd0adcffabdb560cc3df84d";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
 </script>
 </head>
 <body>
@@ -32,7 +32,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" style="font-weight: 700; font-size: 27px;"
-					href="/">roothub</a>
+					href="/">Roothub</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse header-navbar">
 				<form class="navbar-form navbar-left hidden-xs hidden-sm"

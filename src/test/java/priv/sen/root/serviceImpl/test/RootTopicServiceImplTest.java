@@ -3,16 +3,21 @@ package priv.sen.root.serviceImpl.test;
 import java.util.Date;
 import java.util.List;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.roothub.dto.PageDataBody;
+import cn.roothub.dto.Result;
+import cn.roothub.dto.RootTopicExecution;
+import cn.roothub.entity.RootTopic;
+import cn.roothub.entity.Tag;
+import cn.roothub.service.RootTopicService;
 import priv.sen.root.dao.test.BaseTest;
-import priv.sen.root.dto.PageDataBody;
-import priv.sen.root.dto.RootTopicExecution;
-import priv.sen.root.entity.RootTopic;
-import priv.sen.root.entity.Tag;
-import priv.sen.root.service.RootTopicService;
 
 public class RootTopicServiceImplTest extends BaseTest{
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	RootTopicService rootTopicService;
 	
@@ -22,7 +27,7 @@ public class RootTopicServiceImplTest extends BaseTest{
 	 */
 	@Test
 	public void pageTest() throws Exception{
-		PageDataBody<RootTopic> page = rootTopicService.page(1, 20, "all");
+		PageDataBody<RootTopic> page = rootTopicService.page(1, 20, "all","all");
 		System.out.println(page);
 	}
 	
@@ -33,7 +38,8 @@ public class RootTopicServiceImplTest extends BaseTest{
 	@Test
 	public void pageByAuthor() throws Exception{
 		PageDataBody<RootTopic> page = rootTopicService.pageByAuthor(1, 20, "public");
-		System.out.println(page);
+		Result<PageDataBody<RootTopic>> result = new Result<>(true, page);
+		System.out.println(result);
 	}
 	
 	/**
@@ -109,5 +115,15 @@ public class RootTopicServiceImplTest extends BaseTest{
 	public void pageLikeTest() throws Exception{
 		PageDataBody<RootTopic> pageLike = rootTopicService.pageLike(1, 20, "测试");
 		System.out.println(pageLike);
+	}
+	
+	/**
+	 * 根据板块和昵称分页查询话题
+	 * @throws Exception
+	 */
+	@Test
+	public void pageAllByAuthorTest() throws Exception{
+		PageDataBody<RootTopic> page = rootTopicService.pageAllByPtabAndAuthor(1, 20, "qna", "Tyche");
+		logger.info(page.toString());
 	}
 }

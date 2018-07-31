@@ -4,10 +4,11 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.roothub.dto.PageDataBody;
+import cn.roothub.entity.RootNotice;
+import cn.roothub.service.RootNoticeService;
 import priv.sen.root.dao.test.BaseTest;
-import priv.sen.root.dto.PageDataBody;
-import priv.sen.root.entity.RootNotice;
-import priv.sen.root.service.RootNoticeService;
 
 /**
  * 测试通知列表

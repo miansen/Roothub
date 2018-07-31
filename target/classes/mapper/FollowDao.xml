@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="priv.sen.root.dao.FollowDao">
+<mapper namespace="cn.roothub.dao.FollowDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="priv.sen.root.entity.RootUser">
+	<resultMap id="BaseResultMap" type="cn.roothub.entity.RootUser">
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -51,6 +51,23 @@
             </if>
         </if>
      </select>
+     <!-- 关注的人的主题 -->
+	<select id="selectTopic" resultType="RootTopic">
+		SELECT
+        	c.*
+		FROM
+			follow a,root_user b,root_topic c
+		where a.uid = #{uid}
+		and a.fid = b.user_id
+		and b.user_name = c.author
+		order by c.create_date desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
      <!-- 关注我的人 -->
 	<select id="selectByFid" resultType="RootUser">
 		SELECT
@@ -68,7 +85,7 @@
         </if>
      </select>
      <!-- 添加关注 -->
-     <insert id="insert" parameterType="priv.sen.root.entity.Follow" keyProperty="id" useGeneratedKeys="true">
+     <insert id="insert" parameterType="cn.roothub.entity.Follow" keyProperty="id" useGeneratedKeys="true">
      	insert into follow
      	(uid,
      	 fid,
@@ -102,5 +119,13 @@
      	from follow
      	where uid = #{uid}
      	and fid = #{fid}
+     </select>
+     <!-- 关注的人的主题的数量 -->
+     <select id="countTopic" resultType="java.lang.Integer">
+     	select count(c.topic_id)
+     	from follow a,root_user b,root_topic c
+     	where a.uid = #{uid}
+     	and a.fid = b.user_id
+     	and b.user_name = c.author
      </select>
 </mapper>

@@ -5,9 +5,9 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import priv.sen.root.dao.RootReplyDao;
-import priv.sen.root.entity.ReplyAndTopicByName;
-import priv.sen.root.entity.RootReply;
+import cn.roothub.dao.RootReplyDao;
+import cn.roothub.entity.ReplyAndTopicByName;
+import cn.roothub.entity.RootReply;
 
 public class RootReplyDaoTest extends BaseTest{
 

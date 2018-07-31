@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="priv.sen.root.dao.CollectDao">
+<mapper namespace="cn.roothub.dao.CollectDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="priv.sen.root.entity.RootTopic">
+	<resultMap id="BaseResultMap" type="cn.roothub.entity.RootTopic">
         <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
@@ -57,7 +57,7 @@
         </if>
      </select>
      <!-- 添加收藏 -->
-     <insert id="insert" parameterType="priv.sen.root.entity.Collect" keyProperty="id" useGeneratedKeys="true">
+     <insert id="insert" parameterType="cn.roothub.entity.Collect" keyProperty="id" useGeneratedKeys="true">
      	insert into collect
      	(uid,
      	 tid,

@@ -6,8 +6,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import priv.sen.root.dao.RootUserDao;
-import priv.sen.root.entity.RootUser;
+import cn.roothub.dao.RootUserDao;
+import cn.roothub.entity.RootUser;
 
 public class RootUserDaoTest extends BaseTest{
 

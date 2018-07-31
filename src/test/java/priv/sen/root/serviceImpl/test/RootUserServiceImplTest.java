@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.roothub.dto.RootUserExecution;
+import cn.roothub.entity.RootUser;
+import cn.roothub.service.RootUserService;
 import priv.sen.root.dao.test.BaseTest;
-import priv.sen.root.dto.RootUserExecution;
-import priv.sen.root.entity.RootUser;
-import priv.sen.root.service.RootUserService;
 
 public class RootUserServiceImplTest extends BaseTest{
 

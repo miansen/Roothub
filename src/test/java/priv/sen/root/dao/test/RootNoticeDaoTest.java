@@ -7,10 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import priv.sen.root.dao.RootNoticeDao;
-import priv.sen.root.entity.RootNotice;
-import priv.sen.root.service.CollectService;
-import priv.sen.root.service.RootTopicService;
+import cn.roothub.dao.RootNoticeDao;
+import cn.roothub.entity.RootNotice;
+import cn.roothub.service.CollectService;
+import cn.roothub.service.RootTopicService;
 
 /**
  * 测试通知

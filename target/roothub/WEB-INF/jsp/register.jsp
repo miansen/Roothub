@@ -34,7 +34,7 @@
 								<label for="email">邮箱</label> <input type="email"
 									class="form-control" id="email" name="email" placeholder="邮箱">
 							</div>
-							<button type="button" class="btn btn-default" id="reg_btn">注册</button>
+							<button type="button" class="btn btn-primary" id="reg_btn">注册</button>
 						</form>
 					</div>
 				</div>

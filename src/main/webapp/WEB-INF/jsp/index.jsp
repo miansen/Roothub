@@ -9,7 +9,9 @@
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
-  <script src="/resources/js/logout.js"></script>
+  <!-- <script src="/resources/js/logout.js"></script> -->
+  <!-- 引入layui.css -->
+  <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 </head>
 <body>
  <div class="wrapper" style="width: 100%;background-color: #e5e5e5;">
@@ -17,7 +19,14 @@
     <div class="row">
       <div class="col-md-9">
         <div class="panel panel-default">
-          <div class="panel-heading">
+        	<div class="ptab panel-heading" id="ptab">
+        	<ul class="nav nav-pills" id="ptab">
+        	<c:forEach var="item" items="${ptabList}" varStatus="status">
+        		<li class=""><a href="/?ptab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
+        	</c:forEach>
+        	</ul>
+    		</div>
+          <div class="section">
             <ul class="nav nav-pills" id="section">
               <c:forEach var="section" items="${sectionAll}" varStatus="status">
               <li class=""><a href="/?tab=${section.sectionTab}">${section.sectionName}</a></li>
@@ -63,9 +72,10 @@
             </div>
           </c:forEach>
       </div>
-      <div class="panel-footer">
+      <!-- <div class="panel-footer">
           <ul class="pagination pagination-sm pagination2"></ul>
-          </div>
+          </div> -->
+          <div class="panel-footer" id="paginate"></div>
     </div>
   </div>
   <div class="col-md-3 hidden-sm hidden-xs">
@@ -92,7 +102,7 @@
                   </div>
                 </div>
                 <div style="margin-top: 15px;">
-                  <a href="/topic/create" style="font-size: 14px;"><span class="glyphicon glyphicon-pencil"></span>发布话题</a>
+                  <a href="/topic/create" style="font-size: 14px;"><button class="btn btn-success">发布话题</button></a>
                 </div>
               </div>
               <div class="sep10" style="height: 10px;"></div>
@@ -186,12 +196,56 @@
 <!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
-<script src="/resources/js/pagination2.js"></script>
+<!-- <script src="/resources/js/pagination2.js"></script> -->
 <script src="/resources/js/index.js"></script>
+<!-- 引入layui.js -->
+<script src="/resources/layui/layui.js"></script>
+<script src="/resources/layui/layui-paginate.js"></script>
 <script type="text/javascript">
-var tab = "${tab}";
-var url = "/?tab="+tab+"&"
-  $(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+var tab = "${tab}";//板块
+var ptab = "${ptab}";//父板块
+//var url = "/?tab="+tab+"&ptab="+ptab+"&"
+//$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+ var count = ${page.totalRow};//数据总量
+ var limit = 50;//每页显示的条数
+ var url = "?tab="+tab+"&ptab="+ptab+"&p=";//url
+ console.log(count);
+ console.log(url);
+ paginate(count,limit,url);
+/* $("#section li:eq(0) a").attr("href","/?tab=all&ptab="+ptab);
+$("#section li:eq(1) a").attr("href","/?tab=good&ptab="+ptab);
+$("#section li:eq(2) a").attr("href","/?tab=newest&ptab="+ptab);
+$("#section li:eq(3) a").attr("href","/?tab=noReply&ptab="+ptab); */
+/* layui.use('laypage', function(){
+	  var laypage = layui.laypage;
+	  //执行一个laypage实例
+	  laypage.render({
+	    elem: 'test1', //注意，这里的 test1 是 ID，不用加 # 号
+	    count: "${page.totalPage}", //数据总数，从服务端得到
+	    limit:1,//每页显示的条数。laypage将会借助 count 和 limit 计算出分页数。
+	    //通过url获取当前页
+	    curr: function(){
+	        var page = location.search.match(/p=(\d+)/);  
+	        return page ? page[1] : 1;  
+	    }(),
+	    //skin: 'molv', //加载内置皮肤，也可以直接赋值16进制颜色值，如:#c00  
+	    groups:5,//连续显示分页数
+	    theme:'#337ab7',//自定义主题。支持传入：颜色值
+	    //skip: true, //是否开启跳页
+	    //prev: '<', //若不显示，设置false即可  
+	    //next: '>', //若不显示，设置false即可
+	    //hash:'/tab=all&ptab=all&p',
+	    jump: function(obj, first){
+	        //obj包含了当前分页的所有参数，比如：
+	        //console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+	        //console.log(obj.limit); //得到每页显示的条数
+	        //首次不执行
+	        if(!first){
+	        	location.href = '?tab=all&ptab=all&p='+obj.curr;
+	        }
+	      }
+	  });
+	}); */
 </script>
 </body>
 </html>

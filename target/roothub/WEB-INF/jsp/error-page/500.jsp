@@ -18,9 +18,9 @@
   <br>
   <div class="panel panel-default">
     <div class="panel-body">
-      <h1>: (</h1>
+      <!-- <h1>: (</h1> -->
       <h3>╮(╯▽╰)╭</h3>
-      <p>这个页面登录才能操作哦~点击去<a href="/login">登录</a></p>
+      <p>这个页面登录之后才能操作哦~点击去<a href="/login">登录</a></p>
     </div>
   </div>
 </div>

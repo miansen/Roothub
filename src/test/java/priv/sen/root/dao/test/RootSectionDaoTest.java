@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import priv.sen.root.dao.RootSectionDao;
-import priv.sen.root.entity.RootSection;
+import cn.roothub.dao.RootSectionDao;
+import cn.roothub.entity.RootSection;
 
 public class RootSectionDaoTest extends BaseTest{
 	

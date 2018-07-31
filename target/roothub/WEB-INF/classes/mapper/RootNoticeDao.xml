@@ -42,11 +42,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     SELECT
     a.*,
     b.title,
-    b.avatar
+    c.avatar
     FROM
-    root_notice a,root_topic b
+    root_notice a,root_topic b,root_user c
     where a.target_author_name = #{author}
     and a.topic_id = b.topic_id
+    and a.notice_author_name = c.user_name
     order by a.create_date desc
     <if test="start != null">
       limit #{start,jdbcType=INTEGER}

@@ -18,7 +18,7 @@
   <div class="list-group">
     <a href="/user/settings/profile" class="list-group-item active">个人设置</a>
     <a href="/user/settings/changeAvatar" class="list-group-item ">修改头像</a>
-    <!-- <a href="/user/settings/changePassword" class="list-group-item ">修改密码</a> -->
+    <a href="/user/settings/changePassword" class="list-group-item ">修改密码</a>
     <!-- <a href="/user/settings/log" class="list-group-item ">日志记录</a> -->
   </div>
 </div>
@@ -63,7 +63,7 @@
             <input type="checkbox" name="replyEmail" id="replyEmail" checked="">
             <label for="replyEmail">评论被回复邮件提醒</label>
           </div> -->
-            <button type="button" id="userProfileUpdateBtn" onclick="updateUserProfile()" class="btn btn-default">保存设置
+            <button type="button" id="userProfileUpdateBtn" onclick="updateUserProfile()" class="btn btn-primary">保存设置
             </button>
           <span id="error_message"></span>
         </form>
@@ -76,9 +76,15 @@
     var errors = 0;
     var em = $("#error_message");
     var signature = $("#signature").val();
-    if (signature.length > 1000) {
+    var email = $("#email").val();
+    var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+    if (signature.length > 20) {
       errors++;
-      em.html("个性签名不能超过1000个字");
+      em.html("个性签名不能超过20个字");
+    }
+    if(!myreg.test(email)){
+    	errors++;
+    	em.html("邮箱格式不正确");
     }
     if (errors === 0) {
       var form = $("#userProfileForm");

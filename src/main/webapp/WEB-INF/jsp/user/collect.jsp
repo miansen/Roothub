@@ -83,7 +83,7 @@
                   </div>
                 </div>
                 <div style="margin-top: 15px;">
-                  <a href="/topic/create"><span class="glyphicon glyphicon-pencil"></span>发布话题</a>
+                  <a href="/topic/create"><button class="btn btn-success">发布话题</button></a>
                 </div>
               </div>
               <div class="sep10" style="height: 10px;"></div>

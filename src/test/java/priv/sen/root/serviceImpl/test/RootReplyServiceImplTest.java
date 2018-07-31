@@ -5,12 +5,13 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.roothub.dto.PageDataBody;
+import cn.roothub.dto.RootReplyExecution;
+import cn.roothub.entity.ReplyAndTopicByName;
+import cn.roothub.entity.RootReply;
+import cn.roothub.service.RootReplyService;
 import priv.sen.root.dao.test.BaseTest;
-import priv.sen.root.dto.PageDataBody;
-import priv.sen.root.dto.RootReplyExecution;
-import priv.sen.root.entity.ReplyAndTopicByName;
-import priv.sen.root.entity.RootReply;
-import priv.sen.root.service.RootReplyService;
 
 /**
  * 测试评论

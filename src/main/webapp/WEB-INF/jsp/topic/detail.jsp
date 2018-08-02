@@ -24,13 +24,11 @@
 						<h2 class="topic-detail-title">${topic.title}</h2>
 						<p class="gray">
 						<!-- 点赞点踩功能，后续在开发吧 -->
-							<!-- <i id="up_icon_1"
-								class="fa fa-chevron-up
-                up-down-disable "
+							<i id="up_icon_1"
+								class="fa fa-chevron-up up-down-disable "
 								onclick="voteTopic('UP')"></i> <i id="down_icon_1"
-								class="fa fa-chevron-down
-                up-down-disable "
-								onclick="voteTopic('DOWN')"></i> <span id="up_down_vote_count_1">0</span> -->
+								class="fa fa-chevron-down up-down-disable "
+								onclick="voteTopic('DOWN')"></i> <span id="up_down_vote_count_1">0</span>
 							<!-- <span>•</span>  -->
 							<c:if test="${topic.top}">
 							<span class="label label-primary">置顶</span> <span>•</span>

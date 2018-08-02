@@ -123,7 +123,7 @@ hr{border-bottom-color:#eee}
 .comment-detail-content img{max-width:100%}
 body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif}
 .wrapper{width:100%;background-color:#e5e5e5}
-/* a��ǩ������״̬ */
+/* a��ǩ������״̬ */
 .title a:visited{color:/* #ccc */ #778087}
 .avatar{/* border-radius:4px; */max-width:48px}
 .avatar-sm{/* border-radius:4px; */max-width:24px}
@@ -396,7 +396,8 @@ a{
 	/* color:#4078c0; */
 }
 .media span{
-	color: #ccc;
+	/* color: #ccc; */
+	color: #778087;
 }
 a:link {
     text-decoration: none;
@@ -534,4 +535,20 @@ a.tab:active, a.tab:link, a.tab:visited {
 .itemList ul li {
     list-style: none;
     border-bottom: 1px solid hsla(240,2%,90%,.5);
+}
+/* 个人主页信息字体颜色 */
+.data-info dl a {
+    color:#778087;
+}
+.data-info dl span {
+    color:#778087;
+}
+.grade-box dl dt {
+    color:#778087;
+}
+.grade-box dl dd {
+    color:#778087;
+}
+.grade-box dl dt a{
+    color:#778087;
 }

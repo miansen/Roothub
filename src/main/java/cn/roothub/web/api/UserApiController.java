@@ -59,7 +59,7 @@ public class UserApiController {
 		if(user == null) {
 			return new Result<PageDataBody>(true, "用户不存在");
 		}
-		PageDataBody<RootTopic> page = collectDaoService.page(p, 20, user.getUserId());
+		PageDataBody<RootTopic> page = collectDaoService.page(p, 1, user.getUserId());
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -83,7 +83,7 @@ public class UserApiController {
 	 */
 	@RequestMapping(value = "/api/user/reply",method = RequestMethod.GET)
 	private Result<PageDataBody> replyList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<ReplyAndTopicByName> page = rootReplyService.findAllByNameAndTopic(name, p, 20);
+		PageDataBody<ReplyAndTopicByName> page = rootReplyService.findAllByNameAndTopic(name, p, 1);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -95,7 +95,7 @@ public class UserApiController {
 	 */
 	@RequestMapping(value = "/api/user/follow/topic",method = RequestMethod.GET)
 	private Result<PageDataBody> followList(@RequestParam(value = "uid",defaultValue = "-1") Integer uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootTopic> page = followService.pageTopic(p, 20, uid);
+		PageDataBody<RootTopic> page = followService.pageTopic(p, 1, uid);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -107,7 +107,7 @@ public class UserApiController {
 	 */
 	@RequestMapping(value = "/api/user/fans",method = RequestMethod.GET)
 	private Result<PageDataBody> fansList(@RequestParam(value = "fid",defaultValue = "-1") Integer fid,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootUser> page = followService.followMe(p, 20, fid);
+		PageDataBody<RootUser> page = followService.followMe(p, 1, fid);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -119,7 +119,7 @@ public class UserApiController {
 	 */
 	@RequestMapping(value = "/api/user/topic/qna",method = RequestMethod.GET)
 	private  Result<PageDataBody> qnaTopicList(@RequestParam(value = "name",defaultValue = "-1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootTopic> page = rootTopicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
+		PageDataBody<RootTopic> page = rootTopicService.pageAllByPtabAndAuthor(p, 1, "qna", name);
 		return new Result<PageDataBody>(true, page);
 	}
 	

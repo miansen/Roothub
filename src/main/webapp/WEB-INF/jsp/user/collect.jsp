@@ -8,6 +8,8 @@
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
+  <!-- 引入layui.css -->
+  <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
 </head>
 <body>
@@ -59,9 +61,10 @@
             </div>
           </c:forEach>
       </div>
-          <div class="panel-footer">
+          <!-- <div class="panel-footer">
             <ul class="pagination pagination-sm pagination2"></ul>
-          </div>
+          </div> -->
+          <div class="panel-footer" id="paginate"></div>
         </div>
       </div> 
         <jsp:include page="../components/right2.jsp"></jsp:include>
@@ -74,10 +77,25 @@
 <!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
-<script src="/resources/js/pagination2.js"></script>
+<!-- <script src="/resources/js/pagination2.js"></script> -->
+<!-- 引入layui.js -->
+<script src="/resources/layui/layui.js"></script>
+<script src="/resources/layui/layui-paginate.js"></script>
 <script type="text/javascript">
-	var url = "/collect/topics?";
-	$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+	//var url = "/collect/topics?";
+	//$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+	 var count = ${page.totalRow};//数据总量
+	 var limit = ${page.pageSize};//每页显示的条数
+	 var url = "/collect/topics?p=";//url
+	 function page(){
+	     var page = location.search.match(/p=(\d+)/);  
+	     return page ? page[1] : 1;  
+	 }
+	 var p = page();//当前页数
+	 //console.log("p:"+p);
+	 //console.log(count);
+	 //console.log(url);
+	 paginate(count,limit,p,url);
 </script>
 </body>
 </html>

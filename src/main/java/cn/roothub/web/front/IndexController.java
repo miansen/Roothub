@@ -76,9 +76,9 @@ public class IndexController extends BaseController{
 		ptab = PtabUtil.getPtab(request,response,ptab);
 		PageDataBody<RootTopic> page;
 		if(ptab == null || ptab.equals("all")) {
-			page = rootTopicService.page(p, 1, tab,null);
+			page = rootTopicService.page(p, 50, tab,null);
 		}else {
-			page = rootTopicService.page(p, 1, tab,ptab);
+			page = rootTopicService.page(p, 50, tab,ptab);
 		}
 		List<RootSection> sectionAll = rootSectionService.findAll();
 		List<Tab> ptabList = tabService.selectAll();

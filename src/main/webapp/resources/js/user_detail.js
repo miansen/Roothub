@@ -149,9 +149,7 @@ function topicList(pageNumber) {
 					</div>");
 			}
 			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
-
-			/*$(".pagination2").pagination(data.data.pageNumber,data.data.totalPage,10);*/
-			paginate(data.data.totalRow,/*data.data.pageSize*/1,pageNumber,"#");
+			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
 		},
 		error : function(data) {
 
@@ -159,7 +157,7 @@ function topicList(pageNumber) {
 	});
 }
 /*收藏的话题*/
-function collectList() {
+function collectList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
 	$(".cell_tabs a").eq(3).removeClass("cell_tab");
@@ -170,7 +168,7 @@ function collectList() {
 		dataType : "json",
 		data : {
 			name:authorName,
-			p : 1
+			p : pageNumber
 		},
 		success : function(data) {
 			$(".itemList").html('');
@@ -198,6 +196,8 @@ function collectList() {
 					</div>\
 					</div>");
 			}
+			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
+			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
 		},
 		error : function(data) {
 
@@ -205,7 +205,7 @@ function collectList() {
 	});
 }
 /*评论列表*/
-function replyList() {
+function replyList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
 	$(".cell_tabs a").eq(2).removeClass("cell_tab");
@@ -216,7 +216,7 @@ function replyList() {
 		dataType : "json",
 		data : {
 			name:authorName,
-			p : 1
+			p : pageNumber
 		},
 		success : function(data) {
 			$(".itemList").html('<table class="table table-striped"><tbody></tbody></table>');
@@ -230,6 +230,8 @@ function replyList() {
 					<td class=\"show_big_image\">"+data.data.list[i].replyContent+"</td>\
 					</tr>");
 			}
+			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
+			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
 		},
 		error : function(data) {
 
@@ -237,7 +239,7 @@ function replyList() {
 	});
 }
 /*关注人的话题*/
-function followList() {
+function followList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
 	$(".cell_tabs a").eq(4).removeClass("cell_tab");
@@ -248,7 +250,7 @@ function followList() {
 		dataType : "json",
 		data : {
 			uid:userId,
-			p : 1
+			p : pageNumber
 		},
 		success : function(data) {
 			$(".itemList").html('');
@@ -276,6 +278,8 @@ function followList() {
 					</div>\
 					</div>");
 			}
+			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
+			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
 		},
 		error : function(data) {
 
@@ -283,7 +287,7 @@ function followList() {
 	});
 }
 /*粉丝*/
-function fansList() {
+function fansList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
 	$(".cell_tabs a").eq(5).removeClass("cell_tab");
@@ -296,7 +300,7 @@ function fansList() {
 		dataType : "json",
 		data : {
 			fid:userId,
-			p : 1
+			p : pageNumber
 		},
 		success : function(data) {
 			$(".itemList").html('<ul class="fans-ul"></ul>');
@@ -373,6 +377,8 @@ function fansList() {
 					}
 				});
 			}
+			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
+			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
 		},
 		error : function(data) {
 
@@ -380,7 +386,7 @@ function fansList() {
 	});
 }
 /*用户的提问*/
-function topicQnaList() {
+function topicQnaList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
 	$(".cell_tabs a").eq(6).removeClass("cell_tab");
@@ -391,7 +397,7 @@ function topicQnaList() {
 		dataType : "json",
 		data : {
 			name:authorName,
-			p : 1
+			p : pageNumber
 		},
 		success : function(data) {
 			$(".itemList").html('');
@@ -416,7 +422,8 @@ function topicQnaList() {
 					</div>\
 					</div>");
 			}
-			
+			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
+			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
 		},
 		error : function(data) {
 
@@ -425,6 +432,41 @@ function topicQnaList() {
 }
 $(document).on("click",".layui-laypage a",function(){
 	var p = $(this).data("page");
-	//alert(p);
-    topicList(p);
+	$(".cell_tabs a").each(function(index,element){
+		if($(this).attr('class') == "cell_tab_current" && index == 0){
+			console.log("动态");
+		}
+		if($(this).attr('class') == "cell_tab_current" && index == 1){
+			console.log($(this).attr('class')+" "+index);
+			console.log("p:"+p);
+			topicList(p);
+		}
+		if($(this).attr('class') == "cell_tab_current" && index == 2){
+			console.log($(this).attr('class')+" "+index);
+			console.log("p:"+p);
+			replyList(p);
+		}
+		if($(this).attr('class') == "cell_tab_current" && index == 3){
+			collectList(p);
+		}
+		if($(this).attr('class') == "cell_tab_current" && index == 4){
+			followList(p);
+		}
+		if($(this).attr('class') == "cell_tab_current" && index == 5){
+			fansList(p);
+		}
+		if($(this).attr('class') == "cell_tab_current" && index == 6){
+			console.log($(this).attr('class')+" "+index);
+			console.log("p:"+p);
+			topicQnaList(p);
+		}
+  	//console.log($(this).attr('class')+index);
   });
+});
+
+
+   /* $(".cell_tabs a").each(function(index, element) {
+        console.log($(this).attr('class' + index));
+    });*/
+
+    

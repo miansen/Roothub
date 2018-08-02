@@ -70,7 +70,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		topic.setViewCount(topic.getViewCount()+ 1);
 		rootTopicService.updateTopic(topic);//更新话题数据
 		//分页查询回复
-		PageDataBody<RootReply> replyPage = rootReplyService.page(p, 100, id);
+		PageDataBody<RootReply> replyPage = rootReplyService.page(p, 50, id);
 		int countByTid = collectDaoService.countByTid(id);//话题被收藏的数量
 		int countTopicByUserName = 0;
 		int countCollect = 0;

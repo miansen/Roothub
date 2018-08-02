@@ -8,6 +8,8 @@
 <!-- 引入 Bootstrap -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
+<!-- 引入layui.css -->
+<link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 <link rel="shortcut icon" href="/resources/images/favicon.ico">
 </head>
 <body>
@@ -41,18 +43,18 @@
                 <div class="data-info d-flex item-tiling">
                     <dl class="text-center" title="${countTopic}">
                         <dt><a href="javascript:void(0);" onclick="topicList()">主题</a></dt>
-                        <dd><a href="/user/${user.userName}/topics"><span class="count">${countTopic}</span></a></dd>
+                        <dd><span class="count">${countTopic}</span></dd>
                     </dl>
                     <dl class="text-center" title="${countReply}">
                         <dt><a href="javascript:void(0);" onclick="replyList()">评论</a></dt>
-                        <dd><a href="/user/${user.userName}/replys"><span class="count">${countReply}</span></a></dd>
+                        <dd><span class="count">${countReply}</span></dd>
                     </dl>
                     <dl class="text-center" title="${user.userName}的关注" id="follow_title">
                         <dt><a href="javascript:void(0);" onclick="followList()">关注</a></dt>
                         <dd><span class="follow_count_for"></span></dd>
                     </dl>
                     <dl class="text-center" title="4" id="fan_title">
-                        <dt>粉丝</dt>
+                        <dt><a href="javascript:void(0);" onclick="fansList()">粉丝</a></dt>
                         <dd><span id="fan" class="follow_count_to"></span></dd>
                     </dl>
                 </div>
@@ -187,18 +189,18 @@
 					<div class="data-info d-flex item-tiling">
     <dl class="text-center" title="${countTopic}">
         <dt><a href="javascript:void(0);" onclick="topicList()">主题</a></dt>
-        <dd><a href="/user/${user.userName}/topics"><span class="count">${countTopic}</span></a></dd>
+        <dd><span class="count">${countTopic}</span></dd>
     </dl>
     <dl class="text-center" title="${countReply}">
         <dt><a href="javascript:void(0);" onclick="replyList()">评论</a></dt>
-        <dd><a href="/user/${user.userName}/replys"><span class="count">${countReply}</span></a></dd>
+        <dd><span class="count">${countReply}</span></dd>
     </dl>
     <dl class="text-center" title="${user.userName}的关注" id="follow_title">
         <dt><a href="javascript:void(0);" onclick="followList()">关注</a></dt>
         <dd><span class="follow_count_for"></span></dd>
     </dl>
     <dl class="text-center" title="${user.userName}的粉丝" id="fan_title">
-        <dt>粉丝</dt>
+        <dt><a href="javascript:void(0);" onclick="fansList()">粉丝</a></dt>
         <dd><span id="fan" class="follow_count_to"></span></dd>
     </dl>
 </div>
@@ -247,8 +249,11 @@
 	<script src="/resources/js/bootstrap.min.js"></script>
 	<!-- 缓慢回到顶部 -->
 	<script src="/resources/js/goTop.js"></script>
-	<script src="/resources/js/user_detail.js"></script>
 	<!-- 分页 -->
-	<script src="/resources/js/pagination2.js"></script>
+	<!-- <script src="/resources/js/pagination2.js"></script> -->
+	<!-- 引入layui.js -->
+	<script src="/resources/layui/layui.js"></script>
+	<script src="/resources/layui/layui-paginate.js"></script>
+	<script src="/resources/js/user_detail.js"></script>
 </body>
 </html>

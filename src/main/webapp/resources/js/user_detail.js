@@ -148,11 +148,10 @@ function topicList(pageNumber) {
 					</div>\
 					</div>");
 			}
-			$(".itemList").append("<div class=\"panel-footer\">\
-            					   <ul class=\"pagination pagination-sm pagination2\"></ul>\
-          						   </div>");
+			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
 
-			$(".pagination2").pagination(data.data.pageNumber,data.data.totalPage,10);
+			/*$(".pagination2").pagination(data.data.pageNumber,data.data.totalPage,10);*/
+			paginate(data.data.totalRow,/*data.data.pageSize*/1,pageNumber,"#");
 		},
 		error : function(data) {
 
@@ -424,3 +423,8 @@ function topicQnaList() {
 		}
 	});
 }
+$(document).on("click",".layui-laypage a",function(){
+	var p = $(this).data("page");
+	//alert(p);
+    topicList(p);
+  });

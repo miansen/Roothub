@@ -84,27 +84,37 @@ public class UserController extends BaseController{
 	 * @param p
 	 * @return
 	 */
-	@RequestMapping(value = "/user/{name}/topics", method = RequestMethod.GET)
-	private String topics(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
-		if(name == null) {
+	@RequestMapping(value = "/user/topics", method = RequestMethod.GET)
+	private String topics(Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
+		/*if(name == null) {
 			return "error-page/404.jsp";
 		}
 		RootUser user = null;
 		user = rootUserService.findByName(name);
 		if(user == null) {
 			return "error-page/404.jsp";
-		}
+		}*/
 		RootUser user2 = getUser(request);//当前用户
-		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(p, 50, name);
-		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
-		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
-		int countReply = rootReplyService.countByName(user.getUserName());//评论的数量
-		model.addAttribute("user", user);
-		model.addAttribute("user2", user2);
+		if(user2 == null) return "error-page/404.jsp";
+		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
+		
+		/*int countTopic = rootTopicService.countByUserName(user2.getUserName());//主题数量
+		int countCollect = collectDaoService.count(user2.getUserId());//用户收藏话题的数量
+		int countReply = rootReplyService.countByName(user2.getUserName());//评论的数量
+*/		
+		int countCollect = collectDaoService.count(user2.getUserId());//用户收藏话题的数量
+		int countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());//用户发布的主题的数量
+		int notReadNotice = rootNoticeService.countNotReadNotice(user2.getUserName());//未读通知的数量
+		
+		model.addAttribute("user", user2);
+		//model.addAttribute("user2", user2);
 		model.addAttribute("topicPage", topicPage);
-		model.addAttribute("countTopic", countTopic);
+		/*model.addAttribute("countTopic", countTopic);
 		model.addAttribute("countCollect", countCollect);
-		model.addAttribute("countReply", countReply);
+		model.addAttribute("countReply", countReply);*/
+		request.setAttribute("countCollect", countCollect);
+		request.setAttribute("countTopicByUserName", countTopicByUserName);
+		request.setAttribute("notReadNotice", notReadNotice);
 		//model.addAttribute("countCollect", getCountCollect(request));
 		//model.addAttribute("countTopicByUserName", getCountTopicByUserName(request));
 		//model.addAttribute("notReadNotice", getNotReadNotice(request));

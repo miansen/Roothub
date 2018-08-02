@@ -1,4 +1,4 @@
-function paginate(count,limit,url){
+function paginate(count,limit,page,url){
 	layui.use('laypage', function(){
 		  var laypage = layui.laypage;
 		  //执行一个laypage实例
@@ -7,10 +7,7 @@ function paginate(count,limit,url){
 		    count: count, //数据总数，从服务端得到
 		    limit:limit,//每页显示的条数。laypage将会借助 count 和 limit 计算出分页数。
 		    //通过url获取当前页
-		    curr: function(){
-		        var page = location.search.match(/p=(\d+)/);  
-		        return page ? page[1] : 1;  
-		    }(),
+		    curr: page,
 		    //skin: 'molv', //加载内置皮肤，也可以直接赋值16进制颜色值，如:#c00  
 		    groups:5,//连续显示分页数
 		    theme:'#337ab7',//自定义主题。支持传入：颜色值

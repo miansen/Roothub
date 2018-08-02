@@ -56,9 +56,14 @@
 	 var count = ${tag.totalRow};//数据总量
 	 var limit = ${tag.pageSize};//每页显示的条数
 	 var url = "/tags?p=";//url
-	 console.log(count);
-	 console.log(url);
-	 paginate(count,limit,url);
+	 //console.log(count);
+	 //console.log(url);
+	 function page(){
+     var page = location.search.match(/p=(\d+)/);  
+     return page ? page[1] : 1;  
+ 	 }
+ 	 var p = page();//当前页数
+	 paginate(count,limit,p,url);
 </script>
 </body>
 </html>

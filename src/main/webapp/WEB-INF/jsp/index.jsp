@@ -108,7 +108,7 @@
               <div class="sep10" style="height: 10px;"></div>
               <table cellpadding="0" cellspacing="0" border="0" width="100%" class="table_fade" style="font-size: 14px;">
     <tbody><tr>
-        <td width="33%" align="center"><a href="/user/${user.userName}/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
+        <td width="33%" align="center"><a href="/user/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
         <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="/collect/topics" class="dark" style="display: block;"><span class="bigger">${countCollect}</span><div class="sep3"></div><span class="fade">我的收藏</span></a></td>
         <td width="33%" align="center"><a href="/" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
     </tr>
@@ -207,11 +207,17 @@ var ptab = "${ptab}";//父板块
 //var url = "/?tab="+tab+"&ptab="+ptab+"&"
 //$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
  var count = ${page.totalRow};//数据总量
- var limit = 50;//每页显示的条数
+ var limit = ${page.pageSize};//每页显示的条数
  var url = "?tab="+tab+"&ptab="+ptab+"&p=";//url
- console.log(count);
- console.log(url);
- paginate(count,limit,url);
+ function page(){
+     var page = location.search.match(/p=(\d+)/);  
+     return page ? page[1] : 1;  
+ }
+ var p = page();//当前页数
+ console.log("p:"+p);
+ //console.log(count);
+ //console.log(url);
+ paginate(count,1,p,url);
 /* $("#section li:eq(0) a").attr("href","/?tab=all&ptab="+ptab);
 $("#section li:eq(1) a").attr("href","/?tab=good&ptab="+ptab);
 $("#section li:eq(2) a").attr("href","/?tab=newest&ptab="+ptab);

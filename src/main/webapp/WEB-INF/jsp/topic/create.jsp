@@ -36,9 +36,20 @@
                 <div class="form-group">
 						<label for="ptab">板块</label>
 						<select id="ptab" class="form-control" name="ptab">
-							<c:forEach var="item" items="${ptabList}" varStatus="status">
+							<%-- <c:forEach var="item" items="${ptabList}" varStatus="status">
 							<option value="${item.tabName}">${item.tabDesc}</option>
-							</c:forEach>
+							</c:forEach> --%>
+							<option value="pl">编程语言</option>
+							<option value="db">数据库</option>
+							<option value="fe">前端</option>
+							<option value="play">有趣</option>
+							<option value="creative">创意</option>
+							<option value="host">主机</option>
+							<option value="dn">域名</option>
+							<option value="blog">博客</option>
+							<option value="tea">下午茶馆</option>
+							<option value="news">资讯</option>
+							<option value="qna">提问</option>
 						</select>
 					</div>
                 <div class="form-group">
@@ -84,13 +95,20 @@
       editor.customConfig.uploadFileName = 'file';
       editor.customConfig.uploadImgServer = '/common/wangEditorUpload';
       editor.customConfig.menus = [
-    'head',  // 标题
-    'bold',  // 粗体
-    'italic',  // 斜体
-    'list',  // 列表
-    'emoticon',  // 表情
-    'image',  // 插入图片
-    'table',  // 表格
+    	  'head',  // 标题
+    	  'bold',  // 粗体
+    	  'italic',  // 斜体
+    	  'underline',  // 下划线
+    	  'strikeThrough',  // 删除线
+    	  'link',  // 插入链接
+    	  'list',  // 列表
+    	  'quote',  // 引用
+    	  'emoticon',  // 表情
+    	  'image',  // 插入图片
+    	  'table',  // 表格
+    	  'code',  // 插入代码
+    	  'undo',  // 撤销
+    	  'redo'  // 重复
     ];
     editor.create();
 

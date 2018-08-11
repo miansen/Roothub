@@ -1,8 +1,8 @@
 package cn.roothub.dto;
 
 import cn.roothub.entity.RootSection;
-import cn.roothub.enums.InsertRootSectionEnum;
-import cn.roothub.enums.UpdateRootSectionEnum;
+import cn.roothub.enums.InsertEnum;
+import cn.roothub.enums.UpdateEnum;
 
 /**
  * 存储操作板块的结果
@@ -27,18 +27,18 @@ public class RootSectionExecution {
 	 * @param sectionName
 	 * @param stateEnum
 	 */
-	public RootSectionExecution(String sectionName,InsertRootSectionEnum stateEnum) {
+	public RootSectionExecution(String sectionName,InsertEnum stateEnum) {
 		this.sectionName = sectionName;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
 	}
 	
 	/**
-	 * 添加板块失败时的构造器
+	 * 更新板块失败时的构造器
 	 * @param sectionName
 	 * @param stateEnum
 	 */
-	public RootSectionExecution(String sectionName,UpdateRootSectionEnum stateEnum) {
+	public RootSectionExecution(String sectionName,UpdateEnum stateEnum) {
 		this.sectionName = sectionName;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
@@ -50,7 +50,7 @@ public class RootSectionExecution {
 	 * @param stateEnum
 	 * @param rootSection
 	 */
-	public RootSectionExecution(String sectionName,InsertRootSectionEnum stateEnum,RootSection rootSection) {
+	public RootSectionExecution(String sectionName,InsertEnum stateEnum,RootSection rootSection) {
 		this.sectionName = sectionName;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
@@ -58,12 +58,12 @@ public class RootSectionExecution {
 	}
 	
 	/**
-	 * 添加板块成功时的构造器
+	 * 更新板块成功时的构造器
 	 * @param sectionName
 	 * @param stateEnum
 	 * @param rootSection
 	 */
-	public RootSectionExecution(String sectionName,UpdateRootSectionEnum stateEnum,RootSection rootSection) {
+	public RootSectionExecution(String sectionName,UpdateEnum stateEnum,RootSection rootSection) {
 		this.sectionName = sectionName;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();

@@ -1,20 +1,20 @@
 package cn.roothub.enums;
 
 /**
- * 添加板块的数据字典
+ * 添加操作数据字典
  * @author sen
  * 2018年5月9日
  * 下午6:02:07
  * TODO
  */
-public enum InsertRootSectionEnum {
+public enum InsertEnum {
 
 	SUCCESS(1, "添加成功"), NO_USER(0,"添加失败"),REPEAT_USER(-1, "重复添加"),INNER_ERROR(-2, "系统异常");
 	
 	private int state;// 信息代码
 	private String stateInfo;// 信息说明
 	
-	private InsertRootSectionEnum(int state,String stateInfo) {
+	private InsertEnum(int state,String stateInfo) {
 		this.state = state;
 		this.stateInfo = stateInfo;
 	}
@@ -35,8 +35,8 @@ public enum InsertRootSectionEnum {
 		this.stateInfo = stateInfo;
 	}
 	
-	public static InsertRootSectionEnum stateOf(int index) {
-		for(InsertRootSectionEnum state : values()) {
+	public static InsertEnum stateOf(int index) {
+		for(InsertEnum state : values()) {
 			if(state.getState() == index) {
 				return state;
 			}

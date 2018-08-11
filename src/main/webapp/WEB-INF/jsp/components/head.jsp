@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 						</a></li>
 						<li id="shezhili" style="display:none"><a href="/user/settings/profile">设置</a></li>
 						<li id="tuichuli" style="display:none"><a
-							href="javascript:if(confirm('确定要登出roothub吗？'))location.href='/logout'">退出</a></li>
+							href="javascript:if(confirm('确定要登出Roothub吗？'))location.href='/logout'">退出</a></li>
 					
 				</ul>
 			</div>

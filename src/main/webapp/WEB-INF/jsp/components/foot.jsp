@@ -19,6 +19,8 @@
 		</p>
 		<p style="color: #ccc;">去<a href="https://github.com/miansen" target="_blank">鼓励</a>我并获取<a href="https://github.com/miansen" target="_blank">源码</a>，你的☆star将是我源源不断的动力</p>
 		<!-- <p style="color: #ccc;">兴趣使然的无名小站</p> -->
+		<p><script type="text/javascript" src="https://api.uixsj.cn/hitokoto/w.php?code=js"></script><div id="xsjhitokoto" style="color: #ccc;"><script>xsjhitokoto()</script></div></p>
+		
 		<p style="color: #ccc;"><a data-v-2b9fe4cd="">©2018 Roothub</a></p>
 		<p><a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow" style="color: #778087;text-decoration: none;word-break: break-all;">琼ICP备18002390号</a></p>
 		<!-- <script async=""

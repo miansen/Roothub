@@ -25,11 +25,13 @@ import cn.roothub.dto.RootUserExecution;
 import cn.roothub.entity.ReplyAndTopicByName;
 import cn.roothub.entity.RootTopic;
 import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Visit;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.RootNoticeService;
 import cn.roothub.service.RootReplyService;
 import cn.roothub.service.RootTopicService;
 import cn.roothub.service.RootUserService;
+import cn.roothub.service.VisitService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 
@@ -47,6 +49,8 @@ public class UserController extends BaseController{
 	private CollectService collectDaoService;
 	@Autowired
 	private RootNoticeService rootNoticeService;
+	@Autowired
+	private VisitService visitService;
 	/**
 	 * 用户主页
 	 * @return
@@ -67,6 +71,15 @@ public class UserController extends BaseController{
 		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countReply = rootReplyService.countByName(name);//评论的数量
+		//当用户为登录状态并且访问者与被访问者不是同一个人时，添加访问记录
+		if(user2 != null && user.getUserId() != user2.getUserId()) {
+			Visit visit = new Visit();
+			visit.setUid(user2.getUserId());
+			visit.setVid(user.getUserId());
+			visit.setCreateDate(new Date());
+			visit.setDelete(false);
+			visitService.save(visit);
+		}
 		model.addAttribute("user", user);
 		model.addAttribute("user2", user2);
 		model.addAttribute("replyPage", replyPage);

@@ -111,12 +111,22 @@ function save() {
 	})
 	}
 }
-/*话题列表*/
+$(".cell_tab_current").trigger("click");//默认点击
+/*动态*/
+/*function activitiesList(){
+	$(".cell_tabs a").removeClass("cell_tab_current");
+	$(".cell_tabs a").addClass("cell_tab");
+	$(".cell_tabs a").eq(0).removeClass("cell_tab");
+	$(".cell_tabs a").eq(0).addClass("cell_tab_current");
+	$(".itemList").html('<h1>activities</h1>');
+}*/
+
+/*主题*/
 function topicList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
-	$(".cell_tabs a").eq(1).removeClass("cell_tab");
-	$(".cell_tabs a").eq(1).addClass("cell_tab_current");
+	$(".cell_tabs a").eq(0).removeClass("cell_tab");
+	$(".cell_tabs a").eq(0).addClass("cell_tab_current");
 	$.ajax({
 		url : "/api/user/topic",
 		type : "get",
@@ -156,12 +166,47 @@ function topicList(pageNumber) {
 		}
 	});
 }
-/*收藏的话题*/
+/*评论*/
+function replyList(pageNumber) {
+	$(".cell_tabs a").removeClass("cell_tab_current");
+	$(".cell_tabs a").addClass("cell_tab");
+	$(".cell_tabs a").eq(1).removeClass("cell_tab");
+	$(".cell_tabs a").eq(1).addClass("cell_tab_current");
+	$.ajax({
+		url : "/api/user/reply",
+		type : "get",
+		dataType : "json",
+		data : {
+			name:authorName,
+			p : pageNumber
+		},
+		success : function(data) {
+			$(".itemList").html('<table class="table table-striped"><tbody></tbody></table>');
+			for(var i = 0;i < data.data.list.length; i++){
+				$(".table-striped").append("<tr>\
+					<td>"+data.data.list[i].createDate+" 评论了 <a\
+					href=\"/user/"+data.data.list[i].author+"\">"+data.data.list[i].author+"</a> 创建的话题 › <a\
+					href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].title+"</a></td>\
+					</tr>\
+					<tr class=\"user_comments\">\
+					<td class=\"show_big_image\">"+data.data.list[i].replyContent+"</td>\
+					</tr>");
+			}
+			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
+			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
+		},
+		error : function(data) {
+
+		}
+	});
+}
+
+/*收藏*/
 function collectList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
-	$(".cell_tabs a").eq(3).removeClass("cell_tab");
-	$(".cell_tabs a").eq(3).addClass("cell_tab_current");
+	$(".cell_tabs a").eq(2).removeClass("cell_tab");
+	$(".cell_tabs a").eq(2).addClass("cell_tab_current");
 	$.ajax({
 		url : "/api/user/collect",
 		type : "get",
@@ -204,46 +249,12 @@ function collectList(pageNumber) {
 		}
 	});
 }
-/*评论列表*/
-function replyList(pageNumber) {
-	$(".cell_tabs a").removeClass("cell_tab_current");
-	$(".cell_tabs a").addClass("cell_tab");
-	$(".cell_tabs a").eq(2).removeClass("cell_tab");
-	$(".cell_tabs a").eq(2).addClass("cell_tab_current");
-	$.ajax({
-		url : "/api/user/reply",
-		type : "get",
-		dataType : "json",
-		data : {
-			name:authorName,
-			p : pageNumber
-		},
-		success : function(data) {
-			$(".itemList").html('<table class="table table-striped"><tbody></tbody></table>');
-			for(var i = 0;i < data.data.list.length; i++){
-				$(".table-striped").append("<tr>\
-					<td>"+data.data.list[i].createDate+" 评论了 <a\
-					href=\"/user/"+data.data.list[i].author+"\">"+data.data.list[i].author+"</a> 创建的话题 › <a\
-					href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].title+"</a></td>\
-					</tr>\
-					<tr class=\"user_comments\">\
-					<td class=\"show_big_image\">"+data.data.list[i].replyContent+"</td>\
-					</tr>");
-			}
-			$(".itemList").append("<div class=\"panel-footer\" id=\"paginate\"></div>");
-			paginate(data.data.totalRow,data.data.pageSize,pageNumber,"#");
-		},
-		error : function(data) {
-
-		}
-	});
-}
-/*关注人的话题*/
+/*关注*/
 function followList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
-	$(".cell_tabs a").eq(4).removeClass("cell_tab");
-	$(".cell_tabs a").eq(4).addClass("cell_tab_current");
+	$(".cell_tabs a").eq(3).removeClass("cell_tab");
+	$(".cell_tabs a").eq(3).addClass("cell_tab_current");
 	$.ajax({
 		url : "/api/user/follow/topic",
 		type : "get",
@@ -290,8 +301,8 @@ function followList(pageNumber) {
 function fansList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
-	$(".cell_tabs a").eq(5).removeClass("cell_tab");
-	$(".cell_tabs a").eq(5).addClass("cell_tab_current");
+	$(".cell_tabs a").eq(4).removeClass("cell_tab");
+	$(".cell_tabs a").eq(4).addClass("cell_tab_current");
 	$(".itemList").html('');
 	$.ajax({
 		url : "/api/user/fans",
@@ -385,12 +396,12 @@ function fansList(pageNumber) {
 		}
 	});
 }
-/*用户的提问*/
+/*提问*/
 function topicQnaList(pageNumber) {
 	$(".cell_tabs a").removeClass("cell_tab_current");
 	$(".cell_tabs a").addClass("cell_tab");
-	$(".cell_tabs a").eq(6).removeClass("cell_tab");
-	$(".cell_tabs a").eq(6).addClass("cell_tab_current");
+	$(".cell_tabs a").eq(5).removeClass("cell_tab");
+	$(".cell_tabs a").eq(5).addClass("cell_tab_current");
 	$.ajax({
 		url : "/api/user/topic/qna",
 		type : "get",
@@ -430,34 +441,35 @@ function topicQnaList(pageNumber) {
 		}
 	});
 }
+/*分页*/
 $(document).on("click",".layui-laypage a",function(){
 	var p = $(this).data("page");
 	$(".cell_tabs a").each(function(index,element){
+		/*if($(this).attr('class') == "cell_tab_current" && index == 0){
+			activitiesList();
+		}*/
 		if($(this).attr('class') == "cell_tab_current" && index == 0){
-			console.log("动态");
-		}
-		if($(this).attr('class') == "cell_tab_current" && index == 1){
-			console.log($(this).attr('class')+" "+index);
-			console.log("p:"+p);
+			//console.log($(this).attr('class')+" "+index);
+			//console.log("p:"+p);
 			topicList(p);
 		}
-		if($(this).attr('class') == "cell_tab_current" && index == 2){
-			console.log($(this).attr('class')+" "+index);
-			console.log("p:"+p);
+		if($(this).attr('class') == "cell_tab_current" && index == 1){
+			//console.log($(this).attr('class')+" "+index);
+			//console.log("p:"+p);
 			replyList(p);
 		}
-		if($(this).attr('class') == "cell_tab_current" && index == 3){
+		if($(this).attr('class') == "cell_tab_current" && index == 2){
 			collectList(p);
 		}
-		if($(this).attr('class') == "cell_tab_current" && index == 4){
+		if($(this).attr('class') == "cell_tab_current" && index == 3){
 			followList(p);
 		}
-		if($(this).attr('class') == "cell_tab_current" && index == 5){
+		if($(this).attr('class') == "cell_tab_current" && index == 4){
 			fansList(p);
 		}
-		if($(this).attr('class') == "cell_tab_current" && index == 6){
-			console.log($(this).attr('class')+" "+index);
-			console.log("p:"+p);
+		if($(this).attr('class') == "cell_tab_current" && index == 5){
+			//console.log($(this).attr('class')+" "+index);
+			//console.log("p:"+p);
 			topicQnaList(p);
 		}
   	//console.log($(this).attr('class')+index);

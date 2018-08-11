@@ -537,7 +537,7 @@ a.tab:active, a.tab:link, a.tab:visited {
     border-bottom: 1px solid hsla(240,2%,90%,.5);
 }
 /* 个人主页信息字体颜色 */
-.data-info dl a {
+/* .data-info dl a {
     color:#778087;
 }
 .data-info dl span {
@@ -551,4 +551,35 @@ a.tab:active, a.tab:link, a.tab:visited {
 }
 .grade-box dl dt a{
     color:#778087;
+} */
+.votes {
+    display: inline-block;
+}
+.vote, .vote:link, .vote:visited {
+    text-decoration: none;
+    font-size: 10px;
+    line-height: 1;
+    padding: 2px 8px 2px 8px;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    color: #778;
+    display: inline-block;
+    vertical-align: baseline;
+    text-align: center;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.sep10{
+	height: 10px;
+}
+.topic-detail-header a:active, a:link, a:visited {
+    color: #778087;
+    text-decoration: none;
+    word-break: break-all;
 }

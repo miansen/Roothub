@@ -6,10 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.Follow;
+import cn.roothub.entity.RootTopic;
+import cn.roothub.entity.RootUser;
+import cn.roothub.service.CollectService;
 import cn.roothub.service.FollowService;
+import cn.roothub.service.RootNoticeService;
+import cn.roothub.service.RootTopicService;
 
 /**
  * 
@@ -23,6 +30,12 @@ public class FollowController extends BaseController{
 
 	@Autowired
 	private FollowService followService;
+	@Autowired
+	private CollectService collectDaoService;
+	@Autowired
+	private RootTopicService rootTopicService;
+	@Autowired
+	private RootNoticeService rootNoticeService;
 	
 	/**
 	 * 是否已关注
@@ -33,10 +46,12 @@ public class FollowController extends BaseController{
 	@RequestMapping(value = "/follow/isFollow",method = RequestMethod.GET)
 	@ResponseBody
 	private Result<Integer> isFollow(Integer fid,HttpServletRequest request){
-		if(getUser(request).getUserId() == fid) {
+		RootUser user = getUser(request);
+		if(user == null) return new Result<>(false, "未关注");
+		if(user.getUserId() == fid) {
 			return new Result<>(false, "同一用户");
 		}
-		int follow = followService.isFollow(getUser(request).getUserId(), fid);
+		int follow = followService.isFollow(user.getUserId(), fid);
 		if(follow == 0) {
 			return new Result<>(false, "未关注");
 		}
@@ -105,5 +120,27 @@ public class FollowController extends BaseController{
 	private Result<Integer> countByFid(Integer fid,HttpServletRequest request){
 		int countByFid = followService.countByFid(fid);
 		return new Result<Integer>(true,countByFid);
+	}
+	
+	/**
+	 * 特别关注
+	 * @param request
+	 * @param p
+	 * @return
+	 */
+	@RequestMapping(value = "/follow/topics",method = RequestMethod.GET)
+	private String followTopics(HttpServletRequest request,@RequestParam(value = "p",defaultValue = "1")Integer p) {
+		RootUser user = getUser(request);
+		if(user == null) return "error-page/404.jsp";
+		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
+		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
+		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
+		PageDataBody<RootTopic> pageTopic = followService.pageTopic(p, 20, user.getUserId());
+		request.setAttribute("countCollect", countCollect);
+		request.setAttribute("countTopicByUserName", countTopicByUserName);
+		request.setAttribute("notReadNotice", notReadNotice);
+		request.setAttribute("user", user);
+		request.setAttribute("page", pageTopic);
+		return "user/follow_topics";
 	}
 }

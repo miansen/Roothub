@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.roothub.dao.RootSectionDao;
 import cn.roothub.dto.RootSectionExecution;
 import cn.roothub.entity.RootSection;
-import cn.roothub.enums.InsertRootSectionEnum;
-import cn.roothub.enums.UpdateRootSectionEnum;
+import cn.roothub.enums.InsertEnum;
+import cn.roothub.enums.UpdateEnum;
 import cn.roothub.exception.OperationFailedException;
 import cn.roothub.exception.OperationRepeaException;
 import cn.roothub.exception.OperationSystemException;
@@ -76,7 +76,7 @@ public class RootSectionServiceImpl implements RootSectionService{
 					throw new OperationFailedException("添加失败！");
 				}else {
 					RootSection selectBySectionName = rootSectionDao.selectBySectionName(rootSection.getSectionName());
-					return new RootSectionExecution(selectBySectionName.getSectionName(),InsertRootSectionEnum.SUCCESS,selectBySectionName); 
+					return new RootSectionExecution(selectBySectionName.getSectionName(),InsertEnum.SUCCESS,selectBySectionName); 
 				}
 			}
 		} catch (OperationRepeaException e1) {
@@ -104,7 +104,7 @@ public class RootSectionServiceImpl implements RootSectionService{
 					throw new OperationFailedException("更新失败！");
 				}else {
 					RootSection selectBySectionId = rootSectionDao.selectBySectionId(rootSection.getSectionId());
-					return new RootSectionExecution(selectBySectionId.getSectionName(), UpdateRootSectionEnum.SUCCESS,selectBySectionId);
+					return new RootSectionExecution(selectBySectionId.getSectionName(), UpdateEnum.SUCCESS,selectBySectionId);
 				}
 			}
 		} catch (OperationFailedException e1) {

@@ -18,6 +18,7 @@
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
 	<resultMap id="BaseResultMap" type="cn.roothub.entity.RootTopic">
         <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
+        <result column="ptab" jdbcType="VARCHAR" property="ptab"/>
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="tag" jdbcType="VARCHAR" property="tag"/>
@@ -37,7 +38,7 @@
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
     </resultMap>
     <sql id="Base_Column_List">
-        topic_id, tab, title, tag, create_date, update_date, last_reply_time, last_reply_author, 
+        topic_id, ptab,tab, title, tag, create_date, update_date, last_reply_time, last_reply_author, 
         view_count,author,top,good,show_status,reply_count,is_delete,tag_is_count,content,avatar
     </sql>
 	<!-- 查询所有话题 -->

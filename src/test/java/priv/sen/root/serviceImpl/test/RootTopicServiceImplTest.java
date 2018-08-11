@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.dto.RootTopicExecution;
@@ -28,7 +29,8 @@ public class RootTopicServiceImplTest extends BaseTest{
 	@Test
 	public void pageTest() throws Exception{
 		PageDataBody<RootTopic> page = rootTopicService.page(1, 20, "all","all");
-		System.out.println(page);
+		String formatDate = new BaseEntity().formatDate(page.getList().get(0).getCreateDate());
+		System.out.println(formatDate);
 	}
 	
 	/**

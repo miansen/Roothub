@@ -1,20 +1,20 @@
 package cn.roothub.enums;
 
 /**
- * 修改板块的数据字典
+ * 修改操作数据字典
  * @author sen
  * 2018年5月12日
  * 上午11:36:31
  * TODO
  */
-public enum UpdateRootSectionEnum {
+public enum UpdateEnum {
 
-	SUCCESS(1, "修改成功"), NO_USER(0,"修改失败"),REPEAT_USER(-1, "重复操作"),INNER_ERROR(-2, "系统异常");
+	SUCCESS(1, "更新成功"), NO_USER(0,"更新失败"),REPEAT_USER(-1, "重复操作"),INNER_ERROR(-2, "系统异常");
 	
 	private int state;// 信息代码
 	private String stateInfo;// 信息说明
 	
-	private UpdateRootSectionEnum(int state,String stateInfo) {	
+	private UpdateEnum(int state,String stateInfo) {	
 		this.state = state;
 		this.stateInfo = stateInfo;
 	}
@@ -35,8 +35,8 @@ public enum UpdateRootSectionEnum {
 		this.stateInfo = stateInfo;
 	}
 	
-	public static UpdateRootSectionEnum stateOf(int index) {
-		for(UpdateRootSectionEnum state : values()) {
+	public static UpdateEnum stateOf(int index) {
+		for(UpdateEnum state : values()) {
 			if(state.getState() == index) {
 				return state;
 			}

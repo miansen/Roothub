@@ -93,8 +93,8 @@
 				<div class="panel panel-default">
 					<%-- <div class="panel-heading">${user.userName}创建的话题</div> --%>
 					<div class="cell_tabs"><div class="fl"><img src="/resources/images/${user.avatar}" width="24" style="border-radius: 24px; margin-top: -2px;" border="0"></div>
-					<a href="javascript:void(0);" class="cell_tab_current">动态</a>
-					<a href="javascript:void(0);" class="cell_tab" onclick="topicList()">主题</a>
+					<!-- <a href="javascript:void(0);" onclick="activitiesList()" class="cell_tab_current">动态</a> -->
+					<a href="javascript:void(0);" onclick="topicList()" class="cell_tab_current" >主题</a>
 					<a href="javascript:void(0);" onclick="replyList()" class="cell_tab">评论</a>
 					<a href="javascript:void(0);" onclick="collectList()" class="cell_tab">收藏</a>
 					<a href="javascript:void(0);" onclick="followList()" class="cell_tab">关注</a>

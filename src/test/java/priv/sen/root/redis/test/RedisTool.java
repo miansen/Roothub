@@ -7,16 +7,18 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisTool {
 
 	//redis服务器地址
-	private static String address = "localhost";
+	private static String address = "120.79.94.184";
+	//private static String address = "127.0.0.1";
 	
 	//redis服务器端口号
 	private static int port = 6379;
 	
 	 //访问密码  
-    private static String auth = null;  
+    //private static String auth = "Ms@972383371";
+    private static String auth = null;
     //可用连接实例的最大数目，默认值为8；  
     //如果赋值为-1，则表示不限制；如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)。  
-    //private static final int MAX_ACTIVE = 1024;  
+    private static final int MAX_ACTIVE = 1024;  
       
     //控制一个pool最多有多少个状态为idle(空闲的)的jedis实例，默认值也是8。  
     private static int MAX_IDLE = 10;  
@@ -31,8 +33,8 @@ public class RedisTool {
         JedisPoolConfig config = new JedisPoolConfig();  
         config.setMaxIdle(MAX_IDLE);  
         config.setMaxWaitMillis(MAX_WAIT);  
-        config.setTestOnBorrow(TEST_ON_BORROW);  
-        //config.setMaxTotal(MAX_ACTIVE);  
+        config.setTestOnBorrow(TEST_ON_BORROW);
+        config.setMaxTotal(MAX_ACTIVE);  
         jedisPool = new JedisPool(config, address, port, TIMEOUT);  
     }  
       

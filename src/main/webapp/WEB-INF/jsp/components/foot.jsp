@@ -7,7 +7,7 @@
 	<div class="container">
 		<br>
 		<p style="color: #999;">
-			<a href="/" style="color: gray;">关于</a>&nbsp;|&nbsp;
+			<a href="/about" style="color: gray;">关于</a>&nbsp;|&nbsp;
 			<a href="/" style="color: gray;">FAQ</a>&nbsp;|&nbsp;
 			<a href="/" style="color: gray;">API</a><!-- &nbsp;|&nbsp;
 			<a href="https://github.com/miansen" target="_blank" style="color: #999;">源码地址</a>&nbsp;|&nbsp;

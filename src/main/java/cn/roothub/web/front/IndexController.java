@@ -261,4 +261,13 @@ public class IndexController extends BaseController{
     	request.setAttribute("search", search);
     	return "search";
     }
+    
+    /**
+     * 关于
+     * @return
+     */
+    @RequestMapping(value = "/about")
+    private String about() {
+    	return "about";
+    }
 }

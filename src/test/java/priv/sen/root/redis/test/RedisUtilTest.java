@@ -178,4 +178,10 @@ public class RedisUtilTest extends BaseTest{
 		stringRedisTemplate.delete("user");
 		logger.debug(string);
 	}
+	
+	@Test
+	public void test07() throws Exception{
+		String string = RedisUtil.getString("foo");
+		logger.debug(string);
+	}
 }

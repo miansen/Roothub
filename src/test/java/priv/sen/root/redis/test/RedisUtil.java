@@ -37,7 +37,7 @@ public class RedisUtil {
           
         Jedis jedis = RedisTool.getJedis();  
         String statusCode = jedis.set(key, value);  
-        //System.out.println("状态码:(" + statusCode + ")");  
+        System.out.println("状态码:(" + statusCode + ")");  
         RedisTool.returnResource(jedis);  
         return true;  
     }  

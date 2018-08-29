@@ -9,6 +9,8 @@
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
+  <!-- 引入layui.css -->
+  <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 </head>
 <body>
 <div class="wrapper">
@@ -29,9 +31,10 @@
           </c:forEach> 
       </div>
     </div>
-    <div class="panel-footer">
+    <!-- <div class="panel-footer">
    <ul class="pagination pagination-sm pagination2"></ul>
-	</div>
+	</div> -->
+	<div class="panel-footer" id="paginate"></div>
   </div>
 </div>
   </div>
@@ -42,11 +45,25 @@
 <!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
-<script src="/resources/js/pagination2.js"></script>
+<!-- <script src="/resources/js/pagination2.js"></script> -->
+<!-- 引入layui.js -->
+<script src="/resources/layui/layui.js"></script>
+<script src="/resources/layui/layui-paginate.js"></script>
 <script type="text/javascript">
 	$("#biaoqian").addClass("active");
-	var url = "/tags?";
-	$(".pagination2").pagination("${tag.pageNumber}","${tag.totalPage}",10);
+	//var url = "/tags?";
+	//$(".pagination2").pagination("${tag.pageNumber}","${tag.totalPage}",10);
+	 var count = ${tag.totalRow};//数据总量
+	 var limit = ${tag.pageSize};//每页显示的条数
+	 var url = "/tags?p=";//url
+	 //console.log(count);
+	 //console.log(url);
+	 function page(){
+     var page = location.search.match(/p=(\d+)/);  
+     return page ? page[1] : 1;  
+ 	 }
+ 	 var p = page();//当前页数
+	 paginate(count,limit,p,url);
 </script>
 </body>
 </html>

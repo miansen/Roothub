@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+	
+    <!-- scanner redis properties -->
+    <context:property-placeholder ignore-unresolvable="true" file-encoding="UTF-8" location="classpath:redis.properties" />
+	<!-- redis单节点配置 redis连接池配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="50" />
+        <property name="maxIdle" value="${redis.maxIdle}" />
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}" />
+        <property name="testOnBorrow" value="${redis.testOnBorrow}" />
+    </bean>
+    <!--redis连接工厂 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          destroy-method="destroy">
+        <property name="hostName" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="timeout" value="${redis.timeout}"/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+    </bean>
+    <!--redis操作模版,使用该对象可以操作redis  -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+    </bean>
+    <bean id="stringredisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+    </bean>
+    <!--自定义redis工具类,在需要缓存的地方注入此类  -->
+    <!-- <bean id="redisUtil" class="priv.sen.root.redis.test.RedisUtil">
+    	<property name="redisTemplate" ref="redisTemplate" />
+    </bean> -->
+</beans>

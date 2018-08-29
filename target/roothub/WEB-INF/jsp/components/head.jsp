@@ -8,7 +8,7 @@
 <!-- 引入 Bootstrap -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
-<script src="/resources/js/logout.js"></script>
+<!-- <script src="/resources/js/logout.js"></script> -->
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -53,12 +53,12 @@ var _hmt = _hmt || [];
 					
 						<li class="hidden-md hidden-lg"><a href="/topic/create">发布话题</a>
 						</li>
-						<li id="loginuser" style="display:none"><a href="/user/public"> public <span
+						<li id="loginuser" style="display:none"><a href="/user/public"><span
 								class="badge" id="badge"></span>
 						</a></li>
 						<li id="shezhili" style="display:none"><a href="/user/settings/profile">设置</a></li>
 						<li id="tuichuli" style="display:none"><a
-							href="javascript:if(confirm('确定要登出roothub吗？'))location.href='/logout'">退出</a></li>
+							href="javascript:if(confirm('确定要登出Roothub吗？'))location.href='/logout'">退出</a></li>
 					
 				</ul>
 			</div>

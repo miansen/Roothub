@@ -9,7 +9,9 @@
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
-  <script src="/resources/js/logout.js"></script>
+  <!-- <script src="/resources/js/logout.js"></script> -->
+  <!-- 引入layui.css -->
+  <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 </head>
 <body>
  <div class="wrapper" style="width: 100%;background-color: #e5e5e5;">
@@ -17,7 +19,14 @@
     <div class="row">
       <div class="col-md-9">
         <div class="panel panel-default">
-          <div class="panel-heading">
+        	<div class="ptab panel-heading" id="ptab">
+        	<ul class="nav nav-pills" id="ptab">
+        	<c:forEach var="item" items="${ptabList}" varStatus="status">
+        		<li class=""><a href="/?ptab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
+        	</c:forEach>
+        	</ul>
+    		</div>
+          <div class="section">
             <ul class="nav nav-pills" id="section">
               <c:forEach var="section" items="${sectionAll}" varStatus="status">
               <li class=""><a href="/?tab=${section.sectionTab}">${section.sectionName}</a></li>
@@ -63,9 +72,10 @@
             </div>
           </c:forEach>
       </div>
-      <div class="panel-footer">
+      <!-- <div class="panel-footer">
           <ul class="pagination pagination-sm pagination2"></ul>
-          </div>
+          </div> -->
+          <div class="panel-footer" id="paginate"></div>
     </div>
   </div>
   <div class="col-md-3 hidden-sm hidden-xs">
@@ -92,15 +102,15 @@
                   </div>
                 </div>
                 <div style="margin-top: 15px;">
-                  <a href="/topic/create" style="font-size: 14px;"><span class="glyphicon glyphicon-pencil"></span>发布话题</a>
+                  <a href="/topic/create" style="font-size: 14px;"><button class="btn btn-success">发布话题</button></a>
                 </div>
               </div>
               <div class="sep10" style="height: 10px;"></div>
               <table cellpadding="0" cellspacing="0" border="0" width="100%" class="table_fade" style="font-size: 14px;">
     <tbody><tr>
-        <td width="33%" align="center"><a href="/user/${user.userName}/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
+        <td width="33%" align="center"><a href="/user/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
         <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="/collect/topics" class="dark" style="display: block;"><span class="bigger">${countCollect}</span><div class="sep3"></div><span class="fade">我的收藏</span></a></td>
-        <td width="33%" align="center"><a href="/" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
+        <td width="33%" align="center"><a href="/follow/topics" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
     </tr>
 </tbody></table>
        </div>
@@ -186,12 +196,28 @@
 <!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
-<script src="/resources/js/pagination2.js"></script>
+<!-- <script src="/resources/js/pagination2.js"></script> -->
 <script src="/resources/js/index.js"></script>
+<!-- 引入layui.js -->
+<script src="/resources/layui/layui.js"></script>
+<script src="/resources/layui/layui-paginate.js"></script>
 <script type="text/javascript">
-var tab = "${tab}";
-var url = "/?tab="+tab+"&"
-  $(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+var tab = "${tab}";//板块
+var ptab = "${ptab}";//父板块
+//var url = "/?tab="+tab+"&ptab="+ptab+"&"
+//$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+ var count = ${page.totalRow};//数据总量
+ var limit = ${page.pageSize};//每页显示的条数
+ var url = "?tab="+tab+"&ptab="+ptab+"&p=";//url
+ function page(){
+     var page = location.search.match(/p=(\d+)/);  
+     return page ? page[1] : 1;  
+ }
+ var p = page();//当前页数
+ //console.log("p:"+p);
+ //console.log(count);
+ //console.log(url);
+ paginate(count,limit,p,url);
 </script>
 </body>
 </html>

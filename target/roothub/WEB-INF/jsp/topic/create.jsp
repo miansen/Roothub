@@ -34,28 +34,29 @@
                   <div id="editor" style="margin-bottom: 10px;"></div>
                 </div>
                 <div class="form-group">
+						<label for="ptab">板块</label>
+						<select id="ptab" class="form-control" name="ptab">
+							<%-- <c:forEach var="item" items="${ptabList}" varStatus="status">
+							<option value="${item.tabName}">${item.tabDesc}</option>
+							</c:forEach> --%>
+							<option value="pl">编程语言</option>
+							<option value="db">数据库</option>
+							<option value="fe">前端</option>
+							<option value="play">有趣</option>
+							<option value="creative">创意</option>
+							<option value="host">主机</option>
+							<option value="dn">域名</option>
+							<option value="blog">博客</option>
+							<option value="tea">下午茶馆</option>
+							<option value="news">资讯</option>
+							<option value="qna">提问</option>
+						</select>
+					</div>
+                <div class="form-group">
                   <div class="form-group">
                   <label for="title">标签</label>
                   <input type="text" class="form-control" id="tag" name="title" placeholder="请为你的主题选择一个标签。恰当的归类会让你发布的信息更加有用">
                 </div>
-
-                  <style>
-                    .tag-logo {
-                      width: 16px;
-                      height: 16px;
-                      border-radius: 2px;
-                    }
-                    .tag-intro {
-                      font-size: 10px;
-                      color: gray;
-                      word-wrap: break-word;
-                      word-break: break-all;
-                      text-overflow: ellipsis;
-                      overflow:hidden;
-                      width: 300px;
-                    }
-                  </style>
-
                 </div>
                 <button type="button" id="btn" class="btn btn-default">
                   <!-- <span class="glyphicon glyphicon-send"></span> --> 发布
@@ -74,7 +75,6 @@
               <p>• 保持对陌生人的友善。用知识去帮助别人。</p>
               <p>• 如果是转载的文章，请务必只填上原文的URL，内容就不用复制过来了。</p>
               <p>• 请为你的主题选择一个或多个标签。恰当的归类会让你发布的信息更加有用。</p>
-              <p>• 分享视频请直接复制浏览器容器里的链接粘贴即可（目前支持youtube,优酷）。</p>
             </div>
           </div>
         </div>
@@ -94,13 +94,20 @@
       editor.customConfig.uploadFileName = 'file';
       editor.customConfig.uploadImgServer = '/common/wangEditorUpload';
       editor.customConfig.menus = [
-    'head',  // 标题
-    'bold',  // 粗体
-    'italic',  // 斜体
-    'list',  // 列表
-    'emoticon',  // 表情
-    'image',  // 插入图片
-    'table',  // 表格
+    	  'head',  // 标题
+    	  'bold',  // 粗体
+    	  'italic',  // 斜体
+    	  'underline',  // 下划线
+    	  'strikeThrough',  // 删除线
+    	  'link',  // 插入链接
+    	  'list',  // 列表
+    	  'quote',  // 引用
+    	  'emoticon',  // 表情
+    	  'image',  // 插入图片
+    	  'table',  // 表格
+    	  'code',  // 插入代码
+    	  'undo',  // 撤销
+    	  'redo'  // 重复
     ];
     editor.create();
 
@@ -120,15 +127,18 @@
       var title = $("#title").val();
       var contentHtml = editor.txt.html();
       var contentText = editor.txt.text();
+      var ptab = $("#ptab option:selected").val();
       var tag = $("#tag").val();
       if(!title) {
-        alert('请输入标题哦');
+        alert('请输入标题');
         return false;
-    } else if(!tag) {
-      alert('请输入标签哦');
+    }else if(!ptab){
+    	alert('请选择一个板块');
+    }else if(!tag) {
+      alert('请输入标签');
       return false;
     }else if(!contentText){
-    	alert('请输入正文哦');
+    	alert('请输入正文');
     }else {
       $.ajax({
         url: '/topic/save',
@@ -139,6 +149,7 @@
         data: {
           title: title,
           content: contentText ? contentHtml : '',
+          ptab:ptab,
           tag: tag
         },
         success: function(data){

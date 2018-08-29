@@ -8,6 +8,8 @@
 <!-- 引入 Bootstrap -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
+<!-- 引入layui.css -->
+<link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 <link rel="shortcut icon" href="/resources/images/favicon.ico">
 </head>
 <body>
@@ -40,30 +42,30 @@
                 
                 <div class="data-info d-flex item-tiling">
                     <dl class="text-center" title="${countTopic}">
-                        <dt><a href="/user/${user.userName}/topics">主题</a></dt>
-                        <dd><a href="/user/${user.userName}/topics"><span class="count">${countTopic}</span></a></dd>
+                        <dt><a href="javascript:void(0);" onclick="topicList()">主题</a></dt>
+                        <dd><span class="count">${countTopic}</span></dd>
                     </dl>
                     <dl class="text-center" title="${countReply}">
-                        <dt><a href="/user/${user.userName}/replys">评论</a></dt>
-                        <dd><a href="/user/${user.userName}/replys"><span class="count">${countReply}</span></a></dd>
+                        <dt><a href="javascript:void(0);" onclick="replyList()">评论</a></dt>
+                        <dd><span class="count">${countReply}</span></dd>
                     </dl>
-                    <dl class="text-center" title="4">
-                        <dt>粉丝</dt>
-                        <dd><span class="count" id="fan">4</span></dd>
+                    <dl class="text-center" title="${user.userName}的关注" id="follow_title">
+                        <dt><a href="javascript:void(0);" onclick="followList()">关注</a></dt>
+                        <dd><span class="follow_count_for"></span></dd>
                     </dl>
-                    <dl class="text-center" title="" id="follow_dl">
-                        <dt>关注</dt>
-                        <dd><span class="follow_count_to"></span></dd>
+                    <dl class="text-center" title="4" id="fan_title">
+                        <dt><a href="javascript:void(0);" onclick="fansList()">粉丝</a></dt>
+                        <dd><span id="fan" class="follow_count_to"></span></dd>
                     </dl>
                 </div>
 
-                <div class="grade-box clearfix" style="display: flex !important;">
+                <div class="grade-box clearfix" style="display: flex !important;padding-left: 24px;">
                     <dl>
                         <dt>声望：</dt>
                         <dd>10</dd>
                     </dl>
                     <dl>
-                        <dt title="${user.userName}的收藏"><a href="/collect/topics">收藏：</a></dt>
+                        <dt title="${user.userName}的收藏"><a href="javascript:void(0);" onclick="collectList()">收藏：</a></dt>
                         <dd title="${countCollect}">${countCollect}</dd>
                     </dl>
                     
@@ -71,7 +73,7 @@
                 </div>
                 
                 
-                <div class="grade-box clearfix" style="display: flex !important;padding-top: 0px;">
+                <div class="grade-box clearfix" style="display: flex !important;padding-top: 0px;padding-left: 24px;">
                     
                     <dl>
                         <dt>访问：</dt>
@@ -89,8 +91,17 @@
         <!-- 小屏幕显示 -->
 			<div class="col-md-9">
 				<div class="panel panel-default">
-					<div class="panel-heading">${user.userName}创建的话题</div>
-					<c:forEach var="item" items="${topicPage.list}">
+					<%-- <div class="panel-heading">${user.userName}创建的话题</div> --%>
+					<div class="cell_tabs"><div class="fl"><img src="/resources/images/${user.avatar}" width="24" style="border-radius: 24px; margin-top: -2px;" border="0"></div>
+					<!-- <a href="javascript:void(0);" onclick="activitiesList()" class="cell_tab_current">动态</a> -->
+					<a href="javascript:void(0);" onclick="topicList()" class="cell_tab_current" >主题</a>
+					<a href="javascript:void(0);" onclick="replyList()" class="cell_tab">评论</a>
+					<a href="javascript:void(0);" onclick="collectList()" class="cell_tab">收藏</a>
+					<a href="javascript:void(0);" onclick="followList()" class="cell_tab">关注</a>
+					<a href="javascript:void(0);" onclick="fansList()" class="cell_tab">粉丝</a>
+					<a href="javascript:void(0);" onclick="topicQnaList()" class="cell_tab">提问</a></div>
+					<div class="itemList"></div>
+					<%-- <c:forEach var="item" items="${topicPage.list}">
 						<div class="panel-body paginate-bot"
 							style="border-bottom: 1px solid #e2e2e2;">
 							<div class="media">
@@ -99,7 +110,7 @@
 										<a href="/topic/${item.topicId}"> ${item.title} </a>
 									</div>
 									<p>
-										<span><a href="/user/${item.author}">${item.author}</a></span>
+										<span><a href="/user/${item.author}" class="author_name">${item.author}</a></span>
 										<span class="hidden-sm hidden-xs">•</span> <span
 											class="hidden-sm hidden-xs"><a
 											href="/topic/${item.topicId}">${item.replyCount}个评论</a></span> <span
@@ -111,13 +122,13 @@
 								</div>
 							</div>
 						</div>
-					</c:forEach>
-					<div class="panel-footer">
+					</c:forEach> --%>
+					<%-- <div class="panel-footer">
 						<a href="/user/${user.userName}/topics">${user.userName}的更多话题&gt;&gt;</a>
-					</div>
+					</div> --%>
 				</div>
 
-				<div class="panel panel-default">
+			<%-- 	<div class="panel panel-default">
 					<div class="panel-heading">${user.userName}评论的话题</div>
 					<table class="table table-striped">
 						<tbody>
@@ -137,7 +148,7 @@
 					<div class="panel-footer">
 						<a href="/user/${user.userName}/replys">${user.userName}的更多评论&gt;&gt;</a>
 					</div>
-				</div>
+				</div> --%>
 				<button id="toggleBigImageBtn" data-toggle="modal" class="hidden"
 					data-target="#showBigImageModal"></button>
 				<div class="modal fade" tabindex="-1" role="dialog"
@@ -164,53 +175,10 @@
 								<h3 style="margin-top: 0" title="${user.userId}" id="user_id" class= "user_id">${user.userName}</h3>
 								
 								<i>${user.signature}</i>
-					<%-- 			<div class="cell" style="border-bottom: 0px solid #e2e2e2;">
-									<table cellpadding="5" cellspacing="0" border="0" width="100%">
-										<tbody style="font-size: 14px;">
-											<c:if test="${user.userName != user2.userName && user2 != null}">
-												<tr>
-													<td width="80" align="left"><span class="gray"><input
-															type="button" value="加入特别关注"
-															onclick="if (confirm('确认要开始关注 ${user.userName}？')) { location.href = '/follow/${user.userId}'; }"
-															class="btn btn-success"></span></td>
-												</tr>
-											</c:if>
-											<tr>
-												<td width="80" align="left"><span class="gray">入驻时间：<strong
-														style="color: #333"><fmt:formatDate type="date"
-																value="${user.createDate}" /></strong></span></td>
-											</tr>
-											<tr>
-												<td width="80" align="left"><span class="gray">收藏话题：<a
-														href="/user/public/collects">0</a></span></td>
-											</tr>
-											<tr>
-												<td width="80" align="left"><span class="gray">声望：<strong
-														style="color: #333">12</strong></span></td>
-											</tr>
-											<tr>
-												<td width="80" align="left"><span class="gray">主题：<strong
-														style="color: #333">12</strong></span></td>
-											</tr>
-											<tr>
-												<td width="80" align="left" style="font-size: 14px;"><span
-													class="gray">评论：<strong style="color: #333">12</strong></span></td>
-											</tr>
-											<tr>
-												<td width="80" align="left"><span class="gray">粉丝：<strong
-														style="color: #333">12</strong></span></td>
-											</tr>
-											<tr>
-												<td width="80" align="left"><span class="gray">关注：<strong
-														style="color: #333">12</strong></span></td>
-											</tr>
-										</tbody>
-									</table>
-								</div> --%>
 							</div>
 							<c:if test="${user.userName != user2.userName && user2 != null}">
 							<div class="opt-box d-flex justify-content-center flex-column media-body">
-            <span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
+            						<span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
                                 <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()" id="follow"></a>
                             </span>
                     </div>
@@ -220,30 +188,30 @@
 					
 					<div class="data-info d-flex item-tiling">
     <dl class="text-center" title="${countTopic}">
-        <dt><a href="/user/${user.userName}/topics">主题</a></dt>
-        <dd><a href="/user/${user.userName}/topics"><span class="count">${countTopic}</span></a></dd>
+        <dt><a href="javascript:void(0);" onclick="topicList()">主题</a></dt>
+        <dd><span class="count">${countTopic}</span></dd>
     </dl>
     <dl class="text-center" title="${countReply}">
-        <dt><a href="/user/${user.userName}/replys">评论</a></dt>
-        <dd><a href="/user/${user.userName}/replys"><span class="count">${countReply}</span></a></dd>
+        <dt><a href="javascript:void(0);" onclick="replyList()">评论</a></dt>
+        <dd><span class="count">${countReply}</span></dd>
     </dl>
-    <dl class="text-center" title="4">
-        <dt>粉丝</dt>
-        <dd><span class="count" id="fan">4</span></dd>
+    <dl class="text-center" title="${user.userName}的关注" id="follow_title">
+        <dt><a href="javascript:void(0);" onclick="followList()">关注</a></dt>
+        <dd><span class="follow_count_for"></span></dd>
     </dl>
-    <dl class="text-center" title="关注${user.userName}的数量" id="follow_dl">
-        <dt>关注</dt>
-        <dd><span class="follow_count_to"></span></dd>
+    <dl class="text-center" title="${user.userName}的粉丝" id="fan_title">
+        <dt><a href="javascript:void(0);" onclick="fansList()">粉丝</a></dt>
+        <dd><span id="fan" class="follow_count_to"></span></dd>
     </dl>
 </div>
 
-<div class="grade-box clearfix" style="display: flex !important;">
+<div class="grade-box clearfix" style="display: flex !important;padding-left: 24px;">
         <dl>
             <dt>声望：</dt>
             <dd>10</dd>
         </dl>
         <dl>
-            <dt title="${user.userName}的收藏"><a href="/collect/topics">收藏：</a></dt>
+            <dt title="${user.userName}的收藏"><a href="javascript:void(0);" onclick="collectList()">收藏：</a></dt>
             <dd title="${countCollect}">${countCollect}</dd>
         </dl>
         
@@ -251,7 +219,7 @@
     </div>
     
     
-    <div class="grade-box clearfix" style="display: flex !important;padding-top: 0px;">
+    <div class="grade-box clearfix" style="display: flex !important;padding-top: 0px;padding-left: 24px;">
         
         <dl>
             <dt>访问：</dt>
@@ -281,6 +249,11 @@
 	<script src="/resources/js/bootstrap.min.js"></script>
 	<!-- 缓慢回到顶部 -->
 	<script src="/resources/js/goTop.js"></script>
+	<!-- 分页 -->
+	<!-- <script src="/resources/js/pagination2.js"></script> -->
+	<!-- 引入layui.js -->
+	<script src="/resources/layui/layui.js"></script>
+	<script src="/resources/layui/layui-paginate.js"></script>
 	<script src="/resources/js/user_detail.js"></script>
 </body>
 </html>

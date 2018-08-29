@@ -2,6 +2,7 @@ package priv.sen.root.redis.test;
 
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -182,6 +183,26 @@ public class RedisUtilTest extends BaseTest{
 	@Test
 	public void test07() throws Exception{
 		String string = RedisUtil.getString("foo");
+		logger.debug(string);
+	}
+	
+	//78d770aa-7c8b-4bab-bdb0-5b72beb8a8bc
+	//3f60e78a-7bcb-433a-a015-bb97e70be0df
+	//bfa7317d-ff83-4ffa-b999-56805e757182
+	//d2aa2b73-a11f-401f-8e72-1eb2604a2997
+	//d5493882-93e7-470c-824b-e6f864bb1cca
+	@Test
+	public void test08() throws Exception{
+		String string = UUID.randomUUID().toString();
+		logger.debug(string);
+		UUID randomUUID = UUID.randomUUID();
+		System.out.println(randomUUID);
+	}
+	
+	@Test
+	public void test09() throws Exception{
+		ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+		String string = opsForValue.get("0b194aea-f94d-451e-8639-d9ff4e53176c");
 		logger.debug(string);
 	}
 }

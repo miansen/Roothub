@@ -2,14 +2,12 @@ package priv.sen.root.dao.test;
 
 import java.util.Date;
 import java.util.List;
-
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Value;
 import com.google.gson.Gson;
-
 import cn.roothub.dao.VisitDao;
 import cn.roothub.entity.RootUser;
 import cn.roothub.entity.Visit;
@@ -20,6 +18,8 @@ public class VisitDaoTest extends BaseTest {
 	
 	@Autowired
 	private VisitDao visitDao;
+	@Value("${cookie.domain}")
+	private String domain;
 	
 	/**
 	 * 添加访问记录
@@ -82,4 +82,10 @@ public class VisitDaoTest extends BaseTest {
 		int update = visitDao.update(visit);
 		System.out.println(update);
 	}
+	
+	@Test
+	public void test01() throws Exception{
+		logger.debug(domain);
+	}
+	
 }

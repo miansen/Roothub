@@ -8,7 +8,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import cn.roothub.dao.RootUserDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.RootUserExecution;
@@ -19,7 +18,6 @@ import cn.roothub.exception.OperationFailedException;
 import cn.roothub.exception.OperationRepeaException;
 import cn.roothub.exception.OperationSystemException;
 import cn.roothub.service.RootUserService;
-import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.JsonUtil;
 
 @Service
@@ -107,7 +105,7 @@ public class RootUserServiceImpl implements RootUserService{
 				}else {
 					//更新redis
 					ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-					opsForValue.set("user", JsonUtil.objectToJson(rootUser));
+					opsForValue.set(rootUser.getThirdId(), JsonUtil.objectToJson(rootUser));
 					return new RootUserExecution(user.getUserName(),UpdateRootUserEnum.SUCCESS,rootUser);
 				}
 			}
@@ -159,6 +157,8 @@ public class RootUserServiceImpl implements RootUserService{
 				if(insertUser <= 0) {
 					throw new OperationFailedException("注册失败");
 				}else {
+					ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+					opsForValue.set(rootUser.getThirdId(), JsonUtil.objectToJson(rootUser));
 					return new RootUserExecution(user.getUserName(),InsertRootUserEnum.SUCCESS,rootUser);
 				}
 			}

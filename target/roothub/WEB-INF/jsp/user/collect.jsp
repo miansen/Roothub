@@ -8,6 +8,8 @@
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
+  <!-- 引入layui.css -->
+  <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
 </head>
 <body>
@@ -59,51 +61,13 @@
             </div>
           </c:forEach>
       </div>
-          <div class="panel-footer">
+          <!-- <div class="panel-footer">
             <ul class="pagination pagination-sm pagination2"></ul>
-          </div>
+          </div> -->
+          <div class="panel-footer" id="paginate"></div>
         </div>
-      </div>
-      
-        <div class="col-md-3 hidden-sm hidden-xs">
-  	<div class="panel panel-default" id="session">
-       <div class="panel-body">
-              <div class="media">
-                <div class="media-left">
-                  <a href="/user/${user.userName}">
-                    <img src="/resources/images/${user.avatar}" title="" class="avatar img-circle">
-                  </a>
-                </div>
-                <div class="media-body">
-                  <div class="media-heading">
-                    <strong><a href="/user/${user.userName}">${user.userName}</a></strong>
-                    <div style="color: #7A7A7A; font-size: 12px; margin-top:5px;">
-                      <i>${user.signature}</i>
-                    </div>
-                  </div>
-                </div>
-                <div style="margin-top: 15px;">
-                  <a href="/topic/create"><span class="glyphicon glyphicon-pencil"></span>发布话题</a>
-                </div>
-              </div>
-              <div class="sep10" style="height: 10px;"></div>
-		<table cellpadding="0" cellspacing="0" border="0" width="100%" class="table_fade" style="font-size: 14px;">
-    		<tbody><tr>
-        		<td width="33%" align="center"><a href="/user/${user.userName}/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
-        		<td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="/collect/topics" class="dark" style="display: block;"><span class="bigger">${countCollect}</span><div class="sep3"></div><span class="fade">我的收藏</span></a></td>
-        		<td width="33%" align="center"><a href="/" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
-    		</tr>
-		</tbody></table>
-            </div>
-            <div class="panel-footer" style="background-color: white">
-              <div class="row">
-                <span class="col-md-6"><a href="/notification/list"><span id="n_count">${notReadNotice}</span> 条未读消息</a></span>
-                <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span>
-              </div>
-            </div>
-    </div>
-  </div>
-      
+      </div> 
+        <jsp:include page="../components/right2.jsp"></jsp:include>
     </div>
   </div>
 </div>
@@ -113,10 +77,25 @@
 <!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
 <!-- 分页 -->
-<script src="/resources/js/pagination2.js"></script>
+<!-- <script src="/resources/js/pagination2.js"></script> -->
+<!-- 引入layui.js -->
+<script src="/resources/layui/layui.js"></script>
+<script src="/resources/layui/layui-paginate.js"></script>
 <script type="text/javascript">
-	var url = "/collect/topics?";
-	$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+	//var url = "/collect/topics?";
+	//$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+	 var count = ${page.totalRow};//数据总量
+	 var limit = ${page.pageSize};//每页显示的条数
+	 var url = "/collect/topics?p=";//url
+	 function page(){
+	     var page = location.search.match(/p=(\d+)/);  
+	     return page ? page[1] : 1;  
+	 }
+	 var p = page();//当前页数
+	 //console.log("p:"+p);
+	 //console.log(count);
+	 //console.log(url);
+	 paginate(count,limit,p,url);
 </script>
 </body>
 </html>

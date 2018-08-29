@@ -2,7 +2,7 @@ package cn.roothub.web.front;
 
 import java.util.Date;
 import java.util.List;
-import javax.servlet.http.Cookie;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -11,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import cn.roothub.config.SiteConfig;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.dto.RootUserExecution;
@@ -36,9 +35,6 @@ import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.JsonUtil;
 import cn.roothub.util.PtabUtil;
-import cn.roothub.util.StringUtil;
-import cn.roothub.util.WebUtil;
-import priv.sen.root.redis.test.RedisUtil;
 
 @Controller // 标注这是一个控制类，类名不能和注解名一样
 //@RequestMapping("/root") // 访问父路径
@@ -62,6 +58,8 @@ public class IndexController extends BaseController{
 	private StringRedisTemplate stringRedisTemplate;
 	@Autowired
 	private TabService tabService;
+	@Autowired
+	private SiteConfig siteConfig;
 	
 	/**
 	 * 首页
@@ -92,12 +90,13 @@ public class IndexController extends BaseController{
     	int notReadNotice = 0;//未读通知的数量
     	int countCollect = 0;//用户收藏话题的数量
     	int countTopicByUserName = 0;//用户发布的主题的数量
-    	if(cookie != null) {
-    		user = rootUserService.findByName(Base64Util.decode(cookie));
-    		notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());
-    		countCollect = collectDaoService.count(user.getUserId());
-    		countTopicByUserName = rootTopicService.countByUserName(user.getUserName());
-    		request.setAttribute("user", user);
+    	RootUser user2 = getUser(request);
+    	if(user2 != null) {
+    		//user = rootUserService.findByName(Base64Util.decode(cookie));
+    		notReadNotice = rootNoticeService.countNotReadNotice(user2.getUserName());
+    		countCollect = collectDaoService.count(user2.getUserId());
+    		countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());
+    		request.setAttribute("user", user2);
     	}
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
@@ -151,6 +150,7 @@ public class IndexController extends BaseController{
 		rootUser.setPassword(password);
 		rootUser.setScore(0);
 		rootUser.setEmail(email);
+		rootUser.setThirdId(UUID.randomUUID().toString());
 		rootUser.setReceiveMsg(false);
 		rootUser.setCreateDate(new Date());
 		rootUser.setUpdateDate(new Date());
@@ -192,12 +192,12 @@ public class IndexController extends BaseController{
     		//将用户的登录信息存进redis
     		//RedisUtil.setString("user", user.toString());
     		//1.先将对象转成json
-    		String str = JsonUtil.objectToJson(user);
-    		ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+    		//String str = JsonUtil.objectToJson(user);
+    		//ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
     		//2.将json存进redis
-    		opsForValue.set("user", str);
+    		//opsForValue.set("user", str);
     		//设置cookie
-    		CookieAndSessionUtil.setCookie("user", Base64Util.encode(username), 30 * 24 * 60 * 60, "/", true, response);
+    		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(), Base64Util.encode(user.getThirdId()), siteConfig.getCookieConfig().getMaxAge(), siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
     		//设置session
     		CookieAndSessionUtil.setSession(request, "user", user);
     		return new Result<RootUser>(true, user);
@@ -212,9 +212,9 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
     private String logout(HttpServletRequest request,HttpServletResponse response) {
-    	stringRedisTemplate.delete("user");
+    	//stringRedisTemplate.delete("user");
     	CookieAndSessionUtil.removeSession(request, "user");
-    	CookieAndSessionUtil.removeCookie(response, "user", "/", true);
+    	CookieAndSessionUtil.removeCookie(response, siteConfig.getCookieConfig().getName(), siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly());
     	return "redirect:/";
     }
     
@@ -269,5 +269,41 @@ public class IndexController extends BaseController{
     @RequestMapping(value = "/about")
     private String about() {
     	return "about";
+    }
+    
+    /**
+     * faq
+     * @return
+     */
+    @RequestMapping(value = "/faq")
+    private String faq() {
+    	return "faq";
+    }
+    
+    /**
+     * api
+     * @return
+     */
+    @RequestMapping(value = "/api")
+    private String api() {
+    	return "api";
+    }
+    
+    /**
+     * mission
+     * @return
+     */
+    @RequestMapping(value = "/mission")
+    private String mission() {
+    	return "mission";
+    }
+    
+    /**
+     * advertise
+     * @return
+     */
+    @RequestMapping(value = "/advertise")
+    private String advertise() {
+    	return "advertise";
     }
 }

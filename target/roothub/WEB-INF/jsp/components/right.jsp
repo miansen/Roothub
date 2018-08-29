@@ -3,11 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-<title></title>
+<!-- <title></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- 引入 Bootstrap -->
+引入 Bootstrap
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-<link href="/resources/css/app.css" rel="stylesheet" type="text/css">
+<link href="/resources/css/app.css" rel="stylesheet" type="text/css"> -->
 </head>
 <body>
 	        <!-- 大屏幕显示 -->

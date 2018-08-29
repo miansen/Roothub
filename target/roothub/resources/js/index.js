@@ -70,6 +70,43 @@
     section();
    /* $(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);*/
     
+    function changeSectionHref(){
+    	$("#section li:eq(0) a").attr("href","/?tab=all&ptab="+ptab);
+    	$("#section li:eq(1) a").attr("href","/?tab=good&ptab="+ptab);
+    	$("#section li:eq(2) a").attr("href","/?tab=newest&ptab="+ptab);
+    	$("#section li:eq(3) a").attr("href","/?tab=noReply&ptab="+ptab);
+    }
+    changeSectionHref();
+    function changePtabClass(){
+        if(ptab == "hot"){
+        	$("#ptab li:eq(1) a").addClass("tab_current");
+        }else if(ptab == "pl"){
+        	$("#ptab li:eq(2) a").addClass("tab_current");
+        }else if(ptab == "db"){
+        	$("#ptab li:eq(3) a").addClass("tab_current");
+        }else if(ptab == "fe"){
+        	$("#ptab li:eq(4) a").addClass("tab_current");
+        }else if(ptab == "play"){
+        	$("#ptab li:eq(5) a").addClass("tab_current");
+        }else if(ptab == "creative"){
+        	$("#ptab li:eq(6) a").addClass("tab_current");
+        }else if(ptab == "host"){
+        	$("#ptab li:eq(7) a").addClass("tab_current");
+        }else if(ptab == "dn"){
+        	$("#ptab li:eq(8) a").addClass("tab_current");
+        }else if(ptab == "blog"){
+        	$("#ptab li:eq(9) a").addClass("tab_current");
+        }else if(ptab == "tea"){
+        	$("#ptab li:eq(10) a").addClass("tab_current");
+        }else if(ptab == "news"){
+        	$("#ptab li:eq(11) a").addClass("tab_current");
+        }else if(ptab == "qna"){
+        	$("#ptab li:eq(12) a").addClass("tab_current");
+        }else{
+        	$("#ptab li:eq(0) a").addClass("tab_current");
+        }
+      };  
+      changePtabClass();
     function showScroll(){
 		$(window).scroll( function(){ 
 			var scrollValue=$(window).scrollTop();
@@ -90,6 +127,4 @@
 		//直接回到顶部
 		//window.scroll(0,0);
 	});
-
-    
   });

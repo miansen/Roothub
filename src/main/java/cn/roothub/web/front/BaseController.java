@@ -44,13 +44,13 @@ public class BaseController {
 
 	public RootUser getUser(HttpServletRequest request) {
 
-		String thirdId = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
+		String token = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
 
 		try {
-			if (thirdId != null) {
-				thirdId = Base64Util.decode(thirdId);
+			if (token != null) {
+				token = Base64Util.decode(token);
 				ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-				String redisUser = opsForValue.get(thirdId);
+				String redisUser = opsForValue.get(token);
 				if (redisUser != null)
 					return JsonUtil.jsonToObject(redisUser, RootUser.class);
 			} else {

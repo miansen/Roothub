@@ -27,7 +27,7 @@
 
   <div class="col-md-9">
     <div class="panel panel-default">
-      <div class="panel-heading">修改头像</div>
+      <div class="panel-heading"><a href="/">主页</a> / 修改头像</div>
       <div class="panel-body">
         <p>
           <button class="btn btn-primary" id="choiceAvatarBtn">选择头像</button>

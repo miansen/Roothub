@@ -157,7 +157,7 @@
           if(data.success != null && data.success == true) {
             window.location.href = "/topic/" + data.data.topic.topicId;
           } else {
-            alert(data.data.error);
+            alert(data.error);
           }
         }
       })

@@ -205,4 +205,12 @@ public class RedisUtilTest extends BaseTest{
 		String string = opsForValue.get("0b194aea-f94d-451e-8639-d9ff4e53176c");
 		logger.debug(string);
 	}
+	
+	@Test
+	public void test10() throws Exception{
+		ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+		//opsForValue.set("poo", "bool");
+		String string = opsForValue.get("7e95d539-f027-490f-b4ec-222af37dfc23");
+		logger.debug(string);
+	}
 }

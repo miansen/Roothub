@@ -25,7 +25,7 @@ import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 
 @Controller
-public class ReplyController {
+public class ReplyController extends BaseController{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -43,8 +43,9 @@ public class ReplyController {
 	private Result<RootReplyExecution> save(HttpServletRequest request, 
 			@RequestParam("topicId") Integer topicId,
 			@RequestParam("content") String content){
-		String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		RootUser user = rootUserService.findByName(Base64Util.decode(cookie));//当前用户
+		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
+		//RootUser user = rootUserService.findByName(Base64Util.decode(cookie));//当前用户
+			RootUser user = getUser(request);
 			RootReply reply = new RootReply();
 			reply.setTopicId(topicId);//话题id
 			reply.setReplyContent(content);//回复内容

@@ -12,6 +12,7 @@
 			<a href="/api" style="color: gray;">API</a>&nbsp;|&nbsp;
 			<a href="/mission" style="color: gray;">愿景</a>&nbsp;|&nbsp;
 			<a href="/advertise" style="color: gray;">感谢</a><!-- &nbsp;|&nbsp;
+			<a href="/excel" style="color: gray;">报表</a> --><!-- &nbsp;|&nbsp;
 			<a href="https://github.com/miansen" target="_blank" style="color: #999;">源码地址</a>&nbsp;|&nbsp;
 			<a href="https://github.com/miansen"
 				target="_blank" style="color: #999;">搭建教程</a> --><!-- &nbsp;|&nbsp; <a

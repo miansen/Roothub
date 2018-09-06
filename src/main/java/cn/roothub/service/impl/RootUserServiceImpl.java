@@ -1,5 +1,6 @@
 package cn.roothub.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import cn.roothub.exception.OperationRepeaException;
 import cn.roothub.exception.OperationSystemException;
 import cn.roothub.service.RootUserService;
 import cn.roothub.util.JsonUtil;
+import cn.roothub.util.StringUtil;
 
 @Service
 public class RootUserServiceImpl implements RootUserService{
@@ -105,7 +107,7 @@ public class RootUserServiceImpl implements RootUserService{
 				}else {
 					//更新redis
 					ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-					opsForValue.set(rootUser.getThirdId(), JsonUtil.objectToJson(rootUser));
+					opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
 					return new RootUserExecution(user.getUserName(),UpdateRootUserEnum.SUCCESS,rootUser);
 				}
 			}
@@ -158,7 +160,7 @@ public class RootUserServiceImpl implements RootUserService{
 					throw new OperationFailedException("注册失败");
 				}else {
 					ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-					opsForValue.set(rootUser.getThirdId(), JsonUtil.objectToJson(rootUser));
+					opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
 					return new RootUserExecution(user.getUserName(),InsertRootUserEnum.SUCCESS,rootUser);
 				}
 			}
@@ -172,6 +174,25 @@ public class RootUserServiceImpl implements RootUserService{
 		}
 	}
 
+	public RootUserExecution createUser(String username,String password,String email) {
+		RootUser user = new RootUser();
+		user.setUserName(username);
+		user.setPassword(password);
+		user.setScore(0);
+		user.setEmail(email);
+		user.setUrl("https://www.roothub.cn/user/"+username);
+		//user.setThirdId("GitHub");
+		user.setReceiveMsg(false);
+		user.setCreateDate(new Date());
+		user.setUpdateDate(new Date());
+		user.setIsBlock(false);
+		user.setThirdAccessToken(StringUtil.getUUID());
+		user.setStatusCd("1000");
+		user.setUserType("2");
+		user.setAvatar("69290780aaafb00aa37ff2a61342dded.png");
+		user.setSignature("这家伙很懒，什么都没留下");
+		return save(user);
+	}
 	/**
 	 * 统计所有注册会员的数量
 	 */

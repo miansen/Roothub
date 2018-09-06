@@ -30,10 +30,11 @@
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="user_addr" jdbcType="VARCHAR" property="userAddr"/>
         <result column="third_id" jdbcType="VARCHAR" property="thirdId"/>
+        <result column="third_access_token" jdbcType="VARCHAR" property="thirdAccessToken"/>
     </resultMap>
     <sql id="Base_Column_List">
         user_id, user_name, password, score, avatar, email, url, signature, receive_msg,
-        create_date, update_date,user_addr,third_id
+        create_date, update_date,user_addr,third_id,third_access_token
     </sql>
 	<!-- 查询所有用户 -->
 	<select id="selectAll" resultType="RootUser">
@@ -134,6 +135,7 @@
 		create_date,
 		update_date,
 		is_block,
+		third_access_token,
 		status_cd,
 		login_ip,
 		last_login_ip,
@@ -154,6 +156,7 @@
 		#{createDate},
 		#{updateDate},
 		#{isBlock},
+		#{thirdAccessToken},
 		#{statusCd},
 		#{loginIp},
 		#{lastLoginIp},

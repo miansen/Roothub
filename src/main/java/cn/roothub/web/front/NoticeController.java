@@ -20,7 +20,7 @@ import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 
 @Controller
-public class NoticeController {
+public class NoticeController extends BaseController{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -41,7 +41,7 @@ public class NoticeController {
 	 */
 	@RequestMapping(value = "/notification/list", method = RequestMethod.GET)
 	private String noticeList(HttpServletRequest request,@RequestParam(value = "p", defaultValue = "1") Integer p) {
-		RootUser user = null;
+		/*RootUser user = null;
 		RootUser session = CookieAndSessionUtil.getSession(request, "user");
 		if(session != null) {
 			user = session;
@@ -52,6 +52,10 @@ public class NoticeController {
 	    		user = rootUserService.findByName(Base64Util.decode(cookie));
 	    	}
 		}
+		if(user == null) {
+			return "error-page/500";
+		}*/
+		RootUser user = getUser(request);
 		if(user == null) {
 			return "error-page/500";
 		}

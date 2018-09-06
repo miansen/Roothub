@@ -91,6 +91,8 @@ public interface RootUserService {
 	 */
 	RootUserExecution save(RootUser user);
 	
+	RootUserExecution createUser(String username,String password,String email);
+	
 	/**
 	 * 统计所有注册会员的数量
 	 * @return

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import cn.roothub.config.CookieConfig;
 import cn.roothub.config.SiteConfig;
+import cn.roothub.util.StringUtil;
 import priv.sen.root.dao.test.BaseTest;
 
 
@@ -38,5 +39,9 @@ public class ConfigTest extends BaseTest{
 		logger.debug(string);
 	}
 	
-	
+	@Test
+	public void test04() throws Exception{
+		String uuid = StringUtil.getUUID();
+		logger.debug(uuid);
+	}
 }

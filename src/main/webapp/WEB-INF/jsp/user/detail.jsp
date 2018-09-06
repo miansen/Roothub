@@ -5,10 +5,8 @@
 <head>
 <title>${user.userName}的个人主页</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- 引入 Bootstrap -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
-<!-- 引入layui.css -->
 <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 <link rel="shortcut icon" href="/resources/images/favicon.ico">
 </head>
@@ -100,55 +98,8 @@
 					<a href="javascript:void(0);" onclick="followList()" class="cell_tab">关注</a>
 					<a href="javascript:void(0);" onclick="fansList()" class="cell_tab">粉丝</a>
 					<a href="javascript:void(0);" onclick="topicQnaList()" class="cell_tab">提问</a></div>
-					<div class="itemList"></div>
-					<%-- <c:forEach var="item" items="${topicPage.list}">
-						<div class="panel-body paginate-bot"
-							style="border-bottom: 1px solid #e2e2e2;">
-							<div class="media">
-								<div class="media-body">
-									<div class="title">
-										<a href="/topic/${item.topicId}"> ${item.title} </a>
-									</div>
-									<p>
-										<span><a href="/user/${item.author}" class="author_name">${item.author}</a></span>
-										<span class="hidden-sm hidden-xs">•</span> <span
-											class="hidden-sm hidden-xs"><a
-											href="/topic/${item.topicId}">${item.replyCount}个评论</a></span> <span
-											class="hidden-sm hidden-xs">•</span> <span
-											class="hidden-sm hidden-xs">${item.viewCount}次点击</span> <span>•</span>
-										<span><fmt:formatDate type="both" dateStyle="medium"
-												timeStyle="short" value="${item.createDate}" /></span>
-									</p>
-								</div>
-							</div>
-						</div>
-					</c:forEach> --%>
-					<%-- <div class="panel-footer">
-						<a href="/user/${user.userName}/topics">${user.userName}的更多话题&gt;&gt;</a>
-					</div> --%>
+					<div class="itemList"></div>	
 				</div>
-
-			<%-- 	<div class="panel panel-default">
-					<div class="panel-heading">${user.userName}评论的话题</div>
-					<table class="table table-striped">
-						<tbody>
-							<c:forEach var="item" items="${replyPage.list}">
-								<tr>
-									<td><fmt:formatDate type="both" dateStyle="medium"
-											timeStyle="short" value="${item.createDate}" /> 评论了 <a
-										href="/user/${item.author}">${item.author}</a> 创建的话题 › <a
-										href="/topic/${item.topicId}">${item.title}</a></td>
-								</tr>
-								<tr class="user_comments">
-									<td class="show_big_image">${item.replyContent}</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-					<div class="panel-footer">
-						<a href="/user/${user.userName}/replys">${user.userName}的更多评论&gt;&gt;</a>
-					</div>
-				</div> --%>
 				<button id="toggleBigImageBtn" data-toggle="modal" class="hidden"
 					data-target="#showBigImageModal"></button>
 				<div class="modal fade" tabindex="-1" role="dialog"
@@ -243,17 +194,12 @@
 	</div>
 	</div>
 	<jsp:include page="../components/foot.jsp"></jsp:include>
-	<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
 	<script src="/resources/js/jquery.js"></script>
-	<!-- 引入 Bootstrap -->
 	<script src="/resources/js/bootstrap.min.js"></script>
-	<!-- 缓慢回到顶部 -->
 	<script src="/resources/js/goTop.js"></script>
-	<!-- 分页 -->
-	<!-- <script src="/resources/js/pagination2.js"></script> -->
-	<!-- 引入layui.js -->
 	<script src="/resources/layui/layui.js"></script>
 	<script src="/resources/layui/layui-paginate.js"></script>
 	<script src="/resources/js/user_detail.js"></script>
+	<script src="/resources/js/formatDate.js"></script>
 </body>
 </html>

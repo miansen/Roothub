@@ -45,14 +45,15 @@
         <p class="gray">
           <span><a href="/user/${item.author}">${item.author}</a></span>
           <span class="hidden-sm hidden-xs">•</span>
-          <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
-          <span class="hidden-sm hidden-xs">•</span>
           <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
+          <span class="hidden-sm hidden-xs">•</span>
+          <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
           <span>•</span>
-          <span><fmt:formatDate type="both" 
-                  dateStyle="medium" timeStyle="short" 
-                  value="${item.createDate}" />
-          </span>
+          <span>${baseEntity.formatDate(item.createDate)}</span>
+          <c:if test="${item.lastReplyAuthor != null}">
+          <span>•</span>
+          <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
+          </c:if>
           <span>•</span>
             <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
         </p>

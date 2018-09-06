@@ -9,7 +9,9 @@ cn\roothub\util\DateUtil.class
 cn\roothub\web\front\NoticeController.class
 cn\roothub\dto\RootSectionExecution.class
 cn\roothub\entity\RootSection.class
+cn\roothub\config\SiteConfig.class
 cn\roothub\web\front\FollowController.class
+cn\roothub\config\CookieConfig.class
 cn\roothub\service\impl\TabServiceImpl.class
 cn\roothub\enums\InsertRootTopicEnum.class
 cn\roothub\entity\Tag.class

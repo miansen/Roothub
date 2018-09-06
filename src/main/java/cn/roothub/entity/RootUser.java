@@ -284,7 +284,7 @@ public class RootUser {
 		this.remark = remark;
 	}
 
-	/*@Override
+	@Override
 	public String toString() {
 		return "RootUser [userId=" + userId + ", userName=" + userName + ", password=" + password + ", userSex="
 				+ userSex + ", userAddr=" + userAddr + ", score=" + score + ", avatar=" + avatar + ", email=" + email
@@ -292,6 +292,6 @@ public class RootUser {
 				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", isBlock=" + isBlock
 				+ ", thirdAccessToken=" + thirdAccessToken + ", statusCd=" + statusCd + ", loginIp=" + loginIp
 				+ ", lastLoginIp=" + lastLoginIp + ", userType=" + userType + ", remark=" + remark + "]";
-	}*/
+	}
 	
 }

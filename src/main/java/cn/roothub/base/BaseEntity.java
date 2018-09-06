@@ -16,7 +16,7 @@ public class BaseEntity {
 	 * @param date
 	 * @return
 	 */
-	public String formatDate(Date date) {
+	public static String formatDate(Date date) {
 		if (date == null)
 			return "";
 

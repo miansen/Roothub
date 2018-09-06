@@ -1,20 +1,24 @@
 package cn.roothub.web.front;
 
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
+import cn.roothub.base.BaseEntity;
 import cn.roothub.config.SiteConfig;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
@@ -33,7 +37,6 @@ import cn.roothub.service.RootUserService;
 import cn.roothub.service.TabService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
-import cn.roothub.util.JsonUtil;
 import cn.roothub.util.PtabUtil;
 
 @Controller // 标注这是一个控制类，类名不能和注解名一样
@@ -98,6 +101,8 @@ public class IndexController extends BaseController{
     		countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());
     		request.setAttribute("user", user2);
     	}
+    	BaseEntity baseEntity = new BaseEntity();
+    	request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
 		request.setAttribute("sectionAll", sectionAll);
@@ -145,7 +150,7 @@ public class IndexController extends BaseController{
 		if(findByEmail != null) {
 			return new Result<>(false, "邮箱已存在");
 		}
-		RootUser rootUser = new RootUser();
+		/*RootUser rootUser = new RootUser();
 		rootUser.setUserName(username);
 		rootUser.setPassword(password);
 		rootUser.setScore(0);
@@ -159,7 +164,8 @@ public class IndexController extends BaseController{
 		rootUser.setUserType("2");
 		rootUser.setAvatar("69290780aaafb00aa37ff2a61342dded.png");
 		rootUser.setSignature("这家伙很懒，什么都没留下");
-		RootUserExecution save = rootUserService.save(rootUser);
+		RootUserExecution save = rootUserService.save(rootUser);*/
+		RootUserExecution save = rootUserService.createUser(username, password, email);
 		return new Result<RootUserExecution>(true, save);
 	}
 	
@@ -197,7 +203,7 @@ public class IndexController extends BaseController{
     		//2.将json存进redis
     		//opsForValue.set("user", str);
     		//设置cookie
-    		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(), Base64Util.encode(user.getThirdId()), siteConfig.getCookieConfig().getMaxAge(), siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
+    		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(), Base64Util.encode(user.getThirdAccessToken()), siteConfig.getCookieConfig().getMaxAge(), siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
     		//设置session
     		CookieAndSessionUtil.setSession(request, "user", user);
     		return new Result<RootUser>(true, user);
@@ -233,7 +239,7 @@ public class IndexController extends BaseController{
     
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     @ResponseBody
-    private Result<RootUser> session(HttpServletRequest request) {
+    private Map<String,String> session(HttpServletRequest request) {
     	/*RootUser user = null;
     	String cookie = CookieAndSessionUtil.getCookie(request, "user");
     	if(cookie != null) {
@@ -241,9 +247,20 @@ public class IndexController extends BaseController{
     		return new Result<RootUser>(true, user);
     	}
     	return new Result<>(false, "no session");*/
+    	//RootUser user = getUser(request);
+    	//if(user != null) return new Result<Map>(true, user);
+    	//return new Result<>(false, "no session");
     	RootUser user = getUser(request);
-    	if(user != null) return new Result<RootUser>(true, user);
-    	return new Result<>(false, "no session");
+    	HashedMap map = new HashedMap();
+    	if(user != null) {
+    		map.put("success", true);
+    		map.put("user", user.getUserName());
+    		return map;
+    	}else {
+    		map.put("success", false);
+    		map.put("user", "");
+    		return map;
+    	}
     }
     
     /**
@@ -257,6 +274,8 @@ public class IndexController extends BaseController{
     		return "search";
     	}
     	PageDataBody<RootTopic> pageLike = rootTopicService.pageLike(p, 50, search);
+    	BaseEntity baseEntity = new BaseEntity();
+    	request.setAttribute("baseEntity", baseEntity);
     	request.setAttribute("pageLike", pageLike);
     	request.setAttribute("search", search);
     	return "search";
@@ -305,5 +324,90 @@ public class IndexController extends BaseController{
     @RequestMapping(value = "/advertise")
     private String advertise() {
     	return "advertise";
+    }
+    
+    /**
+     * excel
+     * @return
+     */
+    @RequestMapping(value = "/excel")
+    private String excel(HttpServletRequest request) {
+    	List<RootTopic> row1 = rootTopicService.findAll();//全部话题
+		List<Tab> row2 = tabService.selectAll();//父板块
+    	List<RootSection> row3 = rootSectionService.findAll();//子版块
+    	request.setAttribute("row1", row1);
+    	request.setAttribute("row2", row2);
+    	request.setAttribute("row3", row3);
+    	return "excel";
+    }
+    
+    @RequestMapping(value = "/excel/download")
+    private void excel02(HttpServletResponse response) throws Exception {
+    	List<RootTopic> row1 = rootTopicService.findAll();
+		//List<RootTopic> row2 = rootTopicService.findHot(1, 50);
+		List<Tab> row2 = tabService.selectAll();
+    	List<RootSection> row3 = rootSectionService.findAll();
+		List<RootTopic> rows1 = CollUtil.newArrayList(row1);
+		List<Tab> rows2 = CollUtil.newArrayList(row2);
+		List<RootSection> rows3 = CollUtil.newArrayList(row3);
+		//List<List<? extends Object>> rows3 = CollUtil.newArrayList(row1,row2,row3);
+		ExcelWriter writer = ExcelUtil.getWriter("d:/writeTest04.xlsx","话题");
+		writer.addHeaderAlias("topicId", "话题标识");
+		writer.addHeaderAlias("ptab", "父板块标识");
+		writer.addHeaderAlias("tab", "子版块标识");
+		writer.addHeaderAlias("title", "话题标题");
+		writer.addHeaderAlias("tag", "话题内容标签");
+		writer.addHeaderAlias("content", "话题内容");
+		writer.addHeaderAlias("createDate", "创建时间");
+		writer.addHeaderAlias("updateDate", "更新时间");
+		writer.addHeaderAlias("lastReplyTime", "最后回复话题时间");
+		writer.addHeaderAlias("lastReplyAuthor", "最后回复话题的用户");
+		writer.addHeaderAlias("viewCount", "浏览量");
+		writer.addHeaderAlias("author", "话题作者");
+		writer.addHeaderAlias("top", "1置顶 0默认");
+		writer.addHeaderAlias("good", "1精华 0默认");
+		writer.addHeaderAlias("showStatus", "1显示 0不显示");
+		writer.addHeaderAlias("replyCount", "回复数量");
+		writer.addHeaderAlias("isDelete", "1删除 0默认");
+		writer.addHeaderAlias("tagIsCount", "话题内容标签是否被统计过 1是 0否默认");
+		writer.addHeaderAlias("postGoodCount", "点赞");
+		writer.addHeaderAlias("postBadCount", "踩数");
+		writer.addHeaderAlias("statusCd", "话题状态 1000:有效 1100:无效 1200:未生效");
+		writer.addHeaderAlias("nodeSlug", "所属节点");
+		writer.addHeaderAlias("nodeTitle", "节点名称");
+		writer.addHeaderAlias("remark", "备注");
+		writer.addHeaderAlias("avatar", "话题作者头像");
+		writer.write(rows1);
+		writer.setSheet("父板块");
+		writer.addHeaderAlias("id", "父板块标识");
+		writer.addHeaderAlias("tabName", "父板块名称");
+		writer.addHeaderAlias("tabDesc", "父板块描述");
+		writer.addHeaderAlias("isDelete", "是否删除 0：否 1：是");
+		writer.addHeaderAlias("createDate", "创建时间");
+		writer.addHeaderAlias("tabOrder", "排列顺序");
+		writer.write(rows2);
+		writer.setSheet("子板块");
+		writer.addHeaderAlias("sectionId", "子板块标识");
+		writer.addHeaderAlias("sectionName", "子板块名称");
+		writer.addHeaderAlias("sectionTab", "子板块标签");
+		writer.addHeaderAlias("sectionDesc", "子板块描述");
+		writer.addHeaderAlias("sectionTopicNum", "板块帖子数目");
+		writer.addHeaderAlias("showStatus", "是否显示，0:不显示 1:显示");
+		writer.addHeaderAlias("displayIndex", "子板块排序");
+		writer.addHeaderAlias("defaultShow", "默认显示板块 0:默认 1:显示");
+		writer.addHeaderAlias("pid", "模块父节点");
+		writer.addHeaderAlias("createDate", "创建时间");
+		writer.addHeaderAlias("updateDate", "更新时间");
+		writer.addHeaderAlias("statusCd", "板块状态 1000:有效 1100:无效 1200:未生效");
+		writer.write(rows3);
+		//response为HttpServletResponse对象
+		response.setContentType("application/vnd.ms-excel;charset=utf-8");
+		//test.xlsx是弹出下载对话框的文件名，不能为中文，中文请自行编码
+		response.setHeader("Content-Disposition","attachment;filename=test02.xlsx"); 
+		ServletOutputStream out=response.getOutputStream();
+		writer.flush(out);
+		//关闭writer，释放内存
+		//关闭writer，释放内存
+		writer.close();
     }
 }

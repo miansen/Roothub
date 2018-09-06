@@ -88,8 +88,8 @@ var _hmt = _hmt || [];
 		          //console.log(JSON.stringify(data));
 		          if(data.success != null && data.success == true){
 		            $("#loginuser").show();
-		            $("#loginuser a").text(data.data.userName);
-		            $("#loginuser a").attr("href","/user/"+data.data.userName);
+		            $("#loginuser a").text(data.user);
+		            $("#loginuser a").attr("href","/user/"+data.user);
 		            $("#shezhili").show();
 		            $("#tuichuli").show();
 		          }

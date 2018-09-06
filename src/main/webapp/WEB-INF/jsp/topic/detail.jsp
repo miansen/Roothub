@@ -46,9 +46,13 @@
 						<span>•</span>
 					</c:if>
 					<span><a href="/user/${topic.author}">${topic.author}</a></span>
-					<span>•</span> <span><fmt:formatDate type="both"
+					<span>•</span>
+					<%-- <span><fmt:formatDate type="both"
 					dateStyle="medium" timeStyle="short"
-					value="${topic.createDate}" /></span> <span>•</span> <span>${topic.viewCount}次点击</span>
+					value="${topic.createDate}" /></span> --%>
+					<span>${baseEntity.formatDate(topic.createDate)}</span>
+					<span>•</span>
+					<span>${topic.viewCount}次点击</span>
 				</p>
 			</div>
 			<div class="media-right">

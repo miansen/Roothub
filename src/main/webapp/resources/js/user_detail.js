@@ -147,12 +147,13 @@ function topicList(pageNumber) {
 					</div>\
 					<p>\
 					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
-					<span class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\"><a\
-					href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span> <span\
-					class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span> <span>•</span>\
-					<span>"+data.data.list[i].createDate+"</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
+					<span>•</span>\
+					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
+					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
 					</p>\
 					</div>\
 					</div>\
@@ -184,7 +185,7 @@ function replyList(pageNumber) {
 			$(".itemList").html('<table class="table table-striped"><tbody></tbody></table>');
 			for(var i = 0;i < data.data.list.length; i++){
 				$(".table-striped").append("<tr>\
-					<td>"+data.data.list[i].createDate+" 评论了 <a\
+					<td>"+formatDate(Date.parse(data.data.list[i].createDate))+" 评论了 <a\
 					href=\"/user/"+data.data.list[i].author+"\">"+data.data.list[i].author+"</a> 创建的话题 › <a\
 					href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].title+"</a></td>\
 					</tr>\
@@ -221,21 +222,18 @@ function collectList(pageNumber) {
 				$(".itemList").append("<div class=\"panel-body paginate-bot\"\
 					style=\"border-bottom: 1px solid #e2e2e2;\">\
 					<div class=\"media\">\
-					<div class=\"media-left\">\
-					<a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a>\
-					</div>\
+					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
 					<div class=\"media-body\">\
-					<div class=\"title\">\
-					<a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a>\
-					</div>\
+					<div class=\"title\"> <a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<p>\
 					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
-					<span class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\"><a\
-					href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span> <span\
-					class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span> <span>•</span>\
-					<span>"+data.data.list[i].createDate+"</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\"> <a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
+					<span>•</span>\
+					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
+					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
 					</p>\
 					</div>\
 					</div>\
@@ -266,24 +264,20 @@ function followList(pageNumber) {
 		success : function(data) {
 			$(".itemList").html('');
 			for(var i = 0;i < data.data.list.length; i++){
-				$(".itemList").append("<div class=\"panel-body paginate-bot\"\
-					style=\"border-bottom: 1px solid #e2e2e2;\">\
+				$(".itemList").append("<div class=\"panel-body paginate-bot\" style=\"border-bottom: 1px solid #e2e2e2;\">\
 					<div class=\"media\">\
-					<div class=\"media-left\">\
-					<a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a>\
-					</div>\
+					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
 					<div class=\"media-body\">\
-					<div class=\"title\">\
-					<a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a>\
-					</div>\
+					<div class=\"title\"><a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<p>\
 					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
-					<span class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\"><a\
-					href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span> <span\
-					class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span> <span>•</span>\
-					<span>"+data.data.list[i].createDate+"</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
+					<span>•</span>\
+					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
+					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
 					</p>\
 					</div>\
 					</div>\
@@ -413,21 +407,19 @@ function topicQnaList(pageNumber) {
 		success : function(data) {
 			$(".itemList").html('');
 			for(var i = 0;i < data.data.list.length; i++){
-				$(".itemList").append("<div class=\"panel-body paginate-bot\"\
-					style=\"border-bottom: 1px solid #e2e2e2;\">\
+				$(".itemList").append("<div class=\"panel-body paginate-bot\" style=\"border-bottom: 1px solid #e2e2e2;\">\
 					<div class=\"media\">\
 					<div class=\"media-body\">\
-					<div class=\"title\">\
-					<a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a>\
-					</div>\
+					<div class=\"title\"><a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<p>\
 					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
-					<span class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\"><a\
-					href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span> <span\
-					class=\"hidden-sm hidden-xs\">•</span> <span\
-					class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span> <span>•</span>\
-					<span>"+data.data.list[i].createDate+"</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
+					<span class=\"hidden-sm hidden-xs\">•</span>\
+					<span class=\"hidden-sm hidden-xs\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
+					<span>•</span>\
+					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
+					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
 					</p>\
 					</div>\
 					</div>\
@@ -475,10 +467,11 @@ $(document).on("click",".layui-laypage a",function(){
   	//console.log($(this).attr('class')+index);
   });
 });
-
-
-   /* $(".cell_tabs a").each(function(index, element) {
-        console.log($(this).attr('class' + index));
-    });*/
-
-    
+/*最后回复用户*/
+function lastReplyAuthor(lastReplyAuthor){
+	if(lastReplyAuthor){
+		return	"<span>•</span><span> 最后回复来自 <a href=\"/user/"+lastReplyAuthor+"\">"+lastReplyAuthor+"</a></span>";
+	}else{
+		return "";
+	}
+};

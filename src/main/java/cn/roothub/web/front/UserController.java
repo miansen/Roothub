@@ -176,14 +176,22 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping(value = "/user/settings/profile", method = RequestMethod.GET)
 	private String setting(HttpServletRequest request) {
-		RootUser user = null;
+		/*RootUser user = null;
 		String cookie = CookieAndSessionUtil.getCookie(request, "user");
 		if(cookie == null) {
 			return "error-page/500";
 		}
 		user = rootUserService.findByName(Base64Util.decode(cookie));
 		request.setAttribute("user", user);
+		return "user/profile";*/
+		
+		RootUser user2 = getUser(request);
+		if(user2 == null) {
+			return "error-page/500";
+		}
+		request.setAttribute("user", user2);
 		return "user/profile";
+		
 	}
 	
 	/**

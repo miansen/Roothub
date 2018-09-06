@@ -20,7 +20,6 @@
 					<div class="panel-body" style="color: #333;">
 						<h1 style="margin-top: 0px;">感谢</h1>
 						<p><a href="https://github.com/tomoya92/pybbs" target="_blank">pybbs</a></p>
-						<p><a href="https://www.v2ex.com" target="_blank">V2EX</a></p>
 					</div>
 				</div>
 			</div>

@@ -11,16 +11,20 @@
 <div class="cell"><span class="gray">${topic.replyCount} 回复</span></div>
 <%int i=1;%>
 <c:forEach var="item" items="${replyPage.list}">
-    <div id="r_${item.replyId}" class="cell">
+    <div id="r_${item.replyId}" class="cell" style="padding-bottom: 0px;">
     <table cellpadding="0" cellspacing="0" border="0" width="100%" class="pinglun_table">
         <tbody><tr>
             <td width="48" valign="top" align="center"><a href="/user/${item.replyAuthorName}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""/></a>
             <td width="10" valign="top"></td>
             <td width="auto" valign="top" align="left"><div class="fr"> &nbsp; &nbsp; <span class="no"><%=i++%></span></div>
                 <div class="sep3"></div>
-                <strong><a href="/user/${item.replyAuthorName}" class="dark">${item.replyAuthorName}</a></strong>&nbsp; &nbsp;<span class="ago"><fmt:formatDate type="both" 
+                <strong><a href="/user/${item.replyAuthorName}" class="dark">${item.replyAuthorName}</a></strong>&nbsp;
+                <span class="ago">
+                <%-- <fmt:formatDate type="both" 
                   dateStyle="medium" timeStyle="short" 
-                  value="${item.createDate}" /></span> 
+                  value="${item.createDate}" /> --%>
+                  ${baseEntity.formatDate(item.createDate)}
+                  </span> 
                 <div class="sep5"></div>
                 <div class="reply_content">${item.replyContent}</div>
             </td>

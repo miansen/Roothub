@@ -19,7 +19,7 @@
 					</div>
 					<div class="panel-body" style="color: #333;">
 						<h1 style="margin-top: 0px;">愿景</h1>
-						Roothub的愿景是为志同道合的伙伴提供一点微小的帮助。
+						Roothub的愿景是为喜欢代码的伙伴提供一点微小的帮助。
 					</div>
 				</div>
 			</div>

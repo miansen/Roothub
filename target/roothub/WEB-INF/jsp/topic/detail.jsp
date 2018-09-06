@@ -361,7 +361,7 @@
 	 		},
 	 		success:function(data){
 	 			upNumber = data.data;
-	 			console.log("赞同=="+upNumber);
+	 			//console.log("赞同=="+upNumber);
 	 			if(data.success != null && data.success == true && data.data > 0){
 	 				$(".votes .vote_up").html('');
 	 				$(".votes .vote_up").append("<li class=\"fa fa-chevron-up\"></li>"+data.data+"");
@@ -384,7 +384,7 @@
 	 		},
 	 		success:function(data){
 	 			downNumber = data.data;
-	 			console.log("反对=="+downNumber);
+	 			//console.log("反对=="+downNumber);
 	 			if(data.success != null && data.success == true && data.data > 0){
 	 				$(".votes .vote_down").html('');
 	 				$(".votes .vote_down").append("<li class=\"fa fa-chevron-down\"></li>"+data.data+"");

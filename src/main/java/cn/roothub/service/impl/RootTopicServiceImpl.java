@@ -155,6 +155,7 @@ public class RootTopicServiceImpl implements RootTopicService{
 			if(insert <= 0) {
 				throw new OperationFailedException("发布话题失败！");
 			}else {
+				rootUserDao.updateScoreByName(10, topic.getAuthor());//发贴积10分
 				return new RootTopicExecution(rootTopic.getTitle(), InsertRootTopicEnum.SUCCESS, rootTopic);
 			}
 		}catch (OperationFailedException e1) {
@@ -260,6 +261,24 @@ public class RootTopicServiceImpl implements RootTopicService{
 		int totalRow = rootTopicDao.countAllByNameAndPtab(author, ptab);
 		List<RootTopic> list = rootTopicDao.selectAllByPtabAndAuthor((pageNumber - 1) * pageSize, pageSize, ptab, author);
 		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+	}
+
+	/**
+	 * 首页-最热话题
+	 */
+	@Override
+	public PageDataBody<RootTopic> findIndexHot(Integer pageNumber, Integer pageSize, String tab) {
+		int totalRow = rootTopicDao.countIndexHot(tab);
+		List<RootTopic> list = rootTopicDao.selectIndexHot((pageNumber - 1) * pageSize, pageSize, tab);
+		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+	}
+
+	/**
+	 * 侧边栏-今日等待回复的话题
+	 */
+	@Override
+	public List<RootTopic> findTodayNoReply(Integer start, Integer limit) {
+		return rootTopicDao.selectTodayNoReply(start, limit);
 	}
 
 }

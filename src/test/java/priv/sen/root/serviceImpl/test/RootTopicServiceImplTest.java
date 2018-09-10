@@ -249,4 +249,20 @@ public class RootTopicServiceImplTest extends BaseTest{
 		//关闭writer，释放内存
 		writer.close();
 	}
+	
+	/**
+	 * 查询用户发布主题的数量
+	 * @throws Exception
+	 */
+	@Test
+	public void countByUserNameTest() throws Exception{
+		int countByUserName = rootTopicService.countByUserName("public");
+		System.out.println(countByUserName);
+	}
+	
+	@Test
+	public void findIndexHotTest() throws Exception{
+		PageDataBody<RootTopic> page = rootTopicService.findIndexHot(1, 50, "good");
+		logger.debug(page.toString());
+	}
 }

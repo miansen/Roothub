@@ -89,13 +89,30 @@ public interface RootTopicService {
 	List<RootTopic> findOtherTopicByAuthor(Integer currentTopicId, String author, Integer limit);
 	
 	/**
-	 * 查询热门话题
+	 * 侧边栏-今日热门话题
 	 * @param currentTopicId
 	 * @param author
 	 * @param limit
 	 * @return
 	 */
 	List<RootTopic> findHot(Integer start,Integer limit);
+	
+	/**
+	 * 侧边栏-今日等待回复的话题
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	List<RootTopic> findTodayNoReply(Integer start,Integer limit);
+	
+	/**
+	 * 首页-最热话题
+	 * @param start
+	 * @param limit
+	 * @param tab 子版块
+	 * @return
+	 */
+	PageDataBody<RootTopic> findIndexHot(Integer start,Integer limit,String tab);
 	
 	/**
 	 * 根据作者昵称分页查询所有话题

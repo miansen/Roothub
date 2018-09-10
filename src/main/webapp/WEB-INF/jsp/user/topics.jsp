@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-md-9">
         <div class="panel panel-default">
-          <div class="panel-heading">${user.userName}创建的话题</div>
+          <div class="panel-heading"><a href="/">Roothub</a> / ${user.userName}创建的话题</div>
           <c:forEach var="item" items="${topicPage.list}">
           <div class="panel-body paginate-bot" style="border-bottom: 1px solid #e2e2e2;">
             <div class="media">
@@ -43,13 +43,12 @@
             </div>
           </div>
           </c:forEach>
-          <!-- <div class="panel-footer">
-            <ul class="pagination pagination-sm pagination2"></ul>
-          </div> -->
           <div class="panel-footer" id="paginate"></div>
         </div>
       </div>
-      <jsp:include page="../components/right2.jsp"></jsp:include>
+      <div class="col-md-3 hidden-sm hidden-xs">
+		<div class="panel panel-default" id="session"></div>
+	  </div>
     </div>
   </div>
   <div id="back2Top" class="backTop___6Q-ki" style="display:none">
@@ -58,16 +57,13 @@
   </div>
 </div>
 <jsp:include page="../components/foot.jsp"></jsp:include>
-<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
 <script src="/resources/js/jquery.js"></script>
-<!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
-<!-- 分页 -->
 <script src="/resources/js/pagination2.js"></script>
 <script src="/resources/js/goTop.js"></script>
-<!-- 引入layui.js -->
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
+<script src="/resources/js/login_info.js"></script>
 <script type="text/javascript">
 	$(function(){
 		/* var url = "/user/${user.userName}/topics?";

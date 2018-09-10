@@ -1,6 +1,8 @@
 package priv.sen.root.serviceImpl.test;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.roothub.dto.RootUserExecution;
 import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Top100;
 import cn.roothub.service.RootUserService;
 import priv.sen.root.dao.test.BaseTest;
 
@@ -70,5 +73,40 @@ public class RootUserServiceImplTest extends BaseTest{
 		rootUser.setStatusCd("1000");
 		RootUserExecution updateUser = rootUserService.updateUser(rootUser);
 		logger.debug(updateUser.toString());
+	}
+	
+	/**
+	 * 积分榜用户
+	 * @throws Exception
+	 */
+	@Test
+	public void scores() throws Exception{
+		List<Top100> scores = rootUserService.scores(100);
+		logger.debug(scores.toString());
+	}
+	
+	/**
+	 * 更新积分
+	 * @throws Exception
+	 */
+	@Test
+	public void updateScore() throws Exception{
+		rootUserService.updateScore(2, 1);
+	}
+	
+	@Test
+	public void test01() throws Exception{
+		List list = new ArrayList<>();
+		list.add("aa");
+		list.add("bbb");
+		String object = (String) list.get(0);
+		logger.debug(object);
+		logger.debug(list.toString());
+	}
+	
+	@Test
+	public void countScoreTest() throws Exception{
+		int countScore = rootUserService.countScore(1);
+		System.out.println(countScore);
 	}
 }

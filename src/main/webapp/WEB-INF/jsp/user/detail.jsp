@@ -59,8 +59,8 @@
 
                 <div class="grade-box clearfix" style="display: flex !important;padding-left: 24px;">
                     <dl>
-                        <dt>声望：</dt>
-                        <dd>10</dd>
+                        <dt>积分：</dt>
+                        <dd>${countScore}</dd>
                     </dl>
                     <dl>
                         <dt title="${user.userName}的收藏"><a href="javascript:void(0);" onclick="collectList()">收藏：</a></dt>
@@ -75,7 +75,7 @@
                     
                     <dl>
                         <dt>访问：</dt>
-                        <dd title="360">13</dd>
+                        <dd title="360">${countVisit}</dd>
                     </dl>
                     <dl title="${user.userName}加入roothub的时间">
                         <dt>入驻：</dt>
@@ -158,8 +158,8 @@
 
 <div class="grade-box clearfix" style="display: flex !important;padding-left: 24px;">
         <dl>
-            <dt>声望：</dt>
-            <dd>10</dd>
+            <dt>积分：</dt>
+            <dd>${countScore}</dd>
         </dl>
         <dl>
             <dt title="${user.userName}的收藏"><a href="javascript:void(0);" onclick="collectList()">收藏：</a></dt>
@@ -174,7 +174,7 @@
         
         <dl>
             <dt>访问：</dt>
-            <dd title="360">13</dd>
+            <dd title="360">${countVisit}</dd>
         </dl>
         <dl title="${user.userName}加入roothub的时间">
             <dt>入驻：</dt>

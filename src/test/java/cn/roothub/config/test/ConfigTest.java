@@ -44,4 +44,9 @@ public class ConfigTest extends BaseTest{
 		String uuid = StringUtil.getUUID();
 		logger.debug(uuid);
 	}
+	
+	@Test
+	public void test05() throws Exception{
+		logger.debug(citeConfig.getIntro());
+	}
 }

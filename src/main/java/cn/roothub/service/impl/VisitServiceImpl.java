@@ -71,4 +71,9 @@ public class VisitServiceImpl implements VisitService {
 		}
 	}
 
+	@Override
+	public int count(Integer vid) {
+		return visitDao.count(vid);
+	}
+
 }

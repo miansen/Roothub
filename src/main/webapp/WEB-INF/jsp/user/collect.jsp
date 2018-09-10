@@ -18,7 +18,7 @@
     <div class="row">
       <div class="col-md-9">
         <div class="panel panel-default">
-          <div class="panel-heading">${user.userName}收藏的话题
+          <div class="panel-heading"><a href="/" style="color: #778087;">roothub</a><span class="chevron">&nbsp;›&nbsp;</span>收藏系统
           	<span class="pull-right">总共收藏话题 ${countCollect}</span>
           </div>
      		        <div class="panel-body paginate-bot">
@@ -61,26 +61,21 @@
             </div>
           </c:forEach>
       </div>
-          <!-- <div class="panel-footer">
-            <ul class="pagination pagination-sm pagination2"></ul>
-          </div> -->
           <div class="panel-footer" id="paginate"></div>
         </div>
       </div> 
-        <jsp:include page="../components/right2.jsp"></jsp:include>
+        <div class="col-md-3 hidden-sm hidden-xs">
+		<div class="panel panel-default" id="session"></div>
+	  	</div>
     </div>
   </div>
 </div>
 <jsp:include page="../components/foot.jsp"></jsp:include>
-<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
 <script src="/resources/js/jquery.js"></script>
-<!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
-<!-- 分页 -->
-<!-- <script src="/resources/js/pagination2.js"></script> -->
-<!-- 引入layui.js -->
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
+<script src="/resources/js/login_info.js"></script>
 <script type="text/javascript">
 	//var url = "/collect/topics?";
 	//$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);

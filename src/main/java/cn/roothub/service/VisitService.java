@@ -2,6 +2,8 @@ package cn.roothub.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.roothub.dto.DMLExecution;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.RootUser;
@@ -31,5 +33,12 @@ public interface VisitService {
 	 * @return
 	 */
 	DMLExecution save(Visit visit);
+	
+	/**
+	 * 被访问的次数
+	 * @param vid
+	 * @return
+	 */
+	int count(Integer vid);
 	
 }

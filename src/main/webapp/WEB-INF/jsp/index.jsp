@@ -73,59 +73,14 @@
             </div>
           </c:forEach>
       </div>
-      <!-- <div class="panel-footer">
-          <ul class="pagination pagination-sm pagination2"></ul>
-          </div> -->
           <div class="panel-footer" id="paginate"></div>
     </div>
   </div>
   <div class="col-md-3 hidden-sm hidden-xs">
-    <div class="panel panel-default" id="session">
-    <c:if test="${user == null}">
-      <div class="panel-body" id="nologin">
-        <h5>属于技术与资讯的社区</h5><p>在这里你可以学习、分享、提问、回答、诉说，这是一个小众且优雅的社区，欢迎你的加入！</p>
-      </div>
-      </c:if>
-      <c:if test="${user != null}">
-       <div class="panel-body">
-              <div class="media">
-                <div class="media-left">
-                  <a href="/user/${user.userName}">
-                    <img src="/resources/images/${user.avatar}" title="" class="avatar img-circle">
-                  </a>
-                </div>
-                <div class="media-body">
-                  <div class="media-heading">
-                    <strong><a href="/user/${user.userName}">${user.userName}</a></strong>
-                    <div style="color: #7A7A7A; font-size: 12px; margin-top:5px;">
-                      <i>${user.signature}</i>
-                    </div>
-                  </div>
-                </div>
-                <div style="margin-top: 15px;">
-                  <a href="/topic/create" style="font-size: 14px;"><button class="btn btn-success">发布话题</button></a>
-                </div>
-              </div>
-              <div class="sep10" style="height: 10px;"></div>
-              <table cellpadding="0" cellspacing="0" border="0" width="100%" class="table_fade" style="font-size: 14px;">
-    <tbody><tr>
-        <td width="33%" align="center"><a href="/user/topics" class="dark" style="display: block;"><span class="bigger">${countTopicByUserName}</span><div class="sep3"></div><span class="fade">我的主题</span></a></td>
-        <td width="34%" style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);" align="center"><a href="/collect/topics" class="dark" style="display: block;"><span class="bigger">${countCollect}</span><div class="sep3"></div><span class="fade">我的收藏</span></a></td>
-        <td width="33%" align="center"><a href="/follow/topics" class="dark" style="display: block;"><span class="bigger">2</span><div class="sep3"></div><span class="fade">特别关注</span></a></td>
-    </tr>
-</tbody></table>
-       </div>
-            <div class="panel-footer" style="background-color: white">
-              <div class="row">
-                <span class="col-md-6"><a href="/notification/list"><span id="n_count">${notReadNotice}</span> 条未读消息</a></span>
-                <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span>
-              </div>
-            </div>
-           </c:if>
-    </div>
+    <div class="panel panel-default" id="session"></div>
     <!-- 今日热议主题 -->
     <div class="panel panel-default">
-      <div class="panel-heading"><span style="color: #ccc;">今日热议主题</span> <!-- <a href="/top100">TOP 100 &gt;&gt;</a> --></div>
+      <div class="panel-heading"><span style="color: #ccc;">今日热议主题</span></div>
       <table class="table" style="font-size: 14px;">
         <tbody>
         <c:forEach var="item" items="${findHot}">
@@ -134,14 +89,36 @@
                 <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
             </td>
             <td><a href="/topic/${item.topicId}" style="color:#778087">${item.title}</a></td>
-            <%-- <td align="right" class="ago"><fmt:formatDate type="date" 
-                  value="${item.createDate}" /></td> --%>
           </tr>
           </c:forEach>
         </tbody>
       </table>
     </div>
-    <!-- 今日热议主题 -->
+    <!-- 今日等待回复的主题 -->
+    <div class="panel panel-default">
+      <div class="panel-heading"><span style="color: #ccc;">今日等待回复主题</span></div>
+      <table class="table" style="font-size: 14px;">
+        <tbody>
+        <c:forEach var="item" items="${findTodayNoReply}">
+          <tr>
+          <td width="24" valign="middle" align="center">
+                <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
+            </td>
+            <td><a href="/topic/${item.topicId}" style="color:#778087">${item.title}</a></td>
+          </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+    <!-- 积分榜 -->
+    <div class="panel panel-default">
+    <div class="panel-heading"><span style="color: #ccc;">积分榜  <a class="dark" href="/top100">TOP 100 &gt;&gt;</a></span></div>
+    <div class="panel-body">
+      <div class="row">
+      <div class="inner top100"></div>
+      </div>
+    </div>
+  </div>
     <!-- 最热标签 -->
     <div class="panel panel-default">
     <div class="panel-heading"><span style="color: #ccc;">最热标签</span></div>
@@ -192,16 +169,12 @@
 </div>
 </div>
 <jsp:include page="components/foot.jsp"></jsp:include>
-<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
 <script src="/resources/js/jquery.js"></script>
-<!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
-<!-- 分页 -->
-<!-- <script src="/resources/js/pagination2.js"></script> -->
 <script src="/resources/js/index.js"></script>
-<!-- 引入layui.js -->
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
+<script src="/resources/js/login_info.js"></script>
 <script type="text/javascript">
 var tab = "${tab}";//板块
 var ptab = "${ptab}";//父板块

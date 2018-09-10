@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Top100;
 
 public interface RootUserDao {
 
@@ -20,7 +21,7 @@ public interface RootUserDao {
 	 * @param score
 	 * @return
 	 */
-	List<RootUser> selectByScore(@Param("limit") Integer limit);
+	List<Top100> selectByScore(@Param("limit") Integer limit);
 	
 	/**
 	 * 通过用户ID查询单个用户
@@ -148,6 +149,23 @@ public interface RootUserDao {
 	 */
 	int updatePasswordByUserName(@Param("userName") String userName,@Param("password") String passwrod);
 	
+	
+	/**
+	 * 更新积分
+	 * @param score：积分值
+	 * @param userId：用户ID
+	 * @return
+	 */
+	int updateScore(@Param("score")Integer score,@Param("userId")Integer userId);
+	
+	/**
+	 * 更新积分
+	 * @param score:积分值
+	 * @param userName:昵称
+	 * @return
+	 */
+	int updateScoreByName(@Param("score")Integer score,@Param("userName")String userName);
+	
 	/**
 	 * 通过ID删除用户
 	 * @param userId
@@ -168,4 +186,10 @@ public interface RootUserDao {
 	 */
 	int countUserAll();
 
+	/**
+	 * 积分值
+	 * @param userId
+	 * @return
+	 */
+	int countScore(Integer userId);
 }

@@ -71,6 +71,8 @@ public class UserController extends BaseController{
 		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countReply = rootReplyService.countByName(name);//评论的数量
+		int countScore = rootUserService.countScore(user.getUserId());//积分
+		int countVisit = visitService.count(user.getUserId());//被访问的次数
 		//当用户为登录状态并且访问者与被访问者不是同一个人时，添加访问记录
 		if(user2 != null && user.getUserId() != user2.getUserId()) {
 			Visit visit = new Visit();
@@ -87,6 +89,8 @@ public class UserController extends BaseController{
 		model.addAttribute("countTopic", countTopic);
 		model.addAttribute("countCollect", countCollect);
 		model.addAttribute("countReply", countReply);
+		model.addAttribute("countScore", countScore);
+		model.addAttribute("countVisit", countVisit);
 		return "user/detail";
 	}
 	

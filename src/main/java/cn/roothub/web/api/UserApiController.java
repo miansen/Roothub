@@ -1,22 +1,24 @@
 package cn.roothub.web.api;
 
-import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cn.roothub.config.SiteConfig;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
-import cn.roothub.entity.Collect;
 import cn.roothub.entity.ReplyAndTopicByName;
 import cn.roothub.entity.RootTopic;
 import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Top100;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.FollowService;
 import cn.roothub.service.RootNoticeService;
@@ -24,6 +26,7 @@ import cn.roothub.service.RootReplyService;
 import cn.roothub.service.RootTopicService;
 import cn.roothub.service.RootUserService;
 import cn.roothub.service.VisitService;
+import cn.roothub.web.front.BaseController;
 
 /**
  * 
@@ -33,7 +36,7 @@ import cn.roothub.service.VisitService;
  * TODO
  */
 @RestController
-public class UserApiController {
+public class UserApiController extends BaseController{
 
 	@Autowired
 	private CollectService collectDaoService;
@@ -49,6 +52,8 @@ public class UserApiController {
 	private FollowService followService;
 	@Autowired
 	private VisitService visitService;
+	@Autowired
+	private SiteConfig citeConfig;
 	
 	/**
 	 * 用户的收藏
@@ -144,5 +149,68 @@ public class UserApiController {
 		return new Result<Integer>(true, p);
 	}
 	
+	/**
+	 * 用户发表话题或者回复的数量
+	 * @param type
+	 * @param userName
+	 * @return
+	 */
+	@RequestMapping(value = "/api/numberOfCountTopicsOrReply",method = RequestMethod.GET)
+	private Map<String,Object> numberOfCountTopicsOrReply(String type,String userName){
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(userName == null) {
+			map.put("success", false);
+			map.put("msg", "用户名不能为空");
+			return map;
+		}else if(type.equals("reply")){
+			int countByName = rootReplyService.countByName(userName);
+			map.put("success", true);
+			map.put("msg", countByName);
+			return map;
+		}else {
+			int countByUserName = rootTopicService.countByUserName(userName);
+			map.put("success", true);
+			map.put("msg", countByUserName);
+			return map;
+		}
+	}
 	
+	/**
+	 * Top100积分榜
+	 * @return
+	 */
+	@RequestMapping(value = "/api/user/top100",method = RequestMethod.GET)
+	private Result<List> top100(@RequestParam(value = "limit",defaultValue = "100")Integer limit){
+		List<Top100> scores = rootUserService.scores(limit);
+		return new Result<List>(true, scores);
+	}
+	
+	/**
+	 * 登录信息
+	 * @return
+	 */
+	@RequestMapping(value = "/api/user/logininfo",method = RequestMethod.GET)
+	private Result<Map> LoginInfo(HttpServletRequest request){
+		RootUser user = getUser(request);
+		HashMap<String,Object> map = new HashMap<>();
+		if(user == null) {
+			map.put("intro", citeConfig.getIntro());
+			return new Result<>(false, map);
+		}else {
+			map.put("userName", user.getUserName());
+			map.put("avatar", user.getAvatar());
+			map.put("signature", user.getSignature());
+			int countTopic = rootTopicService.countByUserName(user.getUserName());
+			int countCollect = collectDaoService.count(user.getUserId());
+			int countFollow = followService.countByUid(user.getUserId());
+			int countNotReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());
+			int countScore = rootUserService.countScore(user.getUserId());
+			map.put("countTopic", countTopic);
+			map.put("countCollect", countCollect);
+			map.put("countFollow", countFollow);
+			map.put("countNotReadNotice", countNotReadNotice);
+			map.put("countScore", countScore);
+			return new Result<Map>(true, map);
+		}
+	}
 }

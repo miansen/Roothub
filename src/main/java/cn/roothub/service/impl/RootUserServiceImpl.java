@@ -13,6 +13,7 @@ import cn.roothub.dao.RootUserDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.RootUserExecution;
 import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Top100;
 import cn.roothub.enums.InsertRootUserEnum;
 import cn.roothub.enums.UpdateRootUserEnum;
 import cn.roothub.exception.OperationFailedException;
@@ -76,7 +77,7 @@ public class RootUserServiceImpl implements RootUserService{
 	 * 积分榜用户
 	 */
 	@Override
-	public List<RootUser> scores(Integer limit) {
+	public List<Top100> scores(Integer limit) {
 		return rootUserDao.selectByScore(limit);
 	}
 
@@ -178,7 +179,7 @@ public class RootUserServiceImpl implements RootUserService{
 		RootUser user = new RootUser();
 		user.setUserName(username);
 		user.setPassword(password);
-		user.setScore(0);
+		user.setScore(10);
 		user.setEmail(email);
 		user.setUrl("https://www.roothub.cn/user/"+username);
 		//user.setThirdId("GitHub");
@@ -199,6 +200,20 @@ public class RootUserServiceImpl implements RootUserService{
 	@Override
 	public int countUserAll() {
 		return rootUserDao.countUserAll();
+	}
+
+	@Transactional
+	@Override
+	public void updateScore(Integer score, Integer userId) {
+		rootUserDao.updateScore(score, userId);
+	}
+
+	/**
+	 * 积分值
+	 */
+	@Override
+	public int countScore(Integer userId) {
+		return rootUserDao.countScore(userId);
 	}
 
 }

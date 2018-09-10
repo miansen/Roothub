@@ -54,7 +54,7 @@
 
 <div class="grade-box clearfix" style="display: flex !important;">
         <dl>
-            <dt>声望：</dt>
+            <dt>积分：</dt>
             <dd>10</dd>
         </dl>
         <dl>

@@ -166,13 +166,68 @@
             </if>
         </if>
      </select>
-      <!-- 查询热门话题 -->
+      <!-- 侧边栏-今日热门话题 -->
 	<select id="selectHot" resultType="RootTopic">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
 			root_topic
+		where TO_DAYS(create_date) = TO_DAYS(NOW())
 		order by reply_count desc, create_date desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     <!-- 侧边栏-今日热门话题 -->
+	<select id="selectTodayNoReply" resultType="RootTopic">
+		SELECT
+        <include refid="Base_Column_List"/>
+		FROM
+			root_topic
+		where 
+			reply_count = 0
+		and 
+			TO_DAYS(create_date) = TO_DAYS(NOW())
+		order by 
+			view_count desc, create_date desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+      <!-- 首页-热门话题 -->
+	<select id="selectIndexHot" resultType="RootTopic">
+		SELECT
+        <include refid="Base_Column_List"/>
+		FROM
+			root_topic
+		where 
+			DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[ <= ]]> date(create_date)
+		<if test='tab == "good"'>
+			and
+				good = 1
+			order by
+				reply_count desc,view_count desc,create_date desc
+		</if>
+		<if test='tab == "newest"'>
+			order by
+				create_date desc,reply_count desc,view_count desc
+		</if>
+		<if test='tab == "noReply"'>
+			and
+				reply_count = 0
+			order by 
+				view_count desc,create_date desc
+		</if>
+		<if test='tab == null or tab == "all"'>
+			order by
+				reply_count desc,view_count desc,create_date desc
+		</if>
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -400,6 +455,35 @@
         select count(1)
         from root_topic t
         where t.is_delete = 0 and t.tag = #{tag}
+    </select>
+    <!-- 首页-热门话题 -->
+    <select id="countIndexHot" resultType="java.lang.Integer">
+        SELECT
+        	COUNT(1)
+        from
+        	root_topic
+        where 
+			DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[ <= ]]> date(create_date)
+		<if test='tab == "good"'>
+			and
+				good = 1
+			order by
+				reply_count desc,view_count desc,create_date desc
+		</if>
+		<if test='tab == "newest"'>
+			order by
+				create_date desc,reply_count desc,view_count desc
+		</if>
+		<if test='tab == "noReply"'>
+			and
+				reply_count = 0
+			order by 
+				view_count desc,create_date desc
+		</if>
+		<if test='tab == null or tab == "all"'>
+			order by
+				reply_count desc,view_count desc,create_date desc
+		</if>
     </select>
     <!-- 分页查询所有标签 -->
   <select id="selectAllTag" resultType="Tag">

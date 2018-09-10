@@ -50,17 +50,31 @@
         </if>
 	</select>
 	<!-- 积分榜用户 -->
-	<select id="selectByScore" resultType="RootUser">
+	<select id="selectByScore" resultType="Top100">
 		SELECT
-		<include refid="Base_Column_List"/>
+		 a.user_name,
+		 a.score,
+		 a.avatar,
+		 (SELECT COUNT(1) from root_topic b where a.user_name = b.author) count_topic,
+		 (SELECT COUNT(1) from root_reply c where a.user_id = c.reply_author_id) count_reply
 		FROM
-			root_user
+			root_user a
 		ORDER BY
-			score desc,create_date desc
+			a.score desc,a.create_date desc
 		<if test="limit != null">
             limit #{limit,jdbcType=INTEGER}
         </if>
 	</select>
+	<update id="updateScore">
+		update root_user
+		set score = score+#{score}
+		where user_id = #{userId}
+	</update>
+	<update id="updateScoreByName">
+		update root_user
+		set score = score+#{score}
+		where user_name = #{userName}
+	</update>
 	<!-- 通过用户ID查询单个用户 -->
 	<select id="selectByUserId" resultType="RootUser" parameterType="java.lang.Integer">
 		SELECT
@@ -244,4 +258,13 @@
 		WHERE
 			user_name = #{userName}
 	</delete>
+	<!-- 积分值 -->
+	<select id="countScore" resultType="java.lang.Integer">
+		SELECT 
+			score
+		FROM
+			root_user
+		WHERE
+			user_id = #{userId}
+	</select>
 </mapper>

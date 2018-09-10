@@ -583,3 +583,27 @@ a.tab:active, a.tab:link, a.tab:visited {
     text-decoration: none;
     word-break: break-all;
 }
+.panel-body .inner .user_avatar img {
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+}
+
+.panel-body .inner .table td, .table th {
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.panel .top100{
+	padding-left: 20px;
+}
+.panel .top100 ol li {
+	list-style-type:decimal;
+}
+.top_score {
+    color: gray;
+    padding: 2px;
+    margin-right: 10px;
+}

@@ -78,19 +78,22 @@ public class IndexController extends BaseController{
 		PageDataBody<RootTopic> page;
 		if(ptab == null || ptab.equals("all")) {
 			page = rootTopicService.page(p, 50, tab,null);
+		}else if(ptab != null && ptab.equals("hot")){
+			page = rootTopicService.findIndexHot(p, 50, tab);
 		}else {
 			page = rootTopicService.page(p, 50, tab,ptab);
 		}
 		List<RootSection> sectionAll = rootSectionService.findAll();
 		List<Tab> ptabList = tabService.selectAll();
 		List<RootTopic> findHot = rootTopicService.findHot(0, 10);//热门话题榜
+		List<RootTopic> findTodayNoReply = rootTopicService.findTodayNoReply(0, 10);//今日等待回复的话题
 		PageDataBody<Tag> tag = rootTopicService.findByTag(1, 10);//最热标签
 		int countUserAll = rootUserService.countUserAll();//注册会员的数量
 		int countAllTopic = rootTopicService.countAllTopic(null);//所有话题的数量
 		int countAllReply = rootReplyService.countAll();//所有评论的数量
 		RootUser user = null;
     	String cookie = CookieAndSessionUtil.getCookie(request, "user");
-    	int notReadNotice = 0;//未读通知的数量
+    	/*int notReadNotice = 0;//未读通知的数量
     	int countCollect = 0;//用户收藏话题的数量
     	int countTopicByUserName = 0;//用户发布的主题的数量
     	RootUser user2 = getUser(request);
@@ -100,22 +103,23 @@ public class IndexController extends BaseController{
     		countCollect = collectDaoService.count(user2.getUserId());
     		countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());
     		request.setAttribute("user", user2);
-    	}
+    	}*/
     	BaseEntity baseEntity = new BaseEntity();
     	request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
+		request.setAttribute("findTodayNoReply", findTodayNoReply);
 		request.setAttribute("sectionAll", sectionAll);
 		request.setAttribute("ptabList", ptabList);
 		request.setAttribute("tab", tab);
 		request.setAttribute("ptab", ptab);
-		request.setAttribute("notReadNotice", notReadNotice);
+		//request.setAttribute("notReadNotice", notReadNotice);
 		request.setAttribute("tag", tag);
 		request.setAttribute("countUserAll", countUserAll);
 		request.setAttribute("countAllTopic", countAllTopic);
 		request.setAttribute("countAllReply", countAllReply);
-		request.setAttribute("countCollect", countCollect);
-		request.setAttribute("countTopicByUserName", countTopicByUserName);
+		//request.setAttribute("countCollect", countCollect);
+		//request.setAttribute("countTopicByUserName", countTopicByUserName);
 		return "index";
 	}
 	
@@ -279,6 +283,15 @@ public class IndexController extends BaseController{
     	request.setAttribute("pageLike", pageLike);
     	request.setAttribute("search", search);
     	return "search";
+    }
+    
+    /**
+     * Top100积分榜
+     * @return
+     */
+    @RequestMapping(value = "/top100")
+    private String top100() {
+    	return "top100";
     }
     
     /**

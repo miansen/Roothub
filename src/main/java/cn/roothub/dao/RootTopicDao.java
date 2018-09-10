@@ -74,12 +74,28 @@ public interface RootTopicDao {
     List<RootTopic> selectAllNoReply(@Param("start") Integer start, @Param("limit") Integer limit,@Param("ptab") String ptab);
     
     /**
-     * 查询热门话题话题
+     * 侧边栏-今日热门话题
      * @param start
      * @param limit
      * @return
      */
     List<RootTopic> selectHot(@Param("start") Integer start, @Param("limit") Integer limit);
+    
+    /**
+     * 侧边栏-今日等待回复的话题
+     * @param start
+     * @param limit
+     * @return
+     */
+    List<RootTopic> selectTodayNoReply(@Param("start") Integer start, @Param("limit") Integer limit);
+    
+    /**
+     * 首页-热门话题
+     * @param start
+     * @param limit
+     * @return
+     */
+    List<RootTopic> selectIndexHot(@Param("start") Integer start, @Param("limit") Integer limit,@Param("tab")String tab);
     
     /**
      * 根据作者昵称分页查询所有话题
@@ -200,6 +216,12 @@ public interface RootTopicDao {
      * @return
      */
     int countByTag(String tag);
+    
+    /**
+     * 首页-热门话题
+     * @return
+     */
+    int countIndexHot(@Param("tab")String tab);
     
     /**
 	 * 分页查询所有标签

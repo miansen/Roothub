@@ -51,4 +51,22 @@ public class RootUserDaoTest extends BaseTest{
 		int insertByUserNameAndPassword = rootUserDao.insertByUserNameAndPassword("public", "123");
 		System.out.println(insertByUserNameAndPassword);
 	}
+	
+	/**
+	 * 更新积分
+	 * @throws Exception
+	 */
+	@Test
+	public void updateScoreTest() throws Exception{
+		rootUserDao.updateScore(1, 1);
+	}
+	
+	/**
+	 * 更新积分
+	 * @throws Exception
+	 */
+	@Test
+	public void updateScoreByNameTest() throws Exception{
+		rootUserDao.updateScoreByName(3, "public");
+	}
 }

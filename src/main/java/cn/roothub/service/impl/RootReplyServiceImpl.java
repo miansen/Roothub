@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.roothub.dao.RootReplyDao;
+import cn.roothub.dao.RootUserDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.RootReplyExecution;
 import cn.roothub.entity.ReplyAndTopicByName;
@@ -32,6 +33,8 @@ public class RootReplyServiceImpl implements RootReplyService{
 	
 	@Autowired
 	private RootReplyDao rootReplyDao;
+	@Autowired
+	private RootUserDao rootUserDao;
 	
 	/**
 	 * 查询全部评论
@@ -80,6 +83,7 @@ public class RootReplyServiceImpl implements RootReplyService{
 			if(insert <= 0) {
 				throw new OperationFailedException("评论话题失败！");
 			}else {
+				rootUserDao.updateScore(10, reply.getReplyAuthorId());//回复积10分
 				return new RootReplyExecution(reply.getReplyAuthorName(), InsertRootReplyEnum.SUCCESS, reply);
 						
 			}

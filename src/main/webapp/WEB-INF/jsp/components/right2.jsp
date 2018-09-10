@@ -43,7 +43,7 @@
             <div class="panel-footer" style="background-color: white">
               <div class="row">
                 <span class="col-md-6"><a href="/notification/list"><span id="n_count">${notReadNotice}</span> 条未读消息</a></span>
-                <span class="col-md-6 text-right">声望：<a href="/top100">0</a></span>
+                <span class="col-md-6 text-right">积分：<a href="/top100">0</a></span>
               </div>
             </div>
     </div>

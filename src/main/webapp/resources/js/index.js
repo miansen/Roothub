@@ -1,7 +1,7 @@
 /*var tab = "${tab}";
-  var url = "/?tab="+tab+"&"*/
-  $(function(){
-    $("#shouye").addClass("active");
+var url = "/?tab="+tab+"&"*/
+$(function(){
+  $("#shouye").addClass("active");
    /*  function session(){
       $.ajax({
         type:"get",
@@ -68,7 +68,7 @@
     };
     //session();
     section();
-   /* $(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);*/
+    /* $(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);*/
     
     function changeSectionHref(){
     	$("#section li:eq(0) a").attr("href","/?tab=all&ptab="+ptab);
@@ -78,38 +78,38 @@
     }
     changeSectionHref();
     function changePtabClass(){
-        if(ptab == "hot"){
-        	$("#ptab li:eq(1) a").addClass("tab_current");
-        }else if(ptab == "pl"){
-        	$("#ptab li:eq(2) a").addClass("tab_current");
-        }else if(ptab == "db"){
-        	$("#ptab li:eq(3) a").addClass("tab_current");
-        }else if(ptab == "fe"){
-        	$("#ptab li:eq(4) a").addClass("tab_current");
-        }else if(ptab == "play"){
-        	$("#ptab li:eq(5) a").addClass("tab_current");
-        }else if(ptab == "creative"){
-        	$("#ptab li:eq(6) a").addClass("tab_current");
-        }else if(ptab == "host"){
-        	$("#ptab li:eq(7) a").addClass("tab_current");
-        }else if(ptab == "dn"){
-        	$("#ptab li:eq(8) a").addClass("tab_current");
-        }else if(ptab == "blog"){
-        	$("#ptab li:eq(9) a").addClass("tab_current");
-        }else if(ptab == "tea"){
-        	$("#ptab li:eq(10) a").addClass("tab_current");
-        }else if(ptab == "news"){
-        	$("#ptab li:eq(11) a").addClass("tab_current");
-        }else if(ptab == "qna"){
-        	$("#ptab li:eq(12) a").addClass("tab_current");
-        }else{
-        	$("#ptab li:eq(0) a").addClass("tab_current");
-        }
-      };  
-      changePtabClass();
-    function showScroll(){
-		$(window).scroll( function(){ 
-			var scrollValue=$(window).scrollTop();
+      if(ptab == "hot"){
+       $("#ptab li:eq(1) a").addClass("tab_current");
+     }else if(ptab == "pl"){
+       $("#ptab li:eq(2) a").addClass("tab_current");
+     }else if(ptab == "db"){
+       $("#ptab li:eq(3) a").addClass("tab_current");
+     }else if(ptab == "fe"){
+       $("#ptab li:eq(4) a").addClass("tab_current");
+     }else if(ptab == "play"){
+       $("#ptab li:eq(5) a").addClass("tab_current");
+     }else if(ptab == "creative"){
+       $("#ptab li:eq(6) a").addClass("tab_current");
+     }else if(ptab == "host"){
+       $("#ptab li:eq(7) a").addClass("tab_current");
+     }else if(ptab == "dn"){
+       $("#ptab li:eq(8) a").addClass("tab_current");
+     }else if(ptab == "blog"){
+       $("#ptab li:eq(9) a").addClass("tab_current");
+     }else if(ptab == "tea"){
+       $("#ptab li:eq(10) a").addClass("tab_current");
+     }else if(ptab == "news"){
+       $("#ptab li:eq(11) a").addClass("tab_current");
+     }else if(ptab == "qna"){
+       $("#ptab li:eq(12) a").addClass("tab_current");
+     }else{
+       $("#ptab li:eq(0) a").addClass("tab_current");
+     }
+   };  
+   changePtabClass();
+   function showScroll(){
+    $(window).scroll( function(){ 
+     var scrollValue=$(window).scrollTop();
 			//console.log(scrollValue);
 			if (scrollValue > 200)
 			{
@@ -118,13 +118,41 @@
 				$('#back2Top').css("display","none");
 			}
 		});	
-	}
-	showScroll();
-	$("#back2Top").click(function(){
+  }
+  showScroll();
+  $("#back2Top").click(function(){
 		//缓慢效果回到顶部
 		$('body,html').animate({scrollTop:0},500);
 		return false;
 		//直接回到顶部
 		//window.scroll(0,0);
 	});
-  });
+
+  /*积分榜*/
+  (function () {
+    $.ajax({
+     url:"/api/user/top100",
+     type:"get",
+     dataType:"json",
+     data:{limit:10},
+     success:function(data){
+      if(data.success == true){
+    	  $(".panel .top100").append('\
+    			  <ol></ol>\
+    	  ');
+    	  for(var i = 0;i < data.data.length;i++){
+    		  $(".panel .top100 ol").append('\
+    				  <li>\
+    				  <span class="top_score">'+data.data[i].score+'</span>\
+    				  <span class="user_name"><a href="/user/'+data.data[i].userName+'">'+data.data[i].userName+'</a></span>\
+    				  </li>\
+    		  ');
+    	  }
+      }
+     },
+     error:function(data){
+    	 
+ 	}
+    });
+  })();
+});

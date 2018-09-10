@@ -5,6 +5,7 @@ import java.util.List;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.RootUserExecution;
 import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Top100;
 
 /**
  * RootUserService
@@ -57,7 +58,15 @@ public interface RootUserService {
 	 * @param limit
 	 * @return
 	 */
-	List<RootUser> scores(Integer limit);
+	List<Top100> scores(Integer limit);
+	
+	/**
+	 * 更新积分
+	 * @param score:积分值
+	 * @param userId:用户ID
+	 * @return
+	 */
+	void updateScore(Integer score,Integer userId);
 	
 	/**
 	 * 分页查询所有用户，倒序
@@ -98,4 +107,11 @@ public interface RootUserService {
 	 * @return
 	 */
 	int countUserAll();
+	
+	/**
+	 * 积分值
+	 * @param userId
+	 * @return
+	 */
+	int countScore(Integer userId);
 }

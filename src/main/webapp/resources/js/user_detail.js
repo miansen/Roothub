@@ -433,6 +433,7 @@ function topicQnaList(pageNumber) {
 		}
 	});
 }
+
 /*分页*/
 $(document).on("click",".layui-laypage a",function(){
 	var p = $(this).data("page");
@@ -467,6 +468,7 @@ $(document).on("click",".layui-laypage a",function(){
   	//console.log($(this).attr('class')+index);
   });
 });
+
 /*最后回复用户*/
 function lastReplyAuthor(lastReplyAuthor){
 	if(lastReplyAuthor){
@@ -475,3 +477,29 @@ function lastReplyAuthor(lastReplyAuthor){
 		return "";
 	}
 };
+
+/**
+ * 用户发表话题或者回复的数量
+ * @param type:类型 topic(话题)、reply(回复)
+ * @param userName:昵称
+ * @returns
+ */
+function countTopicByUserName(type,userName){
+	var ztsl = 0;
+	$.ajax({
+		url:"/api/numberOfCountTopicsOrReply",
+		type:"get",
+		async:false,
+		dataType:"json",
+		data:{type:type,userName:userName},
+		success:function (data){
+			ztsl = data.msg;
+		},
+		error:function(data){
+
+		}
+	});
+	return ztsl;
+}
+//console.log(countTopicByUserName("reply","public"));
+

@@ -29,4 +29,22 @@ public class RootTopicDaoTest extends BaseTest {
 		int countLike = rootTopicDao.countLike("测试");
 		System.out.println(countLike);
 	}
+	
+	@Test
+	public void selectIndexHotTest() throws Exception{
+		List<RootTopic> selectIndexHot = rootTopicDao.selectIndexHot(0, 50,"good");
+		System.out.println(selectIndexHot);
+	}
+	
+	@Test
+	public void countIndexHot() throws Exception{
+		int countIndexHot = rootTopicDao.countIndexHot("good");
+		System.out.println(countIndexHot);
+	}
+	
+	@Test
+	public void selectTodayNoReplyTest() throws Exception{
+		List<RootTopic> selectTodayNoReply = rootTopicDao.selectTodayNoReply(0, 10);
+		System.out.println(selectTodayNoReply);
+	}
 }

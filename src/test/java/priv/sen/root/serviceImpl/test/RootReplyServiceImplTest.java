@@ -56,4 +56,14 @@ public class RootReplyServiceImplTest extends BaseTest{
 		PageDataBody<ReplyAndTopicByName> page = rootReplyService.findAllByNameAndTopic("void", 1, 20);
 		logger.debug(page.toString());
 	}
+	
+	/**
+	 * 统计评论数
+	 * @throws Exception
+	 */
+	@Test
+	public void countByNameTest() throws Exception{
+		int countByName = rootReplyService.countByName("public");
+		System.out.println(countByName);
+	}
 }

@@ -1,15 +1,22 @@
 package priv.sen.root.redis.test;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -30,6 +37,8 @@ public class RedisUtilTest extends BaseTest{
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private RedisTemplate<String, List<String>> redisTemplate;
 	
 	@Test
 	public void testString() throws Exception{
@@ -212,5 +221,42 @@ public class RedisUtilTest extends BaseTest{
 		//opsForValue.set("poo", "bool");
 		String string = opsForValue.get("7e95d539-f027-490f-b4ec-222af37dfc23");
 		logger.debug(string);
+	}
+	
+	@Test
+	public void test11() throws Exception{
+		List<String> list = new ArrayList<String>();
+		ListOperations<String, List<String>> opsForList = redisTemplate.opsForList();
+		list.add("123");
+		list.add("456");
+		opsForList.leftPush("redisList", list);
+		List<String> leftPop = opsForList.leftPop("redisList");
+		logger.debug(leftPop.toString());
+	}
+	
+	@Test
+	public void test12() throws Exception{
+		List<String> list = new ArrayList<String>();
+		Map<String,Object> map = new HashedMap();
+		map.put("aa","bb"); 
+		HashOperations<String, Object, Object> opsForHash = redisTemplate.opsForHash();
+		opsForHash.putAll("redisMap", map);
+		Map<Object, Object> entries = opsForHash.entries("redisMap");
+		List<Object> values = opsForHash.values("redisMap");
+		Set<Object> keys = opsForHash.keys("redisMap");
+		String get = (String) opsForHash.get("redisMap", "key1");
+		logger.debug("entries=="+entries);
+		logger.debug("values=="+values);
+		logger.debug("keys=="+keys);
+		logger.debug("get=="+get);
+	}
+	
+	@Test
+	public void test13() {
+		HashOperations<String, Object, Object> opsForHash = redisTemplate.opsForHash();
+		List<Object> values = opsForHash.values("feedback");
+		Map<Object, Object> entries = opsForHash.entries("feedback");
+		logger.debug(values.toString());
+		logger.debug(entries.toString());
 	}
 }

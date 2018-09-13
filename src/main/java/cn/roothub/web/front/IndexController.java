@@ -1,5 +1,6 @@
 package cn.roothub.web.front;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletOutputStream;
@@ -9,6 +10,9 @@ import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +42,7 @@ import cn.roothub.service.TabService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.PtabUtil;
+import cn.roothub.util.StringUtil;
 
 @Controller // 标注这是一个控制类，类名不能和注解名一样
 //@RequestMapping("/root") // 访问父路径
@@ -58,7 +63,7 @@ public class IndexController extends BaseController{
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private StringRedisTemplate stringRedisTemplate;
+	private RedisTemplate<String,List<String>> redisTemplate;
 	@Autowired
 	private TabService tabService;
 	@Autowired
@@ -337,6 +342,34 @@ public class IndexController extends BaseController{
     @RequestMapping(value = "/advertise")
     private String advertise() {
     	return "advertise";
+    }
+    
+    /**
+     * 反馈建议
+     * @return
+     */
+    @RequestMapping(value = "/feedback")
+    private String feedback() {
+    	return "feedback";
+    }
+    
+    @RequestMapping(value = "/feedback/add",method=RequestMethod.POST)
+    @ResponseBody
+    private Map feedbackAdd(String info) {
+    	Map<String,Object> redisMap = new HashedMap();
+    	Map<String,Object> returnMap = new HashedMap();
+    	HashOperations<String, String, Object> opsForHash = redisTemplate.opsForHash();
+    	if(info == null) {
+    		returnMap.put("success", false);
+    		returnMap.put("msg", "建议不能为空");
+			return returnMap;
+    	}else {
+    		redisMap.put(StringUtil.getUUID(), info);
+    		opsForHash.putAll("feedback", redisMap);
+    		returnMap.put("success", true);
+    		returnMap.put("msg", "感谢您宝贵的建议!");
+    		return returnMap;
+    	}
     }
     
     /**

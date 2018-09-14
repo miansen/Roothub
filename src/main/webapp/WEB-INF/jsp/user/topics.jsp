@@ -31,13 +31,11 @@
                 <p>
                   <span><a href="/user/${item.author}">${item.author}</a></span>
                   <span class="hidden-sm hidden-xs">•</span>
-                  <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
-                  <span class="hidden-sm hidden-xs">•</span>
                   <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
                   <span>•</span>
-                  <span><fmt:formatDate type="both" 
-                  dateStyle="medium" timeStyle="short" 
-                  value="${item.createDate}" /></span>
+                  <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+                  <span class="hidden-sm hidden-xs">•</span>           
+                  <span>${baseEntity.formatDate(item.createDate)}</span>
                 </p>
               </div>
             </div>

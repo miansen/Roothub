@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.dto.RootUserExecution;
@@ -103,39 +104,19 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping(value = "/user/topics", method = RequestMethod.GET)
 	private String topics(Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
-		/*if(name == null) {
-			return "error-page/404.jsp";
-		}
-		RootUser user = null;
-		user = rootUserService.findByName(name);
-		if(user == null) {
-			return "error-page/404.jsp";
-		}*/
 		RootUser user2 = getUser(request);//当前用户
 		if(user2 == null) return "error-page/404.jsp";
 		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
-		
-		/*int countTopic = rootTopicService.countByUserName(user2.getUserName());//主题数量
-		int countCollect = collectDaoService.count(user2.getUserId());//用户收藏话题的数量
-		int countReply = rootReplyService.countByName(user2.getUserName());//评论的数量
-*/		
 		int countCollect = collectDaoService.count(user2.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user2.getUserName());//未读通知的数量
-		
+		BaseEntity baseEntity = new BaseEntity();
+		model.addAttribute("baseEntity", baseEntity);
 		model.addAttribute("user", user2);
-		//model.addAttribute("user2", user2);
 		model.addAttribute("topicPage", topicPage);
-		/*model.addAttribute("countTopic", countTopic);
-		model.addAttribute("countCollect", countCollect);
-		model.addAttribute("countReply", countReply);*/
 		request.setAttribute("countCollect", countCollect);
 		request.setAttribute("countTopicByUserName", countTopicByUserName);
 		request.setAttribute("notReadNotice", notReadNotice);
-		//model.addAttribute("countCollect", getCountCollect(request));
-		//model.addAttribute("countTopicByUserName", getCountTopicByUserName(request));
-		//model.addAttribute("notReadNotice", getNotReadNotice(request));
-		//model.addAttribute("myUser", getUser(request));
 		return "user/topics";
 	}
 	

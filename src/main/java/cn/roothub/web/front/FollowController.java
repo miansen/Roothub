@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.Follow;
@@ -136,6 +138,8 @@ public class FollowController extends BaseController{
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
 		PageDataBody<RootTopic> pageTopic = followService.pageTopic(p, 20, user.getUserId());
+		BaseEntity baseEntity = new BaseEntity();
+		request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("countCollect", countCollect);
 		request.setAttribute("countTopicByUserName", countTopicByUserName);
 		request.setAttribute("notReadNotice", notReadNotice);

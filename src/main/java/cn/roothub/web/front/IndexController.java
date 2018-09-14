@@ -98,17 +98,6 @@ public class IndexController extends BaseController{
 		int countAllReply = rootReplyService.countAll();//所有评论的数量
 		RootUser user = null;
     	String cookie = CookieAndSessionUtil.getCookie(request, "user");
-    	/*int notReadNotice = 0;//未读通知的数量
-    	int countCollect = 0;//用户收藏话题的数量
-    	int countTopicByUserName = 0;//用户发布的主题的数量
-    	RootUser user2 = getUser(request);
-    	if(user2 != null) {
-    		//user = rootUserService.findByName(Base64Util.decode(cookie));
-    		notReadNotice = rootNoticeService.countNotReadNotice(user2.getUserName());
-    		countCollect = collectDaoService.count(user2.getUserId());
-    		countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());
-    		request.setAttribute("user", user2);
-    	}*/
     	BaseEntity baseEntity = new BaseEntity();
     	request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("page", page);
@@ -118,13 +107,10 @@ public class IndexController extends BaseController{
 		request.setAttribute("ptabList", ptabList);
 		request.setAttribute("tab", tab);
 		request.setAttribute("ptab", ptab);
-		//request.setAttribute("notReadNotice", notReadNotice);
 		request.setAttribute("tag", tag);
 		request.setAttribute("countUserAll", countUserAll);
 		request.setAttribute("countAllTopic", countAllTopic);
 		request.setAttribute("countAllReply", countAllReply);
-		//request.setAttribute("countCollect", countCollect);
-		//request.setAttribute("countTopicByUserName", countTopicByUserName);
 		return "index";
 	}
 	
@@ -159,21 +145,6 @@ public class IndexController extends BaseController{
 		if(findByEmail != null) {
 			return new Result<>(false, "邮箱已存在");
 		}
-		/*RootUser rootUser = new RootUser();
-		rootUser.setUserName(username);
-		rootUser.setPassword(password);
-		rootUser.setScore(0);
-		rootUser.setEmail(email);
-		rootUser.setThirdId(UUID.randomUUID().toString());
-		rootUser.setReceiveMsg(false);
-		rootUser.setCreateDate(new Date());
-		rootUser.setUpdateDate(new Date());
-		rootUser.setIsBlock(false);
-		rootUser.setStatusCd("1000");
-		rootUser.setUserType("2");
-		rootUser.setAvatar("69290780aaafb00aa37ff2a61342dded.png");
-		rootUser.setSignature("这家伙很懒，什么都没留下");
-		RootUserExecution save = rootUserService.save(rootUser);*/
 		RootUserExecution save = rootUserService.createUser(username, password, email);
 		return new Result<RootUserExecution>(true, save);
 	}
@@ -249,16 +220,6 @@ public class IndexController extends BaseController{
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     @ResponseBody
     private Map<String,String> session(HttpServletRequest request) {
-    	/*RootUser user = null;
-    	String cookie = CookieAndSessionUtil.getCookie(request, "user");
-    	if(cookie != null) {
-    		user = rootUserService.findByName(Base64Util.decode(cookie));
-    		return new Result<RootUser>(true, user);
-    	}
-    	return new Result<>(false, "no session");*/
-    	//RootUser user = getUser(request);
-    	//if(user != null) return new Result<Map>(true, user);
-    	//return new Result<>(false, "no session");
     	RootUser user = getUser(request);
     	HashedMap map = new HashedMap();
     	if(user != null) {

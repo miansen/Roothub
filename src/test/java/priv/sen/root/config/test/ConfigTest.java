@@ -1,4 +1,4 @@
-package cn.roothub.config.test;
+package priv.sen.root.config.test;
 
 import java.util.UUID;
 

@@ -83,6 +83,13 @@ server {
 
 ```
 
+### 启动后报404的解决方法
+
+修改项目的访问路径
+
+![](https://i.loli.net/2018/09/14/5b9b13e47b25c.png)
+
+
 ## 反馈
 
 [issues](https://github.com/miansen/Roothub/issues)

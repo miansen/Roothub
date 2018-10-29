@@ -68,13 +68,15 @@ public class IndexController extends BaseController{
 	private TabService tabService;
 	@Autowired
 	private SiteConfig siteConfig;
+	@Autowired
+	private BaseEntity baseEntity;
 	
 	/**
 	 * 首页
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)//访问子路径
+	@RequestMapping(value = "/", method = RequestMethod.GET,produces = "application/json; charset=utf-8")//访问子路径
 	private String index(HttpServletRequest request,HttpServletResponse response,
 						 @RequestParam(value = "tab", defaultValue = "all") String tab,
             			 @RequestParam(value = "p", defaultValue = "1") Integer p,
@@ -98,8 +100,8 @@ public class IndexController extends BaseController{
 		int countAllReply = rootReplyService.countAll();//所有评论的数量
 		RootUser user = null;
     	String cookie = CookieAndSessionUtil.getCookie(request, "user");
-    	BaseEntity baseEntity = new BaseEntity();
-    	request.setAttribute("baseEntity", baseEntity);
+    	//BaseEntity baseEntity = new BaseEntity();
+    	//request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
 		request.setAttribute("findTodayNoReply", findTodayNoReply);
@@ -244,8 +246,8 @@ public class IndexController extends BaseController{
     		return "search";
     	}
     	PageDataBody<RootTopic> pageLike = rootTopicService.pageLike(p, 50, search);
-    	BaseEntity baseEntity = new BaseEntity();
-    	request.setAttribute("baseEntity", baseEntity);
+    	//BaseEntity baseEntity = new BaseEntity();
+    	//request.setAttribute("baseEntity", baseEntity);
     	request.setAttribute("pageLike", pageLike);
     	request.setAttribute("search", search);
     	return "search";
@@ -314,21 +316,23 @@ public class IndexController extends BaseController{
     	return "feedback";
     }
     
-    @RequestMapping(value = "/feedback/add",method=RequestMethod.POST)
+    @RequestMapping(value = "/feedback/add",method=RequestMethod.POST,produces = "application/json; charset=utf-8")
     @ResponseBody
     private Map feedbackAdd(String info) {
     	Map<String,Object> redisMap = new HashedMap();
     	Map<String,Object> returnMap = new HashedMap();
+    	List<String> list = new ArrayList();
     	HashOperations<String, String, Object> opsForHash = redisTemplate.opsForHash();
     	if(info == null) {
     		returnMap.put("success", false);
     		returnMap.put("msg", "建议不能为空");
 			return returnMap;
     	}else {
+    		list.add("感谢您宝贵的建议!");
     		redisMap.put(StringUtil.getUUID(), info);
     		opsForHash.putAll("feedback", redisMap);
     		returnMap.put("success", true);
-    		returnMap.put("msg", "感谢您宝贵的建议!");
+    		returnMap.put("msg", list);
     		return returnMap;
     	}
     }

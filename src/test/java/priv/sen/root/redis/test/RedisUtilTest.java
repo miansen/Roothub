@@ -1,5 +1,6 @@
 package priv.sen.root.redis.test;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -258,5 +259,13 @@ public class RedisUtilTest extends BaseTest{
 		Map<Object, Object> entries = opsForHash.entries("feedback");
 		logger.debug(values.toString());
 		logger.debug(entries.toString());
+	}
+	
+	@Test
+	public void test14() throws Exception {
+		String str2 = "周前";
+		byte[] bytes2 = str2.getBytes();
+		str2 = new String(bytes2,"UTF-8");
+		System.out.println(str2);
 	}
 }

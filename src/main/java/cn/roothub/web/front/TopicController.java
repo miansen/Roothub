@@ -81,8 +81,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 			countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 			notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//统计未读通知的数量
 		}
-		BaseEntity baseEntity = new BaseEntity();
-		model.addAttribute("baseEntity", baseEntity);
+		//BaseEntity baseEntity = new BaseEntity();
+		//model.addAttribute("baseEntity", baseEntity);
 		model.addAttribute("topic", topic);
 		model.addAttribute("replyPage", replyPage);
 		model.addAttribute("user", user);
@@ -193,8 +193,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/topic/tag/{name}", method = RequestMethod.GET)
 	private String tag(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p) {
 		PageDataBody<RootTopic> pageByTag = rootTopicService.pageByTag(name, p, 20);
-		BaseEntity baseEntity = new BaseEntity();
-		model.addAttribute("baseEntity", baseEntity);
+		//BaseEntity baseEntity = new BaseEntity();
+		//model.addAttribute("baseEntity", baseEntity);
 		model.addAttribute("tagName", name);
 		model.addAttribute("pageByTag", pageByTag);
 		return "tag/detail";

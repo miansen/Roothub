@@ -1,7 +1,11 @@
 package cn.roothub.base;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class BaseEntity {
 
 	private static final long MINUTE = 60 * 1000;
@@ -15,8 +19,18 @@ public class BaseEntity {
 	 * 格式化日期
 	 * @param date
 	 * @return
+	 * @throws Exception 
 	 */
-	public static String formatDate(Date date) {
+	public static String formatDate(Date date) throws Exception {
+		
+		String str = "个月前";
+		byte[] bytes = str.getBytes();
+		str = new String(bytes,"UTF-8");
+		
+		String str2 = "周前";
+		byte[] bytes2 = str2.getBytes();
+		str2 = new String(bytes2,"UTF-8");
+		
 		if (date == null)
 			return "";
 
@@ -24,9 +38,9 @@ public class BaseEntity {
 		if (offset > YEAR) {
 			return (offset / YEAR) + "年前";
 		} else if (offset > MONTH) {
-			return (offset / MONTH) + "个月前";
+			return (offset / MONTH) + str;
 		} else if (offset > WEEK) {
-			return (offset / WEEK) + "周前";
+			return (offset / WEEK) + str2;
 		} else if (offset > DAY) {
 			return (offset / DAY) + "天前";
 		} else if (offset > HOUR) {

@@ -60,7 +60,8 @@
                 <span>•</span>
                 <%-- <span><fmt:formatDate type="date" 
                   value="${item.createDate}" /></span> --%>
-                  <span>${baseEntity.formatDate(item.createDate)}</span>
+                  <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
+                  <span class="formate-date">${item.createDate}</span>
                   <c:if test="${item.lastReplyAuthor != null}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
@@ -175,6 +176,7 @@
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
 <script src="/resources/js/login_info.js"></script>
+<script src="/resources/js/formatDate.js"></script>
 <script type="text/javascript">
 var tab = "${tab}";//板块
 var ptab = "${ptab}";//父板块

@@ -50,7 +50,8 @@
 					<%-- <span><fmt:formatDate type="both"
 					dateStyle="medium" timeStyle="short"
 					value="${topic.createDate}" /></span> --%>
-					<span>${baseEntity.formatDate(topic.createDate)}</span>
+					<%-- <span>${baseEntity.formatDate(topic.createDate)}</span> --%>
+					<span class="formate-date">${topic.createDate}</span>
 					<span>•</span>
 					<span>${topic.viewCount}次点击</span>
 				</p>
@@ -128,6 +129,8 @@
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
 <script src="/resources/js/login_info.js"></script>
+<script src="/resources/js/formatDate.js"></script>
+<script src="/resources/js/topic/detail.js"></script>
 <script type="text/javascript">
 	/* 获取登录信息 */
 	$.ajax({

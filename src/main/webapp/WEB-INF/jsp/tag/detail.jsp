@@ -40,7 +40,8 @@
           <span class="hidden-sm hidden-xs">•</span>
           <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
           <span>•</span>
-          <span>${baseEntity.formatDate(item.createDate)}</span>
+          <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
+          <span class="formate-date">${item.createDate}</span>
           <c:if test="${item.lastReplyAuthor != null}">
           <span>•</span>
           <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
@@ -69,6 +70,8 @@
 <script src="/resources/js/goTop.js"></script>
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
+<script src="/resources/js/formatDate.js"></script>
+<script src="/resources/js/tag/detail.js"></script>
 <script type="text/javascript">
 	$("#biaoqian").addClass("active");
 	//var url = "/topic/tag/${tagName}?";

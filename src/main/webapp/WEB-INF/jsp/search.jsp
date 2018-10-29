@@ -47,7 +47,8 @@
                 <span>•</span>
                 <%-- <span><fmt:formatDate type="date" 
                   value="${item.createDate}" /></span> --%>
-                  <span>${baseEntity.formatDate(item.createDate)}</span>
+                  <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
+                  <span class="formate-date">${item.createDate}</span>
                   <c:if test="${item.lastReplyAuthor != null}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
@@ -74,16 +75,13 @@
 	</div>
 </div>
 <jsp:include page="components/foot.jsp"></jsp:include>
-<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
 <script src="/resources/js/jquery.js"></script>
-<!-- 引入 Bootstrap -->
 <script src="/resources/js/bootstrap.min.js"></script>
-<!-- 分页 -->
-<!-- <script src="/resources/js/pagination2.js"></script> -->
-<!-- 引入layui.js -->
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
 <script src="/resources/js/goTop.js"></script>
+<script src="/resources/js/formatDate.js"></script>
+<script src="/resources/js/search/search.js"></script>
 <script type="text/javascript">
   var search = "${search}";
   //var url = "/search?s="+search+"&";

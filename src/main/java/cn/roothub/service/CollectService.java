@@ -2,7 +2,7 @@ package cn.roothub.service;
 
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Collect;
-import cn.roothub.entity.RootTopic;
+import cn.roothub.entity.Topic;
 
 /**
  * @author sen
@@ -19,7 +19,7 @@ public interface CollectService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<RootTopic> page(Integer pageNumber, Integer pageSize,Integer uid);
+	PageDataBody<Topic> page(Integer pageNumber, Integer pageSize,Integer uid);
 	
 	/**
      * 添加收藏

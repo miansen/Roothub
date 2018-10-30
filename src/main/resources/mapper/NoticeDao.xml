@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <!-- Mybatis会动态实现daoImpl,不过需要在mapper文件夹下创建BookDao.xml和AppointmentDao.xml
+    spring-dao.xml文件会自动扫描mapper文件夹下的配置 -->
+    <!-- 
+    1.namespace是该xml对应的接口的全名
+    2.select和update中的id对应方法名
+    3.resultType是返回值类型
+    4.parameterType是参数类型(可选)
+    5.#{...}填写的是方法的参数 
+    6.parameterType:输入参数类型
+    7.resultType:输出参数类型
+  -->
+  <mapper namespace="cn.roothub.dao.NoticeDao">
+   <!-- 目的：为dao接口方法提供sql语句配置 -->
+   <resultMap id="BaseResultMap" type="cn.roothub.entity.Notice">
+    <id column="notice_id" jdbcType="INTEGER" property="noticeId"/>
+    <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle"/>
+    <result column="is_read" jdbcType="BIT" property="isRead"/>
+    <result column="notice_author_id" jdbcType="INTEGER" property="noticeAuthorId"/>
+    <result column="notice_author_name" jdbcType="VARCHAR" property="noticeAuthorName"/>
+    <result column="target_author_id" jdbcType="INTEGER" property="targetAuthorId"/>
+    <result column="target_author_name" jdbcType="VARCHAR" property="targetAuthorName"/>
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="notice_action" jdbcType="VARCHAR" property="noticeAction"/>
+    <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
+    <result column="topic_author_id" jdbcType="INTEGER" property="topicAuthorId"/>
+    <result column="topic_section_id" jdbcType="INTEGER" property="topicSectionId"/>
+    <result column="notice_content" jdbcType="LONGVARCHAR" property="noticeContent"/>
+    <result column="status_cd" jdbcType="VARCHAR" property="statusCd"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    notice_id, notice_title, is_read, notice_author_id, notice_author_name, target_author_id, target_author_name, create_date, 
+    update_date,notice_action,topic_id,topic_author_id,topic_section_id,notice_content,status_cd
+  </sql>
+  <!-- 查询所有通知列表 -->
+  <select id="selectAll" resultType="Notice">
+    SELECT
+    a.*,
+    b.title,
+    c.avatar
+    FROM
+    notice a,topic b,user c
+    where a.target_author_name = #{author}
+    and a.topic_id = b.topic_id
+    and a.notice_author_name = c.user_name
+    order by a.create_date desc
+    <if test="start != null">
+      limit #{start,jdbcType=INTEGER}
+      <if test="limit != null">
+        ,#{limit,jdbcType=INTEGER}
+      </if>
+    </if>
+  </select>
+  <!-- 根据通知ID查询通知 -->
+  <select id="selectByNoticeId" resultType="Notice">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    notice
+    where notice_id = #{noticeId}
+  </select>
+  <!-- 添加通知 -->
+  <insert id="insert" parameterType="cn.roothub.entity.Notice" keyProperty="notice_id" useGeneratedKeys="true">
+    insert into 
+    notice 
+    (notice_id, 
+    notice_title, 
+    is_read, 
+    notice_author_id, 
+    notice_author_name, 
+    target_author_id, 
+    target_author_name, 
+    create_date, 
+    update_date,
+    notice_action,
+    topic_id,
+    topic_author_id,
+    topic_section_id,
+    notice_content,
+    status_cd)
+    values 
+    (#{noticeId}, 
+    #{noticeTitle}, 
+    #{isRead}, 
+    #{noticeAuthorId}, 
+    #{noticeAuthorName}, 
+    #{targetAuthorId}, 
+    #{targetAuthorName}, 
+    #{createDate}, 
+    #{updateDate},
+    #{noticeAction}, 
+    #{topicId}, 
+    #{topicAuthorId}, 
+    #{topicSectionId},
+    #{noticeContent},  
+    #{statusCd})
+  </insert>
+  <!-- 根据昵称更新通知 -->
+  <update id="updateByAuthorName">
+    update notice
+    set is_read = 1
+    where target_author_name = #{authorName}
+  </update>
+  <!-- 根据通知ID删除通知 -->
+  <delete id="deleteByNoticeId" parameterType="java.lang.Integer">
+    delete from notice
+    where notice_id = #{noticeId,jdbcType=INTEGER}
+  </delete>
+  
+  <!-- 根据昵称统计未读通知 -->
+  <select id="countNotReadByAuthor" resultType="java.lang.Integer">
+    select count(notice_id)
+    from notice t
+    where t.is_read = 0
+    and t.target_author_name = #{authorName,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据昵称统计所有通知 -->
+  <select id="countByAuthor" resultType="java.lang.Integer">
+    select count(notice_id)
+    from notice t
+    where t.target_author_name = #{authorName,jdbcType=VARCHAR}
+  </select>
+</mapper>

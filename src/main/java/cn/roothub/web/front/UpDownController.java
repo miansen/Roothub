@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import cn.roothub.dto.DMLExecution;
 import cn.roothub.dto.Result;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.entity.UpDown;
 import cn.roothub.service.UpDownService;
 
@@ -28,7 +28,7 @@ public class UpDownController extends BaseController{
 	
 	@RequestMapping(value = "/vote",method = RequestMethod.GET)
 	private Result<DMLExecution> up(Integer tid,boolean vote,HttpServletRequest request){
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(user == null) return new Result<>(false,"未登录");
 		UpDown upDown = new UpDown();
 		upDown.setUid(user.getUserId());

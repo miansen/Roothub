@@ -28,13 +28,13 @@
         id, uid, tid, up_down,create_date, is_delete
     </sql>
     <!-- 分页查询 -->
-    <!-- <select id="select" resultType="RootUser">
+    <!-- <select id="select" resultType="User">
         select
         	b.user_id,
         	b.user_name,
         	b.signature,
         	b.avatar 
-        from visit a,root_user b
+        from visit a,user b
         where a.vid = #{vid}
         and a.is_delete = '0'
         and a.uid = b.user_id

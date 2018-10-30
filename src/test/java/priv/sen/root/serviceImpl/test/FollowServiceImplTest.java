@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Follow;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 import cn.roothub.service.FollowService;
 import priv.sen.root.dao.test.BaseTest;
 
@@ -28,7 +28,7 @@ public class FollowServiceImplTest extends BaseTest{
 	 */
 	@Test
 	public void pageTest() throws Exception{
-		PageDataBody<RootUser> page = followService.page(1, 10, 1);
+		PageDataBody<User> page = followService.page(1, 10, 1);
 		logger.info(page.toString());
 	}
 	
@@ -92,7 +92,7 @@ public class FollowServiceImplTest extends BaseTest{
 	 */
 	@Test
 	public void followMeTest() throws Exception{
-		PageDataBody<RootUser> followMe = followService.followMe(1, 10, 1);
+		PageDataBody<User> followMe = followService.followMe(1, 10, 1);
 		logger.info(followMe.toString());
 	}
 	
@@ -102,7 +102,7 @@ public class FollowServiceImplTest extends BaseTest{
 	 */
 	@Test
 	public void pageTopicTest() throws Exception{
-		PageDataBody<RootTopic> pageTopic = followService.pageTopic(1, 20, 1);
+		PageDataBody<Topic> pageTopic = followService.pageTopic(1, 20, 1);
 		logger.info(pageTopic.toString());
 	}
 }

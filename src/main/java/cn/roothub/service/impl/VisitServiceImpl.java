@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.roothub.dao.VisitDao;
 import cn.roothub.dto.DMLExecution;
 import cn.roothub.dto.PageDataBody;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Visit;
 import cn.roothub.enums.InsertEnum;
 import cn.roothub.enums.UpdateEnum;
@@ -30,9 +30,9 @@ public class VisitServiceImpl implements VisitService {
 	 * 分页查询访问记录
 	 */
 	@Override
-	public PageDataBody<RootUser> page(Integer vid, Integer pageNumber, Integer pageSize) {
+	public PageDataBody<User> page(Integer vid, Integer pageNumber, Integer pageSize) {
 		int totalRow = visitDao.count(vid);
-		List<RootUser> list = visitDao.select(vid, (pageNumber - 1) * pageSize, pageSize);
+		List<User> list = visitDao.select(vid, (pageNumber - 1) * pageSize, pageSize);
 		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
 	}
 

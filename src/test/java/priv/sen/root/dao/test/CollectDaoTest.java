@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.roothub.dao.CollectDao;
 import cn.roothub.entity.Collect;
-import cn.roothub.entity.RootTopic;
+import cn.roothub.entity.Topic;
 
 public class CollectDaoTest extends BaseTest{
 
@@ -24,7 +24,7 @@ public class CollectDaoTest extends BaseTest{
 	 */
 	@Test
 	public void selectAllByCollectTest() throws Exception{
-		List<RootTopic> selectAllByCollect = collectDao.selectAllByCollect(0, 20, 1);
+		List<Topic> selectAllByCollect = collectDao.selectAllByCollect(0, 20, 1);
 		logger.info(selectAllByCollect.toString());
 	}
 	

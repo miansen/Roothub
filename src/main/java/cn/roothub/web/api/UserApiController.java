@@ -16,15 +16,15 @@ import cn.roothub.config.SiteConfig;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.ReplyAndTopicByName;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Top100;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.FollowService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootReplyService;
-import cn.roothub.service.RootTopicService;
-import cn.roothub.service.RootUserService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.ReplyService;
+import cn.roothub.service.TopicService;
+import cn.roothub.service.UserService;
 import cn.roothub.service.VisitService;
 import cn.roothub.web.front.BaseController;
 
@@ -41,13 +41,13 @@ public class UserApiController extends BaseController{
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	@Autowired
-	private RootUserService rootUserService;
+	private UserService rootUserService;
 	@Autowired
-	private RootReplyService rootReplyService;
+	private ReplyService rootReplyService;
 	@Autowired
 	private FollowService followService;
 	@Autowired
@@ -63,11 +63,11 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/collect",method = RequestMethod.GET)
 	private Result<PageDataBody> collectList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		RootUser user = rootUserService.findByName(name);
+		User user = rootUserService.findByName(name);
 		if(user == null) {
 			return new Result<PageDataBody>(true, "用户不存在");
 		}
-		PageDataBody<RootTopic> page = collectDaoService.page(p, 20, user.getUserId());
+		PageDataBody<Topic> page = collectDaoService.page(p, 20, user.getUserId());
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -79,7 +79,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/topic",method = RequestMethod.GET)
 	private Result<PageDataBody> topicList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootTopic> page = rootTopicService.pageByAuthor(p, 20, name);
+		PageDataBody<Topic> page = rootTopicService.pageByAuthor(p, 20, name);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -103,7 +103,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/follow/topic",method = RequestMethod.GET)
 	private Result<PageDataBody> followList(@RequestParam(value = "uid",defaultValue = "-1") Integer uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootTopic> page = followService.pageTopic(p, 20, uid);
+		PageDataBody<Topic> page = followService.pageTopic(p, 20, uid);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -115,7 +115,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/fans",method = RequestMethod.GET)
 	private Result<PageDataBody> fansList(@RequestParam(value = "fid",defaultValue = "-1") Integer fid,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootUser> page = followService.followMe(p, 20, fid);
+		PageDataBody<User> page = followService.followMe(p, 20, fid);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -127,7 +127,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/topic/qna",method = RequestMethod.GET)
 	private  Result<PageDataBody> qnaTopicList(@RequestParam(value = "name",defaultValue = "-1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootTopic> page = rootTopicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
+		PageDataBody<Topic> page = rootTopicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -140,7 +140,7 @@ public class UserApiController extends BaseController{
 	@RequestMapping(value = "/api/user/visit",method = RequestMethod.GET)
 	private Result<PageDataBody> visitList(@RequestParam(value = "vid",defaultValue = "-1") Integer vid,
 										   @RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<RootUser> page = visitService.page(vid, p, 10);
+		PageDataBody<User> page = visitService.page(vid, p, 10);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -191,7 +191,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/logininfo",method = RequestMethod.GET)
 	private Result<Map> LoginInfo(HttpServletRequest request){
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		HashMap<String,Object> map = new HashMap<>();
 		if(user == null) {
 			map.put("intro", citeConfig.getIntro());

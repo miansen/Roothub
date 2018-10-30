@@ -2,8 +2,8 @@ package cn.roothub.service;
 
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Follow;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 
 public interface FollowService {
 
@@ -14,7 +14,7 @@ public interface FollowService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<RootUser> page(Integer pageNumber, Integer pageSize,Integer uid);
+	PageDataBody<User> page(Integer pageNumber, Integer pageSize,Integer uid);
 	
 	/**
 	 * 关注人的主题
@@ -23,7 +23,7 @@ public interface FollowService {
 	 * @param uid
 	 * @return
 	 */
-	PageDataBody<RootTopic> pageTopic(Integer pageNumber,Integer pageSize,Integer uid);
+	PageDataBody<Topic> pageTopic(Integer pageNumber,Integer pageSize,Integer uid);
 	
 	/**
 	 * 关注我的人
@@ -32,7 +32,7 @@ public interface FollowService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<RootUser> followMe(Integer pageNumber, Integer pageSize,Integer fid);
+	PageDataBody<User> followMe(Integer pageNumber, Integer pageSize,Integer fid);
 	
 	/**
 	 * 添加关注

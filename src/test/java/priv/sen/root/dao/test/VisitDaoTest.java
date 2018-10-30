@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import com.google.gson.Gson;
 import cn.roothub.dao.VisitDao;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Visit;
 
 public class VisitDaoTest extends BaseTest {
@@ -42,7 +42,7 @@ public class VisitDaoTest extends BaseTest {
 	 */
 	@Test
 	public void selectTest() throws Exception{
-		List<RootUser> select = visitDao.select(3, 0, 10);
+		List<User> select = visitDao.select(3, 0, 10);
 		Gson gson = new Gson();
 		String json = gson.toJson(select);
 		logger.debug(json);

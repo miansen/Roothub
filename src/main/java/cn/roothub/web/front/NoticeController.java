@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cn.roothub.dto.PageDataBody;
-import cn.roothub.entity.RootNotice;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Notice;
+import cn.roothub.entity.User;
 import cn.roothub.service.CollectService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootTopicService;
-import cn.roothub.service.RootUserService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.TopicService;
+import cn.roothub.service.UserService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 
@@ -25,11 +25,11 @@ public class NoticeController extends BaseController{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	@Autowired
-	private RootUserService rootUserService;
+	private UserService rootUserService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
 	private CollectService collectDaoService;
 	
@@ -55,7 +55,7 @@ public class NoticeController extends BaseController{
 		if(user == null) {
 			return "error-page/500";
 		}*/
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(user == null) {
 			return "error-page/500";
 		}
@@ -63,7 +63,7 @@ public class NoticeController extends BaseController{
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//统计未读通知的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
-		PageDataBody<RootNotice> page = rootNoticeService.pageByAuthor(p, 20, user.getUserName());//查询所有通知
+		PageDataBody<Notice> page = rootNoticeService.pageByAuthor(p, 20, user.getUserName());//查询所有通知
 		rootNoticeService.updateIsRead(user.getUserName());//将通知都置为已读
 		request.setAttribute("countByAuthor", countByAuthor);
 		request.setAttribute("notReadNotice", notReadNotice);

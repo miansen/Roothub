@@ -26,18 +26,18 @@ import cn.roothub.base.BaseEntity;
 import cn.roothub.config.SiteConfig;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
-import cn.roothub.dto.RootUserExecution;
-import cn.roothub.entity.RootSection;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.dto.UserExecution;
+import cn.roothub.entity.Section;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Tab;
 import cn.roothub.entity.Tag;
 import cn.roothub.service.CollectService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootReplyService;
-import cn.roothub.service.RootSectionService;
-import cn.roothub.service.RootTopicService;
-import cn.roothub.service.RootUserService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.ReplyService;
+import cn.roothub.service.SectionService;
+import cn.roothub.service.TopicService;
+import cn.roothub.service.UserService;
 import cn.roothub.service.TabService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
@@ -51,15 +51,15 @@ public class IndexController extends BaseController{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private RootUserService rootUserService;
+	private UserService rootUserService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
-	private RootSectionService rootSectionService;
+	private SectionService rootSectionService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	@Autowired
-	private RootReplyService rootReplyService;
+	private ReplyService rootReplyService;
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
@@ -82,7 +82,7 @@ public class IndexController extends BaseController{
             			 @RequestParam(value = "p", defaultValue = "1") Integer p,
             			 @RequestParam(value = "ptab", defaultValue = "def") String ptab) {
 		ptab = PtabUtil.getPtab(request,response,ptab);
-		PageDataBody<RootTopic> page;
+		PageDataBody<Topic> page;
 		if(ptab == null || ptab.equals("all")) {
 			page = rootTopicService.page(p, 50, tab,null);
 		}else if(ptab != null && ptab.equals("hot")){
@@ -90,15 +90,15 @@ public class IndexController extends BaseController{
 		}else {
 			page = rootTopicService.page(p, 50, tab,ptab);
 		}
-		List<RootSection> sectionAll = rootSectionService.findAll();
+		List<Section> sectionAll = rootSectionService.findAll();
 		List<Tab> ptabList = tabService.selectAll();
-		List<RootTopic> findHot = rootTopicService.findHot(0, 10);//热门话题榜
-		List<RootTopic> findTodayNoReply = rootTopicService.findTodayNoReply(0, 10);//今日等待回复的话题
+		List<Topic> findHot = rootTopicService.findHot(0, 10);//热门话题榜
+		List<Topic> findTodayNoReply = rootTopicService.findTodayNoReply(0, 10);//今日等待回复的话题
 		PageDataBody<Tag> tag = rootTopicService.findByTag(1, 10);//最热标签
 		int countUserAll = rootUserService.countUserAll();//注册会员的数量
 		int countAllTopic = rootTopicService.countAllTopic(null);//所有话题的数量
 		int countAllReply = rootReplyService.countAll();//所有评论的数量
-		RootUser user = null;
+		User user = null;
     	String cookie = CookieAndSessionUtil.getCookie(request, "user");
     	//BaseEntity baseEntity = new BaseEntity();
     	//request.setAttribute("baseEntity", baseEntity);
@@ -126,12 +126,12 @@ public class IndexController extends BaseController{
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<RootUserExecution> register(@RequestParam("username") String username,
+	private Result<UserExecution> register(@RequestParam("username") String username,
 											   @RequestParam("password") String password, 
 											   @RequestParam("email") String email,
 											   HttpServletRequest request) {
 		if(username == null || username.equals("") && username.length() <= 0) {
-			return new Result<RootUserExecution>(false, "用户名不能为空");
+			return new Result<UserExecution>(false, "用户名不能为空");
 		}
 		if(password == null || password.equals("") && password.length() <= 0) {
 			return new Result<>(false, "密码不能为空");
@@ -139,16 +139,16 @@ public class IndexController extends BaseController{
 		if(email == null || email.equals("") && email.length() <= 0) {
 			return new Result<>(false, "邮箱不能为空");
 		}
-		RootUser findByName = rootUserService.findByName(username);
+		User findByName = rootUserService.findByName(username);
 		if(findByName != null) {
 			return new Result<>(false, "用户已存在");
 		}
-		RootUser findByEmail = rootUserService.findByEmail(email);
+		User findByEmail = rootUserService.findByEmail(email);
 		if(findByEmail != null) {
 			return new Result<>(false, "邮箱已存在");
 		}
-		RootUserExecution save = rootUserService.createUser(username, password, email);
-		return new Result<RootUserExecution>(true, save);
+		UserExecution save = rootUserService.createUser(username, password, email);
+		return new Result<UserExecution>(true, save);
 	}
 	
 	/**
@@ -169,10 +169,10 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    private Result<RootUser> login(@RequestParam("username") String username,
+    private Result<User> login(@RequestParam("username") String username,
 								   @RequestParam("password") String password,HttpServletRequest request,
 								   HttpServletResponse response){
-    	RootUser user = null;
+    	User user = null;
     	user = rootUserService.findByUserNameAndPassword(username, password);
     	if(user == null) {
     		return new Result<>(false, "用户名或者密码错误");
@@ -188,7 +188,7 @@ public class IndexController extends BaseController{
     		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(), Base64Util.encode(user.getThirdAccessToken()), siteConfig.getCookieConfig().getMaxAge(), siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
     		//设置session
     		CookieAndSessionUtil.setSession(request, "user", user);
-    		return new Result<RootUser>(true, user);
+    		return new Result<User>(true, user);
     	}
     }
 
@@ -222,7 +222,7 @@ public class IndexController extends BaseController{
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     @ResponseBody
     private Map<String,String> session(HttpServletRequest request) {
-    	RootUser user = getUser(request);
+    	User user = getUser(request);
     	HashedMap map = new HashedMap();
     	if(user != null) {
     		map.put("success", true);
@@ -245,7 +245,7 @@ public class IndexController extends BaseController{
     	if(search == null || search.equals("")) {
     		return "search";
     	}
-    	PageDataBody<RootTopic> pageLike = rootTopicService.pageLike(p, 50, search);
+    	PageDataBody<Topic> pageLike = rootTopicService.pageLike(p, 50, search);
     	//BaseEntity baseEntity = new BaseEntity();
     	//request.setAttribute("baseEntity", baseEntity);
     	request.setAttribute("pageLike", pageLike);
@@ -343,9 +343,9 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/excel")
     private String excel(HttpServletRequest request) {
-    	List<RootTopic> row1 = rootTopicService.findAll();//全部话题
+    	List<Topic> row1 = rootTopicService.findAll();//全部话题
 		List<Tab> row2 = tabService.selectAll();//父板块
-    	List<RootSection> row3 = rootSectionService.findAll();//子版块
+    	List<Section> row3 = rootSectionService.findAll();//子版块
     	request.setAttribute("row1", row1);
     	request.setAttribute("row2", row2);
     	request.setAttribute("row3", row3);
@@ -354,13 +354,13 @@ public class IndexController extends BaseController{
     
     @RequestMapping(value = "/excel/download")
     private void excel02(HttpServletResponse response) throws Exception {
-    	List<RootTopic> row1 = rootTopicService.findAll();
+    	List<Topic> row1 = rootTopicService.findAll();
 		//List<RootTopic> row2 = rootTopicService.findHot(1, 50);
 		List<Tab> row2 = tabService.selectAll();
-    	List<RootSection> row3 = rootSectionService.findAll();
-		List<RootTopic> rows1 = CollUtil.newArrayList(row1);
+    	List<Section> row3 = rootSectionService.findAll();
+		List<Topic> rows1 = CollUtil.newArrayList(row1);
 		List<Tab> rows2 = CollUtil.newArrayList(row2);
-		List<RootSection> rows3 = CollUtil.newArrayList(row3);
+		List<Section> rows3 = CollUtil.newArrayList(row3);
 		//List<List<? extends Object>> rows3 = CollUtil.newArrayList(row1,row2,row3);
 		ExcelWriter writer = ExcelUtil.getWriter("d:/writeTest04.xlsx","话题");
 		writer.addHeaderAlias("topicId", "话题标识");

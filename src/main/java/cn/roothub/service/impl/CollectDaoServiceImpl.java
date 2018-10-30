@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import cn.roothub.dao.CollectDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Collect;
-import cn.roothub.entity.RootTopic;
+import cn.roothub.entity.Topic;
 import cn.roothub.service.CollectService;
 
 @Service
@@ -20,9 +20,9 @@ public class CollectDaoServiceImpl implements CollectService{
 	 * 分页查询收藏的话题
 	 */
 	@Override
-	public PageDataBody<RootTopic> page(Integer pageNumber, Integer pageSize,Integer uid) {
+	public PageDataBody<Topic> page(Integer pageNumber, Integer pageSize,Integer uid) {
 		int total = collectDao.count(uid);
-		List<RootTopic> list = collectDao.selectAllByCollect((pageNumber - 1) * pageSize, pageSize, uid);
+		List<Topic> list = collectDao.selectAllByCollect((pageNumber - 1) * pageSize, pageSize, uid);
 		return new PageDataBody<>(list, pageNumber, pageSize, total);
 	}
 

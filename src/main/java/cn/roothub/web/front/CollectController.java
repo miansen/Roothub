@@ -13,11 +13,11 @@ import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.Collect;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 import cn.roothub.service.CollectService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootTopicService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.TopicService;
 
 /**
  * @author sen
@@ -31,9 +31,9 @@ public class CollectController extends BaseController{
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	/**
 	 * 收藏话题列表
 	 * @param request
@@ -43,14 +43,14 @@ public class CollectController extends BaseController{
 	 */
 	@RequestMapping(value = "/collect/topics",method = RequestMethod.GET)
 	private String list(HttpServletRequest request,@RequestParam(value = "p",defaultValue = "1")Integer p) {
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(user == null) {
 			return "error-page/500";
 		}
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
-		PageDataBody<RootTopic> page = collectDaoService.page(p, 20, user.getUserId());
+		PageDataBody<Topic> page = collectDaoService.page(p, 20, user.getUserId());
 		BaseEntity baseEntity = new BaseEntity();
 		request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("countCollect", countCollect);
@@ -70,7 +70,7 @@ public class CollectController extends BaseController{
 	@RequestMapping(value = "/collect/isCollect",method = RequestMethod.GET)
 	@ResponseBody
 	private Result<Integer> isCollect(Integer tid,HttpServletRequest request){
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		int collect = 0;
 		if(user != null) {
 			collect = collectDaoService.isCollect(user.getUserId(), tid);

@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.collections.map.HashedMap;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -21,13 +19,11 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.JsonUtil;
 import priv.sen.root.dao.test.BaseTest;
@@ -40,7 +36,7 @@ public class RedisUtilTest extends BaseTest{
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private RedisTemplate<String, List<String>> redisTemplate;
-	
+    
 	@Test
 	public void testString() throws Exception{
 		System.out.println("测试String类型开始======");
@@ -68,7 +64,7 @@ public class RedisUtilTest extends BaseTest{
 	
 	@Test
 	public void Test01() throws Exception{
-		RootUser rootUser = new RootUser();
+		User rootUser = new User();
 		rootUser.setUserName("void");
 		rootUser.setPassword("123456");
 		rootUser.setUserSex("男");
@@ -93,13 +89,13 @@ public class RedisUtilTest extends BaseTest{
 		JSONObject jsonObject = new JSONObject();
 		JSON json = (JSON) JSON.toJSON(string);
 		System.out.println("json=="+json);
-		RootUser javaObject = JSON.toJavaObject(json, RootUser.class);
+		User javaObject = JSON.toJavaObject(json, User.class);
 		System.out.println("javaObject=="+javaObject);
 	}
 	
 	@Test
 	public void Test02() throws Exception{
-		RootUser rootUser = new RootUser();
+		User rootUser = new User();
 		rootUser.setUserName("aavoid");
 		rootUser.setPassword("123456");
 		rootUser.setUserSex("男");
@@ -136,7 +132,7 @@ public class RedisUtilTest extends BaseTest{
 		logger.debug(string);
 		Gson gson = new Gson();
 		//String json = gson.toJson(str);
-		RootUser fromJson = gson.fromJson(str, new TypeToken<RootUser>() {}.getType());
+		User fromJson = gson.fromJson(str, new TypeToken<User>() {}.getType());
 		logger.debug(fromJson.toString());
 	}
 	
@@ -145,13 +141,13 @@ public class RedisUtilTest extends BaseTest{
 		String str = "userName:aaa";
 		Gson gson = new Gson();
 		String json = gson.toJson(str);
-		RootUser fromJson = gson.fromJson(json, new TypeToken<RootUser>() {}.getType());
+		User fromJson = gson.fromJson(json, new TypeToken<User>() {}.getType());
 		logger.debug(fromJson.toString());
 	}
 	
 	@Test
 	public void test05() throws Exception{
-		RootUser rootUser = new RootUser();
+		User rootUser = new User();
 		rootUser.setUserName("aavoid");
 		rootUser.setPassword("123456");
 		rootUser.setUserSex("男");
@@ -177,7 +173,7 @@ public class RedisUtilTest extends BaseTest{
 		logger.debug(json);
 		//json转对象
 		//RootUser fromJson = gson.fromJson(json, RootUser.class);
-		RootUser fromJson = JsonUtil.jsonToObject(json, RootUser.class);
+		User fromJson = JsonUtil.jsonToObject(json, User.class);
 		logger.debug(fromJson.toString());
 		logger.debug(fromJson.getUserName());
 	}

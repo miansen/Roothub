@@ -9,13 +9,13 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 
 import cn.roothub.config.SiteConfig;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.service.CollectService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootReplyService;
-import cn.roothub.service.RootSectionService;
-import cn.roothub.service.RootTopicService;
-import cn.roothub.service.RootUserService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.ReplyService;
+import cn.roothub.service.SectionService;
+import cn.roothub.service.TopicService;
+import cn.roothub.service.UserService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.JsonUtil;
@@ -26,15 +26,15 @@ public class BaseController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private RootUserService rootUserService;
+	private UserService rootUserService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
-	private RootSectionService rootSectionService;
+	private SectionService rootSectionService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	@Autowired
-	private RootReplyService rootReplyService;
+	private ReplyService rootReplyService;
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
@@ -42,7 +42,7 @@ public class BaseController {
 	@Autowired
 	private SiteConfig siteConfig;
 
-	public RootUser getUser(HttpServletRequest request) {
+	public User getUser(HttpServletRequest request) {
 
 		String token = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
 
@@ -52,9 +52,9 @@ public class BaseController {
 				ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
 				String redisUser = opsForValue.get(token);
 				if (redisUser != null)
-					return JsonUtil.jsonToObject(redisUser, RootUser.class);
+					return JsonUtil.jsonToObject(redisUser, User.class);
 			} else {
-				RootUser sessionUser = CookieAndSessionUtil.getSession(request, "user");
+				User sessionUser = CookieAndSessionUtil.getSession(request, "user");
 				return sessionUser;
 			}
 		} catch (Exception e) {
@@ -73,7 +73,7 @@ public class BaseController {
 	}
 
 	public String isLogin(HttpServletRequest request, String errorPage, String suesscePage) {
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if (user == null) {
 			return errorPage;
 		}

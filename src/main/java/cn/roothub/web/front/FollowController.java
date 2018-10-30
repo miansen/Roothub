@@ -13,12 +13,12 @@ import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.Follow;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.FollowService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootTopicService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.TopicService;
 
 /**
  * 
@@ -35,9 +35,9 @@ public class FollowController extends BaseController{
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	
 	/**
 	 * 是否已关注
@@ -48,7 +48,7 @@ public class FollowController extends BaseController{
 	@RequestMapping(value = "/follow/isFollow",method = RequestMethod.GET)
 	@ResponseBody
 	private Result<Integer> isFollow(Integer fid,HttpServletRequest request){
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(user == null) return new Result<>(false, "未关注");
 		if(user.getUserId() == fid) {
 			return new Result<>(false, "同一用户");
@@ -132,12 +132,12 @@ public class FollowController extends BaseController{
 	 */
 	@RequestMapping(value = "/follow/topics",method = RequestMethod.GET)
 	private String followTopics(HttpServletRequest request,@RequestParam(value = "p",defaultValue = "1")Integer p) {
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(user == null) return "error-page/404.jsp";
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
-		PageDataBody<RootTopic> pageTopic = followService.pageTopic(p, 20, user.getUserId());
+		PageDataBody<Topic> pageTopic = followService.pageTopic(p, 20, user.getUserId());
 		BaseEntity baseEntity = new BaseEntity();
 		request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("countCollect", countCollect);

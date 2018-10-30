@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import cn.roothub.dto.DMLExecution;
 import cn.roothub.dto.PageDataBody;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Visit;
 
 /**
@@ -25,7 +25,7 @@ public interface VisitService {
 	 * @param pageSize 每页显示的数据量
 	 * @return
 	 */
-	PageDataBody<RootUser> page(Integer vid,Integer pageNumber,Integer pageSize);
+	PageDataBody<User> page(Integer vid,Integer pageNumber,Integer pageSize);
 	
 	/**
 	 * 添加访问记录

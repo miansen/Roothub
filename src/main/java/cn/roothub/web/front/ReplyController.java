@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.roothub.dto.Result;
-import cn.roothub.dto.RootReplyExecution;
-import cn.roothub.entity.RootNotice;
-import cn.roothub.entity.RootReply;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootReplyService;
-import cn.roothub.service.RootTopicService;
-import cn.roothub.service.RootUserService;
+import cn.roothub.dto.ReplyExecution;
+import cn.roothub.entity.Notice;
+import cn.roothub.entity.Reply;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.ReplyService;
+import cn.roothub.service.TopicService;
+import cn.roothub.service.UserService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 
@@ -30,23 +30,23 @@ public class ReplyController extends BaseController{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private RootReplyService rootReplyService;
+	private ReplyService rootReplyService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
-	private RootUserService rootUserService;
+	private UserService rootUserService;
 	
 	@RequestMapping(value = "/reply/save", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<RootReplyExecution> save(HttpServletRequest request, 
+	private Result<ReplyExecution> save(HttpServletRequest request, 
 			@RequestParam("topicId") Integer topicId,
 			@RequestParam("content") String content){
 		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
 		//RootUser user = rootUserService.findByName(Base64Util.decode(cookie));//当前用户
-			RootUser user = getUser(request);
-			RootReply reply = new RootReply();
+			User user = getUser(request);
+			Reply reply = new Reply();
 			reply.setTopicId(topicId);//话题id
 			reply.setReplyContent(content);//回复内容
 			reply.setCreateDate(new Date());//回复时间
@@ -61,15 +61,15 @@ public class ReplyController extends BaseController{
 			reply.setReplyType("");
 			reply.setReplyReadCount(0);
 			reply.setStatusCd("1000");//回复状态 1000:有效 1100:无效 1200:未生效
-			RootReplyExecution save = rootReplyService.save(reply);//添加回复
-			RootTopic findByTopicId = rootTopicService.findByTopicId(topicId);
+			ReplyExecution save = rootReplyService.save(reply);//添加回复
+			Topic findByTopicId = rootTopicService.findByTopicId(topicId);
 			findByTopicId.setReplyCount(findByTopicId.getReplyCount()+1);//回复量+1
 			findByTopicId.setLastReplyAuthor(user.getUserName());//最后回复人昵称
 			findByTopicId.setLastReplyTime(new Date());//最后回复时间
 			rootTopicService.updateTopic(findByTopicId);//更新话题
 			//回复者与话题作者不是同一个人的时候发送通知
 			if(!user.getUserName().equals(findByTopicId.getAuthor())) {
-				RootNotice notice = new RootNotice();
+				Notice notice = new Notice();
 				//notice.setNoticeTitle(noticeTitle);//通知标题
 				notice.setIsRead(false);//是否已读：0:默认 1:已读
 				notice.setNoticeAuthorId(user.getUserId());//发起通知用户ID
@@ -83,6 +83,6 @@ public class ReplyController extends BaseController{
 				notice.setStatusCd("1000");//通知状态 1000:有效 1100:无效 1200:未生效
 				rootNoticeService.save(notice);//添加通知
 			}
-			return new Result<RootReplyExecution>(true, save);
+			return new Result<ReplyExecution>(true, save);
 	}
 }

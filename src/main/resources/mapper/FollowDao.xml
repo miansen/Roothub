@@ -16,7 +16,7 @@
     -->
 <mapper namespace="cn.roothub.dao.FollowDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="cn.roothub.entity.RootUser">
+	<resultMap id="BaseResultMap" type="cn.roothub.entity.User">
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -36,11 +36,11 @@
         a.create_date, b.update_date,b.user_addr,b.third_id
     </sql>
 	<!-- 我关注的人 -->
-	<select id="select" resultType="RootUser">
+	<select id="select" resultType="User">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
-			follow a,root_user b
+			follow a,user b
 		where a.uid = #{uid}
 		and a.fid = b.user_id
 		order by a.create_date desc
@@ -52,11 +52,11 @@
         </if>
      </select>
      <!-- 关注的人的主题 -->
-	<select id="selectTopic" resultType="RootTopic">
+	<select id="selectTopic" resultType="Topic">
 		SELECT
         	c.*
 		FROM
-			follow a,root_user b,root_topic c
+			follow a,user b,topic c
 		where a.uid = #{uid}
 		and a.fid = b.user_id
 		and b.user_name = c.author
@@ -69,11 +69,11 @@
         </if>
      </select>
      <!-- 关注我的人 -->
-	<select id="selectByFid" resultType="RootUser">
+	<select id="selectByFid" resultType="User">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
-			follow a,root_user b
+			follow a,user b
 		where a.fid = #{fid}
 		and a.uid = b.user_id
 		order by a.create_date desc
@@ -123,7 +123,7 @@
      <!-- 关注的人的主题的数量 -->
      <select id="countTopic" resultType="java.lang.Integer">
      	select count(c.topic_id)
-     	from follow a,root_user b,root_topic c
+     	from follow a,user b,topic c
      	where a.uid = #{uid}
      	and a.fid = b.user_id
      	and b.user_name = c.author

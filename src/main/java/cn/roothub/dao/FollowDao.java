@@ -3,8 +3,8 @@ package cn.roothub.dao;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import cn.roothub.entity.Follow;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 
 public interface FollowDao {
 
@@ -15,7 +15,7 @@ public interface FollowDao {
 	 * @param uid
 	 * @return
 	 */
-	List<RootUser> select(@Param("start")Integer start,@Param("limit")Integer limit,@Param("uid")Integer uid);
+	List<User> select(@Param("start")Integer start,@Param("limit")Integer limit,@Param("uid")Integer uid);
 	
 	/**
 	 * 关注人的主题
@@ -24,7 +24,7 @@ public interface FollowDao {
 	 * @param uid
 	 * @return
 	 */
-	List<RootTopic> selectTopic(@Param("start")Integer start,@Param("limit")Integer limit,@Param("uid")Integer uid);
+	List<Topic> selectTopic(@Param("start")Integer start,@Param("limit")Integer limit,@Param("uid")Integer uid);
 	
 	/**
 	 * 关注我的人
@@ -33,7 +33,7 @@ public interface FollowDao {
 	 * @param uid
 	 * @return
 	 */
-	List<RootUser> selectByFid(@Param("start")Integer start,@Param("limit")Integer limit,@Param("fid")Integer fid);
+	List<User> selectByFid(@Param("start")Integer start,@Param("limit")Integer limit,@Param("fid")Integer fid);
 	
 	/**
 	 * 添加关注

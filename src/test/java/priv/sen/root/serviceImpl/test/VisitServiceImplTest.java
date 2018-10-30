@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.google.gson.Gson;
 import cn.roothub.dto.DMLExecution;
 import cn.roothub.dto.PageDataBody;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Visit;
 import cn.roothub.service.VisitService;
 import priv.sen.root.dao.test.BaseTest;
@@ -25,7 +25,7 @@ public class VisitServiceImplTest extends BaseTest{
 	 */
 	@Test
 	public void pageTest() throws Exception{
-		PageDataBody<RootUser> page = visitService.page(3, 1, 10);
+		PageDataBody<User> page = visitService.page(3, 1, 10);
 		Gson gson = new Gson();
 		String json = gson.toJson(page);
 		logger.info(page.toString());

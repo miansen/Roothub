@@ -1,0 +1,214 @@
+package cn.roothub.service;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.roothub.dto.PageDataBody;
+import cn.roothub.dto.TopicExecution;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
+import cn.roothub.entity.Tag;
+
+public interface TopicService {
+
+	/**
+	 * 根据tab分页查询话题列表
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param tab
+	 * @param ptab
+	 * @return
+	 */
+	PageDataBody<Topic> page(Integer pageNumber, Integer pageSize, String tab,String ptab);
+	
+	/**
+	 * 模糊查询话题列表
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param tab
+	 * @return
+	 */
+	PageDataBody<Topic> pageLike(Integer pageNumber, Integer pageSize, String like);
+	
+	/**
+	 * 分页查询所有话题
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param tab
+	 * @return
+	 */
+	PageDataBody<Topic> pageAll(Integer pageNumber, Integer pageSize,String ptab);
+	
+	/**
+	 * 根据板块和昵称分页查询
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param ptab:板块
+	 * @param author:作者昵称
+	 * @return
+	 */
+	PageDataBody<Topic> pageAllByPtabAndAuthor(Integer pageNumber, Integer pageSize,String ptab,String author);
+	
+	/**
+	 * 分页查询最新话题
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param tab
+	 * @return
+	 */
+	PageDataBody<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String ptab);
+	
+	/**
+	 * 分页查询精华话题
+	 */
+	PageDataBody<Topic> pageGood(Integer pageNumber, Integer pageSize,String ptab);
+	
+	/**
+	 * 分页查询无人回复的话题
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
+	PageDataBody<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String ptab);
+
+	/**
+	 * 根据ID查询话题
+	 * @param id
+	 * @return
+	 */
+	Topic findByTopicId(Integer topicId);
+	
+	/**
+	 * 查询当前作者的其他话题
+	 * @param currentTopicId
+	 * @param author
+	 * @param limit
+	 * @return
+	 */
+	List<Topic> findOtherTopicByAuthor(Integer currentTopicId, String author, Integer limit);
+	
+	/**
+	 * 侧边栏-今日热门话题
+	 * @param currentTopicId
+	 * @param author
+	 * @param limit
+	 * @return
+	 */
+	List<Topic> findHot(Integer start,Integer limit);
+	
+	/**
+	 * 侧边栏-今日等待回复的话题
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	List<Topic> findTodayNoReply(Integer start,Integer limit);
+	
+	/**
+	 * 首页-最热话题
+	 * @param start
+	 * @param limit
+	 * @param tab 子版块
+	 * @return
+	 */
+	PageDataBody<Topic> findIndexHot(Integer start,Integer limit,String tab);
+	
+	/**
+	 * 根据作者昵称分页查询所有话题
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param author
+	 * @return
+	 */
+	PageDataBody<Topic> pageByAuthor(Integer pageNumber, Integer pageSize, String author);
+	
+	/**
+	 * 查询所有话题
+	 * @return
+	 */
+	List<Topic> findAll();
+
+	/**
+	 * 根据ID删除话题
+	 * @param id
+	 */
+	void deleteByTopicId(Integer topicId);
+	
+	/**
+	 * 根据ID置顶话题
+	 * @param id
+	 */
+	void topByTopicId(Integer topicId);
+	
+	/**
+	 * 根据ID加精话题
+	 * @param id
+	 */
+	void goodByTopicId(Integer topicId);
+	
+	/**
+	 * 发布话题
+	 * @param topic
+	 */
+	TopicExecution saveTopic(Topic topic);
+	
+	/**
+	 * 更新话题
+	 * @param topic
+	 */
+	void updateTopic(Topic topic);
+	
+	/**
+     * 更新主题的头像
+     * @param user
+     * @return
+     */
+	void updateTopicAvatar(User user);
+    
+	/**
+	 * 收藏的话题列表
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param uid
+	 * @return
+	 */
+	PageDataBody<Topic> findById(Integer pageNumber, Integer pageSize, Integer uid);
+	
+	/**
+	 * 查询用户发布主题的数量
+	 * @param userId
+	 * @return
+	 */
+	int countByUserName(String userName);
+
+	/**
+	 * 分组统计所有标签
+	 * @return
+	 */
+	//Integer countTag();
+	
+	/**
+	 * 分页查询所有标签
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
+	PageDataBody<Tag> findByTag(Integer pageNumber, Integer pageSize);
+	
+	/**
+	 * 根据标签查询话题
+	 * @param tag
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
+	PageDataBody<Topic> pageByTag(String tag,Integer pageNumber, Integer pageSize);
+	
+	/**
+     * 统计所有话题
+     * @return
+     */
+    int countAllTopic(String ptab);
+    
+}

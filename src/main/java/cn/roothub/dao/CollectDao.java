@@ -4,7 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import cn.roothub.entity.Collect;
-import cn.roothub.entity.RootTopic;
+import cn.roothub.entity.Topic;
 
 public interface CollectDao {
 
@@ -14,7 +14,7 @@ public interface CollectDao {
 	 * @param limit
 	 * @return
 	 */
-    List<RootTopic> selectAllByCollect(@Param("start") Integer start, @Param("limit") Integer limit,@Param("uid")Integer uid);
+    List<Topic> selectAllByCollect(@Param("start") Integer start, @Param("limit") Integer limit,@Param("uid")Integer uid);
     
     /**
      * 添加收藏

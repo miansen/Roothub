@@ -16,7 +16,7 @@
     -->
 <mapper namespace="cn.roothub.dao.CollectDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="cn.roothub.entity.RootTopic">
+	<resultMap id="BaseResultMap" type="cn.roothub.entity.Topic">
         <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
@@ -41,11 +41,11 @@
         a.view_count,a.author,top,a.good,a.show_status,a.reply_count,a.is_delete,a.tag_is_count,a.content,a.avatar
     </sql>
 	<!-- 查询收藏话题 -->
-	<select id="selectAllByCollect" resultType="RootTopic">
+	<select id="selectAllByCollect" resultType="Topic">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
-			root_topic a,collect b
+			topic a,collect b
 		where b.uid = #{uid}
 		and a.topic_id = b.tid
 		order by b.create_date desc

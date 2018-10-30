@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
-import cn.roothub.dto.RootTopicExecution;
-import cn.roothub.entity.RootReply;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.dto.TopicExecution;
+import cn.roothub.entity.Reply;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Tab;
 import cn.roothub.service.CollectService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootReplyService;
-import cn.roothub.service.RootSectionService;
-import cn.roothub.service.RootTopicService;
-import cn.roothub.service.RootUserService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.ReplyService;
+import cn.roothub.service.SectionService;
+import cn.roothub.service.TopicService;
+import cn.roothub.service.UserService;
 import cn.roothub.service.TabService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
@@ -40,17 +40,17 @@ public class TopicController extends BaseController{
 private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private RootUserService rootUserService;
+	private UserService rootUserService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
-	private RootSectionService rootSectionService;
+	private SectionService rootSectionService;
 	@Autowired
-	private RootReplyService rootReplyService;
+	private ReplyService rootReplyService;
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	@Autowired
 	private TabService tabService;
 	
@@ -62,8 +62,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 */
 	@RequestMapping(value = "/topic/{id}", method = RequestMethod.GET)
 	private String detail(@PathVariable Integer id, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
-		RootTopic topic = rootTopicService.findByTopicId(id);
-		RootUser user = getUser(request);
+		Topic topic = rootTopicService.findByTopicId(id);
+		User user = getUser(request);
 		if(topic == null) {
 			return "error-page/404";
 		}
@@ -71,7 +71,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		topic.setViewCount(topic.getViewCount()+ 1);
 		rootTopicService.updateTopic(topic);//更新话题数据
 		//分页查询回复
-		PageDataBody<RootReply> replyPage = rootReplyService.page(p, 50, id);
+		PageDataBody<Reply> replyPage = rootReplyService.page(p, 50, id);
 		int countByTid = collectDaoService.countByTid(id);//话题被收藏的数量
 		int countTopicByUserName = 0;
 		int countCollect = 0;
@@ -108,7 +108,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		if(user == null) {
 			return "error-page/500";
 		}*/
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(user == null) {
 			return "error-page/500";
 		}
@@ -119,10 +119,10 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<RootTopicExecution> save(String title, String content, String ptab, String tag,HttpServletRequest request){
+	private Result<TopicExecution> save(String title, String content, String ptab, String tag,HttpServletRequest request){
 		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
 		//RootUser user = rootUserService.findByName(Base64Util.decode(cookie));
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(title == null) {
 			return new Result<>(false, "请输入标题");
 		}
@@ -159,7 +159,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		//topic.setRemark("");
 		RootTopicExecution saveTopic = rootTopicService.saveTopic(topic);
 		*/
-		RootTopic topic = new RootTopic();
+		Topic topic = new Topic();
 		topic.setPtab(ptab);
 		topic.setTab("all");
 		topic.setTitle(title);
@@ -178,9 +178,9 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		topic.setTagIsCount(true);
 		topic.setContent(content);
 		topic.setAvatar(user.getAvatar());//话题作者的头像
-		RootTopicExecution saveTopic = rootTopicService.saveTopic(topic);
+		TopicExecution saveTopic = rootTopicService.saveTopic(topic);
 		logger.debug(saveTopic.toString());
-		return new Result<RootTopicExecution>(true, saveTopic);
+		return new Result<TopicExecution>(true, saveTopic);
 	}
 	
 	/**
@@ -192,7 +192,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 */
 	@RequestMapping(value = "/topic/tag/{name}", method = RequestMethod.GET)
 	private String tag(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p) {
-		PageDataBody<RootTopic> pageByTag = rootTopicService.pageByTag(name, p, 20);
+		PageDataBody<Topic> pageByTag = rootTopicService.pageByTag(name, p, 20);
 		//BaseEntity baseEntity = new BaseEntity();
 		//model.addAttribute("baseEntity", baseEntity);
 		model.addAttribute("tagName", name);

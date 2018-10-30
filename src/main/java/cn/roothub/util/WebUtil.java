@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 
 
 public class WebUtil {
@@ -389,7 +389,7 @@ public class WebUtil {
      * @param request
      * @param user
      */
-    public static void setSession(HttpServletRequest request,RootUser user) {
+    public static void setSession(HttpServletRequest request,User user) {
     	if(user != null) {
     		getHttpSession(request).setAttribute("user", user);
     	}

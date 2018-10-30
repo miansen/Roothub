@@ -3,7 +3,7 @@ package cn.roothub.dao;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Visit;
 
 /**
@@ -22,7 +22,7 @@ public interface VisitDao {
 	 * @param limit
 	 * @return
 	 */
-	List<RootUser> select(@Param("vid") Integer vid,@Param("start") Integer start,@Param("limit") Integer limit);
+	List<User> select(@Param("vid") Integer vid,@Param("start") Integer start,@Param("limit") Integer limit);
 	
 	/**
 	 * 统计被访问的数量

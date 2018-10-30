@@ -3,7 +3,7 @@ package cn.roothub.util;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.User;
 
 public class CookieAndSessionUtil {
 
@@ -74,7 +74,7 @@ public class CookieAndSessionUtil {
 	 * @param sessionName
 	 * @param user
 	 */
-	public static void setSession (HttpServletRequest request,String sessionName,RootUser user) {
+	public static void setSession (HttpServletRequest request,String sessionName,User user) {
 		request.getSession().setAttribute(sessionName, user);
 	}
 	
@@ -93,11 +93,11 @@ public class CookieAndSessionUtil {
 	 * @param sessionName
 	 * @return
 	 */
-	public static RootUser getSession(HttpServletRequest request,String sessionName) {
-		RootUser user = null;
+	public static User getSession(HttpServletRequest request,String sessionName) {
+		User user = null;
 		Object attribute = request.getSession().getAttribute(sessionName);
 		if(attribute != null) {
-			user = (RootUser) attribute;
+			user = (User) attribute;
 			return user;
 		}
 		return null;

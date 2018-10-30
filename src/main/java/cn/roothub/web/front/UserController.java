@@ -22,16 +22,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
-import cn.roothub.dto.RootUserExecution;
+import cn.roothub.dto.UserExecution;
 import cn.roothub.entity.ReplyAndTopicByName;
-import cn.roothub.entity.RootTopic;
-import cn.roothub.entity.RootUser;
+import cn.roothub.entity.Topic;
+import cn.roothub.entity.User;
 import cn.roothub.entity.Visit;
 import cn.roothub.service.CollectService;
-import cn.roothub.service.RootNoticeService;
-import cn.roothub.service.RootReplyService;
-import cn.roothub.service.RootTopicService;
-import cn.roothub.service.RootUserService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.ReplyService;
+import cn.roothub.service.TopicService;
+import cn.roothub.service.UserService;
 import cn.roothub.service.VisitService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
@@ -41,15 +41,15 @@ public class UserController extends BaseController{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
-	private RootReplyService rootReplyService;
+	private ReplyService rootReplyService;
 	@Autowired
-	private RootUserService rootUserService;
+	private UserService rootUserService;
 	@Autowired
-	private RootTopicService rootTopicService;
+	private TopicService rootTopicService;
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private RootNoticeService rootNoticeService;
+	private NoticeService rootNoticeService;
 	@Autowired
 	private VisitService visitService;
 	/**
@@ -61,13 +61,13 @@ public class UserController extends BaseController{
 		if(name == null) {
 			return "error-page/404.jsp";
 		}
-		RootUser user = null;
+		User user = null;
 		user = rootUserService.findByName(name);
 		if(user == null) {
 			return "error-page/404.jsp";
 		}
-		RootUser user2 = getUser(request);//当前用户
-		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
+		User user2 = getUser(request);//当前用户
+		PageDataBody<Topic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
 		PageDataBody<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, rp, 20);
 		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
@@ -104,9 +104,9 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping(value = "/user/topics", method = RequestMethod.GET)
 	private String topics(Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
-		RootUser user2 = getUser(request);//当前用户
+		User user2 = getUser(request);//当前用户
 		if(user2 == null) return "error-page/404.jsp";
-		PageDataBody<RootTopic> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
+		PageDataBody<Topic> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
 		int countCollect = collectDaoService.count(user2.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user2.getUserName());//未读通知的数量
@@ -132,12 +132,12 @@ public class UserController extends BaseController{
 		if(name == null) {
 			return "error-page/404.jsp";
 		}
-		RootUser user = null;
+		User user = null;
 		user = rootUserService.findByName(name);
 		if(user == null) {
 			return "error-page/404.jsp";
 		}
-		RootUser user2 = getUser(request);//当前用户
+		User user2 = getUser(request);//当前用户
 		PageDataBody<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, p, 20);
 		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
@@ -170,7 +170,7 @@ public class UserController extends BaseController{
 		request.setAttribute("user", user);
 		return "user/profile";*/
 		
-		RootUser user2 = getUser(request);
+		User user2 = getUser(request);
 		if(user2 == null) {
 			return "error-page/500";
 		}
@@ -192,7 +192,7 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/user/setting/profile", method = RequestMethod.POST)
 	private String updateUserInfo(String email,String url,String thirdId,String userAddr,
 			String signature,HttpServletRequest request,HttpServletResponse response) {
-		RootUser user = null;
+		User user = null;
 		String cookie = CookieAndSessionUtil.getCookie(request, "user");
 		if(cookie != null) {
 			user = rootUserService.findByName(Base64Util.decode(cookie));
@@ -226,8 +226,8 @@ public class UserController extends BaseController{
 	
 	@RequestMapping(value = "/user/setting/changeAvatar", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<RootUserExecution> changeAvatar(String avatar,HttpServletRequest request){
-		RootUser user = null;
+	private Result<UserExecution> changeAvatar(String avatar,HttpServletRequest request){
+		User user = null;
 		String cookie = CookieAndSessionUtil.getCookie(request, "user");
 		user = rootUserService.findByName(Base64Util.decode(cookie));
 		if(user == null) {
@@ -237,7 +237,7 @@ public class UserController extends BaseController{
 			return new Result<>(false,"头像不能为空");
 		}
 		String _avatar = avatar.substring(avatar.indexOf(",") + 1, avatar.length());
-		RootUserExecution updateUser = null;
+		UserExecution updateUser = null;
 		try {
 		byte[] bytes = Base64Util.decode2(_avatar);
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
@@ -251,13 +251,13 @@ public class UserController extends BaseController{
 		user.setUpdateDate(new Date());
 		updateUser = rootUserService.updateUser(user);
 		rootTopicService.updateTopicAvatar(user);
-		RootUser user2 = rootUserService.findByName(user.getUserName());
+		User user2 = rootUserService.findByName(user.getUserName());
 		CookieAndSessionUtil.removeSession(request, "user");
 		CookieAndSessionUtil.setSession(request, "user", user2);
 		} catch (IOException e) {
  			e.printStackTrace();
 		}
-		return new Result<RootUserExecution>(true,updateUser); 
+		return new Result<UserExecution>(true,updateUser); 
 	}
 	
 	/**
@@ -272,16 +272,16 @@ public class UserController extends BaseController{
 	
 	@RequestMapping(value = "/user/setting/changePassword",method = RequestMethod.POST)
 	@ResponseBody
-	private Result<RootUserExecution> changePassword(HttpServletRequest request,String oldPassword,String newPassword){
+	private Result<UserExecution> changePassword(HttpServletRequest request,String oldPassword,String newPassword){
 		if(newPassword == null) {
 			return new Result<>(false,"密码不能为空");
 		}
-		RootUser user = getUser(request);
+		User user = getUser(request);
 		if(!user.getPassword().equals(oldPassword)) {
 			return new Result<>(false,"旧密码不正确");
 		}
 		user.setPassword(newPassword);
-		RootUserExecution updateUser = rootUserService.updateUser(user);
-		return new Result<RootUserExecution>(true,updateUser);
+		UserExecution updateUser = rootUserService.updateUser(user);
+		return new Result<UserExecution>(true,updateUser);
 	}
 }

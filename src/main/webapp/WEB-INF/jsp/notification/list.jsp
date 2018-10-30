@@ -61,8 +61,6 @@
 <script src="/resources/layui/layui-paginate.js"></script>
 <script src="/resources/js/login_info.js"></script>
 <script type="text/javascript">
-  //var url = "/notification/list?";
-  //$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
   var count = ${page.totalRow};//数据总量
   var limit = ${page.pageSize};//每页显示的条数
   var url = "/notification/list?p=";//url
@@ -71,9 +69,6 @@
 	   return page ? page[1] : 1;  
 	 }
   var p = page();//当前页数
-	 //console.log("p:"+p);
-	 //console.log(count);
-	 //console.log(url);
   paginate(count,limit,p,url);
 </script>
 </body>

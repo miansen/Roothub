@@ -250,7 +250,7 @@ public class IndexController extends BaseController{
     	//request.setAttribute("baseEntity", baseEntity);
     	request.setAttribute("pageLike", pageLike);
     	request.setAttribute("search", search);
-    	return "search";
+    	return "search/search";
     }
     
     /**
@@ -259,7 +259,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/top100")
     private String top100() {
-    	return "top100";
+    	return "score/top100";
     }
     
     /**

@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="wrapper">
-		<jsp:include page="components/head.jsp"></jsp:include>
+		<jsp:include page="../components/head.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-9">
 				<div class="panel panel-default">
@@ -35,8 +35,8 @@
   </div>
 	</div>
 	</div>
-	<jsp:include page="components/foot.jsp"></jsp:include>
-	<script src="/resources/js/top100.js"></script>
+	<jsp:include page="../components/foot.jsp"></jsp:include>
+	<script src="/resources/js/score/top100.js"></script>
 	<script src="/resources/js/login_info.js"></script>
 	<script src="/resources/js/goTop.js"></script>
 </body>

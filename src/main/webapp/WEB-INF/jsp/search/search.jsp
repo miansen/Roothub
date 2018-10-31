@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="wrapper">
-<jsp:include page="components/head.jsp"></jsp:include>
+<jsp:include page="../components/head.jsp"></jsp:include>
 <div class="row">
   <div class="col-md-12">
     <div class="panel panel-default">
@@ -74,7 +74,7 @@
 		<div class="arrow___3UCwo"></div>
 	</div>
 </div>
-<jsp:include page="components/foot.jsp"></jsp:include>
+<jsp:include page="../components/foot.jsp"></jsp:include>
 <script src="/resources/js/jquery.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/layui/layui.js"></script>

@@ -45,31 +45,24 @@ public class BaseController {
 	public User getUser(HttpServletRequest request) {
 
 		String token = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
-
+		ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+		User sessionUser = CookieAndSessionUtil.getSession(request, "user");
 		try {
 			if (token != null) {
 				token = Base64Util.decode(token);
-				ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
 				String redisUser = opsForValue.get(token);
-				if (redisUser != null)
+				if (redisUser != null) {
 					return JsonUtil.jsonToObject(redisUser, User.class);
+				}else {
+					return sessionUser;
+				}
 			} else {
-				User sessionUser = CookieAndSessionUtil.getSession(request, "user");
 				return sessionUser;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-
-		/*
-		 * RootUser user = null; if(str != null) { user = JsonUtil.jsonToObject(str,
-		 * RootUser.class); logger.debug("redis生效了==="+str); return user; } user =
-		 * CookieAndSessionUtil.getSession(request, "user"); if(user == null) { String
-		 * cookie = CookieAndSessionUtil.getCookie(request, "user"); if(cookie != null)
-		 * { user = rootUserService.findByName(Base64Util.decode(cookie)); return user;
-		 * } } return user;
-		 */
 	}
 
 	public String isLogin(HttpServletRequest request, String errorPage, String suesscePage) {

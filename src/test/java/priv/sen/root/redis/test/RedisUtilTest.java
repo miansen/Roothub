@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import cn.roothub.entity.User;
+import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.JsonUtil;
 import priv.sen.root.dao.test.BaseTest;
@@ -214,9 +215,11 @@ public class RedisUtilTest extends BaseTest{
 	
 	@Test
 	public void test10() throws Exception{
+		String decode = Base64Util.decode("YzkwNDU4YjQ4ZWY0NDNlY2JmM2ZlM2ZkMGQyNDE3NjY=");
+		logger.debug(decode);
 		ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
 		//opsForValue.set("poo", "bool");
-		String string = opsForValue.get("7e95d539-f027-490f-b4ec-222af37dfc23");
+		String string = opsForValue.get(decode);
 		logger.debug(string);
 	}
 	

@@ -192,10 +192,11 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/user/setting/profile", method = RequestMethod.POST)
 	private String updateUserInfo(String email,String url,String thirdId,String userAddr,
 			String signature,HttpServletRequest request,HttpServletResponse response) {
-		User user = null;
-		String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		if(cookie != null) {
-			user = rootUserService.findByName(Base64Util.decode(cookie));
+		//User user = null;
+		User user = getUser(request);
+		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
+		if(user != null) {
+			//user = rootUserService.findByName(Base64Util.decode(cookie));
 			user.setEmail(email);
 			user.setUrl(url);
 			user.setThirdId(thirdId);
@@ -227,9 +228,10 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/user/setting/changeAvatar", method = RequestMethod.POST)
 	@ResponseBody
 	private Result<UserExecution> changeAvatar(String avatar,HttpServletRequest request){
-		User user = null;
-		String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		user = rootUserService.findByName(Base64Util.decode(cookie));
+		//User user = null;
+		User user = getUser(request);
+		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
+		//user = rootUserService.findByName(Base64Util.decode(cookie));
 		if(user == null) {
 			return new Result<>(false,"请先登录");
 		}
@@ -243,7 +245,8 @@ public class UserController extends BaseController{
 		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 		BufferedImage bufferedImage = ImageIO.read(bais);
 		//String __avatar = null;
-		String fileName = new Date().getTime()+cookie+"avatar.png";
+		//String fileName = new Date().getTime()+cookie+"avatar.png";
+		String fileName = new Date().getTime()+user.getUserName()+"avatar.png";
 		String filePath = request.getSession().getServletContext().getRealPath("/")+"/resources/images/"+fileName;
 		File file = new File(filePath);
 		ImageIO.write(bufferedImage, "PNG", file);

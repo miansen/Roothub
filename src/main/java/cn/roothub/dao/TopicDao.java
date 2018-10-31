@@ -239,5 +239,12 @@ public interface TopicDao {
      * @return
      */
     List<Topic> selectByTag(@Param("tag") String tag, @Param("start") Integer start, @Param("limit") Integer limit);
+    
+    /**
+     * 作者的其他话题
+     * @param userName
+     * @return
+     */
+    List<Topic> selectOther(@Param("userName")String userName,@Param("topicId") Integer topicId);
 
 }

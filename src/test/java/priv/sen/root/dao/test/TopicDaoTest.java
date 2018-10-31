@@ -47,4 +47,14 @@ public class TopicDaoTest extends BaseTest {
 		List<Topic> selectTodayNoReply = rootTopicDao.selectTodayNoReply(0, 10);
 		System.out.println(selectTodayNoReply);
 	}
+	
+	/**
+	 * 作者的其他话题
+	 * @throws Exception
+	 */
+	@Test
+	public void selectOther() throws Exception{
+		List<Topic> selectOther = rootTopicDao.selectOther("083013", 80);
+		System.out.println(selectOther);
+	}
 }

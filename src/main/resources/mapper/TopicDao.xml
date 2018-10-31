@@ -515,4 +515,19 @@
             </if>
         </if>
      </select>
+ 	<select id="selectOther" resultType="Topic">
+	SELECT
+	  a.topic_id,
+	  a.title
+	FROM
+	  topic a
+	WHERE
+	  a.author = #{userName}
+	AND 
+	  a.topic_id != #{topicId}
+	ORDER BY
+	  a.create_date
+	LIMIT 
+	  0,10
+</select>
 </mapper>

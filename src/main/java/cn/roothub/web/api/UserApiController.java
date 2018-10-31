@@ -41,13 +41,13 @@ public class UserApiController extends BaseController{
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private TopicService rootTopicService;
+	private TopicService topicService;
 	@Autowired
-	private NoticeService rootNoticeService;
+	private NoticeService noticeService;
 	@Autowired
-	private UserService rootUserService;
+	private UserService userService;
 	@Autowired
-	private ReplyService rootReplyService;
+	private ReplyService replyService;
 	@Autowired
 	private FollowService followService;
 	@Autowired
@@ -63,7 +63,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/collect",method = RequestMethod.GET)
 	private Result<PageDataBody> collectList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		User user = rootUserService.findByName(name);
+		User user = userService.findByName(name);
 		if(user == null) {
 			return new Result<PageDataBody>(true, "用户不存在");
 		}
@@ -79,7 +79,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/topic",method = RequestMethod.GET)
 	private Result<PageDataBody> topicList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<Topic> page = rootTopicService.pageByAuthor(p, 20, name);
+		PageDataBody<Topic> page = topicService.pageByAuthor(p, 20, name);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -91,12 +91,12 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/reply",method = RequestMethod.GET)
 	private Result<PageDataBody> replyList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<ReplyAndTopicByName> page = rootReplyService.findAllByNameAndTopic(name, p, 20);
+		PageDataBody<ReplyAndTopicByName> page = replyService.findAllByNameAndTopic(name, p, 20);
 		return new Result<PageDataBody>(true, page);
 	}
 	
 	/**
-	 * 关注的人的主题
+	 * 用户的关注
 	 * @param uid
 	 * @param p
 	 * @return
@@ -127,7 +127,7 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/topic/qna",method = RequestMethod.GET)
 	private  Result<PageDataBody> qnaTopicList(@RequestParam(value = "name",defaultValue = "-1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<Topic> page = rootTopicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
+		PageDataBody<Topic> page = topicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
 		return new Result<PageDataBody>(true, page);
 	}
 	
@@ -163,12 +163,12 @@ public class UserApiController extends BaseController{
 			map.put("msg", "用户名不能为空");
 			return map;
 		}else if(type.equals("reply")){
-			int countByName = rootReplyService.countByName(userName);
+			int countByName = replyService.countByName(userName);
 			map.put("success", true);
 			map.put("msg", countByName);
 			return map;
 		}else {
-			int countByUserName = rootTopicService.countByUserName(userName);
+			int countByUserName = topicService.countByUserName(userName);
 			map.put("success", true);
 			map.put("msg", countByUserName);
 			return map;
@@ -181,12 +181,12 @@ public class UserApiController extends BaseController{
 	 */
 	@RequestMapping(value = "/api/user/top100",method = RequestMethod.GET)
 	private Result<List> top100(@RequestParam(value = "limit",defaultValue = "100")Integer limit){
-		List<Top100> scores = rootUserService.scores(limit);
+		List<Top100> scores = userService.scores(limit);
 		return new Result<List>(true, scores);
 	}
 	
 	/**
-	 * 登录信息
+	 * 用户的登录信息
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/logininfo",method = RequestMethod.GET)
@@ -200,11 +200,11 @@ public class UserApiController extends BaseController{
 			map.put("userName", user.getUserName());
 			map.put("avatar", user.getAvatar());
 			map.put("signature", user.getSignature());
-			int countTopic = rootTopicService.countByUserName(user.getUserName());
+			int countTopic = topicService.countByUserName(user.getUserName());
 			int countCollect = collectDaoService.count(user.getUserId());
 			int countFollow = followService.countByUid(user.getUserId());
-			int countNotReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());
-			int countScore = rootUserService.countScore(user.getUserId());
+			int countNotReadNotice = noticeService.countNotReadNotice(user.getUserName());
+			int countScore = userService.countScore(user.getUserId());
 			map.put("countTopic", countTopic);
 			map.put("countCollect", countCollect);
 			map.put("countFollow", countFollow);
@@ -212,5 +212,17 @@ public class UserApiController extends BaseController{
 			map.put("countScore", countScore);
 			return new Result<Map>(true, map);
 		}
+	}
+	
+	/**
+	 * 作者的其他话题
+	 * @param userName
+	 * @param topicId
+	 * @return
+	 */
+	@RequestMapping(value = "/api/user/other/topic",method = RequestMethod.GET)
+	private Result<List> otherTopic(String userName,Integer topicId){
+		List<Topic> list = topicService.findOther(userName, topicId);
+		return new Result<List>(true, list);
 	}
 }

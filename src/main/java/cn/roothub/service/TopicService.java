@@ -211,4 +211,12 @@ public interface TopicService {
      */
     int countAllTopic(String ptab);
     
+    /**
+     * 作者的其他话题
+     * @param userName
+     * @param topicId
+     * @return
+     */
+    List<Topic> findOther(String userName,Integer topicId);
+    
 }

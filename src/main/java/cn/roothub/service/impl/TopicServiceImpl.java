@@ -281,4 +281,12 @@ public class TopicServiceImpl implements TopicService{
 		return rootTopicDao.selectTodayNoReply(start, limit);
 	}
 
+	/**
+	 * 作者的其他话题
+	 */
+	@Override
+	public List<Topic> findOther(String userName, Integer topicId) {
+		return rootTopicDao.selectOther(userName, topicId);
+	}
+
 }

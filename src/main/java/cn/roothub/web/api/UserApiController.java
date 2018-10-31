@@ -18,6 +18,7 @@ import cn.roothub.dto.Result;
 import cn.roothub.entity.ReplyAndTopicByName;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
+import cn.roothub.exception.ApiAssert;
 import cn.roothub.entity.Top100;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.FollowService;
@@ -64,9 +65,10 @@ public class UserApiController extends BaseController{
 	@RequestMapping(value = "/api/user/collect",method = RequestMethod.GET)
 	private Result<PageDataBody> collectList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		User user = userService.findByName(name);
-		if(user == null) {
+		/*if(user == null) {
 			return new Result<PageDataBody>(true, "用户不存在");
-		}
+		}*/
+		ApiAssert.notNull(user, "用户不存在");
 		PageDataBody<Topic> page = collectDaoService.page(p, 20, user.getUserId());
 		return new Result<PageDataBody>(true, page);
 	}

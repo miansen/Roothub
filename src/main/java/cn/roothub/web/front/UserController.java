@@ -59,12 +59,12 @@ public class UserController extends BaseController{
 	@RequestMapping(value = "/user/{name}", method = RequestMethod.GET)
 	private String detail(@PathVariable String name, Model model,@RequestParam(value = "tp", defaultValue = "1") Integer tp,@RequestParam(value = "rp", defaultValue = "1") Integer rp,HttpServletRequest request) {
 		if(name == null) {
-			return "error-page/404.jsp";
+			return "error-page/404";
 		}
 		User user = null;
 		user = rootUserService.findByName(name);
 		if(user == null) {
-			return "error-page/404.jsp";
+			return "error-page/404";
 		}
 		User user2 = getUser(request);//当前用户
 		PageDataBody<Topic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);

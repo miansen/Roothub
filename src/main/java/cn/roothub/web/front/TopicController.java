@@ -3,6 +3,7 @@ package cn.roothub.web.front;
 import java.util.Date;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import cn.roothub.dto.TopicExecution;
 import cn.roothub.entity.Reply;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
+import cn.roothub.exception.ApiAssert;
 import cn.roothub.entity.Tab;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.NoticeService;
@@ -64,9 +66,11 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private String detail(@PathVariable Integer id, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
 		Topic topic = rootTopicService.findByTopicId(id);
 		User user = getUser(request);
-		if(topic == null) {
-			return "error-page/404";
-		}
+		/*if(topic == null) {
+			//return "error-page/404";
+			throw new RuntimeException("话题不存在");
+		}*/
+		ApiAssert.notNull(topic, "话题消失了~");
 		//浏览量+1
 		topic.setViewCount(topic.getViewCount()+ 1);
 		rootTopicService.updateTopic(topic);//更新话题数据
@@ -100,18 +104,6 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 */
 	@RequestMapping(value = "/topic/create", method = RequestMethod.GET)
 	private String create(HttpServletRequest request){
-		/*String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		if(cookie == null) {
-			return "error-page/500";
-		}
-		RootUser user = rootUserService.findByName(Base64Util.decode(cookie));
-		if(user == null) {
-			return "error-page/500";
-		}*/
-		User user = getUser(request);
-		if(user == null) {
-			return "error-page/500";
-		}
 		List<Tab> ptabList = tabService.selectAll();
 		request.setAttribute("ptabList", ptabList);
 		return "topic/create";
@@ -120,8 +112,6 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
 	@ResponseBody
 	private Result<TopicExecution> save(String title, String content, String ptab, String tag,HttpServletRequest request){
-		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		//RootUser user = rootUserService.findByName(Base64Util.decode(cookie));
 		User user = getUser(request);
 		if(title == null) {
 			return new Result<>(false, "请输入标题");
@@ -135,30 +125,6 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		if(user == null) {
 			return new Result<>(false, "请先登录");
 		}
-		/*
-		RootTopic topic = new RootTopic();
-		topic.setTab("all");
-		topic.setTitle(title);
-		topic.setTag(tag);
-		topic.setCreateDate(new Date());
-		topic.setUpdateDate(new Date());
-		//topic.setLastReplyTime(null);
-		//topic.setLastReplyAuthor(null);
-		topic.setViewCount(0);
-		topic.setAuthor(user.getUserName());
-		topic.setTop(false);
-		topic.setGood(false);
-		topic.setShowStatus(true);
-		topic.setReplyCount(0);
-		topic.setIsDelete(false);
-		topic.setTagIsCount(true);
-		topic.setContent(content);
-		topic.setPostGoodCount(0);
-		topic.setPostBadCount(0);
-		topic.setStatusCd("1000");
-		//topic.setRemark("");
-		RootTopicExecution saveTopic = rootTopicService.saveTopic(topic);
-		*/
 		Topic topic = new Topic();
 		topic.setPtab(ptab);
 		topic.setTab("all");
@@ -193,8 +159,6 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/topic/tag/{name}", method = RequestMethod.GET)
 	private String tag(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p) {
 		PageDataBody<Topic> pageByTag = rootTopicService.pageByTag(name, p, 20);
-		//BaseEntity baseEntity = new BaseEntity();
-		//model.addAttribute("baseEntity", baseEntity);
 		model.addAttribute("tagName", name);
 		model.addAttribute("pageByTag", pageByTag);
 		return "tag/detail";

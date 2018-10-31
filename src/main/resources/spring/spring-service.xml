@@ -13,6 +13,8 @@
 	<context:property-placeholder ignore-unresolvable="true" file-encoding="UTF-8" location="classpath:application.properties" />
 	<!-- 自动扫描config包，将使用@Component注解的类作为bean注入到IOC容器 -->
 	<context:component-scan base-package="cn.roothub.config" />
+	<!-- 全局异常处理 -->
+	<context:component-scan base-package="cn.roothub.handler" />
 	<!-- 引入redis配置文件 -->
     <import resource="spring-redis.xml"/>
 	<!-- 扫描service.impl包下所有使用注解的类型 -->

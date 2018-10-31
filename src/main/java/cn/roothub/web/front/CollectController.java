@@ -125,6 +125,7 @@ public class CollectController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/collect/count",method = RequestMethod.GET)
+	@ResponseBody
 	private Result<Integer> count(Integer tid){
 		int countByTid = collectDaoService.countByTid(tid);
 		return new Result<Integer>(true, countByTid);

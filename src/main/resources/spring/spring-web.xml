@@ -36,4 +36,32 @@
 	<!-- 4.扫描web相关的bean -->
 	<context:component-scan base-package="cn.roothub.web.front" />
 	<context:component-scan base-package="cn.roothub.web.api" />
+	
+	<!-- 全局拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/topic/create" />
+			<mvc:mapping path="/topic/save" />
+			<mvc:mapping path="/reply/save" />
+			<mvc:mapping path="/collect/topics" />
+			<mvc:mapping path="/collect/isCollect" />
+			<mvc:mapping path="/collect/save" />
+			<mvc:mapping path="/collect/delete" />
+			<mvc:mapping path="/follow/save" />
+			<mvc:mapping path="/follow/delete" />
+			<mvc:mapping path="/follow/count/for" />
+			<mvc:mapping path="/follow/count/to" />
+			<mvc:mapping path="/follow/topics" />
+			<mvc:mapping path="/notification/list" />
+			<mvc:mapping path="/user/settings/profile" />
+			<mvc:mapping path="/user/setting/profile" />
+			<mvc:mapping path="/user/settings/changeAvatar" />
+			<mvc:mapping path="/user/setting/changeAvatar" />
+			<mvc:mapping path="/user/settings/changePassword" />
+			<mvc:mapping path="/user/setting/changePassword" />
+			<mvc:mapping path="/vote" />
+			<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
+			<bean class="cn.roothub.handler.GlobalInterceptorHandler" />
+		</mvc:interceptor>
+	</mvc:interceptors> 
 </beans>

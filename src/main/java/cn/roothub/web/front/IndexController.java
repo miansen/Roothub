@@ -268,7 +268,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/about")
     private String about() {
-    	return "about";
+    	return "foot/about";
     }
     
     /**
@@ -277,7 +277,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/faq")
     private String faq() {
-    	return "faq";
+    	return "foot/faq";
     }
     
     /**
@@ -286,7 +286,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/api")
     private String api() {
-    	return "api";
+    	return "foot/api";
     }
     
     /**
@@ -295,7 +295,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/mission")
     private String mission() {
-    	return "mission";
+    	return "foot/mission";
     }
     
     /**
@@ -304,7 +304,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/advertise")
     private String advertise() {
-    	return "advertise";
+    	return "foot/advertise";
     }
     
     /**
@@ -313,7 +313,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/feedback")
     private String feedback() {
-    	return "feedback";
+    	return "foot/feedback";
     }
     
     @RequestMapping(value = "/feedback/add",method=RequestMethod.POST,produces = "application/json; charset=utf-8")
@@ -349,7 +349,7 @@ public class IndexController extends BaseController{
     	request.setAttribute("row1", row1);
     	request.setAttribute("row2", row2);
     	request.setAttribute("row3", row3);
-    	return "excel";
+    	return "foot/excel";
     }
     
     @RequestMapping(value = "/excel/download")

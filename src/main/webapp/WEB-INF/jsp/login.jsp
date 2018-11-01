@@ -18,6 +18,9 @@
           <div class="panel-heading">
             <a href="/">主页</a> / 登录
           </div>
+          <c:if test="${message != null}">
+          <div class="message">${message}</div>
+          </c:if>
           <div class="panel-body">
             <form role="form" id="form">
               <div class="form-group">

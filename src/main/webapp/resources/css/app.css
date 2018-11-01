@@ -607,3 +607,14 @@ a.tab:active, a.tab:link, a.tab:visited {
     padding: 2px;
     margin-right: 10px;
 }
+.message {
+    padding: 10px;
+    font-size: 14px;
+    line-height: 120%;
+    text-align: left;
+    background-color: #f3faff;
+    border-left: 5px solid #c7e8ff;
+    border-bottom: 1px solid #e2e2e2;
+    color: #333;
+    cursor: pointer;
+}

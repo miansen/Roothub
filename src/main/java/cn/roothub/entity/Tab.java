@@ -88,5 +88,11 @@ public class Tab {
 	public void setTabOrder(Integer tabOrder) {
 		this.tabOrder = tabOrder;
 	}
+
+	@Override
+	public String toString() {
+		return "Tab [id=" + id + ", tabName=" + tabName + ", tabDesc=" + tabDesc + ", idDelete=" + idDelete
+				+ ", createDate=" + createDate + ", tabOrder=" + tabOrder + "]";
+	}
 	
 }

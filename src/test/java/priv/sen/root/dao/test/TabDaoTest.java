@@ -19,6 +19,10 @@ public class TabDaoTest extends BaseTest{
 	@Test
 	public void test01() throws Exception{
 		List<Tab> tab = tabDao.selectAll();
+		Tab remove = tab.remove(0);
+		Tab remove2 = tab.remove(0);
+		logger.debug(remove.toString());
+		logger.debug(remove2.toString());
 		logger.debug(tab.toString());
 	}
 }

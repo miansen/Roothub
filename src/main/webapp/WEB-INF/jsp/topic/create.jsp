@@ -36,20 +36,9 @@
                 <div class="form-group">
 						<label for="ptab">板块</label>
 						<select id="ptab" class="form-control" name="ptab">
-							<%-- <c:forEach var="item" items="${ptabList}" varStatus="status">
+							<c:forEach var="item" items="${ptabList}" varStatus="status">
 							<option value="${item.tabName}">${item.tabDesc}</option>
-							</c:forEach> --%>
-							<option value="pl">编程语言</option>
-							<option value="db">数据库</option>
-							<option value="fe">前端</option>
-							<option value="play">有趣</option>
-							<option value="creative">创意</option>
-							<option value="host">主机</option>
-							<option value="dn">域名</option>
-							<option value="blog">博客</option>
-							<option value="tea">下午茶馆</option>
-							<option value="news">资讯</option>
-							<option value="qna">提问</option>
+							</c:forEach>
 						</select>
 					</div>
                 <div class="form-group">

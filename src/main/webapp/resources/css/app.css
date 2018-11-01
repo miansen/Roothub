@@ -596,11 +596,12 @@ a.tab:active, a.tab:link, a.tab:visited {
     vertical-align: top;
     border-top: 1px solid #ddd;
 }
-.panel .top100{
-	padding-left: 20px;
+.panel .top100 ol{
+	margin: 4px 0;
 }
 .panel .top100 ol li {
 	list-style-type:decimal;
+	list-style: none;
 }
 .top_score {
     color: gray;

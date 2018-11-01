@@ -62,7 +62,7 @@
     </error-page>
    <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/jsp/service-error/500.jsp</location>
+        <location>/WEB-INF/jsp/error-page/500.jsp</location>
     </error-page>
   	<error-page>
         <error-code>503</error-code>

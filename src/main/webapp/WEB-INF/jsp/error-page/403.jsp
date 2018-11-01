@@ -1,11 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% String appPath = request.getContextPath(); %>
-<c:set value="${pageContext.request.contextPath}" var="path" scope="page"></c:set>
 <html>
 <head>
-  <title>roothub-403</title>
+  <title>Roothub-403</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">

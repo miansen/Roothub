@@ -104,51 +104,26 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 */
 	@RequestMapping(value = "/topic/create", method = RequestMethod.GET)
 	private String create(HttpServletRequest request){
-		List<Tab> ptabList = tabService.selectAll();
+		List<Tab> tabList = tabService.selectAll();
 		//去掉全部和最热这两个板块
-		ptabList.remove(0);
-		ptabList.remove(0);
-		request.setAttribute("ptabList", ptabList);
+		tabList.remove(0);
+		tabList.remove(0);
+		request.setAttribute("tabList", tabList);
 		return "topic/create";
 	}
 	
 	@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<TopicExecution> save(String title, String content, String ptab, String tag,HttpServletRequest request){
+	private Result<TopicExecution> save(String title, String content, String tab, String nodeCode,String nodeTitle,String tag,HttpServletRequest request){
 		User user = getUser(request);
-		if(title == null) {
-			return new Result<>(false, "请输入标题");
-		}
-		if(ptab == null) {
-			return new Result<>(false, "请选择板块");
-		}
-		if(tag == null) {
-			return new Result<>(false, "请输入标签");
-		}
-		if(user == null) {
-			return new Result<>(false, "请先登录");
-		}
-		Topic topic = new Topic();
-		topic.setPtab(ptab);
-		topic.setTab("all");
-		topic.setTitle(title);
-		topic.setTag(tag);
-		topic.setCreateDate(new Date());
-		topic.setUpdateDate(new Date());
-		//topic.setLastReplyTime(new Date());
-		//topic.setLastReplyAuthor(user.getUserName());
-		topic.setViewCount(0);
-		topic.setAuthor(user.getUserName());
-		topic.setTop(false);
-		topic.setGood(false);
-		topic.setShowStatus(true);
-		topic.setReplyCount(0);
-		topic.setIsDelete(false);
-		topic.setTagIsCount(true);
-		topic.setContent(content);
-		topic.setAvatar(user.getAvatar());//话题作者的头像
-		TopicExecution saveTopic = rootTopicService.saveTopic(topic);
-		logger.debug(saveTopic.toString());
+		ApiAssert.notNull(user, "请先登录");
+		ApiAssert.notNull(title, "标题不能为空");
+		ApiAssert.notNull(tab, "板块不能为空");
+		ApiAssert.notNull(nodeCode, "节点不能为空");
+		ApiAssert.notNull(tag, "标签不能为空");
+		//TopicExecution saveTopic = rootTopicService.saveTopic(topic);
+		TopicExecution saveTopic = rootTopicService.createTopic(title, content, tab, nodeCode, nodeTitle,tag, user);
+		//logger.debug(saveTopic.toString());
 		return new Result<TopicExecution>(true, saveTopic);
 	}
 	

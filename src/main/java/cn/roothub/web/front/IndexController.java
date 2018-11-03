@@ -27,12 +27,14 @@ import cn.roothub.config.SiteConfig;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.dto.UserExecution;
+import cn.roothub.entity.Node;
 import cn.roothub.entity.Section;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
 import cn.roothub.entity.Tab;
 import cn.roothub.entity.Tag;
 import cn.roothub.service.CollectService;
+import cn.roothub.service.NodeService;
 import cn.roothub.service.NoticeService;
 import cn.roothub.service.ReplyService;
 import cn.roothub.service.SectionService;
@@ -70,6 +72,8 @@ public class IndexController extends BaseController{
 	private SiteConfig siteConfig;
 	@Autowired
 	private BaseEntity baseEntity;
+	@Autowired
+	private NodeService nodeService;
 	
 	/**
 	 * 首页
@@ -90,8 +94,9 @@ public class IndexController extends BaseController{
 		}else {
 			page = rootTopicService.page(p, 50, tab,ptab);
 		}
-		List<Section> sectionAll = rootSectionService.findAll();
+		//List<Section> sectionAll = rootSectionService.findAll();
 		List<Tab> ptabList = tabService.selectAll();
+		List<Node> nodeList = nodeService.findAll(ptab, 0, 10);
 		List<Topic> findHot = rootTopicService.findHot(0, 10);//热门话题榜
 		List<Topic> findTodayNoReply = rootTopicService.findTodayNoReply(0, 10);//今日等待回复的话题
 		PageDataBody<Tag> tag = rootTopicService.findByTag(1, 10);//最热标签
@@ -105,8 +110,9 @@ public class IndexController extends BaseController{
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
 		request.setAttribute("findTodayNoReply", findTodayNoReply);
-		request.setAttribute("sectionAll", sectionAll);
+		//request.setAttribute("sectionAll", sectionAll);
 		request.setAttribute("ptabList", ptabList);
+		request.setAttribute("nodeList", nodeList);
 		request.setAttribute("tab", tab);
 		request.setAttribute("ptab", ptab);
 		request.setAttribute("tag", tag);

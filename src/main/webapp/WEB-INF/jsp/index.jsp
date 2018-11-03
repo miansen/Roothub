@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -26,13 +27,15 @@
         	</c:forEach>
         	</ul>
     		</div>
+    		<c:if test="${fn:length(nodeList) > 0}">
           <div class="section">
             <ul class="nav nav-pills" id="section">
-              <c:forEach var="section" items="${sectionAll}" varStatus="status">
-              <li class=""><a href="/?tab=${section.sectionTab}">${section.sectionName}</a></li>
+              <c:forEach var="item" items="${nodeList}" varStatus="status">
+              <li class=""><a href="/?tab=${item.nodeCode}">${item.nodeTitle}</a></li>
             </c:forEach>
           </ul>
         </div>
+        </c:if>
         <div class="panel-body paginate-bot">
           <c:forEach var="item" items="${page.list}">
           <div class="media" id="topic">
@@ -58,10 +61,10 @@
                 <span class="hidden-sm hidden-xs">•</span>
                 <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
                 <span>•</span>
-                <%-- <span><fmt:formatDate type="date" 
-                  value="${item.createDate}" /></span> --%>
+                <span><fmt:formatDate type="date" 
+                  value="${item.createDate}" /></span>
                   <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
-                  <span class="formate-date">${item.createDate}</span>
+                  <%-- <span class="formate-date">${item.createDate}</span> --%>
                   <c:if test="${item.lastReplyAuthor != null}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>

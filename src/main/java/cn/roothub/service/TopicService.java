@@ -153,6 +153,8 @@ public interface TopicService {
 	 */
 	TopicExecution saveTopic(Topic topic);
 	
+	TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle,String tag,User user);
+	
 	/**
 	 * 更新话题
 	 * @param topic

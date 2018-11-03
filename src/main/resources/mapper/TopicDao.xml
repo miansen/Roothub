@@ -22,6 +22,7 @@
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="last_reply_time" jdbcType="TIMESTAMP" property="lastReplyTime"/>
@@ -34,7 +35,12 @@
         <result column="reply_count" jdbcType="INTEGER" property="replyCount"/>
         <result column="is_delete" jdbcType="BIT" property="isDelete"/>
         <result column="tag_is_count" jdbcType="BIT" property="tagIsCount"/>
-        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="post_good_count" jdbcType="INTEGER" property="postGoodCount"/>
+        <result column="post_bad_count" jdbcType="INTEGER" property="postBadCount"/>
+        <result column="status_cd" jdbcType="VARCHAR" property="statusCd"/>
+        <result column="node_slug" jdbcType="VARCHAR" property="nodeSlug"/>
+        <result column="node_title" jdbcType="VARCHAR" property="nodeTitle"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
     </resultMap>
     <sql id="Base_Column_List">
@@ -318,7 +324,8 @@
             ptab,
             tab, 
             title, 
-            tag, 
+            tag,
+            content,
             create_date, 
             update_date, 
             last_reply_time, 
@@ -331,14 +338,20 @@
             reply_count,
             is_delete,
             tag_is_count,
-            content,
+            post_good_count,
+            post_bad_count,
+            status_cd,
+            node_slug,
+            node_title,
+            remark,
             avatar)
             values 
             (#{topicId},
              #{ptab},
              #{tab}, 
              #{title}, 
-             #{tag}, 
+             #{tag},
+             #{content},
              #{createDate}, 
              #{updateDate}, 
              #{lastReplyTime}, 
@@ -350,8 +363,13 @@
              #{showStatus},
              #{replyCount}, 
              #{isDelete}, 
-             #{tagIsCount}, 
-             #{content},
+             #{tagIsCount},
+             #{postGoodCount},
+             #{postBadCount},
+             #{statusCd},
+             #{nodeSlug},
+             #{nodeTitle},
+             #{remark},
              #{avatar})
   </insert>
     <update id="updateByTopicId" parameterType="cn.roothub.entity.Topic">

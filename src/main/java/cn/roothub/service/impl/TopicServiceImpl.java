@@ -1,5 +1,6 @@
 package cn.roothub.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -163,6 +164,37 @@ public class TopicServiceImpl implements TopicService{
 		}catch (Exception e) {
 			throw new OperationSystemException("insert into RootTopic error"+e.getMessage());
 		}
+	}
+	
+	@Override
+	public TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle, String tag,User user) {
+		Topic topic = new Topic();
+		topic.setPtab(null);
+		topic.setTab(tab);
+		topic.setTitle(title);
+		topic.setTag(tag);
+		topic.setContent(content);
+		topic.setCreateDate(new Date());
+		topic.setUpdateDate(new Date());
+		topic.setLastReplyTime(null);
+		topic.setLastReplyAuthor(null);
+		topic.setViewCount(0);
+		topic.setAuthor(user.getUserName());
+		topic.setTop(false);
+		topic.setGood(false);
+		topic.setShowStatus(true);
+		topic.setReplyCount(0);
+		topic.setIsDelete(false);
+		topic.setTagIsCount(true);
+		topic.setPostGoodCount(null);
+		topic.setPostBadCount(null);
+		topic.setStatusCd("1000");
+		topic.setNodeSlug(nodeCode);
+		topic.setNodeTitle(nodeTitle);
+		topic.setRemark(null);
+		topic.setAvatar(user.getAvatar());//话题作者的头像
+		TopicExecution saveTopic = saveTopic(topic);
+		return saveTopic;
 	}
 
 	/**

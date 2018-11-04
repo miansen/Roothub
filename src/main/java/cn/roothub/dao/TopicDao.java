@@ -15,12 +15,21 @@ public interface TopicDao {
 	List<Topic> selectAll();
 	
 	/**
-	 * 分页查询所有话题
+	 * 根据板块查询所有话题
 	 * @param start
 	 * @param limit
 	 * @return
 	 */
-    List<Topic> selectAll(@Param("start") Integer start, @Param("limit") Integer limit,@Param("ptab") String ptab);
+    List<Topic> selectAllByTab(@Param("start") Integer start, @Param("limit") Integer limit,@Param("tab") String tab);
+    
+    /**
+     * 根据节点查询所有话题
+     * @param start
+     * @param limit
+     * @param nodeCode
+     * @return
+     */
+    List<Topic> selectAllByNode(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
     
     /**
      * 根据昵称和板块查询话题
@@ -41,12 +50,12 @@ public interface TopicDao {
     List<Topic> selectByLike(@Param("like") String like, @Param("start") Integer start, @Param("limit") Integer limit);
     
     /**
-	 * 分页查询所有最新话题
+	 * 根据节点查询所有最新话题
 	 * @param start
 	 * @param limit
 	 * @return
 	 */
-    List<Topic> selectAllNewest(@Param("start") Integer start, @Param("limit") Integer limit,@Param("ptab") String ptab);
+    List<Topic> selectAllNewest(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
 
     /**
      * 根据板块查询话题
@@ -58,20 +67,20 @@ public interface TopicDao {
     List<Topic> selectByTab(@Param("tab") String tab, @Param("start") Integer start, @Param("limit") Integer limit);
     
     /**
-     * 查询精华话题
+     * 根据节点查询精华话题
      * @param start
      * @param limit
      * @return
      */
-    List<Topic> selectAllGood(@Param("start") Integer start, @Param("limit") Integer limit,@Param("ptab") String ptab);
+    List<Topic> selectAllGood(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
 
     /**
-     * 查询等待评论的话题
+     * 根据节点查询无人评论的话题
      * @param start
      * @param limit
      * @return
      */
-    List<Topic> selectAllNoReply(@Param("start") Integer start, @Param("limit") Integer limit,@Param("ptab") String ptab);
+    List<Topic> selectAllNoReply(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
     
     /**
      * 侧边栏-今日热门话题
@@ -162,16 +171,16 @@ public interface TopicDao {
     int deleteById(@Param("topicId") Integer topicId);
     
     /**
-     * 统计所有话题
+     * 根据节点统计所有话题
      * @return
      */
-    int countAllTopic(@Param("ptab") String ptab);
+    int countTopicByNode(@Param("nodeCode") String nodeCode);
 
     /**
-     * 统计所有精华话题
+     * 根据节点统计精华话题
      * @return
      */
-    int countAllTopicGood(@Param("ptab") String ptab);
+    int countTopicGoodByNode(@Param("nodeCode") String nodeCode);
 
     /**
      * 根据板块统计话题
@@ -181,10 +190,10 @@ public interface TopicDao {
     int countTopicByTab(@Param("tab") String tab);
 
     /**
-     * 统计无评论的话题
+     * 根据节点统计无人评论的话题
      * @return
      */
-    int countAllTopicNoReply(@Param("ptab") String ptab);
+    int countTopicNoReplyByNode(@Param("nodeCode") String nodeCode);
     
     /**
      * 根据昵称统计所有话题

@@ -22,7 +22,7 @@ public class NodeDaoTest extends BaseTest{
 	
 	@Test
 	public void selectAll() throws Exception {
-		List<Node> list = nodeDao.selectAll("lang", 0, 10);
+		List<Node> list = nodeDao.selectAllByTab("lang", 0, 10);
 		logger.debug(list.toString());
 	}
 }

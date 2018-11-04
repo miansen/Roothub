@@ -43,7 +43,7 @@ import cn.roothub.service.UserService;
 import cn.roothub.service.TabService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
-import cn.roothub.util.PtabUtil;
+import cn.roothub.util.TabCookieUtil;
 import cn.roothub.util.StringUtil;
 
 @Controller // 标注这是一个控制类，类名不能和注解名一样
@@ -82,21 +82,26 @@ public class IndexController extends BaseController{
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET,produces = "application/json; charset=utf-8")//访问子路径
 	private String index(HttpServletRequest request,HttpServletResponse response,
-						 @RequestParam(value = "tab", defaultValue = "all") String tab,
             			 @RequestParam(value = "p", defaultValue = "1") Integer p,
-            			 @RequestParam(value = "ptab", defaultValue = "def") String ptab) {
-		ptab = PtabUtil.getPtab(request,response,ptab);
-		PageDataBody<Topic> page;
-		if(ptab == null || ptab.equals("all")) {
+            			 @RequestParam(value = "tab", defaultValue = "def") String tab) {
+		tab = TabCookieUtil.getTab(request,response,tab);
+		//PageDataBody<Topic> page;
+		/*if(tab == null || tab.equals("all")) {
 			page = rootTopicService.page(p, 50, tab,null);
-		}else if(ptab != null && ptab.equals("hot")){
+		}else if(tab != null && tab.equals("hot")){
 			page = rootTopicService.findIndexHot(p, 50, tab);
 		}else {
-			page = rootTopicService.page(p, 50, tab,ptab);
-		}
+			page = rootTopicService.page(p, 50, tab,tab);
+		}*/
 		//List<Section> sectionAll = rootSectionService.findAll();
-		List<Tab> ptabList = tabService.selectAll();
-		List<Node> nodeList = nodeService.findAll(ptab, 0, 10);
+		PageDataBody<Topic> page;
+		if(tab.equals("all")) {
+			page = rootTopicService.pageAllByTab(p, 1, null);
+		}else {
+			page = rootTopicService.pageAllByTab(p, 1, tab);
+		}
+		List<Tab> tabList = tabService.selectAll();
+		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 10);
 		List<Topic> findHot = rootTopicService.findHot(0, 10);//热门话题榜
 		List<Topic> findTodayNoReply = rootTopicService.findTodayNoReply(0, 10);//今日等待回复的话题
 		PageDataBody<Tag> tag = rootTopicService.findByTag(1, 10);//最热标签
@@ -111,10 +116,10 @@ public class IndexController extends BaseController{
 		request.setAttribute("findHot", findHot);
 		request.setAttribute("findTodayNoReply", findTodayNoReply);
 		//request.setAttribute("sectionAll", sectionAll);
-		request.setAttribute("ptabList", ptabList);
+		request.setAttribute("tabList", tabList);
 		request.setAttribute("nodeList", nodeList);
 		request.setAttribute("tab", tab);
-		request.setAttribute("ptab", ptab);
+		//request.setAttribute("tab", tab);
 		request.setAttribute("tag", tag);
 		request.setAttribute("countUserAll", countUserAll);
 		request.setAttribute("countAllTopic", countAllTopic);

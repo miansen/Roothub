@@ -20,18 +20,18 @@
     <div class="row">
       <div class="col-md-9">
         <div class="panel panel-default">
-        	<div class="ptab panel-heading" id="ptab">
-        	<ul class="nav nav-pills" id="ptab">
-        	<c:forEach var="item" items="${ptabList}" varStatus="status">
-        		<li class=""><a href="/?ptab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
+        	<div class="tab panel-heading">
+        	<ul class="nav nav-pills" id="tab">
+        	<c:forEach var="item" items="${tabList}" varStatus="status">
+        		<li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
         	</c:forEach>
         	</ul>
     		</div>
     		<c:if test="${fn:length(nodeList) > 0}">
-          <div class="section">
-            <ul class="nav nav-pills" id="section">
+          <div class="section node">
+            <ul class="nav nav-pills" id="node">
               <c:forEach var="item" items="${nodeList}" varStatus="status">
-              <li class=""><a href="/?tab=${item.nodeCode}">${item.nodeTitle}</a></li>
+              <li class="active"><a href="/node/${item.nodeCode}">${item.nodeTitle}</a></li>
             </c:forEach>
           </ul>
         </div>
@@ -55,6 +55,8 @@
 			  <c:if test="${item.good}">
 			  <span class="label label-primary">精华</span> <span>•</span>
 			  </c:if>
+			    <a href="/node/${item.nodeSlug}"><span class="label label-primary">${item.nodeTitle}</span></a>
+			    <span>•</span>
                 <span><a href="/user/${item.author}">${item.author}</a></span>
                 <span class="hidden-sm hidden-xs">•</span>
                 <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
@@ -181,13 +183,13 @@
 <script src="/resources/js/login_info.js"></script>
 <script src="/resources/js/formatDate.js"></script>
 <script type="text/javascript">
-var tab = "${tab}";//板块
-var ptab = "${ptab}";//父板块
+//var tab = "${tab}";//板块
+var tab = "${tab}";//父板块
 //var url = "/?tab="+tab+"&ptab="+ptab+"&"
 //$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
  var count = ${page.totalRow};//数据总量
  var limit = ${page.pageSize};//每页显示的条数
- var url = "?tab="+tab+"&ptab="+ptab+"&p=";//url
+ var url = "?tab="+tab+"&p=";//url
  function page(){
      var page = location.search.match(/p=(\d+)/);  
      return page ? page[1] : 1;  

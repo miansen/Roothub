@@ -44,20 +44,39 @@
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
     </resultMap>
     <sql id="Base_Column_List">
-        topic_id, ptab,tab, title, tag, create_date, update_date, last_reply_time, last_reply_author, 
-        view_count,author,top,good,show_status,reply_count,is_delete,tag_is_count,content,avatar
+        topic_id, ptab,tab,title,tag,content, create_date, update_date, last_reply_time, last_reply_author, 
+        view_count,author,top,good,show_status,reply_count,is_delete,tag_is_count,post_good_count,post_bad_count,
+        status_cd,node_slug,node_title,remark,avatar
     </sql>
-	<!-- 查询所有话题 -->
-	<select id="selectAll" resultType="Topic">
+	<!-- 根据板块查询所有话题 -->
+	<select id="selectAllByTab" resultType="Topic">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
 			topic
 		WHERE is_delete = '0'
-		<if test="ptab != null">
-		AND ptab = #{ptab}
+		<if test="tab != null">
+		AND tab = #{tab}
 		</if>
-		order by top desc, last_reply_time desc
+		order by top desc, last_reply_time desc,create_date desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     <!-- 根据节点查询所有话题 -->
+	<select id="selectAllByNode" resultType="Topic">
+		SELECT
+        <include refid="Base_Column_List"/>
+		FROM
+			topic
+		WHERE is_delete = '0'
+		<if test="nodeCode != null">
+		AND node_slug = #{nodeCode}
+		</if>
+		order by top desc, last_reply_time desc,create_date desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -108,10 +127,10 @@
 		FROM
 			topic
 		WHERE is_delete = '0'
-		<if test="ptab != null">
-		AND ptab = #{ptab}
+		<if test="nodeCode != null">
+		AND node_slug = #{nodeCode}
 		</if>
-		order by create_date desc,last_reply_time desc
+		order by create_date desc,last_reply_time desc,create_date desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -134,7 +153,7 @@
             </if>
         </if>
      </select>
-    <!-- 查询精华话题 -->
+    <!-- 根据节点查询精华话题 -->
 	<select id="selectAllGood" resultType="Topic">
 		SELECT
         <include refid="Base_Column_List"/>
@@ -142,10 +161,10 @@
 			topic
 		where good = 1
 		AND is_delete = '0'
-		<if test="ptab != null">
-		AND ptab = #{ptab}
+		<if test="nodeCode != null">
+		AND node_slug = #{nodeCode}
 		</if>
-		order by top desc, last_reply_time desc
+		order by top desc, last_reply_time desc,create_date desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -153,7 +172,7 @@
             </if>
         </if>
      </select>
-     <!-- 查询等待评论的话题 -->
+     <!-- 查询无人评论的话题 -->
 	<select id="selectAllNoReply" resultType="Topic">
 		SELECT
         <include refid="Base_Column_List"/>
@@ -161,10 +180,10 @@
 			topic
 		where reply_count = 0
 		AND is_delete = '0'
-		<if test="ptab != null">
-		AND ptab = #{ptab}
+		<if test="nodeCode != null">
+		AND node_slug = #{nodeCode}
 		</if>
-		order by top desc, last_reply_time desc
+		order by top desc, last_reply_time desc,create_date desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -404,13 +423,13 @@
         delete from topic
         where topic_id = #{topicId,jdbcType=INTEGER}
     </delete>
-    <!-- 统计所有话题 -->
-    <select id="countAllTopic" resultType="java.lang.Integer">
+    <!-- 根据节点统计话题 -->
+    <select id="countTopicByNode" resultType="java.lang.Integer">
         select count(topic_id)
         from topic t
         where t.is_delete = 0
-        <if test="ptab != null">
-        and t.ptab = #{ptab}
+        <if test="nodeCode != null">
+        and t.node_slug = #{nodeCode}
         </if>
     </select>
     <!-- 统计模糊查询 -->
@@ -419,30 +438,33 @@
         from topic t
         where t.title like '%${like}%'
     </select>
-    <!-- 统计所有精华话题 -->
-    <select id="countAllTopicGood" resultType="java.lang.Integer">
+    <!-- 根据节点统计精华话题 -->
+    <select id="countTopicGoodByNode" resultType="java.lang.Integer">
         select count(topic_id)
         from topic t
         where t.is_delete = 0 
         and t.good = 1
-        <if test="ptab != null">
-        and t.ptab = #{ptab}
+        <if test="nodeCode != null">
+        and t.node_slug = #{nodeCode}
         </if>
     </select>
     <!-- 根据板块统计话题 -->
     <select id="countTopicByTab" resultType="java.lang.Integer">
         select count(topic_id)
         from topic t
-        where t.is_delete = 0 and t.tab = #{tab,jdbcType=VARCHAR}
+        where t.is_delete = 0
+        <if test="tab != null">
+        	and t.tab = #{tab,jdbcType=VARCHAR}
+        </if>
     </select>
-    <!-- 统计无评论的话题 -->
-    <select id="countAllTopicNoReply" resultType="java.lang.Integer">
+    <!-- 根据节点统计无人评论的话题 -->
+    <select id="countTopicNoReplyByNode" resultType="java.lang.Integer">
         select count(topic_id)
         from topic t
         where t.is_delete = 0 
         and t.reply_count = 0
-        <if test="ptab != null">
-        and t.ptab = #{ptab}
+        <if test="nodeCode != null">
+        and t.node_slug = #{nodeCode}
         </if>
     </select>
     <!-- 根据昵称统计所有话题 -->

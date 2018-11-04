@@ -15,7 +15,13 @@ public class NodeServiceIpmlTest extends BaseTest {
 	
 	@Test
 	public void findAll() throws Exception {
-		List<Node> list = nodeService.findAll(null, null, null);
+		List<Node> list = nodeService.findAllByTab(null, null, null);
 		System.out.println(list);
+	}
+	
+	@Test
+	public void findAtherByNodeCodeTest() throws Exception {
+		List<Node> findAtherByNodeCode = nodeService.findAtherByNodeCode("java", 0, 10);
+		System.out.println(findAtherByNodeCode);
 	}
 }

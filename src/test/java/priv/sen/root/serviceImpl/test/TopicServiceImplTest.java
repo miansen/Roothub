@@ -43,7 +43,7 @@ public class TopicServiceImplTest extends BaseTest{
 	 */
 	@Test
 	public void pageTest() throws Exception{
-		PageDataBody<Topic> page = rootTopicService.page(1, 20, "all","all");
+		PageDataBody<Topic> page = rootTopicService.pageByNodeAndSection(1, 20, "all","all");
 		String formatDate = new BaseEntity().formatDate(page.getList().get(0).getCreateDate());
 		System.out.println(formatDate);
 	}

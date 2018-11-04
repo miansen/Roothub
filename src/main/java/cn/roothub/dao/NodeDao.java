@@ -11,5 +11,11 @@ import cn.roothub.entity.Node;
 public interface NodeDao {
 
 	//根据板块查询节点
-	List<Node> selectAll(@Param("tabName") String tabName,@Param("start") Integer start, @Param("limit") Integer limit);
+	List<Node> selectAllByTab(@Param("tabName") String tabName,@Param("start") Integer start, @Param("limit") Integer limit);
+	
+	//根据节点编码查询节点
+	Node selectByNodeCode(@Param("nodeCode") String nodeCode);
+	
+	//相邻节点
+	List<Node> selectAtherByNodeCode(@Param("nodeCode") String nodeCode,@Param("start") Integer start, @Param("limit") Integer limit);
 }

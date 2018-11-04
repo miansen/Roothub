@@ -3,28 +3,28 @@ package cn.roothub.util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PtabUtil {
+public class TabCookieUtil {
 
-	private PtabUtil() {}
+	private TabCookieUtil() {}
 	
-	public static void setPtab(String ptab,HttpServletResponse response) {
-		CookieAndSessionUtil.setCookie("ptab", Base64Util.encode(ptab), 30 * 24 * 60 * 60, "/", true, response);
+	public static void setTab(String ptab,HttpServletResponse response) {
+		CookieAndSessionUtil.setCookie("tab", Base64Util.encode(ptab), 30 * 24 * 60 * 60, "/", true, response);
 	}
 	
 	public static void editPtab(HttpServletRequest request,HttpServletResponse response,String ptab) {
-		CookieAndSessionUtil.editCookie(request,response, "ptab", Base64Util.encode(ptab));
+		CookieAndSessionUtil.editCookie(request,response, "tab", Base64Util.encode(ptab));
 	}
 	
-	public static String getPtab(HttpServletRequest request,HttpServletResponse response,String ptab) {
+	public static String getTab(HttpServletRequest request,HttpServletResponse response,String ptab) {
 		String str = null;
-		str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "ptab"));
+		str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "tab"));
 		if(str == null) {
 			if(ptab.equals("def")) {
-				setPtab("all",response);
-				return str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "ptab"));
+				setTab("all",response);
+				return str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "tab"));
 			}else {
-				setPtab(ptab,response);
-				return str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "ptab"));
+				setTab(ptab,response);
+				return str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "tab"));
 			}
 		}else {
 			if(ptab.equals("def")) {
@@ -33,7 +33,7 @@ public class PtabUtil {
 				return str;
 			}else {
 				editPtab(request,response,ptab);
-				return str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "ptab"));
+				return str = Base64Util.decode(CookieAndSessionUtil.getCookie(request, "tab"));
 			}
 		}
 		
@@ -54,6 +54,6 @@ public class PtabUtil {
 	}
 	
 	public static void removePtab(HttpServletResponse response) {
-		CookieAndSessionUtil.removeCookie(response, "ptab", "/", true);
+		CookieAndSessionUtil.removeCookie(response, "tab", "/", true);
 	}
 }

@@ -19,7 +19,7 @@
         node_id, node_code, node_title, node_img, node_bg_img, node_desc,tab_id,create_date,update_date,is_delete
     </sql>
     <!-- 根据板块查询节点 -->
-    <select id="selectAll" resultType="Node">
+    <select id="selectAllByTab" resultType="Node">
         SELECT
         	A.*
         FROM
@@ -28,6 +28,36 @@
        		A.TAB_ID = B.ID
         <if test="tabName != null">
         	AND B.TAB_NAME = #{tabName}
+        </if>
+        <if test="start != null">
+            LIMIT #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+    </select>
+    <!-- 根据节点编码查询节点 -->
+    <select id="selectByNodeCode" resultType="Node">
+    	SELECT
+        	<include refid="Base_Column_List"/>
+        FROM
+        	NODE A
+        <if test="nodeCode != null">
+        	WHERE A.NODE_CODE = #{nodeCode}
+        </if>
+    </select>
+     <!-- 相邻节点 -->
+    <select id="selectAtherByNodeCode" resultType="Node">
+        SELECT
+        	b.*
+        FROM
+        	node a,
+			node b
+       	WHERE 
+       		a.tab_id = b.tab_id
+        <if test="nodeCode != null">
+        	AND a.node_code = #{nodeCode}
+        	AND b.node_code != #{nodeCode}
         </if>
         <if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}

@@ -20,8 +20,20 @@ public class NodeServiceImpl implements NodeService{
 	
 	//根据板块查询节点
 	@Override
-	public List<Node> findAll(String tabName, Integer pageNumber, Integer pageSize) {
-		return nodeDao.selectAll(tabName, pageNumber, pageSize);
+	public List<Node> findAllByTab(String tabName, Integer pageNumber, Integer pageSize) {
+		return nodeDao.selectAllByTab(tabName, pageNumber, pageSize);
+	}
+
+	//根据节点编码查询对应的节点
+	@Override
+	public Node findByNodeCode(String nodeCode) {
+		return nodeDao.selectByNodeCode(nodeCode);
+	}
+
+	//相邻板块
+	@Override
+	public List<Node> findAtherByNodeCode(String nodeCode, Integer pageNumber, Integer pageSize) {
+		return nodeDao.selectAtherByNodeCode(nodeCode, pageNumber, pageSize);
 	}
 	
 }

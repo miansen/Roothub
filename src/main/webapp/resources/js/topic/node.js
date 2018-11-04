@@ -1,6 +1,6 @@
 function getNode(){
 	var tabName = $("#tab").val();
-	var url = "/node/"+tabName;
+	var url = "/node/tab/"+tabName;
 	$.ajax({
 		url:url,
 		type:"get",
@@ -16,4 +16,5 @@ function getNode(){
 		}
 	});
 };
+//打开页面默认触发事件
 window.onLoad = getNode();

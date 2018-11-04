@@ -13,14 +13,14 @@ import cn.roothub.entity.Tag;
 public interface TopicService {
 
 	/**
-	 * 根据tab分页查询话题列表
+	 * 根据节点和sectionName查询话题
 	 * @param pageNumber
 	 * @param pageSize
 	 * @param tab
 	 * @param ptab
 	 * @return
 	 */
-	PageDataBody<Topic> page(Integer pageNumber, Integer pageSize, String tab,String ptab);
+	PageDataBody<Topic> pageByNodeAndSection(Integer pageNumber, Integer pageSize, String sectionName,String nodeCode);
 	
 	/**
 	 * 模糊查询话题列表
@@ -32,13 +32,22 @@ public interface TopicService {
 	PageDataBody<Topic> pageLike(Integer pageNumber, Integer pageSize, String like);
 	
 	/**
-	 * 分页查询所有话题
+	 * 根据板块查询所有话题
 	 * @param pageNumber
 	 * @param pageSize
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> pageAll(Integer pageNumber, Integer pageSize,String ptab);
+	PageDataBody<Topic> pageAllByTab(Integer pageNumber, Integer pageSize,String tab);
+	
+	/**
+	 * 根据节点查询所有话题
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param nodeCode
+	 * @return
+	 */
+	PageDataBody<Topic> pageAllByNode(Integer pageNumber, Integer pageSize,String nodeCode);
 	
 	/**
 	 * 根据板块和昵称分页查询
@@ -51,26 +60,26 @@ public interface TopicService {
 	PageDataBody<Topic> pageAllByPtabAndAuthor(Integer pageNumber, Integer pageSize,String ptab,String author);
 	
 	/**
-	 * 分页查询最新话题
+	 * 根据节点查询最新话题
 	 * @param pageNumber
 	 * @param pageSize
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String ptab);
+	PageDataBody<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeCode);
 	
 	/**
-	 * 分页查询精华话题
+	 * 根据节点查询查询精华话题
 	 */
-	PageDataBody<Topic> pageGood(Integer pageNumber, Integer pageSize,String ptab);
+	PageDataBody<Topic> pageGood(Integer pageNumber, Integer pageSize,String nodeCode);
 	
 	/**
-	 * 分页查询无人回复的话题
+	 * 根据节点查询无人回复的话题
 	 * @param pageNumber
 	 * @param pageSize
 	 * @return
 	 */
-	PageDataBody<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String ptab);
+	PageDataBody<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String nodeCode);
 
 	/**
 	 * 根据ID查询话题
@@ -208,10 +217,17 @@ public interface TopicService {
 	PageDataBody<Topic> pageByTag(String tag,Integer pageNumber, Integer pageSize);
 	
 	/**
-     * 统计所有话题
+     * 根据板块统计所有话题
      * @return
      */
-    int countAllTopic(String ptab);
+    int countAllTopic(String tab);
+    
+    /**
+     * 根据节点统计所有话题
+     * @param node
+     * @return
+     */
+    int countTopicByNode(String nodeCode);
     
     /**
      * 作者的其他话题

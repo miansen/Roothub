@@ -23,7 +23,7 @@
 						<div class="media">
 							<div class="media-body">
 								<a href="/">Roothub</a> <span class="chevron">&nbsp;›&nbsp;</span>
-								<a href="/?ptab=${topic.ptab}" class="topic-detail-ptab"></a>
+								<a href="/node/${topic.nodeSlug}" class="topic-detail-node">${topic.nodeTitle}</a>
 								<div class="sep10"></div>
 								<h2 class="topic-detail-title">${topic.title}</h2>
 								<p>
@@ -47,11 +47,11 @@
 					</c:if>
 					<span><a href="/user/${topic.author}">${topic.author}</a></span>
 					<span>•</span>
-					<%-- <span><fmt:formatDate type="both"
+					<span><fmt:formatDate type="both"
 					dateStyle="medium" timeStyle="short"
-					value="${topic.createDate}" /></span> --%>
+					value="${topic.createDate}" /></span>
 					<%-- <span>${baseEntity.formatDate(topic.createDate)}</span> --%>
-					<span class="formate-date">${topic.createDate}</span>
+					<%-- <span class="formate-date">${topic.createDate}</span> --%>
 					<span>•</span>
 					<span>${topic.viewCount}次点击</span>
 				</p>
@@ -264,30 +264,6 @@
     }
     function goTop(){
     	$('body,html').animate({scrollTop:0},500);
-    }
-    var ptab = "${topic.ptab}";
-    if(ptab == "pl"){
-    	$(".topic-detail-ptab").text("编程语言");
-    }else if(ptab == "db"){
-    	$(".topic-detail-ptab").text("数据库");
-    }else if(ptab == "fe"){
-    	$(".topic-detail-ptab").text("前端");
-    }else if(ptab == "play"){
-    	$(".topic-detail-ptab").text("有趣");
-    }else if(ptab == "creative"){
-    	$(".topic-detail-ptab").text("创意");
-    }else if(ptab == "host"){
-    	$(".topic-detail-ptab").text("主机");
-    }else if(ptab == "dn"){
-    	$(".topic-detail-ptab").text("域名");
-    }else if(ptab == "blog"){
-    	$(".topic-detail-ptab").text("博客");
-    }else if(ptab == "tea"){
-    	$(".topic-detail-ptab").text("下午茶馆");
-    }else if(ptab == "news"){
-    	$(".topic-detail-ptab").text("资讯");
-    }else{
-    	$(".topic-detail-ptab").text("提问");
     }
     
      var count = ${replyPage.totalRow};//数据总量

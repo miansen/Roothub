@@ -9,21 +9,21 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.roothub.dto.SectionExecution;
-import cn.roothub.entity.Section;
-import cn.roothub.service.SectionService;
+import cn.roothub.entity.NodeTab;
+import cn.roothub.service.NodeTabService;
 import priv.sen.root.dao.test.BaseTest;
 
-public class SectionServiceImplTest extends BaseTest{
+public class NodeTabServiceImplTest extends BaseTest{
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	
 	@Autowired
-	private SectionService rootSectionService;
+	private NodeTabService nodeTabService;
 	
 	@Test
 	public void saveTest() throws Exception{
-		Section rootSection = new Section();
+		/*NodeTab rootSection = new NodeTab();
 		rootSection.setSectionName("等待评论");
 		rootSection.setSectionTab("WFC");
 		rootSection.setShowStatus(true);
@@ -32,12 +32,12 @@ public class SectionServiceImplTest extends BaseTest{
 		rootSection.setPid(0);
 		rootSection.setCreateDate(new Date());
 		SectionExecution save = rootSectionService.save(rootSection);
-		logger.debug(save.toString());
+		logger.debug(save.toString());*/
 	}
 	
 	@Test
 	public void findAllTest() throws Exception{
-		List<Section> findAll = rootSectionService.findAll();
+		List<NodeTab> findAll = nodeTabService.findAll();
 		logger.debug(findAll.toString());
 	}
 	

@@ -19,11 +19,11 @@ import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.dto.TopicExecution;
-import cn.roothub.entity.Section;
+import cn.roothub.entity.NodeTab;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.Tab;
 import cn.roothub.entity.Tag;
-import cn.roothub.service.SectionService;
+import cn.roothub.service.NodeTabService;
 import cn.roothub.service.TopicService;
 import cn.roothub.service.TabService;
 import priv.sen.root.dao.test.BaseTest;
@@ -34,7 +34,7 @@ public class TopicServiceImplTest extends BaseTest{
 	@Autowired
 	TopicService rootTopicService;
 	@Autowired
-	SectionService rootSectionService;
+	NodeTabService rootSectionService;
 	@Autowired
 	TabService tabService;
 	/**
@@ -192,10 +192,10 @@ public class TopicServiceImplTest extends BaseTest{
 		List<Topic> row1 = rootTopicService.findAll();
 		//List<RootTopic> row2 = rootTopicService.findHot(1, 50);
 		List<Tab> row2 = tabService.selectAll();
-    	List<Section> row3 = rootSectionService.findAll();
+    	List<NodeTab> row3 = rootSectionService.findAll();
 		List<Topic> rows1 = CollUtil.newArrayList(row1);
 		List<Tab> rows2 = CollUtil.newArrayList(row2);
-		List<Section> rows3 = CollUtil.newArrayList(row3);
+		List<NodeTab> rows3 = CollUtil.newArrayList(row3);
 		//List<List<? extends Object>> rows3 = CollUtil.newArrayList(row1,row2,row3);
 		ExcelWriter writer = ExcelUtil.getWriter("d:/writeTest04.xlsx","话题");
 		writer.addHeaderAlias("topicId", "话题标识");

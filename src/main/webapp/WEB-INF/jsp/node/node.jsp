@@ -30,9 +30,9 @@
              <span class="f12">${node.nodeDesc}</span>
              <div class="sep10"></div>
              <div class="node_header_tabs">
-               <c:if test="${fn:length(sectionList) > 0}">
-               <c:forEach var="item" items="${sectionList}" varStatus="status">
-               <a href="/node/${node.nodeCode}?s=${item.sectionTab}" id="${item.sectionTab}" class="node_header_tab">${item.sectionName}</a>
+               <c:if test="${fn:length(nodeTabList) > 0}">
+               <c:forEach var="item" items="${nodeTabList}" varStatus="status">
+               <a href="/node/${node.nodeCode}?s=${item.nodeTabCode}" id="${item.nodeTabCode}" class="node_header_tab">${item.nodeTabTitle}</a>
              </c:forEach>
            </c:if>
          </div>

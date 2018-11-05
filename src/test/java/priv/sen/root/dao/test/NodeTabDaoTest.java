@@ -5,17 +5,17 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.roothub.dao.SectionDao;
-import cn.roothub.entity.Section;
+import cn.roothub.dao.NodeTabDao;
+import cn.roothub.entity.NodeTab;
 
-public class SectionDaoTest extends BaseTest{
+public class NodeTabDaoTest extends BaseTest{
 	
 	@Autowired
-	private SectionDao rootSectionDao;
+	private NodeTabDao nodeTabDao;
 	
 	@Test
 	public void selectAllTest() throws Exception {
-		List<Section> selectAll = rootSectionDao.selectAll();
+		List<NodeTab> selectAll = nodeTabDao.selectAll();
 		System.out.println(selectAll);
 	}
 }

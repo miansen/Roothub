@@ -29,7 +29,7 @@ import cn.roothub.entity.Tab;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.NoticeService;
 import cn.roothub.service.ReplyService;
-import cn.roothub.service.SectionService;
+import cn.roothub.service.NodeTabService;
 import cn.roothub.service.TopicService;
 import cn.roothub.service.UserService;
 import cn.roothub.service.TabService;
@@ -46,7 +46,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private TopicService rootTopicService;
 	@Autowired
-	private SectionService rootSectionService;
+	private NodeTabService rootSectionService;
 	@Autowired
 	private ReplyService rootReplyService;
 	@Autowired

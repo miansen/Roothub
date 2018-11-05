@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.Node;
-import cn.roothub.entity.Section;
+import cn.roothub.entity.NodeTab;
 import cn.roothub.entity.Topic;
 import cn.roothub.exception.ApiAssert;
 import cn.roothub.service.NodeService;
-import cn.roothub.service.SectionService;
+import cn.roothub.service.NodeTabService;
 import cn.roothub.service.TopicService;
 
 /**
@@ -35,7 +35,7 @@ public class NodeController {
 	@Autowired
 	private TopicService topicService;
 	@Autowired
-	private SectionService sectionService;
+	private NodeTabService nodeTabService;
 	
 	/**
 	 * 根据板块查询节点
@@ -59,12 +59,12 @@ public class NodeController {
 		if(node == null) {
 			throw new RuntimeException("节点不存在， 返回 > <a href='/'>主页<a/>");
 		}
-		List<Section> sectionList = sectionService.findAll();
+		List<NodeTab> nodeTabList = nodeTabService.findAll();
 		//PageDataBody<Topic> page = topicService.pageAllByNode(p, 50, nodeCode);
 		PageDataBody<Topic> page = topicService.pageByNodeAndSection(p, 1, sectionName, nodeCode);
 		List<Node> atherNode = nodeService.findAtherByNodeCode(nodeCode, 0, 50);
 		int countTopicByNode = topicService.countTopicByNode(nodeCode);
-		request.setAttribute("sectionList", sectionList);
+		request.setAttribute("nodeTabList", nodeTabList);
 		request.setAttribute("page", page);
 		request.setAttribute("node", node);
 		request.setAttribute("sectionName", sectionName);

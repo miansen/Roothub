@@ -1,6 +1,6 @@
 package cn.roothub.dto;
 
-import cn.roothub.entity.Section;
+import cn.roothub.entity.NodeTab;
 import cn.roothub.enums.InsertEnum;
 import cn.roothub.enums.UpdateEnum;
 
@@ -16,7 +16,7 @@ public class SectionExecution {
 	private String sectionName;
 	private int state;// 结果状态
 	private String stateInfo;// 状态标识
-	private Section rootSection;//成功对象
+	private NodeTab rootSection;//成功对象
 	
 	public SectionExecution() {
 		super();
@@ -50,7 +50,7 @@ public class SectionExecution {
 	 * @param stateEnum
 	 * @param rootSection
 	 */
-	public SectionExecution(String sectionName,InsertEnum stateEnum,Section rootSection) {
+	public SectionExecution(String sectionName,InsertEnum stateEnum,NodeTab rootSection) {
 		this.sectionName = sectionName;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
@@ -63,7 +63,7 @@ public class SectionExecution {
 	 * @param stateEnum
 	 * @param rootSection
 	 */
-	public SectionExecution(String sectionName,UpdateEnum stateEnum,Section rootSection) {
+	public SectionExecution(String sectionName,UpdateEnum stateEnum,NodeTab rootSection) {
 		this.sectionName = sectionName;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
@@ -94,11 +94,11 @@ public class SectionExecution {
 		this.stateInfo = stateInfo;
 	}
 
-	public Section getRootSection() {
+	public NodeTab getRootSection() {
 		return rootSection;
 	}
 
-	public void setRootSection(Section rootSection) {
+	public void setRootSection(NodeTab rootSection) {
 		this.rootSection = rootSection;
 	}
 

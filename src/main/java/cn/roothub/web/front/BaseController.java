@@ -13,7 +13,7 @@ import cn.roothub.entity.User;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.NoticeService;
 import cn.roothub.service.ReplyService;
-import cn.roothub.service.SectionService;
+import cn.roothub.service.NodeTabService;
 import cn.roothub.service.TopicService;
 import cn.roothub.service.UserService;
 import cn.roothub.util.Base64Util;
@@ -30,7 +30,7 @@ public class BaseController {
 	@Autowired
 	private TopicService rootTopicService;
 	@Autowired
-	private SectionService rootSectionService;
+	private NodeTabService rootSectionService;
 	@Autowired
 	private NoticeService rootNoticeService;
 	@Autowired

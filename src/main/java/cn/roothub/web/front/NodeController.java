@@ -55,10 +55,13 @@ public class NodeController {
 						  @RequestParam(value = "s", defaultValue = "all") String sectionName,
 						  @RequestParam(value = "p", defaultValue = "1") Integer p,
 						  HttpServletRequest request,HttpServletResponse response) {
+		Node node = nodeService.findByNodeCode(nodeCode);
+		if(node == null) {
+			throw new RuntimeException("节点不存在， 返回 > <a href='/'>主页<a/>");
+		}
 		List<Section> sectionList = sectionService.findAll();
 		//PageDataBody<Topic> page = topicService.pageAllByNode(p, 50, nodeCode);
 		PageDataBody<Topic> page = topicService.pageByNodeAndSection(p, 1, sectionName, nodeCode);
-		Node node = nodeService.findByNodeCode(nodeCode);
 		List<Node> atherNode = nodeService.findAtherByNodeCode(nodeCode, 0, 50);
 		int countTopicByNode = topicService.countTopicByNode(nodeCode);
 		request.setAttribute("sectionList", sectionList);

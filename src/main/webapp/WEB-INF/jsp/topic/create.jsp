@@ -36,7 +36,7 @@
                 <label for="tab">板块</label>
                 <select id="tab" class="form-control" name="tab" onchange="getNode()">
                  <c:forEach var="item" items="${tabList}" varStatus="status">
-                 <c:if test="${item.tabName != 'member'}">
+                 <c:if test="${item.tabName != 'all' && item.tabName != 'member'}">
                  <option value="${item.tabName}">${item.tabDesc}</option>
                </c:if>
              </c:forEach>

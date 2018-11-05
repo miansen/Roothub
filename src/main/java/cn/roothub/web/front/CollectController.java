@@ -44,13 +44,10 @@ public class CollectController extends BaseController{
 	@RequestMapping(value = "/collect/topics",method = RequestMethod.GET)
 	private String list(HttpServletRequest request,@RequestParam(value = "p",defaultValue = "1")Integer p) {
 		User user = getUser(request);
-		if(user == null) {
-			return "error-page/500";
-		}
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
-		PageDataBody<Topic> page = collectDaoService.page(p, 20, user.getUserId());
+		PageDataBody<Topic> page = collectDaoService.page(p, 50, user.getUserId());
 		BaseEntity baseEntity = new BaseEntity();
 		request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("countCollect", countCollect);

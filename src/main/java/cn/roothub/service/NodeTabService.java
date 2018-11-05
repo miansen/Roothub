@@ -1,8 +1,6 @@
 package cn.roothub.service;
 
 import java.util.List;
-
-import cn.roothub.dto.SectionExecution;
 import cn.roothub.entity.NodeTab;
 
 public interface NodeTabService {

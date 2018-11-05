@@ -35,19 +35,21 @@
                 </a>
               </div>
               <p class="gray">
-              <c:if test="${item.top}">
-			  <span class="label label-primary">置顶</span> <span>•</span>
-			  </c:if>
-			  <c:if test="${item.good}">
-			  <span class="label label-primary">精华</span> <span>•</span>
-			  </c:if>
+              	<c:if test="${item.top}">
+			  	<span class="label label-primary">置顶</span> <span>•</span>
+			  	</c:if>
+			  	<c:if test="${item.good}">
+			  	<span class="label label-primary">精华</span> <span>•</span>
+			  	</c:if>
+			  	<a href="/node/${item.nodeSlug}"><span class="label label-primary">${item.nodeTitle}</span></a>
+			    <span>•</span>
                 <span><a href="/user/${item.author}">${item.author}</a></span>
                 <span class="hidden-sm hidden-xs">•</span>
                 <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
                 <span class="hidden-sm hidden-xs">•</span>
                 <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
                 <span>•</span>
-                <span>${baseEntity.formatDate(item.createDate)}</span>
+                <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
                   <c:if test="${item.lastReplyAuthor != null}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>

@@ -105,9 +105,6 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@RequestMapping(value = "/topic/create", method = RequestMethod.GET)
 	private String create(HttpServletRequest request){
 		List<Tab> tabList = tabService.selectAll();
-		//去掉全部和最热这两个板块
-		tabList.remove(0);
-		tabList.remove(0);
 		request.setAttribute("tabList", tabList);
 		return "topic/create";
 	}

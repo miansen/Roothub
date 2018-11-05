@@ -45,10 +45,10 @@
                 <span class="hidden-sm hidden-xs">•</span>
                 <span class="hidden-sm hidden-xs"><a href="/topic/41">${item.replyCount}个评论</a></span>
                 <span>•</span>
-                <%-- <span><fmt:formatDate type="date" 
-                  value="${item.createDate}" /></span> --%>
+                <span><fmt:formatDate type="date" 
+                  value="${item.createDate}" /></span>
                   <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
-                  <span class="formate-date">${item.createDate}</span>
+                  <%-- <span class="formate-date">${item.createDate}</span> --%>
                   <c:if test="${item.lastReplyAuthor != null}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>

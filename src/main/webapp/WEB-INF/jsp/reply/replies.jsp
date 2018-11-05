@@ -20,10 +20,10 @@
                 <div class="sep3"></div>
                 <strong><a href="/user/${item.replyAuthorName}" class="dark">${item.replyAuthorName}</a></strong>&nbsp;
                 <span class="formate-date-reply ago">
-                <%-- <fmt:formatDate type="both" 
+                <fmt:formatDate type="both" 
                   dateStyle="medium" timeStyle="short" 
-                  value="${item.createDate}" /> --%>
-                  ${item.createDate}
+                  value="${item.createDate}" />
+                  <%-- ${item.createDate} --%>
                   </span> 
                 <div class="sep5"></div>
                 <div class="reply_content">${item.replyContent}</div>

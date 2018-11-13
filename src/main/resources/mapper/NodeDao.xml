@@ -7,16 +7,19 @@
         <id column="node_id" jdbcType="INTEGER" property="nodeId"/>
         <result column="node_code" jdbcType="VARCHAR" property="nodeCode"/>
         <result column="node_title" jdbcType="VARCHAR" property="nodeTitle"/>
-        <result column="node_img" jdbcType="VARCHAR" property="nodeImg"/>
-        <result column="node_bg_img" jdbcType="VARCHAR" property="nodeBgImg"/>
+        <result column="avatar_normal" jdbcType="VARCHAR" property="avatarNormal"/>
+        <result column="avatar_mini" jdbcType="VARCHAR" property="avatarMini"/>
+        <result column="avatar_large" jdbcType="VARCHAR" property="avatarLarge"/>
         <result column="node_desc" jdbcType="VARCHAR" property="nodeDesc"/>
         <result column="tab_id" jdbcType="INTEGER" property="tabId"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="parent_node_code" jdbcType="VARCHAR" property="parentNodeCode"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="is_delete" jdbcType="BIT" property="isDelete"/>
     </resultMap>
     <sql id="Base_Column_List">
-        node_id, node_code, node_title, node_img, node_bg_img, node_desc,tab_id,create_date,update_date,is_delete
+        node_id, node_code, node_title, avatar_normal, avatar_mini, avatar_large,node_desc,tab_id,url,parent_node_code,create_date,update_date,is_delete
     </sql>
     <!-- 根据板块查询节点 -->
     <select id="selectAllByTab" resultType="Node">
@@ -42,24 +45,56 @@
         	<include refid="Base_Column_List"/>
         FROM
         	NODE A
-        <if test="nodeCode != null">
-        	WHERE A.NODE_CODE = #{nodeCode}
+        WHERE A.NODE_CODE = #{nodeCode}
+    </select>
+    <!-- 查找子节点 -->
+    <select id="selectChildrenNode" resultType="Node">
+    	SELECT 
+    		a.* 
+    	from node a
+    	<if test="nodeCode != null">
+    		where a.parent_node_code = #{nodeCode}
+    	</if>
+    	<if test="start != null">
+            LIMIT #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
         </if>
     </select>
-     <!-- 相邻节点 -->
-    <select id="selectAtherByNodeCode" resultType="Node">
+     <!-- 查找相邻节点 -->
+    <select id="selectAtherNode" resultType="Node">
         SELECT
-        	b.*
+        	a.*
         FROM
-        	node a,
-			node b
-       	WHERE 
-       		a.tab_id = b.tab_id
+        	node a
         <if test="nodeCode != null">
-        	AND a.node_code = #{nodeCode}
-        	AND b.node_code != #{nodeCode}
+        	WHERE a.node_code != #{nodeCode}
+        	<if test="parentNodeCode != null">
+        		AND a.parent_node_code = #{parentNodeCode}
+        	</if>
         </if>
         <if test="start != null">
+            LIMIT #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+    </select>
+    <!-- 查找相邻顶级节点 -->
+    <select id="selectAtherParentNode" resultType="Node">
+    	SELECT 
+    		a.* 
+    	from 
+    		node a
+    	<if test="nodeCode != null">
+    		where a.node_code != #{nodeCode}
+    		<if test="tabId != null">
+    			and a.tab_id = #{tabId} 
+    			and a.parent_node_code is null
+    		</if>
+    	</if>
+    	<if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}
             <if test="limit != null">
                 ,#{limit,jdbcType=INTEGER}

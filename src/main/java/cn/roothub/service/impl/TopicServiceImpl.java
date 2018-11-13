@@ -27,15 +27,15 @@ public class TopicServiceImpl implements TopicService{
 	private UserDao rootUserDao;
 	
 	/**
-	 * 根据节点和sectionName查询话题
+	 * 根据节点和节点板块查询话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageByNodeAndSection(Integer pageNumber, Integer pageSize, String sectionName,String nodeCode) {
-		if(sectionName.equals("all")) {
+	public PageDataBody<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab,String nodeCode) {
+		if(nodeTab.equals("all")) {
 			return pageAllByNode(pageNumber,pageSize,nodeCode);
-		}else if(sectionName.equals("good")) {
+		}else if(nodeTab.equals("good")) {
 			return pageGood(pageNumber,pageSize,nodeCode);
-		}else if(sectionName.equals("noReply")) {
+		}else if(nodeTab.equals("noReply")) {
 			return pageNoReply(pageNumber,pageSize,nodeCode);
 		}else {
 			return pageAllNewest(pageNumber,pageSize,nodeCode);

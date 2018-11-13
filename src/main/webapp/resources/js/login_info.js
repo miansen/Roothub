@@ -15,7 +15,7 @@
 					</div>\
 					<div class="media-body">\
 					<div class="media-heading">\
-					<strong><a href="/user/${user.userName}">'+data.data.userName+'</a></strong>\
+					<strong><a href="/user/'+data.data.userName+'">'+data.data.userName+'</a></strong>\
 					<div style="color: #7A7A7A; font-size: 12px; margin-top:5px;">\
 					<i>'+data.data.signature+'</i>\
 					</div>\

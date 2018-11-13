@@ -101,7 +101,7 @@ public class IndexController extends BaseController{
 			page = topicService.pageAllByTab(p, 1, tab);
 		}
 		List<Tab> tabList = tabService.selectAll();
-		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 10);
+		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
 		List<Topic> findHot = topicService.findHot(0, 10);//热门话题榜
 		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 10);//今日等待回复的话题
 		PageDataBody<Tag> tag = topicService.findByTag(1, 10);//最热标签

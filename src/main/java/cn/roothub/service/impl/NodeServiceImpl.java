@@ -30,10 +30,21 @@ public class NodeServiceImpl implements NodeService{
 		return nodeDao.selectByNodeCode(nodeCode);
 	}
 
-	//相邻板块
+	//子节点
 	@Override
-	public List<Node> findAtherByNodeCode(String nodeCode, Integer pageNumber, Integer pageSize) {
-		return nodeDao.selectAtherByNodeCode(nodeCode, pageNumber, pageSize);
+	public List<Node> findChildrenNode(String nodeCode, Integer pageNumber, Integer pageSize) {
+		return nodeDao.selectChildrenNode(nodeCode, pageNumber, pageSize);
 	}
+
+	//相邻节点
+	@Override
+	public List<Node> adjacencyNode(Node node) {
+		if(node.getParentNodeCode() != null) {
+			return nodeDao.selectAtherNode(node.getNodeCode(), node.getParentNodeCode(), null, null);
+		}else {
+			return nodeDao.selectAtherParentNode(node.getNodeCode(), node.getTabId(), null, null);
+		}
+	}
+
 	
 }

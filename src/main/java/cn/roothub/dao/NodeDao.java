@@ -16,6 +16,14 @@ public interface NodeDao {
 	//根据节点编码查询节点
 	Node selectByNodeCode(@Param("nodeCode") String nodeCode);
 	
-	//相邻节点
-	List<Node> selectAtherByNodeCode(@Param("nodeCode") String nodeCode,@Param("start") Integer start, @Param("limit") Integer limit);
+	//查找子节点
+	List<Node> selectChildrenNode(@Param("nodeCode") String nodeCode,@Param("start") Integer start, @Param("limit") Integer limit);
+		
+	//查找相邻节点
+	List<Node> selectAtherNode(@Param("nodeCode") String nodeCode,@Param("parentNodeCode") String parentNodeCode,
+									 @Param("start") Integer start, @Param("limit") Integer limit);
+	
+	//查找相邻顶级节点
+	List<Node> selectAtherParentNode(@Param("nodeCode") String nodeCode,@Param("tabId") Integer tabId,
+			 						 @Param("start") Integer start, @Param("limit") Integer limit);
 }

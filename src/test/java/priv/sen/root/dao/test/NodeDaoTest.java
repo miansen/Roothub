@@ -25,4 +25,25 @@ public class NodeDaoTest extends BaseTest{
 		List<Node> list = nodeDao.selectAllByTab("lang", 0, 10);
 		logger.debug(list.toString());
 	}
+	
+	//查找子节点
+	@Test
+	public void selectChildrenNodeTest() throws Exception{
+		List<Node> selectChildrenNode = nodeDao.selectChildrenNode("lang", 0, 10);
+		logger.debug(selectChildrenNode.toString());
+	}
+	
+	//查找相邻节点
+	@Test
+	public void selectAtherNodeTest() throws Exception{
+		List<Node> selectAtherNode = nodeDao.selectAtherNode("java", "lang", 0, 10);
+		logger.debug(selectAtherNode.toString());
+	}
+	
+	//查找相邻顶级节点
+	@Test
+	public void selectAtherParentNodeTest() throws Exception{
+		List<Node> selectAtherParentNode = nodeDao.selectAtherParentNode("lang", 14, 0, 10);
+		logger.debug(selectAtherParentNode.toString());
+	}
 }

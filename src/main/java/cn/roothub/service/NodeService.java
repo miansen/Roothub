@@ -2,6 +2,8 @@ package cn.roothub.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.roothub.entity.Node;
 
 /**
@@ -16,6 +18,9 @@ public interface NodeService {
 	//根据节点编码查询对应的节点
 	Node findByNodeCode(String nodeCode);
 	
+	//子节点
+	List<Node> findChildrenNode(String nodeCode,Integer pageNumber, Integer pageSize);
+	
 	//相邻节点
-	List<Node> findAtherByNodeCode(String nodeCode,Integer pageNumber, Integer pageSize);
+	List<Node> adjacencyNode(Node node);
 }

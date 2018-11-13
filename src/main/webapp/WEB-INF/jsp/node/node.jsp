@@ -20,7 +20,7 @@
        <div class="node_header">
          <div class="node_avatar">
            <div style="float: left; display: inline-block; margin-right: 10px; margin-bottom: initial!important;">
-             <img src="//cdn.v2ex.com/navatar/94f6/d7e0/300_xxlarge.png?m=1541138988" border="0" align="default" width="72"></div>
+             <img src="${node.avatarNormal}" border="0" align="default" width="72"></div>
            </div>
            <div class="node_info">
              <div class="fr f12"><span>主题总数</span> <strong>${countTopicByNode}</strong></div>
@@ -32,7 +32,7 @@
              <div class="node_header_tabs">
                <c:if test="${fn:length(nodeTabList) > 0}">
                <c:forEach var="item" items="${nodeTabList}" varStatus="status">
-               <a href="/node/${node.nodeCode}?s=${item.nodeTabCode}" id="${item.nodeTabCode}" class="node_header_tab">${item.nodeTabTitle}</a>
+               <a href="${node.url}?s=${item.nodeTabCode}" id="${item.nodeTabCode}" class="node_header_tab">${item.nodeTabTitle}</a>
              </c:forEach>
            </c:if>
          </div>
@@ -84,17 +84,36 @@
   <div class="panel panel-default" id="session"></div>
   <!-- 相邻节点 -->
   <div class="panel panel-default">
-    <div class="panel-heading"><span style="color: #ccc;">相关节点</span></div>
+    <!-- <div class="panel-heading"><span style="color: #ccc;">相关节点</span></div> -->
     <div class="panel-body">
       <div class="row">
-      <div class="cell" style="border-bottom: 0px solid #e2e2e2;">
-          <c:if test="${fn:length(atherNode) > 0}">
-          <c:forEach var="item" items="${atherNode}" varStatus="status">
-          <img src="/resources/images/${item.nodeImg}" border="0" align="absmiddle" width="24">&nbsp; <a href="/node/${item.nodeCode}">${item.nodeTitle}</a>
-          <div class="sep10"></div>
-        </c:forEach>
+      <c:if	test="${parentNode != null}">
+      	<div class="cell" style="border-bottom: 0px solid #e2e2e2;">
+        	<strong class="gray">父节点</strong>
+        	<div class="sep10"></div>
+        	<img src="${parentNode.avatarMini}" border="0" align="absmiddle" width="24">&nbsp; <a href="${parentNode.url}">${parentNode.nodeTitle}</a>
+    	</div>
       </c:if>
-    </div>
+      <c:if test="${fn:length(adjacencyNode) > 0}">
+        <div class="cell" style="border-bottom: 0px solid #e2e2e2;border-top: 1px solid #e2e2e2;">
+          <strong class="gray">相关节点</strong>
+          <c:forEach var="item" items="${adjacencyNode}" varStatus="status">
+          <div class="sep10"></div>
+          <img src="${item.avatarMini}" border="0" align="absmiddle" width="24">&nbsp; <a href="${item.url}">${item.nodeTitle}</a>
+          <div class="sep10"></div>
+        </c:forEach> 
+      </div>
+    </c:if>
+    <c:if test="${fn:length(childrenNode) > 0}">
+    	<div class="cell" style="border-bottom: 0px solid #e2e2e2;border-top: 1px solid #e2e2e2;">
+          <strong class="gray">子节点</strong>
+          <c:forEach var="item" items="${childrenNode}" varStatus="status">
+          <div class="sep10"></div>
+          <img src="${item.avatarMini}" border="0" align="absmiddle" width="24">&nbsp; <a href="${item.url}">${item.nodeTitle}</a>
+          <div class="sep10"></div>
+        </c:forEach> 
+      </div>
+    </c:if>
   </div>
 </div>
 </div>
@@ -117,18 +136,15 @@
 <script src="/resources/js/node/changeSectionClass.js"></script>
 <script type="text/javascript">
  var nodeCode = "${node.nodeCode}";//节点编码
- var sectionName = "${sectionName}";//sectionName
+ var nodeTabCode = "${nodeTab}";//节点板块
  var count = ${page.totalRow};//数据总量
  var limit = ${page.pageSize};//每页显示的条数
- var url = "/node/"+nodeCode+"?s="+sectionName+"&p=";//url
+ var url = "/node/"+nodeCode+"?s="+nodeTabCode+"&p=";//url
  function page(){
    var page = location.search.match(/p=(\d+)/);  
    return page ? page[1] : 1;  
  }
  var p = page();//当前页数
- //console.log("p:"+p);
- //console.log(count);
- //console.log(url);
  paginate(count,limit,p,url);
 </script>
 </body>

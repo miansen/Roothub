@@ -28,9 +28,14 @@
             </div>
             <div class="media-body">
               <div class="title">
-                <a href="/topic/${item.topicId}">
-                  ${item.title}
-                </a>
+                <c:choose>
+                	<c:when test="${item.url != null}">
+                		<a href="${item.url}">${item.title}</a>
+                	</c:when>
+                	<c:otherwise>
+                		<a href="/topic/${item.topicId}">${item.title}</a>
+                	</c:otherwise>
+                </c:choose>
               </div>
               <p class="gray">
               <c:if test="${item.top}">

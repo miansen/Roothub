@@ -199,7 +199,7 @@
 	<script src="/resources/js/goTop.js"></script>
 	<script src="/resources/layui/layui.js"></script>
 	<script src="/resources/layui/layui-paginate.js"></script>
-	<script src="/resources/js/user_detail.js"></script>
+	<script src="/resources/js/user/detail.js"></script>
 	<script src="/resources/js/formatDate.js"></script>
 </body>
 </html>

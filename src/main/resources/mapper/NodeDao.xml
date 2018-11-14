@@ -31,6 +31,7 @@
        		A.TAB_ID = B.ID
         <if test="tabName != null">
         	AND B.TAB_NAME = #{tabName}
+        	AND A.parent_node_code is null
         </if>
         <if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}

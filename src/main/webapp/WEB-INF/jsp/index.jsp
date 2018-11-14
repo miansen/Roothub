@@ -44,9 +44,14 @@
             </div>
             <div class="media-body">
               <div class="title">
-                <a href="/topic/${item.topicId}">
-                  ${item.title}
-                </a>
+                <c:choose>
+                	<c:when test="${item.url != null}">
+                		<a href="${item.url}">${item.title}</a>
+                	</c:when>
+                	<c:otherwise>
+                		<a href="/topic/${item.topicId}">${item.title}</a>
+                	</c:otherwise>
+                </c:choose>
               </div>
               <p class="gray">
               <c:if test="${item.top}">
@@ -94,7 +99,16 @@
           <td width="24" valign="middle" align="center">
                 <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
             </td>
-            <td><a href="/topic/${item.topicId}" style="color:#778087">${item.title}</a></td>
+            <td>
+            	<c:choose>
+                	<c:when test="${item.url != null}">
+                		<a href="${item.url}">${item.title}</a>
+                	</c:when>
+                	<c:otherwise>
+                		<a href="/topic/${item.topicId}">${item.title}</a>
+                	</c:otherwise>
+                </c:choose>
+            </td>
           </tr>
           </c:forEach>
         </tbody>
@@ -110,7 +124,16 @@
           <td width="24" valign="middle" align="center">
                 <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
             </td>
-            <td><a href="/topic/${item.topicId}" style="color:#778087">${item.title}</a></td>
+            <td>
+            	<c:choose>
+                	<c:when test="${item.url != null}">
+                		<a href="${item.url}">${item.title}</a>
+                	</c:when>
+                	<c:otherwise>
+                		<a href="/topic/${item.topicId}">${item.title}</a>
+                	</c:otherwise>
+                </c:choose>
+            </td>
           </tr>
           </c:forEach>
         </tbody>

@@ -42,11 +42,12 @@
         <result column="node_title" jdbcType="VARCHAR" property="nodeTitle"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
     </resultMap>
     <sql id="Base_Column_List">
         topic_id, ptab,tab,title,tag,content, create_date, update_date, last_reply_time, last_reply_author, 
         view_count,author,top,good,show_status,reply_count,is_delete,tag_is_count,post_good_count,post_bad_count,
-        status_cd,node_slug,node_title,remark,avatar
+        status_cd,node_slug,node_title,remark,avatar,url
     </sql>
 	<!-- 根据板块查询所有话题 -->
 	<select id="selectAllByTab" resultType="Topic">

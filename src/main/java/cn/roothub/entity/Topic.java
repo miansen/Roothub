@@ -136,6 +136,8 @@ public class Topic {
 	 * 话题作者头像
 	 */
 	private String avatar;
+	
+	private String url;
 
 	public String getAvatar() {
 		return avatar;
@@ -337,16 +339,24 @@ public class Topic {
 		this.ptab = ptab;
 	}
 
-	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	@Override
 	public String toString() {
-		return "RootTopic [topicId=" + topicId + ", tab=" + tab + ", title=" + title + ", tag=" + tag + ", content="
-				+ content + ", createDate=" + createDate + ", updateDate=" + updateDate + ", lastReplyTime="
-				+ lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor + ", viewCount=" + viewCount + ", author="
-				+ author + ", top=" + top + ", good=" + good + ", showStatus=" + showStatus + ", replyCount="
-				+ replyCount + ", isDelete=" + isDelete + ", tagIsCount=" + tagIsCount + ", postGoodCount="
-				+ postGoodCount + ", postBadCount=" + postBadCount + ", statusCd=" + statusCd + ", nodeSlug=" + nodeSlug
-				+ ", nodeTitle=" + nodeTitle + ", remark=" + remark + ", avatar=" + avatar + "]";
+		return "Topic [topicId=" + topicId + ", ptab=" + ptab + ", tab=" + tab + ", title=" + title + ", tag=" + tag
+				+ ", content=" + content + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ ", lastReplyTime=" + lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor + ", viewCount="
+				+ viewCount + ", author=" + author + ", top=" + top + ", good=" + good + ", showStatus=" + showStatus
+				+ ", replyCount=" + replyCount + ", isDelete=" + isDelete + ", tagIsCount=" + tagIsCount
+				+ ", postGoodCount=" + postGoodCount + ", postBadCount=" + postBadCount + ", statusCd=" + statusCd
+				+ ", nodeSlug=" + nodeSlug + ", nodeTitle=" + nodeTitle + ", remark=" + remark + ", avatar=" + avatar
+				+ ", url=" + url + "]";
 	}
 	
 }

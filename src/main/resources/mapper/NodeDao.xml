@@ -21,6 +21,21 @@
     <sql id="Base_Column_List">
         node_id, node_code, node_title, avatar_normal, avatar_mini, avatar_large,node_desc,tab_id,url,parent_node_code,create_date,update_date,is_delete
     </sql>
+    <!-- 查询全部节点 -->
+    <select id="selectAll" resultType="Node">
+        SELECT
+        	A.*
+        FROM
+        	NODE A
+        where a.is_delete = 0
+        <if test="start != null">
+            LIMIT #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+    </select>
+    
     <!-- 根据板块查询节点 -->
     <select id="selectAllByTab" resultType="Node">
         SELECT
@@ -29,6 +44,7 @@
         	NODE A,TAB B
        	WHERE 
        		A.TAB_ID = B.ID
+       		and a.is_delete = 0
         <if test="tabName != null">
         	AND B.TAB_NAME = #{tabName}
         	AND A.parent_node_code is null
@@ -47,14 +63,16 @@
         FROM
         	NODE A
         WHERE A.NODE_CODE = #{nodeCode}
+        and a.is_delete = 0
     </select>
     <!-- 查找子节点 -->
     <select id="selectChildrenNode" resultType="Node">
     	SELECT 
     		a.* 
     	from node a
+    	where a.is_delete = 0
     	<if test="nodeCode != null">
-    		where a.parent_node_code = #{nodeCode}
+    		and a.parent_node_code = #{nodeCode}
     	</if>
     	<if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}
@@ -69,8 +87,9 @@
         	a.*
         FROM
         	node a
+        	where a.is_delete = 0
         <if test="nodeCode != null">
-        	WHERE a.node_code != #{nodeCode}
+        	and a.node_code != #{nodeCode}
         	<if test="parentNodeCode != null">
         		AND a.parent_node_code = #{parentNodeCode}
         	</if>
@@ -88,8 +107,9 @@
     		a.* 
     	from 
     		node a
+    		where a.is_delete = 0
     	<if test="nodeCode != null">
-    		where a.node_code != #{nodeCode}
+    		and a.node_code != #{nodeCode}
     		<if test="tabId != null">
     			and a.tab_id = #{tabId} 
     			and a.parent_node_code is null

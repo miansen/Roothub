@@ -31,7 +31,7 @@
           <div class="section node">
             <ul class="nav nav-pills" id="node">
               <c:forEach var="item" items="${nodeList}" varStatus="status">
-              <li class="active"><a href="/node/${item.nodeCode}">${item.nodeTitle}</a></li>
+              <li class="active"><a href="${item.url}">${item.nodeTitle}</a></li>
             </c:forEach>
           </ul>
         </div>
@@ -63,21 +63,27 @@
 			    <a href="/node/${item.nodeSlug}"><span class="label label-primary">${item.nodeTitle}</span></a>
 			    <span>•</span>
                 <span><a href="/user/${item.author}">${item.author}</a></span>
-                <span class="hidden-sm hidden-xs">•</span>
-                <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
-                <span class="hidden-sm hidden-xs">•</span>
-                <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+                <c:if test="${item.viewCount > 0}">
+                	<span class="hidden-sm hidden-xs">•</span>
+                	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
+                </c:if>
+                <c:if test="${item.replyCount > 0}">
+                	<span class="hidden-sm hidden-xs">•</span>
+                	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+                </c:if>
                 <span>•</span>
                 <span><fmt:formatDate type="date" 
                   value="${item.createDate}" /></span>
                   <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
                   <%-- <span class="formate-date">${item.createDate}</span> --%>
-                  <c:if test="${item.lastReplyAuthor != null}">
+                  <c:if test="${fn:length(item.lastReplyAuthor) > 0}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
                   </c:if>
+                  <c:if test="${item.tag != null}">
                   <span>•</span>
                   <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
+                  </c:if>
                 </p>
               </div>
               <div class="divide mar-top-5"></div>

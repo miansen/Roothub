@@ -96,9 +96,9 @@ public class IndexController extends BaseController{
 		//List<Section> sectionAll = rootSectionService.findAll();
 		PageDataBody<Topic> page;
 		if(tab.equals("all")) {
-			page = topicService.pageAllByTab(p, 1, null);
+			page = topicService.pageAllByTab(p, 50, null);
 		}else {
-			page = topicService.pageAllByTab(p, 1, tab);
+			page = topicService.pageAllByTab(p, 50, tab);
 		}
 		List<Tab> tabList = tabService.selectAll();
 		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
@@ -225,7 +225,7 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/tags", method = RequestMethod.GET)
     private String tag(HttpServletRequest request,@RequestParam(value = "p", defaultValue = "1") Integer p) {
-    	PageDataBody<Tag> tag = topicService.findByTag(p, 20);
+    	PageDataBody<Tag> tag = topicService.findByTag(p, 500);
     	request.setAttribute("tag", tag);
     	return "tag/tag";
     }

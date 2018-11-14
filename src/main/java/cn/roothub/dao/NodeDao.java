@@ -10,6 +10,9 @@ import cn.roothub.entity.Node;
  */
 public interface NodeDao {
 
+	//查询全部节点
+	List<Node> selectAll(@Param("start") Integer start, @Param("limit") Integer limit);
+	
 	//根据板块查询节点
 	List<Node> selectAllByTab(@Param("tabName") String tabName,@Param("start") Integer start, @Param("limit") Integer limit);
 	

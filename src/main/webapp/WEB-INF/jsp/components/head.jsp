@@ -45,21 +45,14 @@ var _hmt = _hmt || [];
 				</form>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden-xs" id="shouye"><a href="/">首页</a></li>
+					<li id="nodes"><a href="/nodes">节点</a></li>
 					<li id="biaoqian"><a href="/tags">标签</a></li>
-				
-						<li id="loginli" style="display:none"><a href="/login">登录</a></li>
-						<li id="zhuceli" style="display:none"><a href="/register">注册</a></li>
-				
-					
-						<li class="hidden-md hidden-lg"><a href="/topic/create">发布话题</a>
-						</li>
-						<li id="loginuser" style="display:none"><a href="/user/public"><span
-								class="badge" id="badge"></span>
-						</a></li>
-						<li id="shezhili" style="display:none"><a href="/user/settings/profile">设置</a></li>
-						<li id="tuichuli" style="display:none"><a
-							href="javascript:if(confirm('确定要登出Roothub吗？'))location.href='/logout'">退出</a></li>
-					
+					<li id="loginli" style="display:none"><a href="/login">登录</a></li>
+					<li id="zhuceli" style="display:none"><a href="/register">注册</a></li>		
+					<li class="hidden-md hidden-lg"><a href="/topic/create">发布话题</a></li>
+					<li id="loginuser" style="display:none"><a href="/user/public"><span class="badge" id="badge"></span></a></li>
+					<li id="shezhili" style="display:none"><a href="/user/settings/profile">设置</a></li>
+					<li id="tuichuli" style="display:none"><a href="javascript:if(confirm('确定要登出Roothub吗？'))location.href='/logout'">退出</a></li>
 				</ul>
 			</div>
 		</div>

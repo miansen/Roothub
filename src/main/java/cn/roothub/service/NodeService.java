@@ -12,6 +12,9 @@ import cn.roothub.entity.Node;
  */
 public interface NodeService {
 
+	//查询全部节点
+	List<Node> findAll(Integer pageNumber, Integer pageSize);
+	
 	//根据板块ID查询节点
 	List<Node> findAllByTab(String tabName,Integer pageNumber, Integer pageSize);
 	

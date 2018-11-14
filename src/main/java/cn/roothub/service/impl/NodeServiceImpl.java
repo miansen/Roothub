@@ -46,5 +46,10 @@ public class NodeServiceImpl implements NodeService{
 		}
 	}
 
-	
+	//查询全部节点
+	@Override
+	public List<Node> findAll(Integer pageNumber, Integer pageSize) {
+		return nodeDao.selectAll(pageNumber, pageSize);
+	}
+
 }

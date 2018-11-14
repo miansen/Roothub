@@ -73,6 +73,13 @@ public class NodeController {
 		request.setAttribute("adjacencyNode", adjacencyNode);
 		request.setAttribute("childrenNode", childrenNode);
 		request.setAttribute("countTopicByNode", countTopicByNode);
+		return "node/detail";
+	}
+	
+	@RequestMapping(value = "/nodes")
+	private String nodes(HttpServletRequest request) {
+		List<Node> nodeList = nodeService.findAll(null, null);
+		request.setAttribute("nodeList", nodeList);
 		return "node/node";
 	}
 }

@@ -67,7 +67,7 @@
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
                 </c:if>
-                <c:if test="${item.replyCount > 0}">
+                <c:if test="${item.replyCount > 0n}">
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
                 </c:if>

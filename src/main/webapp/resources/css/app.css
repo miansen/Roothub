@@ -659,7 +659,7 @@ a.tab:active, a.tab:link, a.tab:visited {
 }
 
 #topic .avatar {
-	max-width: 100px;
+	max-width: 150px;
 	border-radius: 4px;
 }
 
@@ -676,3 +676,7 @@ a.tab:active, a.tab:link, a.tab:visited {
 .title a:visited {color: #778087}
 .title a:hover {color: #4078c0}
 .title a:visited{color: #778087}
+
+.excerpt {
+	padding-bottom: 5px;
+}

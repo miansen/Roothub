@@ -53,6 +53,7 @@
                 	</c:otherwise>
                 </c:choose>
               </div>
+              <div class="excerpt"><span>${item.excerpt}</span></div>
               <div class="tip">
               <p class="gray">
               <c:if test="${item.top}">

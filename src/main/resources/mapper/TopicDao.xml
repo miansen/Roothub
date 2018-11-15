@@ -23,6 +23,7 @@
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="tag" jdbcType="VARCHAR" property="tag"/>
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="excerpt" jdbcType="VARCHAR" property="excerpt"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="last_reply_time" jdbcType="TIMESTAMP" property="lastReplyTime"/>
@@ -45,7 +46,7 @@
         <result column="url" jdbcType="VARCHAR" property="url"/>
     </resultMap>
     <sql id="Base_Column_List">
-        topic_id, ptab,tab,title,tag,content, create_date, update_date, last_reply_time, last_reply_author, 
+        topic_id, ptab,tab,title,tag,content,excerpt, create_date, update_date, last_reply_time, last_reply_author, 
         view_count,author,top,good,show_status,reply_count,is_delete,tag_is_count,post_good_count,post_bad_count,
         status_cd,node_slug,node_title,remark,avatar,url
     </sql>

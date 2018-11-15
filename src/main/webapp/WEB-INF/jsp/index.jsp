@@ -40,19 +40,20 @@
           <c:forEach var="item" items="${page.list}">
           <div class="media" id="topic">
             <div class="media-left">
-              <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""></a>
+              <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" alt=""></a>
             </div>
             <div class="media-body">
               <div class="title">
                 <c:choose>
                 	<c:when test="${item.url != null}">
-                		<a href="${item.url}">${item.title}</a>
+                		<a href="${item.url}" target="_blank">${item.title}</a>
                 	</c:when>
                 	<c:otherwise>
-                		<a href="/topic/${item.topicId}">${item.title}</a>
+                		<a href="/topic/${item.topicId}" target="_blank">${item.title}</a>
                 	</c:otherwise>
                 </c:choose>
               </div>
+              <div class="tip">
               <p class="gray">
               <c:if test="${item.top}">
 			  <span class="label label-primary">置顶</span> <span>•</span>
@@ -67,7 +68,7 @@
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
                 </c:if>
-                <c:if test="${item.replyCount > 0n}">
+                <c:if test="${item.replyCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
                 </c:if>
@@ -85,6 +86,7 @@
                   <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
                   </c:if>
                 </p>
+                </div>
               </div>
               <div class="divide mar-top-5"></div>
             </div>
@@ -103,7 +105,7 @@
         <c:forEach var="item" items="${findHot}">
           <tr>
           <td width="24" valign="middle" align="center">
-                <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
+                <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
             </td>
             <td>
             	<c:choose>
@@ -128,7 +130,7 @@
         <c:forEach var="item" items="${findTodayNoReply}">
           <tr>
           <td width="24" valign="middle" align="center">
-                <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
+                <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
             </td>
             <td>
             	<c:choose>

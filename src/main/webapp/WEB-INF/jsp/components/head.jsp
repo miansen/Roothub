@@ -32,7 +32,7 @@ var _hmt = _hmt || [];
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" style="font-weight: 700; font-size: 27px;"
-					href="/">Roothub</a>
+					href="/">细选</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse header-navbar">
 				<form class="navbar-form navbar-left hidden-xs hidden-sm"

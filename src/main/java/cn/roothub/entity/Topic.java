@@ -43,6 +43,11 @@ public class Topic {
 	private String content;
 	
 	/**
+	 * 摘录
+	 */
+	private String excerpt;
+	
+	/**
 	 * 创建时间
 	 */
 	private Date createDate;
@@ -185,6 +190,14 @@ public class Topic {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public String getExcerpt() {
+		return excerpt;
+	}
+
+	public void setExcerpt(String excerpt) {
+		this.excerpt = excerpt;
 	}
 
 	public Date getCreateDate() {
@@ -350,13 +363,13 @@ public class Topic {
 	@Override
 	public String toString() {
 		return "Topic [topicId=" + topicId + ", ptab=" + ptab + ", tab=" + tab + ", title=" + title + ", tag=" + tag
-				+ ", content=" + content + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ ", lastReplyTime=" + lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor + ", viewCount="
-				+ viewCount + ", author=" + author + ", top=" + top + ", good=" + good + ", showStatus=" + showStatus
-				+ ", replyCount=" + replyCount + ", isDelete=" + isDelete + ", tagIsCount=" + tagIsCount
-				+ ", postGoodCount=" + postGoodCount + ", postBadCount=" + postBadCount + ", statusCd=" + statusCd
-				+ ", nodeSlug=" + nodeSlug + ", nodeTitle=" + nodeTitle + ", remark=" + remark + ", avatar=" + avatar
-				+ ", url=" + url + "]";
+				+ ", content=" + content + ", excerpt=" + excerpt + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + ", lastReplyTime=" + lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor
+				+ ", viewCount=" + viewCount + ", author=" + author + ", top=" + top + ", good=" + good
+				+ ", showStatus=" + showStatus + ", replyCount=" + replyCount + ", isDelete=" + isDelete
+				+ ", tagIsCount=" + tagIsCount + ", postGoodCount=" + postGoodCount + ", postBadCount=" + postBadCount
+				+ ", statusCd=" + statusCd + ", nodeSlug=" + nodeSlug + ", nodeTitle=" + nodeTitle + ", remark="
+				+ remark + ", avatar=" + avatar + ", url=" + url + "]";
 	}
 	
 }

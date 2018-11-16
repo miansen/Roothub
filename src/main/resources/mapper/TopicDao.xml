@@ -60,7 +60,7 @@
 		<if test="tab != null">
 		AND tab = #{tab}
 		</if>
-		order by top desc, last_reply_time desc,create_date desc
+		order by top desc,create_date desc,last_reply_time desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">

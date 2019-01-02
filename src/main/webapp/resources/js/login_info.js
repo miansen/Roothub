@@ -43,6 +43,7 @@
 					');
 			}else{
 				$(".col-md-3 #session").append(data.data.intro);
+				$(".tab .nav .member").hide();
 			}
 		},
 		error:function(data){

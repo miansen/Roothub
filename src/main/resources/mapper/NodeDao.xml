@@ -24,9 +24,9 @@
     <!-- 查询全部节点 -->
     <select id="selectAll" resultType="Node">
         SELECT
-        	A.*
+        	a.*
         FROM
-        	NODE A
+        	node a
         where a.is_delete = 0
         <if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}
@@ -39,15 +39,15 @@
     <!-- 根据板块查询节点 -->
     <select id="selectAllByTab" resultType="Node">
         SELECT
-        	A.*
+        	a.*
         FROM
-        	NODE A,TAB B
+        	node a,tab b
        	WHERE 
-       		A.TAB_ID = B.ID
+       		a.tab_id = b.ID
        		and a.is_delete = 0
         <if test="tabName != null">
-        	AND B.TAB_NAME = #{tabName}
-        	AND A.parent_node_code is null
+        	AND b.tab_name = #{tabName}
+        	AND a.parent_node_code is null
         </if>
         <if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}
@@ -61,8 +61,8 @@
     	SELECT
         	<include refid="Base_Column_List"/>
         FROM
-        	NODE A
-        WHERE A.NODE_CODE = #{nodeCode}
+        	node a
+        WHERE a.node_code = #{nodeCode}
         and a.is_delete = 0
     </select>
     <!-- 查找子节点 -->

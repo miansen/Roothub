@@ -22,7 +22,7 @@
       <div class="row">
       <c:forEach var="item" items="${tag.list}">
           <div class="col-md-3" style="margin-bottom: 10px; padding-left: 10px;">
-            <a href="/topic/tag/${item.tag}">
+            <a href="/tag/${item.tag}">
               <span class="label label-success">${item.tag}</span>
             </a>
             <span class="text-muted">x ${item.number}</span>

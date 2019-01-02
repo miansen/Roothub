@@ -25,7 +25,14 @@
 								<a href="/">Roothub</a> <span class="chevron">&nbsp;›&nbsp;</span>
 								<a href="/node/${topic.nodeSlug}" class="topic-detail-node">${topic.nodeTitle}</a>
 								<div class="sep10"></div>
-								<h2 class="topic-detail-title">${topic.title}</h2>
+								<c:choose>
+                					<c:when test="${topic.url != null}">
+                					<h2><a href="${topic.url}" target="_blank">${topic.title}</a></h2>
+                					</c:when>
+                				<c:otherwise>
+                					<h2>${topic.title}</h2>
+                				</c:otherwise>
+              				</c:choose>
 								<p>
 									<div id="topic_${topic.topicId}_votes" class="votes">
 										<a href="javascript:" onclick="voteTopic(${topic.topicId},true);"
@@ -66,7 +73,7 @@
 	<div class="panel-body topic-detail-content show_big_image">
 		${topic.content}
 		<div>
-			<a href="/topic/tag/${topic.tag}"><span
+			<a href="/tag/${topic.tag}"><span
 				class="label label-success">${topic.tag}</span></a>
 			</div>
 		</div>

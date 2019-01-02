@@ -28,6 +28,7 @@
                     ${item.title}
                   </a>
                 </div>
+                <div class="tip">
                 <p>
                   <c:if test="${item.top}">
 			      <span class="label label-primary">置顶</span> <span>•</span>
@@ -35,23 +36,25 @@
 			      <c:if test="${item.good}">
 			      <span class="label label-primary">精华</span> <span>•</span>
 			      </c:if>
-			      <a href="/node/${item.nodeSlug}"><span class="label label-primary">${item.nodeTitle}</span></a>
+			      <span><a href="/node/${item.nodeSlug}" class="node">${item.nodeTitle}</a></span>
 			      <span>•</span>
-                  <span><a href="/user/${item.author}">${item.author}</a></span>
+                  <strong><a href="/user/${item.author}">${item.author}</a></strong>
                   <span class="hidden-sm hidden-xs">•</span>
                   <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
-                  <span>•</span>
-                  <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+                  <!-- <span>•</span> -->
+                  <%-- <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span> --%>
                   <span class="hidden-sm hidden-xs">•</span>           
                   <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
-                  <c:if test="${item.lastReplyAuthor != null}">
+                  <%-- <c:if test="${item.lastReplyAuthor != null}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
-                  </c:if>
-                  <span>•</span>
-                  <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
+                  </c:if> --%>
+                  <!-- <span>•</span> -->
+                  <%-- <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a> --%>
                 </p>
+                </div>
               </div>
+              <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
             </div>
           </div>
           </c:forEach>

@@ -60,6 +60,7 @@
 			<mvc:mapping path="/user/settings/changePassword" />
 			<mvc:mapping path="/user/setting/changePassword" />
 			<mvc:mapping path="/vote" />
+			<mvc:mapping path="/?tab=member" />
 			<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
 			<bean class="cn.roothub.handler.GlobalInterceptorHandler" />
 		</mvc:interceptor>

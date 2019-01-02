@@ -145,21 +145,19 @@ function topicList(pageNumber) {
 					<div class=\"title\">\
 					<a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a>\
 					</div>\
+					<div class=\"tip\">\
 					<p>\
-					<a href=\"/node/"+data.data.list[i].nodeSlug+"\"><span class=\"label label-primary\">"+data.data.list[i].nodeTitle+"</span></a>\
+					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
+					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
-					<span class=\"hidden-sm hidden-xs\">•</span>\
-					<span class=\"hidden-sm hidden-xs\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
 					<span>•</span>\
 					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
-					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
-					<span>•</span>\
-					<a href=\"/topic/tag/"+data.data.list[i].tag+"\"><span class=\"label label-success\">"+data.data.list[i].tag+"</span></a>\
 					</p>\
 					</div>\
+					</div>\
+					<div class=\"media-right\"><span class=\"badge badge-default\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"</a></span></div>\
 					</div>\
 					</div>");
 			}
@@ -229,21 +227,19 @@ function collectList(pageNumber) {
 					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
 					<div class=\"media-body\">\
 					<div class=\"title\"> <a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
+					<div class=\"tip\">\
 					<p>\
-					<a href=\"/node/"+data.data.list[i].nodeSlug+"\"><span class=\"label label-primary\">"+data.data.list[i].nodeTitle+"</span></a>\
+					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
+					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
-					<span class=\"hidden-sm hidden-xs\">•</span>\
-					<span class=\"hidden-sm hidden-xs\"> <a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
 					<span>•</span>\
 					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
-					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
-					<span>•</span>\
-					<a href=\"/topic/tag/"+data.data.list[i].tag+"\"><span class=\"label label-success\">"+data.data.list[i].tag+"</span></a>\
 					</p>\
 					</div>\
+					</div>\
+					<div class=\"media-right\"><span class=\"badge badge-default\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"</a></span></div>\
 					</div>\
 					</div>");
 			}
@@ -277,21 +273,19 @@ function followList(pageNumber) {
 					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
 					<div class=\"media-body\">\
 					<div class=\"title\"><a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
+					<div class=\"tip\">\
 					<p>\
-					<a href=\"/node/"+data.data.list[i].nodeSlug+"\"><span class=\"label label-primary\">"+data.data.list[i].nodeTitle+"</span></a>\
+					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
+					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
-					<span class=\"hidden-sm hidden-xs\">•</span>\
-					<span class=\"hidden-sm hidden-xs\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
 					<span>•</span>\
 					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
-					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
-					<span>•</span>\
-					<a href=\"/topic/tag/"+data.data.list[i].tag+"\"><span class=\"label label-success\">"+data.data.list[i].tag+"</span></a>\
 					</p>\
 					</div>\
+					</div>\
+					<div class=\"media-right\"><span class=\"badge badge-default\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"</a></span></div>\
 					</div>\
 					</div>");
 			}
@@ -423,21 +417,19 @@ function topicQnaList(pageNumber) {
 					<div class=\"media\">\
 					<div class=\"media-body\">\
 					<div class=\"title\"><a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
+					<div class=\"tip\">\
 					<p>\
-					<a href=\"/node/"+data.data.list[i].nodeSlug+"\"><span class=\"label label-primary\">"+data.data.list[i].nodeTitle+"</span></a>\
+					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<span><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></span>\
+					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
-					<span class=\"hidden-sm hidden-xs\">•</span>\
-					<span class=\"hidden-sm hidden-xs\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"个评论</a></span>\
 					<span>•</span>\
 					<span>"+formatDate(Date.parse(data.data.list[i].createDate))+"</span>\
-					"+lastReplyAuthor(data.data.list[i].lastReplyAuthor)+"\
-					<span>•</span>\
-					<a href=\"/topic/tag/"+data.data.list[i].tag+"\"><span class=\"label label-success\">"+data.data.list[i].tag+"</span></a>\
 					</p>\
 					</div>\
+					</div>\
+					<div class=\"media-right\"><span class=\"badge badge-default\"><a href=\"/topic/"+data.data.list[i].topicId+"\">"+data.data.list[i].replyCount+"</a></span></div>\
 					</div>\
 					</div>");
 			}

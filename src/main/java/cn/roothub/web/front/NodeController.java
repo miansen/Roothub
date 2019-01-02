@@ -60,7 +60,7 @@ public class NodeController {
 			throw new RuntimeException("节点不存在， 返回 > <a href='/'>主页<a/>");
 		}
 		List<NodeTab> nodeTabList = nodeTabService.findAll();
-		PageDataBody<Topic> page = topicService.pageByNodeAndNodeTab(p, 1, nodeTab, nodeCode);
+		PageDataBody<Topic> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, nodeCode);
 		Node parentNode = nodeService.findByNodeCode(node.getParentNodeCode());//父节点
 		List<Node> adjacencyNode = nodeService.adjacencyNode(node);//相邻节点
 		List<Node> childrenNode = nodeService.findChildrenNode(node.getNodeCode(), null, null);//子节点

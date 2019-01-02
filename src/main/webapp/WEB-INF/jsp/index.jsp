@@ -27,7 +27,8 @@
         	</c:forEach>
         	</ul>
     		</div>
-    		<c:if test="${fn:length(nodeList) > 0}">
+    		<!-- 节点列表 -->
+    		<%-- <c:if test="${fn:length(nodeList) > 0}">
           <div class="section node">
             <ul class="nav nav-pills" id="node">
               <c:forEach var="item" items="${nodeList}" varStatus="status">
@@ -35,10 +36,10 @@
             </c:forEach>
           </ul>
         </div>
-        </c:if>
+        </c:if> --%>
         <div class="panel-body paginate-bot">
           <c:forEach var="item" items="${page.list}">
-          <div class="media" id="topic">
+          <div class="media">
             <div class="media-left">
               <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" alt=""></a>
             </div>
@@ -49,11 +50,11 @@
                 		<a href="${item.url}" target="_blank">${item.title}</a>
                 	</c:when>
                 	<c:otherwise>
-                		<a href="/topic/${item.topicId}" target="_blank">${item.title}</a>
+                		<a href="/topic/${item.topicId}">${item.title}</a>
                 	</c:otherwise>
                 </c:choose>
               </div>
-              <div class="excerpt"><span>${item.excerpt}</span></div>
+              <%-- <div class="excerpt"><span>${item.excerpt}</span></div> --%>
               <div class="tip">
               <p class="gray">
               <c:if test="${item.top}">
@@ -62,33 +63,41 @@
 			  <c:if test="${item.good}">
 			  <span class="label label-primary">精华</span> <span>•</span>
 			  </c:if>
-			    <a href="/node/${item.nodeSlug}"><span class="label label-primary">${item.nodeTitle}</span></a>
+			    <span><a href="/node/${item.nodeSlug}" class="node">${item.nodeTitle}</a></span>
 			    <span>•</span>
-                <span><a href="/user/${item.author}">${item.author}</a></span>
+                <strong><a href="/user/${item.author}">${item.author}</a></strong>
                 <c:if test="${item.viewCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
                 </c:if>
-                <c:if test="${item.replyCount > 0}">
+                
+                <!-- 评论数量 -->
+                <%-- <c:if test="${item.replyCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
-                </c:if>
+                </c:if> --%>
+                
                 <span>•</span>
                 <span><fmt:formatDate type="date" 
                   value="${item.createDate}" /></span>
                   <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
                   <%-- <span class="formate-date">${item.createDate}</span> --%>
-                  <c:if test="${fn:length(item.lastReplyAuthor) > 0}">
+                  
+                  <!-- 最后回复用户 -->
+                  <%-- <c:if test="${fn:length(item.lastReplyAuthor) > 0}">
                   <span>•</span>
                   <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
-                  </c:if>
-                  <c:if test="${item.tag != null}">
+                  </c:if> --%>
+                  
+                  <!-- 标签 -->
+                  <%-- <c:if test="${item.tag != null}">
                   <span>•</span>
-                  <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
-                  </c:if>
+                  <a href="/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
+                  </c:if> --%>
                 </p>
                 </div>
               </div>
+              <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
               <div class="divide mar-top-5"></div>
             </div>
           </c:forEach>
@@ -124,7 +133,7 @@
       </table>
     </div>
     <!-- 今日等待回复的主题 -->
-    <div class="panel panel-default">
+    <%-- <div class="panel panel-default">
       <div class="panel-heading"><span style="color: #ccc;">今日等待回复主题</span></div>
       <table class="table" style="font-size: 14px;">
         <tbody>
@@ -147,16 +156,16 @@
           </c:forEach>
         </tbody>
       </table>
-    </div>
+    </div> --%>
     <!-- 积分榜 -->
-    <div class="panel panel-default">
+    <!-- <div class="panel panel-default">
     <div class="panel-heading"><span style="color: #ccc;">积分榜  <a class="dark" href="/top100">TOP 100 &gt;&gt;</a></span></div>
     <div class="panel-body">
       <div class="row">
       <div class="inner top100"></div>
       </div>
     </div>
-  </div>
+  </div> -->
     <!-- 最热标签 -->
     <div class="panel panel-default">
     <div class="panel-heading"><span style="color: #ccc;">最热标签</span></div>
@@ -164,7 +173,7 @@
       <div class="row">
       <c:forEach var="item" items="${tag.list}">
           <div class="col-md-6" style="margin-bottom: 10px; padding-left: 10px;">
-            <a href="/topic/tag/${item.tag}">
+            <a href="/tag/${item.tag}">
               <span class="label label-success">${item.tag}</span>
             </a>
             <%-- <span class="text-muted">x ${item.number}</span> --%>
@@ -174,7 +183,6 @@
       </div>
     </div>
   </div>
-  <!-- 最热标签 -->
     <!-- 社区运行状况 -->
     <div class="panel panel-default">
     <div class="panel-heading"><span style="color: #ccc;">社区运行状况</span></div>
@@ -197,7 +205,6 @@
         </table>
       </div>
   </div>
- <!-- 社区运行状况 -->
   </div>
 </div>
 </div>

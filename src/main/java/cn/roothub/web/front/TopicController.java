@@ -131,7 +131,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 * @param p
 	 * @return
 	 */
-	@RequestMapping(value = "/topic/tag/{name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/tag/{name}", method = RequestMethod.GET)
 	private String tag(@PathVariable String name, Model model,@RequestParam(value = "p", defaultValue = "1") Integer p) {
 		PageDataBody<Topic> pageByTag = rootTopicService.pageByTag(name, p, 20);
 		model.addAttribute("tagName", name);

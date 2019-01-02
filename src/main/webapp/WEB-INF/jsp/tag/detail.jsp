@@ -25,7 +25,7 @@
     <c:forEach var="item" items="${pageByTag.list}">
     <div class="media">
       <div class="media-left">
-        <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""></a>
+         <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" alt=""></a>
       </div>
       <div class="media-body">
         <div class="title">
@@ -38,26 +38,32 @@
                 </c:otherwise>
             </c:choose>
         </div>
+        <%-- <div class="excerpt"><span>${item.excerpt}</span></div> --%>
+        <div class="tip">
         <p class="gray">
-          <span><a href="/user/${item.author}">${item.author}</a></span>
+          <a href="/node/${item.nodeSlug}" class="node">${item.nodeTitle}</a>
+		  <span>•</span>
+          <strong><a href="/user/${item.author}">${item.author}</a></strong>
           <span class="hidden-sm hidden-xs">•</span>
           <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
-          <span class="hidden-sm hidden-xs">•</span>
-          <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+          <!-- 评论 -->
+          <!-- <span class="hidden-sm hidden-xs">•</span> -->
+          <%-- <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span> --%>
           <span>•</span>
           <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
           <%-- <span class="formate-date">${item.createDate}</span> --%>
           <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
           <c:if test="${item.lastReplyAuthor != null}">
-          <span>•</span>
-          <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
+          <!-- 最后回复用户 -->
+          <!-- <span>•</span> -->
+          <%-- <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span> --%>
           </c:if>
-          <span>•</span>
-            <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
         </p>
+        </div>
       </div>
-    </div>
+      <div class="media-right"><span class="badge badge-default">${item.replyCount}</span></div>
       <div class="divide mar-top-5"></div>
+    </div>
       </c:forEach>
     </div>
 <div class="panel-footer" id="paginate"></div>
@@ -84,7 +90,7 @@
 	//$(".pagination2").pagination("${pageByTag.pageNumber}","${pageByTag.totalPage}",10);
 	var count = ${pageByTag.totalRow};//数据总量
 	  var limit = ${pageByTag.pageSize};//每页显示的条数
-	  var url = "/topic/tag/${tagName}?p=";//url
+	  var url = "/tag/${tagName}?p=";//url
 	  function page(){
 		   var page = location.search.match(/p=(\d+)/);  
 		   return page ? page[1] : 1;  

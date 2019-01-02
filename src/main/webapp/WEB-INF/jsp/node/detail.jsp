@@ -40,21 +40,24 @@
      </div>
      <div class="panel-body paginate-bot">
       <c:forEach var="item" items="${page.list}">
-      <div class="media" id="topic">
+      <div class="media">
         <div class="media-left">
-          <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""></a>
+          <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" alt=""></a>
         </div>
         <div class="media-body">
           <div class="title">
             <c:choose>
                 	<c:when test="${item.url != null}">
-                		<a href="${item.url}">${item.title}</a>
+                		<a href="${item.url}" target="_blank">${item.title}</a>
                 	</c:when>
                 	<c:otherwise>
                 		<a href="/topic/${item.topicId}">${item.title}</a>
                 	</c:otherwise>
                 </c:choose>
           </div>
+          <!-- 摘录 -->
+          <%-- <div class="excerpt"><span>${item.excerpt}</span></div> --%>
+          <div class="tip">
           <p class="gray">
             <c:if test="${item.top}">
             <span class="label label-primary">置顶</span> <span>•</span>
@@ -62,23 +65,28 @@
           <c:if test="${item.good}">
           <span class="label label-primary">精华</span> <span>•</span>
         </c:if>
-        <span><a href="/user/${item.author}">${item.author}</a></span>
+        <strong><a href="/user/${item.author}">${item.author}</a></strong>
         <span class="hidden-sm hidden-xs">•</span>
         <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
-        <span class="hidden-sm hidden-xs">•</span>
-        <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+        <!-- 评论 -->
+        <!-- <span class="hidden-sm hidden-xs">•</span> -->
+        <%-- <span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span> --%>
         <span>•</span>
         <span><fmt:formatDate type="date" 
           value="${item.createDate}" /></span>
-          <c:if test="${item.lastReplyAuthor != null}">
+          <!-- 最后回复用户 -->
+          <%-- <c:if test="${item.lastReplyAuthor != null}">
           <span>•</span>
           <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
-        </c:if>
-        <span>•</span>
-        <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
+        </c:if> --%>
+        <!-- 标签 -->
+        <!-- <span>•</span> -->
+        <%-- <a href="/topic/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a> --%>
       </p>
+      </div>
     </div>
-    <div class="divide mar-top-5"></div>
+    	<div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
+    	<div class="divide mar-top-5"></div>
   </div>
 </c:forEach>
 </div>

@@ -162,17 +162,18 @@ public class TopicServiceImpl implements TopicService{
 			 * 如果上面四个参数已存在于数据库中，则此处会报错
 			 * 2018.06.03 16：35
 			 */
-			Topic rootTopic = rootTopicDao.selectByNameAndAuthorAndTagAndContent(topic.getTitle(), topic.getAuthor(),  topic.getTag(),topic.getContent());
+			// Topic rootTopic = rootTopicDao.selectByNameAndAuthorAndTagAndContent(topic.getTitle(), topic.getAuthor(),  topic.getTag(),topic.getContent());
 			if(insert <= 0) {
 				throw new OperationFailedException("发布话题失败！");
 			}else {
 				rootUserDao.updateScoreByName(10, topic.getAuthor());//发贴积10分
+				Topic rootTopic = rootTopicDao.selectByTitleAndDate(topic.getTitle(), topic.getCreateDate());
 				return new TopicExecution(rootTopic.getTitle(), InsertTopicEnum.SUCCESS, rootTopic);
 			}
 		}catch (OperationFailedException e1) {
 			throw e1;
 		}catch (Exception e) {
-			throw new OperationSystemException("insert into RootTopic error"+e.getMessage());
+			throw new OperationSystemException("insert into RootTopic error "+e.getMessage());
 		}
 	}
 	

@@ -46,12 +46,12 @@
           <label for="node">节点</label>
           <select id="node" class="form-control" name="node"></select>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <div class="form-group">
             <label for="title">标签</label>
             <input type="text" class="form-control" id="tag" name="title" placeholder="请为你的主题选择一个标签。恰当的归类会让你发布的信息更加有用">
           </div>
-        </div>
+        </div> -->
         <button type="button" id="btn" class="btn btn-default">发布</button>
       </form>
     </div>
@@ -121,7 +121,7 @@
           var tab = $("#tab option:selected").val();
           var nodeCode = $("#node option:selected").val();
           var nodeTitle = $("#node option:selected").text();
-          var tag = $("#tag").val();
+          // var tag = $("#tag").val();
           if(!title) {
             alert('请输入标题');
             return false;
@@ -130,9 +130,6 @@
            return false;
          }else if(!nodeCode){
           alert('请选择一个节点');
-          return false;
-        }else if(!tag) {
-          alert('请输入标签');
           return false;
         }else if(!contentText){
          alert('请输入正文');
@@ -149,8 +146,7 @@
             content: contentText ? contentHtml : '',
             tab:tab,
             nodeCode:nodeCode,
-            nodeTitle:nodeTitle,
-            tag: tag
+            nodeTitle:nodeTitle
           },
           success: function(data){
           //console.log(JSON.stringify(data));
@@ -159,6 +155,10 @@
           } else {
             alert(data.error);
           }
+        },
+        error: function(data){
+        	console.log(data);
+        	//alert(data.error);
         }
       })
       }

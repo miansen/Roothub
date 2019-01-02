@@ -337,6 +337,31 @@
 		and tag = #{tag}
 		and content = #{content}
      </select>
+     <!-- 根据标题和时间查询话题 -->
+     <select id="selectByTitleAndDate" resultType="Topic">
+		SELECT
+    topic_id,
+		tab, 
+		title, 
+		tag, 
+		create_date, 
+		update_date, 
+		last_reply_time, 
+		last_reply_author, 
+    view_count,author,
+    top,
+    good,
+    show_status,
+    reply_count,
+    is_delete,
+    tag_is_count,
+    content,
+    avatar
+		FROM
+			topic
+		where title = #{title}
+		and create_date = #{date}
+     </select>
      <!-- 发布话题 -->
      <insert id="insert" parameterType="cn.roothub.entity.Topic" keyProperty="topic_id" useGeneratedKeys="true">
     insert into 

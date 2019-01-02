@@ -714,3 +714,25 @@ a.node:active, a.node:link, a.node:visited {
 .badge-default {
     background-color: rgb(187, 187, 187);
 }
+
+.box {
+    background-color: #fff;
+    border-radius: 3px;
+    /* box-shadow: 0 2px 3px rgba(0,0,0,.1); */
+    border-bottom: 1px solid #e2e2e2;
+}
+.fr {
+    float: right;
+    text-align: right;
+}
+.box h1{
+	font-size: 24px;
+    font-weight: 500;
+    line-height: 150%;
+    margin: 0px 0px 10px 0px;
+    padding: 0px;
+    border-bottom: 0px;
+}
+.sep20 {
+    height: 20px;
+}

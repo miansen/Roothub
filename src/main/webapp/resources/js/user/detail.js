@@ -15,9 +15,11 @@ function isFollow() {
 		},
 		success : function(data) {
 			if (data.success != null && data.success == true) {
-				$(".btn-red-hollow").text("已关注");
+				$(".btn-follow").text("取消特别关注");
+				$(".btn-follow").addClass("btn-default");
 			} else {
-				$(".btn-red-hollow").text("关注");
+				$(".btn-follow").text("加入特别关注");
+				$(".btn-follow").addClass("btn-success");
 			}
 		},
 		error : function(data) {
@@ -76,11 +78,11 @@ function save() {
 	//console.log(isFollow);
 	//alert(isFollow);
 	var url;
-	if (isFollow == "关注") {
+	if (isFollow == "加入特别关注") {
 		url = "/follow/save";
 		info = "确定要开始关注" + authorName + "?";
 	}
-	if (isFollow == "已关注") {
+	if (isFollow == "取消特别关注") {
 		url = "/follow/delete";
 		info = "确定要取消关注" + authorName + "?";
 	}
@@ -97,12 +99,14 @@ function save() {
 				if (data.success != null && data.success == true
 					&& data.error == "关注成功") {
 					//alert(data.error);
-				$(".btn-red-hollow").text("已关注");
+				// $(".btn-follow").text("取消特别关注");
+				location.reload();
 			}
 			if (data.success != null && data.success == true
 				&& data.error == "取消关注成功") {
 					//alert(data.error);
-				$(".btn-red-hollow").text("关注");
+				// $(".btn-follow").text("加入特别关注");
+				location.reload();
 			}
 		},
 		error : function(data) {

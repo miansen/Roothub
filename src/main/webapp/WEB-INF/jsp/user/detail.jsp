@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>${user.userName}的个人主页</title>
+<title>Roothub-${user.userName}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
@@ -15,7 +15,7 @@
 		<jsp:include page="../components/head.jsp"></jsp:include>
 		<div class="row">
 		<!-- 小屏幕显示 -->
-		            <div class="col-md-3 hidden-md hidden-lg">
+		            <%-- <div class="col-md-3 hidden-md hidden-lg">
                 <div class="panel panel-default">
                     <div class="panel-body" style="border-bottom: 1px solid #e3e3e3;">
                         <div class="media">
@@ -31,7 +31,7 @@
                             <c:if test="${user.userName != user2.userName && user2 != null}">
                             <div class="opt-box d-flex justify-content-center flex-column media-body">
                                 <span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()" id="follow"></a>
+                                    <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()" id="followa"></a>
                                 </span>
                             </div>
                         </c:if>
@@ -85,9 +85,34 @@
                 
                 
             </div>
-        </div>
+        </div> --%>
         <!-- 小屏幕显示 -->
 			<div class="col-md-9">
+			<div class="box">
+    <div class="cell">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tbody><tr>
+            <td width="73" valign="top" align="center">
+            <img src="/resources/images/${user.avatar}"  border="0" align="default" style="border-radius: 4px;" width="73" height="73px"/>
+            <div class="sep10"></div>
+            </td>
+            <td width="10"></td>
+            <td width="auto" valign="top" align="left">
+                <div class="fr">
+                    <button class="btn btn-follow" onclick="save()" id="follow">加入特别关注</button>   
+                    <div class="sep10"></div>
+                    <button class="btn btn-warning">Block</button>
+                </div>
+                <h1 title="${user.userId}" id="user_id" class= "user_id">${user.userName}</h1>
+                <span class="gray" style="font-size: 14px;">Roothub 第 ${user.userId} 号会员，加入于 <fmt:formatDate type="both" value="${user.createDate}" /><div class="sep5"></div>
+                </span> 
+            </td>
+        </tr>
+    </tbody></table>
+    <div class="sep5"></div>
+</div>
+</div>
+<div class="sep20"></div>
 				<div class="panel panel-default">
 					<%-- <div class="panel-heading">${user.userName}创建的话题</div> --%>
 					<div class="cell_tabs"><div class="fl"><img src="/resources/images/${user.avatar}" width="24" style="border-radius: 24px; margin-top: -2px;" border="0"></div>
@@ -114,7 +139,7 @@
 				</div>
 			</div>
 			<!-- 大屏幕显示 -->
-			<div class="col-md-3 hidden-sm hidden-xs">
+			<%-- <div class="col-md-3 hidden-sm hidden-xs">
 				<div class="panel panel-default">
 					<div class="panel-body" style="border-bottom: 1px solid #e3e3e3;">
 						<div class="media">
@@ -130,7 +155,7 @@
 							<c:if test="${user.userName != user2.userName && user2 != null}">
 							<div class="opt-box d-flex justify-content-center flex-column media-body">
             						<span class="csdn-tracking-statistics tracking-click" data-mod="popu_379">
-                                <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()" id="follow"></a>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-red-hollow" target="_self" onclick="save()" id="followa"></a>
                             </span>
                     </div>
 							</c:if>
@@ -148,7 +173,7 @@
     </dl>
     <dl class="text-center" title="${user.userName}的关注" id="follow_title">
         <dt><a href="javascript:void(0);" onclick="followList()">关注</a></dt>
-        <dd><span class="follow_count_for"></span></dd>
+        <dd><span class="follow_count_for">1</span></dd>
     </dl>
     <dl class="text-center" title="${user.userName}的粉丝" id="fan_title">
         <dt><a href="javascript:void(0);" onclick="fansList()">粉丝</a></dt>
@@ -184,7 +209,7 @@
     
 					
 				</div>
-			</div>
+			</div> --%>
 			<!-- 大屏幕显示 -->
 		</div>
 	</div>

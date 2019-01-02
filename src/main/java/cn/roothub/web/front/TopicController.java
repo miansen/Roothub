@@ -111,15 +111,15 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<TopicExecution> save(String title, String content, String tab, String nodeCode,String nodeTitle,String tag,HttpServletRequest request){
+	private Result<TopicExecution> save(String title, String content, String tab, String nodeCode,String nodeTitle,HttpServletRequest request){
 		User user = getUser(request);
 		ApiAssert.notNull(user, "请先登录");
 		ApiAssert.notNull(title, "标题不能为空");
 		ApiAssert.notNull(tab, "板块不能为空");
 		ApiAssert.notNull(nodeCode, "节点不能为空");
-		ApiAssert.notNull(tag, "标签不能为空");
+		// ApiAssert.notNull(tag, "标签不能为空");
 		//TopicExecution saveTopic = rootTopicService.saveTopic(topic);
-		TopicExecution saveTopic = rootTopicService.createTopic(title, content, tab, nodeCode, nodeTitle,tag, user);
+		TopicExecution saveTopic = rootTopicService.createTopic(title, content, tab, nodeCode, nodeTitle,null, user);
 		//logger.debug(saveTopic.toString());
 		return new Result<TopicExecution>(true, saveTopic);
 	}

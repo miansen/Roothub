@@ -1,5 +1,6 @@
 package cn.roothub.dao;
 
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import cn.roothub.entity.Topic;
@@ -141,6 +142,14 @@ public interface TopicDao {
      * @return
      */
     Topic selectByNameAndAuthorAndTagAndContent(@Param("title") String title,@Param("author") String author,@Param("tag") String tag,@Param("content") String content);
+    
+    /**
+     * 根据标题和时间查询话题
+     * @param title
+     * @param date
+     * @return
+     */
+    Topic selectByTitleAndDate(@Param("title") String title,@Param("date") Date date);
     
     /**
      * 发布话题

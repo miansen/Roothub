@@ -57,12 +57,12 @@
         </if>
     </select>
     <!-- 根据节点编码查询节点 -->
-    <select id="selectByNodeCode" resultType="Node">
+    <select id="selectByTitle" resultType="Node">
     	SELECT
         	<include refid="Base_Column_List"/>
         FROM
         	node a
-        WHERE a.node_code = #{nodeCode}
+        WHERE a.node_title = #{title}
         and a.is_delete = 0
     </select>
     <!-- 查找子节点 -->

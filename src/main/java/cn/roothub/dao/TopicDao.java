@@ -27,10 +27,10 @@ public interface TopicDao {
      * 根据节点查询所有话题
      * @param start
      * @param limit
-     * @param nodeCode
+     * @param nodeTitle
      * @return
      */
-    List<Topic> selectAllByNode(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
+    List<Topic> selectAllByNode(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeTitle") String nodeTitle);
     
     /**
      * 根据昵称和板块查询话题
@@ -56,7 +56,7 @@ public interface TopicDao {
 	 * @param limit
 	 * @return
 	 */
-    List<Topic> selectAllNewest(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
+    List<Topic> selectAllNewest(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeTitle") String nodeTitle);
 
     /**
      * 根据板块查询话题
@@ -73,7 +73,7 @@ public interface TopicDao {
      * @param limit
      * @return
      */
-    List<Topic> selectAllGood(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
+    List<Topic> selectAllGood(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeTitle") String nodeTitle);
 
     /**
      * 根据节点查询无人评论的话题
@@ -81,7 +81,7 @@ public interface TopicDao {
      * @param limit
      * @return
      */
-    List<Topic> selectAllNoReply(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeCode") String nodeCode);
+    List<Topic> selectAllNoReply(@Param("start") Integer start, @Param("limit") Integer limit,@Param("nodeTitle") String nodeTitle);
     
     /**
      * 侧边栏-今日热门话题
@@ -183,13 +183,13 @@ public interface TopicDao {
      * 根据节点统计所有话题
      * @return
      */
-    int countTopicByNode(@Param("nodeCode") String nodeCode);
+    int countTopicByNode(@Param("nodeTitle") String nodeTitle);
 
     /**
      * 根据节点统计精华话题
      * @return
      */
-    int countTopicGoodByNode(@Param("nodeCode") String nodeCode);
+    int countTopicGoodByNode(@Param("nodeTitle") String nodeTitle);
 
     /**
      * 根据板块统计话题
@@ -202,7 +202,7 @@ public interface TopicDao {
      * 根据节点统计无人评论的话题
      * @return
      */
-    int countTopicNoReplyByNode(@Param("nodeCode") String nodeCode);
+    int countTopicNoReplyByNode(@Param("nodeTitle") String nodeTitle);
     
     /**
      * 根据昵称统计所有话题

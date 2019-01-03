@@ -105,6 +105,7 @@ public class IndexController extends BaseController{
 		List<Topic> findHot = topicService.findHot(0, 10);//热门话题榜
 		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 10);//今日等待回复的话题
 		PageDataBody<Tag> tag = topicService.findByTag(1, 10);//最热标签
+		List<Node> nodeList2 = nodeService.findAll(0, 10);
 		int countUserAll = userService.countUserAll();//注册会员的数量
 		int countAllTopic = topicService.countAllTopic(null);//所有话题的数量
 		int countAllReply = replyService.countAll();//所有评论的数量
@@ -118,6 +119,7 @@ public class IndexController extends BaseController{
 		//request.setAttribute("sectionAll", sectionAll);
 		request.setAttribute("tabList", tabList);
 		request.setAttribute("nodeList", nodeList);
+		request.setAttribute("nodeList2", nodeList2);
 		request.setAttribute("tab", tab);
 		//request.setAttribute("tab", tab);
 		request.setAttribute("tag", tag);
@@ -225,10 +227,11 @@ public class IndexController extends BaseController{
      */
     @RequestMapping(value = "/tags", method = RequestMethod.GET)
     private String tag(HttpServletRequest request,@RequestParam(value = "p", defaultValue = "1") Integer p) {
-    	PageDataBody<Tag> tag = topicService.findByTag(p, 500);
+    	PageDataBody<Tag> tag = topicService.findByTag(p, 50);
     	request.setAttribute("tag", tag);
     	return "tag/tag";
     }
+    
     
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     @ResponseBody

@@ -75,8 +75,8 @@
 		FROM
 			topic
 		WHERE is_delete = '0'
-		<if test="nodeCode != null">
-		AND node_slug = #{nodeCode}
+		<if test="nodeTitle != null">
+		AND node_title = #{nodeTitle}
 		</if>
 		order by top desc, last_reply_time desc,create_date desc
 		<if test="start != null">
@@ -129,8 +129,8 @@
 		FROM
 			topic
 		WHERE is_delete = '0'
-		<if test="nodeCode != null">
-		AND node_slug = #{nodeCode}
+		<if test="nodeTitle != null">
+		AND node_title = #{nodeTitle}
 		</if>
 		order by create_date desc,last_reply_time desc,create_date desc
 		<if test="start != null">
@@ -163,8 +163,8 @@
 			topic
 		where good = 1
 		AND is_delete = '0'
-		<if test="nodeCode != null">
-		AND node_slug = #{nodeCode}
+		<if test="nodeTitle != null">
+		AND node_title = #{nodeTitle}
 		</if>
 		order by top desc, last_reply_time desc,create_date desc
 		<if test="start != null">
@@ -182,8 +182,8 @@
 			topic
 		where reply_count = 0
 		AND is_delete = '0'
-		<if test="nodeCode != null">
-		AND node_slug = #{nodeCode}
+		<if test="nodeTitle != null">
+		AND node_title = #{nodeTitle}
 		</if>
 		order by top desc, last_reply_time desc,create_date desc
 		<if test="start != null">
@@ -455,8 +455,8 @@
         select count(topic_id)
         from topic t
         where t.is_delete = 0
-        <if test="nodeCode != null">
-        and t.node_slug = #{nodeCode}
+        <if test="nodeTitle != null">
+        and t.node_title = #{nodeTitle}
         </if>
     </select>
     <!-- 统计模糊查询 -->
@@ -471,8 +471,8 @@
         from topic t
         where t.is_delete = 0 
         and t.good = 1
-        <if test="nodeCode != null">
-        and t.node_slug = #{nodeCode}
+        <if test="nodeTitle != null">
+        and t.node_Title = #{nodeTitle}
         </if>
     </select>
     <!-- 根据板块统计话题 -->
@@ -490,8 +490,8 @@
         from topic t
         where t.is_delete = 0 
         and t.reply_count = 0
-        <if test="nodeCode != null">
-        and t.node_slug = #{nodeCode}
+        <if test="nodeTitle != null">
+        and t.node_title = #{nodeTitle}
         </if>
     </select>
     <!-- 根据昵称统计所有话题 -->

@@ -17,7 +17,10 @@ public interface NodeDao {
 	List<Node> selectAllByTab(@Param("tabName") String tabName,@Param("start") Integer start, @Param("limit") Integer limit);
 	
 	//根据节点编码查询节点
-	Node selectByNodeCode(@Param("nodeCode") String nodeCode);
+	Node selectByTitle(@Param("title") String title);
+	
+	//根据名称查询节点
+	Node selectByNodeTitle(@Param("nodeTitle") String nodeTitle);
 	
 	//查找子节点
 	List<Node> selectChildrenNode(@Param("nodeCode") String nodeCode,@Param("start") Integer start, @Param("limit") Integer limit);

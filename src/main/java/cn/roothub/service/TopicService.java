@@ -20,7 +20,7 @@ public interface TopicService {
 	 * @param ptab
 	 * @return
 	 */
-	PageDataBody<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab,String nodeCode);
+	PageDataBody<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab,String nodeTitle);
 	
 	/**
 	 * 模糊查询话题列表
@@ -227,7 +227,7 @@ public interface TopicService {
      * @param node
      * @return
      */
-    int countTopicByNode(String nodeCode);
+    int countTopicByNode(String nodeTitle);
     
     /**
      * 作者的其他话题

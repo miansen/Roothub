@@ -24,10 +24,9 @@ public class NodeServiceImpl implements NodeService{
 		return nodeDao.selectAllByTab(tabName, pageNumber, pageSize);
 	}
 
-	//根据节点编码查询对应的节点
 	@Override
-	public Node findByNodeCode(String nodeCode) {
-		return nodeDao.selectByNodeCode(nodeCode);
+	public Node findByTitle(String title) {
+		return nodeDao.selectByTitle(title);
 	}
 
 	//子节点
@@ -51,5 +50,4 @@ public class NodeServiceImpl implements NodeService{
 	public List<Node> findAll(Integer pageNumber, Integer pageSize) {
 		return nodeDao.selectAll(pageNumber, pageSize);
 	}
-
 }

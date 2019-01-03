@@ -151,7 +151,7 @@ function topicList(pageNumber) {
 					</div>\
 					<div class=\"tip\">\
 					<p>\
-					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
+					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
 					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
@@ -233,7 +233,7 @@ function collectList(pageNumber) {
 					<div class=\"title\"> <a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<div class=\"tip\">\
 					<p>\
-					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
+					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
 					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
@@ -279,7 +279,7 @@ function followList(pageNumber) {
 					<div class=\"title\"><a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<div class=\"tip\">\
 					<p>\
-					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
+					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
 					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
@@ -423,7 +423,7 @@ function topicQnaList(pageNumber) {
 					<div class=\"title\"><a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<div class=\"tip\">\
 					<p>\
-					<span><a href=\"/node/"+data.data.list[i].nodeSlug+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
+					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
 					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\

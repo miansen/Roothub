@@ -30,15 +30,15 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据节点和节点板块查询话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab,String nodeCode) {
+	public PageDataBody<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab,String nodeTitle) {
 		if(nodeTab.equals("all")) {
-			return pageAllByNode(pageNumber,pageSize,nodeCode);
+			return pageAllByNode(pageNumber,pageSize,nodeTitle);
 		}else if(nodeTab.equals("good")) {
-			return pageGood(pageNumber,pageSize,nodeCode);
+			return pageGood(pageNumber,pageSize,nodeTitle);
 		}else if(nodeTab.equals("noReply")) {
-			return pageNoReply(pageNumber,pageSize,nodeCode);
+			return pageNoReply(pageNumber,pageSize,nodeTitle);
 		}else {
-			return pageAllNewest(pageNumber,pageSize,nodeCode);
+			return pageAllNewest(pageNumber,pageSize,nodeTitle);
 		}
 	}
 
@@ -56,9 +56,9 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据节点查询所有话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllByNode(Integer pageNumber, Integer pageSize, String nodeCode) {
-		List<Topic> list = rootTopicDao.selectAllByNode((pageNumber - 1) * pageSize, pageSize,nodeCode);
-		int total = rootTopicDao.countTopicByNode(nodeCode);
+	public PageDataBody<Topic> pageAllByNode(Integer pageNumber, Integer pageSize, String nodeTitle) {
+		List<Topic> list = rootTopicDao.selectAllByNode((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = rootTopicDao.countTopicByNode(nodeTitle);
 		return new PageDataBody<>(list, pageNumber, pageSize, total);
 	}
 
@@ -66,9 +66,9 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据节点查询精华话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageGood(Integer pageNumber, Integer pageSize,String nodeCode) {
-		List<Topic> list = rootTopicDao.selectAllGood((pageNumber - 1) * pageSize, pageSize,nodeCode);
-		int total = rootTopicDao.countTopicGoodByNode(nodeCode);
+	public PageDataBody<Topic> pageGood(Integer pageNumber, Integer pageSize,String nodeTitle) {
+		List<Topic> list = rootTopicDao.selectAllGood((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = rootTopicDao.countTopicGoodByNode(nodeTitle);
 		return new PageDataBody<>(list, pageNumber, pageSize, total);
 	}
 
@@ -76,9 +76,9 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据节点查询无人回复的话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String nodeCode) {
-		List<Topic> list = rootTopicDao.selectAllNoReply((pageNumber - 1) * pageSize, pageSize,nodeCode);
-		int total = rootTopicDao.countTopicNoReplyByNode(nodeCode);
+	public PageDataBody<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String nodeTitle) {
+		List<Topic> list = rootTopicDao.selectAllNoReply((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = rootTopicDao.countTopicNoReplyByNode(nodeTitle);
 		return new PageDataBody<>(list, pageNumber, pageSize, total);
 	}
 
@@ -236,9 +236,9 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据节点查询最新话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeCode) {
-		List<Topic> list = rootTopicDao.selectAllNewest((pageNumber - 1) * pageSize, pageSize,nodeCode);
-		int total = rootTopicDao.countTopicByNode(nodeCode);
+	public PageDataBody<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeTitle) {
+		List<Topic> list = rootTopicDao.selectAllNewest((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = rootTopicDao.countTopicByNode(nodeTitle);
 		return new PageDataBody<>(list, pageNumber, pageSize, total);
 	}
 
@@ -336,8 +336,8 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据节点统计所有话题
 	 */
 	@Override
-	public int countTopicByNode(String nodeCode) {
-		return rootTopicDao.countTopicByNode(nodeCode);
+	public int countTopicByNode(String nodeTitle) {
+		return rootTopicDao.countTopicByNode(nodeTitle);
 	}
 
 }

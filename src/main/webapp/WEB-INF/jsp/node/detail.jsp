@@ -148,11 +148,16 @@
 <script src="/resources/js/formatDate.js"></script>
 <script src="/resources/js/node/changeSectionClass.js"></script>
 <script type="text/javascript">
+ var nodeTitle = "${node.nodeTitle}";//节点名称
  var nodeCode = "${node.nodeCode}";//节点编码
+ var nodeURL = "${node.url}";//节点url
+ var avatarLarge = "${node.avatarLarge}";//节点背景
+ $(".wrapper").css("background-img","url(https://i.loli.net/2019/01/03/5c2ddd03a5357.jpg)");
+ console.log(avatarLarge)
  var nodeTabCode = "${nodeTab}";//节点板块
  var count = ${page.totalRow};//数据总量
  var limit = ${page.pageSize};//每页显示的条数
- var url = "/node/"+nodeCode+"?s="+nodeTabCode+"&p=";//url
+ var url = nodeURL+"?s="+nodeTabCode+"&p=";//url
  function page(){
    var page = location.search.match(/p=(\d+)/);  
    return page ? page[1] : 1;  

@@ -50,26 +50,26 @@ public class NodeController {
 		return new Result<List>(true, list);
 	}
 	
-	@RequestMapping(value = "/node/{nodeCode}",method = RequestMethod.GET)
-	private String toNode(@PathVariable String nodeCode,
+	@RequestMapping(value = "/n/{name}",method = RequestMethod.GET)
+	private String toNode(@PathVariable String name,
 						  @RequestParam(value = "s", defaultValue = "all") String nodeTab,
 						  @RequestParam(value = "p", defaultValue = "1") Integer p,
 						  HttpServletRequest request,HttpServletResponse response) {
-		Node node = nodeService.findByNodeCode(nodeCode);
+		Node node = nodeService.findByTitle(name);
 		if(node == null) {
 			throw new RuntimeException("节点不存在， 返回 > <a href='/'>主页<a/>");
 		}
 		List<NodeTab> nodeTabList = nodeTabService.findAll();
-		PageDataBody<Topic> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, nodeCode);
-		Node parentNode = nodeService.findByNodeCode(node.getParentNodeCode());//父节点
+		PageDataBody<Topic> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, name);
+		//Node parentNode = nodeService.findByNodeCode(node.getParentNodeCode());//父节点
 		List<Node> adjacencyNode = nodeService.adjacencyNode(node);//相邻节点
 		List<Node> childrenNode = nodeService.findChildrenNode(node.getNodeCode(), null, null);//子节点
-		int countTopicByNode = topicService.countTopicByNode(nodeCode);
+		int countTopicByNode = topicService.countTopicByNode(name);
 		request.setAttribute("nodeTabList", nodeTabList);
 		request.setAttribute("page", page);
 		request.setAttribute("node", node);
 		request.setAttribute("nodeTab", nodeTab);
-		request.setAttribute("parentNode", parentNode);
+		request.setAttribute("parentNode", null);
 		request.setAttribute("adjacencyNode", adjacencyNode);
 		request.setAttribute("childrenNode", childrenNode);
 		request.setAttribute("countTopicByNode", countTopicByNode);

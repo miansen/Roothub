@@ -63,7 +63,7 @@
 			  <c:if test="${item.good}">
 			  <span class="label label-primary">精华</span> <span>•</span>
 			  </c:if>
-			    <span><a href="/node/${item.nodeSlug}" class="node">${item.nodeTitle}</a></span>
+			    <span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
 			    <span>•</span>
                 <strong><a href="/user/${item.author}">${item.author}</a></strong>
                 <c:if test="${item.viewCount > 0}">
@@ -72,10 +72,10 @@
                 </c:if>
                 
                 <!-- 评论数量 -->
-                <%-- <c:if test="${item.replyCount > 0}">
+                <c:if test="${item.replyCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
-                </c:if> --%>
+                </c:if>
                 
                 <span>•</span>
                 <span><fmt:formatDate type="date" 
@@ -97,9 +97,9 @@
                 </p>
                 </div>
               </div>
-              <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
-              <div class="divide mar-top-5"></div>
-            </div>
+            <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
+            <div class="divide mar-top-5"></div>
+          </div>
           </c:forEach>
       </div>
           <div class="panel-footer" id="paginate"></div>
@@ -168,18 +168,19 @@
   </div> -->
     <!-- 最热标签 -->
     <div class="panel panel-default">
-    <div class="panel-heading"><span style="color: #ccc;">最热标签</span></div>
+    <div class="panel-heading"><span style="color: #ccc;">热门节点</span></div>
     <div class="panel-body">
       <div class="row">
-      <c:forEach var="item" items="${tag.list}">
+      <c:forEach var="item" items="${nodeList2}">
           <div class="col-md-6" style="margin-bottom: 10px; padding-left: 10px;">
-            <a href="/tag/${item.tag}">
-              <span class="label label-success">${item.tag}</span>
+            <a href="${item.url}">
+              <span>n/${item.nodeTitle}</span>
             </a>
             <%-- <span class="text-muted">x ${item.number}</span> --%>
+            <a href="#"><span class="label label-primary text-muted">订阅</span></a>
             <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
           </div>
-          </c:forEach>       
+          </c:forEach>
       </div>
     </div>
   </div>

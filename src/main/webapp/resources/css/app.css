@@ -412,7 +412,7 @@ a:link {
     float: right;
     text-align: right;
 }
-.ptab{
+/* .ptab{
 	background-color: #fff;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -421,7 +421,7 @@ a:link {
     line-height: 150%;
     text-align: left;
     border-bottom: 1px solid #eee;
-}
+} */
 .tab_current:active, a.tab_current:link, a.tab_current:hover,a.tab_current:visited {
     display: inline-block;
     font-size: 14px;
@@ -430,9 +430,11 @@ a:link {
     margin-right: 5px;
     border-radius: 3px;
     /* background-color: #5cb85c; */
-    background-color: #334;
+    /* background-color: #334; */
+    background-color: #337ab7;
     color: #fff;
 }
+
 a.tab:active, a.tab:link, a.tab:visited {
     display: inline-block;
     font-size: 14px;
@@ -442,9 +444,9 @@ a.tab:active, a.tab:link, a.tab:visited {
     border-radius: 3px;
     /* color: #555; */
 }
-#ptab li .tab_current:hover{
+/* #ptab li .tab_current:hover{
 	background-color: #5cb85c;
-}
+} */
 .section{
 	background-color: #fff;
     border-top-left-radius: 3px;
@@ -735,4 +737,7 @@ a.node:active, a.node:link, a.node:visited {
 }
 .sep20 {
     height: 20px;
+}
+.layui-laypage a{
+	color: #778087;
 }

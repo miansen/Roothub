@@ -57,10 +57,24 @@
 		FROM
 			topic
 		WHERE is_delete = '0'
-		<if test="tab != null">
+		<!-- <if test="tab != null">
 		AND tab = #{tab}
+		</if> -->
+		<!-- order by top desc,create_date desc,last_reply_time desc -->
+		<if test="tab != null">
+			<if test='tab == "all"'>
+				order by top desc
+			</if>
+			<if test='tab == "hot"'>
+				order by top desc,view_count desc
+			</if>
+			<if test='tab == "new"'>
+				order by top desc,create_date desc
+			</if>
+			<if test='tab == "lonely"'>
+				order by view_count
+			</if>
 		</if>
-		order by top desc,create_date desc,last_reply_time desc
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -480,9 +494,9 @@
         select count(topic_id)
         from topic t
         where t.is_delete = 0
-        <if test="tab != null">
+        <!-- <if test="tab != null">
         	and t.tab = #{tab,jdbcType=VARCHAR}
-        </if>
+        </if> -->
     </select>
     <!-- 根据节点统计无人评论的话题 -->
     <select id="countTopicNoReplyByNode" resultType="java.lang.Integer">

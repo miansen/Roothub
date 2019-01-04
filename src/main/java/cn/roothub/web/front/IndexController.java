@@ -84,7 +84,8 @@ public class IndexController extends BaseController{
 	private String index(HttpServletRequest request,HttpServletResponse response,
             			 @RequestParam(value = "p", defaultValue = "1") Integer p,
             			 @RequestParam(value = "tab", defaultValue = "def") String tab) {
-		tab = TabCookieUtil.getTab(request,response,tab);
+		// tab = TabCookieUtil.getTab(request,response,tab); // 从cookie里找tab
+		
 		//PageDataBody<Topic> page;
 		/*if(tab == null || tab.equals("all")) {
 			page = rootTopicService.page(p, 50, tab,null);
@@ -94,12 +95,15 @@ public class IndexController extends BaseController{
 			page = rootTopicService.page(p, 50, tab,tab);
 		}*/
 		//List<Section> sectionAll = rootSectionService.findAll();
-		PageDataBody<Topic> page;
-		if(tab.equals("all")) {
+		
+		/*PageDataBody<Topic> page;
+		if(tab == null || tab.equals("all")) {
 			page = topicService.pageAllByTab(p, 50, null);
 		}else {
 			page = topicService.pageAllByTab(p, 50, tab);
-		}
+		}*/
+		
+		PageDataBody<Topic> page = topicService.pageAllByTab(p, 25, tab);
 		List<Tab> tabList = tabService.selectAll();
 		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
 		List<Topic> findHot = topicService.findHot(0, 10);//热门话题榜

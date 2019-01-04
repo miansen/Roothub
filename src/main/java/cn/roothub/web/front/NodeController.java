@@ -61,15 +61,15 @@ public class NodeController {
 		}
 		List<NodeTab> nodeTabList = nodeTabService.findAll();
 		PageDataBody<Topic> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, name);
-		//Node parentNode = nodeService.findByNodeCode(node.getParentNodeCode());//父节点
+		Node parentNode = nodeService.findByTitle(node.getParentNodeCode());//父节点
 		List<Node> adjacencyNode = nodeService.adjacencyNode(node);//相邻节点
-		List<Node> childrenNode = nodeService.findChildrenNode(node.getNodeCode(), null, null);//子节点
+		List<Node> childrenNode = nodeService.findChildrenNode(node.getNodeTitle(), null, null);//子节点
 		int countTopicByNode = topicService.countTopicByNode(name);
 		request.setAttribute("nodeTabList", nodeTabList);
 		request.setAttribute("page", page);
 		request.setAttribute("node", node);
 		request.setAttribute("nodeTab", nodeTab);
-		request.setAttribute("parentNode", null);
+		request.setAttribute("parentNode", parentNode);
 		request.setAttribute("adjacencyNode", adjacencyNode);
 		request.setAttribute("childrenNode", childrenNode);
 		request.setAttribute("countTopicByNode", countTopicByNode);

@@ -31,8 +31,8 @@ public class NodeServiceImpl implements NodeService{
 
 	//子节点
 	@Override
-	public List<Node> findChildrenNode(String nodeCode, Integer pageNumber, Integer pageSize) {
-		return nodeDao.selectChildrenNode(nodeCode, pageNumber, pageSize);
+	public List<Node> findChildrenNode(String nodeTitle, Integer pageNumber, Integer pageSize) {
+		return nodeDao.selectChildrenNode(nodeTitle, pageNumber, pageSize);
 	}
 
 	//相邻节点

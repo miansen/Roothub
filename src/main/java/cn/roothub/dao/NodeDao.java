@@ -23,7 +23,7 @@ public interface NodeDao {
 	Node selectByNodeTitle(@Param("nodeTitle") String nodeTitle);
 	
 	//查找子节点
-	List<Node> selectChildrenNode(@Param("nodeCode") String nodeCode,@Param("start") Integer start, @Param("limit") Integer limit);
+	List<Node> selectChildrenNode(@Param("nodeTitle") String nodeTitle,@Param("start") Integer start, @Param("limit") Integer limit);
 		
 	//查找相邻节点
 	List<Node> selectAtherNode(@Param("nodeCode") String nodeCode,@Param("parentNodeCode") String parentNodeCode,

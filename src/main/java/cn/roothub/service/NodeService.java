@@ -22,7 +22,7 @@ public interface NodeService {
 	Node findByTitle(String Title);
 	
 	//子节点
-	List<Node> findChildrenNode(String nodeCode,Integer pageNumber, Integer pageSize);
+	List<Node> findChildrenNode(String nodeTitle,Integer pageNumber, Integer pageSize);
 	
 	//相邻节点
 	List<Node> adjacencyNode(Node node);

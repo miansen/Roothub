@@ -71,8 +71,8 @@
     		a.* 
     	from node a
     	where a.is_delete = 0
-    	<if test="nodeCode != null">
-    		and a.parent_node_code = #{nodeCode}
+    	<if test="nodeTitle != null">
+    		and a.parent_node_code = #{nodeTitle}
     	</if>
     	<if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}

@@ -21,12 +21,14 @@ import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.dto.TopicExecution;
+import cn.roothub.entity.Node;
 import cn.roothub.entity.Reply;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
 import cn.roothub.exception.ApiAssert;
 import cn.roothub.entity.Tab;
 import cn.roothub.service.CollectService;
+import cn.roothub.service.NodeService;
 import cn.roothub.service.NoticeService;
 import cn.roothub.service.ReplyService;
 import cn.roothub.service.NodeTabService;
@@ -55,6 +57,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private NoticeService rootNoticeService;
 	@Autowired
 	private TabService tabService;
+	@Autowired
+	private NodeService nodeService;
 	
 	/**
 	 * 话题详情
@@ -103,23 +107,26 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 * @return
 	 */
 	@RequestMapping(value = "/topic/create", method = RequestMethod.GET)
-	private String create(HttpServletRequest request){
+	private String create(String n,HttpServletRequest request){
 		List<Tab> tabList = tabService.selectAll();
+		List<Node> nodeList = nodeService.findAll(null, null);
 		request.setAttribute("tabList", tabList);
+		request.setAttribute("nodeList", nodeList);
+		request.setAttribute("node", n);
 		return "topic/create";
 	}
 	
 	@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<TopicExecution> save(String title, String content, String tab, String nodeCode,String nodeTitle,HttpServletRequest request){
+	private Result<TopicExecution> save(String title, String content, /*String tab,*/ /*String nodeCode,*/String nodeTitle,String url,String avatar,HttpServletRequest request){
 		User user = getUser(request);
 		ApiAssert.notNull(user, "请先登录");
 		ApiAssert.notNull(title, "标题不能为空");
-		ApiAssert.notNull(tab, "板块不能为空");
-		ApiAssert.notNull(nodeCode, "节点不能为空");
+		// ApiAssert.notNull(tab, "板块不能为空");
+		// ApiAssert.notNull(nodeCode, "节点不能为空");
 		// ApiAssert.notNull(tag, "标签不能为空");
 		//TopicExecution saveTopic = rootTopicService.saveTopic(topic);
-		TopicExecution saveTopic = rootTopicService.createTopic(title, content, tab, nodeCode, nodeTitle,null, user);
+		TopicExecution saveTopic = rootTopicService.createTopic(title, content, null, null, nodeTitle,null, url == null || url.equals("") ? null : url,avatar,user);
 		//logger.debug(saveTopic.toString());
 		return new Result<TopicExecution>(true, saveTopic);
 	}

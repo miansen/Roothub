@@ -178,7 +178,7 @@ public class TopicServiceImpl implements TopicService{
 	}
 	
 	@Override
-	public TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle, String tag,User user) {
+	public TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle, String tag,String url,String avatar,User user) {
 		Topic topic = new Topic();
 		topic.setPtab(null);
 		topic.setTab(tab);
@@ -203,7 +203,8 @@ public class TopicServiceImpl implements TopicService{
 		topic.setNodeSlug(nodeCode);
 		topic.setNodeTitle(nodeTitle);
 		topic.setRemark(null);
-		topic.setAvatar(user.getAvatar());//话题作者的头像
+		topic.setAvatar(avatar);//话题作者的头像
+		topic.setUrl(url);
 		TopicExecution saveTopic = saveTopic(topic);
 		return saveTopic;
 	}

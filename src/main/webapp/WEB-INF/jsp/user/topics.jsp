@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,6 +23,11 @@
           <c:forEach var="item" items="${topicPage.list}">
           <div class="panel-body paginate-bot" style="border-bottom: 1px solid #e2e2e2;">
             <div class="media">
+            <c:if test="${fn:length(item.avatar) > 0}">
+            <div class="media-left">
+              <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
+            </div>
+            </c:if>
               <div class="media-body">
                 <div class="title">
                   <a href="/topic/${item.topicId}">

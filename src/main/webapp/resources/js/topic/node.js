@@ -1,6 +1,7 @@
 function getNode(){
 	var tabName = $("#tab").val();
-	var url = "/node/tab/"+tabName;
+	// var url = "/node/tab/"+tabName;
+	var url = "/nodes";
 	$.ajax({
 		url:url,
 		type:"get",

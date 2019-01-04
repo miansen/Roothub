@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -23,9 +24,11 @@
 
   <c:forEach var="item" items="${pageLike.list}">
           <div class="media" id="topic">
+            <c:if test="${fn:length(item.avatar) > 0}">
             <div class="media-left">
-              <a href="/user/${item.author}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""></a>
+            <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
             </div>
+        	</c:if>
             <div class="media-body">
               <div class="title">
                 <c:choose>

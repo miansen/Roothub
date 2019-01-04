@@ -404,7 +404,8 @@
             node_slug,
             node_title,
             remark,
-            avatar)
+            avatar,
+            url)
             values 
             (#{topicId},
              #{ptab},
@@ -430,7 +431,8 @@
              #{nodeSlug},
              #{nodeTitle},
              #{remark},
-             #{avatar})
+             #{avatar},
+             #{url})
   </insert>
     <update id="updateByTopicId" parameterType="cn.roothub.entity.Topic">
       update topic

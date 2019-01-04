@@ -22,9 +22,14 @@
         <div class="panel panel-default">
         	<div class="tab panel-heading">
         	<ul class="nav nav-pills" id="tab">
-        	<c:forEach var="item" items="${tabList}" varStatus="status">
+        	<%-- <c:forEach var="item" items="${tabList}" varStatus="status">
         		<li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
-        	</c:forEach>
+        	</c:forEach> --%>
+        	<li class="all"><a href="/?tab=all" class="tab tab_current">全部</a></li>
+        	<li class="hot"><a href="/?tab=hot" class="tab">最热</a></li>
+        	<li class="new"><a href="/?tab=new" class="tab">最新</a></li>
+        	<li class="lonely"><a href="/?tab=lonely" class="tab">无人问津</a></li>
+        	<!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
         	</ul>
     		</div>
     		<!-- 节点列表 -->
@@ -40,9 +45,11 @@
         <div class="panel-body paginate-bot">
           <c:forEach var="item" items="${page.list}">
           <div class="media">
+          <c:if test="${fn:length(item.avatar) > 0}">
             <div class="media-left">
-              <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" alt=""></a>
+              <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
             </div>
+            </c:if>
             <div class="media-body">
               <div class="title">
                 <c:choose>
@@ -114,9 +121,11 @@
         <tbody>
         <c:forEach var="item" items="${findHot}">
           <tr>
+          <c:if test="${fn:length(item.avatar) > 0}">
           <td width="24" valign="middle" align="center">
-                <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
+                <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"><!-- </a> -->
             </td>
+            </c:if>
             <td>
             	<c:choose>
                 	<c:when test="${item.url != null}">
@@ -173,11 +182,11 @@
       <div class="row">
       <c:forEach var="item" items="${nodeList2}">
           <div class="col-md-6" style="margin-bottom: 10px; padding-left: 10px;">
-            <a href="${item.url}">
+            <%-- <a href="${item.url}">
               <span>n/${item.nodeTitle}</span>
-            </a>
+            </a> --%>
             <%-- <span class="text-muted">x ${item.number}</span> --%>
-            <a href="#"><span class="label label-primary text-muted">订阅</span></a>
+            <a href="${item.url}"><span class="label label-primary text-muted">${item.nodeTitle}</span></a>
             <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
           </div>
           </c:forEach>

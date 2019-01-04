@@ -81,6 +81,7 @@ $(function(){
     //改变当前选中板块的样式
     $("#tab li").each(function(){
     	if(tab == $(this).attr("class")){
+    		$("#tab li a").removeClass("tab_current");
     		$(this).children("a").addClass("tab_current");
     	}
     })

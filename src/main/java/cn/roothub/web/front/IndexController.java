@@ -83,7 +83,7 @@ public class IndexController extends BaseController{
 	@RequestMapping(value = "/", method = RequestMethod.GET,produces = "application/json; charset=utf-8")//访问子路径
 	private String index(HttpServletRequest request,HttpServletResponse response,
             			 @RequestParam(value = "p", defaultValue = "1") Integer p,
-            			 @RequestParam(value = "tab", defaultValue = "def") String tab) {
+            			 @RequestParam(value = "tab", defaultValue = "all") String tab) {
 		// tab = TabCookieUtil.getTab(request,response,tab); // 从cookie里找tab
 		
 		//PageDataBody<Topic> page;

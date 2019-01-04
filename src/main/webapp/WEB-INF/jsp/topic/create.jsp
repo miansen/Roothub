@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -32,7 +33,7 @@
                 <p class="hidden" id="replyP">回复<span id="replyAuthor"></span>: <a href="javascript:cancelReply();">取消</a></p>
                 <div id="editor" style="margin-bottom: 10px;"></div>
               </div>
-              <div class="form-group">
+              <%-- <div class="form-group">
                 <label for="tab">板块</label>
                 <select id="tab" class="form-control" name="tab" onchange="getNode()">
                  <c:forEach var="item" items="${tabList}" varStatus="status">
@@ -41,11 +42,21 @@
                </c:if>
              </c:forEach>
            </select>
-         </div>
+         </div> --%>
          <div class="form-group">
+                <label for="url">URL</label>
+                <input type="text" class="form-control" id="url" name="url" placeholder="外网链接">
+              </div>
+         <c:if test="${fn:length(node) == 0}">
+         	<div class="form-group">
           <label for="node">节点</label>
-          <select id="node" class="form-control" name="node"></select>
+          <select id="node" class="form-control" name="node">
+          	<c:forEach var="item" items="${nodeList}" varStatus="status">
+                 <option value="${item.nodeTitle}">${item.nodeTitle}</option>
+             </c:forEach>
+          </select>
         </div>
+        </c:if>
         <!-- <div class="form-group">
           <div class="form-group">
             <label for="title">标签</label>
@@ -66,7 +77,7 @@
       <p>• 在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。</p>
       <p>• 保持对陌生人的友善。用知识去帮助别人。</p>
       <p>• 如果是转载的文章，请务必只填上原文的URL，内容就不用复制过来了。</p>
-      <p>• 请为你的主题选择一个或多个标签。恰当的归类会让你发布的信息更加有用。</p>
+      <p>• 请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。</p>
     </div>
   </div>
 </div>
@@ -77,7 +88,7 @@
 <script src="/resources/js/jquery.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/wangEditor/wangEditor.min.js"></script>
-<script src="/resources/js/topic/node.js"></script>
+<!-- <script src="/resources/js/topic/node.js"></script> -->
 <script type="text/javascript">
   $(function () {
     var E = window.wangEditor;
@@ -116,25 +127,25 @@
 
         $("#btn").click(function () {
           var title = $("#title").val();
+          var url = $("#url").val();
+          console.log(url);
           var contentHtml = editor.txt.html();
           var contentText = editor.txt.text();
-          var tab = $("#tab option:selected").val();
-          var nodeCode = $("#node option:selected").val();
-          var nodeTitle = $("#node option:selected").text();
+          // var tab = $("#tab option:selected").val();
+          // var nodeCode = $("#node option:selected").val();
+          // alert(contentHtml);
+          var node = "${node}";
+          
+          var nodeTitle = node ? node : $("#node option:selected").val();
           // var tag = $("#tag").val();
+          var avatar = $("#editor").find("img:first").attr("src");
           if(!title) {
             alert('请输入标题');
             return false;
-          }else if(!tab){
-           alert('请选择一个板块');
-           return false;
-         }else if(!nodeCode){
+          }else if(!nodeTitle){
           alert('请选择一个节点');
           return false;
-        }else if(!contentText){
-         alert('请输入正文');
-         return false;
-       }else {
+        }else {
         $.ajax({
           url: '/topic/save',
           type: 'post',
@@ -143,9 +154,11 @@
           dataType: 'json',
           data: {
             title: title,
-            content: contentText ? contentHtml : '',
-            tab:tab,
-            nodeCode:nodeCode,
+            content: contentHtml,
+            url: url,
+            avatar: avatar,
+            //tab:tab,
+            // nodeCode:nodeCode,
             nodeTitle:nodeTitle
           },
           success: function(data){

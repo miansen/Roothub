@@ -1,4 +1,4 @@
-(function (){
+function nodeInfo(){
 	$.ajax({
 		url:"/api/user/logininfo",
 		type:"get",
@@ -10,7 +10,7 @@
 					<div class="media">\
 					<div class="media-left">\
 					<a href="/user/'+data.data.userName+'">\
-					<img src="/resources/images/'+data.data.avatar+'" title="" class="user-avatar img-circle">\
+					<img src="/resources/images/'+data.data.avatar+'" title="" class="avatar img-circle">\
 					</a>\
 					</div>\
 					<div class="media-body">\
@@ -50,4 +50,4 @@
 
 		}
 	});
-})();
+};

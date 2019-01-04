@@ -662,9 +662,9 @@ a.tab:active, a.tab:link, a.tab:visited {
 }
 
 .avatar {
-	width: 48px;
-    height: 48px;
-    max-width: 48px;
+	width: 80px;
+    height: 60px;
+    max-width: 80px;
 	border-radius: 4px;
 }
 

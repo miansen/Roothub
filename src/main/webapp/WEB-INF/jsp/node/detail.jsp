@@ -41,9 +41,11 @@
      <div class="panel-body paginate-bot">
       <c:forEach var="item" items="${page.list}">
       <div class="media">
-        <div class="media-left">
-          <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" alt=""></a>
-        </div>
+        <c:if test="${fn:length(item.avatar) > 0}">
+            <div class="media-left">
+            <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
+            </div>
+        </c:if>
         <div class="media-body">
           <div class="title">
             <c:choose>
@@ -94,7 +96,15 @@
 </div>
 </div>
 <div class="col-md-3 hidden-sm hidden-xs">
-  <div class="panel panel-default" id="session"></div>
+  <div class="panel panel-default" id="session">
+  	<div class="panel-body" id="nologin">
+  	<h5>n/${node.nodeTitle}</h5>
+  	<p>${node.nodeDesc}</p>
+  	<p><a href="/topic/create?n=${node.nodeTitle}" style="font-size: 14px;">
+  	<button class="btn btn-success">发布话题</button></a>
+  	</p>
+  	</div>
+  </div>
   <!-- 相邻节点 -->
   <div class="panel panel-default">
     <!-- <div class="panel-heading"><span style="color: #ccc;">相关节点</span></div> -->
@@ -144,7 +154,7 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
-<script src="/resources/js/login_info.js"></script>
+<!-- <script src="/resources/js/login_info.js"></script> -->
 <script src="/resources/js/formatDate.js"></script>
 <script src="/resources/js/node/changeSectionClass.js"></script>
 <script type="text/javascript">

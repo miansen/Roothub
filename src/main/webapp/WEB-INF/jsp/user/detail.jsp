@@ -98,11 +98,13 @@
             </td>
             <td width="10"></td>
             <td width="auto" valign="top" align="left">
-                <div class="fr">
+            <c:if test="${user2 != null && user2.userId != user.userId}">
+            	<div class="fr">
                     <button class="btn btn-follow" onclick="save()" id="follow">加入特别关注</button>   
                     <div class="sep10"></div>
                     <button class="btn btn-warning">Block</button>
                 </div>
+            </c:if>
                 <h1 title="${user.userId}" id="user_id" class= "user_id">${user.userName}</h1>
                 <span class="gray" style="font-size: 14px;">Roothub 第 ${user.userId} 号会员，加入于 <fmt:formatDate type="both" value="${user.createDate}" /><div class="sep5"></div>
                 </span> 

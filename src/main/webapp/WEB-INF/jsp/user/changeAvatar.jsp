@@ -122,6 +122,7 @@
           success: function (data) {
             if(data.success != null && data.success == true) {
             	alert("修改头像成功");
+            	location.reload();
             } else {
             	alert("修改头像失败");
             }

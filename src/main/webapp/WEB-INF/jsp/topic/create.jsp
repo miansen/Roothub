@@ -43,10 +43,6 @@
              </c:forEach>
            </select>
          </div> --%>
-         <div class="form-group">
-                <label for="url">URL</label>
-                <input type="text" class="form-control" id="url" name="url" placeholder="外网链接">
-              </div>
          <c:if test="${fn:length(node) == 0}">
          	<div class="form-group">
           <label for="node">节点</label>
@@ -127,8 +123,6 @@
 
         $("#btn").click(function () {
           var title = $("#title").val();
-          var url = $("#url").val();
-          console.log(url);
           var contentHtml = editor.txt.html();
           var contentText = editor.txt.text();
           // var tab = $("#tab option:selected").val();
@@ -138,7 +132,7 @@
           
           var nodeTitle = node ? node : $("#node option:selected").val();
           // var tag = $("#tag").val();
-          var avatar = $("#editor").find("img:first").attr("src");
+          // var avatar = $("#editor").find("img:first").attr("src");
           if(!title) {
             alert('请输入标题');
             return false;
@@ -155,8 +149,6 @@
           data: {
             title: title,
             content: contentHtml,
-            url: url,
-            avatar: avatar,
             //tab:tab,
             // nodeCode:nodeCode,
             nodeTitle:nodeTitle

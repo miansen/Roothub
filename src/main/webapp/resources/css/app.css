@@ -128,7 +128,7 @@ body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino San
 .avatar{border-radius:4px; max-width:48px}
 .avatar-sm{border-radius:4px;max-width:24px}
 .avatar-lg{border-radius:4px;max-width:64px}
-.title{font-size:16px;font-weight:500;padding-bottom:5px}
+.title{font-size:18px;font-weight:500;padding-bottom:5px}
 .topic-detail-header{padding-bottom:0}
 .topic-detail-title{margin-top:0;font-weight:500}
 .topic-append-content{background-color:#fffff9}
@@ -662,9 +662,16 @@ a.tab:active, a.tab:link, a.tab:visited {
 }
 
 .avatar {
-	width: 80px;
-    height: 60px;
-    max-width: 80px;
+	width: 48px;
+    height: 48px;
+    max-width: 48px;
+	border-radius: 4px;
+}
+
+.user-avatar{
+	width: 48px;
+    height: 48px;
+    max-width: 48px;
 	border-radius: 4px;
 }
 

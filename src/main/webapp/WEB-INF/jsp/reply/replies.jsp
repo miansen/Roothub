@@ -14,7 +14,7 @@
     <div id="r_${item.replyId}" class="cell" style="padding-bottom: 0px;">
     <table cellpadding="0" cellspacing="0" border="0" width="100%" class="pinglun_table">
         <tbody><tr>
-            <td width="48" valign="top" align="center"><a href="/user/${item.replyAuthorName}"><img src="/resources/images/${item.avatar}" class="avatar img-circle" alt=""/></a>
+            <td width="48" valign="top" align="center"><a href="/user/${item.replyAuthorName}"><img src="${item.avatar}" class="user-avatar img-circle" alt=""/></a>
             <td width="10" valign="top"></td>
             <td width="auto" valign="top" align="left"><div class="fr"> &nbsp; &nbsp; <span class="no"><%=i++%></span></div>
                 <div class="sep3"></div>

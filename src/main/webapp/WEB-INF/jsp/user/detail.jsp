@@ -93,7 +93,7 @@
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tbody><tr>
             <td width="73" valign="top" align="center">
-            <img src="/resources/images/${user.avatar}"  border="0" align="default" style="border-radius: 4px;" width="73" height="73px"/>
+            <img src="${user.avatar}"  border="0" align="default" style="border-radius: 4px;" width="73" height="73px"/>
             <div class="sep10"></div>
             </td>
             <td width="10"></td>
@@ -115,7 +115,7 @@
 <div class="sep20"></div>
 				<div class="panel panel-default">
 					<%-- <div class="panel-heading">${user.userName}创建的话题</div> --%>
-					<div class="cell_tabs"><div class="fl"><img src="/resources/images/${user.avatar}" width="24" style="border-radius: 24px; margin-top: -2px;" border="0"></div>
+					<div class="cell_tabs"><div class="fl"><img src="${user.avatar}" width="24" style="border-radius: 24px; margin-top: -2px;" border="0"></div>
 					<!-- <a href="javascript:void(0);" onclick="activitiesList()" class="cell_tab_current">动态</a> -->
 					<a href="javascript:void(0);" onclick="topicList()" class="cell_tab_current" >主题</a>
 					<a href="javascript:void(0);" onclick="replyList()" class="cell_tab">评论</a>

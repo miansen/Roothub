@@ -10,7 +10,7 @@
 					<div class="media">\
 					<div class="media-left">\
 					<a href="/user/'+data.data.userName+'">\
-					<img src="/resources/images/'+data.data.avatar+'" title="" class="user-avatar img-circle">\
+					<img src="'+data.data.avatar+'" title="" class="user-avatar img-circle">\
 					</a>\
 					</div>\
 					<div class="media-body">\

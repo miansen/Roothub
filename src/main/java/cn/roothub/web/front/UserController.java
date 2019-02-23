@@ -250,7 +250,7 @@ public class UserController extends BaseController{
 		String filePath = request.getSession().getServletContext().getRealPath("/")+"/resources/images/"+fileName;
 		File file = new File(filePath);
 		ImageIO.write(bufferedImage, "PNG", file);
-		user.setAvatar(fileName);
+		user.setAvatar("/resources/images/"+fileName);
 		user.setUpdateDate(new Date());
 		updateUser = rootUserService.updateUser(user);
 		rootTopicService.updateTopicAvatar(user);

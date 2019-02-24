@@ -190,7 +190,7 @@ public class UserServiceImpl implements UserService{
 		user.setThirdAccessToken(StringUtil.getUUID());
 		user.setStatusCd("1000");
 		user.setUserType("2");
-		user.setAvatar("69290780aaafb00aa37ff2a61342dded.png");
+		user.setAvatar("/resources/images/default-avatar.jpg");
 		user.setSignature("这家伙很懒，什么都没留下");
 		return save(user);
 	}

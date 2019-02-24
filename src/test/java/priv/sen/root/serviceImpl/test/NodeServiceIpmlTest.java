@@ -25,17 +25,17 @@ public class NodeServiceIpmlTest extends BaseTest {
 		System.out.println(findAtherByNodeCode);
 	}*/
 	
-	@Test
+	/*@Test
 	public void adjacencyNodeTest() throws Exception{
 		Node node = nodeService.findByNodeCode("java");
 		List<Node> adjacencyNode = nodeService.adjacencyNode(node);
 		System.out.println(adjacencyNode);
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void findByNodeCodeTest() throws Exception{
 		Node node = nodeService.findByNodeCode("lang");
 		Node findByNodeCode = nodeService.findByNodeCode(node.getParentNodeCode());
 		System.out.println(findByNodeCode);
-	}
+	}*/
 }

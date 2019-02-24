@@ -124,6 +124,7 @@ hr{border-bottom-color:#eee}
 body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif}
 .wrapper{width:100%;background-color:#e5e5e5}
 /* a��ǩ������״̬ */
+.title a{color:#333}
 .title a:visited{color:/* #ccc */ #778087 /* #333 */}
 .avatar{border-radius:4px; max-width:48px}
 .avatar-sm{border-radius:4px;max-width:24px}

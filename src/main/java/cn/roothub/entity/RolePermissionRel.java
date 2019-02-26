@@ -4,20 +4,20 @@ package cn.roothub.entity;
  * @author miansen.wang
  * @date 2019年2月26日 下午1:22:43
  */
-public class RolePermission {
+public class RolePermissionRel {
 	
-	private Integer rolePermissionId;
+	private Integer rolePermissionRelId;
 	
 	private Integer roleId;
 	
 	private Integer permissionId;
 
-	public Integer getRolePermissionId() {
-		return rolePermissionId;
+	public Integer getRolePermissionRelId() {
+		return rolePermissionRelId;
 	}
 
-	public void setRolePermissionId(Integer rolePermissionId) {
-		this.rolePermissionId = rolePermissionId;
+	public void setRolePermissionRelId(Integer rolePermissionRelId) {
+		this.rolePermissionRelId = rolePermissionRelId;
 	}
 
 	public Integer getRoleId() {
@@ -38,7 +38,7 @@ public class RolePermission {
 
 	@Override
 	public String toString() {
-		return "RolePermission [rolePermissionId=" + rolePermissionId + ", roleId=" + roleId + ", permissionId="
-				+ permissionId + "]";
+		return "RolePermissionRel [rolePermissionRelId=" + rolePermissionRelId + ", roleId=" + roleId
+				+ ", permissionId=" + permissionId + "]";
 	}
 }

@@ -15,7 +15,7 @@ public class Role {
 	private Date createDate;
 	
 	private Date updateDate;
-
+	
 	public Integer getRoleId() {
 		return roleId;
 	}

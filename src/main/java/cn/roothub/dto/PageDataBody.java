@@ -19,10 +19,10 @@ public class PageDataBody<T> implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private List<T> list;                // list result of this page
-    private int pageNumber;                // page number 当前页
-    private int pageSize;                // result amount of this page 页面的数据量
-    private long totalPage;                // total page 一共有多少页
-    private long totalRow;                // total row 一共有多少条数据量
+    private int pageNumber;                // page number 当前页数
+    private int pageSize;                // result amount of this page 每页显示多少条数据量
+    private long totalPage;                // total page 总共有多少页
+    private long totalRow;                // total row 总共有多少条数据量
     
 	public PageDataBody(List<T> list, int pageNumber, int pageSize, long totalRow) {
 		super();

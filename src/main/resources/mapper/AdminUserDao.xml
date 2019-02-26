@@ -32,7 +32,7 @@
 		SELECT
         	a.*,
         	b.role_id "role.roleId",
-        	b.role_name "roleName",
+        	b.role_name "role.roleName",
         	b.create_date "role.createDate",
         	b.update_date "role.updateDate"
 		FROM
@@ -49,7 +49,7 @@
 		SELECT
         	a.*,
         	b.role_id "role.roleId",
-        	b.role_name "roleName",
+        	b.role_name "role.roleName",
         	b.create_date "role.createDate",
         	b.update_date "role.updateDate"
 		FROM
@@ -66,7 +66,7 @@
 		SELECT
         	a.*,
         	b.role_id "role.roleId",
-        	b.role_name "roleName",
+        	b.role_name "role.roleName",
         	b.create_date "role.createDate",
         	b.update_date "role.updateDate"
 		FROM
@@ -89,7 +89,7 @@
 		SELECT
         	a.*,
         	b.role_id "role.roleId",
-        	b.role_name "roleName",
+        	b.role_name "role.roleName",
         	b.create_date "role.createDate",
         	b.update_date "role.updateDate"
 		FROM

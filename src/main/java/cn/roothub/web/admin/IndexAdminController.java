@@ -1,9 +1,18 @@
 package cn.roothub.web.admin;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.roothub.dto.PageDataBody;
+import cn.roothub.dto.Result;
+import cn.roothub.entity.AdminUser;
+import cn.roothub.service.AdminUserService;
 
 /**
  * @author miansen.wang
@@ -13,9 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/admin")
 public class IndexAdminController {
 
+	@Autowired
+	private AdminUserService adminUserService;
+	
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
-	public String index() {
-		return "admin/index";
+	@ResponseBody
+	public Result<PageDataBody<AdminUser>> index() {
+		PageDataBody<AdminUser> pageRoles = adminUserService.pageRoles(1, 20);
+		return new Result<PageDataBody<AdminUser>>(true, pageRoles);
 	}
 
 }

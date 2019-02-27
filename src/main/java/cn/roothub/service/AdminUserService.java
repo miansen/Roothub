@@ -19,8 +19,20 @@ public interface AdminUserService {
 	AdminUser getById(Integer id);
 	
 	// 获取所有的后台用户
-	List<AdminUser> list(Integer pageNumber, Integer pageSize);
+	PageDataBody<AdminUser> page(Integer pageNumber, Integer pageSize);
 	
 	// 获取所有的后台用户以及对应的角色列表
-	PageDataBody<Map<String, List<Role>>> page(Integer pageNumber, Integer pageSize);
+	PageDataBody<AdminUser> pageRoles(Integer pageNumber, Integer pageSize);
+	
+	// 新增后台用户
+	void save(AdminUser adminUser);
+	
+	// 更新后台用户
+	void update(AdminUser adminUser);
+	
+	// 删除后台用户
+	void removeById(Integer id);
+	
+	// 统计所有后台用户
+	int countAll();
 }

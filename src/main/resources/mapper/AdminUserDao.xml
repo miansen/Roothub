@@ -30,51 +30,27 @@
 	<!-- 根据用户名查询后台用户 -->
 	<select id="selectByName" resultType="AdminUser">
 		SELECT
-        	a.*,
-        	b.role_id "role.roleId",
-        	b.role_name "role.roleName",
-        	b.create_date "role.createDate",
-        	b.update_date "role.updateDate"
+        	a.*
 		FROM
 			admin_user a
-		LEFT join 
-			role b
-		ON 
-			a.role_id = b.role_id
 		WHERE 
 			a.username = #{name}
      </select>
      <!-- 根据ID查询后台用户 -->
 	<select id="selectById" resultType="AdminUser">
 		SELECT
-        	a.*,
-        	b.role_id "role.roleId",
-        	b.role_name "role.roleName",
-        	b.create_date "role.createDate",
-        	b.update_date "role.updateDate"
+        	a.*
 		FROM
 			admin_user a
-		LEFT join 
-			role b
-		ON 
-			a.role_id = b.role_id
 		WHERE 
 			a.admin_user_id = #{id}
      </select>
      <!-- 查询所有的后台用户 -->
      <select id="selectAll" resultType="AdminUser">
 		SELECT
-        	a.*,
-        	b.role_id "role.roleId",
-        	b.role_name "role.roleName",
-        	b.create_date "role.createDate",
-        	b.update_date "role.updateDate"
+        	a.*
 		FROM
 			admin_user a
-		LEFT join 
-			role b
-		ON 
-			a.role_id = b.role_id
 		ORDER BY 
 			a.create_date DESC 
 		<if test="start != null">
@@ -84,32 +60,7 @@
             </if>
         </if>
      </select>
-     <!-- 根据角色ID查询所关联的后台用户 -->
-     <select id="selectByRoleId" resultType="AdminUser">
-		SELECT
-        	a.*,
-        	b.role_id "role.roleId",
-        	b.role_name "role.roleName",
-        	b.create_date "role.createDate",
-        	b.update_date "role.updateDate"
-		FROM
-			admin_user a
-		LEFT join 
-			role b
-		ON 
-			a.role_id = b.role_id
-		<if test="roleId != null">
-			WHERE a.role_id = #{roleId}
-		</if>
-		ORDER BY 
-			a.create_date DESC 
-		<if test="start != null">
-            limit #{start,jdbcType=INTEGER}
-            <if test="limit != null">
-                ,#{limit,jdbcType=INTEGER}
-            </if>
-        </if>
-     </select>
+     
      <!-- 新增后台用户 -->
      <insert id="insert" parameterType="cn.roothub.entity.AdminUser" keyProperty="adminUserId" useGeneratedKeys="true">
      	insert into admin_user

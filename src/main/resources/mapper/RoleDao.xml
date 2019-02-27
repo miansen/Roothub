@@ -42,7 +42,7 @@
 		ORDER BY 
 			create_date DESC 
 		<if test="start != null">
-            limit #{start,jdbcType=INTEGER}
+            LIMIT #{start,jdbcType=INTEGER}
             <if test="limit != null">
                 ,#{limit,jdbcType=INTEGER}
             </if>
@@ -50,7 +50,7 @@
      </select>
      
      <!-- 根据后台用户ID查询所关联的所有角色 -->
-     <select id="selectAllByAdminId" resultType="cn.roothub.entity.Role">
+     <select id="selectAllByAdminUserId" resultType="cn.roothub.entity.Role">
 		SELECT
         	a.*
 		FROM
@@ -64,7 +64,7 @@
 				b.admin_user_id = #{adminUserId}
 		</if>
 		<if test="start != null">
-            limit #{start,jdbcType=INTEGER}
+            LIMIT #{start,jdbcType=INTEGER}
             <if test="limit != null">
                 ,#{limit,jdbcType=INTEGER}
             </if>
@@ -73,11 +73,11 @@
      
      <!-- 新增角色 -->
      <insert id="insert" parameterType="cn.roothub.entity.Role" keyProperty="roleId" useGeneratedKeys="true">
-     	insert into role
+     	INSERT INTO role
      	(role_name,
      	 create_date,
      	 update_date)
-     	values
+     	VALUES
      	(#{roleName},
      	 #{createDate},
      	 #{updateDate})
@@ -85,22 +85,29 @@
      
      <!--  更新角色 -->
      <update id="update" parameterType="cn.roothub.entity.Role">
-     	update role
-     	set role_name = #{roleName},
+     	UPDATE 
+     		role
+     	SET 
+     		role_name = #{roleName},
      		create_date = #{createDate},
      		update_date = #{updateDate}
-     	where role_id = #{roleId}
+     	WHERE 
+     		role_id = #{roleId}
      </update>
      
      <!-- 根据ID删除角色 -->
      <delete id="deleteById">
-     	delete from role
-     	where role_id = #{roleId}
+     	DELETE FROM 
+     		role
+     	WHERE 
+     		role_id = #{roleId}
      </delete>
      
      <!-- 统计所有角色 -->
      <select id="countAll" resultType="java.lang.Integer">
-     	select count(1)
-     	from role
+     	SELECT 
+     		count(1)
+     	FROM 
+     		role
      </select>
 </mapper>

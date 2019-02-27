@@ -19,9 +19,6 @@ public interface AdminUserDao {
 	// 查询所有的后台用户
 	List<AdminUser> selectAll(@Param("start") Integer start,@Param("limit") Integer limit);
 	
-	// 根据角色ID查询所关联的后台用户
-	List<AdminUser> selectByRoleId(@Param("roleId") Integer roleId,@Param("start") Integer start,@Param("limit") Integer limit);
-	
 	// 新增后台用户
 	int insert(AdminUser adminUser);
 	

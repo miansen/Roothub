@@ -42,12 +42,6 @@ public class AdminUserDaoTest extends BaseTest{
 	}
 	
 	@Test
-	public void selectByRoleId() {
-		List<AdminUser> list = adminUserDao.selectByRoleId(1, 0, 10);
-		log.debug(list.toString());
-	}
-	
-	@Test
 	public void insert() {
 		AdminUser adminUser = new AdminUser();
 		adminUser.setUsername("test");

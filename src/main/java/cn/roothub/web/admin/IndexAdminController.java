@@ -31,5 +31,15 @@ public class IndexAdminController {
 		PageDataBody<AdminUser> pageRoles = adminUserService.pageRoles(1, 20);
 		return new Result<PageDataBody<AdminUser>>(true, pageRoles);
 	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login() {
+		return "admin/login";
+	}
 
+	// 出错页面
+	@RequestMapping(value = "/error", method = RequestMethod.GET)
+	public String error() {
+		return "admin/error/error";
+	}
 }

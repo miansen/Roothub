@@ -1,8 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% String appPath = request.getContextPath(); %>
-<c:set value="${pageContext.request.contextPath}" var="path" scope="page"></c:set>
 <html>
 <head>
   <title>Roothub-出错了~~</title>
@@ -19,8 +15,8 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <h1>: (</h1>
-      <h3>${errorCode}</h3>
-      <p>${exception}</p>
+      <h3>500</h3>
+      <p>出错了</p>
     </div>
   </div>
 </div>

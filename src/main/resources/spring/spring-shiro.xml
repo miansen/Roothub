@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 配置 SecurityManager -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="authenticator" ref="authenticator"></property>
+        
+        <property name="realms">
+        	<list>
+    			<ref bean="myShiroRealm"/>
+    		</list>
+        </property>
+        
+        <property name="rememberMeManager.cookie.maxAge" value="10"></property>
+    </bean>
+    
+    <bean id="authenticator" 
+    	class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
+    	<property name="authenticationStrategy">
+    		<bean class="org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy"></bean>
+    	</property>
+    </bean>
+    
+    <!-- 配置 Realm -->
+    <bean id="myShiroRealm" class="cn.roothub.config.realm.MyShiroRealm">
+    	<property name="credentialsMatcher">
+    		<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+    			<!-- 加密算法的名称 -->
+    			<property name="hashAlgorithmName" value="MD5"></property>
+    			<!-- 配置加密的次数 -->
+    			<property name="hashIterations" value="1024"></property>
+    		</bean>
+    	</property>
+    </bean>
+    
+    <!-- 配置 LifecycleBeanPostProcessor. 可以自动的来调用配置在 Spring IOC 容器中 shiro bean 的生命周期方法 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    
+    <!-- 启用 IOC 容器中使用 shiro 的注解. 但必须在配置了 LifecycleBeanPostProcessor 之后才可以使用 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    
+    <!-- 配置 ShiroFilter -->
+    <!-- id 必须和 web.xml 文件中配置的 DelegatingFilterProxy 的 <filter-name> 一致，
+    	   若不一致, 则会抛出: NoSuchBeanDefinitionException. 因为 Shiro 会来 IOC 容器中查找和 <filter-name> 名字对应的 filter bean -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 登录页面 ，如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->
+        <property name="loginUrl" value="/admin/login"/>
+        <!-- 登录成功后要跳转的链接 -->
+        <property name="successUrl" value="/admin/index"/>
+        <!-- 出错页面定义 -->
+        <property name="unauthorizedUrl" value="/admin/error"/>
+        <!-- 定义拦截规则 -->
+        <property name="filterChainDefinitionMap" ref="filterChainDefinitionMap"></property>
+    </bean>
+    
+    <!-- 配置一个 bean, 该 bean 实际上是一个 Map. 通过实例工厂方法的方式 -->
+    <bean id="filterChainDefinitionMap" 
+    	  factory-bean="filterChainDefinitionMapBuilder" factory-method="buildFilterChainDefinitionMap">
+    </bean>
+    
+    <!-- 定义拦截规则 -->
+    <bean id="filterChainDefinitionMapBuilder"
+    	  class="cn.roothub.config.ShiroConfig">
+    </bean>
+</beans>

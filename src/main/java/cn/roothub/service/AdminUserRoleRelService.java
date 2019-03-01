@@ -10,7 +10,7 @@ import cn.roothub.entity.AdminUserRoleRel;
  * @author: miansen.wang
  * @date: 2019-02-28
  */
-public interface RoleAdminUserService {
+public interface AdminUserRoleRelService {
 
 	/**
 	 * 获取查询所有的关联关系
@@ -28,9 +28,9 @@ public interface RoleAdminUserService {
 	
 	/**
 	 * 批量保存
-	 * @param roleAdminUserRels
+	 * @param adminUserRoleRels
 	 */
-	void saveBatch(Collection<? extends Serializable> roleAdminUserRels);
+	void saveBatch(Collection<? extends Serializable> adminUserRoleRels);
 	
 	/**
 	 * 删除后台用户与角色的关联关系

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.roothub.dao.PermissionDao">
+	
+	<select id="selectBatchByRoleList" resultType="cn.roothub.entity.Permission">
+		SELECT
+        	a.*
+		FROM
+			permission a
+		JOIN
+			role_permission_rel b
+		ON a.permission_id = b.permission_id
+		WHERE 
+			b.role_id in
+			<foreach collection="roleList" item="role" open="(" separator="," close=")">
+				#{role.roleId}
+			</foreach>
+		<if test="start != null">
+            LIMIT #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+   
+     <select id="selectAllByPid" resultType="cn.roothub.entity.Permission">
+		SELECT
+        	*
+		FROM
+			permission
+		WHERE
+			pid = #{pid}
+		<if test="start != null">
+            LIMIT #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+
+     <insert id="insert" parameterType="cn.roothub.entity.Permission" keyProperty="permissionId" useGeneratedKeys="true">
+     	INSERT INTO permission
+     	(permission_name,
+     	 permission_value,
+     	 pid,
+     	 create_date,
+     	 update_date)
+     	VALUES
+     	(#{permissionName},
+     	 #{permissionValue},
+     	 #{pid},
+     	 #{createDate},
+     	 #{updateDate})
+     </insert>
+     
+     <update id="update" parameterType="cn.roothub.entity.Permission">
+     	UPDATE 
+     		permission
+     	SET 
+     		permission_name = #{permissionName},
+     		permission_value = #{permissionValue},
+     		pid = #{pid},
+     		create_date = #{createDate},
+     		update_date = #{updateDate}
+     	WHERE 
+     		permission_id = #{permissionId}
+     </update>
+     
+     <delete id="deleteById">
+     	DELETE FROM 
+     		permission
+     	WHERE 
+     		permission_id = #{id}
+     </delete>
+     
+</mapper>

@@ -1,13 +1,16 @@
 package cn.roothub.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author miansen.wang
  * @date 2019年2月26日 下午12:45:44
  */
-public class Role {
+public class Role implements Serializable{
 	
+	private static final long serialVersionUID = -5491520720033222765L;
+
 	private Integer roleId;
 	
 	private String roleName;

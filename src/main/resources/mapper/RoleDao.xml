@@ -56,7 +56,7 @@
 		FROM
 			role a
 		JOIN 
-			role_admin_user_rel b
+			admin_user_role_rel b
 		ON 
 			a.role_id = b.role_id 
 		<if test="adminUserId != null">

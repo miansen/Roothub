@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import cn.roothub.dao.AdminUserRoleRelDao;
 import cn.roothub.entity.AdminUserRoleRel;
-import cn.roothub.service.RoleAdminUserService;
+import cn.roothub.service.AdminUserRoleRelService;
 
 /**
  * <p></p>
@@ -14,33 +14,33 @@ import cn.roothub.service.RoleAdminUserService;
  * @date: 2019-02-28
  */
 @Service
-public class RoleAdminUserServiceImpl implements RoleAdminUserService {
+public class AdminUserRoleRelServiceImpl implements AdminUserRoleRelService {
 
-	private AdminUserRoleRelDao roleAdminUserRelDao;
+	private AdminUserRoleRelDao adminUserRoleRelDao;
 	
 	@Override
 	public List<AdminUserRoleRel> getAllByAdminUserId(Integer adminUserId) {
-		return roleAdminUserRelDao.selectAllByAdminUserId(adminUserId);
+		return adminUserRoleRelDao.selectAllByAdminUserId(adminUserId);
 	}
 
 	@Override
 	public List<AdminUserRoleRel> getAllByRoleId(Integer roleId) {
-		return roleAdminUserRelDao.selectAllByRoleId(roleId);
+		return adminUserRoleRelDao.selectAllByRoleId(roleId);
 	}
 
 	@Override
-	public void saveBatch(Collection<? extends Serializable> roleAdminUserRels) {
-		roleAdminUserRelDao.insertBatch(roleAdminUserRels);
+	public void saveBatch(Collection<? extends Serializable> adminUserRoleRels) {
+		adminUserRoleRelDao.insertBatch(adminUserRoleRels);
 	}
 
 	@Override
 	public void removeByAdminUserId(Integer adminUserId) {
-		roleAdminUserRelDao.deleteByAdminUserId(adminUserId);
+		adminUserRoleRelDao.deleteByAdminUserId(adminUserId);
 	}
 
 	@Override
 	public void removeByRoleId(Integer roleId) {
-		roleAdminUserRelDao.deleteByRoleId(roleId);
+		adminUserRoleRelDao.deleteByRoleId(roleId);
 	}
 
 }

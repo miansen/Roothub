@@ -4,34 +4,34 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import cn.roothub.entity.RoleAdminUserRel;
+import cn.roothub.entity.AdminUserRoleRel;
 
 /**
  * @author miansen.wang
  * @date 2019年2月28日 上午10:28:26
  */
-public interface RoleAdminUserRelDao {
+public interface AdminUserRoleRelDao {
 
 	/**
 	 * 根据后台用户ID查询所有的关联关系
 	 * @param adminUserId
 	 * @return
 	 */
-	List<RoleAdminUserRel> selectAllByAdminUserId(@Param("adminUserId") Integer adminUserId);
+	List<AdminUserRoleRel> selectAllByAdminUserId(@Param("adminUserId") Integer adminUserId);
 	
 	/**
 	 * 根据角色ID查询所有的关联关系
 	 * @param roleId
 	 * @return
 	 */
-	List<RoleAdminUserRel> selectAllByRoleId(@Param("roleId") Integer roleId);
+	List<AdminUserRoleRel> selectAllByRoleId(@Param("roleId") Integer roleId);
 	
 	/**
 	 * 批量新增后台用户与角色的关联关系
-	 * @param roleAdminUserRels: RoleAdminUserRel实例列表（不能为null以及empty）
+	 * @param adminUserRoleRels: AdminUserRoleRel实例列表（不能为null以及empty）
 	 * @return
 	 */
-	int insertBatch(@Param("roleAdminUserRels") Collection<? extends Serializable> roleAdminUserRels);
+	int insertBatch(@Param("adminUserRoleRels") Collection<? extends Serializable> adminUserRoleRels);
 	
 	/**
 	 * 删除后台用户与角色的关联关系

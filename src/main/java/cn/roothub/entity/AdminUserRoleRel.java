@@ -7,34 +7,26 @@ import java.util.Date;
  * @author miansen.wang
  * @date 2019年2月28日 上午10:25:37
  */
-public class RoleAdminUserRel implements Serializable{
+public class AdminUserRoleRel implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer roleAdminUserRelId;
-	
-	private Integer RoleId;
+	private Integer adminUserRoleRelId;
 	
 	private Integer adminUserId;
+	
+	private Integer RoleId;
 	
 	private Date createDate;
 	
 	private Date updateDate;
 
-	public Integer getRoleAdminUserRelId() {
-		return roleAdminUserRelId;
+	public Integer getAdminUserRoleRelId() {
+		return adminUserRoleRelId;
 	}
 
-	public void setRoleAdminUserRelId(Integer roleAdminUserRelId) {
-		this.roleAdminUserRelId = roleAdminUserRelId;
-	}
-
-	public Integer getRoleId() {
-		return RoleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		RoleId = roleId;
+	public void setAdminUserRoleRelId(Integer adminUserRoleRelId) {
+		this.adminUserRoleRelId = adminUserRoleRelId;
 	}
 
 	public Integer getAdminUserId() {
@@ -43,6 +35,14 @@ public class RoleAdminUserRel implements Serializable{
 
 	public void setAdminUserId(Integer adminUserId) {
 		this.adminUserId = adminUserId;
+	}
+
+	public Integer getRoleId() {
+		return RoleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		RoleId = roleId;
 	}
 
 	public Date getCreateDate() {
@@ -61,9 +61,14 @@ public class RoleAdminUserRel implements Serializable{
 		this.updateDate = updateDate;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
-		return "RoleAdminUserRel [roleAdminUserRelId=" + roleAdminUserRelId + ", RoleId=" + RoleId + ", adminUserId="
-				+ adminUserId + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "AdminUserRoleRel [adminUserRoleRelId=" + adminUserRoleRelId + ", adminUserId=" + adminUserId
+				+ ", RoleId=" + RoleId + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
+
 }

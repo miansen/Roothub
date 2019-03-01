@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.roothub.dao.RoleAdminUserRelDao;
-import cn.roothub.entity.RoleAdminUserRel;
+import cn.roothub.dao.AdminUserRoleRelDao;
+import cn.roothub.entity.AdminUserRoleRel;
 import cn.roothub.test.base.BaseTest;
 
 /**
@@ -16,41 +16,42 @@ import cn.roothub.test.base.BaseTest;
  * @author: miansen.wang
  * @date: 2019-02-28
  */
-public class RoleAdminUserRelDaoTest extends BaseTest {
+public class AdminUserRelRoleDaoTest extends BaseTest {
 
 	@Autowired
-	private RoleAdminUserRelDao roleAdminUserRelDao;
+	private AdminUserRoleRelDao adminUserRoleRelDao;
 	
 	@Test
 	public void test01() {
-		List<RoleAdminUserRel> selectAllByAdminUserId = roleAdminUserRelDao.selectAllByAdminUserId(1);
+		List<AdminUserRoleRel> selectAllByAdminUserId = adminUserRoleRelDao.selectAllByAdminUserId(3);
 		System.out.println(selectAllByAdminUserId);
+		selectAllByAdminUserId.forEach(System.out::println);
 	}
 	
 	@Test
 	public void test02() {
-		List<RoleAdminUserRel> list = new ArrayList<>();
-		RoleAdminUserRel roleAdminUserRel = new RoleAdminUserRel();
-		roleAdminUserRel.setRoleId(1);
+		List<AdminUserRoleRel> list = new ArrayList<>();
+		AdminUserRoleRel roleAdminUserRel = new AdminUserRoleRel();
 		roleAdminUserRel.setAdminUserId(3);
+		roleAdminUserRel.setRoleId(1);
 		roleAdminUserRel.setCreateDate(new Date());
 		
-		RoleAdminUserRel roleAdminUserRel2 = new RoleAdminUserRel();
-		roleAdminUserRel2.setRoleId(2);
+		AdminUserRoleRel roleAdminUserRel2 = new AdminUserRoleRel();
 		roleAdminUserRel2.setAdminUserId(3);
+		roleAdminUserRel2.setRoleId(2);
 		roleAdminUserRel2.setCreateDate(new Date());
 		
 		list.add(roleAdminUserRel);
 		list.add(roleAdminUserRel2);
-		list.forEach(a -> System.out.println(a));
+		// list.forEach(a -> System.out.println(a));
 		
-		int insertByRoleAdminUserRels = roleAdminUserRelDao.insertBatch(list);
+		int insertByRoleAdminUserRels = adminUserRoleRelDao.insertBatch(list);
 		System.out.println(insertByRoleAdminUserRels);
 	}
 	
 	@Test
 	public void test03() {
-		int i = roleAdminUserRelDao.deleteByAdminUserId(3);
+		int i = adminUserRoleRelDao.deleteByAdminUserId(3);
 		System.out.println(i);
 	}
 }

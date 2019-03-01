@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.stereotype.Service;
-import cn.roothub.dao.RoleAdminUserRelDao;
-import cn.roothub.entity.RoleAdminUserRel;
+import cn.roothub.dao.AdminUserRoleRelDao;
+import cn.roothub.entity.AdminUserRoleRel;
 import cn.roothub.service.RoleAdminUserService;
 
 /**
@@ -16,15 +16,15 @@ import cn.roothub.service.RoleAdminUserService;
 @Service
 public class RoleAdminUserServiceImpl implements RoleAdminUserService {
 
-	private RoleAdminUserRelDao roleAdminUserRelDao;
+	private AdminUserRoleRelDao roleAdminUserRelDao;
 	
 	@Override
-	public List<RoleAdminUserRel> getAllByAdminUserId(Integer adminUserId) {
+	public List<AdminUserRoleRel> getAllByAdminUserId(Integer adminUserId) {
 		return roleAdminUserRelDao.selectAllByAdminUserId(adminUserId);
 	}
 
 	@Override
-	public List<RoleAdminUserRel> getAllByRoleId(Integer roleId) {
+	public List<AdminUserRoleRel> getAllByRoleId(Integer roleId) {
 		return roleAdminUserRelDao.selectAllByRoleId(roleId);
 	}
 

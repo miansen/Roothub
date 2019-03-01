@@ -3,7 +3,7 @@ package cn.roothub.service;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import cn.roothub.entity.RoleAdminUserRel;
+import cn.roothub.entity.AdminUserRoleRel;
 
 /**
  * <p></p>
@@ -17,14 +17,14 @@ public interface RoleAdminUserService {
 	 * @param adminUserId: 后台用户ID
 	 * @return
 	 */
-	List<RoleAdminUserRel> getAllByAdminUserId(Integer adminUserId);
+	List<AdminUserRoleRel> getAllByAdminUserId(Integer adminUserId);
 	
 	/**
 	 * 获取查询所有的关联关系
 	 * @param roleId: 角色ID
 	 * @return
 	 */
-	List<RoleAdminUserRel> getAllByRoleId(Integer roleId);
+	List<AdminUserRoleRel> getAllByRoleId(Integer roleId);
 	
 	/**
 	 * 批量保存

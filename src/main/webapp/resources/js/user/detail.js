@@ -153,7 +153,7 @@ function topicList(pageNumber) {
 					<p>\
 					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
+					<a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
 					<span>•</span>\
@@ -235,7 +235,7 @@ function collectList(pageNumber) {
 					<p>\
 					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
+					<a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
 					<span>•</span>\
@@ -281,7 +281,7 @@ function followList(pageNumber) {
 					<p>\
 					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
+					<a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
 					<span>•</span>\
@@ -425,7 +425,7 @@ function topicQnaList(pageNumber) {
 					<p>\
 					<span><a href=\"/n/"+data.data.list[i].nodeTitle+"\" class=\"node\">"+data.data.list[i].nodeTitle+"</a></span>\
 					<span>•</span>\
-					<strong><a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a></strong>\
+					<a href=\"/user/"+data.data.list[i].author+"\" class=\"author_name\">"+data.data.list[i].author+"</a>\
 					<span class=\"hidden-sm hidden-xs\">•</span>\
 					<span class=\"hidden-sm hidden-xs\">"+data.data.list[i].viewCount+"次点击</span>\
 					<span>•</span>\

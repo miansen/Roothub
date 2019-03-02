@@ -19,8 +19,12 @@
 				href="https://github.com/yiiu-co/yiiu/blob/master/api.md"
 				target="_blank">API</a>&nbsp;|&nbsp; <a href="/admin/login"
 				target="_blank">后台登录</a> -->
+			<span class="pull-right">
+        		<a href="/admin/login" target="_blank">登录后台</a>&nbsp;|&nbsp;
+        		<a href="https://github.com/miansen/Roothub" target="_blank">获取源码</a>
+      		</span>
 		</p>
-		<p style="color: #778087;"><a href="https://github.com/miansen/roothub" target="_blank">去鼓励我并获取源码，你的<svg class="octicon octicon-star v-align-text-bottom" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path></svg>Star将是我源源不断的动力</a></p>
+		<!-- <p style="color: #778087;"><a href="https://github.com/miansen/Roothub" target="_blank">去鼓励我并获取源码，你的<svg class="octicon octicon-star v-align-text-bottom" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path></svg>Star将是我源源不断的动力</a></p> -->
 		<!-- <p style="color: #ccc;">兴趣使然的无名小站</p> -->
 		<!-- <p><script type="text/javascript" src="https://api.uixsj.cn/hitokoto/w.php?code=js"></script><div id="xsjhitokoto" style="color: #ccc;"><script>xsjhitokoto()</script></div></p> -->
 		

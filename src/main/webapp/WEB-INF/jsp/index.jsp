@@ -25,10 +25,10 @@
         	<%-- <c:forEach var="item" items="${tabList}" varStatus="status">
         		<li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
         	</c:forEach> --%>
-        	<li class="all"><a href="/?tab=all" class="tab tab_current">全部</a></li>
-        	<li class="hot"><a href="/?tab=hot" class="tab">最热</a></li>
-        	<li class="new"><a href="/?tab=new" class="tab">最新</a></li>
-        	<li class="lonely"><a href="/?tab=lonely" class="tab">无人问津</a></li>
+        	<li class="all"><a href="/?tab=all">全部</a></li>
+        	<li class="hot"><a href="/?tab=hot">最热</a></li>
+        	<li class="new"><a href="/?tab=new">最新</a></li>
+        	<li class="lonely"><a href="/?tab=lonely">无人问津</a></li>
         	<!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
         	</ul>
     		</div>
@@ -72,7 +72,7 @@
 			  </c:if>
 			    <span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
 			    <span>•</span>
-                <strong><a href="/user/${item.author}">${item.author}</a></strong>
+                <a href="/user/${item.author}">${item.author}</a>
                 <c:if test="${item.viewCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>
                 	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>

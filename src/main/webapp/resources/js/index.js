@@ -55,15 +55,16 @@ $(function(){
       });
     }; */
     
+  	// 初始化板块的样式
     function section(){
       if(tab == "good"){
-        $("#section li:eq(1)").addClass("active");
+        $("#tab li:eq(1)").addClass("active");
       }else if(tab == "newest"){
-        $("#section li:eq(2)").addClass("active");
+        $("#tab li:eq(2)").addClass("active");
       }else if(tab == "noReply"){
-        $("#section li:eq(3)").addClass("active");
+        $("#tab li:eq(3)").addClass("active");
       }else{
-        $("#section li:eq(0)").addClass("active");
+        $("#tab li:eq(0)").addClass("active");
       }
     };
     //session();
@@ -81,8 +82,8 @@ $(function(){
     //改变当前选中板块的样式
     $("#tab li").each(function(){
     	if(tab == $(this).attr("class")){
-    		$("#tab li a").removeClass("tab_current");
-    		$(this).children("a").addClass("tab_current");
+    		$("#tab li").removeClass("active");
+    		$(this).addClass("active");
     	}
     })
    

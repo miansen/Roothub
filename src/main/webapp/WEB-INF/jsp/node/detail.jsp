@@ -67,7 +67,7 @@
           <c:if test="${item.good}">
           <span class="label label-primary">精华</span> <span>•</span>
         </c:if>
-        <strong><a href="/user/${item.author}">${item.author}</a></strong>
+        <a href="/user/${item.author}">${item.author}</a>
         <span class="hidden-sm hidden-xs">•</span>
         <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
         <!-- 评论 -->

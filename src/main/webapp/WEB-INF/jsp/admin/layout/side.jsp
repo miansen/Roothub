@@ -67,7 +67,7 @@
               <li>
                 <a href="/admin/admin_user/list">
                   <i class="fa fa-circle-o"></i>
-                  2
+                  后台用户列表
                 </a>
               </li>
             
@@ -75,7 +75,7 @@
             <li>
               <a href="/admin/role/list">
                 <i class="fa fa-circle-o"></i>
-                2
+                角色列表
               </a>
             </li>
             
@@ -83,7 +83,7 @@
             <li>
               <a href="/admin/permission/list">
                 <i class="fa fa-circle-o"></i>
-                2
+                权限列表
               </a>
             </li>
             
@@ -94,14 +94,14 @@
         <li>
           <a href="/admin/system/edit">
             <i class="fa fa-cogs"></i>
-            <span>2</span>
+            <span>系统</span>
           </a>
         </li>
       
       <li>
         <a href="/admin/logout">
           <i class="fa fa-sign-out"></i>
-          <span>2</span>
+          <span>登出</span>
         </a>
       </li>
     </ul>

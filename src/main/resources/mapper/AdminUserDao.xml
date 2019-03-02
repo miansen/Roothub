@@ -52,7 +52,7 @@
 		FROM
 			admin_user a
 		ORDER BY 
-			a.create_date DESC 
+			a.admin_user_id 
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">

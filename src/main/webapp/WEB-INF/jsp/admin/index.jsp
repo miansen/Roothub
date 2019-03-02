@@ -21,7 +21,7 @@
 				<!-- small box -->
 				<div class="small-box bg-aqua">
 					<div class="inner">
-						<h3>0</h3>
+						<h3>${topic_count}</h3>
 
 						<p>今天新增话题数</p>
 					</div>
@@ -53,8 +53,7 @@
 				<!-- small box -->
 				<div class="small-box bg-yellow">
 					<div class="inner">
-						<h3>2</h3>
-
+						<h3>${comment_count}</h3>
 						<p>今天新增评论数</p>
 					</div>
 					<div class="icon">
@@ -69,7 +68,7 @@
 				<!-- small box -->
 				<div class="small-box bg-red">
 					<div class="inner">
-						<h3>3</h3>
+						<h3>${user_count}</h3>
 
 						<p>今天新增用户数</p>
 					</div>
@@ -104,23 +103,23 @@
 										<th width="140">内存</th>
 										<td>
 											<div class="progress">
-												<div
-													class="progress-bar progress-bar-info progress-bar-striped"
-													style="width: 10%">10GB</div>
-											</div>
+                      							<div class="progress-bar progress-bar-info progress-bar-striped" style="width: ${usedMemory * 100 / totalMemorySize}%">
+                       				 				${usedMemory}GB/${totalMemorySize}GB
+                      							</div>
+                    						</div>
 										</td>
 									</tr>
 									<tr>
 										<th>系统</th>
-										<td>Windows7</td>
+										<td>${os_name}</td>
 									</tr>
 									<tr>
 										<th>CPU使用率</th>
-										<td>89%</td>
+										<td>${(systemCpuLoad * 100)}%</td>
 									</tr>
 									<tr>
 										<th>JVM CPU使用率</th>
-										<td>12%</td>
+										<td>${(processCpuLoad * 100)}%</td>
 									</tr>
 								</tbody>
 							</table>
@@ -131,5 +130,10 @@
 			</div>
 		</div>
 	</section>
+	<script type="text/javascript">
+  	$(function(){
+  		$(".sidebar-menu li:eq(1)").addClass("active");
+  	});
+  </script>
 </div>
 <%@ include file="layout/footer.jsp"%>

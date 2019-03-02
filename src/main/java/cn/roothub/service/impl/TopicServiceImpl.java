@@ -341,4 +341,22 @@ public class TopicServiceImpl implements TopicService{
 		return rootTopicDao.countTopicByNode(nodeTitle);
 	}
 
+	@Override
+	public int countToday() {
+		return rootTopicDao.countToday();
+	}
+
+	@Override
+	public PageDataBody<Topic> pageForAdmin(String author, String startDate, String endDate, Integer pageNumber,
+			Integer pageSize) {
+		List<Topic> list = rootTopicDao.selectAllForAdmin(author, startDate, endDate, (pageNumber - 1) * pageSize, pageSize);
+		int totalRow = countAllForAdmin(author, startDate, endDate);
+		return new PageDataBody<Topic>(list, pageNumber, pageSize, totalRow);
+	}
+
+	@Override
+	public int countAllForAdmin(String author,String startDate,String endDate) {
+		return rootTopicDao.countAllForAdmin(author, startDate, endDate);
+	}
+
 }

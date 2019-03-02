@@ -265,4 +265,11 @@ public class TopicServiceImplTest extends BaseTest{
 		PageDataBody<Topic> page = rootTopicService.findIndexHot(1, 50, "good");
 		logger.debug(page.toString());
 	}
+	
+	@Test
+	public void pageForAdminTest() {
+		PageDataBody<Topic> page = rootTopicService.pageForAdmin("public", "2019-01-01", "2019-03-02", 1, 25);
+		System.out.println(page);
+		page.getList().forEach(System.out::println);
+	}
 }

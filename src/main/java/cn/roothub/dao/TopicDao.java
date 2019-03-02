@@ -264,5 +264,12 @@ public interface TopicDao {
      * @return
      */
     List<Topic> selectOther(@Param("userName")String userName,@Param("topicId") Integer topicId);
+    
+    // 统计当天的话题数
+    int countToday();
 
+    List<Topic> selectAllForAdmin(@Param("author") String author,@Param("startDate") String startDate,
+    						      @Param("endDate") String endDate, @Param("start") Integer start, @Param("limit") Integer limit);
+    
+    int countAllForAdmin(@Param("author") String author,@Param("startDate") String startDate,@Param("endDate") String endDate);
 }

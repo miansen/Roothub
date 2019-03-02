@@ -114,4 +114,10 @@ public interface UserService {
 	 * @return
 	 */
 	int countScore(Integer userId);
+	
+	/**
+	 * 统计当天用户数
+	 * @return
+	 */
+	int countToday();
 }

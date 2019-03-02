@@ -58,4 +58,16 @@ public class TopicDaoTest extends BaseTest {
 		List<Topic> selectOther = rootTopicDao.selectOther("083013", 80);
 		System.out.println(selectOther);
 	}
+	
+	@Test
+	public void selectAllForAdminTest() {
+		List<Topic> selectAllForAdmin = rootTopicDao.selectAllForAdmin(null, "2018-08-01", "2019-08-19", 0, 3);
+		selectAllForAdmin.forEach(System.out::println);
+	}
+	
+	@Test
+	public void countAllForAdminTest() {
+		int i = rootTopicDao.countAllForAdmin(null, "2018-08-01", "2019-08-19");
+		System.out.println(i);
+	}
 }

@@ -146,4 +146,9 @@ public class ReplyServiceImpl implements ReplyService{
 	public int countByName(String name) {
 		return rootReplyDao.countByName(name);
 	}
+
+	@Override
+	public int countToday() {
+		return rootReplyDao.countToday();
+	}
 }

@@ -121,4 +121,6 @@ public interface ReplyDao {
 	 */
 	int countByName(@Param("name") String name);
 	
+	// 统计当天评论数
+	int countToday();
 }

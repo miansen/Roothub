@@ -222,4 +222,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from reply t
     where t.is_delete = 0 and t.reply_author_name = #{name}
   </select>
+  
+  	<!-- 统计当天的评论数 -->
+	<select id="countToday" resultType="java.lang.Integer">
+        select count(1)
+        from reply a
+        where TO_DAYS(a.create_date) = TO_DAYS(NOW())
+    </select>
 </mapper>

@@ -192,4 +192,7 @@ public interface UserDao {
 	 * @return
 	 */
 	int countScore(Integer userId);
+	
+	// 统计当天用户数
+	int countToday();
 }

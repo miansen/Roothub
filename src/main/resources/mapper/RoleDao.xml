@@ -110,4 +110,5 @@
      	FROM 
      		role
      </select>
+     
 </mapper>

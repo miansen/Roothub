@@ -54,9 +54,7 @@
 					</c:if>
 					<span><a href="/user/${topic.author}">${topic.author}</a></span>
 					<span>•</span>
-					<span><fmt:formatDate type="both"
-					dateStyle="medium" timeStyle="short"
-					value="${topic.createDate}" /></span>
+					<span><fmt:formatDate type="both" value="${topic.createDate}" /></span>
 					<%-- <span>${baseEntity.formatDate(topic.createDate)}</span> --%>
 					<%-- <span class="formate-date">${topic.createDate}</span> --%>
 					<span>•</span>

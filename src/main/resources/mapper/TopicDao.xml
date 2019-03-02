@@ -50,6 +50,11 @@
         view_count,author,top,good,show_status,reply_count,is_delete,tag_is_count,post_good_count,post_bad_count,
         status_cd,node_slug,node_title,remark,avatar,url
     </sql>
+    <sql id="Admin_Column_List">
+        topic_id, ptab,tab,title,tag,excerpt, create_date, update_date, last_reply_time, last_reply_author, 
+        view_count,author,top,good,show_status,reply_count,is_delete,tag_is_count,post_good_count,post_bad_count,
+        status_cd,node_slug,node_title,remark,avatar,url
+    </sql>
 	<!-- 根据板块查询所有话题 -->
 	<select id="selectAllByTab" resultType="Topic">
 		SELECT
@@ -613,4 +618,46 @@
 	LIMIT 
 	  0,10
 </select>
+<!-- 统计当天的话题数 -->
+<select id="countToday" resultType="java.lang.Integer">
+        select count(1)
+        from topic a
+        where TO_DAYS(a.create_date) = TO_DAYS(NOW())
+    </select>
+    
+    <select id="selectAllForAdmin" resultType="Topic">
+		SELECT
+        <include refid="Admin_Column_List"/>
+		FROM
+			topic
+		WHERE is_delete = '0'
+		<if test="author != null">
+		AND author = #{author}
+		</if>
+		<if test="startDate != null and endDate != null">
+		AND create_date BETWEEN #{startDate} and #{endDate}
+		</if>
+		ORDER BY create_date desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     
+     <select id="countAllForAdmin" resultType="java.lang.Integer">
+        SELECT
+        	COUNT(1)
+        FROM
+        	topic
+        WHERE 
+			is_delete = '0'
+		<if test='author != null'>
+			AND author = #{author}
+		</if>
+		<if test='startDate != null and endDate != null'>
+			AND create_date BETWEEN #{startDate} and #{endDate}
+		</if>
+    </select>
 </mapper>

@@ -216,4 +216,9 @@ public class UserServiceImpl implements UserService{
 		return rootUserDao.countScore(userId);
 	}
 
+	@Override
+	public int countToday() {
+		return rootUserDao.countToday();
+	}
+
 }

@@ -237,4 +237,13 @@ public interface TopicService {
      */
     List<Topic> findOther(String userName,Integer topicId);
     
+    /**
+     * 统计当天话题数
+     * @return
+     */
+    int countToday();
+    
+    PageDataBody<Topic> pageForAdmin(String author,String startDate,String endDate,Integer pageNumber, Integer pageSize);
+    
+    int countAllForAdmin(String author,String startDate,String endDate);
 }

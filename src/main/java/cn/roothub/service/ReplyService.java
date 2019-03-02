@@ -91,4 +91,10 @@ public interface ReplyService {
 	 * @return
 	 */
 	int countByName(String name);
+	
+	/**
+	 * 统计当天评论数
+	 * @return
+	 */
+	int countToday();
 }

@@ -11,6 +11,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -117,8 +118,41 @@ public class AdminUserAdminController {
 	@RequiresPermissions("admin_user:edit")
 	@RequestMapping(value = "/edit",method = RequestMethod.POST)
 	@ResponseBody
-	public Result<String> edit(String username,String password,Integer[] roleIds){
-		return null;
+	public Result<String> edit(Integer id,String username,String password,Integer[] roleIds){
+		ApiAssert.notNull(username, "用户名不能为空");
+		AdminUser adminUser = adminUserService.getById(id);
+		// 修改的用户名与当前用户名不一样时才修改用户名
+		if(!adminUser.getUsername().equals(username)) {
+			AdminUser adminUser2 = adminUserService.getByName(username);
+			ApiAssert.isNull(adminUser2, "用户名已存在");
+			adminUser.setUsername(username);
+		}
+		// 密码不为 null 且不为  "" 时才修改密码
+		if(password != null && !StringUtils.isEmpty(password)) {
+			adminUser.setPassword(SimpleHashUtil.simpleHash("MD5", password, username, 1024).toString());
+		}
+		adminUser.setUpdateDate(new Date());
+		// 更新用户
+		adminUserService.update(adminUser);
+		// 先删除后台用户与角色的关联关系
+		adminUserRoleRelService.removeByAdminUserId(id);
+		// 再重新建立后台用户与角色的关联关系
+		List<AdminUserRoleRel> adminUserRoleRels = new ArrayList<>();
+		if(roleIds != null && roleIds.length > 0) {
+			Arrays.asList(roleIds).forEach( roleId -> {
+				AdminUserRoleRel adminUserRoleRel = new AdminUserRoleRel();
+				adminUserRoleRel.setAdminUserId(id);
+				adminUserRoleRel.setRoleId(roleId);
+				adminUserRoleRel.setCreateDate(new Date());
+				adminUserRoleRel.setUpdateDate(new Date());
+				adminUserRoleRels.add(adminUserRoleRel);
+			});
+		}
+		
+		if(adminUserRoleRels != null && adminUserRoleRels.size() > 0) {
+			adminUserRoleRelService.saveBatch(adminUserRoleRels);
+		}
+		return new Result(true, "编辑用户成功");
 	}
 	
 	

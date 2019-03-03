@@ -57,6 +57,9 @@
   		$(".sidebar-menu li:eq(6)").addClass("active");
   		$(".treeview-menu li:eq(0)").addClass("active");
   		
+  		// 被编辑用户ID
+  		var adminUserId = ${adminUser.adminUserId}
+  		console.log(adminUserId);
   		// 被编辑用户所拥有的角色列表
   		var adminUserRoles = '${adminUserRoles}';
   		// 将数据转换为 JavaScript 对象。
@@ -78,29 +81,22 @@
   	        toast('用户名不能为空');
   	        return false;
   	      }
-  	      if(!password) {
-  	        toast('密码不能为空');
-  	        return false;
-  	      }
-  	      
-  	      console.log(username);
-  	    console.log(password);
-  	  console.log(roleIds);
   	      $.ajax({
-  	        url: '/admin/admin_user/add',
+  	        url: '/admin/admin_user/edit',
   	        async: true,
   	        cache: false,
   	        type: 'post',
   	        dataType: 'json',
   	      	traditional:true, //防止深度序列化,默认false
   	        data: {
+  	          id: adminUserId,
   	          username: username,
   	          password: password,
   	          roleIds: roleIds
   	        },
   	        success: function(data) {
   	          if(data.success === true) {
-  	            toast('添加成功','success');
+  	            toast('编辑成功','success');
   	            setTimeout(function() {
   	              window.location.href = '/admin/admin_user/list';
   	            }, 1000);

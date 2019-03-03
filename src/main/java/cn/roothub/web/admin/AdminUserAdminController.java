@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.AdminUser;
@@ -99,4 +101,36 @@ public class AdminUserAdminController {
 		}
 		return new Result(true, "添加用户成功");
 	}
+	
+	@RequiresPermissions("admin_user:edit")
+	@RequestMapping(value = "/edit",method = RequestMethod.GET)
+	public String edit(Model model,Integer id) {
+		AdminUser adminUser = adminUserService.getById(id);
+		List<Role> roles = roleService.page(1, 100).getList();
+		List<Role> adminUserRoles = roleService.getByAdminUserId(id, null, null);
+		model.addAttribute("adminUser",adminUser);
+		model.addAttribute("roles",roles);
+		model.addAttribute("adminUserRoles",JSON.toJSONString(adminUserRoles));
+		return "admin/admin_user/edit";
+	}
+	
+	@RequiresPermissions("admin_user:edit")
+	@RequestMapping(value = "/edit",method = RequestMethod.POST)
+	@ResponseBody
+	public Result<String> edit(String username,String password,Integer[] roleIds){
+		return null;
+	}
+	
+	
+	@RequiresPermissions("admin_user:delete")
+	@RequestMapping(value = "/delete",method = RequestMethod.GET)
+	public String delete(Integer id){
+		// 先删除后台用户与角色的关联关系
+		adminUserRoleRelService.removeByAdminUserId(id);
+		// 在删除后台用户的记录
+		adminUserService.removeById(id);
+		return "redirect: /admin/admin_user/list";
+	}
+	
+	
 }

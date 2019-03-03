@@ -32,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public List<Role> getByAdminUserId(Integer adminUserId, Integer pageNumber, Integer pageSize) {
-		return roleDao.selectAllByAdminUserId(adminUserId, null, null);
+		return roleDao.selectAllByAdminUserId(adminUserId, pageNumber, pageSize);
 	}
 
 	@Override

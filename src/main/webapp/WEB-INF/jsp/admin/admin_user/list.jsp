@@ -13,7 +13,7 @@
     </h1>
     <ol class="breadcrumb">
       <li><a href="/admin/index"><i class="fa fa-dashboard"></i> 首页</a></li>
-      <li><a href="/admin/user/list">用户</a></li>
+      <li><a href="/admin/admin_user/list">用户</a></li>
       <li class="active">列表</li>
     </ol>
   </section>

@@ -53,8 +53,9 @@ public class AdminUserServiceImpl implements AdminUserService {
 	}
 
 	@Override
-	public void save(AdminUser adminUser) {
+	public AdminUser save(AdminUser adminUser) {
 		adminUserDao.insert(adminUser);
+		return adminUser;
 	}
 
 	@Override

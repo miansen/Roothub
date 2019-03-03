@@ -25,7 +25,7 @@ public interface AdminUserService {
 	PageDataBody<AdminUser> pageRoles(Integer pageNumber, Integer pageSize);
 	
 	// 新增后台用户
-	void save(AdminUser adminUser);
+	AdminUser save(AdminUser adminUser);
 	
 	// 更新后台用户
 	void update(AdminUser adminUser);

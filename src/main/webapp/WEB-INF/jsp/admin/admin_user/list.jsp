@@ -61,37 +61,19 @@
           </tbody>
         </table>
       </div>
+      <div class="panel-footer" id="paginate"></div>
     </div>
   </section>
   <script type="text/javascript">
   	$(function(){
   		$(".sidebar-menu li:eq(6)").addClass("active");
   		$(".treeview-menu li:eq(0)").addClass("active");
-  		$("#startDate").datepicker({
-  	      autoclose: true,
-  	      format: 'yyyy-mm-dd',
-  	      todayBtn: true,
-  	      todayHighlight: true,
-  	    });
-  	    $("#endDate").datepicker({
-  	      autoclose: true,
-  	      format: 'yyyy-mm-dd',
-  	      todayBtn: true,
-  	      todayHighlight: true,
-  	    });
   	   
-  	    var startDate = '${startDate}';
-  	    var endDate = '${endDate}';
-  	    var author = '${author}';
   	  	var count = ${page.totalRow};//数据总量
   	 	var limit = ${page.pageSize};//每页显示的条数
-  	 	var url = "?startDate="+startDate+"&endDate="+endDate+"&author="+author+"&p=";//url
-  	 	function page(){
-  	     	var page = location.search.match(/p=(\d+)/);  
-  	     	return page ? page[1] : 1;  
-  	 	}
-  	 	var p = page();//当前页数
-  	 paginate(count,limit,p,url);
+  	 	var p = ${p};//当前页数
+  	 	var url = "?p=";//路径
+  	 	paginate(count,limit,p,url);
   	});
   </script>
 </div>

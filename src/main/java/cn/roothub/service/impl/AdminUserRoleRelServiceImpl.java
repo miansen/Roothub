@@ -3,6 +3,7 @@ package cn.roothub.service.impl;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.roothub.dao.AdminUserRoleRelDao;
 import cn.roothub.entity.AdminUserRoleRel;
@@ -16,6 +17,7 @@ import cn.roothub.service.AdminUserRoleRelService;
 @Service
 public class AdminUserRoleRelServiceImpl implements AdminUserRoleRelService {
 
+	@Autowired
 	private AdminUserRoleRelDao adminUserRoleRelDao;
 	
 	@Override

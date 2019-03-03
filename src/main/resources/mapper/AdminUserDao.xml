@@ -20,7 +20,6 @@
         <id column="admin_user_id" jdbcType="INTEGER" property="adminUserId"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="role_id" jdbcType="INTEGER" property="roleId"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
     </resultMap>
@@ -66,13 +65,11 @@
      	insert into admin_user
      	(username,
      	 password,
-     	 role_id,
      	 create_date,
      	 update_date)
      	values
      	(#{username},
      	 #{password},
-     	 #{roleId},
      	 #{createDate},
      	 #{updateDate})
      </insert>
@@ -81,7 +78,6 @@
      	update admin_user
      	set username = #{username},
      		password = #{password},
-     		role_id = #{roleId},
      		create_date = #{createDate},
      		update_date = #{updateDate}
      	where admin_user_id = #{adminUserId}
@@ -96,10 +92,5 @@
      	select count(1)
      	from admin_user
      </select>
-     <!-- 根据角色ID统计所关联的后台用户 -->
-     <select id="countByRoleId" resultType="java.lang.Integer">
-     	select count(1)
-     	from admin_user
-     	where role_id = #{roleId}
-     </select>
+
 </mapper>

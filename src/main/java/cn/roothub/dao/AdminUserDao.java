@@ -31,6 +31,4 @@ public interface AdminUserDao {
 	// 统计所有后台用户
 	int countAll();
 	
-	// 根据角色ID统计所关联的后台用户
-	int countByRoleId(@Param("roleId") Integer roleId);
 }

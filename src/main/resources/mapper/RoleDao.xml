@@ -40,7 +40,7 @@
 		FROM
 			role
 		ORDER BY 
-			create_date DESC 
+			role_id	
 		<if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}
             <if test="limit != null">

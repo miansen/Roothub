@@ -1,5 +1,7 @@
 package cn.roothub.test.serviceImpl;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,5 +23,30 @@ public class AdminUserServiceImplTest extends BaseTest {
 	public void test01() {
 		PageDataBody<AdminUser> pageRoles = adminUserService.pageRoles(1, 20);
 		System.out.println(pageRoles);
+	}
+	
+	@Test
+	public void saveTest() {
+		AdminUser adminUser = new AdminUser();
+		adminUser.setUsername("private");
+		adminUser.setPassword("123");
+		adminUser.setCreateDate(new Date());
+		adminUser = adminUserService.save(adminUser);
+		System.out.println(adminUser);
+	}
+	
+	@Test
+	public void test02() {
+		AdminUser adminUser = new AdminUser();
+		System.out.println("adminUser: "+adminUser);
+		AdminUser adminUser2 = null;
+		System.out.println("adminUser2: "+adminUser2);
+		AdminUser byName = adminUserService.getByName("abc");
+		System.out.println("byName: "+byName);
+		adminUser = adminUserService.getByName("abc");
+		System.out.println("adminUser: "+adminUser);
+		// adminUser.setUsername("aa");
+		adminUser = new AdminUser();
+		System.out.println("adminUser: "+adminUser);
 	}
 }

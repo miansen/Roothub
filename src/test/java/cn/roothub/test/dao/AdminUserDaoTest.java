@@ -1,7 +1,9 @@
 package cn.roothub.test.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.roothub.dao.AdminUserDao;
 import cn.roothub.entity.AdminUser;
+import cn.roothub.entity.AdminUserRoleRel;
+import cn.roothub.entity.Role;
 import cn.roothub.test.base.BaseTest;
 
 /**
@@ -58,7 +62,6 @@ public class AdminUserDaoTest extends BaseTest{
 		AdminUser adminUser = new AdminUser();
 		adminUser.setUsername("test");
 		adminUser.setPassword("123");
-		adminUser.setRoleId(1);
 		adminUser.setCreateDate(new Date());
 		int i = adminUserDao.insert(adminUser);
 		System.out.println(i);
@@ -70,7 +73,6 @@ public class AdminUserDaoTest extends BaseTest{
 		adminUser.setAdminUserId(2);
 		adminUser.setUsername("test");
 		adminUser.setPassword("1234");
-		adminUser.setRoleId(1);
 		adminUser.setCreateDate(new Date());
 		adminUser.setUpdateDate(new Date());
 		int i = adminUserDao.update(adminUser);
@@ -86,12 +88,6 @@ public class AdminUserDaoTest extends BaseTest{
 	@Test
 	public void countAll() {
 		int i = adminUserDao.countAll();
-		System.out.println(i);
-	}
-	
-	@Test
-	public void countByRoleId() {
-		int i = adminUserDao.countByRoleId(1);
 		System.out.println(i);
 	}
 	
@@ -129,4 +125,34 @@ public class AdminUserDaoTest extends BaseTest{
 		// System.out.println(list);
 		asList.forEach(System.out::println);
 	}
+	
+	@Test
+	public void test() {
+		List<String> list = new ArrayList<>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		System.out.println(list);
+		for(int i = 0;i < list.size();i++) {
+			System.out.println(list.get(i));
+		}
+		String[] str = new String[3];
+		str[0] = "a";
+		str[1] = "b";
+		str[2] = "c";
+		System.out.println(str);
+		String string = str.toString();
+		System.out.println(string);
+		for(int i = 0;i < str.length;i++) {
+			System.out.println(str[i]);
+		}
+	}
+	
+	public void Test02() {
+		AdminUserRoleRel adminUserRoleRel = new AdminUserRoleRel();
+		
+		Collection<? extends Serializable> collection = new ArrayList<>();
+		//collection.add(adminUserRoleRel);
+	}
+	
 }

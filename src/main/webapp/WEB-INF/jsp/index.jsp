@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 </head>
 <body>
- <div class="wrapper" style="width: 100%;background-color: #e5e5e5;">
+ <div class="wrapper">
   <jsp:include page="components/head.jsp"></jsp:include>
     <div class="row">
       <div class="col-md-9">

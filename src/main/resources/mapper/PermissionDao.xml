@@ -25,6 +25,18 @@
             </if>
         </if>
      </select>
+     
+     <select id="selectAllByRoleId" resultType="cn.roothub.entity.Permission">
+		SELECT
+        	a.*
+		FROM
+			permission a
+		JOIN
+			role_permission_rel b
+		ON a.permission_id = b.permission_id
+		WHERE 
+			b.role_id = #{roleId}
+     </select>
    
      <select id="selectAllByPid" resultType="cn.roothub.entity.Permission">
 		SELECT

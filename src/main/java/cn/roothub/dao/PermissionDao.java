@@ -22,6 +22,8 @@ public interface PermissionDao {
 	List<Permission> selectBatchByRoleList(@Param("roleList") Collection<? extends Serializable> roleList,
 										   @Param("start") Integer start,@Param("limit") Integer limit);
 	
+	List<Permission> selectAllByRoleId(@Param("roleId") Integer roleId);
+	
 	List<Permission> selectAllByPid(@Param("pid") Integer pid,@Param("start") Integer start,@Param("limit") Integer limit);
 	
 	int insert(Permission permission);

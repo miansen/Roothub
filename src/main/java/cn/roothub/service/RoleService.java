@@ -23,8 +23,13 @@ public interface RoleService {
 	// 新增角色
 	void save(Role role);
 	
-	// 更新角色
-	void update(Role role);
+	/**
+	 * 更新角色
+	 * @param roleId
+	 * @param roleName
+	 * @param permissionIds
+	 */
+	void update(Integer roleId,String roleName,Integer[] permissionIds);
 	
 	// 删除角色
 	void removeById(Integer id);

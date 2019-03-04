@@ -1,11 +1,19 @@
 package cn.roothub.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import cn.roothub.dao.RoleDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Role;
+import cn.roothub.entity.RolePermissionRel;
+import cn.roothub.exception.ApiAssert;
+import cn.roothub.service.RolePermissionRelService;
 import cn.roothub.service.RoleService;
 
 /**
@@ -17,6 +25,9 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private RolePermissionRelService rolePermissionRelService;
 
 	@Override
 	public Role getById(Integer id) {
@@ -41,8 +52,31 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void update(Role role) {
-		roleDao.update(role);
+	public void update(Integer roleId,String roleName,Integer[] permissionIds) {
+		Role role = roleDao.selectById(roleId);
+		ApiAssert.notNull(role, "角色不存在");
+		if(roleName != null && !StringUtils.isEmpty(roleName) && !role.getRoleName().equals(roleName)) {
+			role.setRoleName(roleName);
+			role.setUpdateDate(new Date());
+			// 更新角色
+			roleDao.update(role);
+		}
+		// 删除role与permission 的关联关系
+		rolePermissionRelService.removeByRoleId(roleId);
+		
+		List<RolePermissionRel> list = new ArrayList<>();
+		if(permissionIds != null && permissionIds.length > 0) {
+			Arrays.asList(permissionIds).forEach(permissionId -> {
+				RolePermissionRel rolePermissionRel = new RolePermissionRel();
+				rolePermissionRel.setRoleId(roleId);
+				rolePermissionRel.setPermissionId(permissionId);
+				rolePermissionRel.setCreateDate(new Date());
+				rolePermissionRel.setUpdateDate(new Date());
+				list.add(rolePermissionRel);
+			});
+		}
+		// 重新建立关联关系
+		rolePermissionRelService.saveBatch(list);
 	}
 
 	@Override

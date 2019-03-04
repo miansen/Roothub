@@ -2,7 +2,11 @@ package cn.roothub.service.impl;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.roothub.dao.PermissionDao;
@@ -43,6 +47,18 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public void removeById(Integer id) {
 		permissionDao.deleteById(id);
+	}
+
+	@Override
+	public Map<String, Object> permissionMap() {
+		Map<String,Object> map = new LinkedHashMap<>();
+		getAllByPid(0).forEach(role -> map.put(role.getPermissionName(), getAllByPid(role.getPermissionId())));
+		return map;
+	}
+
+	@Override
+	public List<Permission> getAllByRoleId(Integer roleId) {
+		return permissionDao.selectAllByRoleId(roleId);
 	}
 
 }

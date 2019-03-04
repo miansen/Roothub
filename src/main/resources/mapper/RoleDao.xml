@@ -30,7 +30,7 @@
 		FROM
 			role
 		WHERE 
-			role_id = #{roleId}
+			role_id = #{id}
      </select>
    
      <!-- 查询所有的后台用户 -->

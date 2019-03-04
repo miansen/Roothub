@@ -12,7 +12,10 @@ public interface RoleDao {
 	
 	// 根据ID查询角色
 	Role selectById(@Param("id") Integer id);
-		
+	
+	// 根据名称查询角色
+	Role selectByName(@Param("name") String name);
+	
 	// 查询所有角色
 	List<Role> selectAll(@Param("start") Integer satrt,@Param("limit") Integer limit);
 	

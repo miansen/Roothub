@@ -47,8 +47,33 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void save(Role role) {
-		roleDao.insert(role);
+	public void save(String roleName,Integer[] permissionIds) {
+		Role role = getByName(roleName);
+		ApiAssert.isNull(role, "角色名已存在");
+		if(roleName != null && !StringUtils.isEmpty(roleName)) {
+			role = new Role();
+			role.setRoleName(roleName);
+			role.setCreateDate(new Date());
+			// 保存角色
+			roleDao.insert(role);
+		}
+		Role role2 = roleDao.selectById(role.getRoleId());
+		List<RolePermissionRel> list = new ArrayList<>();
+		if(permissionIds != null && permissionIds.length > 0) {
+			Arrays.asList(permissionIds).forEach(permissionId -> {
+				RolePermissionRel rolePermissionRel = new RolePermissionRel();
+				rolePermissionRel.setRoleId(role2.getRoleId());
+				rolePermissionRel.setPermissionId(permissionId);
+				rolePermissionRel.setCreateDate(new Date());
+				list.add(rolePermissionRel);
+			});
+		}
+		
+		if(list != null && list.size() > 0) {
+			// 建立关联关系
+			rolePermissionRelService.saveBatch(list);
+		}
+		
 	}
 
 	@Override
@@ -76,7 +101,9 @@ public class RoleServiceImpl implements RoleService {
 			});
 		}
 		// 重新建立关联关系
-		rolePermissionRelService.saveBatch(list);
+		if(list != null && list.size() > 0) {
+			rolePermissionRelService.saveBatch(list);
+		}
 	}
 
 	@Override
@@ -87,6 +114,11 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public int countAll() {
 		return roleDao.countAll();
+	}
+
+	@Override
+	public Role getByName(String name) {
+		return roleDao.selectByName(name);
 	}
 	
 }

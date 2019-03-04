@@ -14,6 +14,9 @@ public interface RoleService {
 	// 根据ID查询角色
 	Role getById(Integer id);
 	
+	// 根据名称查询角色
+	Role getByName(String name);
+	
 	//分页查询所有角色
 	PageDataBody<Role> page(Integer pageNumber, Integer pageSize);
 	
@@ -21,7 +24,7 @@ public interface RoleService {
 	List<Role> getByAdminUserId(Integer adminUserId,Integer pageNumber, Integer pageSize);
 	
 	// 新增角色
-	void save(Role role);
+	void save(String roleName,Integer[] permissionIds);
 	
 	/**
 	 * 更新角色

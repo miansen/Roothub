@@ -48,6 +48,22 @@ public class RoleAdminController {
 		return "admin/role/list";
 	}
 	
+	@RequiresPermissions("role:add")
+	@RequestMapping(value = "/add",method = RequestMethod.GET)
+	public String add(Model model) {
+		model.addAttribute("permissionMap", permissionService.permissionMap());
+		return "admin/role/add";
+	}
+	
+	@RequiresPermissions("role:add")
+	@RequestMapping(value = "/add",method = RequestMethod.POST)
+	@ResponseBody
+	public Result<String> add(String roleName,Integer[] permissionIds) {
+		ApiAssert.notNull(roleName, "角色名字不能为空");
+		roleService.save(roleName, permissionIds);
+		return new Result<>(true, "添加成功"); 
+	}
+	
 	/**
 	 * 
 	 * @param id: 角色ID

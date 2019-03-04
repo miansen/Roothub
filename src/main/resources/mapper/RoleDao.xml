@@ -32,6 +32,16 @@
 		WHERE 
 			role_id = #{id}
      </select>
+     
+     <!-- 根据名称查询角色-->
+	<select id="selectByName" resultType="cn.roothub.entity.Role">
+		SELECT
+        	*
+		FROM
+			role
+		WHERE 
+			role_name = #{name}
+     </select>
    
      <!-- 查询所有的后台用户 -->
      <select id="selectAll" resultType="cn.roothub.entity.Role">

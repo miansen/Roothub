@@ -22,4 +22,6 @@ public interface RolePermissionRelDao {
 	int deleteByRoleId(@Param("roleId") Integer roleId);
 	
 	int deleteByPermissionId(@Param("permissionId") Integer permissionId);
+	
+	int deleteBatch(@Param("permissionIds") Collection<? extends Serializable> permissionIds);
 }

@@ -5,6 +5,24 @@
 
 <mapper namespace="cn.roothub.dao.PermissionDao">
 	
+	<select id="selectById" resultType="cn.roothub.entity.Permission">
+		SELECT
+        	a.*
+		FROM
+			permission a
+		WHERE 
+			a.permission_id = #{id}
+     </select>
+	
+	<select id="selectByName" resultType="cn.roothub.entity.Permission">
+		SELECT
+        	a.*
+		FROM
+			permission a
+		WHERE 
+			a.permission_name = #{name}
+     </select>
+	
 	<select id="selectBatchByRoleList" resultType="cn.roothub.entity.Permission">
 		SELECT
         	a.*

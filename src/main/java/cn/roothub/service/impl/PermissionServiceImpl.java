@@ -2,6 +2,7 @@ package cn.roothub.service.impl;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import cn.roothub.dao.PermissionDao;
 import cn.roothub.entity.Permission;
 import cn.roothub.service.PermissionService;
@@ -35,8 +38,21 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public void save(Permission permission) {
-		permissionDao.insert(permission);
+	public void save(String pname,String name,String value) {
+		Permission permission = new Permission();
+		if(pname != null && !StringUtils.isEmpty(pname)) {
+			permission.setPermissionName(name);
+			permission.setPermissionValue(value);
+			permission.setCreateDate(new Date());
+			permission.setPid(getByName(pname).getPermissionId());
+			permissionDao.insert(permission);
+		}else {
+			permission.setPermissionName(name);
+			permission.setPermissionValue(value);
+			permission.setCreateDate(new Date());
+			permission.setPid(0);
+			permissionDao.insert(permission);
+		}
 	}
 
 	@Override
@@ -59,6 +75,16 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public List<Permission> getAllByRoleId(Integer roleId) {
 		return permissionDao.selectAllByRoleId(roleId);
+	}
+
+	@Override
+	public Permission getByName(String name) {
+		return permissionDao.selectByName(name);
+	}
+
+	@Override
+	public Permission getById(Integer id) {
+		return permissionDao.selectById(id);
 	}
 
 }

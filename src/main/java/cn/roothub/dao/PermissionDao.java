@@ -12,6 +12,10 @@ import cn.roothub.entity.Permission;
  */
 public interface PermissionDao {
 
+	Permission selectById(@Param("id") Integer id);
+	
+	Permission selectByName(@Param("name") String name);
+	
 	/**
 	 * 批量查询
 	 * @param roleList: 包含多个角色对象的List

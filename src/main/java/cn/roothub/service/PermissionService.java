@@ -14,6 +14,10 @@ import cn.roothub.entity.Permission;
  */
 public interface PermissionService {
 
+	Permission getById(Integer id);
+	
+	Permission getByName(String name);
+	
 	/**
 	 * 根据角色列表批量获取所关联的权限
 	 * @param roleList
@@ -41,7 +45,13 @@ public interface PermissionService {
 	 */
 	Map<String, Object> permissionMap();
 	
-	void save(Permission permission);
+	/**
+	 * 添加权限
+	 * @param pname: 父权限名
+	 * @param name: 权限名
+	 * @param value: 权限值
+	 */
+	void save(String pname,String name,String value);
 	
 	void update(Permission permission);
 	

@@ -1,10 +1,5 @@
 package cn.roothub.web.admin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,12 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.fastjson.JSON;
-
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
-import cn.roothub.entity.Permission;
 import cn.roothub.entity.Role;
 import cn.roothub.exception.ApiAssert;
 import cn.roothub.service.PermissionService;
@@ -87,5 +79,13 @@ public class RoleAdminController {
 		ApiAssert.notNull(roleName, "角色名字不能为空");
 		roleService.update(roleId, roleName, permissionIds);
 		return new Result<>(true, "编辑成功");
+	}
+	
+	@RequiresPermissions("role:delete")
+	@RequestMapping(value = "/delete",method = RequestMethod.GET)
+	public String delete(Integer id) {
+		ApiAssert.notNull(id, "角色ID不能为空");
+		roleService.removeById(id);
+		return "redirect: /admin/role/list";
 	}
 }

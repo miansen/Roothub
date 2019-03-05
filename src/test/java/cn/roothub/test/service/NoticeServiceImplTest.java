@@ -1,4 +1,4 @@
-package cn.roothub.test.serviceImpl;
+package cn.roothub.test.service;
 
 import org.junit.Test;
 import org.slf4j.Logger;

@@ -78,28 +78,7 @@ public class AdminUserAdminController {
 	public Result<String> add(String username,String password,Integer[] roleIds){
 		ApiAssert.notNull(username, "用户名不能为空");
 		ApiAssert.notNull(password, "密码不能为空");
-		AdminUser adminUser = adminUserService.getByName(username);
-		ApiAssert.isNull(adminUser, "用户已存在");
-		adminUser = new AdminUser();
-		adminUser.setUsername(username);
-		adminUser.setPassword(SimpleHashUtil.simpleHash("MD5", password, username, 1024).toString());
-		adminUser.setCreateDate(new Date());
-		// 保存用户
-		AdminUser adminUser2 = adminUserService.save(adminUser);
-		List<AdminUserRoleRel> adminUserRoleRels = new ArrayList<>();
-		if(roleIds != null && roleIds.length > 0) {
-			Arrays.asList(roleIds).forEach( roleId -> {
-				AdminUserRoleRel adminUserRoleRel = new AdminUserRoleRel();
-				adminUserRoleRel.setAdminUserId(adminUser2.getAdminUserId());
-				adminUserRoleRel.setRoleId(roleId);
-				adminUserRoleRel.setCreateDate(new Date());
-				adminUserRoleRels.add(adminUserRoleRel);
-			});
-		}
-		// 保存用户与角色的关联关系
-		if(adminUserRoleRels != null && adminUserRoleRels.size() > 0) {
-			adminUserRoleRelService.saveBatch(adminUserRoleRels);
-		}
+		adminUserService.save(username, password, roleIds);
 		return new Result(true, "添加用户成功");
 	}
 	
@@ -159,9 +138,6 @@ public class AdminUserAdminController {
 	@RequiresPermissions("admin_user:delete")
 	@RequestMapping(value = "/delete",method = RequestMethod.GET)
 	public String delete(Integer id){
-		// 先删除后台用户与角色的关联关系
-		adminUserRoleRelService.removeByAdminUserId(id);
-		// 在删除后台用户的记录
 		adminUserService.removeById(id);
 		return "redirect: /admin/admin_user/list";
 	}

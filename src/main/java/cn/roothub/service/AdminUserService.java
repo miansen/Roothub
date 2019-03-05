@@ -24,8 +24,13 @@ public interface AdminUserService {
 	// 获取所有的后台用户以及对应的角色列表
 	PageDataBody<AdminUser> pageRoles(Integer pageNumber, Integer pageSize);
 	
-	// 新增后台用户
-	AdminUser save(AdminUser adminUser);
+	/**
+	 * 新增后台用户
+	 * @param username: 用户名
+	 * @param password: 密码
+	 * @param roleIds: 角色ID数组
+	 */
+	void save(String username,String password,Integer[] roleIds);
 	
 	// 更新后台用户
 	void update(AdminUser adminUser);

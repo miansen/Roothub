@@ -13,6 +13,7 @@ import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Role;
 import cn.roothub.entity.RolePermissionRel;
 import cn.roothub.exception.ApiAssert;
+import cn.roothub.service.AdminUserRoleRelService;
 import cn.roothub.service.RolePermissionRelService;
 import cn.roothub.service.RoleService;
 
@@ -28,6 +29,9 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Autowired
 	private RolePermissionRelService rolePermissionRelService;
+	
+	@Autowired
+	private AdminUserRoleRelService adminUserRoleRelService;
 
 	@Override
 	public Role getById(Integer id) {
@@ -108,6 +112,11 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public void removeById(Integer id) {
+		// 先删除用户与角色的关联关系
+		adminUserRoleRelService.removeByRoleId(id);
+		// 再删除权限与角色的关联关系
+		rolePermissionRelService.removeByRoleId(id);
+		// 最后删除角色
 		roleDao.deleteById(id);
 	}
 

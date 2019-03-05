@@ -1,4 +1,4 @@
-package cn.roothub.test.serviceImpl;
+package cn.roothub.test.service;
 
 import java.util.Date;
 import java.util.List;

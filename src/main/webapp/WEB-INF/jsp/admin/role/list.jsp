@@ -47,7 +47,7 @@
                   <a href="/admin/role/edit?id=${role.roleId}" class="btn btn-xs btn-warning">编辑</a>
                 </shiro:hasPermission>
                 <shiro:hasPermission name="role:delete">
-                  <button onclick="deleteRole(${role.roleId})" class="btn btn-xs btn-danger">删除</button>
+                  <a href="javascript:if(confirm('确定要删除吗？')) location.href='/admin/role/delete?id=${role.roleId}'" class="btn btn-xs btn-danger">删除</a>
                 </shiro:hasPermission>
               </td>
             </tr>

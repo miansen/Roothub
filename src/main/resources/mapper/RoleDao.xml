@@ -110,7 +110,7 @@
      	DELETE FROM 
      		role
      	WHERE 
-     		role_id = #{roleId}
+     		role_id = #{id}
      </delete>
      
      <!-- 统计所有角色 -->

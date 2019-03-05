@@ -32,8 +32,14 @@ public interface AdminUserService {
 	 */
 	void save(String username,String password,Integer[] roleIds);
 	
-	// 更新后台用户
-	void update(AdminUser adminUser);
+	/**
+	 * 更新后台用户
+	 * @param id: 后台用户ID
+	 * @param username: 用户名
+	 * @param password: 密码
+	 * @param roleIds: 角色ID数组
+	 */
+	void update(Integer id,String username,String password,Integer[] roleIds);
 	
 	// 删除后台用户
 	void removeById(Integer id);

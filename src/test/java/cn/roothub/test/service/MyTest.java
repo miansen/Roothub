@@ -26,4 +26,10 @@ public class MyTest {
 		System.out.println(a == a2);
 		System.out.println(a.equals(a2));
 	}
+	
+	@Test
+	public void test02() {
+		boolean a = false;
+		System.out.println(a);
+	}
 }

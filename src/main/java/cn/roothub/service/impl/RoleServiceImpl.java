@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import cn.roothub.dao.RoleDao;
@@ -50,6 +51,7 @@ public class RoleServiceImpl implements RoleService {
 		return roleDao.selectAllByAdminUserId(adminUserId, pageNumber, pageSize);
 	}
 
+	@Transactional
 	@Override
 	public void save(String roleName,Integer[] permissionIds) {
 		Role role = getByName(roleName);
@@ -80,6 +82,7 @@ public class RoleServiceImpl implements RoleService {
 		
 	}
 
+	@Transactional
 	@Override
 	public void update(Integer roleId,String roleName,Integer[] permissionIds) {
 		Role role = roleDao.selectById(roleId);
@@ -110,6 +113,7 @@ public class RoleServiceImpl implements RoleService {
 		}
 	}
 
+	@Transactional
 	@Override
 	public void removeById(Integer id) {
 		// 先删除用户与角色的关联关系

@@ -51,7 +51,7 @@
      	DELETE FROM 
      		admin_user_role_rel
      	WHERE 
-     		role_id = #{RoleId}
+     		role_id = #{roleId}
      </delete>
      
 </mapper>

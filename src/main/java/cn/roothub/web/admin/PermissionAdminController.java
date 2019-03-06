@@ -83,8 +83,7 @@ public class PermissionAdminController {
 	@RequiresPermissions("permission:delete")
 	@RequestMapping(value = "/delete",method = RequestMethod.GET)
 	public String delete(Integer id,String name) {
-		System.out.println("------------------------------------------"+id);
-		System.out.println("------------------------------------------"+name);
-		return null;
+		permissionService.remove(id, name);
+		return "redirect: /admin/permission/list";
 	}
 }

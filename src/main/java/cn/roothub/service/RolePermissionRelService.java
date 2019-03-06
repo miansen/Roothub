@@ -21,4 +21,6 @@ public interface RolePermissionRelService {
 	void removeByRoleId(Integer roleId);
 	
 	void removeByPermissionId(Integer permissionId);
+	
+	void removeBatch(Collection<? extends Serializable> permissionIds);
 }

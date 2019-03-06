@@ -35,4 +35,6 @@ public interface PermissionDao {
 	int update(Permission permission);
 	
 	int deleteById(Integer id);
+	
+	int deleteByPid(Integer pid);
 }

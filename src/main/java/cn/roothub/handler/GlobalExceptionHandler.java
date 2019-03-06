@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = ApiException.class)
 	@ResponseBody
-	public Result jsonErrorHandler(ApiException e) throws ApiException{
-		return new Result(false, e.getMessage());
+	public Result<String> jsonErrorHandler(ApiException e) throws ApiException{
+		return new Result<>(false, e.getMessage());
 	}
 }

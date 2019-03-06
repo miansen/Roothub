@@ -35,6 +35,16 @@
      	</foreach>
      </insert>
      
+     <delete id="deleteBatch" parameterType="java.util.Collection">
+     	DELETE FROM 
+     		role_permission_rel
+     	WHERE 
+     		permission_id in 
+     	<foreach collection="permissions" item="permission" open="(" separator="," close=")">
+     		#{permission.permissionId}
+     	</foreach>
+     </delete>
+     
      <delete id="deleteByRoleId">
      	DELETE FROM 
      		role_permission_rel

@@ -55,5 +55,9 @@ public interface PermissionService {
 	
 	void update(Permission permission);
 	
+	void remove(Integer id,String name);
+	
 	void removeById(Integer id);
+	
+	void removeByPid(Integer pid);
 }

@@ -45,4 +45,9 @@ public class RolePermissionRelServiceImpl implements RolePermissionRelService {
 		rolePermissionRelDao.deleteByPermissionId(permissionId);
 	}
 
+	@Override
+	public void removeBatch(Collection<? extends Serializable> permissionIds) {
+		rolePermissionRelDao.deleteBatch(permissionIds);
+	}
+
 }

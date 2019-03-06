@@ -106,4 +106,11 @@
      		permission_id = #{id}
      </delete>
      
+     <delete id="deleteByPid">
+     	DELETE FROM 
+     		permission
+     	WHERE 
+     		pid = #{pid}
+     </delete>
+     
 </mapper>

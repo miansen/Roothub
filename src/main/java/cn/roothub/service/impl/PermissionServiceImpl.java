@@ -10,11 +10,13 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import cn.roothub.dao.PermissionDao;
 import cn.roothub.entity.Permission;
 import cn.roothub.service.PermissionService;
+import cn.roothub.service.RolePermissionRelService;
 
 /**
  * <p></p>
@@ -26,6 +28,9 @@ public class PermissionServiceImpl implements PermissionService {
 
 	@Autowired
 	private PermissionDao permissionDao;
+	
+	@Autowired
+	private RolePermissionRelService rolePermissionRelService;
 	
 	@Override
 	public List<Permission> getBatchByRoleList(Collection<? extends Serializable> roleList) {
@@ -85,6 +90,35 @@ public class PermissionServiceImpl implements PermissionService {
 	@Override
 	public Permission getById(Integer id) {
 		return permissionDao.selectById(id);
+	}
+
+	@Transactional
+	@Override
+	public void remove(Integer id, String name) {
+		// 如果删除的是父权限
+		if(name != null && !StringUtils.isEmpty(name)) {
+			// 1.先查询出父权限
+			Permission permission = getByName(name);
+			// 2.根据父权限ID查询对应的子权限
+			List<Permission> list = getAllByPid(permission.getPermissionId());
+			// 3.删除子权限与角色的关联关系
+			rolePermissionRelService.removeBatch(list);
+			// 4.删除子权限
+			removeByPid(permission.getPermissionId());
+			// 5.删除父权限
+			removeById(permission.getPermissionId());
+		}else {
+			// 删除子权限与角色的关联关系
+			rolePermissionRelService.removeByPermissionId(id);
+			// 删除子权限
+			removeById(id);
+		}
+	}
+
+	
+	@Override
+	public void removeByPid(Integer pid) {
+		permissionDao.deleteByPid(pid);
 	}
 
 }

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!-- 侧边栏 -->
 <aside class="main-sidebar" style="position: fixed">
   <section class="sidebar">
@@ -10,51 +11,51 @@
         </div>
         <div class="pull-left info">
         <p>public</p>
-          <a href="#"><i class="fa fa-circle text-success"></i>超级管理员</a>
+          <a href="#"><i class="fa fa-circle text-success"></i>管理员</a>
         </div>
       </div>
       <li class="header">MAIN NAVIGATION</li>
-      
+      <shiro:hasPermission name="index:index">
         <li>
           <a href="/admin/index">
             <i class="fa fa-dashboard"></i>
             <span>仪表盘</span>
           </a>
         </li>
-      
-      
+      </shiro:hasPermission>
+      <shiro:hasPermission name="topic:list">
         <li>
           <a href="/admin/topic/list">
             <i class="fa fa-list"></i>
             <span>话题</span>
           </a>
         </li>
-      
-      
+      </shiro:hasPermission>
+      <shiro:hasPermission name="reply:list">
         <li>
           <a href="/admin/comment/list">
             <i class="fa fa-comment"></i>
             <span>评论</span>
           </a>
         </li>
-      
-      
+      </shiro:hasPermission>
+      <shiro:hasPermission name="tag:list">
         <li>
           <a href="/admin/tag/list">
             <i class="fa fa-tags"></i>
             <span>节点</span>
           </a>
         </li>
-      
-      
+      </shiro:hasPermission>
+      <shiro:hasPermission name="user:list">
         <li>
           <a href="/admin/user/list">
             <i class="fa fa-user"></i>
             <span>用户</span>
           </a>
         </li>
-      
-      
+      </shiro:hasPermission>
+      <shiro:hasPermission name="permission:list">
         <li class="treeview">
           <a href="#">
             <i class="fa fa-server"></i> <span>权限管理</span>
@@ -63,41 +64,38 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            
+            <shiro:hasPermission name="admin_user:list">
               <li>
                 <a href="/admin/admin_user/list">
-                  <i class="fa fa-circle-o"></i>
-                  后台用户列表
+                  <i class="fa fa-circle-o"></i>后台用户列表
                 </a>
               </li>
-            
-           
+            </shiro:hasPermission>
+           <shiro:hasPermission name="role:list">
             <li>
               <a href="/admin/role/list">
-                <i class="fa fa-circle-o"></i>
-                角色列表
+                <i class="fa fa-circle-o"></i>  角色列表
               </a>
             </li>
-            
-            
+            </shiro:hasPermission>
+            <shiro:hasPermission name="permission:list">
             <li>
               <a href="/admin/permission/list">
-                <i class="fa fa-circle-o"></i>
-                权限列表
+                <i class="fa fa-circle-o"></i>权限列表
               </a>
             </li>
-            
+            </shiro:hasPermission>
           </ul>
         </li>
-      
-      
+      </shiro:hasPermission>
+      <shiro:hasPermission name="system:edit">
         <li>
           <a href="/admin/system/edit">
             <i class="fa fa-cogs"></i>
             <span>系统</span>
           </a>
         </li>
-      
+      </shiro:hasPermission>
       <li>
         <a href="/admin/logout">
           <i class="fa fa-sign-out"></i>

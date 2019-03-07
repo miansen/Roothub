@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.roothub.dao.SystemConfigDao">
+    
+	<!-- 根据后台用户ID查询所有的关联关系-->
+	<select id="selectByPid" resultType="cn.roothub.entity.SystemConfig">
+		SELECT
+        	*
+		FROM
+			system_config
+		WHERE 
+			pid = #{pid}
+     </select>
+     
+</mapper>

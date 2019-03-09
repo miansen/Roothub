@@ -3,14 +3,13 @@ package cn.roothub.service.impl;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
-
 import cn.roothub.dao.SystemConfigDao;
 import cn.roothub.entity.SystemConfig;
 import cn.roothub.service.SystemConfigService;
@@ -44,12 +43,38 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 			return map;
 		}else {
 			Map<String,Object> map2 = new LinkedHashMap<>();
-			systemConfigDao.selectByPid(0).forEach(systemConfig -> {
+			
+			/*这种方法循环查询了数据库，性能开销大！*/
+			/*systemConfigDao.selectByPid(0).forEach(systemConfig -> {
 				map2.put(systemConfig.getDescription(), systemConfigDao.selectByPid(systemConfig.getSystemConfigId()));
+			});*/
+			
+			// 获取所有的系统配置数据
+			List<SystemConfig> systemConfigs = getAll();
+			
+			// 获取父节点
+			List<SystemConfig> systemConfigP = systemConfigs.stream()
+						 .filter(systemConfig -> systemConfig.getPid() == 0)
+						 .collect(Collectors.toList());
+			
+			// 遍历父节点
+			systemConfigP.forEach(p -> {
+				// 通过父节点ID获取对应的子节点
+				List<SystemConfig> systemConfigC = systemConfigs.stream()
+							 .filter(systemConfig -> systemConfig.getPid().equals(p.getSystemConfigId()))
+							 .collect(Collectors.toList());
+				map2.put(p.getDescription(), systemConfigC);
 			});
+			
+			// 保存数据到redis
 			opsForValue.set(Constants.REDIS_SYSTEM_CONFIG_KEY, JsonUtil.objectToJson(map2));
 			log.debug("从数据可里面取出了系统设置的信息");
 			return map2;
 		}
+	}
+
+	@Override
+	public List<SystemConfig> getAll() {
+		return systemConfigDao.selectAll();
 	}
 }

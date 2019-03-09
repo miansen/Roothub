@@ -13,5 +13,7 @@ import cn.roothub.entity.SystemConfig;
  */
 public interface SystemConfigDao {
 
+	List<SystemConfig> selectAll();
+	
 	List<SystemConfig> selectByPid(@Param("pid") Integer pid);
 }

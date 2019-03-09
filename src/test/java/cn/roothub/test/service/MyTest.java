@@ -1,8 +1,11 @@
 package cn.roothub.test.service;
 
+import java.util.Map;
+
 import org.junit.Test;
 
 import cn.roothub.entity.AdminUser;
+import cn.roothub.util.JsonUtil;
 
 /**
  * <p></p>
@@ -75,5 +78,11 @@ public class MyTest {
 		System.out.println(adminUser.getUsername());//李四
 	}
 	
+	@Test
+	public void test05() {
+		String str = "{abc:ab}";
+		Map<String,Object> map = JsonUtil.jsonToObject(str, Map.class);
+		System.out.println(map);
+	}
 	
 }

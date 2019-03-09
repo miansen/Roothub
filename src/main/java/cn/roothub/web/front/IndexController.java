@@ -339,7 +339,7 @@ public class IndexController extends BaseController{
     private Map feedbackAdd(String info) {
     	Map<String,Object> redisMap = new HashedMap();
     	Map<String,Object> returnMap = new HashedMap();
-    	List<String> list = new ArrayList();
+    	List<String> list = new ArrayList<>();
     	HashOperations<String, String, Object> opsForHash = redisTemplate.opsForHash();
     	if(info == null) {
     		returnMap.put("success", false);

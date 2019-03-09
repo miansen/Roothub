@@ -5,7 +5,13 @@
  
 <mapper namespace="cn.roothub.dao.SystemConfigDao">
     
-	<!-- 根据后台用户ID查询所有的关联关系-->
+	<select id="selectAll" resultType="cn.roothub.entity.SystemConfig">
+		SELECT
+        	*
+		FROM
+			system_config
+     </select>
+	
 	<select id="selectByPid" resultType="cn.roothub.entity.SystemConfig">
 		SELECT
         	*

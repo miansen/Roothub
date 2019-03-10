@@ -1,5 +1,6 @@
 package cn.roothub.test.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -132,5 +133,21 @@ public class SystemConfigDaoTest extends BaseTest{
 			map.put(systemConfigP.getDescription(), list);
 		});
 		System.out.println(map);
+	}
+	
+	@Test
+	public void selectBatchKey() {
+		List<String> list = Arrays.asList("redis_host",
+										  "redis_port",
+										  "redis_password",
+										  "redis_timeout",
+										  "redis_max_idle",
+										  "redis_max_total",
+										  "redis_database",
+										  "redis_ssl");
+		System.out.println(list);
+		list.forEach(System.out::println);
+		List<SystemConfig> list2 = systemConfigDao.selectBatchKeys(list);
+		list2.forEach(System.out::println);
 	}
 }

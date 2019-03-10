@@ -1,9 +1,9 @@
 package cn.roothub.dao;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
-
 import cn.roothub.entity.SystemConfig;
 
 /**
@@ -13,7 +13,11 @@ import cn.roothub.entity.SystemConfig;
  */
 public interface SystemConfigDao {
 
+	SystemConfig selectByKey(@Param("key") String key);
+	
 	List<SystemConfig> selectAll();
 	
 	List<SystemConfig> selectByPid(@Param("pid") Integer pid);
+	
+	List<SystemConfig> selectBatchKeys(@Param("keys") Collection<? extends Serializable> keys);
 }

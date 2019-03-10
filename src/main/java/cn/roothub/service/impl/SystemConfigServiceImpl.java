@@ -1,5 +1,7 @@
 package cn.roothub.service.impl;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,5 +78,15 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	@Override
 	public List<SystemConfig> getAll() {
 		return systemConfigDao.selectAll();
+	}
+
+	@Override
+	public SystemConfig getByKey(String key) {
+		return systemConfigDao.selectByKey(key);
+	}
+
+	@Override
+	public List<SystemConfig> getBatchKeys(Collection<? extends Serializable> keys) {
+		return systemConfigDao.selectBatchKeys(keys);
 	}
 }

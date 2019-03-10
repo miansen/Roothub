@@ -1,5 +1,7 @@
 package cn.roothub.service;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import cn.roothub.entity.SystemConfig;
@@ -11,6 +13,8 @@ import cn.roothub.entity.SystemConfig;
  */
 public interface SystemConfigService {
 
+	SystemConfig getByKey(String key);
+	
 	/**
 	 * 获取所有的系统配置
 	 * @return
@@ -22,4 +26,11 @@ public interface SystemConfigService {
 	 * @return
 	 */
 	Map<String,Object> getAllMap();
+	
+	/**
+	 * 批量查询
+	 * @param keys
+	 * @return
+	 */
+	List<SystemConfig> getBatchKeys(Collection<? extends Serializable> keys);
 }

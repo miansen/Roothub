@@ -5,6 +5,15 @@
  
 <mapper namespace="cn.roothub.dao.SystemConfigDao">
     
+    <select id="selectByKey" resultType="cn.roothub.entity.SystemConfig">
+		SELECT
+        	*
+		FROM
+			system_config
+		WHERE
+			key = #{key}
+     </select>
+    
 	<select id="selectAll" resultType="cn.roothub.entity.SystemConfig">
 		SELECT
         	*
@@ -19,6 +28,18 @@
 			system_config
 		WHERE 
 			pid = #{pid}
+     </select>
+     
+     <select id="selectBatchKeys" resultType="cn.roothub.entity.SystemConfig">
+		SELECT
+        	a.*
+		FROM
+			system_config a
+		WHERE 
+			a.key in
+		<foreach item="key" collection="keys" open="(" separator="," close=")">  
+		      #{key}
+	    </foreach>
      </select>
      
 </mapper>

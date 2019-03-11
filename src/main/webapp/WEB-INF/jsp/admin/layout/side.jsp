@@ -89,11 +89,72 @@
         </li>
       </shiro:hasPermission>
       <shiro:hasPermission name="system:edit">
-        <li>
-          <a href="/admin/system/edit">
+        <li class="treeview">
+          <a href="#">
             <i class="fa fa-cogs"></i>
-            <span>系统</span>
+            <span>系统设置</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
           </a>
+          <ul class="treeview-menu">
+            <shiro:hasPermission name="system:edit">
+              <li>
+                <a href="/admin/system/edit">
+                  <i class="fa fa-circle-o"></i>基础配置
+                </a>
+              </li>
+            </shiro:hasPermission>
+           <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?key=upload">
+                <i class="fa fa-circle-o"></i>上传配置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?key=email">
+                <i class="fa fa-circle-o"></i>邮箱配置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?key=score">
+                <i class="fa fa-circle-o"></i>积分配置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?key=Redis">
+                <i class="fa fa-circle-o"></i>Redis配置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?key=Elasticsearch">
+                <i class="fa fa-circle-o"></i>Elasticsearch配置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?key=siteLogin">
+                <i class="fa fa-circle-o"></i>站点登入配置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?key=WebSocket">
+                <i class="fa fa-circle-o"></i>WebSocket配置
+              </a>
+            </li>
+            </shiro:hasPermission>
+          </ul>
         </li>
       </shiro:hasPermission>
       <li>

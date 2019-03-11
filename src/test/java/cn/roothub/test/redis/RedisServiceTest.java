@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.roothub.config.service.RedisService;
+import cn.roothub.service.SystemConfigService;
 import cn.roothub.test.base.BaseTest;
 import redis.clients.jedis.Jedis;
 
@@ -16,6 +17,9 @@ public class RedisServiceTest extends BaseTest {
 
 	@Autowired
 	private RedisService redisService;
+	
+	@Autowired
+	private SystemConfigService systemConfigService;
 	
 	@Test
 	public void test01() {
@@ -43,6 +47,14 @@ public class RedisServiceTest extends BaseTest {
 	@Test
 	public void test04() {
 		String string = redisService.getString("redisServiceTest");
+		System.out.println(string);
+	}
+	
+	@Test
+	public void test05() {
+		RedisService redisService22 = new RedisService();
+		String string = redisService22.getString("redisServiceTest");
+		System.out.println(redisService22);
 		System.out.println(string);
 	}
 }

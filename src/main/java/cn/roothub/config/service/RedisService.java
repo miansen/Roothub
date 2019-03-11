@@ -103,7 +103,7 @@ public class RedisService implements BaseService<JedisPool> {
 	 * 
 	 * @return
 	 */
-	private Jedis getJedis() {
+	public Jedis getJedis() {
 		Jedis jedis = null;
 		jedisPool = instance();
 		if (jedisPool != null) {

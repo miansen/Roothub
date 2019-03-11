@@ -42,4 +42,10 @@ public class SystemConfigServiceTest extends BaseTest{
 				);
 		redisConfigs.forEach(System.out::println);
 	}
+	
+	@Test
+	public void test03() {
+		Map<String, Object> map = systemConfigService.getAllMap();
+		System.out.println(map);
+	}
 }

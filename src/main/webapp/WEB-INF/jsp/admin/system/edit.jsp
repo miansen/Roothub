@@ -27,20 +27,11 @@
         <form id="form" action="/admin/role/edit" method="post">
           <input type="hidden" name="roleId" id="roleId" value="${role.roleId}">
           <div class="form-group">
-            <label>角色名</label>
-            <input type="text" name="roleName" id="roleName" value="${role.roleName}" class="form-control" placeholder="角色名">
-          </div>
-          <div class="form-group">
-            <c:forEach items="${permissionMap}" var="permissions" > 
-            	<label for="">${permissions.key}</label>
-            	<p>
-					<c:forEach items="${permissions.value}" var="permission" > 
-						<input type="checkbox" name="permissionIds" id="permission_${permission.permissionId}" 
-						value="${permission.permissionId}"/>${permission.permissionName}&nbsp;&nbsp;
-					</c:forEach>
-				</p>
-				<br></br>
-			</c:forEach> 
+            <c:forEach items="${systemConfigs}" var="systemConfig" >
+            <label>${systemConfig.description}</label>
+			<input type="text" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}" class="form-control"/>
+			<br/>
+			</c:forEach>
           </div>
           <button type="submit" class="btn btn-primary">保存</button>
         </form>
@@ -49,22 +40,8 @@
   </section>
   <script type="text/javascript">
   	$(function(){
-  		$(".sidebar-menu li:eq(6)").addClass("active");
-  		$(".treeview-menu li:eq(1)").addClass("active");
-  		
-  		// 被编辑角色ID
-  		var roleId = ${role.roleId}
-  		console.log(roleId);
-  		// 被编辑角色所拥有的权限列表
-  		var roleHaspermissions = '${roleHaspermissions}';
-  		console.log(roleHaspermissions);
-  		// 将数据转换为 JavaScript 对象。
-  		var arr = JSON.parse(roleHaspermissions);
-  		console.log(arr);
-  		for ( var i = 0; i < arr.length; i++){
-  			// 将被编辑角色已有的权限复选框设置为已勾选
-  			$("#permission_"+arr[i].permissionId).attr("checked", true);
-  		}
+  		$(".sidebar-menu li:eq(7)").addClass("active");
+  		$(".treeview-menu li:eq(0)").addClass("active");
   		
   		$("#form").submit(function() {
   	      var roleName = $("#roleName").val();

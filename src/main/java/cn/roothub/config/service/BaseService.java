@@ -1,13 +1,10 @@
 package cn.roothub.config.service;
 
-import org.springframework.stereotype.Component;
-
 /**
  * <p></p>
  * @author: miansen.wang
  * @date: 2019-03-10
  */
-@Component
 public interface BaseService<T> {
 
 	/**

@@ -22,6 +22,13 @@ public interface SystemConfigService {
 	List<SystemConfig> getAll();
 	
 	/**
+	 * 根据pid获取子节点
+	 * @param pid
+	 * @return
+	 */
+	List<SystemConfig> getByPid(Integer pid);
+	
+	/**
 	 * 获取所有的系统配置，格式为Map，key是父节点的description，value是对应的子节点
 	 * @return
 	 */

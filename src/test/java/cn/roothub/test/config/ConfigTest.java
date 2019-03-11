@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.roothub.base.BaseEntity;
 import cn.roothub.config.CookieConfig;
 import cn.roothub.config.SiteConfig;
 import cn.roothub.test.base.BaseTest;
@@ -19,6 +21,8 @@ public class ConfigTest extends BaseTest{
 	private SiteConfig citeConfig;
 	@Autowired
 	private CookieConfig cookieConfig;
+	@Autowired
+	private BaseEntity baseEntity;
 	
 	
 	@Test
@@ -48,5 +52,12 @@ public class ConfigTest extends BaseTest{
 	@Test
 	public void test05() throws Exception{
 		logger.debug(citeConfig.getIntro());
+	}
+	
+	@Test
+	public void test06() {
+		// cn.roothub.base.BaseEntity@38aa816f
+		// cn.roothub.base.BaseEntity@3ad2e17
+		System.out.println(baseEntity);
 	}
 }

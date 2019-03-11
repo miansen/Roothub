@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.roothub.base.BaseEntity;
 import cn.roothub.dao.CustomerDao;
 import cn.roothub.entity.Customer;
 import cn.roothub.test.base.BaseTest;
@@ -20,6 +22,9 @@ public class CustomerTest extends BaseTest {
 
 	@Autowired
 	private CustomerDao customerDao;
+	
+	@Autowired
+	private BaseEntity baseEntity;
 	
 	@Test
 	public void insertBatchTest() {
@@ -72,4 +77,26 @@ public class CustomerTest extends BaseTest {
 	    
 	    
 	}
+	
+	@Test
+	public void test02() {
+		//cn.roothub.base.BaseEntity@53f6fd09
+		//cn.roothub.base.BaseEntity@8c3619e
+		System.out.println(baseEntity);//cn.roothub.base.BaseEntity@8c3619e
+	}
+	
+	@Test
+	public void test03() {
+		BaseEntity baseEntity2 = new BaseEntity();
+		System.out.println("baseEntity2: "+baseEntity2);//cn.roothub.base.BaseEntity@8c3619e
+		System.out.println("baseEntity: "+baseEntity);//cn.roothub.base.BaseEntity@4331d187
+	}
+	
+	@Test
+	public void test04() {
+		BaseEntity baseEntity2 = new BaseEntity();
+		System.out.println("baseEntity2: "+baseEntity2);//cn.roothub.base.BaseEntity@8c3619e
+		System.out.println("baseEntity: "+baseEntity);//cn.roothub.base.BaseEntity@4331d187
+	}
+	
 }

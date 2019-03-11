@@ -3,8 +3,10 @@ package cn.roothub.base;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+@Scope("singleton")
 @Component
 public class BaseEntity {
 

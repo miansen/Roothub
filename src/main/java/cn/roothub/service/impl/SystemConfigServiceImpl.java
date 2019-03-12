@@ -90,6 +90,13 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
 	@Override
 	public List<SystemConfig> getByPid(Integer pid) {
+		return systemConfigDao.selectByPid(pid);
+	}
+
+	
+	@Override
+	public List<SystemConfig> edit(Integer pid) {
+		
 		return null;
 	}
 }

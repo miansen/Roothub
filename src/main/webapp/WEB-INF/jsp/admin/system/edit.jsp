@@ -28,9 +28,19 @@
           <input type="hidden" name="roleId" id="roleId" value="${role.roleId}">
           <div class="form-group">
             <c:forEach items="${systemConfigs}" var="systemConfig" >
-            <label>${systemConfig.description}</label>
-			<input type="text" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}" class="form-control"/>
-			<br/>
+			<c:if test="${systemConfig.type == 'text'}">
+			 	<label>${systemConfig.description}</label>
+               	<input type="text" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}" class="form-control"/>
+            	<br/>
+            </c:if>
+			<c:if test="${systemConfig.type == 'radio'}">
+				<c:if test="${systemConfig.value == '1'}">
+					${systemConfig.description}<input type="radio" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}" checked="checked"/>
+				</c:if>
+               	<c:if test="${systemConfig.value == '0'}">
+					${systemConfig.description}<input type="radio" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}"/>
+				</c:if>
+            </c:if>
 			</c:forEach>
           </div>
           <button type="submit" class="btn btn-primary">保存</button>
@@ -40,8 +50,8 @@
   </section>
   <script type="text/javascript">
   	$(function(){
-  		$(".sidebar-menu li:eq(7)").addClass("active");
-  		$(".treeview-menu li:eq(0)").addClass("active");
+  		$(".system-menu").addClass("active");
+  		$(".system-treeview-menu li:eq(${pid})").addClass("active");
   		
   		$("#form").submit(function() {
   	      var roleName = $("#roleName").val();

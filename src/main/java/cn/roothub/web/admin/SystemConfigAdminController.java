@@ -7,6 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import cn.roothub.dto.Result;
 import cn.roothub.entity.SystemConfig;
 import cn.roothub.service.SystemConfigService;
 
@@ -23,9 +26,19 @@ public class SystemConfigAdminController {
 	private SystemConfigService systemConfigService;
 	
 	@RequestMapping(value = "/edit",method = RequestMethod.GET)
-	public String edit(@RequestParam(value = "key",defaultValue = "基础配置") String key,Model model) {
-		List<SystemConfig> systemConfigs = (List<SystemConfig>) systemConfigService.getAllMap().get(key);
+	public String edit(@RequestParam(value = "pid",defaultValue = "1") Integer pid,Model model) {
+		List<SystemConfig> systemConfigs = systemConfigService.getByPid(pid);
 		model.addAttribute("systemConfigs", systemConfigs);
+		model.addAttribute("pid", pid-1);
 		return "admin/system/edit";
+	}
+	
+	
+	@RequestMapping(value = "/list",method = RequestMethod.GET)
+	@ResponseBody
+	public Result<List> list(Integer pid) {
+		List<SystemConfig> systemConfigs = systemConfigService.getByPid(pid);
+		return new Result<>(true, systemConfigs);
+				
 	}
 }

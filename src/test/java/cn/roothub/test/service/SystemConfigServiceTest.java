@@ -48,4 +48,10 @@ public class SystemConfigServiceTest extends BaseTest{
 		Map<String, Object> map = systemConfigService.getAllMap();
 		System.out.println(map);
 	}
+	
+	@Test
+	public void test04() {
+		List<SystemConfig> list = systemConfigService.edit(1);
+		list.forEach(System.out::println);
+	}
 }

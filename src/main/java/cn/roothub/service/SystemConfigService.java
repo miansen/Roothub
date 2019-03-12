@@ -40,4 +40,6 @@ public interface SystemConfigService {
 	 * @return
 	 */
 	List<SystemConfig> getBatchKeys(Collection<? extends Serializable> keys);
+	
+	List<SystemConfig> edit(Integer pid);
 }

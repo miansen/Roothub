@@ -13,6 +13,8 @@ import cn.roothub.entity.SystemConfig;
  */
 public interface SystemConfigDao {
 
+	SystemConfig selectById(@Param("id") Integer id);
+	
 	SystemConfig selectByKey(@Param("key") String key);
 	
 	List<SystemConfig> selectAll();

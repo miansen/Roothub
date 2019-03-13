@@ -5,6 +5,15 @@
  
 <mapper namespace="cn.roothub.dao.SystemConfigDao">
     
+    <select id="selectById" resultType="cn.roothub.entity.SystemConfig">
+		SELECT
+        	*
+		FROM
+			system_config
+		WHERE
+			system_config_id = #{id}
+     </select>
+    
     <select id="selectByKey" resultType="cn.roothub.entity.SystemConfig">
 		SELECT
         	*

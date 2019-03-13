@@ -13,6 +13,8 @@ import cn.roothub.entity.SystemConfig;
  */
 public interface SystemConfigService {
 
+	SystemConfig getById(Integer id);
+	
 	SystemConfig getByKey(String key);
 	
 	/**

@@ -99,4 +99,9 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 		
 		return null;
 	}
+
+	@Override
+	public SystemConfig getById(Integer id) {
+		return systemConfigDao.selectById(id);
+	}
 }

@@ -27,7 +27,9 @@ public class SystemConfigAdminController {
 	
 	@RequestMapping(value = "/edit",method = RequestMethod.GET)
 	public String edit(@RequestParam(value = "pid",defaultValue = "1") Integer pid,Model model) {
+		SystemConfig systemConfig = systemConfigService.getById(pid);
 		List<SystemConfig> systemConfigs = systemConfigService.getByPid(pid);
+		model.addAttribute("systemConfig", systemConfig);
 		model.addAttribute("systemConfigs", systemConfigs);
 		model.addAttribute("pid", pid-1);
 		return "admin/system/edit";
@@ -36,7 +38,7 @@ public class SystemConfigAdminController {
 	
 	@RequestMapping(value = "/list",method = RequestMethod.GET)
 	@ResponseBody
-	public Result<List> list(Integer pid) {
+	public Result<List<SystemConfig>> list(Integer pid) {
 		List<SystemConfig> systemConfigs = systemConfigService.getByPid(pid);
 		return new Result<>(true, systemConfigs);
 				

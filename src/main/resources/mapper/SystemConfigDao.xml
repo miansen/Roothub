@@ -51,4 +51,13 @@
 	    </foreach>
      </select>
      
+     <update id="update" parameterType="cn.roothub.entity.SystemConfig">
+     	UPDATE 
+     		system_config a
+     	SET
+     		a.value = #{value}
+     	WHERE 
+     		a.key = #{key}
+     </update>
+     
 </mapper>

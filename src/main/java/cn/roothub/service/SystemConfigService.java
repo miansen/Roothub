@@ -44,4 +44,16 @@ public interface SystemConfigService {
 	List<SystemConfig> getBatchKeys(Collection<? extends Serializable> keys);
 	
 	List<SystemConfig> edit(Integer pid);
+	
+	void update(SystemConfig systemConfig);
+	
+	void update(String key,String value);
+	
+	void update(List<Map<String, String>> list);
+	
+	/**
+	 * 更新上传配置
+	 * @param pid
+	 */
+	void updateUpload(Integer pid);
 }

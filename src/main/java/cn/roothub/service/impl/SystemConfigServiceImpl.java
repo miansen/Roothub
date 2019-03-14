@@ -5,11 +5,14 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import cn.roothub.config.service.RedisService;
 import cn.roothub.dao.SystemConfigDao;
 import cn.roothub.entity.SystemConfig;
@@ -104,4 +107,49 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	public SystemConfig getById(Integer id) {
 		return systemConfigDao.selectById(id);
 	}
+
+	@Override
+	public void update(SystemConfig systemConfig) {
+		systemConfigDao.update(systemConfig);
+	}
+	
+	@Override
+	public void update(String key, String value) {
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setKey(key);
+		systemConfig.setValue(value);
+		systemConfigDao.update(systemConfig);
+	}
+
+	@Override
+	public void update(List<Map<String, String>> list) {
+		for(Map<String, String> map : list) {
+			SystemConfig systemConfig = new SystemConfig(); 
+			systemConfig.setKey(map.get("name"));
+			systemConfig.setValue(map.get("value"));
+			systemConfigDao.update(systemConfig);
+		}
+	}
+
+	/**
+	 * 更新上传配置
+	 */
+	@Transactional
+	@Override
+	public void updateUpload(Integer pid) {
+		SystemConfig systemConfig = getById(pid);
+		
+		List<SystemConfig> list = getByPid(systemConfig.getPid());
+
+		// 先将其他的配置的 value 设置为 0
+		list.forEach(systemConfig2 -> {
+			systemConfig2.setValue("0");
+			update(systemConfig2);
+		});
+
+		// 再将当前配置的 value 设置为 1
+		systemConfig.setValue("1");
+		update(systemConfig);
+	}
+
 }

@@ -24,23 +24,48 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <form id="form" action="/admin/role/edit" method="post">
-          <%-- <input type="hidden" name="roleId" id="roleId" value="${role.roleId}"> --%>
+        <form id="form">
+          <%-- <input type="hidden" name="pid" id="pid" value="${systemConfig.systemConfigId}"> --%>
           <div class="form-group">
             <c:forEach items="${systemConfigs}" var="systemConfig" >
+            
 			<c:if test="${systemConfig.type == 'text'}">
 			 	<label>${systemConfig.description}</label>
                	<input type="text" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}" class="form-control"/>
             	<br/>
             </c:if>
-			<c:if test="${systemConfig.type == 'radio'}">
-				<c:if test="${systemConfig.value == '1'}">
-					${systemConfig.description}<input type="radio" name="radios" id="${systemConfig.key}" value="${systemConfig.systemConfigId}" checked="checked"/>
+            
+            <c:if test="${systemConfig.type == 'number'}">
+			 	<label>${systemConfig.description}</label>
+               	<input type="number" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}" class="form-control"/>
+            	<br/>
+            </c:if>
+            
+           <!--  普通的radio -->
+            <c:if test="${systemConfig.type == 'radio' && systemConfig.pid != 2}">
+            	<label>${systemConfig.description}</label><br/>
+            	<c:if test="${systemConfig.value == '1'}">
+					<span style="padding-right: 5px;">是</span><input type="radio" name="${systemConfig.key}" id="${systemConfig.key}" value="1" checked="checked"/>
+					<span style="padding-right: 5px;">否</span><input type="radio" name="${systemConfig.key}" id="${systemConfig.key}" value="0"/>
 				</c:if>
                	<c:if test="${systemConfig.value == '0'}">
-					${systemConfig.description}<input type="radio" name="radios" id="${systemConfig.key}" value="${systemConfig.systemConfigId}"/>
+               		<span style="padding-right: 5px;">是</span><input type="radio" name="${systemConfig.key}" id="${systemConfig.key}" value="1"/>
+					<span style="padding-right: 5px;">否</span><input type="radio" name="${systemConfig.key}" id="${systemConfig.key}" value="0" checked="checked"/>
 				</c:if>
             </c:if>
+            <!--  普通的radio -->
+            
+            <!-- 上传设置的radio -->
+			<c:if test="${systemConfig.type == 'radio' && systemConfig.pid == 2}">
+				<c:if test="${systemConfig.value == '1'}">
+					<span style="font-weight: 700;padding-right: 5px;">${systemConfig.description}</span><input type="radio" name="upload-type" id="${systemConfig.key}" value="${systemConfig.systemConfigId}" checked="checked"/>
+				</c:if>
+               	<c:if test="${systemConfig.value == '0'}">
+					<span style="font-weight: 700;padding-right: 5px;">${systemConfig.description}</span><input type="radio" name="upload-type" id="${systemConfig.key}" value="${systemConfig.systemConfigId}"/>
+				</c:if>
+            </c:if>
+            <!-- 上传设置的radio -->
+            
 			</c:forEach>
           </div>
           <button type="submit" class="btn btn-primary">保存</button>
@@ -51,15 +76,15 @@
   <script type="text/javascript">
   $(function() {
 	  $(".system-menu").addClass("active");
-	  $(".system-treeview-menu li:eq(${pid})").addClass("active");
+	  $(".system-treeview-menu li:eq(${index})").addClass("active");
 
 	  // 获取已点击的单选框
-	  var uploadValue = $("input[name='radios']:checked").attr("value")
+	  var uploadValue = $("input[name='upload-type']:checked").attr("value")
 	  //console.log(uploadValue);
 	  // 获取上传配置
 	  if (uploadValue) {
 	    $.ajax({
-	      url: '/admin/system/list',
+	      url: '/admin/system/upload/list',
 	      async: true,
 	      cache: false,
 	      type: 'get',
@@ -70,7 +95,7 @@
 	      success: function(data) {
 	        if (data.success === true) {
 	          //console.log(data.data);
-	          $(".form-group").append('<div class="upload-input" style="margin-top: 10px;"></>');
+	          $(".form-group").append('<div class="upload-input" style="margin-top: 20px;"></>');
 	          for (var i = 0; i < data.data.length; i++) {
 	            $(".upload-input").append('<label>' + data.data[i].description + '</label><input type="text" name="' + data.data[i].key + '" id="' + data.data[i].key + '" value="' + data.data[i].value + '" class="form-control"/><br/>');
 	          }
@@ -82,12 +107,12 @@
 	  }
 
 	  // 切换上传配置
-	  $("input[name=radios]").each(function() {
+	  $("input[name=upload-type]").each(function() {
 	    $(this).click(function() {
 	      var pid = $(this).val();
 	      if (pid) {
 	        $.ajax({
-	          url: '/admin/system/list',
+	          url: '/admin/system/upload/list',
 	          async: true,
 	          cache: false,
 	          type: 'get',
@@ -112,40 +137,30 @@
 	  });
 
 	  $("#form").submit(function() {
-	    var roleName = $("#roleName").val();
-	    var permissionIds = [];
-	    $("input[name='permissionIds']:checked").each(function(index, item) {
-	      permissionIds.push($(this).val());
-	    });
-	    if (!roleName) {
-	      toast('角色名不能为空');
-	      return false;
-	    }
+		  /* var username = $("#username").val();
+		  if(!username) {
+	  	        toast('用户名不能为空');
+	  	        return false;
+	  	      } */
 	    $.ajax({
-	      url: '/admin/role/edit',
-	      async: true,
-	      cache: false,
+	      url: '/admin/system/edit',
+	      contentType:"application/json; charset=utf-8",
 	      type: 'post',
 	      dataType: 'json',
-	      traditional: true,
-	      //防止深度序列化,默认false
-	      data: {
-	        roleId: roleId,
-	        roleName: roleName,
-	        permissionIds: permissionIds
-	      },
+	      data: JSON.stringify($("#form").serializeArray()),
 	      success: function(data) {
 	        if (data.success === true) {
 	          toast('编辑成功', 'success');
 	          setTimeout(function() {
-	            window.location.reload();
-	          },
-	          1000);
+	        	  window.location.reload();
+	          },1000);
+	          console.log(data);
 	        } else {
 	          toast(data.error, 'error');
 	        }
 	      }
 	    })
+	    return false;
 	  })
 	});
   </script>

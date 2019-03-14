@@ -54,4 +54,14 @@ public class SystemConfigServiceTest extends BaseTest{
 		List<SystemConfig> list = systemConfigService.edit(1);
 		list.forEach(System.out::println);
 	}
+	
+	@Test
+	public void test05() {
+		List<SystemConfig> list = systemConfigService.getAll();
+		String json = JsonUtil.objectToJson(list);
+		
+		System.out.println(json);
+		System.out.println(list);
+		list.forEach(System.out::println);
+	}
 }

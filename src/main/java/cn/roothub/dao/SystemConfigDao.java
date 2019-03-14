@@ -22,4 +22,6 @@ public interface SystemConfigDao {
 	List<SystemConfig> selectByPid(@Param("pid") Integer pid);
 	
 	List<SystemConfig> selectBatchKeys(@Param("keys") Collection<? extends Serializable> keys);
+	
+	int update(SystemConfig systemConfig);
 }

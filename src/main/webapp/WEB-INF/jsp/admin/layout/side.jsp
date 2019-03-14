@@ -105,55 +105,39 @@
                 </a>
               </li>
             </shiro:hasPermission>
+            
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?pid=48&index=1">
+                <i class="fa fa-circle-o"></i>分页设置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            
+            <shiro:hasPermission name="system:edit">
+            <li>
+              <a href="/admin/system/edit?pid=4&index=2">
+                <i class="fa fa-circle-o"></i>积分设置
+              </a>
+            </li>
+            </shiro:hasPermission>
+            
            <shiro:hasPermission name="system:edit">
             <li>
-              <a href="/admin/system/edit?pid=2">
-                <i class="fa fa-circle-o"></i>上传配置
+              <a href="/admin/system/edit?pid=2&index=3">
+                <i class="fa fa-circle-o"></i>上传设置
               </a>
             </li>
             </shiro:hasPermission>
+            
             <shiro:hasPermission name="system:edit">
             <li>
-              <a href="/admin/system/edit?pid=3">
-                <i class="fa fa-circle-o"></i>邮箱配置
+              <a href="/admin/system/edit?pid=5&index=4">
+                <i class="fa fa-circle-o"></i>Redis设置
               </a>
             </li>
             </shiro:hasPermission>
-            <shiro:hasPermission name="system:edit">
-            <li>
-              <a href="/admin/system/edit?pid=4">
-                <i class="fa fa-circle-o"></i>积分配置
-              </a>
-            </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="system:edit">
-            <li>
-              <a href="/admin/system/edit?pid=5">
-                <i class="fa fa-circle-o"></i>Redis配置
-              </a>
-            </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="system:edit">
-            <li>
-              <a href="/admin/system/edit?pid=6">
-                <i class="fa fa-circle-o"></i>Elasticsearch配置
-              </a>
-            </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="system:edit">
-            <li>
-              <a href="/admin/system/edit?pid=7">
-                <i class="fa fa-circle-o"></i>站点登入配置
-              </a>
-            </li>
-            </shiro:hasPermission>
-            <shiro:hasPermission name="system:edit">
-            <li>
-              <a href="/admin/system/edit?pid=8">
-                <i class="fa fa-circle-o"></i>WebSocket配置
-              </a>
-            </li>
-            </shiro:hasPermission>
+            
           </ul>
         </li>
       </shiro:hasPermission>

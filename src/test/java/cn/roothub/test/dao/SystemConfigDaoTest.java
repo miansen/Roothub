@@ -150,4 +150,13 @@ public class SystemConfigDaoTest extends BaseTest{
 		List<SystemConfig> list2 = systemConfigDao.selectBatchKeys(list);
 		list2.forEach(System.out::println);
 	}
+	
+	@Test
+	public void test09() {
+		SystemConfig systemConfig = new SystemConfig();
+		systemConfig.setKey("oss_upload");
+		systemConfig.setValue("1");
+		int update = systemConfigDao.update(systemConfig);
+		System.out.println(update);
+	}
 }

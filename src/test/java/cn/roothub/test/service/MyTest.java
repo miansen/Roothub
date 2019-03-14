@@ -1,5 +1,8 @@
 package cn.roothub.test.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -83,6 +86,24 @@ public class MyTest {
 		String str = "{abc:ab}";
 		Map<String,Object> map = JsonUtil.jsonToObject(str, Map.class);
 		System.out.println(map);
+	}
+	
+	@Test
+	public void test06() {
+		List<Map<String,String>> list = new ArrayList<>();
+		Map<String,String> map = new HashMap<>();
+		Map<String,String> map2 = new HashMap<>();
+		map.put("name", "pid");
+		map.put("value", "1");
+		map2.put("name", "base_url");
+		map2.put("value", "localhost");
+		list.add(map);
+		list.add(map2);
+		System.out.println(list);
+		System.out.println(list.get(0));
+		System.out.println(list.get(0).get("name"));
+		System.out.println(list.get(1));
+		System.out.println(list.get(1).get("name"));
 	}
 	
 }

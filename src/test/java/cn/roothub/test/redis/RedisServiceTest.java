@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.roothub.config.service.RedisService;
 import cn.roothub.service.SystemConfigService;
 import cn.roothub.test.base.BaseTest;
+import cn.roothub.util.RedisConstants;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -38,7 +39,12 @@ public class RedisServiceTest extends BaseTest {
 	@Test
 	public void test03() {
 		System.out.println(redisService);
+		
 		redisService.setString("redisServiceTest", "succes02");
+		System.out.println(redisService);
+		
+		String string = redisService.getString("redisServiceTest");
+		System.out.println(string);
 	}
 	
 	/**
@@ -48,6 +54,7 @@ public class RedisServiceTest extends BaseTest {
 	public void test04() {
 		String string = redisService.getString("redisServiceTest");
 		System.out.println(string);
+		redisService.delString(RedisConstants.SYSTEM_CONFIG_ALL_LIST);
 	}
 	
 	@Test

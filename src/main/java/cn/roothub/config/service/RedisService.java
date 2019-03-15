@@ -78,7 +78,7 @@ public class RedisService implements BaseService<JedisPool> {
 	}
 
 	/**
-	 * 判断是否配置了redis
+	 * 判断是否配置了redis并初始化参数
 	 * 
 	 * @return
 	 */

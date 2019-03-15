@@ -19,6 +19,7 @@ import cn.roothub.entity.SystemConfig;
 import cn.roothub.service.SystemConfigService;
 import cn.roothub.util.Constants;
 import cn.roothub.util.JsonUtil;
+import cn.roothub.util.RedisConstants;
 
 /**
  * <p></p>
@@ -78,7 +79,21 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
 	@Override
 	public List<SystemConfig> getAll() {
-		return systemConfigDao.selectAll();
+		// 先从redis里面取
+		String string = redisService.getString(RedisConstants.SYSTEM_CONFIG_ALL_LIST);
+		
+		List<SystemConfig> systemConfigs = JsonUtil.jsonToObject(string, List.class);
+		
+		if(systemConfigs != null) {
+			log.debug("从redis里面取出了系统设置的信息");
+			return systemConfigs;
+		}else {
+			systemConfigs = systemConfigDao.selectAll();
+			// 将数据保存进redis里
+			redisService.setString(RedisConstants.SYSTEM_CONFIG_ALL_LIST, JsonUtil.objectToJson(systemConfigs));
+			return systemConfigDao.selectAll();
+		}
+		
 	}
 
 	@Override

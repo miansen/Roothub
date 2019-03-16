@@ -104,12 +104,17 @@ public class RedisService implements BaseService<JedisPool> {
 	 * @return
 	 */
 	public Jedis getJedis() {
-		Jedis jedis = null;
-		jedisPool = instance();
-		if (jedisPool != null) {
-			jedis = jedisPool.getResource();
+		try {
+			Jedis jedis = null;
+			jedisPool = instance();
+			if (jedisPool != null) {
+				jedis = jedisPool.getResource();
+			}
+			return jedis;
+		} catch (Exception e) {
+			log.error("获取Jedis客户端报错，错误信息: {}", e.getMessage());
+			return null;
 		}
-		return jedis;
 	}
 
 	/**

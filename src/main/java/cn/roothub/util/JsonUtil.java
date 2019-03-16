@@ -1,11 +1,7 @@
 package cn.roothub.util;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.util.List;
-
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 /**
  * json工具类
@@ -46,6 +42,5 @@ public class JsonUtil {
 	public static <T> T jsonToObject(String json,Type type) {
 		return gson.fromJson(json, type);
 	}
-	
 	
 }

@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.gson.reflect.TypeToken;
+
 import cn.roothub.config.service.RedisService;
 import cn.roothub.dao.SystemConfigDao;
 import cn.roothub.entity.SystemConfig;
@@ -37,13 +39,23 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	@Autowired
 	private RedisService redisService;
 	
+	//上传类型
+	private SystemConfig uploadType;
+	
+	/**
+	 * key是父节点的description,value是所有子节点对象
+	 */
 	@Override
 	public Map<String, Object> getAllMap() {
+		Map<String,Object> map = null;
 		// 先从redis里面取
-		String str = redisService.getString(Constants.REDIS_SYSTEM_CONFIG_KEY);
-		Map<String,Object> map = JsonUtil.jsonToObject(str, Map.class);
+		String json = redisService.getString(RedisConstants.SYSTEM_CONFIG_ALL_MAP);
+		if(json != null) {
+			// 将json转为Map
+			map = JsonUtil.jsonToObject(json, new TypeToken<Map<String,Object>>() {}.getType());
+		}
 		if(map != null) {
-			log.debug("从redis里面取出了系统设置的信息");
+			log.debug("从redis里面取出了【系统设置】的信息");
 			return map;
 		}else {
 			Map<String,Object> map2 = new LinkedHashMap<>();
@@ -54,7 +66,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 			});*/
 			
 			// 获取所有的系统配置数据
-			List<SystemConfig> systemConfigs = getAll();
+			List<SystemConfig> systemConfigs = getAllList();
 			
 			// 获取父节点
 			List<SystemConfig> systemConfigP = systemConfigs.stream()
@@ -71,29 +83,32 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 			});
 			
 			// 保存数据到redis
-			redisService.setString(Constants.REDIS_SYSTEM_CONFIG_KEY, JsonUtil.objectToJson(map2));
+			redisService.setString(RedisConstants.SYSTEM_CONFIG_ALL_MAP, JsonUtil.objectToJson(map2));
 			log.debug("从数据库里面取出了系统设置的信息");
 			return map2;
 		}
 	}
 
 	@Override
-	public List<SystemConfig> getAll() {
+	public List<SystemConfig> getAllList() {
+		List<SystemConfig> systemConfigs = null;
 		// 先从redis里面取
-		String string = redisService.getString(RedisConstants.SYSTEM_CONFIG_ALL_LIST);
-		
-		List<SystemConfig> systemConfigs = JsonUtil.jsonToObject(string, List.class);
-		
-		if(systemConfigs != null) {
-			log.debug("从redis里面取出了系统设置的信息");
+		String json = redisService.getString(RedisConstants.SYSTEM_CONFIG_ALL_LIST);
+		if (json != null) {
+			// 将json转为List
+			systemConfigs = JsonUtil.jsonToObject(json, new TypeToken<List<SystemConfig>>() {
+			}.getType());
+		}
+		if (systemConfigs != null) {
+			log.debug("从redis里面取出了【系统设置】的信息");
 			return systemConfigs;
-		}else {
+		} else {
 			systemConfigs = systemConfigDao.selectAll();
 			// 将数据保存进redis里
 			redisService.setString(RedisConstants.SYSTEM_CONFIG_ALL_LIST, JsonUtil.objectToJson(systemConfigs));
 			return systemConfigDao.selectAll();
 		}
-		
+
 	}
 
 	@Override
@@ -165,6 +180,37 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 		// 再将当前配置的 value 设置为 1
 		systemConfig.setValue("1");
 		update(systemConfig);
+		
+		//清除redis里的上传类型数据
+		redisService.delString(RedisConstants.UPLOAD_TYPE);
+		
+		//更新uploadType
+		uploadType = null;
+	}
+
+	/**
+	 * 获取上传类型
+	 */
+	@Override
+	public SystemConfig getUploadType() {
+		if(uploadType != null) {
+			return uploadType;
+		}
+		//SystemConfig systemConfig = null;
+		// 先从redis里面取
+		String json = redisService.getString(RedisConstants.UPLOAD_TYPE);
+		if (json != null) {
+			uploadType = JsonUtil.jsonToObject(json, SystemConfig.class);
+		}
+		if (uploadType != null) {
+			log.debug("从redis里面取出了【上传类型】的信息");
+			return uploadType;
+		} else {
+			uploadType = systemConfigDao.selectUploadType();
+			// 将数据存进redis
+			redisService.setString(RedisConstants.UPLOAD_TYPE, JsonUtil.objectToJson(uploadType));
+		}
+		return uploadType;
 	}
 
 }

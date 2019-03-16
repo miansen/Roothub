@@ -159,4 +159,10 @@ public class SystemConfigDaoTest extends BaseTest{
 		int update = systemConfigDao.update(systemConfig);
 		System.out.println(update);
 	}
+	
+	@Test
+	public void test10() {
+		SystemConfig selectUploadType = systemConfigDao.selectUploadType();
+		System.out.println(selectUploadType);
+	}
 }

@@ -64,7 +64,7 @@ public class SystemConfigServiceTest extends BaseTest{
 	
 	@Test
 	public void test05() {
-		List<SystemConfig> list = systemConfigService.getAll();
+		List<SystemConfig> list = systemConfigService.getAllList();
 		String json = JsonUtil.objectToJson(list);
 		
 		System.out.println(json);
@@ -189,6 +189,22 @@ public class SystemConfigServiceTest extends BaseTest{
 		//SystemConfig jsonToObject = JsonUtil.jsonToObject(json, SystemConfig.class);
 		
 	}
+	
+	@Test
+	public void test13() {
+		Map<String, Object> map = systemConfigService.getAllMap();
+		System.out.println(map);
+	}
+	
+	@Test
+	public void test14() {
+		SystemConfig uploadType = systemConfigService.getUploadType();
+		System.out.println(uploadType);
+		SystemConfig uploadType2 = systemConfigService.getUploadType();
+		System.out.println(uploadType2);
+		System.out.println(uploadType == uploadType2);
+	}
+	
 	
 	class MyTypeToKen extends TypeToken<User>{
 		

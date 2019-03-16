@@ -18,10 +18,16 @@ public interface SystemConfigService {
 	SystemConfig getByKey(String key);
 	
 	/**
+	 * 获取上传类型
+	 * @return
+	 */
+	SystemConfig getUploadType();
+	
+	/**
 	 * 获取所有的系统配置
 	 * @return
 	 */
-	List<SystemConfig> getAll();
+	List<SystemConfig> getAllList();
 	
 	/**
 	 * 根据pid获取子节点

@@ -17,6 +17,18 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/img/**").addResourceLocations("file:E:/xp/test/");
+		
+		registry.addResourceHandler("/static/img/**")
+		.addResourceLocations("file:F:/upload/roothub/topic/")
+		.addResourceLocations("file:F:/upload/roothub/node/")
+		.addResourceLocations("file:F:/upload/roothub/user/")
+		.addResourceLocations("file:F:/upload/roothub/tag/")
+		.addResourceLocations("classpath:/upload/")
+		.addResourceLocations("/resources/upload/");
+		
+		registry.addResourceHandler("/static/img2/**").addResourceLocations("file:F:/upload/roothub/topic/");
+		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/node/");
+		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/user/");
+		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/tag/");
 	}
 }

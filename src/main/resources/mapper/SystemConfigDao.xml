@@ -22,6 +22,17 @@
 		WHERE
 			key = #{key}
      </select>
+     
+     <!-- 查询上传类型 -->
+     <select id="selectUploadType" resultType="cn.roothub.entity.SystemConfig">
+		SELECT
+        	*
+		FROM
+			system_config
+		WHERE
+			`key` in ('default_upload','local_upload','oss_upload')
+		AND `value` = '1'
+     </select>
     
 	<select id="selectAll" resultType="cn.roothub.entity.SystemConfig">
 		SELECT

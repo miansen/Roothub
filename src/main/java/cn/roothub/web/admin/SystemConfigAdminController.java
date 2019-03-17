@@ -51,7 +51,6 @@ public class SystemConfigAdminController {
 	@RequestMapping(value = "/upload/list", method = RequestMethod.GET)
 	@ResponseBody
 	public Result<List<SystemConfig>> list(Integer pid) {
-		systemConfigService.updateUpload(pid);
 		List<SystemConfig> systemConfigs = systemConfigService.getByPid(pid);
 		return new Result<>(true, systemConfigs);
 

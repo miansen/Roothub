@@ -41,6 +41,11 @@
             	<br/>
             </c:if>
             
+            <c:if test="${systemConfig.type == 'hidden'}">
+               	<input type="hidden" name="${systemConfig.key}" id="${systemConfig.key}" value="${systemConfig.value}" class="form-control"/>
+            	<br/>
+            </c:if>
+            
            <!--  普通的radio -->
             <c:if test="${systemConfig.type == 'radio' && systemConfig.pid != 2}">
             	<label>${systemConfig.description}</label><br/>
@@ -109,8 +114,9 @@
 	  // 切换上传配置
 	  $("input[name=upload-type]").each(function() {
 	    $(this).click(function() {
-	      var pid = $(this).val();
-	      if (pid) {
+	      var id = $(this).val();
+	      if (id) {
+	    	$("#upload_type").val(id);
 	        $.ajax({
 	          url: '/admin/system/upload/list',
 	          async: true,
@@ -118,7 +124,7 @@
 	          type: 'get',
 	          dataType: 'json',
 	          data: {
-	            pid: pid
+	            pid: id
 	          },
 	          success: function(data) {
 	            if (data.success === true) {

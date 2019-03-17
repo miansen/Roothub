@@ -3,8 +3,11 @@ package cn.roothub.test.service;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -205,6 +208,16 @@ public class SystemConfigServiceTest extends BaseTest{
 		System.out.println(uploadType == uploadType2);
 	}
 	
+	@Test
+	public void test15() {
+		List<SystemConfig> list = systemConfigService.getByPid(2);
+		list.forEach(System.out::println);
+		System.out.println("-----------------------------------------------------------");
+		list.stream()
+		.filter(systemConfig2 -> !systemConfig2.getKey().equals("upload_type"))
+		.collect(Collectors.toList())
+		.forEach(System.out::println);
+	}
 	
 	class MyTypeToKen extends TypeToken<User>{
 		

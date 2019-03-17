@@ -151,13 +151,20 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 		systemConfigDao.update(systemConfig);
 	}
 
+	/**
+	 * 更新配置
+	 */
 	@Override
 	public void update(List<Map<String, String>> list) {
-		for(Map<String, String> map : list) {
-			SystemConfig systemConfig = new SystemConfig(); 
+		for (Map<String, String> map : list) {
+			SystemConfig systemConfig = new SystemConfig();
 			systemConfig.setKey(map.get("name"));
 			systemConfig.setValue(map.get("value"));
 			systemConfigDao.update(systemConfig);
+			// 如果更新的是上传配置
+			if (systemConfig.getKey().equals("upload_type")) {
+				updateUpload(new Integer(systemConfig.getValue()));
+			}
 		}
 	}
 
@@ -166,25 +173,28 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	 */
 	@Transactional
 	@Override
-	public void updateUpload(Integer pid) {
-		SystemConfig systemConfig = getById(pid);
-		
+	public void updateUpload(Integer id) {
+		// 获取当前配置
+		SystemConfig systemConfig = getById(id);
+		// 获取相同父节点的配置
 		List<SystemConfig> list = getByPid(systemConfig.getPid());
 
-		// 先将其他的配置的 value 设置为 0
-		list.forEach(systemConfig2 -> {
-			systemConfig2.setValue("0");
-			update(systemConfig2);
-		});
+		// 将配置的 value 设置为 0，不包含 key 为 upload_type 的配置
+		list.stream()
+			.filter(systemConfig2 -> !systemConfig2.getKey().equals("upload_type"))
+			.collect(Collectors.toList()).forEach(systemConfig2 -> {
+					systemConfig2.setValue("0");
+					update(systemConfig2);
+				});
 
 		// 再将当前配置的 value 设置为 1
 		systemConfig.setValue("1");
 		update(systemConfig);
-		
-		//清除redis里的上传类型数据
+
+		// 清除redis里的上传类型数据
 		redisService.delString(RedisConstants.UPLOAD_TYPE);
-		
-		//更新uploadType
+
+		// 更新uploadType
 		uploadType = null;
 	}
 

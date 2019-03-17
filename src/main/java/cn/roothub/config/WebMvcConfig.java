@@ -1,8 +1,11 @@
 package cn.roothub.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import cn.roothub.service.SystemConfigService;
 
 /**
  * <p></p>
@@ -12,6 +15,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 //@Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
+	@Autowired
+	private SystemConfigService systemConfigService;
+	
 	/**
 	 * 静态资源映射
 	 */
@@ -31,4 +37,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/user/");
 		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/tag/");
 	}
+	
+	
 }

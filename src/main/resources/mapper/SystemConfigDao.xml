@@ -28,10 +28,10 @@
 		SELECT
         	*
 		FROM
-			system_config
+			system_config a,system_config b
 		WHERE
-			`key` in ('default_upload','local_upload','oss_upload')
-		AND `value` = '1'
+			b.key = 'upload_type'
+		AND a.system_config_id = b.value
      </select>
     
 	<select id="selectAll" resultType="cn.roothub.entity.SystemConfig">

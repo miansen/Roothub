@@ -61,5 +61,5 @@ public interface SystemConfigService {
 	 * 更新上传配置
 	 * @param pid
 	 */
-	void updateUpload(Integer pid);
+	void updateUpload(Integer id);
 }

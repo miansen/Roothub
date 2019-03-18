@@ -4,8 +4,10 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
@@ -200,15 +202,6 @@ public class SystemConfigServiceTest extends BaseTest{
 	}
 	
 	@Test
-	public void test14() {
-		SystemConfig uploadType = systemConfigService.getUploadType();
-		System.out.println(uploadType);
-		SystemConfig uploadType2 = systemConfigService.getUploadType();
-		System.out.println(uploadType2);
-		System.out.println(uploadType == uploadType2);
-	}
-	
-	@Test
 	public void test15() {
 		List<SystemConfig> list = systemConfigService.getByPid(2);
 		list.forEach(System.out::println);
@@ -217,6 +210,40 @@ public class SystemConfigServiceTest extends BaseTest{
 		.filter(systemConfig2 -> !systemConfig2.getKey().equals("upload_type"))
 		.collect(Collectors.toList())
 		.forEach(System.out::println);
+	}
+	
+	@Test
+	public void test16() {
+		Map<String, Object> maps = systemConfigService.getUploadConfig();
+		
+		for(Map.Entry<String, Object> map : maps.entrySet()) {
+			System.out.println(map);
+		}
+		
+		System.out.println("-----------------------------------------------------");
+		Iterator<Entry<String, Object>> iterator = maps.entrySet().iterator();
+		while(iterator.hasNext()) {
+			Entry<String, Object> next = iterator.next();
+			System.out.println(next);
+		}
+		System.out.println("-----------------------------------------------------");
+		for(String key : maps.keySet()) {
+			System.out.println(key);
+		}
+		System.out.println("-----------------------------------------------------");
+		for(Object value : maps.values()) {
+			System.out.println(value);
+		}
+	}
+	
+	@Test
+	public void test17() {
+		List<String> asList = Arrays.asList("redis_host", "redis_port",
+				"open_redis", "redis_timeout", "redis_max_idle", "redis_max_total", "redis_database", "redis_ssl");
+		asList.forEach(System.out::println);
+		List<SystemConfig> redisConfigs = systemConfigService.getBatchKeys(Arrays.asList("redis_host", "redis_port",
+				"open_redis", "redis_timeout", "redis_max_idle", "redis_max_total", "redis_database", "redis_ssl"));
+		redisConfigs.forEach(System.out::println);
 	}
 	
 	class MyTypeToKen extends TypeToken<User>{

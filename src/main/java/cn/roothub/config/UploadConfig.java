@@ -13,7 +13,7 @@ import cn.roothub.service.SystemConfigService;
  * @author: miansen.wang
  * @date: 2019-03-15
  */
-@Component
+//@Component
 public class UploadConfig {
 
 	
@@ -21,9 +21,25 @@ public class UploadConfig {
 	
 	/**
 	 * 上传类型
-	 * 1: 默认上传 2: 本地上传 3: 阿里云OSS
+	 * 29:默认上传， 30:本地上传， 45:阿里云OSS
 	 */
-	private Integer uploadType;
+	private String uploadType;
+	
+	// 默认的话题文件保存路径
+	private String defaultUploadTopicFiledir;
+	
+	// 默认的节点文件保存路径
+	private String defaultUploadNodeFiledir;
+	
+	// 默认的标签文件保存路径
+	private String defaultUploadTagFiledir;
+	
+	// 默认的用户文件保存路径
+	private String defaultUploadUserFiledir;
+	
+	// 静态文件访问URL
+	private String defaultUploadStaticUrl;
+	
 	
 	/**
 	 * 资源位置
@@ -34,17 +50,8 @@ public class UploadConfig {
 	public UploadConfig(SystemConfigService systemConfigService) {
 		this.systemConfigService = systemConfigService;
 		List<SystemConfig> list = this.systemConfigService.getAllList();
-		this.uploadType = list.get(0).getSystemConfigId();
 	}
-
-	public Integer getUploadType() {
-		return uploadType;
-	}
-
-	public void setUploadType(Integer uploadType) {
-		this.uploadType = uploadType;
-	}
-
+	
 	public String[] getResourceLocations() {
 		return resourceLocations;
 	}

@@ -2,6 +2,7 @@ package cn.roothub.service.impl;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	private RedisService redisService;
 	
 	//上传类型
-	private SystemConfig uploadType;
+	private Map<String,Object> uploadConfig;
 	
 	/**
 	 * key是父节点的description,value是所有子节点对象
@@ -96,8 +97,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 		String json = redisService.getString(RedisConstants.SYSTEM_CONFIG_ALL_LIST);
 		if (json != null) {
 			// 将json转为List
-			systemConfigs = JsonUtil.jsonToObject(json, new TypeToken<List<SystemConfig>>() {
-			}.getType());
+			systemConfigs = JsonUtil.jsonToObject(json, new TypeToken<List<SystemConfig>>() {}.getType());
 		}
 		if (systemConfigs != null) {
 			log.debug("从redis里面取出了【系统设置】的信息");
@@ -163,7 +163,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 			systemConfigDao.update(systemConfig);
 			// 如果更新的是上传配置
 			if (systemConfig.getKey().equals("upload_type")) {
-				updateUpload(new Integer(systemConfig.getValue()));
+				updateUploadConfig(new Integer(systemConfig.getValue()));
 			}
 		}
 	}
@@ -173,7 +173,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	 */
 	@Transactional
 	@Override
-	public void updateUpload(Integer id) {
+	public void updateUploadConfig(Integer id) {
 		// 获取当前配置
 		SystemConfig systemConfig = getById(id);
 		// 获取相同父节点的配置
@@ -191,36 +191,42 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 		systemConfig.setValue("1");
 		update(systemConfig);
 
-		// 清除redis里的上传类型数据
-		redisService.delString(RedisConstants.UPLOAD_TYPE);
+		// 清除redis里的上传配置数据
+		redisService.delString(RedisConstants.UPLOAD_CONFIG);
 
 		// 更新uploadType
-		uploadType = null;
+		uploadConfig = null;
 	}
 
 	/**
 	 * 获取上传类型
 	 */
 	@Override
-	public SystemConfig getUploadType() {
-		if(uploadType != null) {
-			return uploadType;
+	public Map<String,Object> getUploadConfig() {
+		if(uploadConfig != null) {
+			return uploadConfig;
 		}
-		//SystemConfig systemConfig = null;
 		// 先从redis里面取
-		String json = redisService.getString(RedisConstants.UPLOAD_TYPE);
+		String json = redisService.getString(RedisConstants.UPLOAD_CONFIG);
 		if (json != null) {
-			uploadType = JsonUtil.jsonToObject(json, SystemConfig.class);
+			uploadConfig = JsonUtil.jsonToObject(json, new TypeToken<Map<String,Object>>() {}.getType());
 		}
-		if (uploadType != null) {
+		if (uploadConfig != null) {
 			log.debug("从redis里面取出了【上传类型】的信息");
-			return uploadType;
+			return uploadConfig;
 		} else {
-			uploadType = systemConfigDao.selectUploadType();
+			uploadConfig = new HashMap<>();
+			SystemConfig systemConfig = getByKey("upload_type");
+			List<SystemConfig> list = getByPid(new Integer(systemConfig.getValue()));
+			uploadConfig.put(systemConfig.getKey(), systemConfig.getValue());
+			list.forEach(systemConfig2 -> {
+				uploadConfig.put(systemConfig2.getKey(), systemConfig2.getValue());
+			});
+			
 			// 将数据存进redis
-			redisService.setString(RedisConstants.UPLOAD_TYPE, JsonUtil.objectToJson(uploadType));
+			redisService.setString(RedisConstants.UPLOAD_CONFIG, JsonUtil.objectToJson(uploadConfig));
 		}
-		return uploadType;
+		return uploadConfig;
 	}
 
 }

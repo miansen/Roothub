@@ -17,12 +17,6 @@ public interface SystemConfigDao {
 	
 	SystemConfig selectByKey(@Param("key") String key);
 	
-	/**
-	 * 查询上传类型
-	 * @return
-	 */
-	SystemConfig selectUploadType();
-	
 	List<SystemConfig> selectAll();
 	
 	List<SystemConfig> selectByPid(@Param("pid") Integer pid);

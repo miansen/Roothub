@@ -18,7 +18,7 @@ public class UploadConfigTest extends BaseTest{
 	
 	@Test
 	public void test01() {
-		Integer uploadType = uploadConfig.getUploadType();
-		System.out.println(uploadType);
+		String[] resourceLocations = uploadConfig.getResourceLocations();
+		System.out.println(resourceLocations);
 	}
 }

@@ -1,7 +1,10 @@
 package cn.roothub.config;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -23,16 +26,16 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	 */
 	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+		Map<String, Object> maps = systemConfigService.getUploadConfig();
+		String staticUrl = (String)maps.get("static_url");
+		ResourceHandlerRegistration addResourceLocations = registry.addResourceHandler(staticUrl);
+		for(Object obj : maps.values()) {
+			if(!obj.equals(staticUrl)) {
+				addResourceLocations.addResourceLocations((String)obj);
+			}
+		}
 		
-		registry.addResourceHandler("/static/img/**")
-		.addResourceLocations("file:F:/upload/roothub/topic/")
-		.addResourceLocations("file:F:/upload/roothub/node/")
-		.addResourceLocations("file:F:/upload/roothub/user/")
-		.addResourceLocations("file:F:/upload/roothub/tag/")
-		.addResourceLocations("classpath:/upload/")
-		.addResourceLocations("/resources/upload/");
-		
-		registry.addResourceHandler("/static/img2/**").addResourceLocations("file:F:/upload/roothub/topic/");
+		// registry.addResourceHandler("/static/img2/**").addResourceLocations("file:F:/upload/roothub/topic/");
 		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/node/");
 		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/user/");
 		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/tag/");

@@ -44,6 +44,8 @@ public class RedisService implements BaseService<JedisPool> {
 	private Integer database;
 	// redis服务是否开启认证连接
 	private Boolean ssl;
+	// 是否开启Redis
+	private Boolean openRedis;
 
 	private JedisPool jedisPool;
 
@@ -84,10 +86,10 @@ public class RedisService implements BaseService<JedisPool> {
 	 */
 	public boolean redisConfig() {
 		List<SystemConfig> redisConfigs = systemConfigService.getBatchKeys(Arrays.asList("redis_host", "redis_port",
-				"redis_password", "redis_timeout", "redis_max_idle", "redis_max_total", "redis_database", "redis_ssl"));
+				"open_redis", "redis_timeout", "redis_max_idle", "redis_max_total", "redis_database", "redis_ssl"));
 		this.host = redisConfigs.get(0).getValue();
 		this.port = Integer.parseInt(redisConfigs.get(1).getValue());
-		// this.password = redisConfigs.get(2).getValue();
+		this.openRedis = redisConfigs.get(2).getValue().equals("1");
 		this.timeout = Integer.parseInt(redisConfigs.get(3).getValue());
 		this.maxIdle = Integer.parseInt(redisConfigs.get(4).getValue());
 		this.maxTotal = Integer.parseInt(redisConfigs.get(5).getValue());
@@ -95,7 +97,7 @@ public class RedisService implements BaseService<JedisPool> {
 		this.ssl = redisConfigs.get(7).getValue().equals("1");
 		return !StringUtils.isEmpty(host) && !StringUtils.isEmpty(port) && !StringUtils.isEmpty(timeout)
 				&& !StringUtils.isEmpty(maxIdle) && !StringUtils.isEmpty(maxTotal) && !StringUtils.isEmpty(database)
-				&& !StringUtils.isEmpty(ssl);
+				&& !StringUtils.isEmpty(ssl) && openRedis;
 	}
 
 	/**

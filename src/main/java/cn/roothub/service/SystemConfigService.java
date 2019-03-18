@@ -18,10 +18,10 @@ public interface SystemConfigService {
 	SystemConfig getByKey(String key);
 	
 	/**
-	 * 获取上传类型
+	 * 获取上传配置
 	 * @return
 	 */
-	SystemConfig getUploadType();
+	Map<String,Object> getUploadConfig();
 	
 	/**
 	 * 获取所有的系统配置
@@ -61,5 +61,5 @@ public interface SystemConfigService {
 	 * 更新上传配置
 	 * @param pid
 	 */
-	void updateUpload(Integer id);
+	void updateUploadConfig(Integer id);
 }

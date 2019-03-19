@@ -15,6 +15,8 @@ public class SystemConfig {
 	private String type;
 	private String option;
 	private Boolean reboot;
+	private Boolean isDelete;
+	
 	public Integer getSystemConfigId() {
 		return systemConfigId;
 	}
@@ -63,10 +65,17 @@ public class SystemConfig {
 	public void setReboot(Boolean reboot) {
 		this.reboot = reboot;
 	}
+	public Boolean getIsDelete() {
+		return isDelete;
+	}
+	public void setIsDelete(Boolean isDelete) {
+		this.isDelete = isDelete;
+	}
 	@Override
 	public String toString() {
 		return "SystemConfig [systemConfigId=" + systemConfigId + ", key=" + key + ", value=" + value + ", description="
-				+ description + ", pid=" + pid + ", type=" + type + ", option=" + option + ", reboot=" + reboot + "]";
+				+ description + ", pid=" + pid + ", type=" + type + ", option=" + option + ", reboot=" + reboot
+				+ ", isDelete=" + isDelete + "]";
 	}
 	
 }

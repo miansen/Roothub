@@ -12,6 +12,7 @@
 			system_config
 		WHERE
 			system_config_id = #{id}
+		AND is_delete = 0
      </select>
     
     <select id="selectByKey" resultType="cn.roothub.entity.SystemConfig">
@@ -21,6 +22,7 @@
 			system_config a
 		WHERE
 			a.key = #{key}
+		AND a.is_delete = 0
      </select>
     
 	<select id="selectAll" resultType="cn.roothub.entity.SystemConfig">
@@ -28,6 +30,8 @@
         	*
 		FROM
 			system_config
+		WHERE
+			is_delete = 0
      </select>
 	
 	<select id="selectByPid" resultType="cn.roothub.entity.SystemConfig">
@@ -37,6 +41,7 @@
 			system_config
 		WHERE 
 			pid = #{pid}
+		AND is_delete = 0
      </select>
      
      <select id="selectBatchKeys" resultType="cn.roothub.entity.SystemConfig">
@@ -45,6 +50,8 @@
 		FROM
 			system_config a
 		WHERE 
+			a.is_delete = 0
+		AND 
 			a.key in
 		<foreach item="key" collection="keys" open="(" separator="," close=")">  
 		      #{key}

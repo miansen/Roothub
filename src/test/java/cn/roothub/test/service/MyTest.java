@@ -1,9 +1,15 @@
 package cn.roothub.test.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
 
@@ -106,4 +112,29 @@ public class MyTest {
 		System.out.println(list.get(1).get("name"));
 	}
 	
+	@Test
+	public void test() throws IOException {
+		Path path = Paths.get("upload1646");
+		//Files.createDirectories(path);
+		boolean b = Files.exists(path);
+		System.out.println("目录或者文件是否存在: "+b);
+		System.out.println("对应路径：" + path.toString());
+		System.out.println("父路径：" + path.getParent());
+		System.out.println("根路径：" + path.getRoot());
+		System.out.println("是否是绝对路径：" + path.isAbsolute());
+		System.out.println("绝对路径：" + path.toAbsolutePath());
+		System.out.println("路径数量：" + path.getNameCount());
+		String property = System.getProperty("user.dir");
+		System.out.println(property);
+	}
+	
+	@Test
+	public void test07() {
+		System.out.println("java.home : "+System.getProperty("java.home"));
+		System.out.println("java.class.version : "+System.getProperty("java.class.version"));
+		System.out.println("java.class.path : "+System.getProperty("java.class.path"));
+		System.out.println("user.dir: "+System.getProperty("user.dir"));
+		//String filePath = request.getSession().getServletContext().getRealPath("/")+"/resources/images/1.jpg";
+		
+	}
 }

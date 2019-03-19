@@ -241,9 +241,16 @@ public class SystemConfigServiceTest extends BaseTest{
 		List<String> asList = Arrays.asList("redis_host", "redis_port",
 				"open_redis", "redis_timeout", "redis_max_idle", "redis_max_total", "redis_database", "redis_ssl");
 		asList.forEach(System.out::println);
-		List<SystemConfig> redisConfigs = systemConfigService.getBatchKeys(Arrays.asList("redis_host", "redis_port",
-				"open_redis", "redis_timeout", "redis_max_idle", "redis_max_total", "redis_database", "redis_ssl"));
+		List<SystemConfig> redisConfigs = systemConfigService.getBatchKeys(asList);
 		redisConfigs.forEach(System.out::println);
+	}
+	
+	@Test
+	public void test18() {
+		Map<String, Object> maps = systemConfigService.getUploadConfig();
+		for(Object obj : maps.values()) {
+			System.out.println(obj);
+		}
 	}
 	
 	class MyTypeToKen extends TypeToken<User>{

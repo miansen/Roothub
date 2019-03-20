@@ -147,5 +147,10 @@ public class MyTest {
 		System.out.println(resolve);
 	}
 	
-	
+	@Test
+	public void test09() {
+		String str = "/static/**";
+		String replace = str.replace("**", "");
+		System.out.println(replace);
+	}
 }

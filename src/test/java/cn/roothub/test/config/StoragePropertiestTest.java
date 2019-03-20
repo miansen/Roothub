@@ -22,10 +22,12 @@ public class StoragePropertiestTest extends BaseTest {
 		String localUploadNodeFiledir = storageProperties.getLocalUploadNodeFiledir();
 		String localUploadTagFiledir = storageProperties.getLocalUploadTagFiledir();
 		String localUploadUserFiledir = storageProperties.getLocalUploadUserFiledir();
+		String staticUrl = storageProperties.getStaticUrl();
 		System.out.println(localUploadTopicFiledir);
 		System.out.println(localUploadNodeFiledir);
 		System.out.println(localUploadTagFiledir);
 		System.out.println(localUploadUserFiledir);
+		System.out.println(staticUrl);
 	}
 	
 	@Test

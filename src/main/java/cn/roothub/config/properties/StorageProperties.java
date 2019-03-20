@@ -25,8 +25,11 @@ public class StorageProperties {
 	// 自定义标签文件保存路径
 	private String localUploadTagFiledir;
 
+	// 静态文件访问URL
+	private String staticUrl;
+	
 	/**
-	 * 当upload_type == 30（本地上传）时，初始化变量，并去掉 "file:"
+	 * 当upload_type == 30（本地上传）时，初始化变量，保存路径去掉 "file:"，访问URL去掉"**"
 	 * 
 	 * @param systemConfigService
 	 */
@@ -39,6 +42,7 @@ public class StorageProperties {
 			this.localUploadUserFiledir = ((String) maps.get("local_upload_user_filedir")).replace("file:", "");
 			this.localUploadNodeFiledir = ((String) maps.get("local_upload_node_filedir")).replace("file:", "");
 			this.localUploadTagFiledir = ((String) maps.get("local_upload_tag_filedir")).replace("file:", "");
+			this.staticUrl = ((String)maps.get("static_url")).replace("**", "");
 		}
 	}
 
@@ -74,4 +78,11 @@ public class StorageProperties {
 		this.localUploadTagFiledir = localUploadTagFiledir;
 	}
 
+	public String getStaticUrl() {
+		return staticUrl;
+	}
+
+	public void setStaticUrl(String staticUrl) {
+		this.staticUrl = staticUrl;
+	}
 }

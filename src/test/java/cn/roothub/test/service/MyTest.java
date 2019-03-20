@@ -139,5 +139,13 @@ public class MyTest {
 		
 	}
 	
+	@Test
+	public void test08() {
+		Path path = Paths.get("/user");
+		System.out.println(path);
+		Path resolve = path.resolve("zhangsan");
+		System.out.println(resolve);
+	}
+	
 	
 }

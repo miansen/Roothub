@@ -253,6 +253,26 @@ public class SystemConfigServiceTest extends BaseTest{
 		}
 	}
 	
+	
+	@Test
+	public void test19() {
+		System.out.println("java.home : "+System.getProperty("java.home"));
+		System.out.println("java.class.version : "+System.getProperty("java.class.version"));
+		System.out.println("java.class.path : "+System.getProperty("java.class.path"));
+		System.out.println("user.dir: "+System.getProperty("user.dir"));
+		System.out.println("catalina.home: "+System.getProperty("catalina.home"));
+		//String filePath = request.getSession().getServletContext().getRealPath("/")+"/resources/images/1.jpg";
+		
+	}
+	
+	@Test
+	public void test20() {
+		Map<String, Object> maps = systemConfigService.getUploadConfig();
+		for(Map.Entry<String, Object> map : maps.entrySet()) {
+			System.out.println(map);
+		}
+	}
+	
 	class MyTypeToKen extends TypeToken<User>{
 		
 	}

@@ -134,7 +134,10 @@ public class MyTest {
 		System.out.println("java.class.version : "+System.getProperty("java.class.version"));
 		System.out.println("java.class.path : "+System.getProperty("java.class.path"));
 		System.out.println("user.dir: "+System.getProperty("user.dir"));
+		System.out.println("catalina.home: "+System.getProperty("catalina.home"));
 		//String filePath = request.getSession().getServletContext().getRealPath("/")+"/resources/images/1.jpg";
 		
 	}
+	
+	
 }

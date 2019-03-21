@@ -41,11 +41,11 @@ public class StorageServiceImpl implements StorageService {
 	 */
 	@Override
 	public String store(MultipartFile file, Path path) {
-		// 获取上传的文件名
-		String filename = StringUtils.cleanPath(file.getOriginalFilename());
 		if (file.isEmpty()) {
 			throw new StorageException("请选择要上传的文件");
 		}
+		// 获取上传的文件名
+		String filename = StringUtils.cleanPath(file.getOriginalFilename());
 		if (filename.contains("..")) {
 			throw new StorageException("文件格式不正确");
 		}

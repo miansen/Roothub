@@ -14,6 +14,7 @@ hs_err_pid*
 *.iml
 *.log
 target/
+src/test/
 out/
 .DS_Store
 .apt_generated/

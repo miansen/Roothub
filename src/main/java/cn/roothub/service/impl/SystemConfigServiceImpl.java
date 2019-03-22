@@ -199,7 +199,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	}
 
 	/**
-	 * 获取上传类型
+	 * 获取上传数据
 	 */
 	@Override
 	public Map<String,Object> getUploadConfig() {

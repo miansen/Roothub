@@ -49,6 +49,9 @@ public class RedisService implements BaseService<JedisPool> {
 
 	private JedisPool jedisPool;
 
+	static {
+		System.out.println("redisService");
+	}
 	/**
 	 * redis连接池初始化
 	 */

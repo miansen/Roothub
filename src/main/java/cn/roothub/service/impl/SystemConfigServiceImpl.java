@@ -43,6 +43,10 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	//上传类型
 	private Map<String,Object> uploadConfig;
 	
+	static {
+		System.out.println("SystemConfigServiceImpl");
+	}
+	
 	/**
 	 * key是父节点的description,value是所有子节点对象
 	 */

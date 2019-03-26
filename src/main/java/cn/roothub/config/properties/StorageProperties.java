@@ -2,6 +2,7 @@ package cn.roothub.config.properties;
 
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import cn.roothub.service.SystemConfigService;
 
@@ -13,7 +14,7 @@ import cn.roothub.service.SystemConfigService;
  * @author: miansen.wang
  * @date: 2019-03-19
  */
-@Component
+//@Component
 public class StorageProperties {
 
 	// 默认话题文件保存路径
@@ -65,7 +66,18 @@ public class StorageProperties {
 	 * 1200: 阿里云OSS上传
 	 */
 	private String uploadType;
-		
+	
+	static {
+		System.out.println("TEST");
+	}
+	
+	
+	//private SystemConfigService systemConfigService;
+	
+	/*public StorageProperties() {
+		System.out.println("默认构造函数初始化。。。");
+	}*/
+	
 	@Autowired
 	public StorageProperties(SystemConfigService systemConfigService) {
 		Map<String, Object> maps = systemConfigService.getUploadConfig();

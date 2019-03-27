@@ -221,7 +221,7 @@ public class TopicServiceImpl implements TopicService{
 	 * 收藏话题列表
 	 */
 	@Override
-	public PageDataBody<Topic> findById(Integer pageNumber, Integer pageSize, Integer uid) {
+	public PageDataBody<Topic> findCollectsById(Integer pageNumber, Integer pageSize, Integer uid) {
 		return null;
 	}
 
@@ -357,6 +357,12 @@ public class TopicServiceImpl implements TopicService{
 	@Override
 	public int countAllForAdmin(String author,String startDate,String endDate) {
 		return rootTopicDao.countAllForAdmin(author, startDate, endDate);
+	}
+
+	
+	@Override
+	public Topic findById(Integer id) {
+		return rootTopicDao.selectByTopicId(id);
 	}
 
 }

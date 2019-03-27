@@ -67,7 +67,7 @@
                   	</button>
                   </shiro:hasPermission>
                   <shiro:hasPermission name="topic:good">
-                  	<button onclick="actionBtn('${topic.topicId}', 'top', this)" class="btn btn-xs btn-primary">
+                  	<button onclick="actionBtn('${topic.topicId}', 'good', this)" class="btn btn-xs btn-primary">
                   		<c:choose>
                   			<c:when test="${topic.good}"> 取消加精</c:when>
                   			<c:otherwise> 加精</c:otherwise>
@@ -116,8 +116,35 @@
   	     	return page ? page[1] : 1;  
   	 	}
   	 	var p = page();//当前页数
-  	 paginate(count,limit,p,url);
+  	 	paginate(count,limit,p,url);
   	});
+  	
+  	function actionBtn(id, action, self){
+  		var msg,url;
+  		var tip = $(self).text().replace(/[\r\n]/g, '').trim();
+  		if(action === 'top'){
+  			url = '/admin/topic/top?id=' + id;
+  			msg = '确定' + tip + '这条话题吗？';
+  		}else if(action === 'good'){
+  			url = '/admin/topic/good?id=' + id;
+  	        msg = '确定'+tip+'这条评论吗？';
+  		}else if(action === 'delete'){
+  			url = '/admin/topic/delete?id=' + id;
+  	        msg = '确定要删除这条评论吗？';
+  		}
+  		if(confirm(msg)){
+  			$.get(url,function(data){
+  				if(data.success === true){
+  					toast(data.error, "success");
+  					setTimeout(function(){
+  						window.location.reload();
+  					},700);
+  				}else{
+  					toast(data.error);
+  				}
+  			})
+  		}
+ 	}
   </script>
 </div>
 <%@ include file="../layout/footer.jsp"%>

@@ -184,7 +184,7 @@ public interface TopicService {
 	 * @param uid
 	 * @return
 	 */
-	PageDataBody<Topic> findById(Integer pageNumber, Integer pageSize, Integer uid);
+	PageDataBody<Topic> findCollectsById(Integer pageNumber, Integer pageSize, Integer uid);
 	
 	/**
 	 * 查询用户发布主题的数量
@@ -246,4 +246,6 @@ public interface TopicService {
     PageDataBody<Topic> pageForAdmin(String author,String startDate,String endDate,Integer pageNumber, Integer pageSize);
     
     int countAllForAdmin(String author,String startDate,String endDate);
+    
+    Topic findById(Integer id);
 }

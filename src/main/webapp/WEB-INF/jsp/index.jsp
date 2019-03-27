@@ -68,7 +68,7 @@
 			  <span class="label label-primary">置顶</span> <span>•</span>
 			  </c:if>
 			  <c:if test="${item.good}">
-			  <span class="label label-primary">精华</span> <span>•</span>
+			  <span class="label label-success">精华</span> <span>•</span>
 			  </c:if>
 			    <span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
 			    <span>•</span>

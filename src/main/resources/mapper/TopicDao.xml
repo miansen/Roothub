@@ -440,25 +440,29 @@
              #{url})
   </insert>
     <update id="updateByTopicId" parameterType="cn.roothub.entity.Topic">
-      update topic
-      set tab = #{tab,jdbcType=VARCHAR},
-      title = #{title,jdbcType=VARCHAR},
-      tag = #{tag,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      update_date = #{updateDate,jdbcType=TIMESTAMP},
-      last_reply_time = #{lastReplyTime,jdbcType=TIMESTAMP},
-      last_reply_author = #{lastReplyAuthor,jdbcType=VARCHAR},
-      view_count = #{viewCount,jdbcType=INTEGER},
-      author = #{author,jdbcType=VARCHAR},
-      top = #{top,jdbcType=BIT},
-      good = #{good,jdbcType=BIT},
-      show_status = #{showStatus,jdbcType=BIT},
-      reply_count = #{replyCount,jdbcType=INTEGER},
-      is_delete = #{isDelete,jdbcType=BIT},
-      tag_is_count = #{tagIsCount,jdbcType=BIT},
-      content = #{content,jdbcType=LONGVARCHAR},
-      avatar = #{avatar,jdbcType=VARCHAR}
-    where topic_id = #{topicId,jdbcType=INTEGER}
+      UPDATE 
+      	topic
+      SET 
+      	tab = #{tab,jdbcType=VARCHAR},
+      	title = #{title,jdbcType=VARCHAR},
+      	tag = #{tag,jdbcType=VARCHAR},
+      	create_date = #{createDate,jdbcType=TIMESTAMP},
+      	update_date = #{updateDate,jdbcType=TIMESTAMP},
+      	last_reply_time = #{lastReplyTime,jdbcType=TIMESTAMP},
+      	last_reply_author = #{lastReplyAuthor,jdbcType=VARCHAR},
+      	view_count = #{viewCount,jdbcType=INTEGER},
+      	author = #{author,jdbcType=VARCHAR},
+      	top = #{top,jdbcType=BIT},
+      	good = #{good,jdbcType=BIT},
+      	show_status = #{showStatus,jdbcType=BIT},
+      	reply_count = #{replyCount,jdbcType=INTEGER},
+      	is_delete = #{isDelete,jdbcType=BIT},
+      	tag_is_count = #{tagIsCount,jdbcType=BIT},
+      	content = #{content,jdbcType=LONGVARCHAR},
+      	node_title = #{nodeTitle,jdbcType=VARCHAR},
+      	avatar = #{avatar,jdbcType=VARCHAR}
+    WHERE 
+    	topic_id = #{topicId,jdbcType=INTEGER}
     </update>
     <!-- 更新主题的头像 -->
 	<update id="updateTopicAvatar" parameterType="cn.roothub.entity.User">

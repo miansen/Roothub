@@ -133,8 +133,8 @@
           var nodeTitle = node ? node : $("#node option:selected").val();
           // var tag = $("#tag").val();
           // var avatar = $("#editor").find("img:first").attr("src");
-          if(!title) {
-            alert('请输入标题');
+          if(!title || title.length > 120) {
+            alert('请输入标题，且最大长度在120个字符以内');
             return false;
           }else if(!nodeTitle){
           alert('请选择一个节点');

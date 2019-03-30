@@ -229,4 +229,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from reply a
         where TO_DAYS(a.create_date) = TO_DAYS(NOW())
     </select>
+    
+    <!-- 后台评论列表 -->
+    <select id="selectAllForAdmin" resultType="java.util.Map">
+		SELECT
+        	a.reply_id,
+        	a.reply_content,
+        	a.topic_id,
+        	b.title,
+        	a.reply_author_name,
+        	a.create_date
+		FROM
+			reply a,topic b
+		WHERE 
+			a.is_delete = 0
+		AND 
+			b.is_delete = 0
+		AND 
+			a.topic_id = b.topic_id
+		<if test="author != null">
+		AND a.reply_author_name = #{author}
+		</if>
+		<if test="topic != null">
+		<!-- 模糊查询中，只能使用$,使用#的话，会被解析为列 -->
+		AND b.title like '%${topic}%'
+		</if>
+		<if test="startDate != null and endDate != null">
+		AND a.create_date BETWEEN #{startDate} and #{endDate}
+		</if>
+		ORDER BY a.create_date DESC
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     
+     <!-- 后台评论统计 -->
+     <select id="countAllForAdmin" resultType="java.lang.Integer">
+        SELECT
+        	COUNT(1)
+        FROM
+        	reply a,topic b
+        WHERE 
+			a.is_delete = 0
+		AND 
+			b.is_delete = 0
+		AND 
+			a.topic_id = b.topic_id
+		<if test='author != null'>
+		AND a.reply_author_name = #{author}
+		</if>
+		<if test="topic != null">
+		<!-- 模糊查询中，只能使用$,使用#的话，会被解析为列 -->
+		AND b.title like '%${topic}%'
+		</if>
+		<if test='startDate != null and endDate != null'>
+			AND a.create_date BETWEEN #{startDate} and #{endDate}
+		</if>
+    </select>
 </mapper>

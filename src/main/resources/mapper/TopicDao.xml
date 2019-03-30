@@ -629,6 +629,7 @@
         where TO_DAYS(a.create_date) = TO_DAYS(NOW())
     </select>
     
+    <!-- 后台话题列表 -->
     <select id="selectAllForAdmin" resultType="Topic">
 		SELECT
         <include refid="Admin_Column_List"/>
@@ -650,6 +651,7 @@
         </if>
      </select>
      
+     <!-- 后台话题统计 -->
      <select id="countAllForAdmin" resultType="java.lang.Integer">
         SELECT
         	COUNT(1)

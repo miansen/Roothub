@@ -1,12 +1,12 @@
 package cn.roothub.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import cn.roothub.dao.ReplyDao;
 import cn.roothub.dao.UserDao;
 import cn.roothub.dto.PageDataBody;
@@ -32,16 +32,16 @@ public class ReplyServiceImpl implements ReplyService{
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private ReplyDao rootReplyDao;
+	private ReplyDao replyDao;
 	@Autowired
-	private UserDao rootUserDao;
+	private UserDao userDao;
 	
 	/**
 	 * 查询全部评论
 	 */
 	@Override
 	public List<Reply> findAll() {
-		return rootReplyDao.selectAll();
+		return replyDao.selectAll();
 	}
 
 	/**
@@ -49,8 +49,8 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public PageDataBody<Reply> findAll(Integer pageNumber, Integer pageSize) {
-		int totalRow = rootReplyDao.countAll();
-		List<Reply> list = rootReplyDao.selectAll((pageNumber - 1) * pageSize, pageSize);
+		int totalRow = replyDao.countAll();
+		List<Reply> list = replyDao.selectAll((pageNumber - 1) * pageSize, pageSize);
 		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -59,7 +59,7 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public List<Reply> findByTopicId(Integer topicId) {
-		return rootReplyDao.selectByTopicId(topicId);
+		return replyDao.selectByTopicId(topicId);
 	}
 
 	/**
@@ -67,8 +67,8 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public PageDataBody<Reply> page(Integer pageNumber, Integer pageSize, Integer topicId) {
-		int totalRow = rootReplyDao.countByTopicId(topicId);
-		List<Reply> list = rootReplyDao.selectByTopicId((pageNumber - 1) * pageSize, pageSize, topicId);
+		int totalRow = replyDao.countByTopicId(topicId);
+		List<Reply> list = replyDao.selectByTopicId((pageNumber - 1) * pageSize, pageSize, topicId);
 		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
 	}
 	
@@ -79,11 +79,11 @@ public class ReplyServiceImpl implements ReplyService{
 			if(reply.getReplyContent() == null) {
 				throw new OperationRepeaException("评论内容不能为空");
 			}
-			int insert = rootReplyDao.insert(reply);
+			int insert = replyDao.insert(reply);
 			if(insert <= 0) {
 				throw new OperationFailedException("评论话题失败！");
 			}else {
-				rootUserDao.updateScore(10, reply.getReplyAuthorId());//回复积10分
+				userDao.updateScore(10, reply.getReplyAuthorId());//回复积10分
 				return new ReplyExecution(reply.getReplyAuthorName(), InsertReplyEnum.SUCCESS, reply);
 						
 			}
@@ -101,7 +101,7 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public void deleteByReplyId(Integer replyId) {
-		rootReplyDao.deleteByReplyId(replyId);
+		replyDao.deleteByReplyId(replyId);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public void deleteByTopicId(Integer topicId) {
-		rootReplyDao.deleteByTopicId(topicId);
+		replyDao.deleteByTopicId(topicId);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public void update(Reply reply) {
-		rootReplyDao.update(reply);
+		replyDao.update(reply);
 	}
 
 	/**
@@ -126,8 +126,8 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public PageDataBody<ReplyAndTopicByName> findAllByNameAndTopic(String replyAuthorName, Integer pageNumber, Integer pageSize) {
-		int totalRow = rootReplyDao.countByName(replyAuthorName);
-		List<ReplyAndTopicByName> list = rootReplyDao.selectAllByNameAndTopic(replyAuthorName, (pageNumber - 1) * pageSize, pageSize);
+		int totalRow = replyDao.countByName(replyAuthorName);
+		List<ReplyAndTopicByName> list = replyDao.selectAllByNameAndTopic(replyAuthorName, (pageNumber - 1) * pageSize, pageSize);
 		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -136,7 +136,7 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public int countAll() {
-		return rootReplyDao.countAll();
+		return replyDao.countAll();
 	}
 
 	/**
@@ -144,11 +144,30 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public int countByName(String name) {
-		return rootReplyDao.countByName(name);
+		return replyDao.countByName(name);
 	}
 
 	@Override
 	public int countToday() {
-		return rootReplyDao.countToday();
+		return replyDao.countToday();
+	}
+
+	/**
+	 * 后台评论分页列表
+	 */
+	@Override
+	public PageDataBody<Map<String, Object>> pageForAdmin(String author, String topic, String startDate, String endDate,
+			Integer pageNumber, Integer pageSize) {
+		List<Map<String,Object>> list = replyDao.selectAllForAdmin(author, topic, startDate, endDate, (pageNumber - 1) * pageSize, pageSize);
+		int totalRow = countAllForAdmin(author, topic, startDate, endDate);
+		return new PageDataBody<Map<String, Object>>(list, pageNumber, pageSize, totalRow);
+	}
+
+	/**
+	 * 统计后台评论
+	 */
+	@Override
+	public int countAllForAdmin(String author, String topic, String startDate, String endDate) {
+		return replyDao.countAllForAdmin(author, topic, startDate, endDate);
 	}
 }

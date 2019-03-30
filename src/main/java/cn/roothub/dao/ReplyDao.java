@@ -1,6 +1,8 @@
 package cn.roothub.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import cn.roothub.entity.ReplyAndTopicByName;
@@ -123,4 +125,13 @@ public interface ReplyDao {
 	
 	// 统计当天评论数
 	int countToday();
+	
+	// 后台评论列表
+	List<Map<String,Object>> selectAllForAdmin(@Param("author") String author,@Param("topic") String topic,
+											   @Param("startDate") String startDate,@Param("endDate") String endDate,
+											   @Param("start") Integer start,@Param("limit") Integer limit);
+	
+	// 后台评论统计
+	int countAllForAdmin(@Param("author") String author,@Param("topic") String topic,
+					  @Param("startDate") String startDate,@Param("endDate") String endDate);
 }

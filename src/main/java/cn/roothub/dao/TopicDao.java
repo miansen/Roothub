@@ -268,8 +268,10 @@ public interface TopicDao {
     // 统计当天的话题数
     int countToday();
 
+    // 后台话题列表
     List<Topic> selectAllForAdmin(@Param("author") String author,@Param("startDate") String startDate,
     						      @Param("endDate") String endDate, @Param("start") Integer start, @Param("limit") Integer limit);
     
+    // 后台话题统计
     int countAllForAdmin(@Param("author") String author,@Param("startDate") String startDate,@Param("endDate") String endDate);
 }

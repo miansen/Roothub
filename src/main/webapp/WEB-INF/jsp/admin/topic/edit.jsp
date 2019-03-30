@@ -84,44 +84,47 @@
   	    editor.create();
   	    editor.txt.html("${fn:replace(topic.content,vEnter,'')}");
   	  $("#from").submit(function() {
-  		var title = $("#title").val();
-  		var contentHtml = editor.txt.html();
-  		var nodeTitle = $("#node option:selected").val();
-  		if (!title || title.length > 120) {
-  			alert('请输入标题，且最大长度在120个字符以内');
-  			return false;
-  		} else if (!nodeTitle) {
-  			alert('请选择一个节点');
-  			return false;
-  		} else {
-  			$.ajax({
-  				url: '/admin/topic/edit',
-  				type: 'post',
-  				async: false,
-  				cache: false,
-  				//dataType: 'json',
-  				data: {
-  					id: ${topic.topicId},
-  					title: title,
-  					content: contentHtml,
-  					nodeTitle: nodeTitle
-  				},
-  				success: function(data) {
-  					if (data.success != null && data.success == true) {
-  						toast(data.error, "success");
-  						setTimeout(function(){
-  							window.location.href = "/admin/topic/list";
-  						},700);
-  					} else {
+  		if (confirm("确定编辑此话题吗？")) {
+  			var title = $("#title").val();
+  			var contentHtml = editor.txt.html();
+  			var nodeTitle = $("#node option:selected").val();
+  			if (!title || title.length > 120) {
+  				alert('请输入标题，且最大长度在120个字符以内');
+  				return false;
+  			} else if (!nodeTitle) {
+  				alert('请选择一个节点');
+  				return false;
+  			} else {
+  				$.ajax({
+  					url: '/admin/topic/edit',
+  					type: 'post',
+  					async: false,
+  					cache: false,
+  					dataType: 'json',
+  					data: {
+  						id: ${topic.topicId},
+  						title: title,
+  						content: contentHtml,
+  						nodeTitle: nodeTitle
+  					},
+  					success: function(data) {
+  						if (data.success != null && data.success == true) {
+  							toast(data.error, "success");
+  							setTimeout(function() {
+  								window.location.href = "/admin/topic/list";
+  							},
+  							700);
+  						} else {
+  							toast(data.error);
+  						}
+  					},
+  					error: function(data) {
   						toast(data.error);
   					}
-  				},
-  				error: function(data) {
-  					toast(data.error);
-  				}
-  			})
+  				})
+  			}
   		}
-  		return false;
+  		return false;	
   	});
   	});
   </script>

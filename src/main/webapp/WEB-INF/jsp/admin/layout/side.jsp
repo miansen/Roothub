@@ -33,7 +33,7 @@
       </shiro:hasPermission>
       <shiro:hasPermission name="reply:list">
         <li>
-          <a href="/admin/comment/list">
+          <a href="/admin/reply/list">
             <i class="fa fa-comment"></i>
             <span>评论</span>
           </a>

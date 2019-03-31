@@ -17,6 +17,13 @@ import cn.roothub.entity.Reply;
 public interface ReplyService {
 
 	/**
+	 * 根据ID查询评论
+	 * @param id
+	 * @return
+	 */
+	Reply findById(Integer id);
+	
+	/**
 	 * 查询全部评论
 	 * @return
 	 */

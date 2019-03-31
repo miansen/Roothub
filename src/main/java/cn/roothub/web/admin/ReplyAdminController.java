@@ -1,7 +1,9 @@
 package cn.roothub.web.admin;
 
+import java.util.Date;
 import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +11,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import cn.roothub.dto.PageDataBody;
+import cn.roothub.dto.Result;
+import cn.roothub.entity.Reply;
 import cn.roothub.service.ReplyService;
 
 /**
@@ -55,4 +61,24 @@ public class ReplyAdminController {
 	    return "admin/reply/list";
 	}
 	
+	@RequiresPermissions("reply:edit")
+	@RequestMapping(value = "/edit",method = RequestMethod.GET)
+	public String edit(@RequestParam(value = "id") Integer id,Model model) {
+		Reply reply = replyService.findById(id);
+		model.addAttribute("reply", reply);
+		model.addAttribute("vEnter", "\n");
+		return "admin/reply/edit";
+	}
+	
+	@RequiresPermissions("reply:edit")
+	@RequestMapping(value = "/edit",method = RequestMethod.POST)
+	@ResponseBody
+	public Result<String> edit(@RequestParam(value = "id") Integer id,
+							   @RequestParam(value = "content") String content){
+		Reply reply = replyService.findById(id);
+		reply.setReplyContent(content);
+		reply.setUpdateDate(new Date());
+		replyService.update(reply);
+		return new Result<>(true, "编辑成功！");
+	}
 }

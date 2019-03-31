@@ -55,10 +55,10 @@ public class ReplyController extends BaseController{
 			reply.setReplyAuthorName(user.getUserName());//当前回复用户昵称
 			reply.setIsDelete(false);//是否删除 0:默认 1:删除
 			reply.setIsRead(false);//是否已读 0:默认 1:未读
-			reply.setReplyShow(false);//是否可见 0:默认 1:不可见
+			reply.setIsShow(false);//是否可见 0:默认 1:不可见
 			reply.setReplyGoodCount(0);//点赞
 			reply.setReplyBadCount(0);//踩数
-			reply.setReplyType("");
+			reply.setReplyType(null);
 			reply.setReplyReadCount(0);
 			reply.setStatusCd("1000");//回复状态 1000:有效 1100:无效 1200:未生效
 			ReplyExecution save = rootReplyService.save(reply);//添加回复

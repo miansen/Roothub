@@ -37,6 +37,14 @@ public class ReplyServiceImpl implements ReplyService{
 	private UserDao userDao;
 	
 	/**
+	 * 根据ID查询评论
+	 */
+	@Override
+	public Reply findById(Integer id) {
+		return replyDao.selectByReplyId(id);
+	}
+
+	/**
 	 * 查询全部评论
 	 */
 	@Override

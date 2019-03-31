@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result column="reply_author_name" jdbcType="VARCHAR" property="replyAuthorName"/>
     <result column="is_delete" jdbcType="BIT" property="isDelete"/>
     <result column="is_read" jdbcType="BIT" property="isRead"/>
-    <result column="is_show" jdbcType="BIT" property="replyShow"/>
+    <result column="is_show" jdbcType="BIT" property="isShow"/>
     <result column="reply_good_count" jdbcType="INTEGER" property="replyGoodCount"/>
     <result column="reply_bad_count" jdbcType="INTEGER" property="replyBadCount"/>
     <result column="reply_type" jdbcType="VARCHAR" property="replyType"/>
@@ -161,7 +161,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{replyAuthorName}, 
     #{isDelete},
     #{isRead}, 
-    #{replyShow}, 
+    #{isShow}, 
     #{replyGoodCount}, 
     #{replyBadCount},
     #{replyType}, 
@@ -171,7 +171,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 根据ID更新评论 -->
   <update id="update" parameterType="cn.roothub.entity.Reply">
     update reply
-    set topic_id = #{replyId},
+    set topic_id = #{topicId},
     topic_author_id = #{topicAuthorId},
     reply_content = #{replyContent},
     create_date = #{createDate},
@@ -180,7 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     reply_author_name = #{replyAuthorName},
     is_delete = #{isDelete},
     is_read = #{isRead},
-    is_show = #{replyShow},
+    is_show = #{isShow},
     reply_good_count = #{replyGoodCount},
     reply_bad_count = #{replyBadCount},
     reply_type = #{replyType},

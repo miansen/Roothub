@@ -65,7 +65,7 @@ public class Reply {
 	/**
 	 * 是否可见 0:可见 1:不可见 2:其他
 	 */
-	private Boolean replyShow;
+	private Boolean isShow;
 	
 	/**
 	 * 点赞
@@ -185,12 +185,12 @@ public class Reply {
 		this.isRead = isRead;
 	}
 
-	public Boolean getReplyShow() {
-		return replyShow;
+	public Boolean getIsShow() {
+		return isShow;
 	}
 
-	public void setReplyShow(Boolean replyShow) {
-		this.replyShow = replyShow;
+	public void setIsShow(Boolean isShow) {
+		this.isShow = isShow;
 	}
 
 	public Integer getReplyGoodCount() {
@@ -235,10 +235,10 @@ public class Reply {
 
 	@Override
 	public String toString() {
-		return "RootReply [replyId=" + replyId + ", topicId=" + topicId + ", topicAuthorId=" + topicAuthorId
+		return "Reply [replyId=" + replyId + ", topicId=" + topicId + ", topicAuthorId=" + topicAuthorId
 				+ ", replyContent=" + replyContent + ", createDate=" + createDate + ", updateDate=" + updateDate
 				+ ", replyAuthorId=" + replyAuthorId + ", replyAuthorName=" + replyAuthorName + ", isDelete=" + isDelete
-				+ ", isRead=" + isRead + ", replyShow=" + replyShow + ", replyGoodCount=" + replyGoodCount
+				+ ", isRead=" + isRead + ", isShow=" + isShow + ", replyGoodCount=" + replyGoodCount
 				+ ", replyBadCount=" + replyBadCount + ", replyType=" + replyType + ", replyReadCount=" + replyReadCount
 				+ ", statusCd=" + statusCd + ", avatar=" + avatar + "]";
 	}

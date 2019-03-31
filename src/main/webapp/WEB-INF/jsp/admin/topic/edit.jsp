@@ -82,7 +82,7 @@
   	    	  'redo'  // 重复
   	        ];
   	    editor.create();
-  	    editor.txt.html("${fn:replace(topic.content,vEnter,'')}");
+  	    editor.txt.html('${fn:replace(topic.content,vEnter,'')}');
   	  $("#from").submit(function() {
   		if (confirm("确定编辑此话题吗？")) {
   			var title = $("#title").val();

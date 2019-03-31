@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.Reply;
+import cn.roothub.entity.Topic;
 import cn.roothub.service.ReplyService;
+import cn.roothub.service.TopicService;
 
 /**
  * <p></p>
@@ -29,6 +31,9 @@ public class ReplyAdminController {
 
 	@Autowired
 	private ReplyService replyService;
+	
+	@Autowired
+	private TopicService topicService;
 	
 	/**
 	 * 后台评论列表
@@ -61,6 +66,12 @@ public class ReplyAdminController {
 	    return "admin/reply/list";
 	}
 	
+	/**
+	 * 后台评论编辑页面
+	 * @param id: 评论ID
+	 * @param model
+	 * @return
+	 */
 	@RequiresPermissions("reply:edit")
 	@RequestMapping(value = "/edit",method = RequestMethod.GET)
 	public String edit(@RequestParam(value = "id") Integer id,Model model) {
@@ -70,6 +81,12 @@ public class ReplyAdminController {
 		return "admin/reply/edit";
 	}
 	
+	/**
+	 * 后台评论编辑接口
+	 * @param id: 评论ID
+	 * @param content: 评论内容
+	 * @return
+	 */
 	@RequiresPermissions("reply:edit")
 	@RequestMapping(value = "/edit",method = RequestMethod.POST)
 	@ResponseBody
@@ -80,5 +97,18 @@ public class ReplyAdminController {
 		reply.setUpdateDate(new Date());
 		replyService.update(reply);
 		return new Result<>(true, "编辑成功！");
+	}
+	
+	/**
+	 * 删除评论
+	 * @param id: 评论ID
+	 * @return
+	 */
+	@RequiresPermissions("reply:delete")
+	@RequestMapping(value = "/delete",method = RequestMethod.GET)
+	@ResponseBody
+	public Result<String> delete(@RequestParam(value = "id") Integer id){
+		replyService.deleteByReplyId(id);
+		return new Result<>(true, "删除成功！");
 	}
 }

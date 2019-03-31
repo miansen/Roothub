@@ -96,14 +96,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <!-- 根据话题ID分页查询评论 -->
   <select id="selectByTopicId" resultType="Reply">
     SELECT
-    <!-- <include refid="Base_Column_List"/> -->
-    a.*,
-    b.avatar
+    	a.*,
+    	b.avatar
     FROM
-    reply a,user b
-    where a.topic_id = #{topicId}
-    and a.reply_author_id = b.user_id
-    order by a.create_date
+    	reply a,user b
+    WHERE 
+    	a.is_delete = 0 
+    AND 
+    	a.topic_id = #{topicId}
+    AND 
+    	a.reply_author_id = b.user_id
+    ORDER BY 
+    	a.create_date
     <if test="start != null">
       limit #{start,jdbcType=INTEGER}
       <if test="limit != null">

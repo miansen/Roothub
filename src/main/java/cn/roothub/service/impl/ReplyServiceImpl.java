@@ -12,12 +12,14 @@ import cn.roothub.dao.UserDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.ReplyExecution;
 import cn.roothub.entity.ReplyAndTopicByName;
+import cn.roothub.entity.Topic;
 import cn.roothub.entity.Reply;
 import cn.roothub.enums.InsertReplyEnum;
 import cn.roothub.exception.OperationFailedException;
 import cn.roothub.exception.OperationRepeaException;
 import cn.roothub.exception.OperationSystemException;
 import cn.roothub.service.ReplyService;
+import cn.roothub.service.TopicService;
 
 /**
  * 评论业务逻辑层
@@ -35,6 +37,8 @@ public class ReplyServiceImpl implements ReplyService{
 	private ReplyDao replyDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private TopicService topicService;
 	
 	/**
 	 * 根据ID查询评论
@@ -109,6 +113,13 @@ public class ReplyServiceImpl implements ReplyService{
 	 */
 	@Override
 	public void deleteByReplyId(Integer replyId) {
+		Reply reply = findById(replyId);
+		Topic topic = topicService.findById(reply.getTopicId());
+		// 话题评论数 - 1
+		topic.setReplyCount(topic.getReplyCount() - 1);
+		// 更新话题
+		topicService.updateTopic(topic);
+		// 删除评论
 		replyDao.deleteByReplyId(replyId);
 	}
 

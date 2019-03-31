@@ -43,8 +43,8 @@ public class ReplyController extends BaseController{
 	private Result<ReplyExecution> save(HttpServletRequest request, 
 			@RequestParam("topicId") Integer topicId,
 			@RequestParam("content") String content){
-		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		//RootUser user = rootUserService.findByName(Base64Util.decode(cookie));//当前用户
+			//String cookie = CookieAndSessionUtil.getCookie(request, "user");
+			//RootUser user = rootUserService.findByName(Base64Util.decode(cookie));//当前用户
 			User user = getUser(request);
 			Reply reply = new Reply();
 			reply.setTopicId(topicId);//话题id

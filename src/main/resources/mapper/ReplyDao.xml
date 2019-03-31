@@ -189,15 +189,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where reply_id = #{replyId}
   </update>
   <!-- 根据评论ID删除评论 -->
-  <delete id="deleteByReplyId" parameterType="java.lang.Integer">
-    delete from reply
-    where reply_id = #{replyId,jdbcType=INTEGER}
-  </delete>
+  <update id="deleteByReplyId" parameterType="java.lang.Integer">
+    UPDATE 
+    	reply
+    SET 
+    	is_delete = 1
+    WHERE 
+    	reply_id = #{replyId,jdbcType=INTEGER}
+  </update>
   <!-- 根据话题ID删除评论 -->
-  <delete id="deleteByTopicId" parameterType="java.lang.Integer">
-    delete from reply
-    where topic_id = #{topicId,jdbcType=INTEGER}
-  </delete>
+  <update id="deleteByTopicId" parameterType="java.lang.Integer">
+    UPDATE 
+    	reply
+    SET 
+    	is_delete = 1
+    WHERE 
+    	topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
   <!-- 统计所有评论 -->
   <select id="countAll" resultType="java.lang.Integer">
     select count(reply_id)

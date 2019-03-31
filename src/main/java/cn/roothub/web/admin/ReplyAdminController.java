@@ -54,4 +54,5 @@ public class ReplyAdminController {
 	    model.addAttribute("p", p);
 	    return "admin/reply/list";
 	}
+	
 }

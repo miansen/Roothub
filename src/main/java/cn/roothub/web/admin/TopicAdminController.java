@@ -16,6 +16,7 @@ import cn.roothub.dto.Result;
 import cn.roothub.entity.Topic;
 import cn.roothub.exception.ApiAssert;
 import cn.roothub.service.NodeService;
+import cn.roothub.service.ReplyService;
 import cn.roothub.service.TopicService;
 
 /**
@@ -33,6 +34,8 @@ public class TopicAdminController {
 	private SiteConfig siteConfig;
 	@Autowired
 	private NodeService nodeService;
+	@Autowired
+	private ReplyService replyService;
 	
 	/**
 	 * 话题列表
@@ -102,6 +105,8 @@ public class TopicAdminController {
 		topic.setIsDelete(!topic.getIsDelete());
 		topic.setUpdateDate(new Date());
 		topicService.updateTopic(topic);
+		// 删除关联的评论
+		replyService.deleteByTopicId(id);
 		return new Result<>(true, "删除成功！");
 	}
 	

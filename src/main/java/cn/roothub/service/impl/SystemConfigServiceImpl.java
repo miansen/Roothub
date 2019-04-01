@@ -43,10 +43,18 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	//上传类型
 	private Map<String,Object> uploadConfig;
 	
+	private Integer age;
+	
 	static {
-		System.out.println("SystemConfigServiceImpl");
+		System.out.println("SystemConfigServiceImpl初始化。。。");
 	}
 	
+	
+	
+	public SystemConfigServiceImpl() {
+		System.out.println("SystemConfigServiceImpl构造器初始化。。。");
+	}
+
 	/**
 	 * key是父节点的description,value是所有子节点对象
 	 */
@@ -231,6 +239,19 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 			redisService.setString(RedisConstants.UPLOAD_CONFIG, JsonUtil.objectToJson(uploadConfig));
 		}
 		return uploadConfig;
+	}
+
+	
+	@Override
+	public Integer getAge() {
+		
+		return this.age;
+	}
+
+
+	@Override
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 }

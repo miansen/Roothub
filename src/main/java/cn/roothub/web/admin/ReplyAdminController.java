@@ -3,7 +3,6 @@ package cn.roothub.web.admin;
 import java.util.Date;
 import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.Reply;
-import cn.roothub.entity.Topic;
 import cn.roothub.service.ReplyService;
-import cn.roothub.service.TopicService;
 
 /**
  * <p></p>
@@ -31,9 +27,6 @@ public class ReplyAdminController {
 
 	@Autowired
 	private ReplyService replyService;
-	
-	@Autowired
-	private TopicService topicService;
 	
 	/**
 	 * 后台评论列表

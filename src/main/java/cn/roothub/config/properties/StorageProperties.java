@@ -3,6 +3,7 @@ package cn.roothub.config.properties;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import cn.roothub.service.SystemConfigService;
 
@@ -14,7 +15,8 @@ import cn.roothub.service.SystemConfigService;
  * @author: miansen.wang
  * @date: 2019-03-19
  */
-//@Component
+@Component
+@Scope("prototype")
 public class StorageProperties {
 
 	// 默认话题文件保存路径
@@ -59,6 +61,8 @@ public class StorageProperties {
 	// 静态文件访问URL
 	private String staticUrl;
 
+	private Integer age;
+	
 	/**
 	 * 上传类型
 	 * 1000: 默认上传 
@@ -68,7 +72,7 @@ public class StorageProperties {
 	private String uploadType;
 	
 	static {
-		System.out.println("TEST");
+		System.out.println("StorageProperties初始化。。。");
 	}
 	
 	
@@ -80,9 +84,10 @@ public class StorageProperties {
 	
 	@Autowired
 	public StorageProperties(SystemConfigService systemConfigService) {
+		System.out.println("StorageProperties构造器初始化。。。");
 		Map<String, Object> maps = systemConfigService.getUploadConfig();
 		String uploadType = (String) maps.get("upload_type");
-
+		this.age = systemConfigService.getAge();
 		//默认上传
 		if (uploadType.equals("29")) {
 			this.defaultUploadTopicFiledir = ((String) maps.get("local_upload_topic_filedir"));
@@ -233,6 +238,16 @@ public class StorageProperties {
 
 	public void setUploadType(String uploadType) {
 		this.uploadType = uploadType;
+	}
+
+	
+	
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
 	}
 
 	@Override

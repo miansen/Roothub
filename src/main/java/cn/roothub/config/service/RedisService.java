@@ -50,8 +50,15 @@ public class RedisService implements BaseService<JedisPool> {
 	private JedisPool jedisPool;
 
 	static {
-		System.out.println("redisService");
+		System.out.println("redisService初始化。。。");
 	}
+	
+	
+	
+	public RedisService() {
+		System.out.println("redisService构造器初始化。。。");
+	}
+
 	/**
 	 * redis连接池初始化
 	 */

@@ -62,4 +62,8 @@ public interface SystemConfigService {
 	 * @param pid
 	 */
 	void updateUploadConfig(Integer id);
+	
+	Integer getAge();
+	
+	void setAge(Integer age);
 }

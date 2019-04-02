@@ -17,7 +17,7 @@ import cn.roothub.service.SystemConfigService;
  */
 @Component
 @Scope("prototype")
-public class StorageProperties {
+public class StorageProperties implements BaseProperties{
 
 	// 默认话题文件保存路径
 	private String defaultUploadTopicFiledir;
@@ -75,16 +75,11 @@ public class StorageProperties {
 		System.out.println("StorageProperties初始化。。。");
 	}
 	
-	
-	//private SystemConfigService systemConfigService;
-	
-	/*public StorageProperties() {
-		System.out.println("默认构造函数初始化。。。");
-	}*/
-	
 	@Autowired
-	public StorageProperties(SystemConfigService systemConfigService) {
-		System.out.println("StorageProperties构造器初始化。。。");
+	private SystemConfigService systemConfigService;
+	
+	@Override
+	public void init() {
 		Map<String, Object> maps = systemConfigService.getUploadConfig();
 		String uploadType = (String) maps.get("upload_type");
 		this.age = systemConfigService.getAge();
@@ -120,6 +115,7 @@ public class StorageProperties {
 		}
 	}
 
+	
 	public String getDefaultUploadTopicFiledir() {
 		return defaultUploadTopicFiledir;
 	}

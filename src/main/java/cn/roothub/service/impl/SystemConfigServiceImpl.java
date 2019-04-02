@@ -40,7 +40,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	@Autowired
 	private RedisService redisService;
 	
-	//上传类型
+	//上传配置
 	private Map<String,Object> uploadConfig;
 	
 	private Integer age;

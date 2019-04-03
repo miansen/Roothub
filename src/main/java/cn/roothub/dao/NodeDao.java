@@ -1,6 +1,8 @@
 package cn.roothub.dao;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import cn.roothub.entity.Node;
 
@@ -32,4 +34,10 @@ public interface NodeDao {
 	//查找相邻顶级节点
 	List<Node> selectAtherParentNode(@Param("nodeCode") String nodeCode,@Param("tabId") Integer tabId,
 			 						 @Param("start") Integer start, @Param("limit") Integer limit);
+	
+	// 后台节点列表
+	List<Node> listForAdmin(@Param("nodeTitle") String nodeTitle, @Param("start") Integer start, @Param("limit") Integer limit);
+	
+	// 统计节点列表
+	int count();
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Node;
 
 /**
@@ -26,4 +27,10 @@ public interface NodeService {
 	
 	//相邻节点
 	List<Node> adjacencyNode(Node node);
+	
+	// 后台节点列表
+	PageDataBody<Node> pageForAdmin(String nodeTitle,Integer pageNumber, Integer pageSize);
+	
+	// 统计后台列表
+	int count();
 }

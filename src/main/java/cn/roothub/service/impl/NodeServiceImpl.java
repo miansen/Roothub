@@ -1,10 +1,10 @@
 package cn.roothub.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.roothub.dao.NodeDao;
+import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Node;
 import cn.roothub.service.NodeService;
 
@@ -49,5 +49,18 @@ public class NodeServiceImpl implements NodeService{
 	@Override
 	public List<Node> findAll(Integer pageNumber, Integer pageSize) {
 		return nodeDao.selectAll(pageNumber, pageSize);
+	}
+
+	// 后台节点列表
+	@Override
+	public PageDataBody<Node> pageForAdmin(String nodeTitle, Integer pageNumber, Integer pageSize) {
+		List<Node> list = nodeDao.listForAdmin(nodeTitle, (pageNumber - 1) * pageSize, pageSize);
+		return new PageDataBody<Node>(list, pageNumber, pageSize, count());
+	}
+
+	// 统计节点列表
+	@Override
+	public int count() {
+		return nodeDao.count();
 	}
 }

@@ -39,9 +39,9 @@
           </a>
         </li>
       </shiro:hasPermission>
-      <shiro:hasPermission name="tag:list">
+      <shiro:hasPermission name="node:list">
         <li>
-          <a href="/admin/tag/list">
+          <a href="/admin/node/list">
             <i class="fa fa-tags"></i>
             <span>节点</span>
           </a>

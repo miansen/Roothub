@@ -132,25 +132,14 @@
         	a.avatar_large,
         	a.node_desc,
         	a.create_date,
-        	COUNT(1) count_topic
+        	(SELECT COUNT(1) FROM topic b WHERE b.is_delete = 0 AND a.node_title = b.node_title) count_topic
         FROM
-        	node a,topic b
+        	node a
         WHERE 
         	a.is_delete = 0
-        AND 
-        	b.is_delete = 0
-        AND 
-        	a.node_title = b.node_title
         <if test="nodeTitle != null">
         AND a.node_title = #{nodeTitle}
         </if>
-        GROUP BY 
-        	a.node_id,
-        	a.node_title,
-        	a.avatar_normal,
-        	a.avatar_large,
-        	a.create_date,
-        	a.node_desc
         <if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}
             <if test="limit != null">
@@ -170,7 +159,5 @@
     <if test="nodeTitle != null">
     AND a.node_title = #{nodeTitle}
     </if>
-    AND EXISTS
-    	(SELECT 1 FROM topic b WHERE b.is_delete = 0 AND a.node_title = b.node_title)
     </select>
 </mapper>

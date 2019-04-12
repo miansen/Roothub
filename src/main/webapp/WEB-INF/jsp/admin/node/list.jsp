@@ -48,8 +48,16 @@
             <tr>
               <td>${node.nodeId}</td>
               <td>${node.nodeTitle}</td>
-              <td><a href="${node.avatarNormal}" target="_blank"><img src="${node.avatarNormal}" width="30" alt=""></a></td>
-              <td><a href="${node.avatarLarge}" target="_blank"><img src="${node.avatarLarge}" width="30" alt=""></a></td>
+              <td>
+              <c:if test="${node.avatarNormal != null}">
+              	<a href="${node.avatarNormal}" target="_blank"><img src="${node.avatarNormal}" width="30" alt=""></a>
+              </c:if>
+              </td>
+              <td>
+              <c:if test="${node.avatarLarge != null}">
+              	<a href="${node.avatarLarge}" target="_blank"><img src="${node.avatarLarge}" width="30" alt=""></a>
+              </c:if>
+              </td>
               <td>${node.countTopic}</td>
               <td>${node.nodeDesc}</td>
               <td><fmt:formatDate type="both" value="${node.createDate}" /></td>

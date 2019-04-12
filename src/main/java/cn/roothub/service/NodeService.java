@@ -32,5 +32,5 @@ public interface NodeService {
 	PageDataBody<Node> pageForAdmin(String nodeTitle,Integer pageNumber, Integer pageSize);
 	
 	// 统计后台列表
-	int count();
+	int count(String nodeTitle);
 }

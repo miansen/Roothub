@@ -161,6 +161,16 @@
     
     <!-- 统计后台节点列表 -->
     <select id="count" resultType="java.lang.Integer">
-    SELECT count(1) FROM node WHERE is_delete = 0
+    SELECT 
+    	COUNT(1)
+    FROM 
+    	node a
+    WHERE 
+    	a.is_delete = 0
+    <if test="nodeTitle != null">
+    AND a.node_title = #{nodeTitle}
+    </if>
+    AND EXISTS
+    	(SELECT 1 FROM topic b WHERE b.is_delete = 0 AND a.node_title = b.node_title)
     </select>
 </mapper>

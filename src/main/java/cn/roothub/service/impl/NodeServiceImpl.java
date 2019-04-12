@@ -55,12 +55,12 @@ public class NodeServiceImpl implements NodeService{
 	@Override
 	public PageDataBody<Node> pageForAdmin(String nodeTitle, Integer pageNumber, Integer pageSize) {
 		List<Node> list = nodeDao.listForAdmin(nodeTitle, (pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<Node>(list, pageNumber, pageSize, count());
+		return new PageDataBody<Node>(list, pageNumber, pageSize, count(nodeTitle));
 	}
 
 	// 统计节点列表
 	@Override
-	public int count() {
-		return nodeDao.count();
+	public int count(String nodeTitle) {
+		return nodeDao.count(nodeTitle);
 	}
 }

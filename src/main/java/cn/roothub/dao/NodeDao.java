@@ -39,5 +39,5 @@ public interface NodeDao {
 	List<Node> listForAdmin(@Param("nodeTitle") String nodeTitle, @Param("start") Integer start, @Param("limit") Integer limit);
 	
 	// 统计节点列表
-	int count();
+	int count(@Param("nodeTitle") String nodeTitle);
 }

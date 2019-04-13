@@ -110,7 +110,7 @@ public class StorageProperties implements BaseProperties{
 			this.endpoint = ((String) maps.get("endpoint"));
 			this.bucketName = ((String) maps.get("bucketName"));
 			this.ossFiledir = ((String) maps.get("oss_filedir"));
-			this.staticUrl = ((String) maps.get("static_url"));
+			this.staticUrl = ((String) maps.get("oss_static_url"));
 			this.uploadType = "1200";
 		}
 	}

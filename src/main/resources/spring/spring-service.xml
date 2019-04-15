@@ -16,6 +16,7 @@
 	<!-- 自动扫描config.service包，将使用@Component注解的类作为bean注入到IOC容器 -->
 	<context:component-scan base-package="cn.roothub.config.service" />
 	<context:component-scan base-package="cn.roothub.config.properties" />
+	<context:component-scan base-package="cn.roothub.store" />
 	<!-- 全局异常处理 -->
 	<context:component-scan base-package="cn.roothub.handler" />
 	<!-- 引入redis配置文件 -->

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ import cn.roothub.service.SystemConfigService;
 public class SystemConfigAdminController {
 
 	@Autowired
+	@Qualifier("systemConfigServiceImpl")
 	private SystemConfigService systemConfigService;
 
 	@RequiresPermissions("system:edit")

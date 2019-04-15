@@ -1,4 +1,4 @@
-package cn.roothub.service.impl;
+package cn.roothub.store;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import cn.roothub.exception.StorageException;
-import cn.roothub.service.StorageService;
 import cn.roothub.util.FileNameUtil;
 
 /**
@@ -22,7 +21,7 @@ import cn.roothub.util.FileNameUtil;
  * @date: 2019-03-20
  */
 @Service
-public class StorageServiceImpl implements StorageService {
+public class FileSystemStorageService implements StorageService {
 
 	/**
 	 * 初始化存储

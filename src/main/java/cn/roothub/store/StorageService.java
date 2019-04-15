@@ -1,4 +1,4 @@
-package cn.roothub.service;
+package cn.roothub.store;
 
 import java.nio.file.Path;
 import java.util.stream.Stream;

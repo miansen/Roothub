@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.roothub.service.StorageService;
+import cn.roothub.store.StorageService;
 
 @Controller
 public class CommonController {

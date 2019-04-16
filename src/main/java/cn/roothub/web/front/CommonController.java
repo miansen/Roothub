@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.roothub.config.properties.StorageProperties;
+import cn.roothub.config.service.OSSService;
 import cn.roothub.store.StorageService;
 
 @Controller
@@ -39,14 +41,29 @@ public class CommonController {
 	@Autowired
 	private StorageService storageService;
 	
+	@Autowired
+	private StorageProperties storageProperties;
+	
+	@Autowired
+	private OSSService ossService;
+	
 	@ResponseBody
 	@RequestMapping(value = "/common/wangEditorUpload", method = RequestMethod.POST)
 	private Map<String, Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		storageProperties.init();
 		JSONObject jsonObject = new JSONObject();
 		// 修改上传文件的路径 1.windows的路径和linux的不一样 2.文件应用"/"符号 2018.06.03 15:53
-		String filePath = request.getSession().getServletContext().getRealPath("/") + "/resources/images/";
-		String fileName = storageService.store(file, Paths.get(filePath));
-		String[] data = { "/resources/images/" + fileName };
+		// String filePath = request.getSession().getServletContext().getRealPath("/") + "/resources/images/";
+		// String fileName = storageService.store(file, Paths.get(filePath));
+		// String fileName = null;
+		String[] data = new String[1];
+		if(storageProperties.getUploadType().equals("1200")) {
+			data[0] = ossService.uploadFile2OSS(file);
+		}else if(storageProperties.getUploadType().equals("1100")) {
+			data[0] = storageProperties.getStaticUrl() + storageService.store(file, Paths.get(storageProperties.getLocalUploadTopicFiledir()));
+		}else {
+			data[0] = storageProperties.getStaticUrl() + storageService.store(file, Paths.get(storageProperties.getDefaultUploadTopicFiledir()));
+		}
 		jsonObject.put("errno", 0);
 		jsonObject.put("data", data);
 		return jsonObject;

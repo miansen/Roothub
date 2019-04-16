@@ -36,7 +36,10 @@ public class FileSystemStorageService implements StorageService {
 	}
 
 	/**
-	 * 存储文件
+	 * 存储文件到指定目录
+	 * @param file
+	 * @param path
+	 * @return 文件名
 	 */
 	@Override
 	public String store(MultipartFile file, Path path) {

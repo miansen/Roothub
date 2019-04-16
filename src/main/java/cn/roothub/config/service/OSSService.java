@@ -45,7 +45,7 @@ public class OSSService implements BaseService<OSSClient>{
 	/**
 	 * 上传到OSS服务器 ，如果同名文件会覆盖
 	 * @param file
-	 * @return
+	 * @return 文件URL
 	 */
 	public String uploadFile2OSS(MultipartFile file) {
 		if (file.isEmpty()) {

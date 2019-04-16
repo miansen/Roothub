@@ -1,6 +1,9 @@
 package cn.roothub.config.properties;
 
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -80,17 +83,21 @@ public class StorageProperties implements BaseProperties{
 	@Qualifier("uploadConfig")
 	private SystemConfigService systemConfigService;
 	
+	@Autowired
+	private HttpServletRequest httpServletRequest;
+	
 	@Override
 	public void init() {
+		String realPath = httpServletRequest.getSession().getServletContext().getRealPath("/");
 		Map<String, Object> maps = systemConfigService.getUploadConfig();
 		String uploadType = (String) maps.get("upload_type");
 		this.age = systemConfigService.getAge();
 		//默认上传
 		if (uploadType.equals("29")) {
-			this.defaultUploadTopicFiledir = ((String) maps.get("local_upload_topic_filedir"));
-			this.defaultUploadUserFiledir = ((String) maps.get("local_upload_user_filedir"));
-			this.defaultUploadNodeFiledir = ((String) maps.get("local_upload_node_filedir"));
-			this.defaultUploadTagFiledir = ((String) maps.get("local_upload_tag_filedir"));
+			this.defaultUploadTopicFiledir = realPath + (String) maps.get("default_upload_topic_filedir");
+			this.defaultUploadUserFiledir = realPath + (String) maps.get("default_upload_user_filedir");
+			this.defaultUploadNodeFiledir = realPath + (String) maps.get("default_upload_node_filedir");
+			this.defaultUploadTagFiledir = realPath + (String) maps.get("default_upload_tag_filedir");
 			this.staticUrl = ((String) maps.get("static_url")).replace("**", "");
 			this.uploadType = "1000";
 		}

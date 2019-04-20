@@ -35,6 +35,7 @@ public class OSSService implements BaseService<OSSClient>{
 	 */
 	@Override
 	public OSSClient instance() {
+		storageProperties.init();
 		if(ossClient != null) {
 			return ossClient;
 		}
@@ -65,7 +66,7 @@ public class OSSService implements BaseService<OSSClient>{
 		} catch (IOException e) {
 			log.error("图片上传OSS失败",e);
 		}
-		return storageProperties.getStaticUrl() + newFilename;
+		return storageProperties.getStaticUrl() + storageProperties.getOssFiledir() + newFilename;
 	}
 	
 	/**

@@ -24,6 +24,9 @@ public interface NodeDao {
 	//根据名称查询节点
 	Node selectByNodeTitle(@Param("nodeTitle") String nodeTitle);
 	
+	//根据ID查询节点
+	Node selectById(@Param("id") Integer id);
+	
 	//查找子节点
 	List<Node> selectChildrenNode(@Param("nodeTitle") String nodeTitle,@Param("start") Integer start, @Param("limit") Integer limit);
 		

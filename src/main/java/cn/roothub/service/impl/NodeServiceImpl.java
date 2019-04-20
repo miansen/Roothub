@@ -28,6 +28,11 @@ public class NodeServiceImpl implements NodeService{
 	public Node findByTitle(String title) {
 		return nodeDao.selectByTitle(title);
 	}
+	
+	@Override
+	public Node findById(Integer id) {
+		return nodeDao.selectById(id);
+	}
 
 	//子节点
 	@Override

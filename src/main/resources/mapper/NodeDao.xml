@@ -44,7 +44,8 @@
         	node a,tab b
        	WHERE 
        		a.tab_id = b.ID
-       		and a.is_delete = 0
+       	AND 
+       		a.is_delete = 0
         <if test="tabName != null">
         	AND b.tab_name = #{tabName}
         	AND a.parent_node_code is null
@@ -62,9 +63,24 @@
         	<include refid="Base_Column_List"/>
         FROM
         	node a
-        WHERE a.node_title = #{title}
-        and a.is_delete = 0
+        WHERE 
+        	a.node_title = #{title}
+        AND 
+        	a.is_delete = 0
     </select>
+    
+    <!-- 根据ID查询节点 -->
+    <select id="selectById" resultType="Node">
+    	SELECT
+        	<include refid="Base_Column_List"/>
+        FROM
+        	node a
+        WHERE 
+        	a.node_id = #{id}
+        AND 
+        	a.is_delete = 0
+    </select>
+    
     <!-- 查找子节点 -->
     <select id="selectChildrenNode" resultType="Node">
     	SELECT 

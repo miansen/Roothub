@@ -35,4 +35,12 @@ public class NodeAdminController {
 		model.addAttribute("p", p);
 		return "admin/node/list";
 	}
+	
+	@RequiresPermissions("node:edit")
+	@RequestMapping(value = "/edit",method = RequestMethod.GET)
+	public String edit(@RequestParam(value = "id") Integer id, Model model) {
+		Node node = nodeService.findById(id);
+		model.addAttribute("node", node);
+		return "admin/node/edit";
+	}
 }

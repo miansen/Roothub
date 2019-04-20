@@ -22,6 +22,9 @@ public interface NodeService {
 	//根据名称查询对应的节点
 	Node findByTitle(String Title);
 	
+	//根据ID查询对应的节点
+	Node findById(Integer id);
+	
 	//子节点
 	List<Node> findChildrenNode(String nodeTitle,Integer pageNumber, Integer pageSize);
 	

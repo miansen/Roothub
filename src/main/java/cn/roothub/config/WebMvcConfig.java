@@ -1,14 +1,12 @@
 package cn.roothub.config;
 
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-
 import cn.roothub.service.SystemConfigService;
 
 /**
@@ -29,19 +27,24 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		Map<String, Object> maps = systemConfigService.getUploadConfig();
+		// 静态资源访问URL
 		String staticUrl = (String)maps.get("static_url");
-		ResourceHandlerRegistration addResourceLocations = registry.addResourceHandler(staticUrl);
-		for(Object obj : maps.values()) {
-			if(!obj.equals(staticUrl)) {
-				addResourceLocations.addResourceLocations((String)obj);
+		/**
+		 * 上传类型
+		 * 29: 默认上传
+		 * 30: 自定义上传
+		 * 45: 阿里云OSS上传
+		 */
+		String uploadType = (String)maps.get("upload_type");
+		if(!uploadType.equals("45")) {
+			// 添加静态资源访问URL
+			ResourceHandlerRegistration addResourceLocations = registry.addResourceHandler(staticUrl);
+			for(Object obj : maps.values()) {
+				if(!obj.equals(staticUrl)) {
+					// 静态资源映射路径
+					addResourceLocations.addResourceLocations((String)obj);
+				}
 			}
 		}
-		
-		// registry.addResourceHandler("/static/img2/**").addResourceLocations("file:F:/upload/roothub/topic/");
-		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/node/");
-		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/user/");
-		//registry.addResourceHandler("/static/img/**").addResourceLocations("file:F:/upload/roothub/tag/");
 	}
-	
-	
 }

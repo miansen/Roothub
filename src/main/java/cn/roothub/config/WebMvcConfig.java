@@ -27,8 +27,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		Map<String, Object> maps = systemConfigService.getUploadConfig();
-		// 静态资源访问URL
-		String staticUrl = (String)maps.get("static_url");
 		/**
 		 * 上传类型
 		 * 29: 默认上传
@@ -37,13 +35,15 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		 */
 		String uploadType = (String)maps.get("upload_type");
 		if(!uploadType.equals("45")) {
-			// 添加静态资源访问URL
+			// 静态资源访问URL
+			String staticUrl = (String)maps.get("static_url");
+			String uploadFiledir = (String)maps.get("default_upload_filedir") != null ? (String)maps.get("default_upload_filedir") : (String)maps.get("local_upload_filedir");
+			String[] locations = {uploadFiledir + "topic/",uploadFiledir + "node/",uploadFiledir + "user/",uploadFiledir + "tag/"};
+			// 静态资源访问URL
 			ResourceHandlerRegistration addResourceLocations = registry.addResourceHandler(staticUrl);
-			for(Object obj : maps.values()) {
-				if(!obj.equals(staticUrl)) {
-					// 静态资源映射路径
-					addResourceLocations.addResourceLocations((String)obj);
-				}
+			for(String location : locations) {
+				// 静态资源映射目录
+				addResourceLocations.addResourceLocations(location);
 			}
 		}
 	}

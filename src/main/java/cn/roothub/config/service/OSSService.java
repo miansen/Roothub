@@ -45,10 +45,11 @@ public class OSSService implements BaseService<OSSClient>{
 
 	/**
 	 * 上传到OSS服务器 ，如果同名文件会覆盖
-	 * @param file
-	 * @return 文件URL
+	 * @param file: 要上传的文件对象
+	 * @param customPath: 自定义存放路径，格式类似 avatar/admin/
+	 * @return 文件访问路径，格式如: 阿里云静态资源访问URL + 数据库里配置的路径 + 自定义路径 + 文件名
 	 */
-	public String uploadFile2OSS(MultipartFile file) {
+	public String uploadFile2OSS(MultipartFile file,String customPath) {
 		if (file.isEmpty()) {
 			throw new StorageException("请选择要上传的文件");
 		}
@@ -60,22 +61,21 @@ public class OSSService implements BaseService<OSSClient>{
 		// 生成新的文件名
 		String newFilename = FileNameUtil.getFileName(filename);
 		try {
-			InputStream inputStream = file.getInputStream();
 			// 上传文件
-			uploadFile2OSS(inputStream,newFilename);
+			uploadFile2OSS(file.getInputStream(),customPath + "/" + newFilename);
 		} catch (IOException e) {
 			log.error("图片上传OSS失败",e);
 		}
-		return storageProperties.getStaticUrl() + storageProperties.getOssFiledir() + newFilename;
+		return storageProperties.getStaticUrl() + storageProperties.getOssFiledir() + customPath + "/" + newFilename;
 	}
 	
 	/**
 	 * 上传到OSS服务器 ，如果同名文件会覆盖
 	 * @param instream: 文件流
-	 * @param fileName: 文件名称 包括后缀名
+	 * @param path: 文件名称 包括自定义的路径和后缀名
 	 * @return 出错返回"" ,唯一MD5数字签名
 	 */
-	public String uploadFile2OSS(InputStream instream, String fileName) {
+	public String uploadFile2OSS(InputStream instream, String path) {
 		String ret = "";
         try {
         	// 创建上传Object的Metadata
@@ -83,10 +83,10 @@ public class OSSService implements BaseService<OSSClient>{
 			objectMetadata.setContentLength(instream.available());
 			objectMetadata.setCacheControl("no-cache");
 	        objectMetadata.setHeader("Pragma", "no-cache");
-	        objectMetadata.setContentType(getcontentType(fileName.substring(fileName.lastIndexOf("."))));
-	        objectMetadata.setContentDisposition("inline;filename=" + fileName);
+	        objectMetadata.setContentType(getcontentType(path.substring(path.lastIndexOf("."))));
+	        objectMetadata.setContentDisposition("inline;filename=" + path);
 	        // 上传文件
-	        PutObjectResult putObject = instance().putObject(storageProperties.getBucketName(),storageProperties.getOssFiledir() + fileName,instream,objectMetadata);
+	        PutObjectResult putObject = instance().putObject(storageProperties.getBucketName(),storageProperties.getOssFiledir() + path,instream,objectMetadata);
 	        ret = putObject.getETag();
 		} catch (IOException e) {
 			log.error(e.getMessage(), e);

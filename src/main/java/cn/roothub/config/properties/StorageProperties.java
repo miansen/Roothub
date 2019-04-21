@@ -23,30 +23,9 @@ import cn.roothub.service.SystemConfigService;
 @Scope("prototype")
 public class StorageProperties implements BaseProperties{
 
-	// 默认话题文件保存路径
-	private String defaultUploadTopicFiledir;
-
-	// 默认节点文件保存路径
-	private String defaultUploadNodeFiledir;
-
-	// 默认的标签文件保存路径
-	private String defaultUploadTagFiledir;
-
-	// 默认的用户文件保存路径
-	private String defaultUploadUserFiledir;
-
-	// 自定义主题文件保存路径
-	private String localUploadTopicFiledir;
-
-	// 自定义用户文件保存路径
-	private String localUploadUserFiledir;
-
-	// 自定义节点文件保存路径
-	private String localUploadNodeFiledir;
-
-	// 自定义标签文件保存路径
-	private String localUploadTagFiledir;
-
+	// 文件上传的保存路径
+	private String uploadFiledir;
+	
 	// AccessKeyId
 	private String accessKeyId;
 
@@ -64,15 +43,8 @@ public class StorageProperties implements BaseProperties{
 
 	// 静态文件访问URL
 	private String staticUrl;
-
-	private Integer age;
 	
-	/**
-	 * 上传类型
-	 * 1000: 默认上传 
-	 * 1100: 自定义上传 
-	 * 1200: 阿里云OSS上传
-	 */
+	// 上传类型
 	private String uploadType;
 	
 	static {
@@ -88,31 +60,26 @@ public class StorageProperties implements BaseProperties{
 	
 	@Override
 	public void init() {
+		// 获取程序的部署路径
 		String realPath = httpServletRequest.getSession().getServletContext().getRealPath("/");
 		Map<String, Object> maps = systemConfigService.getUploadConfig();
+		/**
+		 * 获取上传类型
+		 * 29: 默认上传
+		 * 30: 自定义上传
+		 * 45: 阿里云OSS上传
+		 */
 		String uploadType = (String) maps.get("upload_type");
-		this.age = systemConfigService.getAge();
-		//默认上传
 		if (uploadType.equals("29")) {
-			this.defaultUploadTopicFiledir = realPath + (String) maps.get("default_upload_topic_filedir");
-			this.defaultUploadUserFiledir = realPath + (String) maps.get("default_upload_user_filedir");
-			this.defaultUploadNodeFiledir = realPath + (String) maps.get("default_upload_node_filedir");
-			this.defaultUploadTagFiledir = realPath + (String) maps.get("default_upload_tag_filedir");
+			this.uploadFiledir = realPath + (String) maps.get("default_upload_filedir");
 			this.staticUrl = ((String) maps.get("static_url")).replace("**", "");
-			this.uploadType = "1000";
+			this.uploadType = "29";
 		}
-
-		// 自定义上传
 		if (uploadType.equals("30")) {
-			this.localUploadTopicFiledir = ((String) maps.get("local_upload_topic_filedir")).replace("file:", "");
-			this.localUploadUserFiledir = ((String) maps.get("local_upload_user_filedir")).replace("file:", "");
-			this.localUploadNodeFiledir = ((String) maps.get("local_upload_node_filedir")).replace("file:", "");
-			this.localUploadTagFiledir = ((String) maps.get("local_upload_tag_filedir")).replace("file:", "");
+			this.uploadFiledir = ((String) maps.get("local_upload_filedir")).replace("file:", "");
 			this.staticUrl = ((String) maps.get("static_url")).replace("**", "");
-			this.uploadType = "1100";
+			this.uploadType = "30";
 		}
-
-		// 阿里云OSS上传
 		if (uploadType.equals("45")) {
 			this.accessKeyId = ((String) maps.get("accessKeyId"));
 			this.accessKeySecret = ((String) maps.get("accessKeySecret"));
@@ -120,73 +87,16 @@ public class StorageProperties implements BaseProperties{
 			this.bucketName = ((String) maps.get("bucketName"));
 			this.ossFiledir = ((String) maps.get("oss_filedir"));
 			this.staticUrl = ((String) maps.get("oss_static_url"));
-			this.uploadType = "1200";
+			this.uploadType = "45";
 		}
 	}
 
-	
-	public String getDefaultUploadTopicFiledir() {
-		return defaultUploadTopicFiledir;
+	public String getUploadFiledir() {
+		return uploadFiledir;
 	}
 
-	public void setDefaultUploadTopicFiledir(String defaultUploadTopicFiledir) {
-		this.defaultUploadTopicFiledir = defaultUploadTopicFiledir;
-	}
-
-	public String getDefaultUploadNodeFiledir() {
-		return defaultUploadNodeFiledir;
-	}
-
-	public void setDefaultUploadNodeFiledir(String defaultUploadNodeFiledir) {
-		this.defaultUploadNodeFiledir = defaultUploadNodeFiledir;
-	}
-
-	public String getDefaultUploadTagFiledir() {
-		return defaultUploadTagFiledir;
-	}
-
-	public void setDefaultUploadTagFiledir(String defaultUploadTagFiledir) {
-		this.defaultUploadTagFiledir = defaultUploadTagFiledir;
-	}
-
-	public String getDefaultUploadUserFiledir() {
-		return defaultUploadUserFiledir;
-	}
-
-	public void setDefaultUploadUserFiledir(String defaultUploadUserFiledir) {
-		this.defaultUploadUserFiledir = defaultUploadUserFiledir;
-	}
-
-	public String getLocalUploadTopicFiledir() {
-		return localUploadTopicFiledir;
-	}
-
-	public void setLocalUploadTopicFiledir(String localUploadTopicFiledir) {
-		this.localUploadTopicFiledir = localUploadTopicFiledir;
-	}
-
-	public String getLocalUploadUserFiledir() {
-		return localUploadUserFiledir;
-	}
-
-	public void setLocalUploadUserFiledir(String localUploadUserFiledir) {
-		this.localUploadUserFiledir = localUploadUserFiledir;
-	}
-
-	public String getLocalUploadNodeFiledir() {
-		return localUploadNodeFiledir;
-	}
-
-	public void setLocalUploadNodeFiledir(String localUploadNodeFiledir) {
-		this.localUploadNodeFiledir = localUploadNodeFiledir;
-	}
-
-	public String getLocalUploadTagFiledir() {
-		return localUploadTagFiledir;
-	}
-
-	public void setLocalUploadTagFiledir(String localUploadTagFiledir) {
-		this.localUploadTagFiledir = localUploadTagFiledir;
+	public void setUploadFiledir(String uploadFiledir) {
+		this.uploadFiledir = uploadFiledir;
 	}
 
 	public String getAccessKeyId() {
@@ -245,26 +155,28 @@ public class StorageProperties implements BaseProperties{
 		this.uploadType = uploadType;
 	}
 
-	
-	
-	public Integer getAge() {
-		return age;
+	public SystemConfigService getSystemConfigService() {
+		return systemConfigService;
 	}
 
-	public void setAge(Integer age) {
-		this.age = age;
+	public void setSystemConfigService(SystemConfigService systemConfigService) {
+		this.systemConfigService = systemConfigService;
+	}
+
+	public HttpServletRequest getHttpServletRequest() {
+		return httpServletRequest;
+	}
+
+	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+		this.httpServletRequest = httpServletRequest;
 	}
 
 	@Override
 	public String toString() {
-		return "StorageProperties [defaultUploadTopicFiledir=" + defaultUploadTopicFiledir
-				+ ", defaultUploadNodeFiledir=" + defaultUploadNodeFiledir + ", defaultUploadTagFiledir="
-				+ defaultUploadTagFiledir + ", defaultUploadUserFiledir=" + defaultUploadUserFiledir
-				+ ", localUploadTopicFiledir=" + localUploadTopicFiledir + ", localUploadUserFiledir="
-				+ localUploadUserFiledir + ", localUploadNodeFiledir=" + localUploadNodeFiledir
-				+ ", localUploadTagFiledir=" + localUploadTagFiledir + ", accessKeyId=" + accessKeyId
+		return "StorageProperties [uploadFiledir=" + uploadFiledir + ", accessKeyId=" + accessKeyId
 				+ ", accessKeySecret=" + accessKeySecret + ", endpoint=" + endpoint + ", bucketName=" + bucketName
-				+ ", ossFiledir=" + ossFiledir + ", staticUrl=" + staticUrl + ", uploadType=" + uploadType + "]";
+				+ ", ossFiledir=" + ossFiledir + ", staticUrl=" + staticUrl + ", uploadType=" + uploadType
+				+ ", systemConfigService=" + systemConfigService + ", httpServletRequest=" + httpServletRequest + "]";
 	}
 
 }

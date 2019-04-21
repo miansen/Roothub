@@ -1,19 +1,7 @@
 package cn.roothub.web.front;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.alibaba.fastjson.JSONObject;
-
-import cn.roothub.config.properties.StorageProperties;
-import cn.roothub.config.service.OSSService;
 import cn.roothub.store.StorageService;
 
 @Controller
@@ -35,35 +19,20 @@ public class CommonController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired  
-	private HttpServletRequest request;  
-	
 	@Autowired
 	private StorageService storageService;
 	
-	@Autowired
-	private StorageProperties storageProperties;
-	
-	@Autowired
-	private OSSService ossService;
-	
+	/**
+	 * 文件上传接口
+	 * @param file: 要上传的文件对象
+	 * @param customPath: 自定义存放路径，格式 xxx/xxx/xxx，最后一个目录没有 "/"
+	 * @return 返回的是JSON，{errno: 状态，data: 文件访问URL}
+	 */
 	@ResponseBody
-	@RequestMapping(value = "/common/wangEditorUpload", method = RequestMethod.POST)
-	private Map<String, Object> upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		storageProperties.init();
+	@RequestMapping(value = "/common/upload", method = RequestMethod.POST)
+	private Map<String, Object> upload(@RequestParam("file") MultipartFile file, @RequestParam(value = "customPath",defaultValue = "node") String customPath) {
 		JSONObject jsonObject = new JSONObject();
-		// 修改上传文件的路径 1.windows的路径和linux的不一样 2.文件应用"/"符号 2018.06.03 15:53
-		// String filePath = request.getSession().getServletContext().getRealPath("/") + "/resources/images/";
-		// String fileName = storageService.store(file, Paths.get(filePath));
-		// String fileName = null;
-		String[] data = new String[1];
-		if(storageProperties.getUploadType().equals("1200")) {
-			data[0] = ossService.uploadFile2OSS(file);
-		}else if(storageProperties.getUploadType().equals("1100")) {
-			data[0] = storageProperties.getStaticUrl() + storageService.store(file, Paths.get(storageProperties.getLocalUploadTopicFiledir()));
-		}else {
-			data[0] = storageProperties.getStaticUrl() + storageService.store(file, Paths.get(storageProperties.getDefaultUploadTopicFiledir()));
-		}
+		String[] data = {storageService.store(file, Paths.get(customPath))};
 		jsonObject.put("errno", 0);
 		jsonObject.put("data", data);
 		return jsonObject;

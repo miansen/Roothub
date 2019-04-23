@@ -122,7 +122,18 @@ hr{border-bottom-color:#eee}
 .comment-detail-content pre {padding: 10px;}
 .comment-detail-content img{max-width:100%}
 body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif}
-.wrapper{width:100%;background-color: #e5e5e5}
+.wrapper{
+	width:100%;
+	background-color: #e5e5e5;
+	background-position-x: 50%;
+	background-position-y: 0px;
+	background-size: initial;
+    background-repeat-x: repeat;
+    background-repeat-y: repeat;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+	}
 /* a��ǩ������״̬ */
 .title a{color:#333}
 .title a:visited{color:/* #ccc */ #778087 /* #333 */}

@@ -118,7 +118,7 @@
   						if(data.success == true){
   							toast('编辑成功','success');
   	  						setTimeout(function(){
-  	  							window.location.reload();
+  	  							window.location.href = "/admin/node/list";
   	  						},1000);
   						}else{
   							toast(data.error,'error');

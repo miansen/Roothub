@@ -162,8 +162,8 @@
  var nodeCode = "${node.nodeCode}";//节点编码
  var nodeURL = "${node.url}";//节点url
  var avatarLarge = "${node.avatarLarge}";//节点背景
- $(".wrapper").css("background","#000 url(/static/e8a3efec61564eff8bc26c72cdeec80c.jpg) no-repeat 50% 0;");
- console.log(avatarLarge)
+ $(".wrapper").css({"background-image":"url("+avatarLarge+")"});
+ // console.log(avatarLarge)
  var nodeTabCode = "${nodeTab}";//节点板块
  var count = ${page.totalRow};//数据总量
  var limit = ${page.pageSize};//每页显示的条数

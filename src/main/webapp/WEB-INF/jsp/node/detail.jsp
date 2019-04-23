@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 </head>
 <body>
- <div class="wrapper" style="width: 100%;background-color: #e5e5e5;">
+ <div class="wrapper">
   <jsp:include page="../components/head.jsp"></jsp:include>
   <div class="row">
     <div class="col-md-9">
@@ -162,7 +162,7 @@
  var nodeCode = "${node.nodeCode}";//节点编码
  var nodeURL = "${node.url}";//节点url
  var avatarLarge = "${node.avatarLarge}";//节点背景
- $(".wrapper").css("background-img","url(https://i.loli.net/2019/01/03/5c2ddd03a5357.jpg)");
+ $(".wrapper").css("background","#000 url(/static/e8a3efec61564eff8bc26c72cdeec80c.jpg) no-repeat 50% 0;");
  console.log(avatarLarge)
  var nodeTabCode = "${nodeTab}";//节点板块
  var count = ${page.totalRow};//数据总量

@@ -178,6 +178,13 @@ public interface TopicService {
 	void updateTopicAvatar(User user);
     
 	/**
+	 * 更新节点名称
+	 * @param oldNodeTitle:老的节点名称
+	 * @param newNodeTitle:新的节点名称
+	 */
+	void updateNodeTitile(String oldNodeTitle, String newNodeTitle);
+	
+	/**
 	 * 收藏的话题列表
 	 * @param pageNumber
 	 * @param pageSize

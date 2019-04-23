@@ -173,6 +173,14 @@ public interface TopicDao {
     int updateTopicAvatar(User user);
     
     /**
+     * 更新节点名称
+     * @param oldNodeTitle:老的节点名称
+     * @param newNodeTitle:新的节点名称
+     * @return
+     */
+    int updateNodeTitile(@Param("oldNodeTitle") String oldNodeTitle, @Param("newNodeTitle") String newNodeTitle);
+    
+    /**
      * 根据ID删除话题
      * @param topicId
      * @return

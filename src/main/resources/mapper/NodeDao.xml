@@ -176,4 +176,24 @@
     AND a.node_title = #{nodeTitle}
     </if>
     </select>
+    <!-- 更新节点 -->
+    <update id="update" parameterType="cn.roothub.entity.Node">
+        UPDATE 
+        	node
+        SET 
+        	node_code = #{nodeCode},
+        	node_title = #{nodeTitle},
+        	avatar_normal = #{avatarNormal},
+        	avatar_mini = #{avatarMini},
+        	avatar_large = #{avatarLarge},
+        	node_desc = #{nodeDesc},
+        	tab_id = #{tabId},
+        	url = #{url},
+        	parent_node_code = #{parentNodeCode},
+        	create_date = #{createDate},
+        	update_date = #{updateDate},
+        	is_delete = #{isDelete}
+        WHERE 
+        	node_id = #{nodeId}
+    </update>
 </mapper>

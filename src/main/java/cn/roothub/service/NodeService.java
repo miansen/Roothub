@@ -36,4 +36,6 @@ public interface NodeService {
 	
 	// 统计后台列表
 	int count(String nodeTitle);
+	
+	void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc);
 }

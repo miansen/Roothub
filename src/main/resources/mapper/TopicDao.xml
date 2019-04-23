@@ -470,6 +470,15 @@
         set avatar = #{avatar}
         where author = #{userName}
     </update>
+    <!-- 更新节点名称 -->
+    <update id="updateNodeTitile">
+        UPDATE 
+        	topic
+        SET 
+        	node_title = #{newNodeTitle}
+        WHERE 
+        	node_title = #{oldNodeTitle}
+    </update>
     <!-- 根据ID删除话题 -->
   	<delete id="deleteById" parameterType="java.lang.Integer">
         delete from topic

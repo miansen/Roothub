@@ -21,8 +21,9 @@ public interface StorageService {
 	
 	/**
 	 * 存储文件
-	 * @param file
-	 * @param path
+	 * @param file 要上传的文件对象
+	 * @param path 文件存放路径，路径的最后面没有 "/"
+	 * @return 文件访问路径
 	 */
 	String store(MultipartFile file,Path path);
 	

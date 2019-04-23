@@ -43,4 +43,7 @@ public interface NodeDao {
 	
 	// 统计节点列表
 	int count(@Param("nodeTitle") String nodeTitle);
+	
+	// 更新节点
+	int update(Node node);
 }

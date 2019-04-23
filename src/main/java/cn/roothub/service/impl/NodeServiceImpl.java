@@ -1,12 +1,15 @@
 package cn.roothub.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import cn.roothub.dao.NodeDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Node;
 import cn.roothub.service.NodeService;
+import cn.roothub.service.TopicService;
 
 /**
  * @author miansen.wang
@@ -17,6 +20,9 @@ public class NodeServiceImpl implements NodeService{
 
 	@Autowired
 	private NodeDao nodeDao;
+	
+	@Autowired
+	private TopicService topicService;
 	
 	//根据板块查询节点
 	@Override
@@ -67,5 +73,23 @@ public class NodeServiceImpl implements NodeService{
 	@Override
 	public int count(String nodeTitle) {
 		return nodeDao.count(nodeTitle);
+	}
+
+	@Transactional
+	@Override
+	public void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+		Node node = findById(nodeId);
+		// 先更新话题的节点名称
+		if(!nodeTitle.equals(node.getNodeTitle())) {
+			topicService.updateNodeTitile(node.getNodeTitle(), nodeTitle);
+		}
+		node.setNodeTitle(nodeTitle);
+		node.setAvatarNormal(avatarNormal);
+		node.setAvatarLarge(avatarLarge);
+		node.setNodeDesc(nodeDesc);
+		node.setUrl("/n/" + nodeTitle);
+		node.setUpdateDate(new Date());
+		// 最后在更新节点
+		nodeDao.update(node);
 	}
 }

@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import cn.roothub.store.StorageService;
 
 @Controller
+@RequestMapping("/common")
 public class CommonController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,8 +30,8 @@ public class CommonController {
 	 * @return 返回的是JSON，{errno: 状态，data: 文件访问URL}
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/common/upload", method = RequestMethod.POST)
-	private Map<String, Object> upload(@RequestParam("file") MultipartFile file, @RequestParam(value = "customPath",defaultValue = "node") String customPath) {
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	private Map<String, Object> upload(@RequestParam("file") MultipartFile file, @RequestParam(value = "customPath",defaultValue = "topic") String customPath) {
 		JSONObject jsonObject = new JSONObject();
 		String[] data = {storageService.store(file, Paths.get(customPath))};
 		jsonObject.put("errno", 0);

@@ -280,6 +280,14 @@ public class TopicServiceImpl implements TopicService{
 	}
 
 	/**
+	 * 更新节点名称
+	 */
+	@Override
+	public void updateNodeTitile(String oldNodeTitle, String newNodeTitle) {
+		rootTopicDao.updateNodeTitile(oldNodeTitle, newNodeTitle);
+	}
+
+	/**
 	 * 统计所有话题
 	 */
 	@Override

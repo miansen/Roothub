@@ -7,13 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import cn.roothub.config.properties.StorageProperties;
 import cn.roothub.config.service.OSSService;
 import cn.roothub.exception.StorageException;
@@ -50,7 +48,7 @@ public class FileSystemStorageService implements StorageService {
 	/**
 	 * 存储文件
 	 * @param file: 要上传的文件对象
-	 * @param path: 文件存放路径
+	 * @param path: 文件存放路径，路径的最后面没有 "/"
 	 * @return 文件访问路径
 	 */
 	@Override

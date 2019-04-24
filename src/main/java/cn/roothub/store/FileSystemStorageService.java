@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import cn.roothub.config.properties.StorageProperties;
 import cn.roothub.config.service.OSSService;
 import cn.roothub.exception.StorageException;
+import cn.roothub.util.Base64Util;
 import cn.roothub.util.FileNameUtil;
 
 /**
@@ -59,8 +60,9 @@ public class FileSystemStorageService implements StorageService {
 		if (file.isEmpty()) {
 			throw new StorageException("请选择要上传的文件");
 		}
-		// 判断文件格式是否正确
+		// 获取文件的原名
 		String filename = StringUtils.cleanPath(file.getOriginalFilename());
+		// 判断文件格式是否正确
 		if (filename.contains("..")) {
 			throw new StorageException("文件格式不正确");
 		}
@@ -86,6 +88,17 @@ public class FileSystemStorageService implements StorageService {
 			}
 		}
 		return fileURL;
+	}
+	
+	@Override
+	public String store(String base64, Path path) {
+		// 去除base64中无用的部分，如：data:image/png;base64,
+		String _base64 = base64.substring(base64.indexOf(",") + 1, base64.length());
+		// 解密
+		byte[] content = Base64Util.decode2(_base64);
+		// 获取base64中的头部信息，如：data:image/png
+		String header = base64.split(";")[0];
+		return store(new BASE64DecodedMultipartFile(content,header),path);
 	}
 
 	@Override

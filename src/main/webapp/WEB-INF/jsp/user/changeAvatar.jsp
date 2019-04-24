@@ -117,7 +117,8 @@
           method: 'post',
           dataType: 'json',
           data: {
-            avatar: avatarBase64
+        	avatarBase64: avatarBase64,
+            path: "user"
           },
           success: function (data) {
             if(data.success != null && data.success == true) {

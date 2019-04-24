@@ -27,6 +27,14 @@ public interface StorageService {
 	 */
 	String store(MultipartFile file,Path path);
 	
+	/**
+	 * 存储base64格式的文件
+	 * @param base64
+	 * @param path
+	 * @return
+	 */
+	String store(String base64, Path path);
+	
 	Stream<Path> loadAll();
 	
 	Path load(String filename);

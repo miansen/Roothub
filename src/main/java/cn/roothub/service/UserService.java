@@ -2,6 +2,8 @@ package cn.roothub.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.UserExecution;
 import cn.roothub.entity.User;
@@ -67,6 +69,15 @@ public interface UserService {
 	 * @return
 	 */
 	void updateScore(Integer score,Integer userId);
+	
+	/**
+	 * 更新头像
+	 * @param avatarBase64:base64格式的图片
+	 * @param path:自定义保存路径
+	 * @param user:用户对象
+	 * @param request
+	 */
+	void updateAvatar(String avatarBase64,String path,User user,HttpServletRequest request);
 	
 	/**
 	 * 分页查询所有用户，倒序

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -27,12 +28,14 @@ import cn.roothub.entity.ReplyAndTopicByName;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
 import cn.roothub.entity.Visit;
+import cn.roothub.exception.ApiAssert;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.NoticeService;
 import cn.roothub.service.ReplyService;
 import cn.roothub.service.TopicService;
 import cn.roothub.service.UserService;
 import cn.roothub.service.VisitService;
+import cn.roothub.store.StorageService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
 
@@ -52,6 +55,8 @@ public class UserController extends BaseController{
 	private NoticeService rootNoticeService;
 	@Autowired
 	private VisitService visitService;
+	@Autowired
+	private StorageService storageService;
 	/**
 	 * 用户主页
 	 * @return
@@ -225,42 +230,21 @@ public class UserController extends BaseController{
 		return "user/changeAvatar";
 	}
 	
+	/**
+	 * 更新头像
+	 * @param avatarBase64:base64格式的图片
+	 * @param path:自定义保存路径
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/user/setting/changeAvatar", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<UserExecution> changeAvatar(String avatar,HttpServletRequest request){
-		//User user = null;
+	private Result<String> changeAvatar(String avatarBase64,String path,HttpServletRequest request){
 		User user = getUser(request);
-		//String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		//user = rootUserService.findByName(Base64Util.decode(cookie));
-		if(user == null) {
-			return new Result<>(false,"请先登录");
-		}
-		if(avatar == null) {
-			return new Result<>(false,"头像不能为空");
-		}
-		String _avatar = avatar.substring(avatar.indexOf(",") + 1, avatar.length());
-		UserExecution updateUser = null;
-		try {
-		byte[] bytes = Base64Util.decode2(_avatar);
-		ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
-		BufferedImage bufferedImage = ImageIO.read(bais);
-		//String __avatar = null;
-		//String fileName = new Date().getTime()+cookie+"avatar.png";
-		String fileName = new Date().getTime()+user.getUserName()+"avatar.png";
-		String filePath = request.getSession().getServletContext().getRealPath("/")+"/resources/images/"+fileName;
-		File file = new File(filePath);
-		ImageIO.write(bufferedImage, "PNG", file);
-		user.setAvatar("/resources/images/"+fileName);
-		user.setUpdateDate(new Date());
-		updateUser = rootUserService.updateUser(user);
-		rootTopicService.updateTopicAvatar(user);
-		User user2 = rootUserService.findByName(user.getUserName());
-		CookieAndSessionUtil.removeSession(request, "user");
-		CookieAndSessionUtil.setSession(request, "user", user2);
-		} catch (IOException e) {
- 			e.printStackTrace();
-		}
-		return new Result<UserExecution>(true,updateUser); 
+		ApiAssert.notNull(user, "请先登录");
+		ApiAssert.notEmpty(avatarBase64, "头像不能为空");
+		rootUserService.updateAvatar(avatarBase64, path, user, request);
+		return new Result<>(true, "更新成功");
 	}
 	
 	/**

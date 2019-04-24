@@ -1,7 +1,9 @@
 package cn.roothub.service.impl;
 
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,10 @@ import cn.roothub.enums.UpdateUserEnum;
 import cn.roothub.exception.OperationFailedException;
 import cn.roothub.exception.OperationRepeaException;
 import cn.roothub.exception.OperationSystemException;
+import cn.roothub.service.TopicService;
 import cn.roothub.service.UserService;
+import cn.roothub.store.StorageService;
+import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.JsonUtil;
 import cn.roothub.util.StringUtil;
 
@@ -30,8 +35,15 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDao rootUserDao;
+	
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
+	
+	@Autowired
+	private StorageService storageService;
+	
+	@Autowired
+	private TopicService topicService;
 	
 	/**
 	 * 根据ID查找用户
@@ -219,6 +231,25 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int countToday() {
 		return rootUserDao.countToday();
+	}
+
+	/**
+	 * 更新头像
+	 */
+	@Override
+	@Transactional
+	public void updateAvatar(String avatarBase64, String path, User user, HttpServletRequest request) {
+		// 存储头像
+		String avatarURL = storageService.store(avatarBase64, Paths.get(path));
+		user.setAvatar(avatarURL);
+		user.setUpdateDate(new Date());
+		// 更新用户
+		updateUser(user);
+		// 更新话题
+		topicService.updateTopicAvatar(user);
+		// 重新设置 session
+		CookieAndSessionUtil.removeSession(request, "user");
+		CookieAndSessionUtil.setSession(request, "user", user);
 	}
 
 }

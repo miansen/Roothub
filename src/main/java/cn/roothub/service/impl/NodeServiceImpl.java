@@ -105,4 +105,12 @@ public class NodeServiceImpl implements NodeService{
 		// 然后在删除节点
 		nodeDao.deleteById(id);
 	}
+
+	/**
+	 * 统计当天的节点数量
+	 */
+	@Override
+	public int countToday() {
+		return nodeDao.countToday();
+	}
 }

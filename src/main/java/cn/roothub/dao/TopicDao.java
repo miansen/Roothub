@@ -273,13 +273,30 @@ public interface TopicDao {
      */
     List<Topic> selectOther(@Param("userName")String userName,@Param("topicId") Integer topicId);
     
-    // 统计当天的话题数
+    /**
+     * 统计当天的话题数
+     * @return
+     */
     int countToday();
 
-    // 后台话题列表
+    /**
+     * 后台话题列表
+     * @param author
+     * @param startDate
+     * @param endDate
+     * @param start
+     * @param limit
+     * @return
+     */
     List<Topic> selectAllForAdmin(@Param("author") String author,@Param("startDate") String startDate,
     						      @Param("endDate") String endDate, @Param("start") Integer start, @Param("limit") Integer limit);
     
-    // 后台话题统计
+    /**
+     * 统计后台话题
+     * @param author
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     int countAllForAdmin(@Param("author") String author,@Param("startDate") String startDate,@Param("endDate") String endDate);
 }

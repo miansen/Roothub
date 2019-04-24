@@ -37,14 +37,14 @@
 				<!-- small box -->
 				<div class="small-box bg-green">
 					<div class="inner">
-						<h3>1</h3>
+						<h3>${node_count}</h3>
 
-						<p>今天新增标签数</p>
+						<p>今天新增节点数</p>
 					</div>
 					<div class="icon">
 						<i class="ion ion-pricetags"></i>
 					</div>
-					<a href="/admin/tag/list" class="small-box-footer">更多 <i
+					<a href="/admin/node/list" class="small-box-footer">更多 <i
 						class="fa fa-arrow-circle-right"></i></a>
 				</div>
 			</div>

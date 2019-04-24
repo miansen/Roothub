@@ -91,4 +91,10 @@ public interface NodeService {
 	 * @param id:节点ID
 	 */
 	void deleteById(Integer id);
+	
+	/**
+	 * 统计当天的节点数量
+	 * @return
+	 */
+	int countToday();
 }

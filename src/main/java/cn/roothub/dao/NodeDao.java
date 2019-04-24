@@ -110,4 +110,10 @@ public interface NodeDao {
 	 * @return
 	 */
 	int deleteById(Integer id);
+	
+	/**
+	 * 统计当天节点数
+	 * @return
+	 */
+	int countToday();
 }

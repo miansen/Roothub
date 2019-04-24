@@ -20,6 +20,7 @@ import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.entity.AdminUser;
 import cn.roothub.service.AdminUserService;
+import cn.roothub.service.NodeService;
 import cn.roothub.service.ReplyService;
 import cn.roothub.service.TopicService;
 import cn.roothub.service.UserService;
@@ -41,6 +42,8 @@ public class IndexAdminController {
 	private ReplyService replyService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private NodeService nodeService;
 	
 	// 后台首页
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -51,6 +54,8 @@ public class IndexAdminController {
 	    model.addAttribute("comment_count", replyService.countToday());
 	    // 查询当天新增用户
 	    model.addAttribute("user_count", userService.countToday());
+	    //查询当天新增节点
+	    model.addAttribute("node_count", nodeService.countToday());
 	    // 获取操作系统的名字
 	    model.addAttribute("os_name", System.getProperty("os.name"));
 	    // 内存

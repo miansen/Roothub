@@ -205,4 +205,13 @@
     	WHERE
     		node_id = #{id}
     </update>
+    <!-- 统计当天的节点数 -->
+	<select id="countToday" resultType="java.lang.Integer">
+        SELECT 
+        	count(1)
+        FROM 
+        	node a
+        WHERE 
+        	TO_DAYS(a.create_date) = TO_DAYS(NOW())
+    </select>
 </mapper>

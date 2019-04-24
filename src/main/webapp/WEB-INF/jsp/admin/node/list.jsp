@@ -66,7 +66,7 @@
                   	<a href="/admin/node/edit?id=${node.nodeId}" class="btn btn-xs btn-warning">编辑</a>
                   </shiro:hasPermission>
                   <shiro:hasPermission name="node:delete">
-                  	<button onclick="actionBtn('${node.nodeId}', 'delete', this)" class="btn btn-xs btn-danger">删除</button>
+                  	<button onclick="actionBtn('${node.nodeId}')" class="btn btn-xs btn-danger">删除</button>
                   </shiro:hasPermission>
               </td>
             </tr>
@@ -88,15 +88,13 @@
   	 	paginate(count,limit,p,url);
   	});
   	
-  	function actionBtn(id, action, self){
-  		var msg,url;
-  		var tip = $(self).text().replace(/[\r\n]/g, '').trim();
-  		if(action === 'delete'){
-  			url = '/admin/node/delete?id=' + id;
-  	    	msg = '确定要'+tip+'这个节点吗？';
-  		}
-  		if(confirm(msg)){
-  			$.get(url,function(data){
+  	// 删除节点
+  	function actionBtn(id){
+  		if(confirm("确定要删除这个节点吗？对应的话题节点也会一起删除")){
+  			if(!id){
+  				toast("节点ID不能为空", "error");
+  			}
+  			$.post("/admin/node/delete",{id: id},function(data){
   				if(data.success === true){
   					toast(data.error, "success");
   					setTimeout(function(){

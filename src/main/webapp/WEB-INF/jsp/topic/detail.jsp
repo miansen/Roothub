@@ -22,8 +22,11 @@
 					<div class="panel-body topic-detail-header">
 						<div class="media">
 							<div class="media-body">
-								<a href="/">Roothub</a> <span class="chevron">&nbsp;›&nbsp;</span>
-								<a href="/n/${topic.nodeTitle}" class="topic-detail-node">${topic.nodeTitle}</a>
+								<a href="/">主页</a>
+								<c:if test="${topic.nodeTitle != null}">
+									<span class="chevron">&nbsp;›&nbsp;</span>
+									<a href="/n/${topic.nodeTitle}" class="topic-detail-node">${topic.nodeTitle}</a>
+								</c:if>
 								<div class="sep10"></div>
 								<c:choose>
                 					<c:when test="${topic.url != null}">

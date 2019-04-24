@@ -24,7 +24,7 @@
            </div>
            <div class="node_info">
              <div class="fr f12"><span>主题总数</span> <strong>${countTopicByNode}</strong></div>
-             <a href="/">Roothub</a> <span class="chevron">&nbsp;›&nbsp;</span> ${node.nodeTitle}
+             <a href="/">主页</a> <span class="chevron">&nbsp;›&nbsp;</span> ${node.nodeTitle}
              <div class="sep10"></div>
              <div class="sep5"></div>
              <span class="f12">${node.nodeDesc}</span>

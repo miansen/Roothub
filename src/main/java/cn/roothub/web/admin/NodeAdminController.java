@@ -60,4 +60,13 @@ public class NodeAdminController {
 		nodeService.update(nodeId, nodeTitle, avatarNormal, avatarLarge, nodeDesc);
 		return new Result<>(true, "更新成功");
 	}
+	
+	@RequiresPermissions("node:delete")
+	@RequestMapping(value = "/delete",method = RequestMethod.POST)
+	@ResponseBody
+	public Result<String> delete(Integer id){
+		ApiAssert.notNull(id, "节点ID不能为空");
+		nodeService.deleteById(id);
+		return new Result<>(true, "删除成功");
+	}
 }

@@ -196,4 +196,13 @@
         WHERE 
         	node_id = #{nodeId}
     </update>
+    <!-- 删除节点 -->
+    <update id="deleteById" parameterType="java.lang.Integer">
+    	UPDATE
+    		node
+    	SET
+    		is_delete = 1
+    	WHERE
+    		node_id = #{id}
+    </update>
 </mapper>

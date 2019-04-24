@@ -92,4 +92,17 @@ public class NodeServiceImpl implements NodeService{
 		// 最后在更新节点
 		nodeDao.update(node);
 	}
+
+	/**
+	 * 删除节点
+	 */
+	@Transactional
+	@Override
+	public void deleteById(Integer id) {
+		Node node = findById(id);
+		// 先将话题的节点设置为 null
+		topicService.updateNodeTitile(node.getNodeTitle(), null);
+		// 然后在删除节点
+		nodeDao.deleteById(id);
+	}
 }

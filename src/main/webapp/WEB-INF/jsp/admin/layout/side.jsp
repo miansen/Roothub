@@ -7,10 +7,10 @@
       <div class="user-panel">
         <div class="pull-left image">
           <img src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/img/user2-160x160.jpg" class="img-circle"
-               alt="User Image">
+               alt="User Image" id="user-avatar">
         </div>
         <div class="pull-left info">
-        <p>public</p>
+        <p id="user-name">admin</p>
           <a href="#"><i class="fa fa-circle text-success"></i>管理员</a>
         </div>
       </div>
@@ -150,4 +150,22 @@
     </ul>
   </section>
   <!-- /.sidebar -->
+  <script type="text/javascript">
+  	$(function(){
+  		$.ajax({
+  			url: "/admin/user/info",
+  			type: "get",
+  			dataType: "json",
+  			success: function(data){
+  				if(data.success === true){
+  					$("#user-name").text(data.data.username);
+  					$("#user-avatar").attr("src",data.data.avatar);
+  				}
+  			},
+  			error: function(data){
+  				
+  			}
+  		});
+  	})
+  </script>
 </aside>

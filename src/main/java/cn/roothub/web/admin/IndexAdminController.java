@@ -115,4 +115,15 @@ public class IndexAdminController {
 	public String error() {
 		return "admin/error/error";
 	}
+	
+	/**
+	 * 获取后台登录用户的信息
+	 * @return
+	 */
+	@RequestMapping(value = "/user/info",method = RequestMethod.GET)
+	@ResponseBody
+	public Result<AdminUser> getAdminUser(){
+		AdminUser user = (AdminUser)SecurityUtils.getSubject().getPrincipal();
+		return new Result<AdminUser>(true, user);
+	}
 }

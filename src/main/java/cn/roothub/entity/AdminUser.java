@@ -15,7 +15,9 @@ public class AdminUser {
 	private String username;
 	
 	private String password;
-		
+	
+	private String avatar;
+	
 	private Date createDate;
 	
 	private Date updateDate;
@@ -45,6 +47,14 @@ public class AdminUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 
 	public Date getCreateDate() {
 		return createDate;
@@ -70,10 +80,11 @@ public class AdminUser {
 		this.roles = roles;
 	}
 
-	/*@Override
+	@Override
 	public String toString() {
 		return "AdminUser [adminUserId=" + adminUserId + ", username=" + username + ", password=" + password
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", roles=" + roles + "]";
-	}*/
+				+ ", avatar=" + avatar + ", createDate=" + createDate + ", updateDate=" + updateDate + ", roles="
+				+ roles + "]";
+	}
 
 }

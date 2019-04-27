@@ -20,11 +20,12 @@
         <id column="admin_user_id" jdbcType="INTEGER" property="adminUserId"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
     </resultMap>
     <sql id="Base_Column_List">
-        a.admin_user_id,a.username,a.password,a.role_id,a.create_date,a.update_date
+        a.admin_user_id,a.username,a.password,a.avatar,a.create_date,a.update_date
     </sql>
 	<!-- 根据用户名查询后台用户 -->
 	<select id="selectByName" resultType="AdminUser">
@@ -65,11 +66,13 @@
      	insert into admin_user
      	(username,
      	 password,
+     	 avatar,
      	 create_date,
      	 update_date)
      	values
      	(#{username},
      	 #{password},
+     	 #{avatar},
      	 #{createDate},
      	 #{updateDate})
      </insert>
@@ -78,6 +81,7 @@
      	update admin_user
      	set username = #{username},
      		password = #{password},
+     		avatar = #{avatar},
      		create_date = #{createDate},
      		update_date = #{updateDate}
      	where admin_user_id = #{adminUserId}

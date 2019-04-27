@@ -15,7 +15,7 @@
 			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a href="/">Roothub</a> / 问题反馈
+						<a href="/">主页</a> / 问题反馈
 					</div>
 					<div class="panel-body" style="color: #333;">
 					<h5>hello，网站还不够完美，需要改进的地方很多，欢迎您的留言。</h5>

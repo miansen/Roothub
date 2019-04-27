@@ -15,7 +15,7 @@
 			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a href="/">Roothub</a> / 感谢
+						<a href="/">主页</a> / 感谢
 					</div>
 					<div class="panel-body" style="color: #333;">
 						<h1 style="margin-top: 0px;">感谢</h1>

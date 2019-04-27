@@ -142,12 +142,8 @@
 	    });
 	  });
 
+	  // 更新配置
 	  $("#form").submit(function() {
-		  /* var username = $("#username").val();
-		  if(!username) {
-	  	        toast('用户名不能为空');
-	  	        return false;
-	  	      } */
 	    $.ajax({
 	      url: '/admin/system/edit',
 	      contentType:"application/json; charset=utf-8",

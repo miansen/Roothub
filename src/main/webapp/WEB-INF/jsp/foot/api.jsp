@@ -15,7 +15,7 @@
 			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a href="/">Roothub</a> / API
+						<a href="/">主页</a> / API
 					</div>
 					<div class="panel-body" style="color: #333;">
 						<h2>用户的主题</h2>

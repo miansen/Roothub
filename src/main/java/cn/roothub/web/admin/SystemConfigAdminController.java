@@ -2,7 +2,6 @@ package cn.roothub.web.admin;
 
 import java.util.List;
 import java.util.Map;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import cn.roothub.dto.Result;
 import cn.roothub.entity.SystemConfig;
 import cn.roothub.service.SystemConfigService;
@@ -33,10 +31,19 @@ public class SystemConfigAdminController {
 	@Qualifier("systemConfigServiceImpl")
 	private SystemConfigService systemConfigService;
 
+	/**
+	 * 获取系统配置
+	 * @param pid:父级ID
+	 * @param index:当前点击的<li>标签
+	 * @param model
+	 * @return
+	 */
 	@RequiresPermissions("system:edit")
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(@RequestParam(value = "pid", defaultValue = "1") Integer pid, @RequestParam(value = "index", defaultValue = "0") Integer index, Model model) {
+		// 父级配置
 		SystemConfig systemConfig = systemConfigService.getById(pid);
+		// 子配置
 		List<SystemConfig> systemConfigs = systemConfigService.getByPid(pid);
 		model.addAttribute("systemConfig", systemConfig);
 		model.addAttribute("systemConfigs", systemConfigs);
@@ -45,8 +52,8 @@ public class SystemConfigAdminController {
 	}
 
 	/**
-	 * 获取上传配置并更新
-	 * @param pid
+	 * 根据父级ID获取对应的子元素，主要用于获取上传配置
+	 * @param pid:父级ID
 	 * @return
 	 */
 	@RequiresPermissions("system:edit")
@@ -54,6 +61,11 @@ public class SystemConfigAdminController {
 	@ResponseBody
 	public Result<List<SystemConfig>> list(Integer pid) {
 		List<SystemConfig> systemConfigs = systemConfigService.getByPid(pid);
+		systemConfigs.forEach(systemConfig -> {
+			if(systemConfig.getKey().equals("accessKeyId") || systemConfig.getKey().equals("accessKeySecret")) {
+				systemConfig.setValue("******");
+			}
+		});
 		return new Result<>(true, systemConfigs);
 
 	}

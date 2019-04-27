@@ -65,7 +65,7 @@
 				</p>
 			</div>
 			<div class="media-right">
-				<img src="/resources/images/${topic.avatar}"
+				<img src="${topic.avatar}"
 				class="avatar-lg img-circle">
 			</div>
 		</div>

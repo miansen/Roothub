@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
+import cn.roothub.dto.Result;
+import cn.roothub.exception.ApiAssert;
 import cn.roothub.store.StorageService;
 
 @Controller
@@ -39,24 +41,17 @@ public class CommonController {
 		return jsonObject;
 	}
 	
-	/* @RequestMapping("/fileUpload")  
-	    public String fileUpload(@RequestParam("file") MultipartFile file) {  
-	        // 判断文件是否为空  
-	        if (!file.isEmpty()) {  
-	            try {  
-	                // 文件保存路径  F:\Tomcat\apache-tomcat-8.5.16\wtpwebapps\ROOT\resources/images/3.png
-	            	//12:08:28.168 [http-nio-8080-exec-24] DEBUG priv.sen.root.web.CommonController - 
-	            	//F:\Tomcat\apache-tomcat-8.5.16\wtpwebapps\ROOT\resources\images\3.png
-	                String filePath = request.getSession().getServletContext().getRealPath("/") + "resources\\images\\"  
-	                        + file.getOriginalFilename(); 
-	                logger.debug(filePath);
-	                // 转存文件  
-	                file.transferTo(new File(filePath));
-	            } catch (Exception e) {  
-	                e.printStackTrace();  
-	            }  
-	        }  
-	        // 重定向  
-	        return "topic/detail";  
-	    }  */
+	/**
+	 * base64格式的文件上传接口
+	 * @param base64:base64格式的文件
+	 * @param path:自定义的保存路径，如：user
+	 * @return
+	 */
+	@RequestMapping(value = "/upload/base64",method = RequestMethod.POST)
+	@ResponseBody
+	public Result<String> uploadBase64(String base64, String path){
+		ApiAssert.notEmpty(base64, "文件不能为空");
+		String url = storageService.store(base64, Paths.get(path));
+		return new Result<>(true, url);
+	}
 }

@@ -3,12 +3,13 @@ package cn.roothub.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 import cn.roothub.dao.AdminUserDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.AdminUser;
@@ -66,12 +67,13 @@ public class AdminUserServiceImpl implements AdminUserService {
 
 	@Transactional
 	@Override
-	public void save(String username, String password, Integer[] roleIds) {
+	public void save(String username, String password, String avatar, Integer[] roleIds) {
 		AdminUser adminUser = getByName(username);
 		ApiAssert.isNull(adminUser, "用户名已存在");
 		adminUser = new AdminUser();
 		adminUser.setUsername(username);
 		adminUser.setPassword(SimpleHashUtil.simpleHash("MD5", password, username, 1024).toString());
+		adminUser.setAvatar(avatar);
 		adminUser.setCreateDate(new Date());
 		// 保存用户
 		adminUserDao.insert(adminUser);
@@ -95,24 +97,33 @@ public class AdminUserServiceImpl implements AdminUserService {
 
 	@Transactional
 	@Override
-	public void update(Integer id, String username, String password, Integer[] roleIds) {
+	public Map<String,Object> update(Integer id, String username, String password, String avatar, Integer[] roleIds) {
+		Map<String,Object> map = new HashMap<>();
 		boolean updateUsername = false;
 		boolean updatePassword = false;
+		boolean updateAvatar = false;
 		AdminUser adminUser = getById(id);
 		// 用户名不一样时才修改用户名
-		if (!adminUser.getUsername().equals(username)) {
+		if (!username.equals(adminUser.getUsername())) {
 			AdminUser adminUser2 = getByName(username);
 			ApiAssert.isNull(adminUser2, "用户名已存在");
 			adminUser.setUsername(username);
 			updateUsername = true;
 		}
 		// 密码不为 null 且不为 "" 时才修改密码
-		if (password != null && !StringUtils.isEmpty(password)) {
+		if (!StringUtils.isEmpty(password)) {
 			adminUser.setPassword(SimpleHashUtil.simpleHash("MD5", password, username, 1024).toString());
 			updatePassword = true;
 		}
 
-		if (updateUsername || updatePassword) {
+		// 头像不一样时才修改头像
+		if(!avatar.equals(adminUser.getAvatar())) {
+			adminUser.setAvatar(avatar);
+			updateAvatar = true;
+		}
+		
+		// 更新后台用户
+		if (updateUsername || updatePassword || updateAvatar) {
 			adminUserDao.update(adminUser);
 		}
 
@@ -135,6 +146,10 @@ public class AdminUserServiceImpl implements AdminUserService {
 		if (adminUserRoleRels != null && adminUserRoleRels.size() > 0) {
 			adminUserRoleRelService.saveBatch(adminUserRoleRels);
 		}
+		map.put("updateUsername", updateUsername);
+		map.put("updatePassword", updatePassword);
+		map.put("updateAvatar", updateAvatar);
+		return map;
 	}
 
 	@Transactional

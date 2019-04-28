@@ -1,10 +1,8 @@
 package cn.roothub.service;
 
-import java.util.List;
 import java.util.Map;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.AdminUser;
-import cn.roothub.entity.Role;
 
 /**
  * @author miansen.wang
@@ -26,11 +24,12 @@ public interface AdminUserService {
 	
 	/**
 	 * 新增后台用户
-	 * @param username: 用户名
-	 * @param password: 密码
-	 * @param roleIds: 角色ID数组
+	 * @param username:用户名
+	 * @param password:密码
+	 * @param avatar:头像
+	 * @param roleIds:角色ID数组
 	 */
-	void save(String username,String password,Integer[] roleIds);
+	void save(String username,String password,String avatar,Integer[] roleIds);
 	
 	/**
 	 * 更新后台用户
@@ -39,7 +38,7 @@ public interface AdminUserService {
 	 * @param password: 密码
 	 * @param roleIds: 角色ID数组
 	 */
-	void update(Integer id,String username,String password,Integer[] roleIds);
+	Map<String,Object> update(Integer id,String username,String password,String avatar,Integer[] roleIds);
 	
 	// 删除后台用户
 	void removeById(Integer id);

@@ -35,14 +35,22 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		 */
 		String uploadType = (String)maps.get("upload_type");
 		if(!uploadType.equals("45")) {
-			// 静态资源访问URL
+			// 数据库里配置的静态资源访问URL
 			String staticUrl = (String)maps.get("static_url");
+			// 数据库里配置的静态资源映射目录
 			String uploadFiledir = (String)maps.get("default_upload_filedir") != null ? (String)maps.get("default_upload_filedir") : (String)maps.get("local_upload_filedir");
-			String[] locations = {uploadFiledir + "topic/",uploadFiledir + "node/",uploadFiledir + "user/",uploadFiledir + "tag/"};
-			// 静态资源访问URL
+			// 自定义的静态资源映射目录，这里是写死的
+			String[] locations = {
+					uploadFiledir + "topic/",
+					uploadFiledir + "node/",
+					uploadFiledir + "user/",
+					uploadFiledir + "tag/",
+					uploadFiledir + "admin-user/"
+					};
+			// 添加静态资源访问URL
 			ResourceHandlerRegistration addResourceLocations = registry.addResourceHandler(staticUrl);
 			for(String location : locations) {
-				// 静态资源映射目录
+				// 添加静态资源映射目录
 				addResourceLocations.addResourceLocations(location);
 			}
 		}

@@ -1,10 +1,13 @@
 package cn.roothub.web.admin;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,20 +57,21 @@ public class AdminUserAdminController {
 
 	/**
 	 * 添加后台用户
-	 * 
-	 * @param username
-	 * @param password
-	 * @param roleIds
+	 * @param username:用户名
+	 * @param password:密码
+	 * @param avatar:头像
+	 * @param roleIds:角色
 	 * @return
 	 */
 	@RequiresPermissions("admin_user:add")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
-	public Result<String> add(String username, String password, Integer[] roleIds) {
+	public Result<String> add(String username, String password, String avatar, Integer[] roleIds) {
 		ApiAssert.notNull(username, "用户名不能为空");
 		ApiAssert.notNull(password, "密码不能为空");
-		adminUserService.save(username, password, roleIds);
-		return new Result(true, "添加用户成功");
+		if(StringUtils.isEmpty(avatar)) avatar = "/resources/images/default-avatar.jpg";
+		adminUserService.save(username, password, avatar, roleIds);
+		return new Result<>(true, "添加用户成功");
 	}
 
 	@RequiresPermissions("admin_user:edit")
@@ -84,14 +88,26 @@ public class AdminUserAdminController {
 		return "admin/admin_user/edit";
 	}
 
+	/**
+	 * 编辑后台用户
+	 * 如果 password 为空，则不更新 password
+	 * 如果 avatar 为空，则设置 avatar 为默认值
+	 * @param id:后台用户ID
+	 * @param username:用户名
+	 * @param password:密码
+	 * @param avatar:头像
+	 * @param roleIds:角色
+	 * @return
+	 */
 	@RequiresPermissions("admin_user:edit")
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Result<String> edit(Integer id, String username, String password, Integer[] roleIds) {
+	public Result<Map<String, Object>> edit(Integer id, String username, String password, String avatar, Integer[] roleIds) {
 		ApiAssert.notNull(username, "用户名不能为空");
+		if(StringUtils.isEmpty(avatar)) avatar = "/resources/images/default-avatar.jpg";
 		// 更新用户
-		adminUserService.update(id, username, password, roleIds);
-		return new Result(true, "编辑用户成功");
+		Map<String, Object> map = adminUserService.update(id, username, password, avatar, roleIds);
+		return new Result<Map<String,Object>>(true, map);
 	}
 
 	@RequiresPermissions("admin_user:delete")

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
     <link rel="stylesheet" href="/resources/css/admin.css">
     <link rel="stylesheet" href="/resources/wangEditor/wangEditor.min.css">
+    <link rel="stylesheet" href="/resources/cropper/cropper.css">
     <style>
       @media screen and (max-width: 768px) {
         .content-header {
@@ -36,6 +37,8 @@
     <script src="/resources/admin/js/app.min.js"></script>
     <script src="/resources/layui/layui.js"></script>
   	<script src="/resources/layui/layui-paginate.js"></script>
+  	<script src="/resources/js/admin/avatar.js"></script>
+  	<script src="/resources/cropper/cropper.min.js"></script>
 
     <script>
       function toast(txt, icon) {

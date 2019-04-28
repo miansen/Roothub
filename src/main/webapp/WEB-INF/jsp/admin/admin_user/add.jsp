@@ -36,6 +36,23 @@
                 <input type="password" id="password" name="password" class="form-control" placeholder="密码">
               </div>
               <div class="form-group">
+                <label>头像</label>
+                <p>
+          			<button type="button" class="btn btn-primary" id="choiceAvatarBtn">选择头像</button>
+         			<button type="button" class="btn btn-success" id="confirmAvatarBtn">确认头像</button>
+          			<input type="file" class="hidden" id="newAvatarFile" name="newAvatarFile">
+          			<input type="hidden" value="" name="adminUserAvatar" id="adminUserAvatar">
+        		</p>
+        		<div class="row">
+          			<div class="col-md-9" id="adjustment">
+            			<img src="" id="newAvatarImg" class="hidden origin-avatar" alt="">
+          			</div>
+          			<div class="col-md-3">
+            			<div class="preview"></div>
+          			</div>
+        		</div>
+              </div>
+              <div class="form-group">
                 <label>角色</label>
                 <p>
                 	<c:forEach var="role" items="${page.list}">
@@ -58,6 +75,7 @@
   		$("#form").submit(function() {
   	      var username = $("#username").val();
   	      var password = $("#password").val();
+  	      var avatar = $("#adminUserAvatar").val();
   	      var roleIds = [];
   	      $("input[name='roleId']:checked").each(function(index,item){
   	    	roleIds.push($(this).val());
@@ -84,6 +102,7 @@
   	        data: {
   	          username: username,
   	          password: password,
+  	          avatar: avatar,
   	          roleIds: roleIds
   	        },
   	        success: function(data) {

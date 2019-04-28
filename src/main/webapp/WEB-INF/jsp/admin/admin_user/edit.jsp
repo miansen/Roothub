@@ -34,7 +34,24 @@
               </div>
               <div class="form-group">
                 <label>密码</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="密码">
+                <input type="password" id="password" name="password" class="form-control" placeholder="密码为空则不修改">
+              </div>
+              <div class="form-group">
+                <label>头像</label>
+                <p>
+          			<button type="button" class="btn btn-primary" id="choiceAvatarBtn">选择头像</button>
+         			<button type="button" class="btn btn-success" id="confirmAvatarBtn">确认头像</button>
+          			<input type="file" class="hidden" id="newAvatarFile" name="newAvatarFile">
+          			<input type="hidden" value="${adminUser.avatar}" name="adminUserAvatar" id="adminUserAvatar">
+        		</p>
+        		<div class="row">
+          			<div class="col-md-9" id="adjustment">
+            			<img src="${adminUser.avatar}" id="newAvatarImg" class="origin-avatar" alt="">
+          			</div>
+          			<div class="col-md-3">
+            			<div class="preview"></div>
+          			</div>
+        		</div>
               </div>
               <div class="form-group">
                 <label>角色</label>
@@ -73,6 +90,7 @@
   		$("#form").submit(function() {
   	      var username = $("#username").val();
   	      var password = $("#password").val();
+  	      var avatar = $("#adminUserAvatar").val();
   	      var roleIds = [];
   	      $("input[name='roleId']:checked").each(function(index,item){
   	    	roleIds.push($(this).val());
@@ -92,14 +110,21 @@
   	          id: adminUserId,
   	          username: username,
   	          password: password,
+  	          avatar: avatar,
   	          roleIds: roleIds
   	        },
   	        success: function(data) {
   	          if(data.success === true) {
-  	            toast('编辑成功','success');
-  	            setTimeout(function() {
-  	              window.location.href = '/admin/admin_user/list';
-  	            }, 1000);
+  	            // 如果修改了用户名和密码，则强制退出
+  	            if(data.data.updateUsername || data.data.updatePassword){
+  	            	alert('修改成功，请重新登录');
+  	            	window.location.href = '/admin/logout';
+  	            }else{
+  	            	toast('修改成功','success');
+  	            	setTimeout(function() {
+  	  	              window.location.href = '/admin/admin_user/list';
+  	  	            }, 1000);
+  	            }
   	          } else {
   	            toast(data.error,'error');
   	          }

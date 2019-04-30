@@ -30,7 +30,7 @@
               <input type="hidden" name="id" value="${adminUser.adminUserId}">
               <div class="form-group">
                 <label>用户名</label>
-                <input type="text" id="username" name="username" value="${adminUser.username}" class="form-control" placeholder="用户名">
+                <input type="text" id="username" name="username" value="${adminUser.username}" class="form-control" placeholder="用户名" disabled>
               </div>
               <div class="form-group">
                 <label>密码</label>
@@ -88,17 +88,13 @@
   		}
   		
   		$("#form").submit(function() {
-  	      var username = $("#username").val();
+  	      // var username = $("#username").val();
   	      var password = $("#password").val();
   	      var avatar = $("#adminUserAvatar").val();
   	      var roleIds = [];
   	      $("input[name='roleId']:checked").each(function(index,item){
   	    	roleIds.push($(this).val());
   	      });
-  	      if(!username) {
-  	        toast('用户名不能为空');
-  	        return false;
-  	      }
   	      $.ajax({
   	        url: '/admin/admin_user/edit',
   	        async: true,
@@ -108,15 +104,14 @@
   	      	traditional:true, //防止深度序列化,默认false
   	        data: {
   	          id: adminUserId,
-  	          username: username,
   	          password: password,
   	          avatar: avatar,
   	          roleIds: roleIds
   	        },
   	        success: function(data) {
   	          if(data.success === true) {
-  	            // 如果修改了用户名和密码，则强制退出
-  	            if(data.data.updateUsername || data.data.updatePassword){
+  	            // 如果修改的是当前登录用户，则强制重新登录
+  	            if(data.data.logout){
   	            	alert('修改成功，请重新登录');
   	            	window.location.href = '/admin/logout';
   	            }else{

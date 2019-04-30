@@ -34,11 +34,11 @@ public interface AdminUserService {
 	/**
 	 * 更新后台用户
 	 * @param id: 后台用户ID
-	 * @param username: 用户名
 	 * @param password: 密码
 	 * @param roleIds: 角色ID数组
+	 * @return 如果修改的是当前登录用户，则强制重新登录
 	 */
-	Map<String,Object> update(Integer id,String username,String password,String avatar,Integer[] roleIds);
+	Map<String,Object> update(Integer id,String password,String avatar,Integer[] roleIds);
 	
 	// 删除后台用户
 	void removeById(Integer id);

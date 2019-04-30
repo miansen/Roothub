@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +30,10 @@ public class AdminUserServiceImpl implements AdminUserService {
 
 	@Autowired
 	private AdminUserDao adminUserDao;
+	
 	@Autowired
 	private RoleService roleService;
+	
 	@Autowired
 	private AdminUserRoleRelService adminUserRoleRelService;
 
@@ -97,22 +100,15 @@ public class AdminUserServiceImpl implements AdminUserService {
 
 	@Transactional
 	@Override
-	public Map<String,Object> update(Integer id, String username, String password, String avatar, Integer[] roleIds) {
+	public Map<String,Object> update(Integer id, String password, String avatar, Integer[] roleIds) {
 		Map<String,Object> map = new HashMap<>();
-		boolean updateUsername = false;
 		boolean updatePassword = false;
 		boolean updateAvatar = false;
 		AdminUser adminUser = getById(id);
-		// 用户名不一样时才修改用户名
-		if (!username.equals(adminUser.getUsername())) {
-			AdminUser adminUser2 = getByName(username);
-			ApiAssert.isNull(adminUser2, "用户名已存在");
-			adminUser.setUsername(username);
-			updateUsername = true;
-		}
+		
 		// 密码不为 null 且不为 "" 时才修改密码
 		if (!StringUtils.isEmpty(password)) {
-			adminUser.setPassword(SimpleHashUtil.simpleHash("MD5", password, username, 1024).toString());
+			adminUser.setPassword(SimpleHashUtil.simpleHash("MD5", password, adminUser.getUsername(), 1024).toString());
 			updatePassword = true;
 		}
 
@@ -123,7 +119,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 		}
 		
 		// 更新后台用户
-		if (updateUsername || updatePassword || updateAvatar) {
+		if (updatePassword || updateAvatar) {
+			adminUser.setUpdateDate(new Date());
 			adminUserDao.update(adminUser);
 		}
 
@@ -146,9 +143,13 @@ public class AdminUserServiceImpl implements AdminUserService {
 		if (adminUserRoleRels != null && adminUserRoleRels.size() > 0) {
 			adminUserRoleRelService.saveBatch(adminUserRoleRels);
 		}
-		map.put("updateUsername", updateUsername);
-		map.put("updatePassword", updatePassword);
-		map.put("updateAvatar", updateAvatar);
+		// 当前登录用户
+		AdminUser principal = (AdminUser)SecurityUtils.getSubject().getPrincipal();
+		
+		// 如果修改的是当前登录用户，则强制重新登录
+		if(adminUser.getAdminUserId().equals(principal.getAdminUserId())) {
+			map.put("logout", true);
+		}
 		return map;
 	}
 

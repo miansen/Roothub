@@ -96,6 +96,7 @@ public class AccountRealm extends AuthorizingRealm {
 		 */
 		// Object principal = username;
 		AdminUser principal = new AdminUser();
+		principal.setAdminUserId(adminUser.getAdminUserId());
 		principal.setUsername(username);
 		principal.setAvatar(adminUser.getAvatar());
 		

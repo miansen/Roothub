@@ -92,8 +92,8 @@ public class AdminUserAdminController {
 	 * 编辑后台用户
 	 * 如果 password 为空，则不更新 password
 	 * 如果 avatar 为空，则设置 avatar 为默认值
+	 * 如果修改的是当前登录用户，则强制重新登录
 	 * @param id:后台用户ID
-	 * @param username:用户名
 	 * @param password:密码
 	 * @param avatar:头像
 	 * @param roleIds:角色
@@ -102,11 +102,11 @@ public class AdminUserAdminController {
 	@RequiresPermissions("admin_user:edit")
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Result<Map<String, Object>> edit(Integer id, String username, String password, String avatar, Integer[] roleIds) {
-		ApiAssert.notNull(username, "用户名不能为空");
+	public Result<Map<String, Object>> edit(Integer id, String password, String avatar, Integer[] roleIds) {
+		// ApiAssert.notNull(username, "用户名不能为空");
 		if(StringUtils.isEmpty(avatar)) avatar = "/resources/images/default-avatar.jpg";
 		// 更新用户
-		Map<String, Object> map = adminUserService.update(id, username, password, avatar, roleIds);
+		Map<String, Object> map = adminUserService.update(id, password, avatar, roleIds);
 		return new Result<Map<String,Object>>(true, map);
 	}
 

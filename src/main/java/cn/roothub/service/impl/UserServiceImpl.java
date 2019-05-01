@@ -252,4 +252,16 @@ public class UserServiceImpl implements UserService{
 		CookieAndSessionUtil.setSession(request, "user", user);
 	}
 
+	@Override
+	public PageDataBody<User> pageForAdmin(String username, String email, Integer pageNumber, Integer pageSize) {
+		List<User> list = rootUserDao.selectAllForAdmin(username, email, (pageNumber - 1) * pageSize, pageSize);
+		int totalRow = countAllForAdmin(username, email);
+		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+	}
+
+	@Override
+	public int countAllForAdmin(String username, String email) {
+		return rootUserDao.countAllForAdmin(username, email);
+	}
+
 }

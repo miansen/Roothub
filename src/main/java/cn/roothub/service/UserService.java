@@ -129,4 +129,8 @@ public interface UserService {
 	 * @return
 	 */
 	int countToday();
+	
+	PageDataBody<User> pageForAdmin(String username, String email, Integer pageNumber, Integer pageSize);
+	
+	int countAllForAdmin(String username,String email);
 }

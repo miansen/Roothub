@@ -55,7 +55,7 @@ public class StorageProperties implements BaseProperties{
 	@Qualifier("uploadConfig")
 	private SystemConfigService systemConfigService;
 	
-	@Autowired
+	@Autowired(required = false)
 	private HttpServletRequest httpServletRequest;
 	
 	@Override

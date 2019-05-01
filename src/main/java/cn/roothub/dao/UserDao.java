@@ -193,6 +193,28 @@ public interface UserDao {
 	 */
 	int countScore(Integer userId);
 	
-	// 统计当天用户数
+	/**
+	 * 统计当天用户数
+	 * @return
+	 */
 	int countToday();
+	
+	/**
+	 * 用户列表
+	 * @param username:用户名
+	 * @param email:邮箱
+	 * @param start
+	 * @param limit
+	 * @return
+	 */
+	List<User> selectAllForAdmin(@Param("username") String username, @Param("email") String email, 
+			@Param("start") Integer start, @Param("limit") Integer limit);
+	
+	/**
+	 * 统计用户数量
+	 * @param username
+	 * @param email
+	 * @return
+	 */
+	int countAllForAdmin(@Param("username") String username, @Param("email") String email);
 }

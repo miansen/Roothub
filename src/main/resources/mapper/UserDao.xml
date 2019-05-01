@@ -274,4 +274,43 @@
         from user a
         where TO_DAYS(a.create_date) = TO_DAYS(NOW())
     </select>
+    
+    <!-- 用户列表 -->
+    <select id="selectAllForAdmin" resultType="User">
+		SELECT
+        	*
+		FROM
+			user
+		WHERE 
+			1 = 1
+		<if test="username != null">
+		AND user_name like CONCAT('%',#{username},'%')
+		</if>
+		<if test="email != null">
+		AND email like CONCAT('%',#{email},'%')
+		</if>
+		ORDER BY create_date desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     
+     <!-- 后台话题统计 -->
+     <select id="countAllForAdmin" resultType="java.lang.Integer">
+        SELECT
+        	COUNT(1)
+        FROM
+        	user
+        WHERE 
+			1 = 1
+		<if test='username != null'>
+			AND user_name like CONCAT('%',#{username},'%')
+		</if>
+		<if test='email != null'>
+			AND email like CONCAT('%',#{email},'%')
+		</if>
+    </select>
 </mapper>

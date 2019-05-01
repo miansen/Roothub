@@ -68,7 +68,7 @@ $(function () {
           dataType: 'json',
           data: {
         	base64: avatarBase64,
-            path: "admin-user"
+            path: "user"
           },
           success: function (data) {
             if(data.success != null && data.success == true) {

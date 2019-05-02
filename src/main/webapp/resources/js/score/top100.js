@@ -29,7 +29,7 @@ $(function(){
 							<td><b>'+(i+1)+'</b></td>\
 							<td>\
 							<a class="user_avatar" href="/user/'+data.data[i].userName+'">\
-							<img src="/resources/images/'+data.data[i].avatar+'" title="'+data.data[i].userName+'">\
+							<img src="'+data.data[i].avatar+'" title="'+data.data[i].userName+'">\
 							</a>\
 							<span class="sp10"></span>\
 							<a href="/user/'+data.data[i].userName+'">'+data.data[i].userName+'</a></td>\

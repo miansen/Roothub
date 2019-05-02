@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-md-9">
         <div class="panel panel-default">
-          <div class="panel-heading"><a href="/">Roothub</a> / ${user.userName}创建的话题</div>
+          <div class="panel-heading"><a href="/">主页</a> / ${user.userName}创建的话题</div>
           <c:forEach var="item" items="${topicPage.list}">
           <div class="panel-body paginate-bot" style="border-bottom: 1px solid #e2e2e2;">
             <div class="media">

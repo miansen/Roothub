@@ -193,11 +193,11 @@ public class UserServiceImpl implements UserService{
 		user.setPassword(password);
 		user.setScore(10);
 		user.setEmail(email);
-		user.setUrl("https://www.roothub.cn/user/"+username);
-		//user.setThirdId("GitHub");
+		user.setUrl(null);
+		user.setThirdId(null);
 		user.setReceiveMsg(false);
 		user.setCreateDate(new Date());
-		user.setUpdateDate(new Date());
+		user.setUpdateDate(null);
 		user.setIsBlock(false);
 		user.setThirdAccessToken(StringUtil.getUUID());
 		user.setStatusCd("1000");

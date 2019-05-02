@@ -19,7 +19,7 @@
     <div class="row">
       <div class="col-md-9">
         <div class="panel panel-default">
-          <div class="panel-heading"><a href="/" style="color: #778087;">roothub</a><span class="chevron">&nbsp;›&nbsp;</span>收藏系统
+          <div class="panel-heading"><a href="/" style="color: #778087;">主页</a><span class="chevron">&nbsp;›&nbsp;</span>收藏系统
           	<span class="pull-right">总共收藏话题 ${countCollect}</span>
           </div>
      		        <div class="panel-body paginate-bot">

@@ -15,7 +15,7 @@
 			<div class="col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a href="/">Roothub</a> / Top100积分榜
+						<a href="/">主页</a> / Top100积分榜
 					</div>
 					<div class="panel-body" style="color: #333;">
 						<div class="panel">

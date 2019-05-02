@@ -32,6 +32,14 @@
         <property name="defaultEncoding" value="UTF-8"></property>
         <property name="maxUploadSize" value="5400000"></property>
     </bean>
+    
+    <!-- 配置日期转换 -->
+    <bean id="convertDateConfig" 
+    	class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="cn.roothub.config.ConvertDateConfig"/>
+		</property>
+	</bean>
 
 	<!-- 4.扫描web相关的bean -->
 	<context:component-scan base-package="cn.roothub.web" />

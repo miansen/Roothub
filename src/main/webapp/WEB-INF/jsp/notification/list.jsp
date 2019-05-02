@@ -20,7 +20,7 @@
   <div class="col-md-9">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <a href="/" style="color: #778087;">roothub</a><span class="chevron">&nbsp;›&nbsp;</span>通知系统
+          <a href="/" style="color: #778087;">主页</a><span class="chevron">&nbsp;›&nbsp;</span>通知系统
           <span class="pull-right">总共收到通知 ${countByAuthor}</span>
         </div>
         <div class="panel-body">

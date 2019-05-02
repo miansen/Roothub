@@ -33,7 +33,7 @@
         <result column="third_access_token" jdbcType="VARCHAR" property="thirdAccessToken"/>
     </resultMap>
     <sql id="Base_Column_List">
-        user_id, user_name, password, score, avatar, email, url, signature, receive_msg,
+        user_id, user_name, password, user_sex, score, avatar, email, url, signature, receive_msg,
         create_date, update_date,user_addr,third_id,third_access_token
     </sql>
 	<!-- 查询所有用户 -->

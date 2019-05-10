@@ -4,16 +4,58 @@ Navicat MySQL Data Transfer
 Source Server         : sen
 Source Server Version : 50505
 Source Host           : localhost:3306
-Source Database       : roothub
+Source Database       : roothub_bak
 
 Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-12-04 14:55:15
+Date: 2019-05-11 00:12:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `admin_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_user`;
+CREATE TABLE `admin_user` (
+  `admin_user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL DEFAULT '',
+  `password` varchar(255) NOT NULL DEFAULT '',
+  `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
+  `create_date` datetime NOT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`admin_user_id`),
+  UNIQUE KEY `uk_admin_user_username` (`username`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员表';
+
+-- ----------------------------
+-- Records of admin_user
+-- ----------------------------
+INSERT INTO `admin_user` VALUES ('1', 'admin', 'c41d7c66e1b8404545aa3a0ece2006ac', '/resources/images/default-avatar.jpg', '2019-02-26 11:09:57', null);
+
+-- ----------------------------
+-- Table structure for `admin_user_role_rel`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin_user_role_rel`;
+CREATE TABLE `admin_user_role_rel` (
+  `admin_user_role_rel_id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`admin_user_role_rel_id`),
+  KEY `key_admin_user_role_rel_role_id` (`role_id`) USING BTREE,
+  KEY `key_admin_user_role_rel_admin_user_id` (`admin_user_id`) USING BTREE,
+  CONSTRAINT `fk_admin_user_role_rel_admin_user_id` FOREIGN KEY (`admin_user_id`) REFERENCES `admin_user` (`admin_user_id`),
+  CONSTRAINT `fk_admin_user_role_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色用户关系表';
+
+-- ----------------------------
+-- Records of admin_user_role_rel
+-- ----------------------------
+INSERT INTO `admin_user_role_rel` VALUES ('1', '1', '1', '2019-03-14 15:42:47', '2019-03-14 15:42:47');
 
 -- ----------------------------
 -- Table structure for `collect`
@@ -25,17 +67,11 @@ CREATE TABLE `collect` (
   `tid` int(11) DEFAULT NULL COMMENT '主题ID',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
 
 -- ----------------------------
 -- Records of collect
 -- ----------------------------
-INSERT INTO `collect` VALUES ('67', '1', '73', '2018-07-14 15:38:47');
-INSERT INTO `collect` VALUES ('68', '1', '65', '2018-07-22 12:37:57');
-INSERT INTO `collect` VALUES ('69', '61', '72', '2018-09-10 11:13:22');
-INSERT INTO `collect` VALUES ('70', '62', '80', '2018-10-30 18:45:36');
-INSERT INTO `collect` VALUES ('71', '63', '80', '2018-10-31 20:32:44');
-INSERT INTO `collect` VALUES ('72', '63', '96', '2018-11-05 21:17:53');
 
 -- ----------------------------
 -- Table structure for `follow`
@@ -47,29 +83,18 @@ CREATE TABLE `follow` (
   `fid` int(11) DEFAULT NULL COMMENT '被关注者ID',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COMMENT='关注表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='关注表';
 
 -- ----------------------------
 -- Records of follow
 -- ----------------------------
-INSERT INTO `follow` VALUES ('3', '3', '1', '2018-07-01 21:35:52');
-INSERT INTO `follow` VALUES ('5', '5', '1', '2018-07-01 21:39:38');
-INSERT INTO `follow` VALUES ('17', '1', '3', '2018-07-01 22:51:14');
-INSERT INTO `follow` VALUES ('23', '1', '2', '2018-07-02 13:17:59');
-INSERT INTO `follow` VALUES ('30', '1', '47', '2018-07-27 21:11:40');
-INSERT INTO `follow` VALUES ('31', '1', '46', '2018-07-27 21:38:15');
-INSERT INTO `follow` VALUES ('32', '1', '5', '2018-07-28 14:36:06');
-INSERT INTO `follow` VALUES ('33', '61', '1', '2018-09-10 11:13:59');
-INSERT INTO `follow` VALUES ('34', '61', '47', '2018-09-10 11:14:12');
-INSERT INTO `follow` VALUES ('35', '61', '46', '2018-09-10 11:14:25');
-INSERT INTO `follow` VALUES ('36', '63', '1', '2018-11-05 21:11:10');
 
 -- ----------------------------
 -- Table structure for `node`
 -- ----------------------------
 DROP TABLE IF EXISTS `node`;
 CREATE TABLE `node` (
-  `node_id` int(11) NOT NULL COMMENT '主键ID',
+  `node_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `node_code` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '节点编码',
   `node_title` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '节点名称',
   `avatar_normal` varchar(250) CHARACTER SET utf8 DEFAULT NULL COMMENT '节点头像',
@@ -84,45 +109,12 @@ CREATE TABLE `node` (
   `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0:否 1:是',
   PRIMARY KEY (`node_id`),
   KEY `key_node_code` (`node_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='节点表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='节点表';
 
 -- ----------------------------
 -- Records of node
 -- ----------------------------
-INSERT INTO `node` VALUES ('0', 'jrrd', '金融热点', null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `node` VALUES ('1', 'java', 'Java', '/resources/images/node/java_normal.png', '/resources/images/node/java_mini.png', null, 'Java语言', '14', '/node/java', 'lang', '2018-11-03 11:57:18', '2018-11-03 11:57:21', '0');
-INSERT INTO `node` VALUES ('2', 'python', 'Python', '/resources/images/node/python_normal.png', '/resources/images/node/python_mini.png', null, 'Python语言', '14', '/node/python', 'lang', '2018-11-03 11:58:50', '2018-11-03 11:58:53', '0');
-INSERT INTO `node` VALUES ('3', 'oracle', 'Oracle', '/resources/images/node/oracle_normal.png', '/resources/images/node/oracle_mini.png', null, 'Oracle数据库', '14', '/node/oracle', 'db', '2018-11-03 15:23:29', '2018-11-03 15:23:33', '0');
-INSERT INTO `node` VALUES ('4', 'mysql', 'MySQL', '/resources/images/node/mysql_normal.png', '/resources/images/node/mysql_mini.png', null, 'MySQL数据库', '14', '/node/mysql', 'db', '2018-11-03 15:24:04', '2018-11-03 15:24:08', '0');
-INSERT INTO `node` VALUES ('5', 'html', 'html', '/resources/images/node/html_normal.png', '/resources/images/node/html_mini.png', null, '超文本标记语言', '14', '/node/html', 'web', '2018-11-03 15:24:56', '2018-11-03 15:24:59', '0');
-INSERT INTO `node` VALUES ('6', 'css', 'CSS', '/resources/images/node/css_normal.png', '/resources/images/node/css_mini.png', null, '层叠样式表', '14', '/node/css', 'web', '2018-11-03 15:26:02', '2018-11-03 15:26:04', '0');
-INSERT INTO `node` VALUES ('7', 'android', 'Android', '/resources/images/node/android_normal.png', '/resources/images/node/android_mini.png', null, '安卓开发', '14', '/node/android', 'mobile', '2018-11-03 15:27:42', '2018-11-03 15:27:46', '0');
-INSERT INTO `node` VALUES ('8', 'ios', 'IOS', '/resources/images/node/ios_normal.png', '/resources/images/node/ios_mini.png', null, 'IOS开发', '14', '/node/ios', 'mobile', '2018-11-03 15:28:12', '2018-11-03 15:28:15', '0');
-INSERT INTO `node` VALUES ('9', 'qna', '问与答', '/resources/images/node/lang_normal.png', '/resources/images/node/lang_mini.png', null, '问与答', '13', '/node/qna', null, '2018-11-03 15:29:09', '2018-11-03 15:29:13', '0');
-INSERT INTO `node` VALUES ('10', 'lang', '编程语言', '/resources/images/node/lang_normal.png', '/resources/images/node/lang_mini.png', null, '任何傻瓜都能写出计算机可以理解的代码，而好的程序员能写出让人能读懂的代码。', '14', '/node/lang', null, '2018-11-13 15:26:59', '2018-11-13 15:26:57', '0');
-INSERT INTO `node` VALUES ('11', 'mobile', '移动开发', '/resources/images/node/mobile_normal.png', '/resources/images/node/mobile_mini.png', null, '移动开发', '14', '/node/mobile', null, '2018-11-13 15:48:26', '2018-11-13 15:48:24', '0');
-INSERT INTO `node` VALUES ('12', 'db', '数据库', '/resources/images/node/db_normal.png', '/resources/images/node/db_mini.png', null, '数据库', '14', '/node/db', null, '2018-11-13 15:48:18', '2018-11-13 15:48:22', '0');
-INSERT INTO `node` VALUES ('13', 'web', '前端开发', '/resources/images/node/web_normal.png', '/resources/images/node/web_mini.png', null, '前端开发', '14', '/node/web', null, '2018-11-13 16:22:09', '2018-11-13 16:22:12', '0');
-INSERT INTO `node` VALUES ('14', 'jdbc', 'JDBC', '/resources/images/node/lang_normal.png', '/resources/images/node/lang_mini.png', null, 'JDBC', '14', '/node/jdbc', 'java', '2018-11-13 18:35:30', '2018-11-13 18:35:33', '0');
-INSERT INTO `node` VALUES ('15', 'movie', '电影', '/resources/images/node/movie_normal.png', '/resources/images/node/movie_mini.png', null, '梦想始于剧本，而终结于电影。', '16', '/node/movie', null, '2018-11-13 19:18:03', '2018-11-13 19:18:07', '1');
-INSERT INTO `node` VALUES ('16', 'music', '音乐', '/resources/images/node/music_normal.png', '/resources/images/node/music_mini.png', null, '音乐是生活中最美好的一面', '16', '/node/music', null, '2018-11-13 19:24:22', '2018-11-13 19:24:25', '1');
-INSERT INTO `node` VALUES ('17', 'internet', '互联网热点', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '网络正在改变人类的生存方式', '15', '/node/internet', null, '2018-11-13 19:55:28', '2018-11-13 19:55:32', '0');
-INSERT INTO `node` VALUES ('18', 'global', '全球热点', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '聚焦全球热点信息', '15', '/node/global', null, '2018-11-14 10:53:03', '2018-11-14 10:53:06', '0');
-INSERT INTO `node` VALUES ('19', '8gua', '八卦来了', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '以天下八卦为己任，置他人生死为度外。', '20', '/node/8gua', null, '2018-11-14 20:47:53', '2018-11-14 20:47:56', '0');
-INSERT INTO `node` VALUES ('20', 'rmwj', '热门网剧', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '来看看有哪些热门网剧吧', '20', '/node/rmwj', null, '2018-11-14 20:52:36', '2018-11-14 20:52:39', '0');
-INSERT INTO `node` VALUES ('21', 'jilupian', '值得一看的纪录片', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '推荐制作精良的纪录片', '20', '/node/jilupian', null, '2018-11-14 20:56:23', '2018-11-14 20:56:26', '0');
-INSERT INTO `node` VALUES ('22', 'qsyk', '轻松一刻', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '网易的王牌栏目-轻松一刻', '16', '/node/qsyk', null, '2018-11-14 20:59:28', '2018-11-14 20:59:30', '0');
-INSERT INTO `node` VALUES ('23', 'wbgxpl', '微博搞笑评论', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '发现沙雕网友', '16', '/node/wbgxpl', null, '2018-11-14 21:01:32', '2018-11-14 21:01:35', '0');
-INSERT INTO `node` VALUES ('24', 'gxdz', '搞笑段子', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '让段子拯救你的不开心', '16', '/node/gxdz', null, '2018-11-14 21:02:52', '2018-11-14 21:02:55', '0');
-INSERT INTO `node` VALUES ('25', 'mrgjsy', '每日国际视野', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '每日国际视野', '15', '/node/mrgjsy', null, '2018-11-14 21:04:59', '2018-11-14 21:05:02', '0');
-INSERT INTO `node` VALUES ('26', 'dsnn', '单身男女', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '分享单身经历，感悟单身喜悲', '21', '/node/dsnn', null, '2018-11-14 21:07:26', '2018-11-14 21:07:29', '0');
-INSERT INTO `node` VALUES ('27', 'qgtd', '情感天地', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '有人的地方就有情感', '21', '/node/qgtd', null, '2018-11-14 21:08:35', '2018-11-14 21:08:38', '0');
-INSERT INTO `node` VALUES ('28', 'yqzfj', '一起追番剧', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '一起追番剧吧', '22', '/node/yqzfj', null, '2018-11-14 21:10:37', '2018-11-14 21:10:40', '0');
-INSERT INTO `node` VALUES ('29', 'pzhs', 'p站画师', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, 'p站画师精选', '22', '/node/pzhs', null, '2018-11-14 21:11:51', '2018-11-14 21:11:53', '0');
-INSERT INTO `node` VALUES ('30', 'lssdjt', '历史上的今天', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '看看历史上的今天发生了什么吧', '23', '/node/lssdjt', null, '2018-11-14 21:14:28', '2018-11-14 21:14:31', '0');
-INSERT INTO `node` VALUES ('31', 'apple', '苹果', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '苹果动向', '24', '/node/apple', null, '2018-11-14 21:16:45', '2018-11-14 21:16:47', '0');
-INSERT INTO `node` VALUES ('32', 'hwsj', '华为手机', '/resources/images/node/global_normal.png', '/resources/images/node/global_mini.png', null, '华为手机', '24', '/node/hwsj', null, '2018-11-14 21:28:13', '2018-11-14 21:28:16', '0');
-INSERT INTO `node` VALUES ('33', 'jrrd', '金融热点', '/resources/images/node/internet_normal.png', '/resources/images/node/internet_mini.png', null, '金融热点', '27', '/node/jrrd', null, '2018-11-15 11:45:41', '2018-11-15 11:45:43', '0');
+INSERT INTO `node` VALUES ('1', 'java', 'Java', '/resources/images/node/java_normal.png', '/resources/images/node/java_mini.png', null, 'Java语言', '14', '/n/Java', '编程语言', '2018-11-03 11:57:18', '2019-04-23 23:48:45', '0');
 
 -- ----------------------------
 -- Table structure for `node_tab`
@@ -138,15 +130,15 @@ CREATE TABLE `node_tab` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`node_tab_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='节点板块表';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='节点板块表';
 
 -- ----------------------------
 -- Records of node_tab
 -- ----------------------------
-INSERT INTO `node_tab` VALUES ('2', 'all', '全部', '', '0', '1', '2018-05-12 10:04:43', null);
-INSERT INTO `node_tab` VALUES ('3', 'good', '精华', '', '0', '2', '2018-05-12 12:03:30', null);
-INSERT INTO `node_tab` VALUES ('4', 'newest', '最新', '', '0', '3', '2018-05-12 14:47:35', null);
-INSERT INTO `node_tab` VALUES ('5', 'noReply', '等待评论', '', '0', '4', '2018-05-12 14:55:30', null);
+INSERT INTO `node_tab` VALUES ('1', 'all', '全部', '', '0', '1', '2018-05-12 10:04:43', null);
+INSERT INTO `node_tab` VALUES ('2', 'good', '精华', '', '0', '2', '2018-05-12 12:03:30', null);
+INSERT INTO `node_tab` VALUES ('3', 'newest', '最新', '', '0', '3', '2018-05-12 14:47:35', null);
+INSERT INTO `node_tab` VALUES ('4', 'noReply', '等待评论', '', '0', '4', '2018-05-12 14:55:30', null);
 
 -- ----------------------------
 -- Table structure for `notice`
@@ -169,23 +161,77 @@ CREATE TABLE `notice` (
   `notice_content` longtext COMMENT '通知内容',
   `status_cd` varchar(4) DEFAULT NULL COMMENT '通知状态 1000:有效 1100:无效 1200:未生效',
   PRIMARY KEY (`notice_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='消息通知表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='消息通知表';
 
 -- ----------------------------
 -- Records of notice
 -- ----------------------------
-INSERT INTO `notice` VALUES ('1', null, '1', null, 'void', null, 'public', '2018-06-01 01:35:45', '2018-06-01 01:35:46', '', '1', null, null, '<p>zcccc</p>', '1000');
-INSERT INTO `notice` VALUES ('2', null, '1', '3', 'void', null, 'public', '2018-06-19 10:13:36', '2018-06-19 10:13:36', '', '1', null, null, '<p>测试</p>', '1000');
-INSERT INTO `notice` VALUES ('3', null, '1', '3', 'void', null, 'public', '2018-06-19 10:13:51', '2018-06-19 10:13:51', '', '1', null, null, '<p>ceshi</p>', '1000');
-INSERT INTO `notice` VALUES ('4', null, '1', '3', 'void', null, 'public', '2018-06-19 10:14:13', '2018-06-19 10:14:13', '', '36', null, null, '<p>测试</p>', '1000');
-INSERT INTO `notice` VALUES ('5', null, '1', '3', 'void', null, 'public', '2018-06-19 10:14:23', '2018-06-19 10:14:23', '', '36', null, null, '<p>测试2</p>', '1000');
-INSERT INTO `notice` VALUES ('6', null, '1', '2', 'private', null, 'public', '2018-07-01 15:03:02', '2018-07-01 15:03:02', '', '32', null, null, '<p>测试</p><p><img src=\"/resources/images/04b81d950a7b02088720bbc86ed9f2d3562cc869.jpg\" style=\"max-width:100%;\"></p>', '1000');
-INSERT INTO `notice` VALUES ('7', null, '1', '1', 'public', null, 'private', '2018-07-02 21:37:51', '2018-07-02 21:37:51', 'reply', '53', null, null, '<p>哼哼哼</p>', '1000');
-INSERT INTO `notice` VALUES ('8', null, '1', '2', 'private', null, 'public', '2018-07-02 21:38:54', '2018-07-02 21:38:54', 'reply', '63', null, null, '<p>哈哈哈哈哈哈哈</p>', '1000');
-INSERT INTO `notice` VALUES ('9', null, '0', '1', 'public', null, 'Tyche', '2018-07-07 09:29:08', '2018-07-07 09:29:08', 'reply', '73', null, null, '<p>。。。<img src=\"http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif\" alt=\"[浮云]\" data-w-e=\"1\"></p>', '1000');
-INSERT INTO `notice` VALUES ('10', null, '0', '62', 'longde', null, '083013', '2018-10-30 11:50:59', '2018-10-30 11:50:59', 'reply', '80', null, null, '<p>测试</p>', '1000');
-INSERT INTO `notice` VALUES ('11', null, '0', '62', 'longde', null, '083013', '2018-10-30 18:28:40', '2018-10-30 18:28:40', 'reply', '80', null, null, '<p>测试测试</p>', '1000');
-INSERT INTO `notice` VALUES ('12', null, '0', '62', 'longde', null, '083013', '2018-10-30 18:45:52', '2018-10-30 18:45:52', 'reply', '80', null, null, '<p>测试测试\n\n</p>', '1000');
+
+-- ----------------------------
+-- Table structure for `permission`
+-- ----------------------------
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE `permission` (
+  `permission_id` int(11) NOT NULL AUTO_INCREMENT,
+  `permission_name` varchar(255) NOT NULL DEFAULT '',
+  `permission_value` varchar(255) NOT NULL DEFAULT '',
+  `pid` int(11) NOT NULL DEFAULT '0',
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`permission_id`),
+  UNIQUE KEY `permission_name_uk` (`permission_name`),
+  UNIQUE KEY `permission_value_uk` (`permission_value`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='权限表';
+
+-- ----------------------------
+-- Records of permission
+-- ----------------------------
+INSERT INTO `permission` VALUES ('1', '首页', 'index', '0', '2019-02-26 11:29:05', null);
+INSERT INTO `permission` VALUES ('2', '话题', 'topic', '0', '2019-02-26 11:29:07', null);
+INSERT INTO `permission` VALUES ('3', '评论', 'reply', '0', '2019-02-26 11:29:09', null);
+INSERT INTO `permission` VALUES ('4', '通知', 'notice', '0', '2019-02-26 11:29:12', null);
+INSERT INTO `permission` VALUES ('5', '用户', 'user', '0', '2019-02-26 11:29:15', null);
+INSERT INTO `permission` VALUES ('6', '节点', 'node', '0', '2019-02-26 11:29:18', null);
+INSERT INTO `permission` VALUES ('7', '标签', 'tag', '0', '2019-02-26 11:29:21', null);
+INSERT INTO `permission` VALUES ('8', '权限', 'permission', '0', '2019-02-26 11:29:23', null);
+INSERT INTO `permission` VALUES ('9', '系统', 'system', '0', '2019-02-26 11:29:26', null);
+INSERT INTO `permission` VALUES ('10', '后台用户', 'admin_user', '0', '2019-02-26 11:29:28', null);
+INSERT INTO `permission` VALUES ('11', '角色', 'role', '0', '2019-02-26 11:29:30', null);
+INSERT INTO `permission` VALUES ('12', '日志', 'log', '0', '2019-02-26 11:29:33', null);
+INSERT INTO `permission` VALUES ('13', '仪表盘', 'index:index', '1', '2019-02-26 11:29:35', '2019-03-06 14:36:11');
+INSERT INTO `permission` VALUES ('14', '话题列表', 'topic:list', '2', '2019-02-26 11:29:37', '2019-03-06 14:36:30');
+INSERT INTO `permission` VALUES ('15', '话题编辑', 'topic:edit', '2', '2019-02-26 11:29:40', null);
+INSERT INTO `permission` VALUES ('16', '话题删除', 'topic:delete', '2', '2019-02-26 11:29:42', null);
+INSERT INTO `permission` VALUES ('17', '话题加精', 'topic:good', '2', '2019-02-26 11:29:45', null);
+INSERT INTO `permission` VALUES ('18', '话题置顶', 'topic:top', '2', '2019-02-26 11:29:47', null);
+INSERT INTO `permission` VALUES ('19', '评论列表', 'reply:list', '3', '2019-03-03 14:22:21', null);
+INSERT INTO `permission` VALUES ('20', '评论编辑', 'reply:edit', '3', '2019-03-03 14:22:24', null);
+INSERT INTO `permission` VALUES ('21', '评论删除', 'reply:delete', '3', '2019-03-03 14:22:50', null);
+INSERT INTO `permission` VALUES ('22', '通知列表', 'notice:list', '4', '2019-03-03 14:23:28', null);
+INSERT INTO `permission` VALUES ('23', '通知删除', 'notice:delete', '4', '2019-03-03 14:23:51', null);
+INSERT INTO `permission` VALUES ('24', '用户列表', 'user:list', '5', '2019-03-03 14:24:15', null);
+INSERT INTO `permission` VALUES ('25', '用户编辑', 'user:edit', '5', '2019-03-03 14:24:29', null);
+INSERT INTO `permission` VALUES ('26', '用户删除', 'user:delete', '5', '2019-03-03 14:24:45', null);
+INSERT INTO `permission` VALUES ('27', '节点列表', 'node:list', '6', '2019-03-03 14:25:12', null);
+INSERT INTO `permission` VALUES ('28', '节点编辑', 'node:edit', '6', '2019-03-03 14:25:32', null);
+INSERT INTO `permission` VALUES ('29', '节点删除', 'node:delete', '6', '2019-03-03 14:25:49', null);
+INSERT INTO `permission` VALUES ('30', '标签列表', 'tag:list', '7', '2019-03-03 14:26:27', null);
+INSERT INTO `permission` VALUES ('31', '标签编辑', 'tag:edit', '7', '2019-03-03 14:26:41', null);
+INSERT INTO `permission` VALUES ('32', '标签删除', 'tag:delete', '7', '2019-03-03 14:26:55', null);
+INSERT INTO `permission` VALUES ('33', '权限列表', 'permission:list', '8', '2019-03-03 14:28:50', null);
+INSERT INTO `permission` VALUES ('34', '权限编辑', 'permission:edit', '8', '2019-03-03 14:29:03', null);
+INSERT INTO `permission` VALUES ('35', '权限删除', 'permission:delete', '8', '2019-03-03 14:29:16', null);
+INSERT INTO `permission` VALUES ('36', '系统设置', 'system:edit', '9', '2019-03-03 14:29:57', null);
+INSERT INTO `permission` VALUES ('37', '后台用户列表', 'admin_user:list', '10', '2019-03-03 14:30:24', null);
+INSERT INTO `permission` VALUES ('38', '后台用户编辑', 'admin_user:edit', '10', '2019-03-03 14:30:39', null);
+INSERT INTO `permission` VALUES ('39', '后台用户创建', 'admin_user:add', '10', '2019-03-03 14:30:55', null);
+INSERT INTO `permission` VALUES ('40', '后台用户删除', 'admin_user:delete', '10', '2019-03-03 14:31:25', null);
+INSERT INTO `permission` VALUES ('41', '角色列表', 'role:list', '11', '2019-03-03 14:31:54', null);
+INSERT INTO `permission` VALUES ('42', '角色编辑', 'role:edit', '11', '2019-03-03 14:32:24', null);
+INSERT INTO `permission` VALUES ('43', '角色创建', 'role:add', '11', '2019-03-03 14:32:50', null);
+INSERT INTO `permission` VALUES ('44', '角色删除', 'role:delete', '11', '2019-03-03 14:33:06', null);
+INSERT INTO `permission` VALUES ('45', '日志列表', 'log:list', '12', '2019-03-03 14:33:54', null);
+INSERT INTO `permission` VALUES ('47', '权限创建', 'permission:add', '8', '2019-03-05 16:11:20', null);
 
 -- ----------------------------
 -- Table structure for `reply`
@@ -200,42 +246,172 @@ CREATE TABLE `reply` (
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   `reply_author_id` int(11) DEFAULT NULL COMMENT '当前回复用户id',
   `reply_author_name` varchar(50) DEFAULT NULL COMMENT '当前回复用户昵称',
-  `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0:默认 1:删除',
-  `is_read` tinyint(1) DEFAULT NULL COMMENT '是否已读 0:默认 1:未读',
-  `is_show` tinyint(1) DEFAULT NULL COMMENT '是否可见 0:默认 1:不可见',
-  `reply_good_count` int(10) NOT NULL DEFAULT '0' COMMENT '点赞',
-  `reply_bad_count` int(10) NOT NULL DEFAULT '0' COMMENT '踩数',
-  `reply_type` varchar(16) NOT NULL DEFAULT '' COMMENT '回复类型',
+  `is_delete` tinyint(1) DEFAULT '0' COMMENT '是否删除 0:默认 1:删除',
+  `is_read` tinyint(1) DEFAULT '0' COMMENT '是否已读 0:默认 1:未读',
+  `is_show` tinyint(1) DEFAULT '0' COMMENT '是否可见 0:默认 1:不可见',
+  `reply_good_count` int(10) DEFAULT '0' COMMENT '点赞',
+  `reply_bad_count` int(10) DEFAULT '0' COMMENT '踩数',
+  `reply_type` varchar(16) DEFAULT NULL COMMENT '回复类型',
   `reply_read_count` int(11) DEFAULT NULL COMMENT '回复阅读数量',
-  `status_cd` varchar(4) DEFAULT NULL COMMENT '回复状态 1000:有效 1100:无效 1200:未生效',
-  PRIMARY KEY (`reply_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='回复表';
+  `status_cd` varchar(4) DEFAULT '1000' COMMENT '回复状态 1000:有效 1100:无效 1200:未生效',
+  PRIMARY KEY (`reply_id`),
+  KEY `key_topic_id` (`topic_id`),
+  KEY `key_reply_author_name` (`reply_author_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='回复表';
 
 -- ----------------------------
 -- Records of reply
 -- ----------------------------
-INSERT INTO `reply` VALUES ('34', '62', null, '<p><span style=\"font-weight: bold;\">哈哈</span></p>', '2018-07-02 21:17:17', '2018-07-02 21:17:17', '1', 'public', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('36', '63', null, '<p>哈哈哈哈哈哈哈</p>', '2018-07-02 21:38:54', '2018-07-02 21:38:54', '2', 'private', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('37', '60', null, '<p>哈哈</p>', '2018-07-03 15:35:06', '2018-07-03 15:35:06', '1', 'public', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('38', '73', null, '<p>。。。<img src=\"http://img.t.sinajs.cn/t35/style/images/common/face/ext/normal/bc/fuyun_thumb.gif\" alt=\"[浮云]\" data-w-e=\"1\"></p>', '2018-07-07 09:29:08', '2018-07-07 09:29:08', '1', 'public', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('39', '59', null, '<p>666</p>', '2018-07-16 10:40:33', '2018-07-16 10:40:33', '1', 'public', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('40', '59', null, '<p>111</p>', '2018-08-02 21:20:37', '2018-08-02 21:20:37', '1', 'public', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('41', '59', null, '<p>222</p>', '2018-08-02 21:26:58', '2018-08-02 21:26:58', '1', 'public', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('42', '79', null, '<p>111</p>', '2018-08-03 17:09:14', '2018-08-03 17:09:14', '1', 'public', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('43', '80', null, '<p>0905</p>', '2018-09-05 15:41:01', '2018-09-05 15:41:01', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('44', '80', null, '<p>0805a</p>', '2018-09-05 15:41:08', '2018-09-05 15:41:08', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('45', '80', null, '<p>123</p>', '2018-09-05 15:41:13', '2018-09-05 15:41:13', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('46', '80', null, '<p>456</p>', '2018-09-06 14:06:41', '2018-09-06 14:06:41', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('47', '80', null, '<p>678</p>', '2018-09-06 16:50:54', '2018-09-06 16:50:54', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('48', '80', null, '<p>abc</p>', '2018-09-06 16:51:32', '2018-09-06 16:51:32', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('49', '81', null, '<p>测试</p>', '2018-09-06 16:52:39', '2018-09-06 16:52:39', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('50', '80', null, '<p>测试</p>', '2018-09-06 16:52:58', '2018-09-06 16:52:58', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('51', '80', null, '<p>测试</p>', '2018-09-10 18:01:52', '2018-09-10 18:01:52', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('52', '80', null, '<p>测试\n\n</p>', '2018-09-10 19:30:07', '2018-09-10 19:30:07', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('53', '80', null, '<p>测试\n\n</p>', '2018-09-10 19:31:01', '2018-09-10 19:31:01', '61', '083013', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('54', '80', null, '<p>测试</p>', '2018-10-30 11:50:59', '2018-10-30 11:50:59', '62', 'longde', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('55', '80', null, '<p>测试测试</p>', '2018-10-30 18:28:40', '2018-10-30 18:28:40', '62', 'longde', '0', '0', '0', '0', '0', '', '0', '1000');
-INSERT INTO `reply` VALUES ('56', '80', null, '<p>测试测试\n\n</p>', '2018-10-30 18:45:52', '2018-10-30 18:45:52', '62', 'longde', '0', '0', '0', '0', '0', '', '0', '1000');
+
+-- ----------------------------
+-- Table structure for `role`
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(255) NOT NULL DEFAULT '',
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `uk_role_role_name` (`role_name`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色表';
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES ('1', '超级管理员', '2019-02-26 11:25:48', '2019-03-04 22:25:42');
+
+-- ----------------------------
+-- Table structure for `role_permission_rel`
+-- ----------------------------
+DROP TABLE IF EXISTS `role_permission_rel`;
+CREATE TABLE `role_permission_rel` (
+  `role_permission_rel_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`role_permission_rel_id`),
+  KEY `key_role_permission_rel_role_id` (`role_id`) USING BTREE,
+  KEY `key_role_permission_rel_permission_id` (`permission_id`) USING BTREE,
+  CONSTRAINT `fk_role_permission_rel_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`),
+  CONSTRAINT `fk_role_permission_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色权限关系表';
+
+-- ----------------------------
+-- Records of role_permission_rel
+-- ----------------------------
+INSERT INTO `role_permission_rel` VALUES ('1', '1', '13', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('2', '1', '14', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('3', '1', '15', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('4', '1', '16', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('5', '1', '17', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('6', '1', '18', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('7', '1', '19', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('8', '1', '20', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('9', '1', '21', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('10', '1', '22', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('11', '1', '23', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('12', '1', '24', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('13', '1', '25', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('14', '1', '26', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('15', '1', '27', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('16', '1', '28', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('17', '1', '29', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('18', '1', '30', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('19', '1', '31', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('20', '1', '32', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('21', '1', '33', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('22', '1', '34', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('23', '1', '35', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('24', '1', '47', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('25', '1', '36', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('26', '1', '37', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('27', '1', '38', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('28', '1', '39', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('29', '1', '40', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('30', '1', '41', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('31', '1', '42', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('32', '1', '43', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+INSERT INTO `role_permission_rel` VALUES ('33', '1', '44', '2019-03-11 21:54:02', '2019-03-11 21:54:02');
+
+-- ----------------------------
+-- Table structure for `system_config`
+-- ----------------------------
+DROP TABLE IF EXISTS `system_config`;
+CREATE TABLE `system_config` (
+  `system_config_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `description` varchar(1000) NOT NULL,
+  `pid` int(11) NOT NULL DEFAULT '0',
+  `type` varchar(255) DEFAULT NULL,
+  `option` varchar(255) DEFAULT NULL,
+  `reboot` int(11) NOT NULL DEFAULT '0',
+  `is_delete` tinyint(1) DEFAULT '0' COMMENT '是否删除 0: 否 1: 是',
+  PRIMARY KEY (`system_config_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of system_config
+-- ----------------------------
+INSERT INTO `system_config` VALUES ('1', null, null, '基础配置', '0', '', null, '0', '0');
+INSERT INTO `system_config` VALUES ('2', null, null, '上传配置', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('3', null, null, '邮箱配置', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('4', null, null, '积分配置', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('5', null, null, 'Redis配置', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('6', null, null, 'Elasticsearch配置', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('7', null, null, 'Github登录配置，<a href=\"https://github.com/settings/developers\" target=\"_blank\">申请地址</a>', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('8', null, null, 'WebSocket配置', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('9', 'base_url', 'http://localhost:8080', '网站部署后访问的域名，注意这个后面没有 \"/\"', '1', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('10', 'site_name', 'Roothub', '站点名称', '1', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('11', 'site_intro', 'Java论坛', '站点介绍', '1', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('12', 'cookie_name', 'user', 'cookie名称', '1', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('13', 'cookie_max_age', '2592000', 'cookie存活的最大时间', '1', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('14', 'cookie_domain', 'localhost', '存cookie时用到的域名，要与网站部署后访问的域名一致', '1', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('15', 'cookie_path', '/', 'cookie的路径', '1', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('16', 'page_size', '50', '分页每页条数', '1', 'number', null, '0', '1');
+INSERT INTO `system_config` VALUES ('17', 'local_upload_filedir', 'file:F:/upload/', '自定义文件保存路径，注意这个以 \"file:\" 开头，后面有 \"/\"（这种方式可以将资源存储在服务器的任意目录里，前提是要有该目录的读写权限）', '30', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('18', 'local_upload_user_filedir', 'file:F:/upload/roothub/user/', '自定义用户文件保存路径，注意这个后面有 \"/\"并且保证有该目录的读权限以', '30', 'text', null, '0', '1');
+INSERT INTO `system_config` VALUES ('19', 'local_upload_node_filedir', 'file:F:/upload/roothub/node/', '自定义节点文件保存路径，注意这个后面有 \"/\"并且保证有该目录的读权限', '30', 'text', null, '0', '1');
+INSERT INTO `system_config` VALUES ('20', 'local_upload_tag_filedir', 'file:F:/upload/roothub/tag/', '自定义标签文件保存路径，注意这个后面有 \"/\"并且保证有该目录的读权限', '30', 'text', null, '0', '1');
+INSERT INTO `system_config` VALUES ('21', 'redis_host', '127.0.0.1', 'redis服务地址', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('22', 'redis_port', '6379', 'redis服务端口（默认: 6379）', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('23', 'redis_password', '', 'redis服务密码（没有的话可以不用填）', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('24', 'redis_timeout', '2000', '网站连接redis服务超时时间，单位毫秒', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('25', 'redis_max_idle', '20', '连接池最多空闲实例', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('26', 'redis_max_total', '50', '连接池最多创建实例', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('27', 'redis_database', '0', '网站连接redis服务的哪个数据库，默认 0 号数据库，取值范围 0-15', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('28', 'redis_ssl', '0', 'redis服务是否开启认证连接（0：否，1：是）', '5', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('29', 'default_upload', '0', '默认上传', '2', 'radio', null, '0', '0');
+INSERT INTO `system_config` VALUES ('30', 'local_upload', '0', '自定义上传', '2', 'radio', null, '0', '0');
+INSERT INTO `system_config` VALUES ('31', 'static_url', '/static/**', '静态文件访问URL（默认上传和自定义上传的URL最好设置成一样的，否则更换上传方式后会导致之前的资源访问不了），注意最后有个\"/**\"', '30', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('32', 'accessKeyId', '', 'AccessKeyId（强烈推荐这种方式）', '45', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('33', 'accessKeySecret', '', 'AccessKeySecret', '45', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('34', 'endpoint', 'http://oss-cn-shenzhen.aliyuncs.com', 'Endpoint', '45', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('35', 'bucketName', 'roothub', 'BucketName', '45', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('36', 'oss_filedir', 'images/', '阿里云OSS静态文件存储路径，注意前面没有\"/\"，后面有 \"/\"', '45', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('37', 'oss_static_url', ' https://roothub.oss-cn-shenzhen.aliyuncs.com/', '阿里云OSS静态文件访问的URL，注意这个后面有 \"/\"', '45', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('38', 'open_redis', '1', '是否开启Redis', '5', 'radio', null, '0', '0');
+INSERT INTO `system_config` VALUES ('39', 'create_topic_score', '10', '创建话题奖励的积分', '4', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('40', 'create_reply_score', '5', '发布评论奖励的积分', '4', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('41', 'delete_topic_score', '10', '删除话题要被扣除的积分', '4', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('42', 'delete_reply_score', '5', '删除评论要被扣除的积分', '4', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('43', 'up_topic_score', '3', '点赞话题奖励话题作者的积分', '4', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('44', 'up_reply_score', '3', '点赞评论奖励评论作者的积分', '4', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('45', 'oss_upload', '1', '阿里云OSS', '2', 'radio', null, '0', '0');
+INSERT INTO `system_config` VALUES ('46', 'default_upload_filedir', '/upload/', '默认的文件保存路径，注意这个后面有 \"/\"（这种方式会将资源存储在war包里，不推荐这种方式，因为重新部署应用时会初始化）', '29', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('47', 'static_url', '/static/**', '静态文件访问URL（默认上传和自定义上传的URL最好设置成一样的，否则更换上传方式后会导致之前的资源访问不了），注意最后有个\"/**\"', '29', 'text', null, '0', '0');
+INSERT INTO `system_config` VALUES ('48', null, null, '分页设置', '0', null, null, '0', '0');
+INSERT INTO `system_config` VALUES ('49', 'index_page_size', '50', '首页', '48', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('50', 'node_page_size', '50', '节点页', '48', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('51', 'tag_page_size', '50', '标签页', '48', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('52', 'user_page_size', '50', '用户主页', '48', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('53', 'search_page_size', '50', '搜索页', '48', 'number', null, '0', '0');
+INSERT INTO `system_config` VALUES ('54', 'default_upload_node_filedir', '/upload/node/', '默认的节点文件保存路径（保存在war包里）', '29', 'text', null, '0', '1');
+INSERT INTO `system_config` VALUES ('55', 'default_upload_tag_filedir', '/upload/tag/', '默认的标签文件保存路径（保存在war包里）', '29', 'text', null, '0', '1');
+INSERT INTO `system_config` VALUES ('56', 'default_upload_user_filedir', '/upload/user/', '默认的用户文件保存路径（保存在war包里）', '29', 'text', null, '0', '1');
+INSERT INTO `system_config` VALUES ('57', 'upload_type', '45', '上传类型', '2', 'hidden', null, '0', '0');
 
 -- ----------------------------
 -- Table structure for `tab`
@@ -249,39 +425,16 @@ CREATE TABLE `tab` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `tab_order` int(2) DEFAULT NULL COMMENT '排列顺序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COMMENT='父板块表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='父板块表';
 
 -- ----------------------------
 -- Records of tab
 -- ----------------------------
-INSERT INTO `tab` VALUES ('1', 'all', '推荐', '0', '2018-07-15 15:59:48', '1');
-INSERT INTO `tab` VALUES ('2', 'hot', '最热', '1', '2018-07-15 16:00:49', null);
-INSERT INTO `tab` VALUES ('3', 'lang', '编程语言', '1', '2018-07-15 16:01:35', null);
-INSERT INTO `tab` VALUES ('4', 'db', '数据库', '1', '2018-07-15 16:02:37', null);
-INSERT INTO `tab` VALUES ('5', 'web', '前端', '1', '2018-07-15 16:04:52', null);
-INSERT INTO `tab` VALUES ('6', 'mobile', '移动开发', '1', '2018-07-15 16:05:39', null);
-INSERT INTO `tab` VALUES ('7', 'data', '大数据', '1', '2018-07-15 20:46:33', null);
-INSERT INTO `tab` VALUES ('8', 'blockchain', '区块链', '1', '2018-07-15 20:47:11', null);
-INSERT INTO `tab` VALUES ('9', 'ai', '人工智能', '1', '2018-07-15 20:47:46', null);
-INSERT INTO `tab` VALUES ('10', 'ops', '运维', '1', '2018-07-15 20:48:19', null);
-INSERT INTO `tab` VALUES ('11', 'fund', '计算机基础', '1', '2018-07-15 20:48:53', null);
-INSERT INTO `tab` VALUES ('12', 'member', '关注', '0', '2018-07-15 20:49:50', '2');
-INSERT INTO `tab` VALUES ('13', 'qna', '问与答', '1', '2018-07-15 20:50:06', null);
-INSERT INTO `tab` VALUES ('14', 'tech', '技术', '0', '2018-11-13 14:31:40', '5');
-INSERT INTO `tab` VALUES ('15', 'news', '资讯', '0', '2018-11-13 14:33:36', '3');
-INSERT INTO `tab` VALUES ('16', 'play', '有趣', '0', '2018-11-13 14:35:51', '4');
-INSERT INTO `tab` VALUES ('17', 'site', '站点', '1', '2018-11-14 11:11:02', null);
-INSERT INTO `tab` VALUES ('18', 'img', '图片', '1', '2018-11-14 11:12:59', null);
-INSERT INTO `tab` VALUES ('19', 'vodie', '视频', '1', '2018-11-14 11:13:29', null);
-INSERT INTO `tab` VALUES ('20', 'ent', '娱乐', '0', '2018-11-14 19:21:10', '6');
-INSERT INTO `tab` VALUES ('21', 'life', '生活', '0', '2018-11-14 19:21:47', '7');
-INSERT INTO `tab` VALUES ('22', 'comic', '动漫', '0', '2018-11-14 19:23:48', '8');
-INSERT INTO `tab` VALUES ('23', 'culture', '文化', '0', '2018-11-14 19:24:36', '9');
-INSERT INTO `tab` VALUES ('24', 'sat', '科技', '0', '2018-11-14 19:25:28', '10');
-INSERT INTO `tab` VALUES ('25', 'sport', '体育', '0', '2018-11-14 19:26:06', '11');
-INSERT INTO `tab` VALUES ('26', 'game', '游戏', '0', '2018-11-14 19:26:34', '12');
-INSERT INTO `tab` VALUES ('27', 'fae', '财经', '0', '2018-11-14 19:27:13', '13');
-INSERT INTO `tab` VALUES ('28', 'film', '电影', '0', '2018-11-14 19:28:07', '14');
+INSERT INTO `tab` VALUES ('1', 'all', '全部', '0', '2018-07-15 15:59:48', '1');
+INSERT INTO `tab` VALUES ('2', 'hot', '最热', '0', '2018-07-15 16:00:49', '2');
+INSERT INTO `tab` VALUES ('3', 'new', '最新', '0', '2019-01-03 20:19:41', '3');
+INSERT INTO `tab` VALUES ('4', 'lonely', '无人问津', '0', '2019-01-03 20:20:49', '4');
+INSERT INTO `tab` VALUES ('5', 'member', '关注', '0', '2018-07-15 20:49:50', '15');
 
 -- ----------------------------
 -- Table structure for `topic`
@@ -313,295 +466,17 @@ CREATE TABLE `topic` (
   `node_slug` varchar(50) DEFAULT NULL COMMENT '节点编码',
   `node_title` varchar(50) DEFAULT NULL COMMENT '节点名称',
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
-  `avatar` varchar(250) DEFAULT '69290780aaafb00aa37ff2a61342dded.png' COMMENT '头图',
+  `avatar` varchar(250) DEFAULT NULL COMMENT '头图',
   `url` varchar(250) DEFAULT NULL COMMENT 'url',
   PRIMARY KEY (`topic_id`),
   KEY `key_tab` (`tab`),
   KEY `key_author` (`author`),
-  KEY `key_node_slug` (`node_slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=451 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='帖子表';
+  KEY `key_node_title` (`node_title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='帖子表';
 
 -- ----------------------------
 -- Records of topic
 -- ----------------------------
-INSERT INTO `topic` VALUES ('58', 'tea', 'tech', '有哪些老鸟程序员知道而新手不知道的小技巧？', '幽默', '<p>程序不等于数据结构加算法，而等于搜索引擎加英语。\n\n</p>', null, '2018-07-02 21:10:43', '2018-07-02 21:10:43', null, null, '88', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'oracle', 'Oracle', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('59', 'tea', 'tech', '中国梦和美国梦的区别是什么？', '幽默', '<p>中国梦.txt，美国梦.exe\n\n</p>', null, '2018-07-02 21:11:20', '2018-07-02 21:11:20', '2018-08-02 21:26:58', 'public', '150', 'public', '0', '0', '1', '3', '0', '1', '0', '0', null, 'oracle', 'Oracle', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('60', 'tea', 'tech', '如何反驳「程序员离开电脑就是废物」这个观点？', '幽默', '<p>不不不，很多程序员在电脑前也是废物。\n\n</p>', null, '2018-07-02 21:13:43', '2018-07-02 21:13:43', '2018-07-03 15:35:06', 'public', '102', 'public', '0', '0', '1', '1', '0', '1', '0', '0', null, 'oracle', 'Oracle', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('61', 'tea', 'tech', '为什么程序员无论到哪儿都喜欢背电脑包，哪怕里面没有装电脑？', '幽默', '<p>因为他们没有别的包。\n\n</p>', null, '2018-07-02 21:14:42', '2018-07-02 21:14:42', null, null, '31', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'mysql', 'MySQL', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('62', 'tea', 'tech', '程序员都有哪些强迫症行为？', '幽默', '<p>乘电梯的时候看着电梯的按钮面板（UI）常常会开始思考电梯的调度算法，然后仔细一想好像状态挺多的，多个实例之间状态可以互相影响，还涉及到一些优先级、加速度、预判方面的东西，仔细想想其实挺复杂的，然后还没等到出电梯就放弃了。然后不知道哪次坐又会望着面板开始想。\n\n</p>', null, '2018-07-02 21:15:08', '2018-07-02 21:15:08', '2018-07-02 21:17:17', 'public', '71', 'public', '0', '0', '1', '1', '0', '1', '0', '0', null, 'mysql', 'MySQL', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('63', 'tea', 'tech', '为什么圣斗士每次出招前都要大喊一声招式？', '幽默', '<p>函数要先声明，然后才能调用。\n\n</p>', null, '2018-07-02 21:17:47', '2018-07-02 21:17:47', '2018-07-02 21:38:54', 'private', '90', 'public', '0', '0', '1', '1', '0', '1', '0', '0', null, 'html', 'html', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('64', 'tea', 'tech', '大家写代码时喜欢用 Guard Clause 还是一条路径走到底？', 'Guard Clause', '<p>前两天 Code Review 的时候被指出了这个问题。</p><p>如题，是</p><pre><code>bool func() {\n  if (xxx) return false;\n  if (xxx) return true;\n  xxx;\n  return true;\n}\n</code></pre><p>还是</p><pre><code>bool func() {\n  if (xxx) {\n    if (xxx) return false;\n    else return true;\n  } else {\n    xxx;\n    return true;\n  }\n}\n</code></pre><p>好像前者一般比较清爽，缩进层次也少。我只看过王垠在他的博客里强烈支持过第二种。</p>', null, '2018-07-03 17:20:16', '2018-07-03 17:20:16', null, null, '54', 'Roothuba', '0', '0', '1', '0', '0', '1', '0', '0', null, 'html', 'html', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('65', 'all', 'tech', '当年 1.6 亿美金估值的公司—— Digg 是如何被一句 Python 函数可变默参 毁掉的', 'Digg ', '<p><a href=\"https://lethain.com/digg-v4/\" rel=\"nofollow\">https://lethain.com/digg-v4/</a></p><p>太戏剧性了。画重点：</p><p>2011 年，Google 推出「 Panda 」 机制动摇了很多老的 SEO 手段，digg 流量被腰斩。推出 DiggV4 作战计划。经过紧张的开发发布，不过访客页面没问题，已登录用户打不开 MyNews 页面。开发不得不用临时手段把登录用户的默认页面改成 TopNews</p><p>MyNews 只能通过不断重启进程才能短暂修复。初期以为是 cassandra 的缓存击穿了 memcache，后来加紧用 redis 重写了，还是得几个小时重启一次</p><p>（折腾了一个月之后）</p><p>终于发现原因了：API 服务器是 tornado 写的名字叫 Bobtail。里面最常用的函数是：</p><p><code>def get_user_by_ids(ids=[])</code></p><p>然后这个 ids 就一直被&nbsp;<code>append</code>&nbsp;直到撑爆内存</p><p>所以这个 MyNews 功能也渐渐用的人少，因为没法定制化看新闻，后来，大家都不去 diggv4 而去 reddit 了。。</p><p>后来，digg 以 50w 美金被别人收了。。</p><p>作为这次 digg v4 事件的受害者，觉得太神奇了。。</p>', null, '2018-07-03 17:22:01', '2018-07-03 17:22:01', null, null, '39', 'Roothuba', '0', '0', '1', '0', '0', '1', '0', '0', null, 'html', 'html', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('66', 'tea', 'tech', '关闭微信朋友圈 2 个月,有感而发', '微信朋友圈', '<p>在设置中：</p><ol><li>关掉发现的小红点</li><li>全局关闭朋友圈</li><li>管理发现那个地方把所有的勾都关闭，只留下一个扫二维码图表</li></ol><p>说真的，治好了我 5 分种就刷一次朋友圈的强迫症。。神清气爽。。</p>', null, '2018-07-03 17:23:42', '2018-07-03 17:23:42', null, null, '46', 'Roothuba', '0', '0', '1', '0', '0', '1', '0', '0', null, 'css', 'CSS', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('67', 'blog', 'tech', '有没有人愿意交换个人博客友情链接的。。。', '博客', '<p>我的博客地址是：&nbsp;<a href=\"https://itfucking.com/\" rel=\"nofollow\">https://itfucking.com/</a></p><p>还没多少文章，不过最近准备开始持续输出了。</p><p>博客的文章 100%都是我自己原创的，虽然目前内容还不多，不过相信在一段时间的积累后也会变成一个不错的原创内容博客。</p><p>其实这个博客很多年前就建立了，只是一直没有用心经营，现在打算认真做起来。</p><p>在这种情况下，流量就是我需要考虑的一个问题了。</p><p>因此，想问问有没有跟我一样想法的朋友愿意交换个友链什么的。</p><p>愿意的朋友就在下面留言好啦。</p><p>或者给我邮件：daoye.more#<a href=\"http://outlook.com/\" rel=\"nofollow\">outlook.com</a>&nbsp;。</p>', null, '2018-07-03 17:25:35', '2018-07-03 17:25:35', null, null, '49', 'Roothuba', '0', '0', '1', '0', '0', '1', '0', '0', null, 'android', 'Android', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('68', 'host', 'tech', '套路云主动打电话过来的都是代理商吗？', '套路云', '<p>给我巴拉巴拉打了一会电话，销售人员，还发了一个一个邮件，邮箱是 @&nbsp;<a target=\"_blank\" href=\"http://alibaba-inc.com/\" rel=\"nofollow\">alibaba-inc.com</a>&nbsp;的，自称是阿里云授权服务中心\n\n</p>', null, '2018-07-04 22:43:19', '2018-07-04 22:43:19', null, null, '32', 'private', '0', '0', '1', '0', '0', '1', '0', '0', null, 'android', 'Android', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('69', 'host', 'tech', '无外网主机如何保证时间准确性', '主机', '<p>讨论一下，最近遇到的一个问题，在这方面了解比较少，希望有了解的同学指点指点。</p><p>如果有一台 linux 服务器一直运行在内网（不能连到互联网），而服务器时间每个月会快或者慢几分钟，有没有什么方案，比如加一个性价比高的外部硬件，可以保证服务器时间的准确性？</p>', null, '2018-07-04 22:44:02', '2018-07-04 22:44:02', null, null, '35', 'private', '0', '0', '1', '0', '0', '1', '0', '0', null, 'android', 'Android', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('70', 'host', 'tech', '站点被 CC 攻击了，怎么解？', 'CC 攻击', '<p>阿里云提供了一个 web 防火墙(里面有防 cc 攻击的选项)，结果那个防火墙要求对 www 域名做 cname 设置，而我们的 www 域名之前已经做了 A 记录，所以这里直接就提示冲突了。。。 各种查资料，始终是无解啊。\n\n</p>', null, '2018-12-04 14:45:05', '2018-12-04 14:45:05', null, null, '40', 'private', '0', '0', '1', '0', '0', '1', '0', '0', null, 'android', 'Android', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('71', 'pl', 'tech', '请教个 c++的问题', ' c++', '<p>是这样的，我用 lua 来启动一个 c++写的 daemon 进程，现在这个 daemon 有点问题，我在里面加了一些 log。问题来了，我使用 vs 直接启动 daemon 来 debug，是可以输出 log 的，而用 lua 来启动，发现没有 log 输出。</p><p>log 输出是很简单的文件 IO。真是想不通了。在资源管理器中看到的进程对应的文件位置是对的。</p>', null, '2018-07-04 22:47:04', '2018-07-04 22:47:04', null, null, '45', 'private', '0', '0', '1', '0', '0', '1', '0', '0', null, 'ios', 'IOS', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('72', 'pl', 'tech', 'http跳转https（tomcat版）', 'http跳转https', '<pre><code>&lt;!-- http跳转https --&gt;\n &lt;security-constraint&gt;\n    &lt;web-resource-collection &gt;\n    &lt;web-resource-name &gt;SSL&lt;/web-resource-name&gt;\n   &lt;url-pattern&gt;/*&lt;/url-pattern&gt;\n    &lt;/web-resource-collection&gt;\n    &lt;user-data-constraint&gt;\n    &lt;transport-guarantee&gt;CONFIDENTIAL&lt;/transport-guarantee&gt;\n    &lt;/user-data-constraint&gt;\n&lt;/security-constraint&gt;</code></pre>', null, '2018-07-06 20:29:13', '2018-07-06 20:29:13', null, null, '42', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'ios', 'IOS', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('73', 'qna', 'tech', '思考', '工作', '<p><br>未来的工作该如何抉择</p>', null, '2018-07-07 09:27:05', '2018-07-07 09:27:05', '2018-07-07 09:29:08', 'public', '107', 'Tyche', '0', '0', '1', '1', '0', '1', '0', '0', null, 'ios', 'IOS', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('74', 'host', 'qna', '问问大家国内阿里云服务器一般用来做什么呢', '阿里云服务器', '<p>如题 想问问大家一般用来做什么呢\n\n</p>', null, '2018-07-14 17:18:08', '2018-07-14 17:18:08', null, null, '33', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'qna', '问与答', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('75', 'tea', 'qna', '求推荐深圳骑行路线', '深圳骑行', '<p>如题，自行车&nbsp;<br><br>顺便有没有组队一起骑的？\n\n</p>', null, '2018-07-21 21:04:07', '2018-07-21 21:04:07', null, null, '28', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'qna', '问与答', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('76', 'qna', 'qna', '这段反向代理的代码哪边有问题？', '反向代理', '<p>其他都没有问题，但是点击搜索（&nbsp;<a href=\"http://www.abc.com/search.php\" rel=\"nofollow\">http://www.abc.com/search.php</a>&nbsp;）的时候会跳转到这个链接（&nbsp;<a href=\"https://cl.getpocket.in/cl.getpocket.in/search.php\" rel=\"nofollow\">https://cl.getpocket.in/cl.getpocket.in/search.php</a>&nbsp;） 不应该是&nbsp;<a href=\"https://cl.getpocket.in/search.php\" rel=\"nofollow\">https://cl.getpocket.in/search.php</a>&nbsp;吗？</p><p><a href=\"http://abc.com/\" rel=\"nofollow\">abc.com</a>&nbsp;是好人一生平安的网站~~ 感谢</p><pre><code>location / {\n    proxy_redirect off;\n    proxy_cookie_domain abc.com cl.getpocket.in;\n    proxy_pass https://www.abc.com;\n    proxy_connect_timeout 60s;\n    proxy_read_timeout 5400s;\n    proxy_send_timeout 5400s;\n\n    proxy_set_header Host \"www.abc.com\";\n    proxy_set_header User-Agent $http_user_agent;\n    proxy_set_header Referer https://www.abc.com;\n    proxy_set_header Accept-Encoding \"\";\n    proxy_set_header X-Real-IP $remote_addr;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n    proxy_set_header X-Forwarded-Proto https;\n\n\n    subs_filter https://www.abc.com cl.getpocket.in;\n    #subs_filter_types text/css text/xml text/javascript;\n\n    sub_filter_once off;\n}\n}</code></pre>', null, '2018-07-28 18:09:48', '2018-07-28 18:09:48', null, null, '20', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'qna', '问与答', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('77', 'qna', 'qna', '现在有什么屏小、电池大、不卡的手机', '手机', '<p>撸了那个内蒙古的移动号，求推荐一个手机 iphone se 还值得入吗\n\n</p>', null, '2018-07-28 18:10:50', '2018-07-28 18:10:50', null, null, '24', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'qna', '问与答', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('78', 'qna', 'qna', '在转转闲鱼买二手 Macbook 需要注意什么？', '转转闲鱼', '<p>rt.主要是价格参差不齐，怕翻车。\n\n</p>', null, '2018-07-28 18:13:29', '2018-07-28 18:13:29', null, null, '34', 'public', '0', '0', '1', '0', '0', '1', '0', '0', null, 'qna', '问与答', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('79', 'tea', 'tech', '好奇心日报再次被整改', '好奇心日报', '<p>现在首页已经跳转&nbsp;<a href=\"http://www.qdaily.com/statement.html\" rel=\"nofollow\">http://www.qdaily.com/statement.html</a>&nbsp;整改原因写在了网页注释里</p><blockquote><p>《好奇心日报》违规发布新闻信息，损害网络信息传播秩序，违反了《网络安全法》《互联网信息服务管理办法》《互联网新闻信息服务管理规定》相关规定。我们将严格落实监管部门要求，自 8 月 3 日 15 时至 9 月 2 日 15 时，暂停更新《好奇心日报》所有网络传播平台，进行全面彻底整改。</p></blockquote>', null, '2018-08-03 15:55:32', '2018-08-03 15:55:32', '2018-08-03 17:11:22', 'public', '151', 'public', '0', '0', '1', '1', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('80', 'pl', 'tech', '测试发帖', '0905', '<p>0905</p>', '沈阳市洪区济华医院，早上，两辆面包车的老人被送来，医生不检查就安排住院，老人们先去集市购物，中午回医院吃免费午餐，在病房喝酒打牌，晚上领好处费离开…假住院4天，每人的医保卡都被消费了1000多元，全被医院刷走了', '2018-10-01 14:45:05', '2018-10-01 14:45:05', '2018-10-30 18:45:52', 'longde', '162', '083013', '0', '0', '1', '13', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('81', 'pl', 'tech', '0906', '测试', '<p>测试</p>', null, '2018-09-06 16:51:56', '2018-09-06 16:51:56', '2018-09-06 16:52:39', '083013', '17', '083013', '0', '0', '1', '1', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('82', 'pl', 'tech', '什么是异常', '异常', '<p>所谓异常即是指可能由于外部系统的，导致程序可能出错或中断的原因。\n\n</p>', null, '2018-09-10 18:03:28', '2018-09-10 18:03:28', null, null, '7', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('83', 'pl', 'tech', '归并排序', '排序', '<p>算法简单易懂，第一次编写错误，误把原数组下表当做临时数组考虑，结果可想而知，访问越界\n\n</p>', null, '2018-09-10 18:04:47', '2018-09-10 18:04:47', null, null, '2', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('84', 'pl', 'tech', '数组下表越界', '数组', '<p>ArrayIndexOutOfBoundsException</p>', null, '2018-09-10 18:05:39', '2018-09-10 18:05:39', null, null, '2', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('85', 'pl', 'tech', '文件不存在', '异常', '<p>UnsupportedOperationException\n\n</p>', null, '2018-09-10 18:07:41', '2018-09-10 18:07:41', null, null, '3', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('86', 'news', 'tech', '详解马云的传承计划：合伙人制度让阿里无“没有2号人物”的难题', '马云', '<p>详解马云的传承计划：合伙人制度让阿里无“没有2号人物”的难题</p>', null, '2018-09-10 19:29:24', '2018-09-10 19:29:24', null, null, '3', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('87', 'news', 'tech', '9月10日 铅笔道DATA优选项目（共54个）', '铅笔道', '<p>9月10日 铅笔道DATA优选项目（共54个）</p>', null, '2018-09-10 19:30:36', '2018-09-10 19:30:36', null, null, '5', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('88', 'news', 'tech', '2018亿欧创新者年会将于11月29日在京召开，22项年度创新大奖等你参..', '欧创新者年会', '<p>2018亿欧创新者年会将于11月29日在京召开，22项年度创新大奖等你参..</p>', null, '2018-09-10 19:31:25', '2018-09-10 19:31:25', null, null, '5', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('89', 'news', 'tech', '“7” ：不再谈消费升级还是降级，这个“严选”品牌只想让你对自己..', '消费', '<p>“7” ：不再谈消费升级还是降级，这个“严选”品牌只想让你对自己..</p>', null, '2018-09-10 19:32:17', '2018-09-10 19:32:17', null, null, '3', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'python', 'Python', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('90', 'qna', 'tech', '有没有免费好用 Windows 下的播放器推荐的？', '播放器', '<p><a href=\"https://www.v2ex.com/t/487966#reply17\">有没有免费好用 Windows 下的播放器推荐的？</a>\n\n</p>', null, '2018-09-10 22:33:25', '2018-09-10 22:33:25', null, null, '7', '083013', '0', '0', '1', '0', '0', '1', '0', '0', null, 'python', 'Python', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('91', 'blog', 'tech', '已写独立博客三年之久，说说自己的小小感受', '博客', '<h2>前言</h2><p>三年之前，连电脑都不怎么接触的我使用手机搭建了人生中的第一个博客，程序采用的是 EMLOG （现在 emlog 的官网貌似都无法访问了），后来再慢慢地将博客迁移到 WordPress 至今。</p><h2>感触</h2><p>当时最开始懂得很少，就在网上转载一些文章，当然大家可以进我的博客看<a href=\"https://www.licoy.cn/file.html\" rel=\"nofollow\">&nbsp;[博客归档]&nbsp;</a>栏目最早时间的文章便可知道，后来慢慢地学习了计算机，也开始自己写文章，也有了从虚拟主机到服务器转化的经历，现在大多数都是在博客分享自己的所知所想所见所闻，可能文章并不是那么专业性，但是博客的主题就是记录自己的想法与经历，所以这一点并没有什么异议。</p><p>-- 写博客是一种生活，这能从生活中更能体现出自己所需要的坚持！</p><h2>尾记</h2><p>这是今天早上的一点点想法，与各位 V 友们分享一下，文笔不好若有不周之处还望见谅，另外 V 友们有需要博客友链的在下方留言即可，感谢您的阅读！</p><h4>Blog：&nbsp;<a href=\"https://www.licoy.cn/\" rel=\"nofollow\">https://www.licoy.cn</a></h4>', null, '2018-10-30 11:26:13', '2018-10-30 11:26:13', null, null, '33', 'longde', '0', '0', '1', '0', '0', '1', '0', '0', null, 'python', 'Python', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('92', 'all', 'tech', 'web.xml文件的作用', 'web.xml', '<p>每个javaEE工程中都有web.xml文件，那么它的作用是什么呢？它是每个web.xml工程都必须的吗？&nbsp;<br><br>一个web中可以没有web.xml文件，也就是说，web.xml文件并不是web工程必须的。&nbsp;<br><br><br>web.xml文件是用来初始化配置信息：比如Welcome页面、servlet、servlet-mapping、filter、listener、启动加载级别等。</p><p>当你的web工程没用到这些时，你可以不用web.xml文件来配置你的Application。</p><p><br>每个xml文件都有定义它书写规则的Schema文件，也就是说javaEE的定义web.xml所对应的xml Schema文件中定义了多少种标签元素，web.xml中就可以出现它所定义的标签元素，也就具备哪些特定的功能。web.xml的模式文件是由Sun 公司定义的，每个web.xml文件的根元素为&lt;web-app&gt;中，必须标明这个web.xml使用的是哪个模式文件。如：&nbsp;<br>&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;&nbsp;<br>&lt;web-app version=\"2.5\"&nbsp;<br>xmlns=\"http://java.sun.com/xml/ns/javaee\"&nbsp;<br>xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"&nbsp;<br>xsi:schemaLocation=\"http://java.sun.com/xml/ns/javaee&nbsp;<br>http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd\"&gt;&nbsp;<br>&lt;/web-app&gt;&nbsp;<br><br>&nbsp;&nbsp;&nbsp; web.xml的模式文件中定义的标签并不是定死的，模式文件也是可以改变的，一般来说，随着web.mxl模式文件的版本升级，里面定义的功能会越来越复杂，标签元素的种类肯定也会越来越多，但有些不是很常用的，我们只需记住一些常用的并知道怎么配置就可以了。&nbsp;<br><br><br>下面列出web.xml我们常用的一些标签元素及其功能：&nbsp;<br><br>1、指定欢迎页面，例如：&nbsp;<br>&lt;welcome-file-list&gt;&nbsp;<br>&nbsp; &lt;welcome-file-list&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;welcome-file&gt;index1.jsp&lt;/welcome-file&gt;&nbsp;<br>&nbsp; &lt;/welcome-file-list&gt;&nbsp;<br>PS：指定了2个欢迎页面，显示时按顺序从第一个找起，如果第一个存在，就显示第一个，后面的不起作用。如果第一个不存在，就找第二个，以此类推。&nbsp;<br><br>关于欢迎页面：&nbsp;<br><br>&nbsp;&nbsp;&nbsp; 访问一个网站时，默认看到的第一个页面就叫欢迎页，一般情况下是由首页来充当欢迎页的。一般情况下，我们会在web.xml中指定欢迎页。但 web.xml并不是一个Web的必要文件，没有web.xml，网站仍然是可以正常工作的。只不过网站的功能复杂起来后，web.xml的确有非常大用处，所以，默认创建的动态web工程在WEB-INF文件夹下面都有一个web.xml文件。</p><p><br>2、命名与定制URL。我们可以为Servlet和JSP文件命名并定制URL,其中定制URL是依赖命名的，命名必须在定制URL前。下面拿serlet来举例：&nbsp;<br>(1)、为Servlet命名：&nbsp;<br>&lt;servlet&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;servlet-name&gt;servlet1&lt;/servlet-name&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;servlet-class&gt;org.whatisjava.TestServlet&lt;/servlet-class&gt;&nbsp;<br>&lt;/servlet&gt;&nbsp;<br><br>(2)、为Servlet定制URL、&nbsp;<br>&lt;servlet-mapping&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;servlet-name&gt;servlet1&lt;/servlet-name&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;url-pattern&gt;*.do&lt;/url-pattern&gt;&nbsp;<br>&lt;/servlet-mapping&gt;</p><p><br><br>3、定制初始化参数：可以定制servlet、JSP、Context的初始化参数，然后可以再servlet、JSP、Context中获取这些参数值。&nbsp;<br><br>下面用servlet来举例：&nbsp;<br>&lt;servlet&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;servlet-name&gt;servlet1&lt;/servlet-name&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;servlet-class&gt;org.whatisjava.TestServlet&lt;/servlet-class&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;init-param&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param-name&gt;userName&lt;/param-name&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param-value&gt;Daniel&lt;/param-value&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;/init-param&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;init-param&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param-name&gt;E-mail&lt;/param-name&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;param-value&gt;125485762@qq.com&lt;/param-value&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;/init-param&gt;&nbsp;<br>&lt;/servlet&gt;&nbsp;<br>经过上面的配置，在servlet中能够调用getServletConfig().getInitParameter(\"param1\")获得参数名对应的值。&nbsp;<br><br><br><br>4、指定错误处理页面，可以通过“异常类型”或“错误码”来指定错误处理页面。&nbsp;<br>&lt;error-page&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;error-code&gt;404&lt;/error-code&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;location&gt;/error404.jsp&lt;/location&gt;&nbsp;<br>&lt;/error-page&gt;&nbsp;<br>-----------------------------&nbsp;<br>&lt;error-page&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;exception-type&gt;java.lang.Exception&lt;exception-type&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;location&gt;/exception.jsp&lt;location&gt;&nbsp;<br>&lt;/error-page&gt;&nbsp;<br><br><br><br>5、设置过滤器：比如设置一个编码过滤器，过滤所有资源&nbsp;<br>&lt;filter&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;filter-name&gt;XXXCharaSetFilter&lt;/filter-name&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;filter-class&gt;net.test.CharSetFilter&lt;/filter-class&gt;&nbsp;<br>&lt;/filter&gt;&nbsp;<br>&lt;filter-mapping&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;filter-name&gt;XXXCharaSetFilter&lt;/filter-name&gt;&nbsp;<br>&nbsp;&nbsp;&nbsp; &lt;url-pattern&gt;/*&lt;/url-pattern&gt;&nbsp;<br>&lt;/filter-mapping&gt;&nbsp;<br><br><br><br>6、设置监听器：&nbsp;<br>&lt;listener&gt;&nbsp;<br>&lt;listener-class&gt;net.test.XXXLisenet&lt;/listener-class&gt;&nbsp;<br>&lt;/listener&gt;&nbsp;<br><br><br><br>7、设置会话(Session)过期时间，其中时间以分钟为单位，假如设置60分钟超时：&nbsp;<br>&lt;session-config&gt;&nbsp;<br>&lt;session-timeout&gt;60&lt;/session-timeout&gt;&nbsp;<br>&lt;/session-config&gt;</p><p><br>除了这些标签元素之外，还可以往web.xml中添加很多标签元素，由于不常用省略。</p>', null, '2018-11-01 15:11:07', '2018-11-01 15:11:07', null, null, '6', 'jinyong', '0', '0', '1', '0', '0', '1', '0', '0', null, 'python', 'Python', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('93', 'pl', 'tech', 'web.xml配置', 'web.xml', '<pre><code>&lt;?xml version=\"1.0\" encoding=\"UTF-8\"?&gt;\n&lt;web-app version=\"2.5\" xmlns=\"http://java.sun.com/xml/ns/javaee\"\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n         xsi:schemaLocation=\"http://java.sun.com/xml/ns/javaee\n    http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd\"&gt;\n    &lt;display-name&gt;Lrtech_framework&lt;/display-name&gt;\n    &lt;servlet&gt;\n        &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;\n        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;\n        &lt;init-param&gt;\n            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;\n            &lt;param-value&gt;classpath*:conf/springdemo-servlet.xml&lt;/param-value&gt;\n        &lt;/init-param&gt;\n        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;\n    &lt;/servlet&gt;\n    &lt;servlet-mapping&gt;\n        &lt;servlet-name&gt;springMVC&lt;/servlet-name&gt;\n        &lt;url-pattern&gt;/&lt;/url-pattern&gt;\n    &lt;/servlet-mapping&gt;\n    &lt;filter&gt;\n        &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;\n        &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;\n        &lt;init-param&gt;\n            &lt;param-name&gt;encoding&lt;/param-name&gt;\n            &lt;param-value&gt;UTF-8&lt;/param-value&gt;\n        &lt;/init-param&gt;\n        &lt;init-param&gt;\n            &lt;param-name&gt;forceEncoding&lt;/param-name&gt;\n            &lt;param-value&gt;true&lt;/param-value&gt;\n        &lt;/init-param&gt;\n    &lt;/filter&gt;\n    &lt;filter-mapping&gt;\n        &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;\n        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;\n    &lt;/filter-mapping&gt;\n&lt;/web-app&gt;</code></pre>', null, '2018-11-01 15:40:56', '2018-11-01 15:40:56', null, null, '4', 'jinyong', '0', '0', '1', '0', '0', '1', '0', '0', null, 'python', 'Python', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('94', null, 'tech', 'SpringBoot的单元测试', '单元测试', '<p>Spring Boot 的单元测试，打包成 jar/war 后，怎么去使用 shell 启动里面的单元测试；\n\n</p>', null, '2018-11-03 17:58:01', '2018-11-03 17:58:01', null, null, '4', 'jinyong', '0', '0', '1', '0', '0', '1', '0', '0', null, 'python', 'Python', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('95', null, 'tech', 'Java 常量应该放在接口中还是常量类中？？？', 'Java常量', '<p>最近看到一些代码中把常量放在接口中，我平时是把常量放在常量类中的，因此有所疑惑，去网上查了之后，发现既有人赞成，又有人反对，请 v2 大神指教，到底该不该放在接口中，有什么优势，有什么不好的地方？\n\n</p>', null, '2018-11-03 18:07:23', '2018-11-03 18:07:23', null, null, '1', 'jinyong', '0', '0', '1', '0', '0', '1', null, null, '1000', 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('96', null, 'tech', '目前有哪个 Python 的轮子 支持 xlsx 的修改（保留源格式）', 'Python', '<h1>需求</h1><ul><li>简单来说就是，已有一个设置过极其复杂的格式的 excel，需要增减改部分数据。</li><li>具体是，把数据库数据处理后导入 excel。<br>然后对 excel 做了一系列调整，以优化阅读。<br>比如条件格式、超链接、单元格格式、分组、等等，需要修改的同时保留源格式。</li></ul><h1>遇到的问题</h1><ul><li>pandas 等轮子只能写新文件。</li><li>xlsxwriter 这种可以插图的，不支持复杂格式，而且也只支持新建。</li><li>xlutils 只支持 xls，不支持 xlsx。</li><li>有些轮子也支持自定义个单元格大小颜色啥的，但支持得不全面。</li></ul><h1>请教</h1><p>感觉是个挺常用的功能，但实在遍寻不到可用的轮子，有大神能指条明路嘛？</p><ul><li>修改 xlsx 文件。</li><li>仅修改单元格内容，保留源格式。</li></ul>', null, '2018-11-05 20:50:20', '2018-11-05 20:50:20', null, null, '5', 'jinyong', '0', '0', '1', '0', '0', '1', null, null, '1000', 'java', 'Java', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('97', null, 'play', '[讣告] 漫威创始人斯坦·李去世享年 95 岁', '斯坦·李去世', '<p>TMZ 消息，美国漫画界元老级人物斯坦·李于当地时间周一（ 12 日）在好莱坞一家医疗中心去世，享年 95 岁。过去的一年多时间里，斯坦·李得了肺炎并伴有视力问题。1961 年，斯坦和杰克·柯比一起创办了漫威影业(Marvel)。其代表作品有《蜘蛛侠》《黑豹》《绿巨人》《 X 战警》《钢铁侠》和《复仇者联盟》等。从此美漫界和电影界少了一个活跃身影，每部漫威超级英雄电影里都会客串出现的那个和蔼逗趣的老人永远地离开了。\n\n</p>', null, '2018-11-13 19:20:47', '2018-11-13 19:20:47', null, null, '1', 'jinyong', '0', '0', '1', '0', '0', '1', null, null, '1000', 'movie', '电影', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('98', null, 'play', '推荐一款体验度完美的“良心+极客+强大”的在线音乐（APP）：墨灵音乐', '墨灵音乐', '<p>一、功能<br><br>· 覆盖多个平台（目前支持网易云音乐、腾讯、百度、酷狗、虾米音乐）<br>· 在线搜索任何音乐<br>· 下载音乐（直接提供所支持的最高品质）<br>· 音乐可视化功能 查看更多可视化功能介绍<br>· 完整的网易云歌单功能<br>· 同步自己或者他人的网易云歌单（帐号下所有歌单）<br>· 分享当前歌曲、分享搜索链接<br>· 提供播放历史<br>· 网页简洁无广告<br><br>二、特点<br>· 用户体验第一，功能第二。着重优化界面<br>· 支持广<br>· 界面好看，歌单包括：播放历史，云音乐热歌榜，新歌榜，华语金曲榜，飙升榜等等。种类繁多<br><br>三、访问地址<br><a target=\"_blank\" href=\"https://music.mli.im/\" rel=\"nofollow\">https://music.mli.im/</a>\n\n</p>', null, '2018-11-13 19:26:55', '2018-11-13 19:26:55', null, null, '3', 'jinyong', '0', '0', '1', '0', '0', '1', null, null, '1000', 'music', '音乐', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', null);
-INSERT INTO `topic` VALUES ('99', null, 'tech', '测试标题', '测试', null, null, '2018-11-14 15:37:57', null, null, '', '11', '测试爬虫', '0', null, null, '0', '0', '0', '0', '0', null, 'lang', '编程语言', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.baidu.com');
-INSERT INTO `topic` VALUES ('146', null, 'news', '让机器为作文评分，这事儿靠谱吗？', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', 'KnowingAI知智', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271768.html');
-INSERT INTO `topic` VALUES ('147', null, 'news', '许倬云：中国人将何去何从？', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '理想国imaginist©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271764.html');
-INSERT INTO `topic` VALUES ('148', null, 'news', '戴威开全员大会：ofo不会倒闭，其他都有可能', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '中国企业家杂志©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271758.html');
-INSERT INTO `topic` VALUES ('149', null, 'news', '逃离上海后，我选择去巴西做一个快乐的穷人', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '1', '故事FM©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271745.html');
-INSERT INTO `topic` VALUES ('150', null, 'news', '从微信群说起，看中国社交电商和新零售的趋势及机会', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '蓝社区©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271707.html');
-INSERT INTO `topic` VALUES ('151', null, 'news', '记一场道德制高点争夺战', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '格林糖', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271757.html');
-INSERT INTO `topic` VALUES ('152', null, 'news', '大学禁止叫外卖，是为你好，还是为了钱', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '有间大学©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271751.html');
-INSERT INTO `topic` VALUES ('153', null, 'news', '一年有8000集电视剧无法播出，谁的锅？', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '毒眸', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271663.html');
-INSERT INTO `topic` VALUES ('154', null, 'news', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('155', null, 'news', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('156', null, 'news', 'B站第一“野鸡”比你想象的更真实', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '虎扯电台', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271739.html');
-INSERT INTO `topic` VALUES ('157', null, 'news', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('158', null, 'news', '美图美妆宣布停止运营，“AI+时尚”是美丽的泡沫？', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271735.html');
-INSERT INTO `topic` VALUES ('159', null, 'news', '为什么大多数商务社交活动是“彩票型机会主义”', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271732.html');
-INSERT INTO `topic` VALUES ('160', null, 'news', '04:11\n                                \n                                    \n                                \n                   ', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '回形针PaperClip', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271698.html?f=index_');
-INSERT INTO `topic` VALUES ('161', null, 'news', '既不丧，也不装，我只是颓废式豁达', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '钱德虎', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271643.html');
-INSERT INTO `topic` VALUES ('162', null, 'news', '国六提前5年生效，电动车爆发的东风来了？', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '车东西', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271645.html');
-INSERT INTO `topic` VALUES ('163', null, 'news', '无座火车票为什么不能半价？', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '运营研究社', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271692.html');
-INSERT INTO `topic` VALUES ('164', null, 'news', '手机销售量明显放缓，苹果概念股要凉了吗？', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '港股那点事©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271681.html');
-INSERT INTO `topic` VALUES ('165', null, 'news', '52:48\n                                \n                                    \n                                \n                   ', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '财约你', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271662.html?f=index_');
-INSERT INTO `topic` VALUES ('166', null, 'news', '硅谷流行新风尚：喝“假奶”、吃“假肉”', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '硅兔赛跑', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271672.html');
-INSERT INTO `topic` VALUES ('167', null, 'news', '新贫富数字鸿沟：你沉迷手机时，金字塔尖父母早已让孩子远离屏幕', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '全媒派©', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271659.html');
-INSERT INTO `topic` VALUES ('168', null, 'news', '华策影视的“子公司依赖症”', '虎嗅网', null, null, '2018-11-14 21:53:36', null, null, '', '0', '镜像娱乐', '0', null, null, '0', '0', '0', '0', '0', null, 'internet', '互联网热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271641.html');
-INSERT INTO `topic` VALUES ('169', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('170', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('171', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('172', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('173', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('174', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('175', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('176', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('177', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 11:59:31', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('178', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('179', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('180', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('181', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('182', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('183', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('184', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('185', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('186', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('187', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('188', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 11:59:31', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('189', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('190', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('191', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('192', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('193', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('194', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('195', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('196', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('197', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:08:18', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('198', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('199', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('200', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('201', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('202', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('203', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('204', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('205', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('206', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('207', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('208', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:08:18', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('209', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('210', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('211', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('212', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('213', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('214', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('215', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('216', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('217', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:10:53', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('218', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('219', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('220', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('221', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('222', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('223', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('224', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('225', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('226', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('227', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('228', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:10:53', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('229', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('230', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('231', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('232', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('233', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('234', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('235', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('236', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('237', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:12:25', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('238', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('239', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('240', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('241', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('242', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('243', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('244', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('245', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('246', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('247', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('248', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:12:25', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('249', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('250', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('251', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('252', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('253', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('254', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('255', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('256', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('257', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:14:14', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('258', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('259', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('260', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('261', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('262', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('263', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('264', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('265', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('266', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('267', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('268', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:14:14', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('269', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('270', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('271', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('272', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('273', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('274', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('275', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('276', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('277', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:14:51', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('278', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('279', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('280', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('281', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('282', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('283', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('284', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('285', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('286', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('287', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('288', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:14:51', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('289', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('290', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('291', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('292', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('293', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('294', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('295', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('296', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('297', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:28:19', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('298', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('299', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('300', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('301', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('302', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('303', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('304', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('305', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('306', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('307', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('308', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:28:19', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('309', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('310', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('311', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('312', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('313', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('314', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('315', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('316', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('317', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:28:43', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('318', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('319', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('320', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('321', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('322', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('323', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('324', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('325', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('326', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('327', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('328', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:28:43', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('329', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('330', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('331', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('332', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('333', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('334', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('335', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('336', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('337', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:30:54', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('338', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('339', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:30:54', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('409', null, 'fae', '金融业务收入首曝光，它会是腾讯的一剂良药吗？', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '馨金融', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271773.html');
-INSERT INTO `topic` VALUES ('410', null, 'fae', '【虎嗅晚报】腾讯出Q3成绩：总营收806亿元，游戏营收同比下降4%', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271741.html');
-INSERT INTO `topic` VALUES ('411', null, 'fae', '信用卡代偿真相：有平台变相收取砍头息，“卸妆”后利率远高于银行账单分期', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '添升金融©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271744.html');
-INSERT INTO `topic` VALUES ('412', null, 'fae', '数据不会撒谎：10月信贷腰斩 重返去杠杆 企业痛苦继续', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '华夏时报©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271721.html');
-INSERT INTO `topic` VALUES ('413', null, 'fae', '范剑勇：四万亿如何改变了中国经济增长动力', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271651.html');
-INSERT INTO `topic` VALUES ('414', null, 'fae', '股市的故事', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '混子谈钱', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271636.html');
-INSERT INTO `topic` VALUES ('415', null, 'fae', '匹诺贾的新故事', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '财经无忌', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271585.html');
-INSERT INTO `topic` VALUES ('416', null, 'fae', '制造业再也回不到过去的好时代了', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '1', '曲高和众©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271562.html');
-INSERT INTO `topic` VALUES ('417', null, 'fae', '京沪高铁要IPO了', '虎嗅网', null, '国有资产“盘活存量”的新思路', '2018-11-15 14:55:23', null, null, null, '0', '有毒财经社©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271556.html');
-INSERT INTO `topic` VALUES ('418', null, 'fae', '【虎嗅晚报】腾讯张军回应“OMG高管被抓”：谣言；银隆原董事长魏银仓称“已起诉董明珠”', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271539.html');
-INSERT INTO `topic` VALUES ('419', null, 'fae', '香港的三次经济战', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '疯牛视角©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271554.html');
-INSERT INTO `topic` VALUES ('420', null, 'fae', '当杠杆遇到平台：平台跨界竞争的反垄断问题', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '经济观察报观察家©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271538.html');
-INSERT INTO `topic` VALUES ('421', null, 'fae', '董明珠持股的银隆自曝家丑：大股东、原高管侵占超10亿公款', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '界面©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271522.html');
-INSERT INTO `topic` VALUES ('422', null, 'fae', '王川：财富取决于认可者愿支付的最高价', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '硅谷王川', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271485.html');
-INSERT INTO `topic` VALUES ('423', null, 'fae', '中国第一大税种改革对谁影响最大？', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', 'MissMoney浮世©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271474.html');
-INSERT INTO `topic` VALUES ('424', null, 'fae', '房地产下半场，利润从哪里来', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '冯仑风马牛', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271418.html');
-INSERT INTO `topic` VALUES ('425', null, 'fae', '另类“双11”：四合院降价1000万却无人下手', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '每日经济新闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271364.html');
-INSERT INTO `topic` VALUES ('426', null, 'fae', '【虎嗅晚报】金庸追悼会举行，马云致挽联：一人江湖，江湖一人；FF回应2020年IPO：不予置评', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', 'mrpuppybunny', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271328.html');
-INSERT INTO `topic` VALUES ('427', null, 'fae', '长期投资者如何看待亚马逊的商业模式？', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '红刊财经', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271348.html');
-INSERT INTO `topic` VALUES ('428', null, 'fae', '趣头条首份季报10亿巨亏背后：高管股权激励超7亿', '虎嗅网', null, null, '2018-11-15 14:55:23', null, null, null, '0', '华尔街见闻©', '0', null, null, '0', '0', '0', '0', '0', null, 'jrrd', '金融热点', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271349.html');
-INSERT INTO `topic` VALUES ('429', null, 'ent', '亚马逊邀好莱坞影星拍摄八部恐怖电影，仅在网上点播', '虎嗅网', null, '电子商务巨头亚马逊已经大手笔进入了网络视频和影视媒体原创领域，过去已经有多部电影和电视剧获得奥斯卡奖艾美奖。据外媒最新消...', '2018-11-15 17:48:33', null, null, null, '0', '腾讯科技©', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271910.html');
-INSERT INTO `topic` VALUES ('430', null, 'ent', '厂长与Uzi告诉我们的电竞真相', '虎嗅网', null, '成绩代表了一切', '2018-11-15 17:48:33', null, null, null, '0', '丁鹏Gamewower', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271827.html');
-INSERT INTO `topic` VALUES ('431', null, 'ent', '游戏江湖，山寨凶猛', '虎嗅网', null, '富贵险中求，这就是部分小型游戏厂商看到的机会', '2018-11-15 17:48:33', null, null, null, '0', '硬核芒果', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271848.html');
-INSERT INTO `topic` VALUES ('432', null, 'ent', '为什么王思聪吞热狗会引起围观？', '虎嗅网', null, '一切要从下颔骨说起', '2018-11-15 17:48:33', null, null, null, '0', '我是科学家iScientist', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271853.html');
-INSERT INTO `topic` VALUES ('433', null, 'ent', '2018中国视频红皮书', '虎嗅网', null, '2018年，是中国视频“小年”。', '2018-11-15 17:48:33', null, null, null, '0', '新周刊©', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271834.html');
-INSERT INTO `topic` VALUES ('434', null, 'ent', '有人觉得游戏特别邪恶，但对我们来说游戏就是全世界', '虎嗅网', null, '有时候在游戏中还能发现超越时间与空间的默契', '2018-11-15 17:48:33', null, null, null, '0', '一席©', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271799.html');
-INSERT INTO `topic` VALUES ('435', null, 'ent', '腾讯离开舒适区', '虎嗅网', null, '自信基因可以进化', '2018-11-15 17:48:33', null, null, null, '0', 'Eastland', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271792.html');
-INSERT INTO `topic` VALUES ('436', null, 'ent', '从幕后到台前：中国网配的商业化之路', '虎嗅网', null, '声优赋予动画角色以灵魂', '2018-11-15 17:48:33', null, null, null, '0', 'ACGx', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271753.html');
-INSERT INTO `topic` VALUES ('437', null, 'ent', '腾讯游戏“刹车”', '虎嗅网', null, '同比下降 4%', '2018-11-15 17:48:33', null, null, null, '0', '我不叫塞尔达', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271772.html');
-INSERT INTO `topic` VALUES ('438', null, 'ent', 'B站第一“野鸡”比你想象的更真实', '虎嗅网', null, '黑粉说“看不下去他在B站只手遮天操控这个市场”。', '2018-11-15 17:48:33', null, null, null, '0', '虎扯电台', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271739.html');
-INSERT INTO `topic` VALUES ('439', null, 'ent', '美图美妆宣布停止运营，“AI+时尚”是美丽的泡沫？', '虎嗅网', null, 'AI会成为“时尚大师”，但可能不是现在', '2018-11-15 17:48:33', null, null, null, '0', 'Cuba Libre', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271735.html');
-INSERT INTO `topic` VALUES ('440', null, 'ent', '阿里与百度电梯间里的战争', '虎嗅网', null, '百度战略领投新潮传媒，此轮融资共计21亿元', '2018-11-15 17:48:33', null, null, null, '0', '敲敲格', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271644.html');
-INSERT INTO `topic` VALUES ('441', null, 'ent', '一年有8000集电视剧无法播出，谁的锅？', '虎嗅网', null, '谁会成为压死骆驼的最后一根稻草', '2018-11-15 17:48:33', null, null, null, '0', '毒眸', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271663.html');
-INSERT INTO `topic` VALUES ('442', null, 'ent', '华策影视的“子公司依赖症”', '虎嗅网', null, '保障自身的“造血能力”最为关键', '2018-11-15 17:48:33', null, null, null, '0', '镜像娱乐', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271641.html');
-INSERT INTO `topic` VALUES ('443', null, 'ent', '告别搜狐：大鹏和中国网络视频的最好时光', '虎嗅网', null, '网络自制剧市场的飞速发展，还跟“一剧两星”政策有关', '2018-11-15 17:48:33', null, null, null, '0', '棱镜深网', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271607.html');
-INSERT INTO `topic` VALUES ('444', null, 'ent', '斯坦·李：不完美英雄的完美父亲', '虎嗅网', null, '他为我们留下了一个精彩的宇宙', '2018-11-15 17:48:33', null, null, null, '0', '骚客文艺©', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271545.html');
-INSERT INTO `topic` VALUES ('445', null, 'ent', '科学“杠精”：带你去找《巨齿鲨》中的bug', '虎嗅网', null, '尽管《巨齿鲨》里有不少科学bug，但是仍然不失为一部好片', '2018-11-15 17:48:33', null, null, null, '0', '科学大院©', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271600.html');
-INSERT INTO `topic` VALUES ('446', null, 'ent', '《名侦探柯南》剧场版入华9年，票房为什么像坐过山车？', '虎嗅网', null, '“日本第一小学生”在中国电影市场的号召力如何？', '2018-11-15 17:48:33', null, null, null, '0', 'ACGx', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271566.html');
-INSERT INTO `topic` VALUES ('447', null, 'ent', '04:46\n                            \n                                \n                            \n                        \n                                    Stan Lee离开了，留下一座制造超级英雄的工厂', '虎嗅网', null, '这一切还得从漫威的起点说起', '2018-11-15 17:48:33', null, null, null, '0', '收了Sola', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271579.html');
-INSERT INTO `topic` VALUES ('448', null, 'ent', '斯坦·李：把科学放进几代人的“中二”梦', '虎嗅网', null, '超级英雄动漫是最低门槛的科幻作品存在形式', '2018-11-15 17:48:33', null, null, null, '0', '脑极体', '0', null, null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/19/article1542634815973.png', 'https://www.huxiu.com/article/271581.html');
-INSERT INTO `topic` VALUES ('449', null, 'ent', '硅谷是个什么谷（第二十一章）：凛冬将至', '虎嗅网', null, '她把人生希望押在了莫测的pH值里', '2018-12-04 14:39:16', null, null, null, '0', '新周刊©', '0', '0', null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/18/article1542475555360.png', 'https://www.huxiu.com/article/272243.html');
-INSERT INTO `topic` VALUES ('450', null, 'ent', '求你们不要再尬吹李诞了', '虎嗅网', null, '正视你们的小眼睛男神', '2018-12-04 14:45:05', null, null, null, '0', '新周刊©', '0', '0', null, '0', '0', '0', '0', '0', null, '8gua', '八卦来了', null, 'https://xixuan-co.oss-cn-shenzhen.aliyuncs.com/images/article/2018/11/18/article1542475555352.png', 'https://www.huxiu.com/article/272243.html');
 
 -- ----------------------------
 -- Table structure for `up_down`
@@ -615,25 +490,11 @@ CREATE TABLE `up_down` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0 否 1 是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='点赞表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='点赞表';
 
 -- ----------------------------
 -- Records of up_down
 -- ----------------------------
-INSERT INTO `up_down` VALUES ('6', '1', '58', '1', '2018-08-11 16:33:22', '0');
-INSERT INTO `up_down` VALUES ('7', '1', '79', '1', '2018-08-11 16:28:09', '0');
-INSERT INTO `up_down` VALUES ('8', '1', '59', '0', '2018-08-13 20:10:59', '0');
-INSERT INTO `up_down` VALUES ('9', '1', '73', '0', '2018-08-11 16:35:37', '0');
-INSERT INTO `up_down` VALUES ('10', '1', '62', '0', '2018-08-11 16:38:12', '0');
-INSERT INTO `up_down` VALUES ('11', '2', '79', '1', '2018-08-11 16:40:09', '0');
-INSERT INTO `up_down` VALUES ('12', '2', '59', '1', '2018-08-11 16:44:41', '0');
-INSERT INTO `up_down` VALUES ('13', '2', '58', '1', '2018-08-11 16:45:40', '0');
-INSERT INTO `up_down` VALUES ('14', '2', '63', '1', '2018-08-11 16:46:25', '0');
-INSERT INTO `up_down` VALUES ('15', '1', '63', '1', '2018-08-11 17:12:25', '0');
-INSERT INTO `up_down` VALUES ('16', '1', '64', '1', '2018-08-11 17:02:53', '0');
-INSERT INTO `up_down` VALUES ('17', '1', '67', '1', '2018-08-11 17:13:10', '0');
-INSERT INTO `up_down` VALUES ('18', '49', '73', '1', '2018-08-30 10:50:05', '0');
-INSERT INTO `up_down` VALUES ('19', '62', '80', '1', '2018-10-30 18:45:32', '0');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -663,118 +524,11 @@ CREATE TABLE `user` (
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UNIQUE_NAME` (`user_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=415 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'public', '123456', null, '', '7', '1530435804606cHVibGljavatar.png', '', '', '过去再美终究过去qaq', 'f4d81c72-8671-4915-b3e7-eb465273c3e0', null, null, '2018-07-13 18:45:33', null, null, null, null, null, '2', null);
-INSERT INTO `user` VALUES ('2', 'private', '123456', null, '长沙', '100', '1.jpg', '123456@qq.com', 'www.baidu.com', '哈哈哼哼哼', '1158827539', '1', '2018-05-06 20:10:37', '2018-05-06 20:10:37', '1', null, null, '127.0.1', '127.0.1', '0', null);
-INSERT INTO `user` VALUES ('3', 'void', '123456', null, '长沙', '100', '69290780aaafb00aa37ff2a61342dded.png', 'abc@q.acv', 'www.baidu.com', '哈哈哈哈', '1158827539', '0', '2018-05-06 20:12:20', '2018-05-06 20:12:20', '0', null, null, '127.0.1', '127.0.1', '0', null);
-INSERT INTO `user` VALUES ('5', 'throws', '123456', '男', '长沙', '100', '69290780aaafb00aa37ff2a61342dded.png', '123456@qq.com', 'www.baidu.com', '哈哈', '1158827539', '0', '2018-05-06 22:39:01', '2018-05-06 22:39:01', '0', null, '1000', '127.0.1', '127.0.1', '0', null);
-INSERT INTO `user` VALUES ('6', 'Exception', '123456', '男', '长沙', '100', '69290780aaafb00aa37ff2a61342dded.png', '123456@qq.com', 'www.baidu.com', '哈哈', '1158827539', '0', '2018-05-06 22:44:04', '2018-05-06 22:44:04', '0', null, '1000', '127.0.1', '127.0.1', '0', null);
-INSERT INTO `user` VALUES ('7', 'import', '123456', '男', '长沙', '100', '69290780aaafb00aa37ff2a61342dded.png', '123456@qq.com', 'www.baidu.com', '哈哈', '1158827539', '0', '2018-05-06 22:45:09', '2018-05-06 22:45:09', '0', null, '1000', '127.0.1', '127.0.1', '0', null);
-INSERT INTO `user` VALUES ('8', 'fangjin', '000000', '女', '武汉', '10', '69290780aaafb00aa37ff2a61342dded.png', '12233444', '33333', '哈哈哈哈', '789', '1', '2018-05-06 23:01:12', '2018-05-07 21:38:38', '0', null, '1000', '127.0.1', '127.0.1', '0', null);
-INSERT INTO `user` VALUES ('9', 'ruqin', '123456', '男', '长沙', '100', '69290780aaafb00aa37ff2a61342dded.png', '123456@qq.com', 'www.baidu.com', '哈哈', '1158827539', '0', '2018-05-09 16:57:21', '2018-05-09 16:57:21', '0', null, '1000', '127.0.1', '127.0.1', '0', null);
-INSERT INTO `user` VALUES ('11', 'yiiu', '123', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '123456@123', null, null, null, '0', '2018-05-18 16:26:28', '2018-05-18 16:26:28', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('12', 'qwer', 'qwer', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '', null, null, null, '0', '2018-05-18 16:33:25', '2018-05-18 16:33:25', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('13', 'fff', 'gg', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', 'hhh@aa', null, null, null, '0', '2018-05-18 16:43:36', '2018-05-18 16:43:36', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('14', 'zhangsan', '123', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '1158827539@qq.com', null, null, null, '0', '2018-05-18 17:50:12', '2018-05-18 17:50:12', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('15', 'bbb', '1234', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588ddd27539@qq.com', null, null, null, '0', '2018-05-18 18:27:20', '2018-05-18 18:27:20', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('17', '1234', '5667', null, null, '0', null, '1234444@qq', null, null, null, '0', '2018-05-18 18:27:51', '2018-05-18 18:27:51', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('19', 'wangwu', '123456', null, null, '0', null, '555@8866', null, null, null, '0', '2018-05-18 18:28:40', '2018-05-18 18:28:40', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('21', 'zhaoliu', 'q97238', null, null, '0', null, '97238@qq.com', null, null, null, '0', '2018-05-18 18:31:15', '2018-05-18 18:31:15', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('23', 'sdf', '1234', null, null, '0', null, '3216@qq', null, null, null, '0', '2018-05-18 18:37:53', '2018-05-18 18:37:53', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('25', 'publiccc', '456', null, null, '0', null, '11588275aaaaa39@qq.com', null, null, null, '0', '2018-05-18 18:39:16', '2018-05-18 18:39:16', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('27', 'ioc', '123', null, null, '0', null, 'oracle@qq.com', null, null, null, '0', '2018-05-18 18:56:20', '2018-05-18 18:56:20', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('28', 'publicfff', '123', null, null, '0', null, '115882aaaa7539@qq.com', null, null, null, '0', '2018-05-18 19:08:44', '2018-05-18 19:08:44', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('29', 'publichhhhhh', '123', null, null, '0', null, '11588aaaa27539@qq.com', null, null, null, '0', '2018-05-18 19:18:53', '2018-05-18 19:18:53', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('30', 'publicuuuuuuuu', '123', null, null, '0', null, '1158827555539@qq.com', null, null, null, '0', '2018-05-18 19:30:56', '2018-05-18 19:30:56', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('31', 'qpublic', '123', null, null, '0', null, 'hhh@aaf', null, null, null, '0', '2018-05-18 19:33:39', '2018-05-18 19:33:39', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('32', 'wpublic', '123', null, null, '0', null, '555@886', null, null, null, '0', '2018-05-18 19:37:00', '2018-05-18 19:37:00', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('33', 'rpublic', '123', null, null, '0', null, '1158827539@qq.comc', null, null, null, '0', '2018-05-18 19:39:16', '2018-05-18 19:39:16', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('34', 'mybatiss', '123', null, null, '0', null, '555@884', null, null, null, '0', '2018-05-18 21:36:32', '2018-05-18 21:36:32', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('35', 'mybatisa', '123', null, null, '0', null, '123456@1234', null, null, null, '0', '2018-05-18 21:38:34', '2018-05-18 21:38:34', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('36', 'publid', '123', null, null, '0', null, '1158827539@qq.coma', null, null, null, '0', '2018-05-18 21:39:50', '2018-05-18 21:39:50', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('37', 'publidd', '123', null, null, '0', null, '1158827539@qq.comab', null, null, null, '0', '2018-05-18 21:43:13', '2018-05-18 21:43:13', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('38', '经济', '123', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '1158827539@qq.comj', null, null, null, '0', '2018-05-20 01:03:36', '2018-05-20 01:03:36', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('39', '素素素', '123', null, null, '0', null, '123', null, null, null, '0', '2018-06-19 09:55:07', '2018-06-19 09:55:07', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('40', '啊', 'a', null, null, '0', null, 'a', null, null, null, '0', '2018-06-20 01:09:57', '2018-06-20 01:09:57', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('41', 'a', '1', null, null, '0', null, '1', null, null, null, '0', '2018-06-20 02:05:24', '2018-06-20 02:05:24', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('42', 'aa', '11111111111111', null, null, '0', null, '12', null, null, null, '0', '2018-06-20 02:10:39', '2018-06-20 02:10:39', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('43', 'aab', '123456', null, null, '0', null, '115@qq.cn', null, null, null, '0', '2018-06-20 02:13:31', '2018-06-20 02:13:31', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('44', 'roothub', '123456', null, null, '0', null, '11588217539@qq.com', null, null, null, '0', '2018-07-03 15:40:19', '2018-07-03 15:40:19', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('45', 'oop', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '1234444@qq.cn', null, null, null, '0', '2018-07-03 15:48:41', '2018-07-03 15:48:41', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('46', 'Roothuba', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', 'sdsdhg@ww.com', null, '这家伙很懒，什么都没留下', null, '0', '2018-07-03 15:52:26', '2018-07-03 15:52:26', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('47', 'Tyche', '12332102', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '2501435159@qq.com', null, '杩欏浼欏緢鎳掞紝浠�涔堥兘娌＄暀涓�', null, '0', '2018-07-06 21:29:59', '2018-07-06 21:29:59', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('48', '20180829', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275390829@qq.com', null, '这家伙很懒，什么都没留下', '0b194aea-f94d-451e-8639-d9ff4e53176c', '0', '2018-08-29 18:06:43', '2018-08-29 18:06:43', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('49', '0830', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275391@qq.com', null, '这家伙很懒，什么都没留下', '7e95d539-f027-490f-b4ec-222af37dfc23', '0', '2018-08-30 10:46:37', '2018-08-30 10:46:37', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('50', '083001', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275392@qq.com', null, '这家伙很懒，什么都没留下', '7aaa54e5-e645-4e62-b2ac-73f97dcc7a5a', '0', '2018-08-30 10:57:20', '2018-08-30 10:57:21', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('51', '083002', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275393@qq.com', 'https://www.roothub.cn/user/083002', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 20:48:50', '2018-08-30 20:48:50', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('52', '083004', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275394@qq.com', 'https://www.roothub.cn/user/083004', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 20:50:24', '2018-08-30 20:50:24', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('53', '083005', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275395@qq.com', 'https://www.roothub.cn/user/083005', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 20:52:58', '2018-08-30 20:52:59', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('54', '083006', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275396@qq.com', 'https://www.roothub.cn/user/083006', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 20:56:26', '2018-08-30 20:56:26', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('55', '083007', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275397@qq.com', 'https://www.roothub.cn/user/083007', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 20:58:34', '2018-08-30 20:58:34', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('56', '083008', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275398@qq.com', 'https://www.roothub.cn/user/083008', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 21:00:22', '2018-08-30 21:00:22', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('57', '083009', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '11588275399@qq.com', 'https://www.roothub.cn/user/083009', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 21:01:30', '2018-08-30 21:01:30', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('58', '083010', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '115882753910@qq.com', 'https://www.roothub.cn/user/083010', '这家伙很懒，什么都没留下', 'GitHub', '0', '2018-08-30 21:01:59', '2018-08-30 21:01:59', '0', null, '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('59', '083011', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '115882753911@qq.com', 'https://www.roothub.cn/user/083011', '这家伙很懒，什么都没留下', null, '0', '2018-08-30 21:15:05', '2018-08-30 21:15:05', '0', '88cb96a946e94ee6b6a230cb5992898c', '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('60', '083012', '123456', null, null, '0', '69290780aaafb00aa37ff2a61342dded.png', '115882753912@qq.com', 'https://www.roothub.cn/user/083012', '这家伙很懒，什么都没留下', null, '0', '2018-08-30 21:16:56', '2018-08-30 21:16:57', '0', 'a7fbcf79517a48e4be79c0801e3eb061', '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('61', '083013', '123456', null, null, '100', '69290780aaafb00aa37ff2a61342dded.png', '115882753913@qq.com', 'https://www.roothub.cn/user/083013', '这家伙很懒，什么都没留下', null, '0', '2018-08-30 21:20:38', '2018-08-30 21:20:38', '0', '8889e5905a2c41dab55f3a26203da901', '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('62', 'longde', '123456', null, null, '50', '69290780aaafb00aa37ff2a61342dded.png', 'longde@qq.com', 'https://www.roothub.cn/user/longde', '这家伙很懒，什么都没留下', null, '0', '2018-10-30 11:23:52', '2018-10-30 11:23:52', '0', 'dd562ff1498f445db25cf4e87cb79fc9', '1000', null, null, '2', null);
-INSERT INTO `user` VALUES ('63', 'jinyong', '123456', null, '', '80', '69290780aaafb00aa37ff2a61342dded.png', 'jinyong@qq.com', 'https://www.roothub.cn/user/jinyong', '家国天下', '', '0', '2018-10-31 11:36:02', '2018-10-31 11:58:02', '0', 'c90458b48ef443ecbf3fe3fd0d241766', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('64', '测试爬虫', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 15:37:57', null, '0', '6ffc368e-b087-42c5-805e-9a41d59bd739', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('65', '理想国imaginist©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'dbd77460-71ad-4ff1-8e05-d3f75de007eb', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('66', '中国企业家杂志©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '65fef566-95b7-4de8-bbbe-cc1719f524b8', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('67', '蓝社区©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '4ecb683c-d4e7-485f-82f9-5140cc390f28', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('68', '故事FM©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '929ea0c0-89e4-4e98-8134-fef30e856917', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('69', '格林糖', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'b2dd264f-38e3-4803-8dd9-ae3da3aee407', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('70', '有间大学©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'e6285caa-a59b-4654-afb4-fee70bb55353', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('71', 'Cuba Libre', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '4a73406b-25ef-4153-8c20-cbcd9a0ffeef', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('72', '毒眸', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '915f1f15-0027-48e3-8ddc-5adafe56aa72', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('73', '添升金融©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '7ea75078-245e-4537-830c-f32ff74b6da9', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('74', '虎扯电台', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '83002118-d80a-4f29-8c12-76a35057b482', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('76', '界面©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'e306e5ef-aa53-45e3-b6b6-6ea94526c025', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('77', '硅谷王川', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'd50b6355-494a-43b9-84b7-9d7c013386ec', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('78', '回形针PaperClip', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '5fde8fc4-fd28-41e1-b95d-47f5649a4fce', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('79', '钱德虎', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '63b5c637-f872-4471-8731-5cc79941faaa', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('80', '车东西', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'c6158b7a-28f3-45d9-9643-4a9d51018a93', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('81', '运营研究社', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '1ede1cb7-2d94-48cb-88aa-4c0086323e90', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('82', '港股那点事©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'c57999f1-e1fa-43cb-9c81-f01e6828f157', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('83', '财约你', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '66386da7-7f9c-4b88-b4f4-c50584034f5b', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('84', '硅兔赛跑', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '42d18090-10c5-4f68-96e6-7069ca98ea24', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('85', '全媒派©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', '82df230d-9b39-490e-8405-fdd22978b4db', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('86', '镜像娱乐', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'ba218db2-dd79-464a-8611-d3ef65815c39', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('87', 'mrpuppybunny', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:42:44', null, '0', 'a887169f-013e-4140-b882-c40bfc5fc0bd', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('134', 'KnowingAI知智', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-14 21:50:41', null, '0', '48f51b18-285f-4374-89a9-c0d900947d31', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('135', '馨金融', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', 'e5d8594c-ff2c-4902-86e6-36a9e9456b68', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('138', '华夏时报©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '721857c8-fa81-4573-b68b-3ff88d5a03ab', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('140', '混子谈钱', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '5b3efccf-f083-460c-a21b-0d71390eb4c1', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('141', '财经无忌', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '4b6b4450-c15e-4f1f-8b5e-15a1abe9009b', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('142', '曲高和众©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '514f04e6-bb41-4fb8-8088-28904784bf15', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('143', '有毒财经社©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '82ea33f1-49f6-4c42-8d08-fc4350bac773', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('145', '疯牛视角©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '8d76d708-cdf8-479e-8833-f89d366a814c', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('146', '经济观察报观察家©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', 'eec9e1fc-de0c-4a44-9561-496e00016e27', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('149', 'MissMoney浮世©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '237eabbc-f862-4e96-ba5b-f201906fbebc', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('150', '冯仑风马牛', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', 'ec8b25b4-91f8-4f9b-84b9-099f9ab08bb4', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('151', '每日经济新闻©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '12f22ded-57e5-4402-8d75-159441ec7087', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('153', '红刊财经', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', '513976e0-114a-400c-8c25-c597b74453b9', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('154', '华尔街见闻©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 11:59:31', null, '0', 'c4b804ce-3f37-4bd9-8790-93ddec3efca7', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('395', '腾讯科技©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '97e83c52-53e3-4244-80f2-c8a2496aa637', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('396', '丁鹏Gamewower', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '418cfee4-a82c-4150-8d80-ff010e0f6cf4', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('397', '硬核芒果', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', 'cdf267ec-3a94-4dff-9a03-7d5161de6920', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('398', '我是科学家iScientist', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', 'c6a0bf3b-6bd6-4512-89e4-ba525c3f8bf5', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('399', '新周刊©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '9c869434-e78b-4ad2-8d8e-23e34d7beb8a', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('400', '一席©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '058d082a-1227-43eb-9afd-e9c932b367ad', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('401', 'Eastland', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '28c33e2b-86ba-4598-8df7-509f10e6c153', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('402', 'ACGx', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '0cead883-2c75-46f2-8bc2-e29e1233af44', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('403', '我不叫塞尔达', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', 'cddcd6b2-6926-451c-9939-40701b6dd94a', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('406', '敲敲格', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', 'b57989d1-81f8-4589-ba4f-a380e550cd34', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('409', '棱镜深网', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '0b572466-36dc-4c47-8401-4ba3888e68f7', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('410', '骚客文艺©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', '89af1e98-0482-4569-8e51-8f8d30b646f6', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('411', '科学大院©', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', 'd1d2b546-8307-45d9-97d0-2daab5539a5e', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('413', '收了Sola', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', 'd5ae7536-3e9e-4284-a0a2-0e9f8ca01310', null, null, null, '2', null);
-INSERT INTO `user` VALUES ('414', '脑极体', '123456', null, null, '10', 'default-avatar.jpg', null, null, null, null, null, '2018-11-15 17:48:33', null, '0', 'c898de68-9651-41bf-b3fa-08be31fbc771', null, null, null, '2', null);
 
 -- ----------------------------
 -- Table structure for `visit`
@@ -787,29 +541,8 @@ CREATE TABLE `visit` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0 否 1 是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COMMENT='访问记录表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='访问记录表';
 
 -- ----------------------------
 -- Records of visit
 -- ----------------------------
-INSERT INTO `visit` VALUES ('1', '1', '2', '2018-08-04 14:32:46', '0');
-INSERT INTO `visit` VALUES ('2', '1', '3', '2018-08-05 14:32:01', '0');
-INSERT INTO `visit` VALUES ('3', '1', '3', '2018-08-05 14:32:01', '0');
-INSERT INTO `visit` VALUES ('4', '2', '3', '2018-08-04 14:38:25', '0');
-INSERT INTO `visit` VALUES ('5', '5', '3', '2018-08-04 16:21:42', '0');
-INSERT INTO `visit` VALUES ('6', '6', '3', '2018-08-04 16:25:35', '0');
-INSERT INTO `visit` VALUES ('7', '1', '3', '2018-08-05 14:32:01', '0');
-INSERT INTO `visit` VALUES ('8', '1', '47', '2018-08-06 21:18:46', '0');
-INSERT INTO `visit` VALUES ('9', '49', '1', '2018-08-30 20:24:33', '0');
-INSERT INTO `visit` VALUES ('10', '49', '47', '2018-08-30 10:49:20', '0');
-INSERT INTO `visit` VALUES ('11', '61', '1', '2018-09-14 15:38:45', '0');
-INSERT INTO `visit` VALUES ('12', '61', '47', '2018-09-10 11:14:10', '0');
-INSERT INTO `visit` VALUES ('13', '61', '2', '2018-09-06 17:32:24', '0');
-INSERT INTO `visit` VALUES ('14', '61', '5', '2018-09-06 15:30:03', '0');
-INSERT INTO `visit` VALUES ('15', '61', '9', '2018-09-10 22:32:54', '0');
-INSERT INTO `visit` VALUES ('16', '61', '8', '2018-09-10 11:12:27', '0');
-INSERT INTO `visit` VALUES ('17', '61', '46', '2018-09-10 20:02:06', '0');
-INSERT INTO `visit` VALUES ('18', '62', '1', '2018-11-13 11:34:05', '0');
-INSERT INTO `visit` VALUES ('19', '63', '1', '2018-11-07 09:53:13', '0');
-INSERT INTO `visit` VALUES ('20', '63', '61', '2018-11-07 09:35:40', '0');
-INSERT INTO `visit` VALUES ('21', '63', '62', '2018-11-05 20:54:16', '0');

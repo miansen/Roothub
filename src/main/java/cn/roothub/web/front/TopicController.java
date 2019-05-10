@@ -1,23 +1,18 @@
 package cn.roothub.web.front;
 
-import java.util.Date;
 import java.util.List;
-
-import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import cn.roothub.base.BaseEntity;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.Result;
 import cn.roothub.dto.TopicExecution;
@@ -35,8 +30,6 @@ import cn.roothub.service.NodeTabService;
 import cn.roothub.service.TopicService;
 import cn.roothub.service.UserService;
 import cn.roothub.service.TabService;
-import cn.roothub.util.Base64Util;
-import cn.roothub.util.CookieAndSessionUtil;
 
 @Controller
 public class TopicController extends BaseController{
@@ -116,9 +109,18 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		return "topic/create";
 	}
 	
+	/**
+	 * 发布话题逻辑
+	 * @param title
+	 * @param content
+	 * @param nodeTitle
+	 * @param tag:标签，暂时只能输入一个
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<TopicExecution> save(String title, String content, /*String tab,*/ /*String nodeCode,*/String nodeTitle,HttpServletRequest request){
+	private Result<TopicExecution> save(String title, String content, /*String tab,*/ /*String nodeCode,*/String nodeTitle, String tag, HttpServletRequest request){
 		User user = getUser(request);
 		ApiAssert.notNull(user, "请先登录");
 		ApiAssert.notNull(title, "标题不能为空");
@@ -126,7 +128,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		// ApiAssert.notNull(nodeCode, "节点不能为空");
 		// ApiAssert.notNull(tag, "标签不能为空");
 		//TopicExecution saveTopic = rootTopicService.saveTopic(topic);
-		TopicExecution saveTopic = rootTopicService.createTopic(title, content, null, null, nodeTitle,null,user);
+		if(StringUtils.isEmpty(tag)) tag = null;
+		TopicExecution saveTopic = rootTopicService.createTopic(title, content, null, null, nodeTitle, tag ,user);
 		//logger.debug(saveTopic.toString());
 		return new Result<TopicExecution>(true, saveTopic);
 	}

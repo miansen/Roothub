@@ -53,12 +53,12 @@
           </select>
         </div>
         </c:if>
-        <!-- <div class="form-group">
+        <div class="form-group">
           <div class="form-group">
             <label for="title">标签</label>
             <input type="text" class="form-control" id="tag" name="title" placeholder="请为你的主题选择一个标签。恰当的归类会让你发布的信息更加有用">
           </div>
-        </div> -->
+        </div>
         <button type="button" id="btn" class="btn btn-default">发布</button>
       </form>
     </div>
@@ -122,16 +122,23 @@
         }
 
         $("#btn").click(function () {
+          // 标题
           var title = $("#title").val();
+          // html 格式的内容
           var contentHtml = editor.txt.html();
+          // 普通格式的内容
           var contentText = editor.txt.text();
+          
           // var tab = $("#tab option:selected").val();
           // var nodeCode = $("#node option:selected").val();
           // alert(contentHtml);
+          
           var node = "${node}";
           
+       	  // 节点
           var nodeTitle = node ? node : $("#node option:selected").val();
-          // var tag = $("#tag").val();
+          // 标签
+          var tag = $("#tag").val();
           // var avatar = $("#editor").find("img:first").attr("src");
           if(!title || title.length > 120) {
             alert('请输入标题，且最大长度在120个字符以内');
@@ -151,7 +158,8 @@
             content: contentHtml,
             //tab:tab,
             // nodeCode:nodeCode,
-            nodeTitle:nodeTitle
+            nodeTitle: nodeTitle,
+            tag: tag
           },
           success: function(data){
           //console.log(JSON.stringify(data));

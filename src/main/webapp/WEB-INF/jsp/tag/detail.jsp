@@ -64,7 +64,7 @@
         </p>
         </div>
       </div>
-      <div class="media-right"><span class="badge badge-default">${item.replyCount}</span></div>
+      <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
       <div class="divide mar-top-5"></div>
     </div>
       </c:forEach>

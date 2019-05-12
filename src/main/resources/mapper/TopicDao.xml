@@ -77,7 +77,7 @@
 				order by top desc,create_date desc
 			</if>
 			<if test='tab == "lonely"'>
-				order by top desc,order by view_count
+				order by top desc,view_count
 			</if>
 		</if>
 		<if test="start != null">

@@ -82,6 +82,12 @@ public interface ReplyService {
 	void deleteByTopicId(Integer topicId);
 	
 	/**
+	 * 根据用户名称删除评论
+	 * @param replyAuthorName
+	 */
+	void deleteByReplyAuthorName(String replyAuthorName);
+	
+	/**
 	 * 更新评论
 	 * @param reply
 	 */

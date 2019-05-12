@@ -21,7 +21,7 @@ $(function(){
               },
               success:function(data){
                 if(data.success != null && data.success == false){
-                  alert("用户名或者密码错误");
+                  alert(data.error);
                   return false;
                 }else{
                   location.href = "/";

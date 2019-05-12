@@ -190,21 +190,31 @@
 	</insert>
 	<!-- 更新用户 -->
 	<update id="updateUser" parameterType="cn.roothub.entity.User">
-        update user
-        set user_name = #{userName},
-        password = #{password},
-        user_sex = #{userSex},
-        user_addr = #{userAddr},
-        score = #{score},
-        avatar = #{avatar},
-        email = #{email},
-        url = #{url},
-        signature = #{signature},
-        third_id = #{thirdId},
-        receive_msg = #{receiveMsg},
-        update_date = #{updateDate},
-        status_cd = #{statusCd}
-        where user_id = #{userId}
+        UPDATE 
+        	user
+        SET	
+        	user_name = #{userName},
+        	password = #{password},
+        	user_sex = #{userSex},
+        	user_addr = #{userAddr},
+        	score = #{score},
+        	avatar = #{avatar},
+        	email = #{email},
+        	url = #{url},
+        	signature = #{signature},
+        	third_id = #{thirdId},
+        	receive_msg = #{receiveMsg},
+        	create_date = #{createDate},
+        	update_date = #{updateDate},
+        	is_block = #{isBlock},
+        	third_access_token = #{thirdAccessToken},
+        	status_cd = #{statusCd},
+        	login_ip = #{loginIp},
+        	last_login_ip = #{lastLoginIp},
+        	user_type = #{userType},
+        	remark = #{remark}
+        WHERE 
+        	user_id = #{userId}
     </update>
     <!-- 通过昵称修改昵称、邮箱、个人主页、个性签名、邮件是否接受社区消息 -->
 	<update id="updateUserByUserName">

@@ -43,6 +43,14 @@ public class CollectDaoServiceImpl implements CollectService{
 	}
 
 	/**
+	 * 根据用户 ID 删除收藏
+	 */
+	@Override
+	public void deleteByUid(Integer uid) {
+		collectDao.deleteByUid(uid);
+	}
+
+	/**
 	 * 统计收藏话题的数量
 	 */
 	@Override

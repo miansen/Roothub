@@ -83,11 +83,19 @@
      	where uid = #{uid}
      	and tid = #{tid}
      </delete>
+     
+     <!-- 根据用户 ID 删除收藏 -->
+     <delete id="deleteByUid">
+     	delete from collect
+     	where uid = #{uid}
+     </delete>
+     
      <!-- 统计用户收藏话题的数量 -->
      <select id="count" resultType="java.lang.Integer">
      	select count(1)
-     	from collect
+     	from collect a,topic b
      	where uid = #{uid}
+     	and a.tid = b.topic_id
      </select>
      <!-- 统计话题被收藏的数量 -->
      <select id="countByTid" resultType="java.lang.Integer">

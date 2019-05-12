@@ -90,6 +90,13 @@ public interface ReplyDao {
 	int deleteByTopicId(@Param("topicId") Integer topicId);
 	
 	/**
+	 * 根据用户名称删除评论
+	 * @param replyAuthorName
+	 * @return
+	 */
+	int deleteByReplyAuthorName(@Param("replyAuthorName") String replyAuthorName);
+	
+	/**
 	 * 更新评论
 	 * @param reply
 	 * @return

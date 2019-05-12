@@ -145,6 +145,12 @@ public interface TopicService {
 	void deleteByTopicId(Integer topicId);
 	
 	/**
+	 * 根据作者删除话题
+	 * @param author
+	 */
+	void deleteByAuthor(String author);
+	
+	/**
 	 * 根据ID置顶话题
 	 * @param id
 	 */

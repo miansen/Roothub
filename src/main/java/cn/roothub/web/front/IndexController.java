@@ -11,9 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +29,7 @@ import cn.roothub.entity.Node;
 import cn.roothub.entity.NodeTab;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
+import cn.roothub.exception.ApiAssert;
 import cn.roothub.entity.Tab;
 import cn.roothub.entity.Tag;
 import cn.roothub.service.CollectService;
@@ -43,15 +42,15 @@ import cn.roothub.service.UserService;
 import cn.roothub.service.TabService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
-import cn.roothub.util.TabCookieUtil;
+import cn.roothub.util.bcrypt.BCryptPasswordEncoder;
 import cn.roothub.util.StringUtil;
 
 @Controller // 标注这是一个控制类，类名不能和注解名一样
-//@RequestMapping("/root") // 访问父路径
-public class IndexController extends BaseController{
+// @RequestMapping("/root") // 访问父路径
+public class IndexController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -65,7 +64,7 @@ public class IndexController extends BaseController{
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private RedisTemplate<String,List<String>> redisTemplate;
+	private RedisTemplate<String, List<String>> redisTemplate;
 	@Autowired
 	private TabService tabService;
 	@Autowired
@@ -74,313 +73,296 @@ public class IndexController extends BaseController{
 	private BaseEntity baseEntity;
 	@Autowired
 	private NodeService nodeService;
-	
+
 	/**
 	 * 首页
+	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET,produces = "application/json; charset=utf-8")//访问子路径
-	private String index(HttpServletRequest request,HttpServletResponse response,
-            			 @RequestParam(value = "p", defaultValue = "1") Integer p,
-            			 @RequestParam(value = "tab", defaultValue = "all") String tab) {
-		// tab = TabCookieUtil.getTab(request,response,tab); // 从cookie里找tab
-		
-		//PageDataBody<Topic> page;
-		/*if(tab == null || tab.equals("all")) {
-			page = rootTopicService.page(p, 50, tab,null);
-		}else if(tab != null && tab.equals("hot")){
-			page = rootTopicService.findIndexHot(p, 50, tab);
-		}else {
-			page = rootTopicService.page(p, 50, tab,tab);
-		}*/
-		//List<Section> sectionAll = rootSectionService.findAll();
-		
-		/*PageDataBody<Topic> page;
-		if(tab == null || tab.equals("all")) {
-			page = topicService.pageAllByTab(p, 50, null);
-		}else {
-			page = topicService.pageAllByTab(p, 50, tab);
-		}*/
-		
+	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json; charset=utf-8") // 访问子路径
+	private String index(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(value = "p", defaultValue = "1") Integer p,
+			@RequestParam(value = "tab", defaultValue = "all") String tab) {
 		PageDataBody<Topic> page = topicService.pageAllByTab(p, 25, tab);
 		List<Tab> tabList = tabService.selectAll();
 		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
-		List<Topic> findHot = topicService.findHot(0, 10);//热门话题榜
-		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 10);//今日等待回复的话题
-		PageDataBody<Tag> tag = topicService.findByTag(1, 10);//最热标签
+		// 热门话题榜
+		List<Topic> findHot = topicService.findHot(0, 10);
+		// 今日等待回复的话题
+		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 10);
+		// 最热标签
+		PageDataBody<Tag> tag = topicService.findByTag(1, 10);
 		List<Node> nodeList2 = nodeService.findAll(0, 10);
-		int countUserAll = userService.countUserAll();//注册会员的数量
-		int countAllTopic = topicService.countAllTopic(null);//所有话题的数量
-		int countAllReply = replyService.countAll();//所有评论的数量
-		User user = null;
-    	String cookie = CookieAndSessionUtil.getCookie(request, "user");
-    	//BaseEntity baseEntity = new BaseEntity();
-    	//request.setAttribute("baseEntity", baseEntity);
+		// 注册会员的数量
+		int countUserAll = userService.countUserAll();
+		// 所有话题的数量
+		int countAllTopic = topicService.countAllTopic(null);
+		// 所有评论的数量
+		int countAllReply = replyService.countAll();
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
 		request.setAttribute("findTodayNoReply", findTodayNoReply);
-		//request.setAttribute("sectionAll", sectionAll);
 		request.setAttribute("tabList", tabList);
 		request.setAttribute("nodeList", nodeList);
 		request.setAttribute("nodeList2", nodeList2);
 		request.setAttribute("tab", tab);
-		//request.setAttribute("tab", tab);
 		request.setAttribute("tag", tag);
 		request.setAttribute("countUserAll", countUserAll);
 		request.setAttribute("countAllTopic", countAllTopic);
 		request.setAttribute("countAllReply", countAllReply);
 		return "index";
 	}
-	
-	/**
-     * 注册页面
-     */
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    private String register(HttpServletRequest request) {
-            return "register";   
-    }
 
+	/**
+	 * 注册页面
+	 */
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	private String register(HttpServletRequest request) {
+		return "register";
+	}
+
+	/**
+	 * 注册接口
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	@ResponseBody
 	private Result<UserExecution> register(@RequestParam("username") String username,
-											   @RequestParam("password") String password, 
-											   @RequestParam("email") String email,
-											   HttpServletRequest request) {
-		if(username == null || username.equals("") && username.length() <= 0) {
-			return new Result<UserExecution>(false, "用户名不能为空");
-		}
-		if(password == null || password.equals("") && password.length() <= 0) {
-			return new Result<>(false, "密码不能为空");
-		}
-		if(email == null || email.equals("") && email.length() <= 0) {
-			return new Result<>(false, "邮箱不能为空");
-		}
-		User findByName = userService.findByName(username);
-		if(findByName != null) {
-			return new Result<>(false, "用户已存在");
-		}
-		User findByEmail = userService.findByEmail(email);
-		if(findByEmail != null) {
-			return new Result<>(false, "邮箱已存在");
-		}
+			@RequestParam("password") String password, @RequestParam("email") String email,
+			HttpServletRequest request) {
+		ApiAssert.notEmpty(username, "请输入用户名");
+		ApiAssert.notEmpty(password, "请输入密码");
+		ApiAssert.notEmpty(email, "请输入邮箱");
+		User user = userService.findByName(username);
+		ApiAssert.isNull(user, "用户已存在");
+		user = userService.findByEmail(email);
+		ApiAssert.isNull(user, "邮箱已存在");
 		UserExecution save = userService.createUser(username, password, email);
 		return new Result<UserExecution>(true, save);
 	}
-	
-	/**
-     * 登录页面
-     */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    private String login(HttpServletRequest request) {
-            return "login";   
-    }
-    
-    /**
-     * 登录处理
-     * @param username
-     * @param password
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    private Result<User> login(@RequestParam("username") String username,
-								   @RequestParam("password") String password,HttpServletRequest request,
-								   HttpServletResponse response){
-    	User user = null;
-    	user = userService.findByUserNameAndPassword(username, password);
-    	if(user == null) {
-    		return new Result<>(false, "用户名或者密码错误");
-    	}else {
-    		//将用户的登录信息存进redis
-    		//RedisUtil.setString("user", user.toString());
-    		//1.先将对象转成json
-    		//String str = JsonUtil.objectToJson(user);
-    		//ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-    		//2.将json存进redis
-    		//opsForValue.set("user", str);
-    		//设置cookie
-    		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(), Base64Util.encode(user.getThirdAccessToken()), siteConfig.getCookieConfig().getMaxAge(), siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
-    		//设置session
-    		CookieAndSessionUtil.setSession(request, "user", user);
-    		return new Result<User>(true, user);
-    	}
-    }
 
-    /**
-     * 退出
-     * @param request
-     * @param response
-     * @return
-     */
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    private String logout(HttpServletRequest request,HttpServletResponse response) {
-    	//stringRedisTemplate.delete("user");
-    	CookieAndSessionUtil.removeSession(request, "user");
-    	CookieAndSessionUtil.removeCookie(response, siteConfig.getCookieConfig().getName(), siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly());
-    	return "redirect:/";
-    }
-    
-    /**
-     * 标签页
-     * @param request
-     * @param p
-     * @return
-     */
-    @RequestMapping(value = "/tags", method = RequestMethod.GET)
-    private String tag(HttpServletRequest request,@RequestParam(value = "p", defaultValue = "1") Integer p) {
-    	PageDataBody<Tag> tag = topicService.findByTag(p, 50);
-    	request.setAttribute("tag", tag);
-    	return "tag/tag";
-    }
-    
-    
-    @RequestMapping(value = "/session", method = RequestMethod.GET)
-    @ResponseBody
-    private Map<String,String> session(HttpServletRequest request) {
-    	User user = getUser(request);
-    	HashedMap map = new HashedMap();
-    	if(user != null) {
-    		map.put("success", true);
-    		map.put("user", user.getUserName());
-    		return map;
-    	}else {
-    		map.put("success", false);
-    		map.put("user", "");
-    		return map;
-    	}
-    }
-    
-    /**
-     * 搜索
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    private String search(HttpServletRequest request,@RequestParam("s") String search,@RequestParam(value = "p", defaultValue = "1") Integer p) {
-    	if(search == null || search.equals("")) {
-    		return "search";
-    	}
-    	PageDataBody<Topic> pageLike = topicService.pageLike(p, 50, search);
-    	//BaseEntity baseEntity = new BaseEntity();
-    	//request.setAttribute("baseEntity", baseEntity);
-    	request.setAttribute("pageLike", pageLike);
-    	request.setAttribute("search", search);
-    	return "search/search";
-    }
-    
-    /**
-     * Top100积分榜
-     * @return
-     */
-    @RequestMapping(value = "/top100")
-    private String top100() {
-    	return "score/top100";
-    }
-    
-    /**
-     * 关于
-     * @return
-     */
-    @RequestMapping(value = "/about")
-    private String about() {
-    	return "foot/about";
-    }
-    
-    /**
-     * faq
-     * @return
-     */
-    @RequestMapping(value = "/faq")
-    private String faq() {
-    	return "foot/faq";
-    }
-    
-    /**
-     * api
-     * @return
-     */
-    @RequestMapping(value = "/api")
-    private String api() {
-    	return "foot/api";
-    }
-    
-    /**
-     * mission
-     * @return
-     */
-    @RequestMapping(value = "/mission")
-    private String mission() {
-    	return "foot/mission";
-    }
-    
-    /**
-     * advertise
-     * @return
-     */
-    @RequestMapping(value = "/advertise")
-    private String advertise() {
-    	return "foot/advertise";
-    }
-    
-    /**
-     * 反馈建议
-     * @return
-     */
-    @RequestMapping(value = "/feedback")
-    private String feedback() {
-    	return "foot/feedback";
-    }
-    
-    @RequestMapping(value = "/feedback/add",method=RequestMethod.POST,produces = "application/json; charset=utf-8")
-    @ResponseBody
-    private Map feedbackAdd(String info) {
-    	Map<String,Object> redisMap = new HashedMap();
-    	Map<String,Object> returnMap = new HashedMap();
-    	List<String> list = new ArrayList<>();
-    	HashOperations<String, String, Object> opsForHash = redisTemplate.opsForHash();
-    	if(info == null) {
-    		returnMap.put("success", false);
-    		returnMap.put("msg", "建议不能为空");
+	/**
+	 * 登录页面
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	private String login(HttpServletRequest request) {
+		return "login";
+	}
+
+	/**
+	 * 登录接口
+	 * 
+	 * @param username
+	 * @param password
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
+	private Result<User> login(@RequestParam("username") String username, @RequestParam("password") String password,
+			HttpServletRequest request, HttpServletResponse response) {
+		User user = userService.findByName(username);
+		ApiAssert.notNull(user, "用户不存在");
+		ApiAssert.isTrue(new BCryptPasswordEncoder().matches(password, user.getPassword()), "密码不正确");
+		// 设置cookie
+		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(),
+				Base64Util.encode(user.getThirdAccessToken()), siteConfig.getCookieConfig().getMaxAge(),
+				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
+		// 设置session
+		CookieAndSessionUtil.setSession(request, "user", user);
+		return new Result<User>(true, user);
+	}
+
+	/**
+	 * 退出
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	private String logout(HttpServletRequest request, HttpServletResponse response) {
+		// stringRedisTemplate.delete("user");
+		CookieAndSessionUtil.removeSession(request, "user");
+		CookieAndSessionUtil.removeCookie(response, siteConfig.getCookieConfig().getName(),
+				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly());
+		return "redirect:/";
+	}
+
+	/**
+	 * 标签页
+	 * 
+	 * @param request
+	 * @param p
+	 * @return
+	 */
+	@RequestMapping(value = "/tags", method = RequestMethod.GET)
+	private String tag(HttpServletRequest request, @RequestParam(value = "p", defaultValue = "1") Integer p) {
+		PageDataBody<Tag> tag = topicService.findByTag(p, 50);
+		request.setAttribute("tag", tag);
+		return "tag/tag";
+	}
+
+	@RequestMapping(value = "/session", method = RequestMethod.GET)
+	@ResponseBody
+	private Map<String, String> session(HttpServletRequest request) {
+		User user = getUser(request);
+		HashedMap map = new HashedMap();
+		if (user != null) {
+			map.put("success", true);
+			map.put("user", user.getUserName());
+			return map;
+		} else {
+			map.put("success", false);
+			map.put("user", "");
+			return map;
+		}
+	}
+
+	/**
+	 * 搜索
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	private String search(HttpServletRequest request, @RequestParam("s") String search,
+			@RequestParam(value = "p", defaultValue = "1") Integer p) {
+		if (search == null || search.equals("")) {
+			return "search";
+		}
+		PageDataBody<Topic> pageLike = topicService.pageLike(p, 50, search);
+		// BaseEntity baseEntity = new BaseEntity();
+		// request.setAttribute("baseEntity", baseEntity);
+		request.setAttribute("pageLike", pageLike);
+		request.setAttribute("search", search);
+		return "search/search";
+	}
+
+	/**
+	 * Top100积分榜
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/top100")
+	private String top100() {
+		return "score/top100";
+	}
+
+	/**
+	 * 关于
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/about")
+	private String about() {
+		return "foot/about";
+	}
+
+	/**
+	 * faq
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/faq")
+	private String faq() {
+		return "foot/faq";
+	}
+
+	/**
+	 * api
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/api")
+	private String api() {
+		return "foot/api";
+	}
+
+	/**
+	 * mission
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/mission")
+	private String mission() {
+		return "foot/mission";
+	}
+
+	/**
+	 * advertise
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/advertise")
+	private String advertise() {
+		return "foot/advertise";
+	}
+
+	/**
+	 * 反馈建议
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/feedback")
+	private String feedback() {
+		return "foot/feedback";
+	}
+
+	@RequestMapping(value = "/feedback/add", method = RequestMethod.POST, produces = "application/json; charset=utf-8")
+	@ResponseBody
+	private Map<String,Object> feedbackAdd(String info) {
+		Map<String, Object> redisMap = new HashedMap();
+		Map<String, Object> returnMap = new HashedMap();
+		List<String> list = new ArrayList<>();
+		HashOperations<String, String, Object> opsForHash = redisTemplate.opsForHash();
+		if (info == null) {
+			returnMap.put("success", false);
+			returnMap.put("msg", "建议不能为空");
 			return returnMap;
-    	}else {
-    		list.add("感谢您宝贵的建议!");
-    		redisMap.put(StringUtil.getUUID(), info);
-    		opsForHash.putAll("feedback", redisMap);
-    		returnMap.put("success", true);
-    		returnMap.put("msg", list);
-    		return returnMap;
-    	}
-    }
-    
-    /**
-     * excel
-     * @return
-     */
-    @RequestMapping(value = "/excel")
-    private String excel(HttpServletRequest request) {
-    	List<Topic> row1 = topicService.findAll();//全部话题
-		List<Tab> row2 = tabService.selectAll();//父板块
-    	List<NodeTab> row3 = nodeTabService.findAll();//子版块
-    	request.setAttribute("row1", row1);
-    	request.setAttribute("row2", row2);
-    	request.setAttribute("row3", row3);
-    	return "foot/excel";
-    }
-    
-    @RequestMapping(value = "/excel/download")
-    private void excel02(HttpServletResponse response) throws Exception {
-    	List<Topic> row1 = topicService.findAll();
-		//List<RootTopic> row2 = rootTopicService.findHot(1, 50);
+		} else {
+			list.add("感谢您宝贵的建议!");
+			redisMap.put(StringUtil.getUUID(), info);
+			opsForHash.putAll("feedback", redisMap);
+			returnMap.put("success", true);
+			returnMap.put("msg", list);
+			return returnMap;
+		}
+	}
+
+	/**
+	 * excel
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/excel")
+	private String excel(HttpServletRequest request) {
+		List<Topic> row1 = topicService.findAll();// 全部话题
+		List<Tab> row2 = tabService.selectAll();// 父板块
+		List<NodeTab> row3 = nodeTabService.findAll();// 子版块
+		request.setAttribute("row1", row1);
+		request.setAttribute("row2", row2);
+		request.setAttribute("row3", row3);
+		return "foot/excel";
+	}
+
+	@RequestMapping(value = "/excel/download")
+	private void excel02(HttpServletResponse response) throws Exception {
+		List<Topic> row1 = topicService.findAll();
+		// List<RootTopic> row2 = rootTopicService.findHot(1, 50);
 		List<Tab> row2 = tabService.selectAll();
-    	List<NodeTab> row3 = nodeTabService.findAll();
+		List<NodeTab> row3 = nodeTabService.findAll();
 		List<Topic> rows1 = CollUtil.newArrayList(row1);
 		List<Tab> rows2 = CollUtil.newArrayList(row2);
 		List<NodeTab> rows3 = CollUtil.newArrayList(row3);
-		//List<List<? extends Object>> rows3 = CollUtil.newArrayList(row1,row2,row3);
-		ExcelWriter writer = ExcelUtil.getWriter("d:/writeTest04.xlsx","话题");
+		// List<List<? extends Object>> rows3 = CollUtil.newArrayList(row1,row2,row3);
+		ExcelWriter writer = ExcelUtil.getWriter("d:/writeTest04.xlsx", "话题");
 		writer.addHeaderAlias("topicId", "话题标识");
 		writer.addHeaderAlias("ptab", "父板块标识");
 		writer.addHeaderAlias("tab", "子版块标识");
@@ -429,14 +411,14 @@ public class IndexController extends BaseController{
 		writer.addHeaderAlias("updateDate", "更新时间");
 		writer.addHeaderAlias("statusCd", "板块状态 1000:有效 1100:无效 1200:未生效");
 		writer.write(rows3);
-		//response为HttpServletResponse对象
+		// response为HttpServletResponse对象
 		response.setContentType("application/vnd.ms-excel;charset=utf-8");
-		//test.xlsx是弹出下载对话框的文件名，不能为中文，中文请自行编码
-		response.setHeader("Content-Disposition","attachment;filename=test02.xlsx"); 
-		ServletOutputStream out=response.getOutputStream();
+		// test.xlsx是弹出下载对话框的文件名，不能为中文，中文请自行编码
+		response.setHeader("Content-Disposition", "attachment;filename=test02.xlsx");
+		ServletOutputStream out = response.getOutputStream();
 		writer.flush(out);
-		//关闭writer，释放内存
-		//关闭writer，释放内存
+		// 关闭writer，释放内存
+		// 关闭writer，释放内存
 		writer.close();
-    }
+	}
 }

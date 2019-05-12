@@ -188,6 +188,13 @@ public interface TopicDao {
     int deleteById(@Param("topicId") Integer topicId);
     
     /**
+     * 根据作者删除话题
+     * @param author
+     * @return
+     */
+    int deleteByAuthor(@Param("author") String author);
+    
+    /**
      * 根据节点统计所有话题
      * @return
      */

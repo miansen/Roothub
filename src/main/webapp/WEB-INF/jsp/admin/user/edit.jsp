@@ -30,7 +30,7 @@
           			<input type="hidden" value="${user.userId}" name="userId" id="userId" class="form-control">
           			<div class="form-group">
             			<label>用户名</label>
-            			<input type="text" name="userName" id ="userName" value="${user.userName}" class="form-control">
+            			<input type="text" name="userName" id ="userName" value="${user.userName}" class="form-control" readonly="readonly">
           			</div>
           			<div class="form-group">
             			<label>密码</label>

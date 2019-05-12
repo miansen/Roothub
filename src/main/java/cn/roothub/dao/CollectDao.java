@@ -33,6 +33,12 @@ public interface CollectDao {
     int delete(@Param("uid") Integer uid,@Param("tid") Integer tid);
     
     /**
+     * 根据用户 ID 删除收藏
+     * @return
+     */
+    int deleteByUid(@Param("uid") Integer uid);
+    
+    /**
      * 统计用户收藏话题的数量
      * @param uid
      * @return

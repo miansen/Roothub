@@ -33,6 +33,14 @@ public class UserAdminController {
 	@Autowired
 	private UserService userService;
 	
+	/**
+	 * 用户列表
+	 * @param username
+	 * @param email
+	 * @param p
+	 * @param model
+	 * @return
+	 */
 	@RequiresPermissions("user:list")
 	@RequestMapping(value = "/list",method = RequestMethod.GET)
 	public String list(String username, String email, @RequestParam(value = "p",defaultValue = "1") Integer p, Model model) {
@@ -45,6 +53,12 @@ public class UserAdminController {
 		return "/admin/user/list";
 	}
 	
+	/**
+	 * 编辑用户界面
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@RequiresPermissions("user:edit")
 	@RequestMapping(value = "/edit",method = RequestMethod.GET)
 	public String edit(Integer id, Model model) {
@@ -52,14 +66,37 @@ public class UserAdminController {
 		return "/admin/user/edit";
 	}
 	
+	/**
+	 * 编辑用户接口
+	 * @param user
+	 * @param request
+	 * @return
+	 */
 	@RequiresPermissions("user:edit")
 	@RequestMapping(value = "/edit",method = RequestMethod.POST)
 	@ResponseBody
 	public Result<String> edit(User user){
-		System.out.println(user);
+		userService.updateAdmin(user);
 		return new Result<>(true, "编辑成功");
 	}
 	
+	/**
+	 * 删除用户
+	 * @param id
+	 * @return
+	 */
+	@RequiresPermissions("user:delete")
+	@RequestMapping(value = "/delete",method = RequestMethod.GET)
+	@ResponseBody
+	public Result<String> delete(Integer id){
+		userService.deleteAdmin(id);
+		return new Result<>(true, "删除成功");
+	}
+	
+	/**
+	 * 刷新Token
+	 * @return
+	 */
 	@RequestMapping(value = "/refreshToken",method = RequestMethod.GET)
 	@ResponseBody
 	public Result<String> refreshToken(){

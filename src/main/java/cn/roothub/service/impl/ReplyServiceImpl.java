@@ -132,6 +132,14 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	/**
+	 * 根据用户名称删除评论
+	 */
+	@Override
+	public void deleteByReplyAuthorName(String replyAuthorName) {
+		replyDao.deleteByReplyAuthorName(replyAuthorName);
+	}
+
+	/**
 	 * 更新评论
 	 */
 	@Override

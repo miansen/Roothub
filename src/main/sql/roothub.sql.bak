@@ -520,7 +520,7 @@ CREATE TABLE `user` (
   `status_cd` varchar(4) DEFAULT NULL COMMENT '用户状态 1000:有效 1100:无效 1200:未生效',
   `login_ip` varchar(20) DEFAULT NULL COMMENT '用户登入ip',
   `last_login_ip` varchar(20) DEFAULT NULL COMMENT '用户最后登入ip',
-  `user_type` int(2) DEFAULT NULL COMMENT '用户类型 0:超级管理员 1:版主 2:普通用户',
+  `user_type` int(2) NOT NULL DEFAULT '2' COMMENT '用户类型 0:超级管理员 1:版主 2:普通用户',
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UNIQUE_NAME` (`user_name`) USING BTREE

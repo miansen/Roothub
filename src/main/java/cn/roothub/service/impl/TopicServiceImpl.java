@@ -126,6 +126,14 @@ public class TopicServiceImpl implements TopicService{
 	}
 
 	/**
+	 * 根据作者删除话题
+	 */
+	@Override
+	public void deleteByAuthor(String author) {
+		rootTopicDao.deleteByAuthor(author);
+	}
+
+	/**
 	 * 置顶话题
 	 */
 	@Override

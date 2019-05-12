@@ -61,5 +61,13 @@ public class NoticeServiceImpl implements NoticeService{
 	public int countByAuthor(String author) {
 		return rootNoticeDao.countByAuthor(author);
 	}
+
+	/**
+	 * 根据 要通知用户的昵称 删除
+	 */
+	@Override
+	public void deleteByTargetAuthorName(String targetAuthorName) {
+		rootNoticeDao.deleteByTargetAuthorName(targetAuthorName);
+	}
 	
 }

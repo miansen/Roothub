@@ -68,7 +68,7 @@
 		<!-- order by top desc,create_date desc,last_reply_time desc -->
 		<if test="tab != null">
 			<if test='tab == "all"'>
-				order by top desc
+				order by top desc,create_date desc
 			</if>
 			<if test='tab == "hot"'>
 				order by top desc,view_count desc
@@ -77,7 +77,7 @@
 				order by top desc,create_date desc
 			</if>
 			<if test='tab == "lonely"'>
-				order by view_count
+				order by top desc,order by view_count
 			</if>
 		</if>
 		<if test="start != null">
@@ -484,6 +484,13 @@
         delete from topic
         where topic_id = #{topicId,jdbcType=INTEGER}
     </delete>
+    
+    <!-- 根据作者删除话题 -->
+    <delete id="deleteByAuthor" parameterType="java.lang.String">
+        delete from topic
+        where author = #{author,jdbcType=VARCHAR}
+    </delete>
+    
     <!-- 根据节点统计话题 -->
     <select id="countTopicByNode" resultType="java.lang.Integer">
         select count(topic_id)

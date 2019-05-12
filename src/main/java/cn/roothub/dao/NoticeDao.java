@@ -43,6 +43,13 @@ public interface NoticeDao {
 	int deleteByNoticeId(@Param("noticeId") Integer noticeId);
 	
 	/**
+	 * 根据 要通知用户的昵称 删除
+	 * @param targetAuthorName
+	 * @return
+	 */
+	int deleteByTargetAuthorName(@Param("targetAuthorName") String targetAuthorName);
+	
+	/**
 	 * 根据昵称更新通知
 	 * @return
 	 */

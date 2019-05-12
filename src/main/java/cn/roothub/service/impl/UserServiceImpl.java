@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import cn.roothub.dao.UserDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.dto.UserExecution;
@@ -21,12 +22,16 @@ import cn.roothub.enums.UpdateUserEnum;
 import cn.roothub.exception.OperationFailedException;
 import cn.roothub.exception.OperationRepeaException;
 import cn.roothub.exception.OperationSystemException;
+import cn.roothub.service.CollectService;
+import cn.roothub.service.NoticeService;
+import cn.roothub.service.ReplyService;
 import cn.roothub.service.TopicService;
 import cn.roothub.service.UserService;
 import cn.roothub.store.StorageService;
 import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.JsonUtil;
 import cn.roothub.util.StringUtil;
+import cn.roothub.util.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -44,6 +49,15 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private TopicService topicService;
+	
+	@Autowired
+	private ReplyService replyService;
+	
+	@Autowired
+	private CollectService collectService;
+	
+	@Autowired
+	private NoticeService noticeService;
 	
 	/**
 	 * 根据ID查找用户
@@ -190,7 +204,8 @@ public class UserServiceImpl implements UserService{
 	public UserExecution createUser(String username,String password,String email) {
 		User user = new User();
 		user.setUserName(username);
-		user.setPassword(password);
+		// 密码加密处理
+		user.setPassword(new BCryptPasswordEncoder().encode(password));
 		user.setScore(10);
 		user.setEmail(email);
 		user.setUrl(null);
@@ -262,6 +277,42 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int countAllForAdmin(String username, String email) {
 		return rootUserDao.countAllForAdmin(username, email);
+	}
+
+	/**
+	 * 更新用户，主要用于后台操作
+	 */
+	@Override
+	public void updateAdmin(User user) {
+		// 删除Redis里面的缓存
+		stringRedisTemplate.delete(findById(user.getUserId()).getThirdAccessToken());
+		// 如果密码不为空，则加密在保存
+		if(!StringUtils.isEmpty(user.getPassword())) {
+			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+		}
+		user.setUpdateDate(new Date());
+		updateUser(user);
+	}
+
+	/**
+	 * 删除用户，主要用于后台操作
+	 */
+	@Override
+	@Transactional
+	public void deleteAdmin(Integer id) {
+		User user = findById(id);
+		// 删除话题
+		topicService.deleteByAuthor(user.getUserName());
+		// 删除评论
+		replyService.deleteByReplyAuthorName(user.getUserName());
+		// 删除收藏
+		collectService.deleteByUid(user.getUserId());
+		// 删除通知
+		noticeService.deleteByTargetAuthorName(user.getUserName());
+		// 删除Redis里面的缓存
+		stringRedisTemplate.delete(findById(user.getUserId()).getThirdAccessToken());
+		// 删除用户
+		deleteUserById(user.getUserId());
 	}
 
 }

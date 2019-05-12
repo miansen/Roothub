@@ -38,6 +38,13 @@ public interface CollectService {
     int delete(Integer uid,Integer tid);
     
     /**
+     * 根据用户 ID 删除收藏
+     * @param uid
+     * @return
+     */
+    void deleteByUid(Integer uid);
+    
+    /**
      * 统计用户收藏话题的数量
      * @param uid
      * @return

@@ -27,7 +27,7 @@
         <c:forEach var="item" items="${page.list}">
             <div class="media">
               <div class="media-left">
-                <img src="/resources/images/${item.avatar}" class="avatar-sm img-circle">
+                <img src="${item.avatar}" class="avatar-sm img-circle">
               </div>
               <div class="media-body">
                 <div class="gray">

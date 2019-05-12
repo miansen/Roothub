@@ -47,4 +47,10 @@ public interface NoticeService {
 	 * @param notice
 	 */
 	void save(Notice notice);
+	
+	/**
+	 * 根据 要通知用户的昵称 删除
+	 * @param targetAuthorName
+	 */
+	void deleteByTargetAuthorName(String targetAuthorName);
 }

@@ -112,6 +112,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where notice_id = #{noticeId,jdbcType=INTEGER}
   </delete>
   
+  <!-- 根据 要通知用户的昵称 删除 -->
+  <delete id="deleteByTargetAuthorName" parameterType="java.lang.String">
+    delete from notice
+    where target_author_name = #{targetAuthorName,jdbcType=VARCHAR}
+  </delete>
+  
   <!-- 根据昵称统计未读通知 -->
   <select id="countNotReadByAuthor" resultType="java.lang.Integer">
     select count(notice_id)

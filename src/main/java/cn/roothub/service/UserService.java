@@ -133,4 +133,16 @@ public interface UserService {
 	PageDataBody<User> pageForAdmin(String username, String email, Integer pageNumber, Integer pageSize);
 	
 	int countAllForAdmin(String username,String email);
+	
+	/**
+	 * 更新用户，主要用于后台操作
+	 * @param user
+	 */
+	void updateAdmin(User user);
+	
+	/**
+	 * 删除用户，主要用于后台操作
+	 * @param id
+	 */
+	void deleteAdmin(Integer id);
 }

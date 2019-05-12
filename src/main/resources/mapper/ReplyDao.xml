@@ -210,6 +210,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE 
     	topic_id = #{topicId,jdbcType=INTEGER}
   </update>
+  
+  <!-- 根据用户名称删除评论 -->
+  <delete id="deleteByReplyAuthorName" parameterType="java.lang.String">
+  	DELETE FROM
+  		reply
+  	WHERE
+  		reply_author_name = #{replyAuthorName}
+  </delete>
+  
   <!-- 统计所有评论 -->
   <select id="countAll" resultType="java.lang.Integer">
     select count(reply_id)
@@ -230,9 +239,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   <!-- 根据用户昵称统计评论数 -->
   <select id="countByName" resultType="java.lang.Integer">
-    select count(1)
-    from reply t
-    where t.is_delete = 0 and t.reply_author_name = #{name}
+    select 
+    	count(1)
+    from 
+    	reply a,topic b
+    where 
+    	a.is_delete = 0 
+    and 
+    	a.reply_author_name = #{name}
+    and 
+    	a.topic_id = b.topic_id
   </select>
   
   	<!-- 统计当天的评论数 -->

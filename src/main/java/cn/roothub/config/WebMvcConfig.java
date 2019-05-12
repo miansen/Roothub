@@ -18,7 +18,7 @@ import cn.roothub.service.SystemConfigService;
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 	@Autowired
-	@Qualifier("systemConfigServiceImpl")
+	@Qualifier("uploadConfig")
 	private SystemConfigService systemConfigService;
 	
 	/**

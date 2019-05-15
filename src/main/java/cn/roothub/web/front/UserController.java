@@ -38,6 +38,7 @@ import cn.roothub.service.VisitService;
 import cn.roothub.store.StorageService;
 import cn.roothub.util.Base64Util;
 import cn.roothub.util.CookieAndSessionUtil;
+import cn.roothub.util.bcrypt.BCryptPasswordEncoder;
 
 @Controller
 public class UserController extends BaseController{
@@ -267,7 +268,8 @@ public class UserController extends BaseController{
 		if(!user.getPassword().equals(oldPassword)) {
 			return new Result<>(false,"旧密码不正确");
 		}
-		user.setPassword(newPassword);
+		//加密保存
+		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
 		UserExecution updateUser = rootUserService.updateUser(user);
 		return new Result<UserExecution>(true,updateUser);
 	}

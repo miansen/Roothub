@@ -228,7 +228,7 @@ function collectList(pageNumber) {
 				$(".itemList").append("<div class=\"panel-body paginate-bot\"\
 					style=\"border-bottom: 1px solid #e2e2e2;\">\
 					<div class=\"media\">\
-					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
+					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
 					<div class=\"media-body\">\
 					<div class=\"title\"> <a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<div class=\"tip\">\
@@ -274,7 +274,7 @@ function followList(pageNumber) {
 			for(var i = 0;i < data.data.list.length; i++){
 				$(".itemList").append("<div class=\"panel-body paginate-bot\" style=\"border-bottom: 1px solid #e2e2e2;\">\
 					<div class=\"media\">\
-					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
+					<div class=\"media-left\"><a href=\"/user/"+data.data.list[i].author+"\"><img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\"></a></div>\
 					<div class=\"media-body\">\
 					<div class=\"title\"><a href=\"/topic/"+data.data.list[i].topicId+"\"> "+data.data.list[i].title+" </a></div>\
 					<div class=\"tip\">\
@@ -342,7 +342,7 @@ function fansList(pageNumber) {
 								<a data-v-dc1504f6=\"\" href=\"/user/"+data.data.list[i].userName+"\" \
 								class=\"link\">\
 								<div class=\"media-left\">\
-								<img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
+								<img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
 								</div>\
 								<div data-v-dc1504f6=\"\" class=\"info-box\">\
 								<div data-v-dc1504f6=\"\" class=\"username\" title=\""+data.data.list[i].userId+"\">"+data.data.list[i].userName+"</div>\
@@ -360,7 +360,7 @@ function fansList(pageNumber) {
 								<a data-v-dc1504f6=\"\" href=\"/user/"+data.data.list[i].userName+"\" \
 								class=\"link\">\
 								<div class=\"media-left\">\
-								<img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
+								<img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
 								</div>\
 								<div data-v-dc1504f6=\"\" class=\"info-box\">\
 								<div data-v-dc1504f6=\"\" class=\"username\" title=\""+data.data.list[i].userId+"\">"+data.data.list[i].userName+"</div>\
@@ -376,7 +376,7 @@ function fansList(pageNumber) {
 								<a data-v-dc1504f6=\"\" href=\"/user/"+data.data.list[i].userName+"\" \
 								class=\"link\">\
 								<div class=\"media-left\">\
-								<img src=\"/resources/images/"+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
+								<img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
 								</div>\
 								<div data-v-dc1504f6=\"\" class=\"info-box\">\
 								<div data-v-dc1504f6=\"\" class=\"username\" title=\""+data.data.list[i].userId+"\">"+data.data.list[i].userName+"</div>\

@@ -3,6 +3,7 @@ package cn.roothub.service.impl;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import cn.roothub.entity.Tag;
 import cn.roothub.enums.InsertTopicEnum;
 import cn.roothub.exception.OperationFailedException;
 import cn.roothub.exception.OperationSystemException;
+import cn.roothub.service.SystemConfigService;
 import cn.roothub.service.TopicService;
 
 @Service
@@ -23,8 +25,13 @@ public class TopicServiceImpl implements TopicService{
 
 	@Autowired
 	private TopicDao rootTopicDao;
+	
 	@Autowired
 	private UserDao rootUserDao;
+	
+	@Autowired
+	@Qualifier("systemConfigServiceImpl")
+	private SystemConfigService systemConfigService;
 	
 	/**
 	 * 根据节点和节点板块查询话题
@@ -174,7 +181,8 @@ public class TopicServiceImpl implements TopicService{
 			if(insert <= 0) {
 				throw new OperationFailedException("发布话题失败！");
 			}else {
-				rootUserDao.updateScoreByName(10, topic.getAuthor());//发贴积10分
+				//发贴加积分
+				rootUserDao.updateScoreByName(Integer.valueOf(systemConfigService.getByKey("create_topic_score").getValue()), topic.getAuthor());
 				Topic rootTopic = rootTopicDao.selectByTitleAndDate(topic.getTitle(), topic.getCreateDate());
 				return new TopicExecution(rootTopic.getTitle(), InsertTopicEnum.SUCCESS, rootTopic);
 			}

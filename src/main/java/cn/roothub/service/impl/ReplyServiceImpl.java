@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import cn.roothub.dao.ReplyDao;
@@ -19,6 +20,7 @@ import cn.roothub.exception.OperationFailedException;
 import cn.roothub.exception.OperationRepeaException;
 import cn.roothub.exception.OperationSystemException;
 import cn.roothub.service.ReplyService;
+import cn.roothub.service.SystemConfigService;
 import cn.roothub.service.TopicService;
 
 /**
@@ -35,10 +37,16 @@ public class ReplyServiceImpl implements ReplyService{
 	
 	@Autowired
 	private ReplyDao replyDao;
+	
 	@Autowired
 	private UserDao userDao;
+	
 	@Autowired
 	private TopicService topicService;
+	
+	@Autowired
+	@Qualifier("systemConfigServiceImpl")
+	private SystemConfigService systemConfigService;
 	
 	/**
 	 * 根据ID查询评论
@@ -95,7 +103,8 @@ public class ReplyServiceImpl implements ReplyService{
 			if(insert <= 0) {
 				throw new OperationFailedException("评论话题失败！");
 			}else {
-				userDao.updateScore(10, reply.getReplyAuthorId());//回复积10分
+				//回复加积分
+				userDao.updateScore(Integer.valueOf(systemConfigService.getByKey("create_reply_score").getValue()), reply.getReplyAuthorId());
 				return new ReplyExecution(reply.getReplyAuthorName(), InsertReplyEnum.SUCCESS, reply);
 						
 			}

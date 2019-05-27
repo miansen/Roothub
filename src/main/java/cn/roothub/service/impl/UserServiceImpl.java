@@ -4,6 +4,8 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import cn.roothub.config.service.RedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private NoticeService noticeService;
+
+	@Autowired
+	private RedisService redisService;
 	
 	/**
 	 * 根据ID查找用户

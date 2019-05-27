@@ -45,8 +45,7 @@ import cn.roothub.util.CookieAndSessionUtil;
 import cn.roothub.util.bcrypt.BCryptPasswordEncoder;
 import cn.roothub.util.StringUtil;
 
-@Controller // 标注这是一个控制类，类名不能和注解名一样
-// @RequestMapping("/root") // 访问父路径
+@Controller
 public class IndexController extends BaseController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -80,7 +79,7 @@ public class IndexController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json; charset=utf-8") // 访问子路径
+	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
 	private String index(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "p", defaultValue = "1") Integer p,
 			@RequestParam(value = "tab", defaultValue = "all") String tab) {
@@ -337,6 +336,7 @@ public class IndexController extends BaseController {
 	}
 
 	/**
+	 * 这是测试代码，与项目无关
 	 * excel
 	 * 
 	 * @return
@@ -352,6 +352,11 @@ public class IndexController extends BaseController {
 		return "foot/excel";
 	}
 
+	/**
+	 * 这是测试代码，与项目无关
+	 * @param response
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/excel/download")
 	private void excel02(HttpServletResponse response) throws Exception {
 		List<Topic> row1 = topicService.findAll();

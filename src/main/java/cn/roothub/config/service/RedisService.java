@@ -16,6 +16,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * <p>
+ *     Redis 配置与获取
  * </p>
  * 
  * @author: miansen.wang

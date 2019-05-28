@@ -4,7 +4,6 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
 import cn.roothub.config.service.RedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,8 +137,9 @@ public class UserServiceImpl implements UserService{
 					throw new OperationFailedException("修改失败");
 				}else {
 					//更新redis
-					ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-					opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
+					// ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+					// opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
+					redisService.setString(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
 					return new UserExecution(user.getUserName(),UpdateUserEnum.SUCCESS,rootUser);
 				}
 			}
@@ -191,8 +191,9 @@ public class UserServiceImpl implements UserService{
 				if(insertUser <= 0) {
 					throw new OperationFailedException("注册失败");
 				}else {
-					ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-					opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
+					// ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+					// opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
+					redisService.setString(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
 					return new UserExecution(user.getUserName(),InsertUserEnum.SUCCESS,rootUser);
 				}
 			}

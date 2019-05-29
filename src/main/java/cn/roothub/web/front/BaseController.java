@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
-
 import cn.roothub.config.SiteConfig;
+import cn.roothub.config.service.RedisService;
 import cn.roothub.entity.User;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.NoticeService;
@@ -41,28 +41,39 @@ public class BaseController {
 	private StringRedisTemplate stringRedisTemplate;
 	@Autowired
 	private SiteConfig siteConfig;
+	@Autowired
+	private RedisService redisService;
 
+	/**
+	 * 获取登录用户的信息，先从 Redis 里面取，如果取不到，再从 seesion 里面取
+	 * 
+	 * @param request
+	 * @return
+	 */
 	public User getUser(HttpServletRequest request) {
 
 		String token = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
-		ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
-		User sessionUser = CookieAndSessionUtil.getSession(request, "user");
+		// ValueOperations<String, String> opsForValue =
+		// stringRedisTemplate.opsForValue();
+
+		// User sessionUser = CookieAndSessionUtil.getSession(request, "user");
 		try {
 			if (token != null) {
 				token = Base64Util.decode(token);
-				String redisUser = opsForValue.get(token);
+				// String redisUser = opsForValue.get(token);
+				String redisUser = redisService.getString(token);
 				if (redisUser != null) {
 					return JsonUtil.jsonToObject(redisUser, User.class);
-				}else {
-					return sessionUser;
+				} else {
+					return CookieAndSessionUtil.getSession(request, "user");
 				}
 			} else {
-				return sessionUser;
+				return CookieAndSessionUtil.getSession(request, "user");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
-		return null;
 	}
 
 	public String isLogin(HttpServletRequest request, String errorPage, String suesscePage) {

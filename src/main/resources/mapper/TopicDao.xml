@@ -382,7 +382,7 @@
 		and create_date = #{date}
      </select>
      <!-- 发布话题 -->
-     <insert id="insert" parameterType="cn.roothub.entity.Topic" keyProperty="topic_id" useGeneratedKeys="true">
+     <insert id="insert" parameterType="cn.roothub.entity.Topic" keyProperty="topicId" useGeneratedKeys="true">
     insert into 
            topic 
            (topic_id,

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.roothub.bbs.module.security.dao.RolePermissionRelDao">
+    
+	<select id="selectAllByRoleId" resultType="cn.roothub.bbs.module.security.model.RolePermissionRel">
+		SELECT
+        	*
+		FROM
+			role_permission_rel
+		WHERE 
+			role_id = #{roleId}
+     </select>
+   
+     <select id="selectAllByPermissionId" resultType="cn.roothub.bbs.module.security.model.RolePermissionRel">
+		SELECT
+        	*
+		FROM
+			role_permission_rel
+		WHERE 
+			permission_id = #{permissionId}
+     </select>
+     
+     <insert id="insertBatch" parameterType="java.util.Collection">
+     	<selectKey resultType ="java.lang.Integer" keyProperty= "rolePermissionRelId" order= "AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey >
+     	INSERT INTO role_permission_rel
+     		(role_id,permission_id,create_date,update_date)
+     	VALUES
+     	<foreach collection="rolePermissionRels" item="rolePermissionRel" separator=",">
+     		(#{rolePermissionRel.roleId},#{rolePermissionRel.permissionId},#{rolePermissionRel.createDate},#{rolePermissionRel.updateDate})
+     	</foreach>
+     </insert>
+     
+     <delete id="deleteBatch" parameterType="java.util.Collection">
+     	DELETE FROM 
+     		role_permission_rel
+     	WHERE 
+     		permission_id in 
+     	<foreach collection="permissions" item="permission" open="(" separator="," close=")">
+     		#{permission.permissionId}
+     	</foreach>
+     </delete>
+     
+     <delete id="deleteByRoleId">
+     	DELETE FROM 
+     		role_permission_rel
+     	WHERE 
+     		role_id = #{roleId}
+     </delete>
+     
+     <delete id="deleteByPermissionId">
+     	DELETE FROM 
+     		role_permission_rel
+     	WHERE 
+     		permission_id = #{permissionId}
+     </delete>
+     
+</mapper>

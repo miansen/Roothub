@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <!-- Mybatis会动态实现daoImpl,不过需要在mapper文件夹下创建BookDao.xml和AppointmentDao.xml
+  		spring-dao.xml文件会自动扫描mapper文件夹下的配置 -->
+    <!-- 
+    1.namespace是该xml对应的接口的全名
+    2.select和update中的id对应方法名
+    3.resultType是返回值类型
+    4.parameterType是参数类型(可选)    
+    5.#{...}填写的是方法的参数 
+    6.parameterType:输入参数类型
+    7.resultType:输出参数类型
+    -->
+<mapper namespace="cn.roothub.bbs.module.visit.dao.VisitDao">
+	<!-- 目的：为dao接口方法提供sql语句配置 -->
+    <resultMap id="BaseResultMap" type="cn.roothub.bbs.module.visit.model.Visit">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="uid" jdbcType="INTEGER" property="uid"/>
+        <result column="vid" jdbcType="INTEGER" property="vid"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="is_delete" jdbcType="BIT" property="isDelete"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, uid, vid, create_date, is_delete
+    </sql>
+    <!-- 分页查询 -->
+    <select id="select" resultType="User">
+        select
+        	b.user_id,
+        	b.user_name,
+        	b.signature,
+        	b.avatar 
+        from visit a,user b
+        where a.vid = #{vid}
+        and a.is_delete = '0'
+        and a.uid = b.user_id
+        order by a.create_date desc
+        <if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+    </select>
+    <!-- 添加访问记录 -->
+    <insert id="insert" parameterType="cn.roothub.bbs.module.visit.model.Visit" keyProperty="id" useGeneratedKeys="true">
+        insert into visit 
+        (id, 
+         uid,
+         vid,
+         create_date,
+         is_delete)
+        values 
+        (#{id,jdbcType=INTEGER}, 
+         #{uid,jdbcType=INTEGER}, 
+         #{vid,jdbcType=INTEGER}, 
+         #{createDate,jdbcType=TIMESTAMP},
+         #{isDelete,jdbcType=BIT})
+    </insert>
+    <!-- 统计被访问的数量 -->
+    <select id="count" resultType="java.lang.Integer">
+    	select count(1)
+    	from visit
+    	where vid = #{vid}
+    	and is_delete = '0'
+    </select>
+    <!-- 是否已存在访问记录 -->
+    <select id="isVisit" resultType="java.lang.Integer">
+    	select count(1)
+    	from visit
+    	where uid = #{uid}
+    	and vid = #{vid}
+    	and is_delete = '0'
+    </select>
+    <!-- 删除访问记录 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from visit
+        where uid = #{uid,jdbcType=INTEGER}
+        and vid = #{vid,jdbcType=INTEGER}
+    </delete>
+    <!-- 根据访问者ID和被访问者ID更新板块 -->
+    <update id="update" parameterType="cn.roothub.bbs.module.visit.model.Visit">
+        update visit
+        set create_date = #{createDate,jdbcType=TIMESTAMP},
+        is_delete = #{isDelete,jdbcType=BIT}
+        where uid = #{uid,jdbcType=INTEGER}
+        and vid = #{vid,jdbcType=INTEGER}
+    </update>
+</mapper>

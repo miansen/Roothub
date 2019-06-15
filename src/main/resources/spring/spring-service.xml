@@ -9,20 +9,45 @@
 	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<!-- 引入application配置文件 -->
+	<!-- 引入 application 配置文件 -->
 	<context:property-placeholder ignore-unresolvable="true" file-encoding="UTF-8" location="classpath:application.properties" />
-	<!-- 自动扫描config包，将使用@Component注解的类作为bean注入到IOC容器 -->
-	<context:component-scan base-package="cn.roothub.config" />
-	<!-- 自动扫描config.service包，将使用@Component注解的类作为bean注入到IOC容器 -->
-	<context:component-scan base-package="cn.roothub.config.service" />
-	<context:component-scan base-package="cn.roothub.config.properties" />
-	<context:component-scan base-package="cn.roothub.store" />
-	<!-- 全局异常处理 -->
-	<context:component-scan base-package="cn.roothub.handler" />
+
 	<!-- 引入redis配置文件 -->
-    <import resource="spring-redis.xml"/>
-	<!-- 扫描service.impl包下所有使用注解的类型 -->
-	<context:component-scan base-package="cn.roothub.service.impl" />
+	<import resource="spring-redis.xml"/>
+
+	<!-- 自动扫描包，将使用 @Component、@Service、@Controller、@Repository 等注解的类
+		 作为 bean 注入到 IOC 容器 -->
+
+	<!--通用模块-->
+	<context:component-scan base-package="cn.roothub.bbs.common.**" />
+
+	<!--系统配置-->
+	<context:component-scan base-package="cn.roothub.bbs.config.**" />
+
+	<!--核心模块-->
+	<context:component-scan base-package="cn.roothub.bbs.core.**" />
+
+	<!--存储模块-->
+	<context:component-scan base-package="cn.roothub.bbs.store" />
+
+	<!--第三方集成-->
+	<context:component-scan base-package="cn.roothub.bbs.third.**" />
+
+	<!-- 扫描 service.impl 包下所有使用注解的类型 -->
+	<context:component-scan base-package="cn.roothub.bbs.module.collect.service.impl,
+										  cn.roothub.bbs.module.follow.service.impl,
+										  cn.roothub.bbs.module.integral.service.impl,
+										  cn.roothub.bbs.module.node.service.impl,
+										  cn.roothub.bbs.module.notice.service.impl,
+										  cn.roothub.bbs.module.reply.service.impl,
+										  cn.roothub.bbs.module.security.service.impl,
+										  cn.roothub.bbs.module.sys.service.impl,
+										  cn.roothub.bbs.module.tab.service.impl,
+										  cn.roothub.bbs.module.tag.service.impl,
+										  cn.roothub.bbs.module.topic.service.impl,
+										  cn.roothub.bbs.module.user.service.impl,
+										  cn.roothub.bbs.module.visit.service.impl,
+										  cn.roothub.bbs.module.vote.service.impl" />
 
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"
@@ -33,6 +58,5 @@
 
 	<!-- 配置基于注解的声明式事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	
-	<bean id="baseEntity" class="cn.roothub.base.BaseEntity"></bean>
+
 </beans>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+    <!-- Mybatis会动态实现daoImpl,不过需要在mapper文件夹下创建BookDao.xml和AppointmentDao.xml
+    spring-dao.xml文件会自动扫描mapper文件夹下的配置 -->
+    <!-- 
+    1.namespace是该xml对应的接口的全名
+    2.select和update中的id对应方法名
+    3.resultType是返回值类型
+    4.parameterType是参数类型(可选)
+    5.#{...}填写的是方法的参数 
+    6.parameterType:输入参数类型
+    7.resultType:输出参数类型
+  -->
+  <mapper namespace="cn.roothub.bbs.module.reply.dao.ReplyDao">
+   <!-- 目的：为dao接口方法提供sql语句配置 -->
+   <resultMap id="BaseResultMap" type="cn.roothub.bbs.module.reply.model.Reply">
+    <id column="reply_id" jdbcType="INTEGER" property="replyId"/>
+    <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
+    <result column="topic_author_id" jdbcType="INTEGER" property="topicAuthorId"/>
+    <result column="reply_content" jdbcType="LONGVARCHAR" property="replyContent"/>
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    <result column="reply_author_id" jdbcType="INTEGER" property="replyAuthorId"/>
+    <result column="reply_author_name" jdbcType="VARCHAR" property="replyAuthorName"/>
+    <result column="is_delete" jdbcType="BIT" property="isDelete"/>
+    <result column="is_read" jdbcType="BIT" property="isRead"/>
+    <result column="is_show" jdbcType="BIT" property="isShow"/>
+    <result column="reply_good_count" jdbcType="INTEGER" property="replyGoodCount"/>
+    <result column="reply_bad_count" jdbcType="INTEGER" property="replyBadCount"/>
+    <result column="reply_type" jdbcType="VARCHAR" property="replyType"/>
+    <result column="reply_read_count" jdbcType="INTEGER" property="replyReadCount"/>
+    <result column="status_cd" jdbcType="VARCHAR" property="statusCd"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    reply_id, topic_id, topic_author_id, reply_content, create_date, update_date, reply_author_id, reply_author_name, 
+    is_delete,is_read,is_show,reply_good_count,reply_bad_count,reply_type,reply_read_count,status_cd
+  </sql>
+  <!-- 查询所有评论 -->
+  <select id="selectAll" resultType="Reply">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    reply
+    order create_date
+    <if test="start != null">
+      limit #{start,jdbcType=INTEGER}
+      <if test="limit != null">
+        ,#{limit,jdbcType=INTEGER}
+      </if>
+    </if>
+  </select>
+  <!-- 根据评论人昵称分页查询所有评论,关联话题表、用户表 -->
+  <select id="selectAllByNameAndTopic" resultType="ReplyAndTopicByName">
+    SELECT
+    a.create_date,
+    b.author,
+    b.topic_id,
+    b.title,
+    a.reply_content,
+    c.avatar
+    from reply a,topic b,user c
+	where a.topic_id = b.topic_id
+	and a.reply_author_id = c.user_id
+	and a.reply_author_name = #{replyAuthorName}
+	ORDER BY a.create_date desc
+    <if test="start != null">
+      limit #{start,jdbcType=INTEGER}
+      <if test="limit != null">
+        ,#{limit,jdbcType=INTEGER}
+      </if>
+    </if>
+  </select>
+  <!-- 根据评论ID查询评论 -->
+  <select id="selectByReplyId" resultType="Reply">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    reply
+    where reply_id = #{replyId}
+  </select>
+
+  <!-- 根据话题ID查询评论
+  <select id="selectByTopicId" resultType="Reply">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    reply
+    where topic_id = #{topicId}
+    order create_date
+  </select>
+   -->
+
+  <!-- 根据话题ID分页查询评论 -->
+  <select id="selectByTopicId" resultType="Reply">
+    SELECT
+    	a.*,
+    	b.avatar
+    FROM
+    	reply a,user b
+    WHERE 
+    	a.is_delete = 0 
+    AND 
+    	a.topic_id = #{topicId}
+    AND 
+    	a.reply_author_id = b.user_id
+    ORDER BY 
+    	a.create_date
+    <if test="start != null">
+      limit #{start,jdbcType=INTEGER}
+      <if test="limit != null">
+        ,#{limit,jdbcType=INTEGER}
+      </if>
+    </if>
+  </select>
+  <!-- 根据话题作者ID查询评论 -->
+  <select id="selectByTopicAuthorId" resultType="Reply">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    reply
+    where topic_author_id = #{topicAuthorId}
+    order create_date desc
+  </select>
+  <!-- 根据评论人ID查询评论 -->
+  <select id="selectByReplyAuthorId" resultType="Reply">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    reply
+    where reply_author_id = #{replyAuthorId}
+    order create_date desc
+  </select>
+
+  <!-- 添加评论 -->
+  <insert id="insert" parameterType="cn.roothub.bbs.module.reply.model.Reply" keyProperty="reply_id" useGeneratedKeys="true">
+    insert into 
+    reply 
+    (reply_id, 
+    topic_id, 
+    topic_author_id, 
+    reply_content, 
+    create_date, 
+    update_date, 
+    reply_author_id, 
+    reply_author_name, 
+    is_delete,
+    is_read,
+    is_show,
+    reply_good_count,
+    reply_bad_count,
+    reply_type,
+    reply_read_count,
+    status_cd)
+    values 
+    (#{replyId}, 
+    #{topicId}, 
+    #{topicAuthorId}, 
+    #{replyContent}, 
+    #{createDate}, 
+    #{updateDate}, 
+    #{replyAuthorId}, 
+    #{replyAuthorName}, 
+    #{isDelete},
+    #{isRead}, 
+    #{isShow}, 
+    #{replyGoodCount}, 
+    #{replyBadCount},
+    #{replyType}, 
+    #{replyReadCount}, 
+    #{statusCd})
+  </insert>
+  <!-- 根据ID更新评论 -->
+  <update id="update" parameterType="cn.roothub.bbs.module.reply.model.Reply">
+    update reply
+    set topic_id = #{topicId},
+    topic_author_id = #{topicAuthorId},
+    reply_content = #{replyContent},
+    create_date = #{createDate},
+    update_date = #{updateDate},
+    reply_author_id = #{replyAuthorId},
+    reply_author_name = #{replyAuthorName},
+    is_delete = #{isDelete},
+    is_read = #{isRead},
+    is_show = #{isShow},
+    reply_good_count = #{replyGoodCount},
+    reply_bad_count = #{replyBadCount},
+    reply_type = #{replyType},
+    reply_read_count = #{replyReadCount},
+    status_cd = #{statusCd}
+    where reply_id = #{replyId}
+  </update>
+  <!-- 根据评论ID删除评论 -->
+  <update id="deleteByReplyId" parameterType="java.lang.Integer">
+    UPDATE 
+    	reply
+    SET 
+    	is_delete = 1
+    WHERE 
+    	reply_id = #{replyId,jdbcType=INTEGER}
+  </update>
+  <!-- 根据话题ID删除评论 -->
+  <update id="deleteByTopicId" parameterType="java.lang.Integer">
+    UPDATE 
+    	reply
+    SET 
+    	is_delete = 1
+    WHERE 
+    	topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 根据用户名称删除评论 -->
+  <delete id="deleteByReplyAuthorName" parameterType="java.lang.String">
+  	DELETE FROM
+  		reply
+  	WHERE
+  		reply_author_name = #{replyAuthorName}
+  </delete>
+  
+  <!-- 统计所有评论 -->
+  <select id="countAll" resultType="java.lang.Integer">
+    select count(reply_id)
+    from reply t
+    where t.is_delete = 0
+  </select>
+  <!-- 根据话题ID统计评论数 -->
+  <select id="countByTopicId" resultType="java.lang.Integer">
+    select count(reply_id)
+    from reply t
+    where t.is_delete = 0 and t.topic_id = #{topicId}
+  </select>
+  <!-- 根据用户ID统计评论数 -->
+  <select id="countByUserId" resultType="java.lang.Integer">
+    select count(reply_id)
+    from reply t
+    where t.is_delete = 0 and t.reply_author_id = #{userId}
+  </select>
+  <!-- 根据用户昵称统计评论数 -->
+  <select id="countByName" resultType="java.lang.Integer">
+    select 
+    	count(1)
+    from 
+    	reply a,topic b
+    where 
+    	a.is_delete = 0 
+    and 
+    	a.reply_author_name = #{name}
+    and 
+    	a.topic_id = b.topic_id
+  </select>
+  
+  	<!-- 统计当天的评论数 -->
+	<select id="countToday" resultType="java.lang.Integer">
+        select count(1)
+        from reply a
+        where TO_DAYS(a.create_date) = TO_DAYS(NOW())
+    </select>
+    
+    <!-- 后台评论列表 -->
+    <select id="selectAllForAdmin" resultType="java.util.Map">
+		SELECT
+        	a.reply_id,
+        	a.reply_content,
+        	a.topic_id,
+        	b.title,
+        	a.reply_author_name,
+        	a.create_date
+		FROM
+			reply a,topic b
+		WHERE 
+			a.is_delete = 0
+		AND 
+			b.is_delete = 0
+		AND 
+			a.topic_id = b.topic_id
+		<if test="author != null">
+		AND a.reply_author_name = #{author}
+		</if>
+		<if test="topic != null">
+		<!-- 模糊查询中，只能使用$,使用#的话，会被解析为列 -->
+		AND b.title like '%${topic}%'
+		</if>
+		<if test="startDate != null and endDate != null">
+		AND a.create_date BETWEEN #{startDate} and #{endDate}
+		</if>
+		ORDER BY a.create_date DESC
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     
+     <!-- 后台评论统计 -->
+     <select id="countAllForAdmin" resultType="java.lang.Integer">
+        SELECT
+        	COUNT(1)
+        FROM
+        	reply a,topic b
+        WHERE 
+			a.is_delete = 0
+		AND 
+			b.is_delete = 0
+		AND 
+			a.topic_id = b.topic_id
+		<if test='author != null'>
+		AND a.reply_author_name = #{author}
+		</if>
+		<if test="topic != null">
+		<!-- 模糊查询中，只能使用$,使用#的话，会被解析为列 -->
+		AND b.title like '%${topic}%'
+		</if>
+		<if test='startDate != null and endDate != null'>
+			AND a.create_date BETWEEN #{startDate} and #{endDate}
+		</if>
+    </select>
+</mapper>

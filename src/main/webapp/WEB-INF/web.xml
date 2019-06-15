@@ -29,14 +29,14 @@
   
  
   
-  <servlet-mapping>
+<!--  <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>*.js</url-pattern>
     <url-pattern>*.css</url-pattern>
     <url-pattern>*.woff</url-pattern>
     <url-pattern>*.woff2</url-pattern>
     <url-pattern>*.ttf</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
   
   <!-- 字符集过滤器 -->
     <filter>
@@ -72,30 +72,30 @@
     <!-- 出错页面定义 -->
     <error-page>
         <error-code>400</error-code>
-        <location>/WEB-INF/jsp/error-page/400.jsp</location>
+        <location>/default/front/common/400.jsp</location>
     </error-page>
     <error-page>
         <error-code>401</error-code>
-        <location>/WEB-INF/jsp/error-page/401.jsp</location>
+        <location>/default/front/common/401.jsp</location>
     </error-page>
     <error-page>
         <error-code>403</error-code>
-        <location>/WEB-INF/jsp/error-page/403.jsp</location>
+        <location>/default/front/common/403.jsp</location>
     </error-page>
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/jsp/error-page/404.jsp</location>
+        <location>/default/front/common/404.jsp</location>
     </error-page>
     <error-page>
         <error-code>405</error-code>
-        <location>/WEB-INF/jsp/error-page/405.jsp</location>
+        <location>/default/front/common/405.jsp</location>
     </error-page>
    <error-page>
         <error-code>500</error-code>
-        <location>/WEB-INF/jsp/error-page/500.jsp</location>
+        <location>/default/front/common/500.jsp</location>
     </error-page>
   	<error-page>
         <error-code>503</error-code>
-        <location>/WEB-INF/jsp/error-page/503.jsp</location>
+        <location>/default/front/common/503.jsp</location>
     </error-page>
 </web-app>

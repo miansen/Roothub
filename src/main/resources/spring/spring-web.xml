@@ -8,7 +8,9 @@
 	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/mvc
 	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
 	<!-- 配置SpringMVC -->
+
 	<!-- 1.开启SpringMVC注解模式 -->
 	<!-- 简化配置： (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter 
 		(2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持 -->
@@ -22,7 +24,7 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
-		<property name="prefix" value="/WEB-INF/jsp/" />
+		<!--<property name="prefix" value="/WEB-INF/jsp/" />-->
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
@@ -37,12 +39,26 @@
     <bean id="convertDateConfig" 
     	class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="webBindingInitializer">
-			<bean class="cn.roothub.config.ConvertDateConfig"/>
+			<bean class="cn.roothub.bbs.config.ConvertDateConfig"/>
 		</property>
 	</bean>
 
 	<!-- 4.扫描web相关的bean -->
-	<context:component-scan base-package="cn.roothub.web" />
+	<context:component-scan base-package="cn.roothub.bbs.module.collect.controller.**,
+										  cn.roothub.bbs.module.follow.controller.**,
+										  cn.roothub.bbs.module.integral.controller.**,
+										  cn.roothub.bbs.module.node.controller.**,
+										  cn.roothub.bbs.module.notice.controller.**,
+										  cn.roothub.bbs.module.reply.controller.**,
+										  cn.roothub.bbs.module.security.controller**,
+										  cn.roothub.bbs.module.sys.controller.**,
+										  cn.roothub.bbs.module.tab.controller.**,
+										  cn.roothub.bbs.module.tag.controller.**,
+										  cn.roothub.bbs.module.topic.controller.**,
+										  cn.roothub.bbs.module.user.controller.**,
+										  cn.roothub.bbs.module.visit.controller.**,
+										  cn.roothub.bbs.module.vote.controller.**" />
+
 	<!-- 全局拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -68,7 +84,7 @@
 			<mvc:mapping path="/vote" />
 			<mvc:mapping path="/?tab=member" />
 			<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
-			<bean class="cn.roothub.handler.GlobalInterceptorHandler" />
+			<bean class="cn.roothub.bbs.core.handler.GlobalInterceptorHandler" />
 		</mvc:interceptor>
 	</mvc:interceptors> 
 </beans>

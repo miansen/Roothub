@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <!-- Mybatis会动态实现daoImpl,不过需要在mapper文件夹下创建BookDao.xml和AppointmentDao.xml
+  		spring-dao.xml文件会自动扫描mapper文件夹下的配置 -->
+    <!-- 
+    1.namespace是该xml对应的接口的全名
+    2.select和update中的id对应方法名
+    3.resultType是返回值类型
+    4.parameterType是参数类型(可选)
+    5.#{...}填写的是方法的参数 
+    6.parameterType:输入参数类型
+    7.resultType:输出参数类型
+    -->
+<mapper namespace="cn.roothub.bbs.module.security.dao.AdminUserDao">
+	<!-- 目的：为dao接口方法提供sql语句配置 -->
+	<resultMap id="BaseResultMap" type="cn.roothub.bbs.module.security.model.AdminUser">
+        <id column="admin_user_id" jdbcType="INTEGER" property="adminUserId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.admin_user_id,a.username,a.password,a.avatar,a.create_date,a.update_date
+    </sql>
+	<!-- 根据用户名查询后台用户 -->
+	<select id="selectByName" resultType="AdminUser">
+		SELECT
+        	a.*
+		FROM
+			admin_user a
+		WHERE 
+			a.username = #{name}
+     </select>
+     <!-- 根据ID查询后台用户 -->
+	<select id="selectById" resultType="AdminUser">
+		SELECT
+        	a.*
+		FROM
+			admin_user a
+		WHERE 
+			a.admin_user_id = #{id}
+     </select>
+     <!-- 查询所有的后台用户 -->
+     <select id="selectAll" resultType="AdminUser">
+		SELECT
+        	a.*
+		FROM
+			admin_user a
+		ORDER BY 
+			a.admin_user_id 
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     
+     <!-- 新增后台用户 -->
+     <insert id="insert" parameterType="cn.roothub.bbs.module.security.model.AdminUser" keyProperty="adminUserId" useGeneratedKeys="true">
+     	insert into admin_user
+     	(username,
+     	 password,
+     	 avatar,
+     	 create_date,
+     	 update_date)
+     	values
+     	(#{username},
+     	 #{password},
+     	 #{avatar},
+     	 #{createDate},
+     	 #{updateDate})
+     </insert>
+     <!--  更新后台用户 -->
+     <update id="update" parameterType="cn.roothub.bbs.module.security.model.AdminUser">
+     	update admin_user
+     	set username = #{username},
+     		password = #{password},
+     		avatar = #{avatar},
+     		create_date = #{createDate},
+     		update_date = #{updateDate}
+     	where admin_user_id = #{adminUserId}
+     </update>
+     <!-- 根据ID删除后台用户 -->
+     <delete id="deleteById">
+     	delete from admin_user
+     	where admin_user_id = #{id}
+     </delete>
+     <!-- 统计所有后台用户 -->
+     <select id="countAll" resultType="java.lang.Integer">
+     	select count(1)
+     	from admin_user
+     </select>
+
+</mapper>

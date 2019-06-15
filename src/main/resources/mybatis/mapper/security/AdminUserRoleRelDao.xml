@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="cn.roothub.bbs.module.security.dao.AdminUserRoleRelDao">
+    
+	<!-- 根据后台用户ID查询所有的关联关系-->
+	<select id="selectAllByAdminUserId" resultType="cn.roothub.bbs.module.security.model.AdminUserRoleRel">
+		SELECT
+        	*
+		FROM
+			admin_user_role_rel
+		WHERE 
+			admin_user_id = #{adminUserId}
+     </select>
+   
+     <!-- 根据角色ID查询所有的关联关系 -->
+     <select id="selectAllByRoleId" resultType="cn.roothub.bbs.module.security.model.AdminUserRoleRel">
+		SELECT
+        	*
+		FROM
+			admin_user_role_rel
+		WHERE 
+			role_id = #{roleId}
+     </select>
+     
+     <!-- 批量新增后台用户与角色的关联关系 -->
+     <insert id="insertBatch" parameterType="java.util.Collection">
+     	<selectKey resultType ="java.lang.Integer" keyProperty= "adminUserRoleRelId" order= "AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey >
+     	INSERT INTO admin_user_role_rel
+     		(admin_user_id,role_id,create_date,update_date)
+     	VALUES
+     	<foreach collection="adminUserRoleRels" item="adminUserRoleRel" separator=",">
+     		(#{adminUserRoleRel.adminUserId},#{adminUserRoleRel.RoleId},#{adminUserRoleRel.createDate},#{adminUserRoleRel.updateDate})
+     	</foreach>
+     </insert>
+     
+     <!-- 删除后台用户与角色的关联关系 -->
+     <delete id="deleteByAdminUserId">
+     	DELETE FROM 
+     		admin_user_role_rel
+     	WHERE 
+     		admin_user_id = #{adminUserId}
+     </delete>
+     
+     <!-- 删除后台用户与角色的关联关系 -->
+     <delete id="deleteByRoleId">
+     	DELETE FROM 
+     		admin_user_role_rel
+     	WHERE 
+     		role_id = #{roleId}
+     </delete>
+     
+</mapper>

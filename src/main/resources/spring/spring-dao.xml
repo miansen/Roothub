@@ -33,11 +33,25 @@
 		<!-- 注入数据库连接池 -->
 		<property name="dataSource" ref="dataSource" />
 		<!-- 配置MyBatis全局配置文件:mybatis-config.xml -->
-		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
 		<!-- 扫描entity包 使用别名 -->
-		<property name="typeAliasesPackage" value="cn.roothub.entity" />
+		<property name="typeAliasesPackage"
+				  value="cn.roothub.bbs.module.collect.model,
+				  		 cn.roothub.bbs.module.follow.model,
+				  		 cn.roothub.bbs.module.integral.model,
+				  		 cn.roothub.bbs.module.node.model,
+				  		 cn.roothub.bbs.module.notice.model,
+				  		 cn.roothub.bbs.module.reply.model,
+				  		 cn.roothub.bbs.module.security.model,
+				  		 cn.roothub.bbs.module.sys.model,
+				  		 cn.roothub.bbs.module.tab.model,
+				  		 cn.roothub.bbs.module.tag.model,
+				  		 cn.roothub.bbs.module.topic.model,
+				  		 cn.roothub.bbs.module.user.model,
+				  		 cn.roothub.bbs.module.visit.model,
+				  		 cn.roothub.bbs.module.vote.model"/>
 		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
-		<property name="mapperLocations" value="classpath:mapper/*.xml" />
+		<property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
 	</bean>
 
 	<!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
@@ -45,6 +59,20 @@
 		<!-- 注入sqlSessionFactory -->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<!-- 给出需要扫描Dao接口包 -->
-		<property name="basePackage" value="cn.roothub.dao" />
+		<property name="basePackage"
+				  value="cn.roothub.bbs.module.collect.dao,
+				  		 cn.roothub.bbs.module.follow.dao,
+				  		 cn.roothub.bbs.module.integral.dao,
+				  		 cn.roothub.bbs.module.node.dao,
+				  		 cn.roothub.bbs.module.notice.dao,
+				  		 cn.roothub.bbs.module.reply.dao,
+				  		 cn.roothub.bbs.module.security.dao,
+				  		 cn.roothub.bbs.module.sys.dao,
+				  		 cn.roothub.bbs.module.tab.dao,
+				  		 cn.roothub.bbs.module.tag.dao,
+				  		 cn.roothub.bbs.module.topic.dao,
+				  		 cn.roothub.bbs.module.user.dao,
+				  		 cn.roothub.bbs.module.visit.dao,
+				  		 cn.roothub.bbs.module.vote.dao"/>
 	</bean>
 </beans>

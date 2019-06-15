@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <!-- Mybatis会动态实现daoImpl,不过需要在mapper文件夹下创建BookDao.xml和AppointmentDao.xml
+  		spring-dao.xml文件会自动扫描mapper文件夹下的配置 -->
+    <!-- 
+    1.namespace是该xml对应的接口的全名
+    2.select和update中的id对应方法名
+    3.resultType是返回值类型
+    4.parameterType是参数类型(可选)
+    5.#{...}填写的是方法的参数 
+    6.parameterType:输入参数类型
+    7.resultType:输出参数类型
+    -->
+<mapper namespace="cn.roothub.bbs.module.collect.dao.CollectDao">
+	<!-- 目的：为dao接口方法提供sql语句配置 -->
+	<resultMap id="BaseResultMap" type="cn.roothub.bbs.module.topic.model.Topic">
+        <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
+        <result column="ptab" jdbcType="VARCHAR" property="ptab"/>
+        <result column="tab" jdbcType="VARCHAR" property="tab"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="excerpt" jdbcType="VARCHAR" property="excerpt"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+        <result column="last_reply_time" jdbcType="TIMESTAMP" property="lastReplyTime"/>
+        <result column="last_reply_author" jdbcType="VARCHAR" property="lastReplyAuthor"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="top" jdbcType="BIT" property="top"/>
+        <result column="good" jdbcType="BIT" property="good"/>
+        <result column="show_status" jdbcType="BIT" property="showStatus"/>
+        <result column="reply_count" jdbcType="INTEGER" property="replyCount"/>
+        <result column="is_delete" jdbcType="BIT" property="isDelete"/>
+        <result column="tag_is_count" jdbcType="BIT" property="tagIsCount"/>
+        <result column="post_good_count" jdbcType="INTEGER" property="postGoodCount"/>
+        <result column="post_bad_count" jdbcType="INTEGER" property="postBadCount"/>
+        <result column="status_cd" jdbcType="VARCHAR" property="statusCd"/>
+        <result column="node_slug" jdbcType="VARCHAR" property="nodeSlug"/>
+        <result column="node_title" jdbcType="VARCHAR" property="nodeTitle"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        a.topic_id, a.ptab,a.tab,a.title,a.tag,a.content,excerpt, a.create_date, a.update_date, a.last_reply_time, a.last_reply_author, 
+        a.view_count,a.author,a.top,a.good,a.show_status,a.reply_count,a.is_delete,a.tag_is_count,a.post_good_count,a.post_bad_count,
+        a.status_cd,a.node_slug,a.node_title,a.remark,a.avatar,a.url
+    </sql>
+	<!-- 查询收藏话题 -->
+	<select id="selectAllByCollect" resultType="Topic">
+		SELECT
+        <include refid="Base_Column_List"/>
+		FROM
+			topic a,collect b
+		where b.uid = #{uid}
+		and a.topic_id = b.tid
+		order by b.create_date desc
+		<if test="start != null">
+            limit #{start,jdbcType=INTEGER}
+            <if test="limit != null">
+                ,#{limit,jdbcType=INTEGER}
+            </if>
+        </if>
+     </select>
+     <!-- 添加收藏 -->
+     <insert id="insert" parameterType="cn.roothub.bbs.module.collect.model.Collect" keyProperty="id" useGeneratedKeys="true">
+     	insert into collect
+     	(uid,
+     	 tid,
+     	 create_date)
+     	values
+     	(#{uid},
+     	 #{tid},
+     	 #{createDate})
+     </insert>
+     <!-- 取消收藏 -->
+     <delete id="delete">
+     	delete from collect
+     	where uid = #{uid}
+     	and tid = #{tid}
+     </delete>
+     
+     <!-- 根据用户 ID 删除收藏 -->
+     <delete id="deleteByUid">
+     	delete from collect
+     	where uid = #{uid}
+     </delete>
+     
+     <!-- 统计用户收藏话题的数量 -->
+     <select id="count" resultType="java.lang.Integer">
+     	select count(1)
+     	from collect a,topic b
+     	where uid = #{uid}
+     	and a.tid = b.topic_id
+     </select>
+     <!-- 统计话题被收藏的数量 -->
+     <select id="countByTid" resultType="java.lang.Integer">
+     	select count(1)
+     	from collect
+     	where tid = #{tid}
+     </select>
+     <!-- 判断用户是否已收藏此话题 0:否 1:是 -->
+     <select id="isCollect" resultType="java.lang.Integer">
+     	select count(1)
+     	from collect
+     	where uid = #{uid}
+     	and tid = #{tid}
+     </select>
+</mapper>

@@ -188,8 +188,8 @@ public class TopicServiceImpl implements TopicService{
 			}else {
 				//发贴加积分
 				rootUserDao.updateScoreByName(Integer.valueOf(systemConfigService.getByKey("create_topic_score").getValue()), topic.getAuthor());
-				Topic rootTopic = rootTopicDao.selectByTitleAndDate(topic.getTitle(), topic.getCreateDate());
-				return new TopicExecution(rootTopic.getTitle(), InsertTopicEnum.SUCCESS, rootTopic);
+				// Topic rootTopic = rootTopicDao.selectByTitleAndDate(topic.getTitle(), topic.getCreateDate());
+				return new TopicExecution(topic.getTitle(), InsertTopicEnum.SUCCESS, topic);
 			}
 		}catch (OperationFailedException e1) {
 			log.error("发布话题报错，错误信息: {}", e1.getMessage());

@@ -167,14 +167,14 @@
       </table>
     </div> --%>
     <!-- 积分榜 -->
-    <!-- <div class="panel panel-default">
+    <div class="panel panel-default">
     <div class="panel-heading"><span style="color: #ccc;">积分榜  <a class="dark" href="/top100">TOP 100 &gt;&gt;</a></span></div>
     <div class="panel-body">
       <div class="row">
       <div class="inner top100"></div>
       </div>
     </div>
-  </div> -->
+  </div>
     <!-- 最热标签 -->
     <div class="panel panel-default">
     <div class="panel-heading"><span style="color: #ccc;">热门节点</span></div>

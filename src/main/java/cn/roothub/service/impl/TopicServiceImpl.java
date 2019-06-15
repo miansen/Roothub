@@ -2,6 +2,9 @@ package cn.roothub.service.impl;
 
 import java.util.Date;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -23,6 +26,8 @@ import cn.roothub.service.TopicService;
 @Service
 public class TopicServiceImpl implements TopicService{
 
+	private Logger log = LoggerFactory.getLogger(TopicServiceImpl.class);
+	
 	@Autowired
 	private TopicDao rootTopicDao;
 	
@@ -183,14 +188,18 @@ public class TopicServiceImpl implements TopicService{
 			}else {
 				//发贴加积分
 				rootUserDao.updateScoreByName(Integer.valueOf(systemConfigService.getByKey("create_topic_score").getValue()), topic.getAuthor());
-				// Topic rootTopic = rootTopicDao.selectByTitleAndDate(topic.getTitle(), topic.getCreateDate());
-				return new TopicExecution(topic.getTitle(), InsertTopicEnum.SUCCESS, topic);
+				Topic rootTopic = rootTopicDao.selectByTitleAndDate(topic.getTitle(), topic.getCreateDate());
+				return new TopicExecution(rootTopic.getTitle(), InsertTopicEnum.SUCCESS, rootTopic);
 			}
 		}catch (OperationFailedException e1) {
-			throw e1;
+			log.error("发布话题报错，错误信息: {}", e1.getMessage());
+			// throw e1;
 		}catch (Exception e) {
-			throw new OperationSystemException("insert into RootTopic error "+e.getMessage());
+			log.error("发布话题报错，错误信息: {}", e.getMessage());
+			// throw new OperationSystemException("insert into RootTopic error "+e.getMessage());
 		}
+		return null;
+		
 	}
 	
 	@Override

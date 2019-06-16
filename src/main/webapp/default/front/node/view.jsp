@@ -75,14 +75,14 @@
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
         <div class="panel panel-default" id="session">
-            <div class="panel-body" id="nologin">
+            <%--<div class="panel-body" id="nologin">
                 <h5>n/${node.nodeTitle}</h5>
                 <p>${node.nodeDesc}</p>
                 <p><a href="/topic/create?n=${node.nodeTitle}" style="font-size: 14px;">
                     <button class="btn btn-success">发布话题</button>
                 </a>
                 </p>
-            </div>
+            </div>--%>
         </div>
         <!-- 相邻节点开始 -->
         <div class="panel panel-default">

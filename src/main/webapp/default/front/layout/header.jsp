@@ -18,19 +18,42 @@
     <link rel="stylesheet" href="/default/front/common/wangEditor/wangEditor.min.css">
     <link rel="stylesheet" href="/default/front/common/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/default/front/common/cropper/cropper.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css"/>
     <%--系统全局 CSS 样式--%>
     <link rel="stylesheet" href="/default/front/common/css/app.css" type="text/css">
 
+    <%--系统全局第三方 js 文件--%>
     <script src="/default/front/common/js/jquery.js"></script>
-    <script src="/default/front/common/js/bootstrap.min.js"></script>
+    <script src="/default/front/common/cropper/cropper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/mode/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.38.0/addon/display/placeholder.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <script src="/default/front/common/wangEditor/wangEditor.min.js"></script>
-    <script src="/default/front/common/js/goTop.js"></script>
     <script src="/default/front/common/layui/layui.js"></script>
     <script src="/default/front/common/layui/layui-paginate.js"></script>
+
+    <%--系统全局通用 js 文件--%>
     <script src="/default/front/common/js/login_info.js"></script>
     <script src="/default/front/common/js/formatDate.js"></script>
-    <script src="/default/front/common/cropper/cropper.min.js"></script>
+    <script src="/default/front/common/js/bootstrap.min.js"></script>
+    <script src="/default/front/common/js/goTop.js"></script>
 
+    <script>
+        function toast(txt, icon) {
+            $.toast({
+                text: txt, // Text that is to be shown in the toast
+                heading: '系统提醒', // Optional heading to be shown on the toast
+                icon: icon || 'error', // Type of toast icon warning, info, success, error
+                showHideTransition: 'slide', // fade, slide or plain
+                allowToastClose: true, // Boolean value true or false
+                hideAfter: 2000, // false to make it sticky or number representing the miliseconds as time after which toast needs to be hidden
+                stack: false, // false if there should be only one toast at a time or a number representing the maximum number of toasts to be shown at a time
+                position: 'top-right', // bottom-left or bottom-right or bottom-center or top-left or top-right or top-center or mid-center or an object representing the left, right, top, bottom values
+            });
+        }
+    </script>
 </head>
 <body>
 <%--wrapper 开始--%>

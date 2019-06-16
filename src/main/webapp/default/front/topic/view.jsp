@@ -10,6 +10,7 @@
                 <div class="media">
                     <div class="media-body">
                         <a href="/">主页</a>
+                        <input type="hidden" value="${topic.topicId}" id="hidden-topicId">
                         <c:if test="${topic.nodeTitle != null}">
                             <span class="chevron">&nbsp;›&nbsp;</span>
                             <a href="/n/${topic.nodeTitle}" class="topic-detail-node">${topic.nodeTitle}</a>
@@ -77,18 +78,29 @@
         </c:if>
         <div class="panel panel-default" id="pinglun" style="display: none">
             <div class="panel-heading">
-                添加一条新评论
+                添加一条新评论&nbsp;
+                <a href="javascript:void(0);" onclick="switchEditor(this)" style="color: #66afe9">
+                    <small id="editor-type">Markdown编辑器</small>
+                </a>
             </div>
             <div class="panel-body">
-                <input type="hidden" id="commentId" value="">
-                <p class="hidden" id="replyP">
-                    回复
-                    <span id="replyAuthor"></span>:
-                    <a href="javascript:cancelReply();">取消</a>
-                </p>
-                <body></body>
-                <div id="editor" style="margin-bottom: 10px;"></div>
-                <button id="btn" class="btn btn-sm btn-default">评论</button>
+
+                <%--富文本编辑器--%>
+                <div id="wangEditor" class="form-group">
+                    <div id="wangEditor-content" style="margin-bottom: 10px;"></div>
+                </div>
+
+                <%--Markdown编辑器--%>
+                <div id="codemirror" class="form-group" style="display: none;">
+                    <textarea name="content"
+                              id="codemirror-content"
+                              class="form-control"
+                              placeholder="内容，支持Markdown语法">
+                    </textarea>
+                </div>
+
+                <button type="button" id="wangEditor-btn" class="btn btn-default">评论</button>
+                <button type="button" id="codemirror-btn" class="btn btn-default" style="display: none;">评论</button>
                 <div class="fr"><a href="/">← Roothub</a></div>
             </div>
         </div>
@@ -100,145 +112,14 @@
 <script src="/default/front/topic/js/view.js"></script>
 <script src="/default/front/topic/js/other-list.js"></script>
 <script type="text/javascript">
-    /* 获取登录信息 */
-    $.ajax({
-        type: "get",
-        url: "/session",
-        dataType: "json",
-        success: function (data) {
-            if (data.success != null && data.success == true) {
-                $("#pinglun").show();
-                $("#collect").show();
-            }
-            if (data.success != null && data.success == false) {
 
-            }
-        },
-        error: function (data) {
+    // 数据总量
+    var count = ${replyPage.totalRow};
+    //每页显示的条数
+    var limit = ${replyPage.pageSize};
+    //url
+    var url = "/topic/${topic.topicId}?p=";
 
-        }
-    });
-
-    var E = window.wangEditor;
-    var editor = new E('#editor');
-    editor.customConfig.debug = true;
-    editor.customConfig.uploadFileName = 'file';
-    editor.customConfig.uploadImgServer = '/common/wangEditorUpload';
-    editor.customConfig.menus = [
-        'head',  // 标题
-        'bold',  // 粗体
-        'italic',  // 斜体
-        'underline',  // 下划线
-        'strikeThrough',  // 删除线
-        'link',  // 插入链接
-        'list',  // 列表
-        'quote',  // 引用
-        'emoticon',  // 表情
-        'image',  // 插入图片
-        'table',  // 表格
-        'code',  // 插入代码
-        'undo',  // 撤销
-        'redo'  // 重复
-    ];
-    editor.create();
-
-    function commentThis(username, commentId) {
-        $("#replyAuthor").text(username);
-        $("#commentId").val(commentId);
-        $("#replyP").removeClass("hidden");
-    }
-
-    function cancelReply() {
-        $("#replyAuthor").text("");
-        $("#commentId").val("");
-        $("#replyP").addClass("hidden");
-    }
-
-    /* 回复话题 */
-    $("#btn").click(function () {
-        var contentHtml = editor.txt.html();
-        var contentText = editor.txt.text();
-        var topicId = ${topic.topicId};
-        if (!contentText) {
-            alert('请输入回复内容哦');
-            return false;
-        } else {
-            $.ajax({
-                url: '/reply/save',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    content: contentText ? contentHtml : '',
-                    topicId: topicId
-                },
-                success: function (data) {
-                    if (data.success != null && data.success == true) {
-                        window.location.href = "/topic/" + data.data.reply.topicId;
-                    } else {
-                        alert(data.data.error);
-                    }
-                }
-            })
-        }
-    });
-    var tid = ${topic.topicId};
-    $.ajax({
-        url: "/collect/isCollect",
-        type: "get",
-        dataType: "json",
-        data: {tid: tid},
-        success: function (data) {
-            if (data.success != null && data.success == true) {
-                $(".collectTopic").text("取消收藏");
-            } else {
-                $(".collectTopic").text("加入收藏");
-            }
-        },
-        error: function (data) {
-
-        }
-    });
-
-    /* 收藏和取消收藏话题 */
-    function save() {
-        var collectTopic = $(".collectTopic").text();
-        //console.log(collectTopic);
-        var url;
-        if (collectTopic == "加入收藏") {
-            url = "/collect/save";
-        }
-        if (collectTopic == "取消收藏") {
-            url = "/collect/delete";
-        }
-        //alert("collectTopic："+collectTopic+"  url："+url);
-        $.ajax({
-            url: url,
-            type: "post",
-            dataType: "json",
-            data: {tid: tid},
-            success: function (data) {
-                if (data.success != null && data.success == true && data.error == "收藏成功") {
-                    //alert(JSON.stringify(data));
-                    $(".collectTopic").text("取消收藏");
-                }
-                if (data.success != null && data.success == true && data.error == "取消收藏成功") {
-                    //alert(JSON.stringify(data));
-                    $(".collectTopic").text("加入收藏");
-                }
-            },
-            error: function (data) {
-
-            }
-        })
-    }
-
-    function goTop() {
-        $('body,html').animate({scrollTop: 0}, 500);
-    }
-
-    var count = ${replyPage.totalRow};//数据总量
-    var limit = ${replyPage.pageSize};//每页显示的条数
-    var url = "/topic/${topic.topicId}?p=";//url
     function page() {
         var page = location.search.match(/p=(\d+)/);
         return page ? page[1] : 1;
@@ -247,79 +128,5 @@
     var p = page();//当前页数
     paginate(count, limit, p, url);
 
-    var upNumber;
-    var downNumber;
-
-    function upCount() {
-        $.ajax({
-            url: "/topic/vote/count",
-            type: "get",
-            dataType: "json",
-            data: {
-                tid: tid,
-                vote: true
-            },
-            success: function (data) {
-                upNumber = data.data;
-                //console.log("赞同=="+upNumber);
-                if (data.success != null && data.success == true && data.data > 0) {
-                    $(".votes .vote_up").html('');
-                    $(".votes .vote_up").append("<li class=\"fa fa-chevron-up\"></li>" + data.data + "");
-                    $(".votes .vote_up").attr("title", data.data + " 赞同");
-                }
-            },
-            error: function (data) {
-
-            }
-        });
-    }
-
-    function downCount() {
-        $.ajax({
-            url: "/topic/vote/count",
-            type: "get",
-            dataType: "json",
-            data: {
-                tid: tid,
-                vote: false
-            },
-            success: function (data) {
-                downNumber = data.data;
-                //console.log("反对=="+downNumber);
-                if (data.success != null && data.success == true && data.data > 0) {
-                    $(".votes .vote_down").html('');
-                    $(".votes .vote_down").append("<li class=\"fa fa-chevron-down\"></li>" + data.data + "");
-                    $(".votes .vote_down").attr("title", data.data + " 反对");
-                }
-            },
-            error: function (data) {
-
-            }
-        });
-    }
-
-    upCount();
-    downCount();
-
-    function voteTopic(tid, action) {
-        $.ajax({
-            url: "/topic/vote",
-            type: "get",
-            dataType: "json",
-            data: {
-                tid: tid,
-                vote: action
-            },
-            success: function (data) {
-                if (data.success != null && data.success == true) {
-                    upCount();
-                    downCount();
-                }
-            },
-            error: function (data) {
-
-            }
-        });
-    }
 </script>
 <%@ include file="../layout/footer.jsp" %>

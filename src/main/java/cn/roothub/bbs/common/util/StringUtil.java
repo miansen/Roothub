@@ -1,9 +1,7 @@
 package cn.roothub.bbs.common.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import org.springframework.util.StringUtils;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -145,4 +143,23 @@ public class StringUtil {
             return Integer.parseInt(s);
         }
     }
+
+    /**
+     * 格式化url参数部分返回map
+     * params格式：a=1&b=2&c=3
+     * 返回：{a: 1, b: 2, c: 3}
+     * @param params
+     * @return
+     */
+    public static Map<String, Object> formatParams(String params) {
+        if (StringUtils.isEmpty(params)) return null;
+        Map<String, Object> map = new HashMap<>();
+        for (String s : params.split("&")) {
+            String[] ss = s.split("=");
+            map.put(ss[0], ss[1]);
+        }
+        return map;
+    }
+
+
 }

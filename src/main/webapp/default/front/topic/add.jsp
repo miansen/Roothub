@@ -9,32 +9,52 @@
             <div class="panel-heading"><a href="/">主页</a> / 发布话题</div>
             <div class="panel-body">
                 <form id="form">
+
+                    <%--标题--%>
                     <div class="form-group">
                         <label for="title">标题</label>
                         <input type="text" class="form-control" id="title" name="title"
                                placeholder="请输入话题标题，如果标题能够表达完整内容，则正文可以为空">
                     </div>
-                    <div class="form-group">
-                        <label for="content">内容</label>
-                        <input type="hidden" id="commentId" value="">
-                        <p class="hidden" id="replyP">
-                            回复
-                            <span id="replyAuthor"></span>
-                            :
-                            <a href="javascript:cancelReply();">取消</a>
-                        </p>
-                        <div id="editor" style="margin-bottom: 10px;"></div>
+
+                    <%--正文（富文本编辑器）--%>
+                    <div class="form-group" id="wangEditor">
+                        <label for="content">内容&nbsp;
+                            <a href="javascript:void(0);" onclick="switchEditor(1)" style="color: #66afe9">
+                                <small>Markdown编辑器</small>
+                            </a>
+                        </label>
+                        <div id="wangEditor-content" style="margin-bottom: 10px;"></div>
                     </div>
-                    <c:if test="${fn:length(node) == 0}">
-                        <div class="form-group">
-                            <label for="node">节点</label>
-                            <select id="node" class="form-control" name="node">
-                                <c:forEach var="item" items="${nodeList}" varStatus="status">
-                                    <option value="${item.nodeTitle}">${item.nodeTitle}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </c:if>
+
+                    <%--正文（Markdown编辑器）--%>
+                    <div class="form-group" id="codemirror" style="display: none;">
+                        <label for="content">内容&nbsp;
+                            <a href="javascript:void(0);" onclick="switchEditor(0)" style="color: #66afe9">
+                                <small>富文本编辑器</small>
+                            </a>
+                        </label>
+                        <textarea name="content" id="codemirror-content" class="form-control" placeholder="内容，支持Markdown语法"></textarea>
+                    </div>
+
+                    <%--节点--%>
+                    <c:choose>
+                        <c:when test="${node != null}">
+                            <input type="hidden" value="${node}" id="hidden-node">
+                        </c:when>
+                        <c:otherwise>
+                            <div class="form-group">
+                                <label for="node">节点</label>
+                                <select id="node" class="form-control" name="node">
+                                    <c:forEach var="item" items="${nodeList}" varStatus="status">
+                                        <option value="${item.nodeTitle}">${item.nodeTitle}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <%--标签--%>
                     <div class="form-group">
                         <div class="form-group">
                             <label for="title">标签</label>
@@ -42,7 +62,9 @@
                                    placeholder="请为你的主题选择一个标签。恰当的归类会让你发布的信息更加有用">
                         </div>
                     </div>
-                    <button type="button" id="btn" class="btn btn-default">发布</button>
+
+                    <button type="button" id="wangEditor-btn" class="btn btn-default">发布</button>
+                    <button type="button" id="codemirror-btn" class="btn btn-default" style="display: none;">发布</button>
                 </form>
             </div>
         </div>
@@ -59,99 +81,22 @@
                 <p>• 请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。</p>
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"><b>Markdown 语法参考</b></div>
+            <div class="panel-body">
+                <p># 标题</p>
+                <p>- 列表</p>
+                <p>> 引用</p>
+                <p>**粗体**</p>
+                <p>[显示文本](链接地址)</p>
+                <p>![显示文本](图片链接地址)</p>
+                <p>`System.out.println('行内代码')`</p>
+                <p>```java 标记代码块 ```</p>
+
+
+            </div>
+        </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        var E = window.wangEditor;
-        var editor = new E('#editor');
-        editor.customConfig.uploadFileName = 'file';
-        editor.customConfig.uploadImgServer = '/common/upload';
-        editor.customConfig.menus = [
-            'head',  // 标题
-            'bold',  // 粗体
-            'italic',  // 斜体
-            'underline',  // 下划线
-            'strikeThrough',  // 删除线
-            'link',  // 插入链接
-            'list',  // 列表
-            'quote',  // 引用
-            'emoticon',  // 表情
-            'image',  // 插入图片
-            'table',  // 表格
-            'code',  // 插入代码
-            'undo',  // 撤销
-            'redo'  // 重复
-        ];
-        editor.create();
-
-        function commentThis(username, commentId) {
-            $("#replyAuthor").text(username);
-            $("#commentId").val(commentId);
-            $("#replyP").removeClass("hidden");
-        }
-
-        function cancelReply() {
-            $("#replyAuthor").text("");
-            $("#commentId").val("");
-            $("#replyP").addClass("hidden");
-        }
-
-        $("#btn").click(function () {
-            // 标题
-            var title = $("#title").val();
-            // html 格式的内容
-            var contentHtml = editor.txt.html();
-            // 普通格式的内容
-            var contentText = editor.txt.text();
-
-            // var tab = $("#tab option:selected").val();
-            // var nodeCode = $("#node option:selected").val();
-            // alert(contentHtml);
-
-            var node = "${node}";
-
-            // 节点
-            var nodeTitle = node ? node : $("#node option:selected").val();
-            // 标签
-            var tag = $("#tag").val();
-            // var avatar = $("#editor").find("img:first").attr("src");
-            if (!title || title.length > 120) {
-                alert('请输入标题，且最大长度在120个字符以内');
-                return false;
-            } else if (!nodeTitle) {
-                alert('请选择一个节点');
-                return false;
-            } else {
-                $.ajax({
-                    url: '/topic/save',
-                    type: 'post',
-                    async: false,
-                    cache: false,
-                    dataType: 'json',
-                    data: {
-                        title: title,
-                        content: contentHtml,
-                        //tab:tab,
-                        // nodeCode:nodeCode,
-                        nodeTitle: nodeTitle,
-                        tag: tag
-                    },
-                    success: function (data) {
-                        //console.log(JSON.stringify(data));
-                        if (data.success != null && data.success == true) {
-                            window.location.href = "/topic/" + data.data.topic.topicId;
-                        } else {
-                            alert(data.error);
-                        }
-                    },
-                    error: function (data) {
-                        console.log(data);
-                        //alert(data.error);
-                    }
-                })
-            }
-        });
-    })
-</script>
+<script src="/default/front/topic/js/add.js"></script>
 <%@ include file="../layout/footer.jsp" %>

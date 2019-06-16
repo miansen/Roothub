@@ -760,3 +760,10 @@ a.node:active, a.node:link, a.node:visited {
 .layui-laypage a{
 	color: #778087;
 }
+
+.CodeMirror {
+    border: 1px solid #ddd;
+}
+.CodeMirror pre.CodeMirror-placeholder {
+    color: #999;
+}

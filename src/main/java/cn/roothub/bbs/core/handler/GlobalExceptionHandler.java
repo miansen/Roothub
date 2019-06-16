@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
 	    ModelAndView mav = new ModelAndView();
 	    mav.addObject("exception", e.getMessage());
 	    mav.addObject("errorCode", getStatus(request));
-	    mav.setViewName("/default/front/common/error");
+	    mav.setViewName("/default/front/error/error");
 	    return mav;
 	  }
 	

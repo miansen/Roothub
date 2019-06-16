@@ -1,49 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-  <title>节点-roothub</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 引入 Bootstrap -->
-  <link href="/default/front/common/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/default/front/common/css/app.css" rel="stylesheet" type="text/css">
-  <link rel="shortcut icon" href="/default/front/common/images/favicon.ico">
-  <!-- 引入layui.css -->
-  <link rel="stylesheet" href="/default/front/common/layui/css/layui.css" media="all">
-</head>
-<body>
-<div class="wrapper">
-<jsp:include page="../common/head.jsp"></jsp:include>
+<%@ include file="../layout/header.jsp" %>
 <div class="row">
-  <div class="panel panel-default">
-  <div class="panel-heading">全部节点</div>
-    <div class="panel-body">
-      <div class="row">
-      <c:forEach var="item" items="${nodeList}">
-        <%-- <c:if test="${item.tabId == 15}"> --%>
-            <div class="col-md-2" style="margin-bottom: 10px; padding-left: 10px;">
-              <a href="${item.url}">
-                <span class="label label-primary">${item.nodeTitle}</span>
-              </a>
-              <span class="text-muted"></span>
-              <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
+    <div class="panel panel-default">
+        <div class="panel-heading">全部节点</div>
+        <div class="panel-body">
+            <div class="row">
+                <c:forEach var="item" items="${nodeList}">
+                    <div class="col-md-2" style="margin-bottom: 10px; padding-left: 10px;">
+                        <a href="${item.url}">
+                            <span class="label label-primary">${item.nodeTitle}</span>
+                        </a>
+                        <span class="text-muted"></span>
+                        <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
+                    </div>
+                </c:forEach>
             </div>
-            <%-- </c:if> --%>
-          </c:forEach> 
-      </div>
+        </div>
     </div>
-  </div>
 </div>
-  </div>
-</div>
-<jsp:include page="../common/foot.jsp"></jsp:include>
-<script src="/default/front/common/js/jquery.js"></script>
-<script src="/default/front/common/js/bootstrap.min.js"></script>
-<script src="/default/front/common/layui/layui.js"></script>
-<script src="/default/front/common/layui/layui-paginate.js"></script>
 <script type="text/javascript">
-	$("#nodes").addClass("active");
+    $("#nodes").addClass("active");
 </script>
-</body>
-</html>
+<%@ include file="../layout/footer.jsp" %>

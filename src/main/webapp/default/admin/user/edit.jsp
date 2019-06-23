@@ -84,7 +84,7 @@
             			<div class="input-group">
             				<input type="text" name="thirdAccessToken" id ="thirdAccessToken" value="${user.thirdAccessToken}" class="form-control">
             				<span class="input-group-btn">
-                  				<button type="button" onclick="refreshToken(this)" class="btn btn-info" autocomplete="off"
+                  				<button type="button" onclick="refreshToken(this)" class="btn btn-primary" autocomplete="off"
                           				data-loading-text="刷新中...">刷新Token</button>
                   				<script>
                     				function refreshToken(self) {

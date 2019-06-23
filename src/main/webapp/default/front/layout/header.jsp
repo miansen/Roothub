@@ -38,7 +38,6 @@
     <script src="/default/front/common/js/login_info.js"></script>
     <script src="/default/front/common/js/formatDate.js"></script>
     <script src="/default/front/common/js/bootstrap.min.js"></script>
-    <script src="/default/front/common/js/goTop.js"></script>
 
     <script>
         function toast(txt, icon) {
@@ -97,7 +96,7 @@
         </div>
     </nav>
     <%--container 开始--%>
-    <div class="container" style="padding: 0 25px;">
+    <div class="container">
         <form class="hidden-lg hidden-md" style="margin: 0 -10px;"
               role="search" action="/search" method="get">
             <div class="form-group has-feedback" style="margin-bottom: 10px;">

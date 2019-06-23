@@ -99,8 +99,8 @@
                     </textarea>
                 </div>
 
-                <button type="button" id="wangEditor-btn" class="btn btn-default">评论</button>
-                <button type="button" id="codemirror-btn" class="btn btn-default" style="display: none;">评论</button>
+                <button type="button" id="wangEditor-btn" class="btn btn-primary">评论</button>
+                <button type="button" id="codemirror-btn" class="btn btn-primary" style="display: none;">评论</button>
                 <div class="fr"><a href="/">← Roothub</a></div>
             </div>
         </div>

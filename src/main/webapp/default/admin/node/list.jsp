@@ -21,6 +21,9 @@
     <div class="box box-info">
       <div class="box-header with-border">
         <h3 class="box-title">节点列表</h3>
+        <shiro:hasPermission name="node:add">
+          <a href="/admin/node/add" class="btn btn-xs btn-primary pull-right">添加</a>
+        </shiro:hasPermission>
       </div>
       <!-- /.box-header -->
       <div class="box-body">

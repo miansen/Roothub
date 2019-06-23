@@ -53,6 +53,6 @@
     <div class="arrow___3UCwo"></div>
 </div>
 <%--缓慢回到顶部结束--%>
-
+<script src="/default/front/common/js/goTop.js"></script>
 </body>
 </html>

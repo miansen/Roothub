@@ -63,8 +63,8 @@
                         </div>
                     </div>
 
-                    <button type="button" id="wangEditor-btn" class="btn btn-default">发布</button>
-                    <button type="button" id="codemirror-btn" class="btn btn-default" style="display: none;">发布</button>
+                    <button type="button" id="wangEditor-btn" class="btn btn-primary">发布</button>
+                    <button type="button" id="codemirror-btn" class="btn btn-primary" style="display: none;">发布</button>
                 </form>
             </div>
         </div>

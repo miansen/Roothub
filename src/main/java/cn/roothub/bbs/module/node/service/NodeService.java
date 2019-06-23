@@ -83,7 +83,13 @@ public interface NodeService {
 	 * @param nodeDesc:节点描述
 	 */
 	void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc);
-	
+
+	/**
+	 * 添加节点
+	 * @param node
+	 */
+	void save(Node node);
+
 	/**
 	 * 删除节点
 	 * @param id:节点ID

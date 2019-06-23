@@ -113,11 +113,7 @@
                     <tr>
                         <c:if test="${fn:length(item.avatar) > 0}">
                             <td width="24" valign="middle" align="center">
-                                    <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}"
-                                                                                  class="avatar img-circle" border="0"
-                                                                                  align="default"
-                                                                                  style="max-width: 24px; max-height: 24px;">
-                                <!-- </a> -->
+                                <img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
                             </td>
                         </c:if>
                         <td>
@@ -162,8 +158,8 @@
         </div> --%>
         <!-- 积分榜 -->
         <div class="panel panel-default">
-            <div class="panel-heading"><span style="color: #ccc;">积分榜  <a class="dark"
-                                                                          href="/top100">TOP 100 &gt;&gt;</a></span>
+            <div class="panel-heading"><span style="color: #ccc;">积分榜
+                <a class="dark" href="/top100" style="float: right;">TOP 100 &gt;&gt;</a></span>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -175,18 +171,9 @@
         <div class="panel panel-default">
             <div class="panel-heading"><span style="color: #ccc;">热门节点</span></div>
             <div class="panel-body">
-                <div class="row">
-                    <c:forEach var="item" items="${nodeList2}">
-                        <div class="col-md-6" style="margin-bottom: 10px; padding-left: 10px;">
-                                <%-- <a href="${item.url}">
-                                  <span>n/${item.nodeTitle}</span>
-                                </a> --%>
-                                <%-- <span class="text-muted">x ${item.number}</span> --%>
-                            <a href="${item.url}"><span class="label label-primary text-muted">${item.nodeTitle}</span></a>
-                            <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
-                        </div>
-                    </c:forEach>
-                </div>
+                <c:forEach var="item" items="${nodeList2}">
+                    <a href="${item.url}" class="item_node"><span class="layui-badge layui-bg-primary">${item.nodeTitle}</span></a>
+                </c:forEach>
             </div>
         </div>
         <!-- 社区运行状况 -->

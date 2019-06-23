@@ -108,6 +108,7 @@ CREATE TABLE `node` (
   `update_date` datetime DEFAULT NULL COMMENT '修改时间',
   `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0:否 1:是',
   PRIMARY KEY (`node_id`),
+  UNIQUE KEY `uk_node_title` (`node_title`),
   KEY `key_node_code` (`node_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='节点表';
 

@@ -83,6 +83,7 @@ public class NodeServiceImpl implements NodeService{
 		if(!nodeTitle.equals(node.getNodeTitle())) {
 			topicService.updateNodeTitile(node.getNodeTitle(), nodeTitle);
 		}
+		node.setNodeCode(nodeTitle);
 		node.setNodeTitle(nodeTitle);
 		node.setAvatarNormal(avatarNormal);
 		node.setAvatarLarge(avatarLarge);
@@ -91,6 +92,15 @@ public class NodeServiceImpl implements NodeService{
 		node.setUpdateDate(new Date());
 		// 最后在更新节点
 		nodeDao.update(node);
+	}
+
+	/**
+	 * 添加节点
+	 * @param node
+	 */
+	@Override
+	public void save(Node node) {
+		nodeDao.insert(node);
 	}
 
 	/**

@@ -102,7 +102,14 @@ public interface NodeDao {
 	 * @return
 	 */
 	int update(Node node);
-	
+
+	/**
+	 * 添加节点
+	 * @param node
+	 * @return
+	 */
+	int insert(@Param("node") Node node);
+
 	/**
 	 * 删除节点
 	 * @param id:节点ID

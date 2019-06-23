@@ -119,11 +119,11 @@ public class Node {
 		this.updateDate = updateDate;
 	}
 
-	public boolean isDelete() {
+	public boolean getIsDelete() {
 		return isDelete;
 	}
 
-	public void setDelete(boolean isDelete) {
+	public void setIsDelete(boolean isDelete) {
 		this.isDelete = isDelete;
 	}
 

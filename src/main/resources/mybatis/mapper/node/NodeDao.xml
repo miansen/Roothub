@@ -196,6 +196,88 @@
         WHERE 
         	node_id = #{nodeId}
     </update>
+
+    <!--添加节点-->
+    <insert id="insert" parameterType="cn.roothub.bbs.module.node.model.Node" keyProperty="node.nodeId" useGeneratedKeys="true">
+        INSERT INTO node
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="node.nodeCode != null and node.nodeCode != ''">
+                node_code,
+            </if>
+            <if test="node.nodeTitle != null and node.nodeTitle != ''">
+                node_title,
+            </if>
+            <if test="node.avatarNormal != null and node.avatarNormal != ''">
+                avatar_normal,
+            </if>
+            <if test="node.avatarMini != null and node.avatarMini != ''">
+                avatar_mini,
+            </if>
+            <if test="node.avatarLarge != null and node.avatarLarge != ''">
+                avatar_large,
+            </if>
+            <if test="node.nodeDesc != null and node.nodeDesc != ''">
+                node_desc,
+            </if>
+            <if test="node.tabId != null and node.tabId != ''">
+                node_code,
+            </if>
+            <if test="node.url != null and node.url != ''">
+                url,
+            </if>
+            <if test="node.parentNodeCode != null and node.parentNodeCode != ''">
+                parent_node_code,
+            </if>
+            <if test="node.createDate != null">
+                create_date,
+            </if>
+            <if test="node.updateDate != null">
+                update_date,
+            </if>
+            <if test="node.isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="node.nodeCode != null and node.nodeCode != ''">
+                #{node.nodeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="node.nodeTitle != null and node.nodeTitle != ''">
+                #{node.nodeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="node.avatarNormal != null and node.avatarNormal != ''">
+                #{node.avatarNormal,jdbcType=VARCHAR},
+            </if>
+            <if test="node.avatarMini != null and node.avatarMini != ''">
+                #{node.avatarMini,jdbcType=VARCHAR},
+            </if>
+            <if test="node.avatarLarge != null and node.avatarLarge != ''">
+                #{node.avatarLarge,jdbcType=VARCHAR},
+            </if>
+            <if test="node.nodeDesc != null and node.nodeDesc != ''">
+                #{node.nodeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="node.tabId != null and node.tabId != ''">
+                #{node.tabId,jdbcType=INTEGER},
+            </if>
+            <if test="node.url != null and node.url != ''">
+                #{node.url,jdbcType=VARCHAR},
+            </if>
+            <if test="node.parentNodeCode != null and node.parentNodeCode != ''">
+                #{node.parentNodeCode,jdbcType=VARCHAR},
+            </if>
+            <if test="node.createDate != null">
+                #{node.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="node.updateDate != null">
+                #{node.updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="node.isDelete != null">
+                #{node.isDelete,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+
     <!-- 删除节点 -->
     <update id="deleteById" parameterType="java.lang.Integer">
     	UPDATE

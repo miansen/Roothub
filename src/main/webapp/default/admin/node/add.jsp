@@ -53,7 +53,7 @@
             <a href="" target="_blank" id="background-href"><img src="" width="50" alt="" id="background-img"></a>
           </div>
           <div class="form-group">
-            <label for="">描述</label>
+            <label>描述</label>
             <textarea name="nodeDesc" rows="7" class="form-control node-desc"></textarea>
           </div>
           <button type="submit" id="btn" class="btn btn-primary">提交</button>
@@ -63,22 +63,8 @@
       </div>
     </div>
   </section>
+  <script src="/default/admin/node/js/openParentNode.js"></script>
   <script type="text/javascript">
-
-    // 打开父节点页面
-    function openParentNode() {
-        layui.use('layer', function(){
-            var layer = layui.layer;
-            layer.open({
-                title: ['选择父节点', 'font-size:18px;'],
-                type: 2,
-                area: ['700px', '450px'],
-                fixed: false, //不固定
-                maxmin: true,
-                content: '/admin/node/parent' //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: ['http://sentsin.com', 'no']
-            });
-        });
-    }
 
   	$(function(){
 

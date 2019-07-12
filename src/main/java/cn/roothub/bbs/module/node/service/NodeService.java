@@ -76,13 +76,14 @@ public interface NodeService {
 	
 	/**
 	 * 更新节点
-	 * @param nodeId:节点ID
-	 * @param nodeTitle:节点名称
-	 * @param avatarNormal:图标
-	 * @param avatarLarge:背景图
-	 * @param nodeDesc:节点描述
+	 * @param nodeId 节点ID
+	 * @Param parentNodeCode 父节点
+	 * @param nodeTitle 节点名称
+	 * @param avatarNormal 图标
+	 * @param avatarLarge 背景图
+	 * @param nodeDesc 节点描述
 	 */
-	void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc);
+	void update(Integer nodeId, String parentNodeCode, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc);
 
 	/**
 	 * 添加节点

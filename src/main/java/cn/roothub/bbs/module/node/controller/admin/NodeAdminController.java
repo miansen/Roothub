@@ -71,13 +71,13 @@ public class NodeAdminController {
 	@RequiresPermissions("node:edit")
 	@RequestMapping(value = "/edit",method = RequestMethod.POST)
 	@ResponseBody
-	public Result<String> edit(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+	public Result<String> edit(Integer nodeId, String parentNodeCode, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
 		ApiAssert.notNull(nodeId, "节点ID不能为空");
 		ApiAssert.notEmpty(nodeTitle, "节点名称不能为空");
 		if(StringUtils.isEmpty(avatarNormal)) avatarNormal = null;
 		if(StringUtils.isEmpty(avatarLarge)) avatarLarge = null;
 		if(StringUtils.isEmpty(nodeDesc)) nodeDesc = null;
-		nodeService.update(nodeId, nodeTitle, avatarNormal, avatarLarge, nodeDesc);
+		nodeService.update(nodeId, parentNodeCode, nodeTitle, avatarNormal, avatarLarge, nodeDesc);
 		return new Result(true, "更新成功");
 	}
 

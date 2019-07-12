@@ -154,7 +154,7 @@
         WHERE 
         	a.is_delete = 0
         <if test="nodeTitle != null">
-        AND a.node_title = #{nodeTitle}
+        AND a.node_title LIKE '%${nodeTitle}%'
         </if>
         <if test="start != null">
             LIMIT #{start,jdbcType=INTEGER}
@@ -173,9 +173,10 @@
     WHERE 
     	a.is_delete = 0
     <if test="nodeTitle != null">
-    AND a.node_title = #{nodeTitle}
+    AND a.node_title LIKE '%${nodeTitle}%'
     </if>
     </select>
+
     <!-- 更新节点 -->
     <update id="update" parameterType="cn.roothub.bbs.module.node.model.Node">
         UPDATE 

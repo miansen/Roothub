@@ -24,8 +24,19 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
+        <div class="row">
+          <div class="col-sm-6">
         <form id="form" action="/admin/tag/edit" method="post" enctype="multipart/form-data">
           <input type="hidden" value="${node.nodeId}" name="nodeId" class="node-id">
+          <div class="form-group">
+            <label>父节点</label>
+            <div class="input-group">
+              <input type="text" name="parentNodeCode" id="parentNodeCode" value="${node.parentNodeCode}" class="form-control node-parentNodeCode">
+              <span class="input-group-btn">
+              <button type="button" onclick="openParentNode(this)" class="btn btn-primary">选择</button>
+            </span>
+            </div>
+          </div>
           <div class="form-group">
             <label>名称</label>
             <input type="text" name="name" value="${node.nodeTitle}" class="form-control node-name">
@@ -43,14 +54,17 @@
             <a href="${node.avatarLarge}" target="_blank" id="background-href"><img src="${node.avatarLarge}" width="50" alt="" id="background-img"></a>
           </div>
           <div class="form-group">
-            <label for="">描述</label>
+            <label>描述</label>
             <textarea name="description" rows="7" class="form-control node-desc">${node.nodeDesc}</textarea>
           </div>
           <button type="submit" id="btn" class="btn btn-primary">提交</button>
         </form>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+  <script src="/default/admin/node/js/openParentNode.js"></script>
   <script type="text/javascript">
   	$(function(){
   		$(".sidebar-menu li:eq(4)").addClass("active");
@@ -94,6 +108,8 @@
   		$("#form").submit(function(){
   			// ID
   			var nodeId = $(".node-id").val();
+  			// 父节点
+  			var parentNodeCode = $("#parentNodeCode").val();
   			// 名称
   			var nodeTitle = $(".node-name").val();
   			// 图标
@@ -102,7 +118,15 @@
   			var avatarLarge = $(".avatarLarge").val();
   			// 描述
   			var nodeDesc = $(".node-desc").val();
-  			var data = {nodeId, nodeTitle, avatarNormal, avatarLarge, nodeDesc};
+  			var data = {
+  			              "nodeId": nodeId,
+                          "parentNodeCode": parentNodeCode,
+                          "nodeTitle": nodeTitle,
+                          "avatarNormal": avatarNormal,
+                          "avatarLarge": avatarLarge,
+                          "nodeDesc": nodeDesc
+  			            };
+  			console.log(data);
   			if(confirm("确定要编辑此节点吗？")){
   				if(!nodeId){
   					toast('节点名称不能为空');

@@ -77,12 +77,13 @@ public class NodeServiceImpl implements NodeService{
 
 	@Transactional
 	@Override
-	public void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+	public void update(Integer nodeId, String parentNodeCode, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
 		Node node = findById(nodeId);
 		// 先更新话题的节点名称
 		if(!nodeTitle.equals(node.getNodeTitle())) {
 			topicService.updateNodeTitile(node.getNodeTitle(), nodeTitle);
 		}
+		node.setParentNodeCode(parentNodeCode);
 		node.setNodeCode(nodeTitle);
 		node.setNodeTitle(nodeTitle);
 		node.setAvatarNormal(avatarNormal);

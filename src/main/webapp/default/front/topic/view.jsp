@@ -42,7 +42,7 @@
                             <span class="label label-success">精华</span>
                             <span>•</span>
                         </c:if>
-                        <span><a href="/user/${topic.author}">${topic.author}</a></span>
+                        <span class="author"><a href="/user/${topic.author}">${topic.author}</a></span>
                         <span>•</span>
                         <span><fmt:formatDate type="both" value="${topic.createDate}"/></span>
                         <span>•</span>
@@ -110,7 +110,6 @@
     </div>
 </div>
 <script src="/default/front/topic/js/view.js"></script>
-<script src="/default/front/topic/js/other-list.js"></script>
 <script type="text/javascript">
 
     // 数据总量

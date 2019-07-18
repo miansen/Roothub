@@ -59,7 +59,7 @@ $(function () {
         var nodeTitle = node ? node : $("#node option:selected").val();
 
         // 标签
-        var tag = $("#tag").val();
+        var tag = $("#tag").val().trim();
 
         if (!title || title.length > 120) {
             toast("请输入标题，且最大长度在120个字符以内");
@@ -70,8 +70,17 @@ $(function () {
             return;
         }
         if (!tag || tag.length == 0) {
-            toast("请选择一个标签");
+            toast("请至少输入一个标签");
             return;
+        }
+
+        // 将标签以空格分割
+        var tags = tag.split(/\s+/);
+        for (var i = 0; i < tags.length; i++) {
+            if (tags[i].length > 10) {
+                toast("每个标签的最大长度不能超过10个字符");
+                return;
+            }
         }
 
         $.ajax({
@@ -118,7 +127,7 @@ $(function () {
         // 标题
         var title = $("#title").val();
 
-        //正文
+        // 正文
         var content = CodeMirrorEditor.getDoc().getValue();
 
         // 节点
@@ -126,7 +135,7 @@ $(function () {
         var nodeTitle = node ? node : $("#node option:selected").val();
 
         // 标签
-        var tag = $("#tag").val();
+        var tag = $("#tag").val().trim();
 
         if (!title || title.length > 120) {
             toast("请输入标题，且最大长度在120个字符以内");
@@ -137,8 +146,17 @@ $(function () {
             return;
         }
         if (!tag || tag.length == 0) {
-            toast("请选择一个标签");
+            toast("请至少输入一个标签");
             return;
+        }
+
+        // 将标签以空格分割
+        var tags = tag.split(/\s+/);
+        for (var i = 0; i < tags.length; i++) {
+            if (tags[i].length > 10) {
+                toast("每个标签的最大长度不能超过10个字符");
+                return;
+            }
         }
 
         $.post("/topic/save", {

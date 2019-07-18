@@ -1,5 +1,6 @@
 package cn.roothub.bbs.module.topic.controller.front;
 
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import cn.roothub.bbs.common.controller.BaseController;
@@ -69,6 +70,11 @@ public class TopicController extends BaseController {
         topicService.updateTopic(topic);
         // 查询回复
         PageDataBody<Reply> replyPage = replyService.page(p, 50, id);
+
+        String tag = topic.getTag();
+        // 将标签封装成list
+        List<String> tags = Arrays.asList(tag.split("\\s+"));
+
         // 话题被收藏的数量
         int countByTid = collectService.countByTid(id);
         // 发布的主题的数量
@@ -84,6 +90,7 @@ public class TopicController extends BaseController {
         }
         model.addAttribute("topic", topic);
         model.addAttribute("replyPage", replyPage);
+        model.addAttribute("tags", tags);
         model.addAttribute("user", user);
         model.addAttribute("countByTid", countByTid);
         request.setAttribute("countTopicByUserName", countTopicByUserName);
@@ -129,7 +136,7 @@ public class TopicController extends BaseController {
         ApiAssert.notNull(title, "标题不能为空");
         if (StringUtils.isEmpty(tag)) tag = null;
 
-        // 如果是 Markdown 格式的正文，则先渲染后再保存进数据库
+        // 如果是 Markdown 格式的正文，则先渲染再保存进数据库
         if ("1".equals(type)) {
             content = baseEntity.formatContent(content);
         }

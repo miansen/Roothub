@@ -58,9 +58,12 @@
             <div class="panel-body topic-detail-content show_big_image">
                 ${topic.content}
                 <div>
-                    <a href="/tag/${topic.tag}">
-                        <span class="label label-success">${topic.tag}</span>
-                    </a>
+                    <c:forEach var="tag" items="${tags}">
+                        <a href="/tag/${tag}">
+                            <span class="label label-success">${tag}</span>
+                        </a>
+                    </c:forEach>
+
                 </div>
             </div>
             <div class="panel-footer" style="display: none" id="collect">

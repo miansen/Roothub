@@ -8,34 +8,18 @@
         <div class="panel panel-default">
             <div class="tab panel-heading">
                 <ul class="nav nav-pills" id="tab">
-                    <%-- <c:forEach var="item" items="${tabList}" varStatus="status">
-                        <li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
-                    </c:forEach> --%>
                     <li class="all"><a href="/?tab=all">全部</a></li>
                     <li class="hot"><a href="/?tab=hot">最热</a></li>
                     <li class="new"><a href="/?tab=new">最新</a></li>
                     <li class="lonely"><a href="/?tab=lonely">无人问津</a></li>
-                    <!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
                 </ul>
             </div>
-            <!-- 节点列表 -->
-            <%-- <c:if test="${fn:length(nodeList) > 0}">
-          <div class="section node">
-            <ul class="nav nav-pills" id="node">
-              <c:forEach var="item" items="${nodeList}" varStatus="status">
-              <li class="active"><a href="${item.url}">${item.nodeTitle}</a></li>
-            </c:forEach>
-          </ul>
-        </div>
-        </c:if> --%>
             <div class="panel-body paginate-bot">
                 <c:forEach var="item" items="${page.list}">
                     <div class="media">
                         <c:if test="${fn:length(item.avatar) > 0}">
                             <div class="media-left">
-                                    <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}"
-                                                                                  class="avatar img-circle" alt="">
-                                <!-- </a> -->
+                                <img src="${item.avatar}" class="avatar img-circle" alt="">
                             </div>
                         </c:if>
                         <div class="media-body">
@@ -49,7 +33,6 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                                <%-- <div class="excerpt"><span>${item.excerpt}</span></div> --%>
                             <div class="tip">
                                 <p class="gray">
                                     <c:if test="${item.top}">
@@ -76,20 +59,6 @@
                                     <span>•</span>
                                     <span><fmt:formatDate type="date"
                                                           value="${item.createDate}"/></span>
-                                        <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
-                                        <%-- <span class="formate-date">${item.createDate}</span> --%>
-
-                                    <!-- 最后回复用户 -->
-                                        <%-- <c:if test="${fn:length(item.lastReplyAuthor) > 0}">
-                                        <span>•</span>
-                                        <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
-                                        </c:if> --%>
-
-                                    <!-- 标签 -->
-                                        <%-- <c:if test="${item.tag != null}">
-                                        <span>•</span>
-                                        <a href="/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
-                                        </c:if> --%>
                                 </p>
                             </div>
                         </div>

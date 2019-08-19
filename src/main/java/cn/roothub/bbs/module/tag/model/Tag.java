@@ -1,5 +1,8 @@
 package cn.roothub.bbs.module.tag.model;
 
+import cn.roothub.bbs.common.model.IBaseModel;
+import java.util.Date;
+
 /**
  * 标签实体
  * @author sen
@@ -7,25 +10,109 @@ package cn.roothub.bbs.module.tag.model;
  * 下午8:09:32
  * TODO
  */
-public class Tag {
+public class Tag implements IBaseModel{
 
-	private String tag;//标签的名字
-	private Integer number;//标签的数量
-	public String gettag() {
-		return tag;
+	/**
+	 * 标签ID
+	 */
+	private Integer tagId;
+
+	/**
+	 * 标签名称
+	 */
+	private String tagName;
+
+	/**
+	 * 标签状态
+	 */
+	private String tagState;
+
+	/**
+	 * 标签图标
+	 */
+	private String tagAvatar;
+
+	/**
+	 * 标签简介
+	 */
+	private String tagContent;
+
+	/**
+	 * 创建时间
+	 */
+	private Date createDate;
+
+	/**
+	 * 更新时间
+	 */
+	private Date updateDate;
+
+	public Integer getTagId() {
+		return tagId;
 	}
-	public void settag(String tag) {
-		this.tag = tag;
+
+	public void setTagId(Integer tagId) {
+		this.tagId = tagId;
 	}
-	public Integer getnumber() {
-		return number;
+
+	public String getTagName() {
+		return tagName;
 	}
-	public void setnumber(Integer number) {
-		this.number = number;
+
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
 	}
+
+	public String getTagState() {
+		return tagState;
+	}
+
+	public void setTagState(String tagState) {
+		this.tagState = tagState;
+	}
+
+	public String getTagAvatar() {
+		return tagAvatar;
+	}
+
+	public void setTagAvatar(String tagAvatar) {
+		this.tagAvatar = tagAvatar;
+	}
+
+	public String getTagContent() {
+		return tagContent;
+	}
+
+	public void setTagContent(String tagContent) {
+		this.tagContent = tagContent;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
 	@Override
 	public String toString() {
-		return "Tag [tag=" + tag + ", number=" + number + "]";
+		return "Tag{" +
+				"tagId=" + tagId +
+				", tagName='" + tagName + '\'' +
+				", tagState='" + tagState + '\'' +
+				", tagAvatar='" + tagAvatar + '\'' +
+				", tagContent='" + tagContent + '\'' +
+				", createDate=" + createDate +
+				", updateDate=" + updateDate +
+				'}';
 	}
-	
 }

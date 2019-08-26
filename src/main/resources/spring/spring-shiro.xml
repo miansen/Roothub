@@ -6,13 +6,13 @@
 	<!-- 配置 SecurityManager -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="authenticator" ref="authenticator"></property>
-        
+        <!--Realm-->
         <property name="realms">
         	<list>
     			<ref bean="accountRealm"/>
     		</list>
         </property>
-        
+        <!--记住我功能-->
         <property name="rememberMeManager.cookie.maxAge" value="10"></property>
     </bean>
     

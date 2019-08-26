@@ -21,7 +21,7 @@
 	<!--通用模块-->
 	<context:component-scan base-package="cn.roothub.bbs.common.**" />
 
-	<!--系统配置-->
+	<!--系统配置模块-->
 	<context:component-scan base-package="cn.roothub.bbs.config.**" />
 
 	<!--核心模块-->
@@ -30,10 +30,10 @@
 	<!--存储模块-->
 	<context:component-scan base-package="cn.roothub.bbs.store" />
 
-	<!--第三方集成-->
+	<!--第三方集成模块-->
 	<context:component-scan base-package="cn.roothub.bbs.third.**" />
 
-	<!-- 扫描 service.impl 包下所有使用注解的类型 -->
+	<!-- 业务模块，扫描 service.impl 包下所有使用注解的类型 -->
 	<context:component-scan base-package="cn.roothub.bbs.module.collect.service.impl,
 										  cn.roothub.bbs.module.follow.service.impl,
 										  cn.roothub.bbs.module.integral.service.impl,

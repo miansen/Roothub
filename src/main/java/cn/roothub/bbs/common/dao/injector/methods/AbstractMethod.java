@@ -1,4 +1,4 @@
-package cn.roothub.bbs.common.dao.injector;
+package cn.roothub.bbs.common.dao.injector.methods;
 
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import org.apache.ibatis.builder.MapperBuilderAssistant;

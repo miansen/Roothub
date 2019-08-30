@@ -1,6 +1,5 @@
 package cn.roothub.bbs.common.dao.injector.methods;
 
-import cn.roothub.bbs.common.dao.injector.AbstractMethod;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import org.apache.ibatis.mapping.*;
 

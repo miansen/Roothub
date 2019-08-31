@@ -9,11 +9,11 @@ import java.util.stream.Stream;
 /**
  * 默认的 SQL 注入器，提供了基本的 SQL 注入
  */
-public class AutoSqlInjector extends AbstractSqlInjector{
+public class DefaultSqlInjector extends AbstractSqlInjector{
 
     @Override
     public List<AbstractMethod> getMethodList() {
-        return Stream.of(
+        return (List)Stream.of(
                 new SelectOne()
         ).collect(Collectors.toList());
     }

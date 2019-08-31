@@ -11,10 +11,10 @@ public class SelectOne extends AbstractMethod{
 
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, "<script>\nSELECT %s FROM %s %s\n</script>", modelClass);
-        return this.builderAssistant.addMappedStatement(mapperClass.getName() + "SelectOne",
+        SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, "<script>\nSELECT * FROM tag\n</script>", modelClass);
+        return this.builderAssistant.addMappedStatement("SelectOne",
                     sqlSource, StatementType.PREPARED, SqlCommandType.SELECT, (Integer)null, (Integer)null, (String)null,
-                null, null, null, (ResultSetType)null, true, true, false,
+                null, null, modelClass, (ResultSetType)null, true, true, false,
                 null, null, tableInfo.getPrimaryKeyColumn(), this.configuration.getDatabaseId(), this.languageDriver,
                 (String)null);
     }

@@ -1,6 +1,8 @@
 package cn.roothub.bbs.common.dao.metadata;
 
 /**
+ * TableInfo 存储了数据库对应的 model 所有的信息，
+ * 包括表主键 ID 类型、表名称、表字段信息列表等等信息，这些信息通过反射获取。
  * @Author: miansen.wang
  * @Date: 2019/8/26 23:15
  */

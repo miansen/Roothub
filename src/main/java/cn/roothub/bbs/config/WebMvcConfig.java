@@ -14,7 +14,7 @@ import cn.roothub.bbs.module.sys.service.SystemConfigService;
  * @author: miansen.wang
  * @date: 2019-03-12
  */
-@Configuration
+// @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 	@Autowired

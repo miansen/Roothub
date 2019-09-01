@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface IBaseDao<T> {
 
-    <T> T SelectOne();
+    <T> T SelectOne(Integer primaryKey);
 
     /**
      * 单个查询

@@ -1,7 +1,7 @@
 package cn.roothub.bbs.common.dao.injector.methods;
 
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
-import cn.roothub.bbs.common.util.TableInfoHelper;
+import cn.roothub.bbs.common.dao.builder.TableInfoBuilder;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.scripting.LanguageDriver;
@@ -36,7 +36,7 @@ public abstract class AbstractMethod {
         this.languageDriver = this.configuration.getDefaultScriptingLanuageInstance();
         this.builderAssistant = builderAssistant;
         if (modelClass != null) {
-            TableInfo tableInfo = TableInfoHelper.initTableInfo(builderAssistant,modelClass);
+            TableInfo tableInfo = TableInfoBuilder.initTableInfo(builderAssistant,modelClass);
             this.injectMappedStatement(mapperClass, modelClass, tableInfo);
         }
     }

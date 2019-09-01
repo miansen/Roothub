@@ -40,6 +40,29 @@ public class StringUtil {
     }
 
     /**
+     * 驼峰转下划线
+     * @param param
+     * @return
+     */
+    public static String camelToUnderline(String param) {
+        if (isBlank(param)) {
+            return "";
+        } else {
+            int len = param.length();
+            StringBuilder sb = new StringBuilder(len);
+            for(int i = 0; i < len; ++i) {
+                char c = param.charAt(i);
+                if (Character.isUpperCase(c) && i > 0) {
+                    sb.append('_');
+                }
+
+                sb.append(Character.toLowerCase(c));
+            }
+            return sb.toString();
+        }
+    }
+
+    /**
      * 字符串为 null 或者为  "" 时返回 true
      */
     public static boolean isBlank(String str) {

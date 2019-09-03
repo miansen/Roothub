@@ -1,11 +1,16 @@
 package cn.roothub.bbs.common.dao.injector.methods;
 
+import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.dao.builder.TableInfoBuilder;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
+
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 此类提供了注入 SQL 的方法 inject()
@@ -39,6 +44,16 @@ public abstract class AbstractMethod {
             TableInfo tableInfo = TableInfoBuilder.initTableInfo(builderAssistant,modelClass);
             this.injectMappedStatement(mapperClass, modelClass, tableInfo);
         }
+    }
+
+    /**
+     * 初始化查询字段
+     * @param tableInfo
+     * @return
+     */
+    protected String initSqlSelectColumns (TableInfo tableInfo) {
+        return tableInfo.getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
+                .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
     }
 
     public abstract MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo);

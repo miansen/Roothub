@@ -42,4 +42,28 @@ public class TableFieldInfo {
         this.propertyType = field.getType();
         this.modelClass = field.getDeclaringClass();
     }
+
+    public String getColumn() {
+        return column;
+    }
+
+    public String getProperty() {
+        return property;
+    }
+
+    public Class<?> getPropertyType() {
+        return propertyType;
+    }
+
+    public Class<?> getModelClass() {
+        return modelClass;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
+    }
 }

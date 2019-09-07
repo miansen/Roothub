@@ -4,9 +4,15 @@ import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.dao.builder.TableInfoBuilder;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
+import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.mapping.SqlSource;
+import org.apache.ibatis.mapping.StatementType;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.stream.Collectors;
 
 /**
@@ -16,6 +22,8 @@ import java.util.stream.Collectors;
  * @Date: 2019/8/26 22:26
  */
 public abstract class AbstractMethod {
+
+    private Logger log = LoggerFactory.getLogger(AbstractMethod.class);
 
     /**
      * Mybatis 的配置信息，存储了所有 Mapper 注册与绑定的信息
@@ -53,5 +61,40 @@ public abstract class AbstractMethod {
                 .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
     }
 
+    /**
+     * 注入 MappedStatement，由子类实现
+     * @param mapperClass
+     * @param modelClass
+     * @param tableInfo
+     * @return
+     */
     public abstract MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo);
+
+    /**
+     * 添加 MappedStatement
+     * @param mapperClass
+     * @param id
+     * @param sqlSource
+     * @param sqlCommandType
+     * @param parameterClass
+     * @param resultMap
+     * @param resultType
+     * @param keyGenerator
+     * @param keyProperty
+     * @param keyColumn
+     * @return
+     */
+    protected MappedStatement addMappedStatement (Class<?> mapperClass, String id, SqlSource sqlSource, SqlCommandType sqlCommandType, Class<?> parameterClass, String resultMap, Class<?> resultType, KeyGenerator keyGenerator, String keyProperty, String keyColumn) {
+        String statementName = mapperClass.getName() + "." + id;
+        if (configuration.hasStatement(statementName)) {
+            log.error(statementName + "Has been loaded by XML or SqlProvider, ignoring the injection of the SQL");
+            return null;
+        } else {
+            boolean isSelect = false;
+            if (sqlCommandType == SqlCommandType.SELECT) {
+                isSelect = true;
+            }
+            return this.builderAssistant.addMappedStatement(id, sqlSource, StatementType.PREPARED, sqlCommandType, null, null, null, parameterClass, resultMap, resultType, null, !isSelect, isSelect, false, keyGenerator, keyProperty,keyColumn, this.configuration.getDatabaseId(), this.languageDriver, null);
+        }
+    }
 }

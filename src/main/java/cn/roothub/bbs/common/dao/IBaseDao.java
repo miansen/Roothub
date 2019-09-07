@@ -9,7 +9,7 @@ import java.util.List;
  * @Date: 2019/8/19 22:44
  * 该接口作为Dao层的基础接口，定义了常用的数据库增删改查方法，建议大部分的Dao层接口继承
  */
-public interface IBaseDao<T> {
+public interface IBaseDao<T extends IBaseModel> {
 
     <T> T selectOne(@Param("whereBlock") String whereBlock);
 

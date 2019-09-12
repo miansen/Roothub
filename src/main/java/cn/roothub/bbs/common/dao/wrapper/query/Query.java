@@ -5,36 +5,43 @@ import java.io.Serializable;
 import java.util.function.Predicate;
 
 /**
- * 查询包装器的接口
- * Children: 查询包装器
- * T: 实体类
- * R: 两种方式，String 或者 函数
+ * 查询包装器的接口，主要的作用是自定义查询字段（默认是查询所有字段）
+ *
+ * <p>定义了设置查询字段的方法{@link #select(Object[])}
+ * 和过滤查询字段的方法{@link #select(Predicate)} 及其重载方法{@link #select(Class, Predicate)}
+ *
+ * @param <T> 实体类型
+ * @param <R> 返回结果类型
+ * @param <K> 输入参数类型
+ *
  * @Author: miansen.wang
  * @Date: 2019/9/10 22:43
  */
-public interface Query<Children, T, R> extends Serializable{
+public interface Query<T, R, K> extends Serializable{
 
     /**
-     *  设置查询字段
+     * 设置查询字段
      * @param columns 字段数组
-     * @return 子类
+     * @return 包装器
      */
-    Children select(R... columns);
+    R select(K... columns);
 
     /**
-     * 过滤查询条件
-     * 注意：当查询包装器里面的 modelClass 字段初始化后才能用此方法，否则只能用下面的重载方法
-     * @param predicate
-     * @return
+     * 过滤查询字段
+     *
+     * <p>注意：当查询包装器里面的 modelClass 字段初始化后才能用此方法，否则只能用下面的重载方法
+     * @param predicate 过滤条件
+     * @return 包装器
      */
-    Children select(Predicate<TableFieldInfo> predicate);
+    R select(Predicate<TableFieldInfo> predicate);
 
     /**
-     * 过滤查询条件
-     * 当查询包装器里面的 modelClass 字段没有初始化时，可以使用此方法
-     * @param modelClass
-     * @param predicate
-     * @return
+     * 过滤查询字段
+     *
+     * <p>当查询包装器里面的 modelClass 字段没有初始化时，可以使用此方法
+     * @param modelClass 实体类型
+     * @param predicate 过滤条件
+     * @return 包装器
      */
-    Children select(Class<T> modelClass, Predicate<TableFieldInfo> predicate);
+    R select(Class<T> modelClass, Predicate<TableFieldInfo> predicate);
 }

@@ -12,12 +12,12 @@ import java.lang.reflect.Field;
 public class TableFieldInfo {
 
     /**
-     * 字段名
+     * 数据库字段名
      */
     private final String column;
 
     /**
-     * 属性名
+     * 实体类属性名
      */
     private final String property;
 
@@ -27,7 +27,7 @@ public class TableFieldInfo {
     private final Class<?> propertyType;
 
     /**
-     * model 类型
+     * 实体类型
      */
     private final Class<?> modelClass;
 

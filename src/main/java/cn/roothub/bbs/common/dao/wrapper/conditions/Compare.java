@@ -15,9 +15,10 @@ import java.util.Map;
  * <p>小于等于（<=）{@link #le(Object, Object)} {@link #le(Map)}
  * <p>BETWEEN {@link #between(Object, Object, Object)}
  * <p>NOT BETWEEN {@link #notBetween(Object, Object, Object)}
+ *
  * @param <R> 返回结果
- * @param <K> 实体类字段
- * @param <V> 值
+ * @param <K> 实体类属性
+ * @param <V> 实体类属性的值
  *
  * @Author: miansen.wang
  * @Date: 2019/9/12 10:19

@@ -4,6 +4,7 @@ package cn.roothub.bbs.common.dao.wrapper.conditions;
  * 拼接条件接口
  *
  * @param <R> 返回结果
+ *
  * @Author: miansen.wang
  * @Date: 2019/9/12 16:24
  */

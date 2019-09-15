@@ -17,8 +17,8 @@ import java.util.Map;
  * <p>NOT BETWEEN {@link #notBetween(Object, Object, Object)}
  *
  * @param <R> 返回结果
- * @param <K> 实体类属性
- * @param <V> 实体类属性的值
+ * @param <K> 数据库字段
+ * @param <V> 字段对应的值
  *
  * @Author: miansen.wang
  * @Date: 2019/9/12 10:19
@@ -32,10 +32,10 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：eq("userName", null) -> user_name is null
      *
      * @param column 实体类的字段
-     * @param val 值
+     * @param value 值
      * @return
      */
-    R eq(K column, V val);
+    R eq(K column, V value);
 
     /**
      * 等于（=）
@@ -55,10 +55,10 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：ne("userName", null) -> user_name is not null
      *
      * @param column 实体类的字段
-     * @param val 值
+     * @param value 值
      * @return
      */
-    R ne(K column, V val);
+    R ne(K column, V value);
 
     /**
      * 不等于（<>）
@@ -78,10 +78,10 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：gt("age", null) -> 无效
      *
      * @param column
-     * @param val
+     * @param value
      * @return
      */
-    R gt (K column, V val);
+    R gt (K column, V value);
 
     /**
      * 大于（>）
@@ -101,10 +101,10 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：ge("age", null) -> 无效
      *
      * @param column
-     * @param val
+     * @param value
      * @return
      */
-    R ge(K column, V val);
+    R ge(K column, V value);
 
     /**
      * 大于等于（>=）
@@ -124,10 +124,10 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：lt("age", null) -> 无效
      *
      * @param column
-     * @param val
+     * @param value
      * @return
      */
-    R lt(K column, V val);
+    R lt(K column, V value);
 
     /**
      * 小于（<）
@@ -146,10 +146,10 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：le("age", null) -> 无效
      *
      * @param column
-     * @param val
+     * @param value
      * @return
      */
-    R le(K column, V val);
+    R le(K column, V value);
 
     /**
      * 小于等于（<=）
@@ -171,11 +171,11 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例: between("age", null, null) -> 无效
      *
      * @param column
-     * @param val1
-     * @param val2
+     * @param value1
+     * @param value2
      * @return R
      */
-    R between(K column, V val1, V val2);
+    R between(K column, V value1, V value2);
 
     /**
      * NOT BETWEEN
@@ -186,9 +186,9 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例: notBetween("age", null, null) -> 无效
      *
      * @param column
-     * @param val1
-     * @param val2
+     * @param value1
+     * @param value2
      * @return R
      */
-    R notBetween(K column, V val1, V val2);
+    R notBetween(K column, V value1, V value2);
 }

@@ -2,8 +2,8 @@ package cn.roothub.bbs.common.dao.wrapper.conditions;
 
 /**
  * @param <R> 返回结果
- * @param <K> 实体类属性
- * @param <V> 实体类属性的值
+ * @param <K> 数据库字段
+ * @param <V> 字段对应的值
  *
  * @Author: miansen.wang
  * @Date: 2019/9/12 16:44

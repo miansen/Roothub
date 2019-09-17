@@ -49,6 +49,9 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
      */
     protected AtomicInteger paramNameSeq = new AtomicInteger(0);
 
+    /**
+     * SQL 片段容器
+     */
     private AbstractSqlSegmentList segmentList = new SimpleSqlSegmentList();
 
     public T getModel() {
@@ -69,62 +72,68 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R eq(K column, V value) {
-        return this.addCondition(column, SqlKeyword.EQ, value);
+        return addCondition(column, SqlKeyword.EQ, value);
     }
 
     @Override
     public R eq(Map<K, V> params) {
-        return null;
+         params.forEach((k, v) -> addCondition(k, SqlKeyword.EQ, v));
+         return typedThis;
     }
 
     @Override
     public R ne(K column, V value) {
-        return this.addCondition(column, SqlKeyword.NE, value);
+        return addCondition(column, SqlKeyword.NE, value);
     }
 
     @Override
     public R ne(Map<K, V> params) {
-        return null;
+        params.forEach((k, v) -> addCondition(k, SqlKeyword.NE, v));
+        return typedThis;
     }
 
     @Override
     public R gt(K column, V value) {
-        return null;
+        return addCondition(column, SqlKeyword.GT, value);
     }
 
     @Override
     public R gt(Map<K, V> params) {
-        return null;
+        params.forEach((k, v) -> addCondition(k, SqlKeyword.GT, v));
+        return typedThis;
     }
 
     @Override
     public R ge(K column, V value) {
-        return null;
+        return addCondition(column, SqlKeyword.GE, value);
     }
 
     @Override
     public R ge(Map<K, V> params) {
-        return null;
+        params.forEach(((k, v) -> addCondition(k, SqlKeyword.GE, v)));
+        return typedThis;
     }
 
     @Override
     public R lt(K column, V value) {
-        return null;
+        return addCondition(column, SqlKeyword.LT, value);
     }
 
     @Override
     public R lt(Map<K, V> params) {
-        return null;
+        params.forEach((k, v) -> addCondition(k, SqlKeyword.LT, v));
+        return typedThis;
     }
 
     @Override
     public R le(K column, V value) {
-        return null;
+        return addCondition(column, SqlKeyword.LE, value);
     }
 
     @Override
     public R le(Map<K, V> params) {
-        return null;
+        params.forEach((k, v) -> addCondition(k, SqlKeyword.LE, v));
+        return typedThis;
     }
 
     @Override
@@ -222,17 +231,27 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
         return null;
     }
 
+    /**
+     * 添加 SQL 片段到容器中
+     * @param column 数据库表字段名称
+     * @param sqlKeyword 连接符
+     * @param value 字段对应的值
+     * @return this
+     */
     protected R addCondition(K column, SqlKeyword sqlKeyword, V value) {
-        List<ISqlSegment> list = Arrays.asList(() -> {
-            return this.columnToString(column);
-        }, sqlKeyword, () -> {
-            return this.formatSqlVal(value);
-        });
+        List<ISqlSegment> list = Arrays.asList(() -> columnToString(column),
+                sqlKeyword,
+                () -> formatSqlValue(value));
         segmentList.addAll(list);
-        return this.typedThis;
+        return typedThis;
     }
 
-    protected final String formatSqlVal(V value) {
+    /**
+     * 缓存 value，并且格式化成 mybatis 的参数格式：#{%s}
+     * @param value 数据库表字段对应的值
+     * @return String
+     */
+    protected final String formatSqlValue(V value) {
         if (value instanceof Object) {
             String genParamName = "BASEDAOVALUE" + this.paramNameSeq.incrementAndGet();
             this.paramNameValuePairs.put(genParamName, value);
@@ -242,6 +261,11 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
         }
     }
 
+    /**
+     * 将 column 转化成 String
+     * @param column 数据库表字段名称
+     * @return String
+     */
     protected String columnToString(K column) {
         if (column instanceof String) {
             return (String) column;
@@ -250,6 +274,10 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
         }
     }
 
+    /**
+     * 获取拼接好的 SQL 语句
+     * @return
+     */
     @Override
     public String getSqlSegment() {
         return segmentList.getSqlSegment();

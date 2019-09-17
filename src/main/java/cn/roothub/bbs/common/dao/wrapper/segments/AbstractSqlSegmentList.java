@@ -27,6 +27,7 @@ public abstract class AbstractSqlSegmentList extends ArrayList<ISqlSegment> impl
     public boolean addAll(Collection<? extends ISqlSegment> c) {
         List<ISqlSegment> list = new ArrayList<>(c);
         if (this.lastSqlSegment != null) {
+            // 默认用 AND 连接
             super.add(SqlKeyword.AND);
         }
         this.flushLastSqlSegment(list);

@@ -31,8 +31,8 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：eq("userName", "张三") -> user_name = '张三'
      * <p>例：eq("userName", null) -> user_name is null
      *
-     * @param column 实体类的字段
-     * @param value 值
+     * @param column 数据库表的字段名
+     * @param value 字段对应的值
      * @return
      */
     R eq(K column, V value);
@@ -54,8 +54,8 @@ public interface Compare<R, K, V> extends Serializable{
      * <p>例：ne("userName", "张三") -> user_name <> '张三'
      * <p>例：ne("userName", null) -> user_name is not null
      *
-     * @param column 实体类的字段
-     * @param value 值
+     * @param column 数据库表的字段名
+     * @param value 字段对应的值
      * @return
      */
     R ne(K column, V value);

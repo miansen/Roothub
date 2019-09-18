@@ -138,22 +138,31 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R between(K column, V value1, V value2) {
-        return null;
+        return addCondition(() -> columnToString(column),
+                SqlKeyword.BETWEEN,
+                () -> formatSqlValue(value1),
+                SqlKeyword.AND,
+                () -> formatSqlValue(value2));
     }
 
     @Override
     public R notBetween(K column, V value1, V value2) {
-        return null;
+        return addCondition(() -> columnToString(column),
+                SqlKeyword.NOT,
+                SqlKeyword.BETWEEN,
+                () -> formatSqlValue(value1),
+                SqlKeyword.AND,
+                () -> formatSqlValue(value2));
     }
 
     @Override
     public R isNull(K column) {
-        return null;
+        return addCondition(() -> columnToString(column), SqlKeyword.IS_NULL);
     }
 
     @Override
     public R isNotNull(K column) {
-        return null;
+        return addCondition(() -> columnToString(column), SqlKeyword.IS_NOT_NULL);
     }
 
     @Override
@@ -239,10 +248,16 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
      * @return this
      */
     protected R addCondition(K column, SqlKeyword sqlKeyword, V value) {
-        List<ISqlSegment> list = Arrays.asList(() -> columnToString(column),
-                sqlKeyword,
-                () -> formatSqlValue(value));
-        segmentList.addAll(list);
+        return addCondition(() -> columnToString(column), sqlKeyword, () -> formatSqlValue(value));
+    }
+
+    /**
+     * 添加 SQL 片段到容器中
+     * @param sqlSegments SQL 片段
+     * @return this
+     */
+    protected R addCondition(ISqlSegment...sqlSegments) {
+        segmentList.addAll(Arrays.asList(sqlSegments));
         return typedThis;
     }
 

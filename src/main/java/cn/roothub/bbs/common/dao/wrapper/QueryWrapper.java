@@ -21,7 +21,15 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
         queryWrapper = queryWrapper.eq(map);
         System.out.println(queryWrapper.getSqlSegment());
         QueryWrapper<Tag> queryWrapper2 = new QueryWrapper<>();
-        queryWrapper2 = queryWrapper2.eq("id", 1).ne("name", "zhangsan").ge(map);
+        queryWrapper2 = queryWrapper2.eq("id", 1)
+                .ne("name", "zhangsan")
+                .ge(map)
+                .between("create_date", "2018", "2019")
+                .notBetween("update_date", "2019", "2020")
+                .isNull("sex")
+                .isNotNull("addr");
         System.out.println(queryWrapper2.getSqlSegment());
+        Map<String, Object> paramNameValuePairs1 = queryWrapper.paramNameValuePairs;
+        Map<String, Object> paramNameValuePairs2 = queryWrapper2.paramNameValuePairs;
     }
 }

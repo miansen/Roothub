@@ -1,7 +1,7 @@
 package cn.roothub.bbs.common.dao.injector;
 
 import cn.roothub.bbs.common.dao.injector.methods.AbstractMethod;
-import cn.roothub.bbs.common.util.ArrayUtil;
+import cn.roothub.bbs.common.util.ArrayUtils;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.springframework.util.Assert;
 import java.lang.reflect.ParameterizedType;
@@ -54,7 +54,7 @@ public abstract class AbstractSqlInjector implements ISqlInjector{
             Type type = var4[var6];
             if (type instanceof ParameterizedType) {
                 Type[] typeArray = ((ParameterizedType)type).getActualTypeArguments();
-                if (ArrayUtil.isNotEmpty(typeArray)) {
+                if (ArrayUtils.isNotEmpty(typeArray)) {
                     int var10 = typeArray.length;
                     byte var11 = 0;
                     if (var11 < var10) {

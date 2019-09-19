@@ -27,7 +27,15 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
                 .between("create_date", "2018", "2019")
                 .notBetween("update_date", "2019", "2020")
                 .isNull("sex")
-                .isNotNull("addr");
+                .isNotNull("addr")
+                .in("last_name", "a", "b", "c")
+                .in("last_name")
+                .notIn("first_name", "d", "e", "f")
+                .notIn("first_name")
+                .like("title", "i like sql")
+                .notLike("title", "i like")
+                .likeLeft("title", "like")
+                .likeRight("title", "like");
         System.out.println(queryWrapper2.getSqlSegment());
         Map<String, Object> paramNameValuePairs1 = queryWrapper.paramNameValuePairs;
         Map<String, Object> paramNameValuePairs2 = queryWrapper2.paramNameValuePairs;

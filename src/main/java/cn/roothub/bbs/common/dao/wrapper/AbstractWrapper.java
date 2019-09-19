@@ -6,11 +6,11 @@ import cn.roothub.bbs.common.dao.wrapper.conditions.Func;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Join;
 import cn.roothub.bbs.common.dao.wrapper.segments.AbstractSqlSegmentList;
 import cn.roothub.bbs.common.dao.wrapper.segments.SimpleSqlSegmentList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import cn.roothub.bbs.common.util.ArrayUtils;
+
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @param <T> 数据库表映射实体类
@@ -167,32 +167,32 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R in(K column, V... values) {
-        return null;
+        return ArrayUtils.isEmpty(values) ? typedThis : addCondition(() -> columnToString(column), SqlKeyword.IN, inExpression(Arrays.asList(values)));
     }
 
     @Override
     public R notIn(K column, V... values) {
-        return null;
+        return ArrayUtils.isEmpty(values) ? typedThis : addCondition(() -> columnToString(column), SqlKeyword.NOT, SqlKeyword.IN, inExpression(Arrays.asList(values)));
     }
 
     @Override
     public R like(K column, V value) {
-        return null;
+        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> formatSqlValue((V) ("%" + value + "%")));
     }
 
     @Override
     public R notLike(K column, V value) {
-        return null;
+        return addCondition(() -> columnToString(column), SqlKeyword.NOT, SqlKeyword.LIKE, () -> formatSqlValue((V) ("%" + value + "%")));
     }
 
     @Override
     public R likeLeft(K column, V value) {
-        return null;
+        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> formatSqlValue((V) ("%" + value)));
     }
 
     @Override
     public R likeRight(K column, V value) {
-        return null;
+        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> formatSqlValue((V) (value + "%")));
     }
 
     @Override
@@ -287,6 +287,16 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
         } else {
             throw new RuntimeException("not support this column !");
         }
+    }
+
+    /**
+     * 生成 IN 的表达式
+     * @param values
+     * @return ISqlSegment
+     */
+    private ISqlSegment inExpression(Collection<V> values) {
+        return () -> values.stream().map((value) -> formatSqlValue(value))
+                .collect(Collectors.joining(",", "(", ")"));
     }
 
     /**

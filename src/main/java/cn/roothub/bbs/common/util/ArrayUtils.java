@@ -4,9 +4,9 @@ package cn.roothub.bbs.common.util;
  * @Author: miansen.wang
  * @Date: 2019/8/31 11:33
  */
-public class ArrayUtil {
+public class ArrayUtils {
 
-    private ArrayUtil() {
+    private ArrayUtils() {
     }
 
     public static boolean isEmpty(Object[] array) {

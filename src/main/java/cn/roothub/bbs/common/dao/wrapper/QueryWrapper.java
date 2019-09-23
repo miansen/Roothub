@@ -39,5 +39,13 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
         System.out.println(queryWrapper2.getSqlSegment());
         Map<String, Object> paramNameValuePairs1 = queryWrapper.paramNameValuePairs;
         Map<String, Object> paramNameValuePairs2 = queryWrapper2.paramNameValuePairs;
+        QueryWrapper<Object> queryWrapper3 = new QueryWrapper<>();
+        queryWrapper3.eq("id", 1)
+                .and()
+                .ne("name", "zhangsan")
+                .or()
+                .ge("addr", "china");
+        String sqlSegment3 = queryWrapper3.getSqlSegment();
+        System.out.println(sqlSegment3);
     }
 }

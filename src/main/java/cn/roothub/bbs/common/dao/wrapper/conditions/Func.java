@@ -83,18 +83,30 @@ public interface Func<R, K, V> {
     /**
      * 排序：ORDER BY 字段, ... ASC
      * <p>例: orderByAsc("id", "userName", "age") -> order by id ASC,user_name ASC,age ASC
-     * @param columns
-     * @return
+     * @param columns 数据库表字段
+     * @return R
      */
-    R orderByAsc(K... columns);
+    default R orderByAsc(K... columns) {
+        return orderBy(true, columns);
+    }
 
     /**
      * 排序：ORDER BY 字段, ... DESC
      * <p>例: orderByDesc("id", "userName", "age") -> order by id DESC,user_name DESC,age DESC
-     * @param columns
-     * @return
+     * @param columns 数据库表字段
+     * @return R
      */
-    R orderByDesc(K... columns);
+    default R orderByDesc(K... columns) {
+        return orderBy(false, columns);
+    }
+
+    /**
+     * 排序：ORDER BY 字段
+     * @param isAsc 是否升序
+     * @param columns 数据库表字段
+     * @return R
+     */
+    R orderBy(boolean isAsc, K... columns);
 
     /**
      * 分组：GROUP BY 字段

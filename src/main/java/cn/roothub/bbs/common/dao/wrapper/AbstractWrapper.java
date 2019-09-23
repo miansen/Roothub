@@ -5,7 +5,7 @@ import cn.roothub.bbs.common.dao.wrapper.conditions.Compare;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Func;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Join;
 import cn.roothub.bbs.common.dao.wrapper.segments.AbstractSqlSegmentList;
-import cn.roothub.bbs.common.dao.wrapper.segments.SimpleSqlSegmentList;
+import cn.roothub.bbs.common.dao.wrapper.segments.NormalSqlSegmentList;
 import cn.roothub.bbs.common.util.ArrayUtils;
 
 import java.util.*;
@@ -52,7 +52,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     /**
      * SQL 片段容器
      */
-    private AbstractSqlSegmentList segmentList = new SimpleSqlSegmentList();
+    private AbstractSqlSegmentList segmentList = new NormalSqlSegmentList();
 
     public T getModel() {
         return model;
@@ -196,12 +196,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     }
 
     @Override
-    public R orderByAsc(K... columns) {
-        return null;
-    }
-
-    @Override
-    public R orderByDesc(K... columns) {
+    public R orderBy(boolean isAsc, K... columns) {
         return null;
     }
 
@@ -212,12 +207,12 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R or() {
-        return null;
+        return addCondition(SqlKeyword.OR);
     }
 
     @Override
     public R and() {
-        return null;
+        return addCondition(SqlKeyword.AND);
     }
 
     @Override

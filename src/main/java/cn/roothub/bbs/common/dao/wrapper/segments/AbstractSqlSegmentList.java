@@ -1,6 +1,5 @@
 package cn.roothub.bbs.common.dao.wrapper.segments;
 
-import cn.roothub.bbs.common.dao.enums.SqlKeyword;
 import cn.roothub.bbs.common.dao.wrapper.ISqlSegment;
 import cn.roothub.bbs.common.util.StringPool;
 import java.util.ArrayList;
@@ -15,25 +14,31 @@ import java.util.List;
 public abstract class AbstractSqlSegmentList extends ArrayList<ISqlSegment> implements ISqlSegment, StringPool{
 
     /**
-     * 最后一个 SQL 片段，用于判断是否添加连接条件（AND、OR、EXISTS、NOT EXISTS）
+     * 最后一个 SQL 片段，用于判断添加连接条件
      */
     protected ISqlSegment lastSqlSegment;
 
     /**
      * 将 SQL 片段添加到容器当中
      * @param c
-     * @return
+     * @return boolean
      */
     public boolean addAll(Collection<? extends ISqlSegment> c) {
-        List<ISqlSegment> list = new ArrayList<>(c);
-        if (this.lastSqlSegment != null) {
-            // 默认用 AND 连接
-            super.add(SqlKeyword.AND);
+        List<ISqlSegment> sqlSegmentList = new ArrayList<>(c);
+        boolean goon = transformList(sqlSegmentList);
+        if (goon) {
+            flushLastSqlSegment(sqlSegmentList);
         }
-        this.flushLastSqlSegment(list);
-        super.addAll(list);
+        super.addAll(sqlSegmentList);
         return true;
     }
+
+    /**
+     * 由子类实现，根据第一个和最后一个 SQL 片段判断连接条件
+     * @param sqlSegmentList
+     * @return boolean
+     */
+    protected abstract boolean transformList(List<ISqlSegment> sqlSegmentList);
 
     /**
      * 刷新最后一个 SQL 片段

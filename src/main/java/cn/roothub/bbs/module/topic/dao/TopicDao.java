@@ -2,12 +2,14 @@ package cn.roothub.bbs.module.topic.dao;
 
 import java.util.Date;
 import java.util.List;
+
+import cn.roothub.bbs.common.dao.IBaseDao;
 import org.apache.ibatis.annotations.Param;
 import cn.roothub.bbs.module.topic.model.Topic;
 import cn.roothub.bbs.module.user.model.User;
 import cn.roothub.bbs.module.tag.model.Tag;
 
-public interface TopicDao {
+public interface TopicDao extends IBaseDao<Topic>{
 
 	/**
 	 * 查询所有话题

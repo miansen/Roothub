@@ -8,7 +8,10 @@ import cn.roothub.bbs.common.dao.wrapper.segments.AbstractSqlSegmentList;
 import cn.roothub.bbs.common.dao.wrapper.segments.NormalSqlSegmentList;
 import cn.roothub.bbs.common.util.ArrayUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -197,7 +200,16 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R orderBy(boolean isAsc, K... columns) {
-        return null;
+        if (ArrayUtils.isEmpty(columns)) {
+            return typedThis;
+        } else {
+            SqlKeyword mode = isAsc ? SqlKeyword.ASC : SqlKeyword.DESC;
+            for (int i = 0; i < columns.length; i++) {
+                K column = columns[i];
+                addCondition(SqlKeyword.ORDER_BY, () -> columnToString(column), mode);
+            }
+            return typedThis;
+        }
     }
 
     @Override

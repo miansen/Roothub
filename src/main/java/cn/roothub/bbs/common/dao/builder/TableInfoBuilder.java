@@ -4,9 +4,11 @@ import cn.roothub.bbs.common.dao.annotation.TableName;
 import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.util.StringUtil;
+
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.util.CollectionUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
@@ -29,7 +31,7 @@ public class TableInfoBuilder {
     /**
      * Field 缓存池
      */
-    private static final Map<Class, List<Field>> FIELD_CACHE = new ConcurrentHashMap();
+    private static final Map<Class<?>, List<Field>> FIELD_CACHE = new ConcurrentHashMap();
 
     /**
      * 初始化 TableInfo

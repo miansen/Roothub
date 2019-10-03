@@ -1,5 +1,7 @@
 package cn.roothub.bbs.module.topic.model;
 
+import cn.roothub.bbs.common.model.IBaseModel;
+
 import java.util.Date;
 
 /**
@@ -10,7 +12,7 @@ import java.util.Date;
  * 下午9:19:57
  * TODO
  */
-public class Topic {
+public class Topic implements IBaseModel{
 
 	/**
 	 * 话题标识

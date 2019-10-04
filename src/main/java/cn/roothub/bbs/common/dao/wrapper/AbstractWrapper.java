@@ -5,6 +5,7 @@ import cn.roothub.bbs.common.dao.wrapper.conditions.Compare;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Func;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Join;
 import cn.roothub.bbs.common.dao.wrapper.segments.AbstractSqlSegmentList;
+import cn.roothub.bbs.common.dao.wrapper.segments.ISqlSegment;
 import cn.roothub.bbs.common.dao.wrapper.segments.NormalSqlSegmentList;
 import cn.roothub.bbs.common.util.ArrayUtils;
 
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  * @Author: miansen.wang
  * @Date: 2019/9/12 10:04
  */
-public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>, K, V> implements Compare<R, K, V>, Join<R>, Func<R, K, V>, ISqlSegment{
+public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>, K, V> implements Compare<R, K, V>, Join<R>, Func<R, K, V>, ISqlSegment {
 
     /**
      * 数据库表映射实体类
@@ -214,7 +215,9 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R groupBy(K... columns) {
-        return null;
+        return ArrayUtils.isEmpty(columns) ? typedThis : addCondition(SqlKeyword.GROUP_BY, () ->
+            Arrays.stream(columns).map(this::columnToString).collect(Collectors.joining(","))
+        );
     }
 
     @Override
@@ -229,22 +232,22 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R exists(String existsSql) {
-        return null;
+        return addCondition(SqlKeyword.EXISTS, () -> String.format("(%s)", existsSql));
     }
 
     @Override
     public R notExists(String existsSql) {
-        return null;
+        return addCondition(SqlKeyword.NOT, SqlKeyword.EXISTS, () -> String.format("(%s)", existsSql));
     }
 
     @Override
     public R having() {
-        return null;
+        return addCondition(SqlKeyword.HAVING);
     }
 
     @Override
     public R having(String havingSql) {
-        return null;
+        return addCondition(SqlKeyword.HAVING, () -> havingSql);
     }
 
     /**

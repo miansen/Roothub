@@ -1,6 +1,5 @@
 package cn.roothub.bbs.common.dao.wrapper.segments;
 
-import cn.roothub.bbs.common.dao.wrapper.ISqlSegment;
 import cn.roothub.bbs.common.util.StringPool;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +33,7 @@ public abstract class AbstractSqlSegmentList extends ArrayList<ISqlSegment> impl
     }
 
     /**
-     * 由子类实现，根据第一个和最后一个 SQL 片段判断连接条件
+     * 由子类实现，根据具体的场景做转换
      * @param sqlSegmentList
      * @return boolean
      */

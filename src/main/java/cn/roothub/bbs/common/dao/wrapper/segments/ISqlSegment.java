@@ -1,4 +1,4 @@
-package cn.roothub.bbs.common.dao.wrapper;
+package cn.roothub.bbs.common.dao.wrapper.segments;
 
 import java.io.Serializable;
 

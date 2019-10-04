@@ -2,7 +2,7 @@ package cn.roothub.bbs.common.dao.wrapper.segments;
 
 import cn.roothub.bbs.common.dao.enums.MatchSegment;
 import cn.roothub.bbs.common.dao.enums.SqlKeyword;
-import cn.roothub.bbs.common.dao.wrapper.ISqlSegment;
+
 import java.util.List;
 import java.util.stream.Collectors;
 

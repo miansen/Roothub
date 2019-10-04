@@ -1,6 +1,6 @@
 package cn.roothub.bbs.common.dao.enums;
 
-import cn.roothub.bbs.common.dao.wrapper.ISqlSegment;
+import cn.roothub.bbs.common.dao.wrapper.segments.ISqlSegment;
 
 /**
  * @Author: miansen.wang

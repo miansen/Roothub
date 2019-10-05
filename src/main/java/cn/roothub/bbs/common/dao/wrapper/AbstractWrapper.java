@@ -4,9 +4,8 @@ import cn.roothub.bbs.common.dao.enums.SqlKeyword;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Compare;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Func;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Join;
-import cn.roothub.bbs.common.dao.wrapper.segments.AbstractSqlSegmentList;
 import cn.roothub.bbs.common.dao.wrapper.segments.ISqlSegment;
-import cn.roothub.bbs.common.dao.wrapper.segments.NormalSqlSegmentList;
+import cn.roothub.bbs.common.dao.wrapper.segments.SqlSegmentBuilder;
 import cn.roothub.bbs.common.util.ArrayUtils;
 
 import java.util.Arrays;
@@ -43,8 +42,8 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     protected final R typedThis = (R) this;
 
     /**
-     * K: 实体类属性名
-     * V: 实体类属性值
+     * K: "BASEDAOVALUE" + this.paramNameSeq.incrementAndGet()
+     * V: value
      */
     protected Map<String, Object> paramNameValuePairs = new HashMap<>(16);
 
@@ -54,9 +53,9 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     protected AtomicInteger paramNameSeq = new AtomicInteger(0);
 
     /**
-     * SQL 片段容器
+     * SQL 片段生成器
      */
-    private AbstractSqlSegmentList segmentList = new NormalSqlSegmentList();
+    private SqlSegmentBuilder sqlSegmentBuilder = new SqlSegmentBuilder();
 
     public T getModel() {
         return model;
@@ -216,7 +215,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     @Override
     public R groupBy(K... columns) {
         return ArrayUtils.isEmpty(columns) ? typedThis : addCondition(SqlKeyword.GROUP_BY, () ->
-            Arrays.stream(columns).map(this::columnToString).collect(Collectors.joining(","))
+            Arrays.stream(columns).map(this::columnToString).collect(Collectors.joining(" , "))
         );
     }
 
@@ -267,7 +266,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
      * @return this
      */
     protected R addCondition(ISqlSegment...sqlSegments) {
-        segmentList.addAll(Arrays.asList(sqlSegments));
+        sqlSegmentBuilder.add(sqlSegments);
         return typedThis;
     }
 
@@ -315,6 +314,6 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
      */
     @Override
     public String getSqlSegment() {
-        return segmentList.getSqlSegment();
+        return sqlSegmentBuilder.getSqlSegment();
     }
 }

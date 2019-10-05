@@ -11,7 +11,21 @@ import java.util.function.Predicate;
  */
 public enum MatchSegment {
 
-    ADN_OR(i -> i == SqlKeyword.AND || i == SqlKeyword.OR);
+    ADN(i -> i == SqlKeyword.AND),
+
+    OR(i -> i == SqlKeyword.OR),
+
+    ADN_OR(i -> i == SqlKeyword.AND || i == SqlKeyword.OR),
+
+    NOT(i -> i == SqlKeyword.NOT),
+
+    GROUP_BY(i -> i == SqlKeyword.GROUP_BY),
+
+    ORDER_BY(i -> i == SqlKeyword.ORDER_BY),
+
+    HAVING(i -> i == SqlKeyword.HAVING),
+
+    EXISTS(i -> i == SqlKeyword.EXISTS);
 
     private final Predicate<ISqlSegment> predicate;
 

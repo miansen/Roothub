@@ -44,6 +44,9 @@ public abstract class AbstractSqlSegmentList extends ArrayList<ISqlSegment> impl
      * @param list
      */
     protected void flushLastSqlSegment(List<? extends ISqlSegment> list) {
-        this.lastSqlSegment = list.get(list.size() - 1);
+        int size = list.size();
+        if (size > 1) {
+            lastSqlSegment = list.get(size - 1);
+        }
     }
 }

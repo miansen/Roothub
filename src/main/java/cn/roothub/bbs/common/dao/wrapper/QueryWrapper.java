@@ -44,7 +44,14 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
                 .and()
                 .ne("name", "zhangsan")
                 .or()
-                .ge("addr", "china");
+                .ge("addr", "china")
+                .exists("select 1 from user b where a.id = b.id")
+                .groupBy("id", "name", "age")
+                .groupBy("addr")
+                .having("count(1) > 1")
+                .orderByDesc("id", "id2", "id3")
+                .orderByAsc("name")
+                .orderBy(false, "age");
         String sqlSegment3 = queryWrapper3.getSqlSegment();
         System.out.println(sqlSegment3);
     }

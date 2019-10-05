@@ -37,6 +37,6 @@ public class NormalSqlSegmentList extends AbstractSqlSegmentList {
      */
     @Override
     public String getSqlSegment() {
-        return this.stream().map(ISqlSegment::getSqlSegment).collect(Collectors.joining(" "));
+        return this.isEmpty() ? EMPTY : this.stream().map(ISqlSegment::getSqlSegment).collect(Collectors.joining(SPACE));
     }
 }

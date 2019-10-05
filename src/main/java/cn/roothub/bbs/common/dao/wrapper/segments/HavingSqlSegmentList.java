@@ -21,6 +21,6 @@ public class HavingSqlSegmentList extends AbstractSqlSegmentList{
     // 因为前面删了 "HAVING"，所以取的时候再拼上
     @Override
     public String getSqlSegment() {
-        return this.isEmpty() ? "" : this.stream().map(ISqlSegment::getSqlSegment).collect(Collectors.joining(" ", " " + SqlKeyword.HAVING.getSqlSegment() + " ",""));
+        return this.isEmpty() ? EMPTY : this.stream().map(ISqlSegment::getSqlSegment).collect(Collectors.joining(SPACE, SPACE + SqlKeyword.HAVING.getSqlSegment() + SPACE,EMPTY));
     }
 }

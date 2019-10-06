@@ -74,6 +74,8 @@ public interface StringPool {
     String HTML_LT = "&lt;";
     String HTML_GT = "&gt;";
 
+    String SPACE_COMMA_SPACE = " , ";
+
     // ---------------------------------------------------------------- array
 
     String[] EMPTY_ARRAY = new String[0];

@@ -7,6 +7,7 @@ import cn.roothub.bbs.common.dao.wrapper.conditions.Join;
 import cn.roothub.bbs.common.dao.wrapper.segments.ISqlSegment;
 import cn.roothub.bbs.common.dao.wrapper.segments.SqlSegmentBuilder;
 import cn.roothub.bbs.common.util.ArrayUtils;
+import cn.roothub.bbs.common.util.StringPool;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,6 +28,20 @@ import java.util.stream.Collectors;
 public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>, K, V> implements Compare<R, K, V>, Join<R>, Func<R, K, V>, ISqlSegment {
 
     /**
+     * {@link #paramNameValuePairs} key 的固定的前缀
+     */
+    private static final String BASE_MAPPER_PREFIX_PARAM = "BASEMAPPERVALUE";
+
+    /**
+     * 别名
+     */
+    private static final String BASE_MAPPER_ALIAS_PARAM = "wrapper";
+
+    private static final String BASE_MAPPER_TOKEN = "#{%s.paramNameValuePairs.%s}";
+
+    private static final String PLACE_HOLDER = "(%s)";
+
+    /**
      * 数据库表映射实体类
      */
     protected T model;
@@ -42,13 +57,14 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     protected final R typedThis = (R) this;
 
     /**
-     * K: "BASEDAOVALUE" + this.paramNameSeq.incrementAndGet()
-     * V: value
+     * 存储参数的值
+     * K: {@link #BASE_MAPPER_PREFIX_PARAM} + {@link #paramNameSeq}.incrementAndGet()
+     * V: 参数值
      */
     protected Map<String, Object> paramNameValuePairs = new HashMap<>(16);
 
     /**
-     * 自增长值，作为 paramNameValuePairs 的 key
+     * 自增长值，作为 {@link #paramNameValuePairs} 的 key 的后缀
      */
     protected AtomicInteger paramNameSeq = new AtomicInteger(0);
 
@@ -180,22 +196,22 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R like(K column, V value) {
-        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> formatSqlValue((V) ("%" + value + "%")));
+        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> StringPool.PERCENT + formatSqlValue(value) + StringPool.PERCENT);
     }
 
     @Override
     public R notLike(K column, V value) {
-        return addCondition(() -> columnToString(column), SqlKeyword.NOT, SqlKeyword.LIKE, () -> formatSqlValue((V) ("%" + value + "%")));
+        return addCondition(() -> columnToString(column), SqlKeyword.NOT, SqlKeyword.LIKE, () -> StringPool.PERCENT + formatSqlValue(value) + StringPool.PERCENT);
     }
 
     @Override
     public R likeLeft(K column, V value) {
-        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> formatSqlValue((V) ("%" + value)));
+        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> StringPool.PERCENT + formatSqlValue(value));
     }
 
     @Override
     public R likeRight(K column, V value) {
-        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> formatSqlValue((V) (value + "%")));
+        return addCondition(() -> columnToString(column), SqlKeyword.LIKE, () -> formatSqlValue(value) + StringPool.PERCENT);
     }
 
     @Override
@@ -215,7 +231,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     @Override
     public R groupBy(K... columns) {
         return ArrayUtils.isEmpty(columns) ? typedThis : addCondition(SqlKeyword.GROUP_BY, () ->
-            Arrays.stream(columns).map(this::columnToString).collect(Collectors.joining(" , "))
+            Arrays.stream(columns).map(this::columnToString).collect(Collectors.joining(StringPool.SPACE_COMMA_SPACE))
         );
     }
 
@@ -231,12 +247,12 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
 
     @Override
     public R exists(String existsSql) {
-        return addCondition(SqlKeyword.EXISTS, () -> String.format("(%s)", existsSql));
+        return addCondition(SqlKeyword.EXISTS, () -> String.format(PLACE_HOLDER, existsSql));
     }
 
     @Override
     public R notExists(String existsSql) {
-        return addCondition(SqlKeyword.NOT, SqlKeyword.EXISTS, () -> String.format("(%s)", existsSql));
+        return addCondition(SqlKeyword.NOT, SqlKeyword.EXISTS, () -> String.format(PLACE_HOLDER, existsSql));
     }
 
     @Override
@@ -277,9 +293,9 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
      */
     protected final String formatSqlValue(V value) {
         if (value instanceof Object) {
-            String genParamName = "BASEDAOVALUE" + this.paramNameSeq.incrementAndGet();
+            String genParamName = BASE_MAPPER_PREFIX_PARAM + this.paramNameSeq.incrementAndGet();
             this.paramNameValuePairs.put(genParamName, value);
-            return String.format("#{%s.paramNameValuePairs.%s}", "wrapper", genParamName);
+            return String.format(BASE_MAPPER_TOKEN, BASE_MAPPER_ALIAS_PARAM, genParamName);
         } else {
             throw new RuntimeException("not support this value !");
         }
@@ -305,7 +321,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
      */
     private ISqlSegment inExpression(Collection<V> values) {
         return () -> values.stream().map((value) -> formatSqlValue(value))
-                .collect(Collectors.joining(",", "(", ")"));
+                .collect(Collectors.joining(StringPool.COMMA, StringPool.LEFT_BRACKET, StringPool.RIGHT_BRACKET));
     }
 
     /**

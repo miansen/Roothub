@@ -33,6 +33,14 @@ public class TableInfoBuilder {
      */
     private static final Map<Class<?>, List<Field>> FIELD_CACHE = new ConcurrentHashMap();
 
+    public static TableInfo getTableInfo(Class<?> modelClass) {
+        if (modelClass == null) {
+            return null;
+        } else {
+            return TABLE_INFO_CACHE.get(modelClass);
+        }
+    }
+
     /**
      * 初始化 TableInfo
      * @param builderAssistant

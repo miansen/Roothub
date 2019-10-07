@@ -1,7 +1,7 @@
 package cn.roothub.bbs.common.dao.injector;
 
 import cn.roothub.bbs.common.dao.injector.methods.AbstractMethod;
-import cn.roothub.bbs.common.util.ArrayUtils;
+import cn.roothub.bbs.common.dao.util.ArrayUtils;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.springframework.util.Assert;
 import java.lang.reflect.ParameterizedType;

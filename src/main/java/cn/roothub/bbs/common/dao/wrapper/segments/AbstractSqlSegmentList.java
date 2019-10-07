@@ -1,6 +1,6 @@
 package cn.roothub.bbs.common.dao.wrapper.segments;
 
-import cn.roothub.bbs.common.util.StringPool;
+import cn.roothub.bbs.common.dao.util.StringPool;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

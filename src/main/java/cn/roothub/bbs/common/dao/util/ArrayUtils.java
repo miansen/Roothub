@@ -1,4 +1,4 @@
-package cn.roothub.bbs.common.util;
+package cn.roothub.bbs.common.dao.util;
 
 /**
  * @Author: miansen.wang

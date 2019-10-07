@@ -1,13 +1,14 @@
 package cn.roothub.bbs.common.dao.wrapper;
 
 import cn.roothub.bbs.common.dao.enums.SqlKeyword;
+import cn.roothub.bbs.common.dao.exceptions.BaseMapperException;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Compare;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Func;
 import cn.roothub.bbs.common.dao.wrapper.conditions.Join;
 import cn.roothub.bbs.common.dao.wrapper.segments.ISqlSegment;
 import cn.roothub.bbs.common.dao.wrapper.segments.SqlSegmentBuilder;
-import cn.roothub.bbs.common.util.ArrayUtils;
-import cn.roothub.bbs.common.util.StringPool;
+import cn.roothub.bbs.common.dao.util.ArrayUtils;
+import cn.roothub.bbs.common.dao.util.StringPool;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -297,7 +298,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
             this.paramNameValuePairs.put(genParamName, value);
             return String.format(BASE_MAPPER_TOKEN, BASE_MAPPER_ALIAS_PARAM, genParamName);
         } else {
-            throw new RuntimeException("not support this value !");
+            throw new BaseMapperException("not support this value !");
         }
     }
 
@@ -310,7 +311,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
         if (column instanceof String) {
             return (String) column;
         } else {
-            throw new RuntimeException("not support this column !");
+            throw new BaseMapperException("not support this column !");
         }
     }
 

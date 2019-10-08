@@ -292,7 +292,7 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
      * @param value 数据库表字段对应的值
      * @return String
      */
-    protected final String formatSqlValue(V value) {
+    protected String formatSqlValue(V value) {
         if (value instanceof Object) {
             String genParamName = BASE_MAPPER_PREFIX_PARAM + this.paramNameSeq.incrementAndGet();
             this.paramNameValuePairs.put(genParamName, value);

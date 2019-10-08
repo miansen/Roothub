@@ -1,9 +1,9 @@
-package cn.roothub.bbs.common.dao.wrapper;
+package cn.roothub.bbs.common.dao.wrapper.query;
 
 import cn.roothub.bbs.common.dao.builder.TableInfoBuilder;
 import cn.roothub.bbs.common.dao.exceptions.BaseMapperException;
 import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
-import cn.roothub.bbs.common.dao.wrapper.query.Query;
+import cn.roothub.bbs.common.dao.wrapper.AbstractWrapper;
 import cn.roothub.bbs.common.dao.util.ArrayUtils;
 import cn.roothub.bbs.common.dao.util.StringPool;
 import cn.roothub.bbs.module.tag.model.Tag;

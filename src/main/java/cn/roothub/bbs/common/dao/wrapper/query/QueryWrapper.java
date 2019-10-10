@@ -65,6 +65,10 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
         return super.typedThis;
     }
 
+    /**
+     * 获取查询的字段
+     * @return
+     */
     public String getSelectColumns() {
         return selectColumns;
     }

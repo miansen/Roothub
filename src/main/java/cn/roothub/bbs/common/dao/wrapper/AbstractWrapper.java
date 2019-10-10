@@ -31,16 +31,16 @@ public abstract class AbstractWrapper<T , R extends AbstractWrapper<T, R, K, V>,
     /**
      * {@link #paramNameValuePairs} key 的固定的前缀
      */
-    private static final String BASE_MAPPER_PREFIX_PARAM = "BASEMAPPERVALUE";
+    protected static final String BASE_MAPPER_PREFIX_PARAM = "BASEMAPPERVALUE";
 
     /**
      * 别名
      */
-    private static final String BASE_MAPPER_ALIAS_PARAM = "wrapper";
+    protected static final String BASE_MAPPER_ALIAS_PARAM = "wrapper";
 
-    private static final String BASE_MAPPER_TOKEN = "#{%s.paramNameValuePairs.%s}";
+    protected static final String BASE_MAPPER_TOKEN = "#{%s.paramNameValuePairs.%s}";
 
-    private static final String PLACE_HOLDER = "(%s)";
+    protected static final String PLACE_HOLDER = "(%s)";
 
     /**
      * 数据库表映射实体类

@@ -1,14 +1,16 @@
 package cn.roothub.bbs.common.dao.wrapper.query;
 
+import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.wrapper.AbstractWrapper;
 
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
  * @Author: miansen.wang
  * @Date: 2019/10/8 21:50
  */
-public class LambdaQueryWrapper<T> extends AbstractWrapper implements Query{
+public class LambdaQueryWrapper<T> extends AbstractWrapper<T, LambdaQueryWrapper<T>, Function<T, ?>, Function<T, ?>> implements Query<T, LambdaQueryWrapper<T>, Function<T, ?>>{
 
     private String selectColumns;
 
@@ -20,38 +22,38 @@ public class LambdaQueryWrapper<T> extends AbstractWrapper implements Query{
         super.modelClass = modelClass;
     }
 
-    public LambdaQueryWrapper(String... columns) {
+    public LambdaQueryWrapper(Function<T, ?> columns) {
         this.select(columns);
     }
 
-    public LambdaQueryWrapper(Class<T> modelClass, String... columns) {
+    public LambdaQueryWrapper(Class<T> modelClass, Function<T, ?> columns) {
         super.modelClass = modelClass;
         this.select(columns);
     }
 
     @Override
-    public Object select(Object[] columns) {
-        return null;
+    protected String formatSqlValue(Function<T, ?> value) {
+        return super.formatSqlValue(value);
     }
 
     @Override
-    public Object select(Predicate predicate) {
-        return null;
-    }
-
-    @Override
-    public Object select(Class modelClass, Predicate predicate) {
-        return null;
-    }
-
-    @Override
-    protected String columnToString(Object column) {
+    protected String columnToString(Function<T, ?> column) {
         return super.columnToString(column);
     }
 
     @Override
-    protected String formatSqlValue(Object value) {
-        return super.formatSqlValue(value);
+    public LambdaQueryWrapper<T> select(Function<T, ?>... columns) {
+        return null;
+    }
+
+    @Override
+    public LambdaQueryWrapper<T> select(Predicate<TableFieldInfo> predicate) {
+        return null;
+    }
+
+    @Override
+    public LambdaQueryWrapper<T> select(Class<T> modelClass, Predicate<TableFieldInfo> predicate) {
+        return null;
     }
 
     public String getSelectColumns() {

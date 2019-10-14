@@ -1,5 +1,6 @@
 package cn.roothub.bbs.common.dao;
 
+import cn.roothub.bbs.common.dao.wrapper.query.QueryWrapper;
 import cn.roothub.bbs.common.model.IBaseModel;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface IBaseDao<T extends IBaseModel> {
 
-    <T> T selectOne(@Param("whereBlock") String whereBlock);
+    <T> T selectOne(@Param("wrapper") QueryWrapper queryWrapper);
 
     /**
      * 单个查询

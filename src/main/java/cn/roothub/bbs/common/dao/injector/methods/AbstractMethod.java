@@ -15,6 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.stream.Collectors;
 
+import static cn.roothub.bbs.common.dao.util.StringPool.NEWLINE;
+import static cn.roothub.bbs.common.dao.util.StringPool.QUOTE;
+import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_CHEV;
+
 /**
  * 此类提供了注入 SQL 的方法 inject()
  * 具体注入的逻辑在这个方法 injectMappedStatement() 里，由子类实现
@@ -57,8 +61,13 @@ public abstract class AbstractMethod {
      * @return
      */
     protected String initSqlSelectColumns (TableInfo tableInfo) {
-        return tableInfo.getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
+        String selectColumns = tableInfo.getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
                 .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
+        return "<choose>" + "\n"
+                + "<when test=\"" + "wrapper != null and wrapper.selectColumns != null" + QUOTE + RIGHT_CHEV + NEWLINE
+                + "${wrapper.selectColumns}" + NEWLINE + "</when>" + NEWLINE
+                + "<otherwise>" + selectColumns + "</otherwise>" + NEWLINE
+                + "</choose>";
     }
 
     /**

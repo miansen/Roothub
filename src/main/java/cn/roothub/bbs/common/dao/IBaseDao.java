@@ -6,13 +6,23 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
+ * 该接口作为 Dao 层的基础接口，定义了常用的数据库增删改查方法，建议大部分的 Dao 层接口继承
+ *
+ * @param <T> 数据库表映射实体类
+ *
  * @Author: miansen.wang
  * @Date: 2019/8/19 22:44
- * 该接口作为Dao层的基础接口，定义了常用的数据库增删改查方法，建议大部分的Dao层接口继承
  */
 public interface IBaseDao<T extends IBaseModel> {
 
-    <T> T selectOne(@Param("wrapper") QueryWrapper queryWrapper);
+    /**
+     * 查询满足条件的一条数据
+     * @param queryWrapper
+     * @return T
+     */
+    T selectOne(@Param("wrapper") QueryWrapper queryWrapper);
+
+
 
     /**
      * 单个查询

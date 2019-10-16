@@ -9,18 +9,18 @@ import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 查询满足条件的一条数据
+ * 查询满足条件的总记录数
  *
  * @Author: miansen.wang
- * @Date: 2019/8/29 22:01
+ * @Date: 2019/10/16 22:50
  */
-public class SelectOne extends AbstractMethod{
+public class SelectCount extends AbstractMethod{
 
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        SqlMethod selectOne = SqlMethod.SELECT_ONE;
-        String sqlScript = String.format(selectOne.getSql(), initSqlSelectColumns(tableInfo), tableInfo.getTableName(), "<where>${wrapper.sqlSegment}</where>");
+        SqlMethod selectCount = SqlMethod.SELECT_COUNT;
+        String sqlScript = String.format(selectCount.getSql(), tableInfo.getTableName(), "<where>${wrapper.sqlSegment}</where>");
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
-        return this.addMappedStatement(mapperClass, selectOne.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, modelClass, new NoKeyGenerator(), null, null);
+        return this.addMappedStatement(mapperClass, selectCount.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, Integer.class, new NoKeyGenerator(), null, null);
     }
 }

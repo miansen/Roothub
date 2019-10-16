@@ -3,6 +3,9 @@ package cn.roothub.bbs.common.dao;
 import cn.roothub.bbs.common.dao.wrapper.query.QueryWrapper;
 import cn.roothub.bbs.common.model.IBaseModel;
 import org.apache.ibatis.annotations.Param;
+
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,57 +19,38 @@ import java.util.List;
 public interface IBaseDao<T extends IBaseModel> {
 
     /**
+     * 根据 ID 查询一条数据
+     * @param id
+     * @return
+     */
+    T selectById(Serializable id);
+
+    /**
+     * 根据 ID 集合，批量查询多条数据
+     * @param idList
+     * @return
+     */
+    List<T> selectBatchIds(@Param("coll") Collection<? extends Serializable> idList);
+
+    /**
      * 查询满足条件的一条数据
      * @param queryWrapper
      * @return T
      */
-    T selectOne(@Param("wrapper") QueryWrapper queryWrapper);
-
-
+    T selectOne(@Param("wrapper") QueryWrapper<T> queryWrapper);
 
     /**
-     * 单个查询
-     * @param primaryKey
+     * 查询满足条件的多条数据
+     * @param queryWrapper
      * @return
      */
-    IBaseModel findByPrimaryKey(@Param("primaryKey") Integer primaryKey);
+    List<T> selectList(@Param("wrapper") QueryWrapper<T> queryWrapper);
 
     /**
-     * lsit查询
-     * @param start
-     * @param limit
-     * @param <T>
+     * 查询满足条件的总记录数
+     * @param queryWrapper
      * @return
      */
-    <T extends IBaseModel> List<T> findList(@Param("start") Integer start, @Param("limit") Integer limit);
-
-    /**
-     * 添加
-     * @param t
-     * @param <T>
-     * @return
-     */
-    <T extends IBaseModel> int insert(T t);
-
-    /**
-     * 更新
-     * @param t
-     * @param <T>
-     * @return
-     */
-    <T extends IBaseModel> int update(T t);
-
-    /**
-     * 单个删除
-     * @param primaryKey
-     * @return
-     */
-    int deleteByPrimaryKey(@Param("primaryKey") Integer primaryKey);
-
-    /**
-     * 统计
-     * @return
-     */
-    int count();
+    Integer selectCount(@Param("wrapper") QueryWrapper<T> queryWrapper);
 
 }

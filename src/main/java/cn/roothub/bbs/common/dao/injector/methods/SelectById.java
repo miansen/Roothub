@@ -9,18 +9,19 @@ import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 查询满足条件的一条数据
+ * 根据 ID 查询一条数据
  *
  * @Author: miansen.wang
- * @Date: 2019/8/29 22:01
+ * @Date: 2019/10/16 22:06
  */
-public class SelectOne extends AbstractMethod{
+public class SelectById extends AbstractMethod{
 
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        SqlMethod selectOne = SqlMethod.SELECT_ONE;
-        String sqlScript = String.format(selectOne.getSql(), initSqlSelectColumns(tableInfo), tableInfo.getTableName(), "<where>${wrapper.sqlSegment}</where>");
+        SqlMethod selectById = SqlMethod.SELECT_BY_ID;
+        String sqlScript = String.format(selectById.getSql(), initSqlSelectColumns(tableInfo),
+                tableInfo.getTableName(), tableInfo.getPrimaryKeyColumn(), "${id}");
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
-        return this.addMappedStatement(mapperClass, selectOne.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, modelClass, new NoKeyGenerator(), null, null);
+        return this.addMappedStatement(mapperClass, selectById.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, modelClass, new NoKeyGenerator(), null, null);
     }
 }

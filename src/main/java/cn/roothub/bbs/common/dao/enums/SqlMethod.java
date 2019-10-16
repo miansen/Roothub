@@ -8,7 +8,7 @@ public enum SqlMethod {
 
     SELECT_BY_ID("selectById", "根据 ID 查询一条数据", "<script>\nSELECT %s FROM %s WHERE %s = %s\n</script>"),
 
-    SELECT_BATCH_BY_IDS("selectBatchIds", "根据 ID 集合，批量查询多条数据", "<script>\nSELECT %s FROM %s WHERE %s IN %s\n</script>"),
+    SELECT_BATCH_BY_IDS("selectBatchIds", "根据 ID 集合，批量查询多条数据", "<script>\nSELECT %s FROM %s WHERE %s IN (%s)\n</script>"),
 
     SELECT_ONE("selectOne", "查询满足条件的一条数据", "<script>\nSELECT %s FROM %s %s\n</script>"),
 

@@ -3,6 +3,10 @@ package cn.roothub.bbs.common.dao.injector.methods;
 import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.dao.builder.TableInfoBuilder;
+import static cn.roothub.bbs.common.dao.util.StringPool.NEWLINE;
+import static cn.roothub.bbs.common.dao.util.StringPool.QUOTE;
+import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_CHEV;
+
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -11,13 +15,11 @@ import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.mapping.StatementType;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.stream.Collectors;
 
-import static cn.roothub.bbs.common.dao.util.StringPool.NEWLINE;
-import static cn.roothub.bbs.common.dao.util.StringPool.QUOTE;
-import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_CHEV;
+import java.util.stream.Collectors;
 
 /**
  * 此类提供了注入 SQL 的方法 inject()

@@ -2,8 +2,8 @@ package cn.roothub.bbs.common.dao.injector.methods;
 
 import cn.roothub.bbs.common.dao.enums.SqlMethod;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
-
 import cn.roothub.bbs.common.dao.util.SqlScriptUtils;
+
 import org.apache.ibatis.executor.keygen.NoKeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;

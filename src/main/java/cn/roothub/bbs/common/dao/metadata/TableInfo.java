@@ -1,5 +1,7 @@
 package cn.roothub.bbs.common.dao.metadata;
 
+import cn.roothub.bbs.common.dao.enums.IdType;
+
 import java.util.List;
 
 /**
@@ -11,26 +13,33 @@ import java.util.List;
 public class TableInfo {
 
     /**
-     * model 对应的表名
+     * 实体类对应的表名
      */
     private String tableName;
 
     /**
-     * model class
+     * 实体类 class
      */
     private Class<?> modelClass;
 
     /**
      * 主键字段
      */
-    private String primaryKeyColumn;
+    private String keyColumn;
 
     /**
-     * 所有字段
+     * 主键类型
      */
-    private String[] columns;
+    private IdType idType = IdType.NONE;
 
+    /**
+     * 所有的字段信息
+     */
     private List<TableFieldInfo> tableFieldInfoList;
+
+    public TableInfo(Class<?> modelClass) {
+        this.modelClass = modelClass;
+    }
 
     public String getTableName() {
         return tableName;
@@ -48,20 +57,20 @@ public class TableInfo {
         this.modelClass = modelClass;
     }
 
-    public String getPrimaryKeyColumn() {
-        return primaryKeyColumn;
+    public String getKeyColumn() {
+        return keyColumn;
     }
 
-    public void setPrimaryKeyColumn(String primaryKeyColumn) {
-        this.primaryKeyColumn = primaryKeyColumn;
+    public void setKeyColumn(String keyColumn) {
+        this.keyColumn = keyColumn;
     }
 
-    public String[] getColumns() {
-        return columns;
+    public IdType getIdType() {
+        return idType;
     }
 
-    public void setColumns(String[] columns) {
-        this.columns = columns;
+    public void setIdType(IdType idType) {
+        this.idType = idType;
     }
 
     public List<TableFieldInfo> getTableFieldInfoList() {

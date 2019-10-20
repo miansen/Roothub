@@ -1,8 +1,10 @@
 package cn.roothub.bbs.common.dao.register;
 
-import cn.roothub.bbs.common.dao.IBaseDao;
-import cn.roothub.bbs.common.dao.builder.BaseMapperAnnotationBuilder;
+import cn.roothub.bbs.common.dao.BaseMapper;
+import cn.roothub.bbs.common.dao.builder.BaseMapperBuilder;
+
 import org.apache.ibatis.session.Configuration;
+
 import java.util.List;
 
 /**
@@ -10,14 +12,14 @@ import java.util.List;
  * @Author: miansen.wang
  * @Date: 2019/8/29 22:36
  */
-public class MybatisMapperRegistry {
+public class BaseMapperRegistry {
 
     /**
      * Mybatis 的配置信息，存储了所有 Mapper 注册与绑定的信息
      */
     private Configuration configuration;
 
-    public MybatisMapperRegistry(Configuration configuration) {
+    public BaseMapperRegistry(Configuration configuration) {
         this.configuration = configuration;
     }
 
@@ -28,10 +30,10 @@ public class MybatisMapperRegistry {
     public void addMappers(List<Class<?>> mappers) {
         mappers.forEach(m -> {
             // mapper 必须是接口且继承 IBaseDao，才能注入
-            if (!m.isInterface() || !IBaseDao.class.isAssignableFrom(m)){
+            if (!m.isInterface() || !BaseMapper.class.isAssignableFrom(m)){
                 return;
             }
-            BaseMapperAnnotationBuilder myBatisMapperAnnotationBuilder = new BaseMapperAnnotationBuilder(configuration, m);
+            BaseMapperBuilder myBatisMapperAnnotationBuilder = new BaseMapperBuilder(configuration, m);
             myBatisMapperAnnotationBuilder.parse();
         });
     }

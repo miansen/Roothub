@@ -1,6 +1,6 @@
 package cn.roothub.bbs.common.dao.config;
 
-import cn.roothub.bbs.common.dao.register.MybatisMapperRegistry;
+import cn.roothub.bbs.common.dao.register.BaseMapperRegistry;
 import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class BaseMapperConfig {
             org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
             MapperRegistry mapperRegistry = configuration.getMapperRegistry();
             List<Class<?>> mappers = new ArrayList<>(mapperRegistry.getMappers());
-            MybatisMapperRegistry mybatisMapperRegistry = new MybatisMapperRegistry(configuration);
+            BaseMapperRegistry mybatisMapperRegistry = new BaseMapperRegistry(configuration);
             mybatisMapperRegistry.addMappers(mappers);
         });
     }

@@ -2,18 +2,19 @@ package cn.roothub.bbs.common.dao.builder;
 
 import cn.roothub.bbs.common.dao.injector.DefaultSqlInjector;
 import cn.roothub.bbs.common.dao.injector.ISqlInjector;
+
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.builder.annotation.MapperAnnotationBuilder;
 import org.apache.ibatis.session.Configuration;
 
 /**
- * BaseMapper 注解构建器，它的主要职责是：
- * 1.初始化 MapperBuilderAssistant
- * 2.调用 ISqlInjector.inspectInject() 方法注入通用的 SQL
+ * BaseMapper 构建器，它的主要职责是：
+ * <p>1.初始化 MapperBuilderAssistant
+ * <p>2.调用 ISqlInjector.inspectInject() 方法注入常用的增删改查方法
  * @Author: miansen.wang
  * @Date: 2019/8/31 16:31
  */
-public class BaseMapperAnnotationBuilder extends MapperAnnotationBuilder{
+public class BaseMapperBuilder extends MapperAnnotationBuilder{
 
     /**
      * Mybatis 的配置信息，存储了所有 Mapper 注册与绑定的信息
@@ -30,7 +31,12 @@ public class BaseMapperAnnotationBuilder extends MapperAnnotationBuilder{
      */
     private final Class<?> mapperClass;
 
-    public BaseMapperAnnotationBuilder(Configuration configuration, Class<?> mapperClass) {
+    /**
+     * 初始化各个属性
+     * @param configuration
+     * @param mapperClass
+     */
+    public BaseMapperBuilder(Configuration configuration, Class<?> mapperClass) {
         super(configuration, mapperClass);
         String resource = mapperClass.getName().replace('.', '/') + ".java (best guess)";
         this.configuration = configuration;
@@ -40,6 +46,9 @@ public class BaseMapperAnnotationBuilder extends MapperAnnotationBuilder{
         this.assistant.setCurrentNamespace(mapperClass.getName());
     }
 
+    /**
+     * 注入常用的增删改查方法
+     */
     @Override
     public void parse() {
         ISqlInjector sqlInjector = new DefaultSqlInjector();

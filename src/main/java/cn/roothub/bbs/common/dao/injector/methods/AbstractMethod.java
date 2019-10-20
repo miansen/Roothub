@@ -52,7 +52,7 @@ public abstract class AbstractMethod {
         this.languageDriver = this.configuration.getDefaultScriptingLanuageInstance();
         this.builderAssistant = builderAssistant;
         if (modelClass != null) {
-            TableInfo tableInfo = TableInfoBuilder.initTableInfo(builderAssistant,modelClass);
+            TableInfo tableInfo = TableInfoBuilder.initTableInfo(builderAssistant, modelClass);
             this.injectMappedStatement(mapperClass, modelClass, tableInfo);
         }
     }
@@ -73,7 +73,7 @@ public abstract class AbstractMethod {
     }
 
     /**
-     * 注入 MappedStatement，由子类实现
+     * 注入 MappedStatement，具体的注入逻辑由子类实现
      * @param mapperClass
      * @param modelClass
      * @param tableInfo

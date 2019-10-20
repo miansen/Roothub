@@ -5,7 +5,7 @@ import cn.roothub.bbs.common.dao.wrapper.segments.ISqlSegment;
 import java.util.function.Predicate;
 
 /**
- * 匹配 SqlKeyword
+ * 匹配 {@link SqlKeyword}
  * @Author: miansen.wang
  * @Date: 2019/9/23 21:34
  */
@@ -33,9 +33,13 @@ public enum MatchSegment {
         this.predicate = predicate;
     }
 
+    /**
+     * 传入一个 SQL 片段，返回是否匹配到该片段。
+     * @param sqlSegment
+     * @return
+     */
     public boolean match(ISqlSegment sqlSegment) {
         return predicate.test(sqlSegment);
     }
-
 
 }

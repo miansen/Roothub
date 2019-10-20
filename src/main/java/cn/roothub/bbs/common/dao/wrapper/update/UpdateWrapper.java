@@ -11,7 +11,7 @@ import java.util.List;
  * @Author: miansen.wang
  * @Date: 2019/10/19 13:46
  */
-public class UpdateWrapper<T> extends AbstractWrapper<T, UpdateWrapper<T>, String, Object> implements Update<UpdateWrapper, String, Object> {
+public class UpdateWrapper<T> extends AbstractWrapper<T, UpdateWrapper<T>, String, Object> implements Update<UpdateWrapper<T>, String, Object> {
 
     /**
      * SQL 更新字段内容

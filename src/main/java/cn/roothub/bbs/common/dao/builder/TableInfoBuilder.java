@@ -1,5 +1,6 @@
 package cn.roothub.bbs.common.dao.builder;
 
+import cn.roothub.bbs.common.dao.annotation.TableId;
 import cn.roothub.bbs.common.dao.annotation.TableName;
 import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
@@ -52,7 +53,7 @@ public class TableInfoBuilder {
         if (tableInfo != null) {
             return tableInfo;
         } else {
-            tableInfo = new TableInfo();
+            tableInfo = new TableInfo(modelClass);
             initTableName(modelClass, tableInfo);
             initTableFields(modelClass, tableInfo);
             TABLE_INFO_CACHE.put(modelClass, tableInfo);
@@ -69,7 +70,7 @@ public class TableInfoBuilder {
         String tableName = modelClass.getSimpleName();
         // 获取 Model 类上的 TableName 注解
         TableName tableNameAnnotation = modelClass.getAnnotation(TableName.class);
-        if (tableNameAnnotation != null) {
+        if (tableNameAnnotation != null && !"".equals(tableNameAnnotation.value())) {
             tableName = tableNameAnnotation.value();
         } else {
             tableName = StringUtil.camelToUnderline(tableName);
@@ -78,17 +79,33 @@ public class TableInfoBuilder {
     }
 
     /**
-     * 初始化 TableFieldInfo
+     * 初始化主键
+     * @param field
+     */
+    public static void initTableId(TableInfo tableInfo, Field field) {
+        // 获取字段上的 TableId 主键
+        TableId fieldAnnotation = field.getAnnotation(TableId.class);
+        if (fieldAnnotation != null) {
+            tableInfo.setKeyColumn(fieldAnnotation.value());
+            tableInfo.setIdType(fieldAnnotation.type());
+        }
+    }
+
+    /**
+     * 初始化 TableFieldInfo 和 主键
      * @param modelClass
      * @param tableInfo
      */
     public static void initTableFields(Class<?> modelClass, TableInfo tableInfo) {
         List<Field> fieldList = getAllFields(modelClass);
         List<TableFieldInfo> tableFieldInfoList = new ArrayList<>();
-        for (Iterator<Field>iterator = fieldList.iterator(); iterator.hasNext();) {
+        for (Iterator<Field> iterator = fieldList.iterator(); iterator.hasNext();) {
             Field field = iterator.next();
             tableFieldInfoList.add(new TableFieldInfo(field));
+            // 初始化主键
+            initTableId(tableInfo, field);
         }
+        // 初始化 TableFieldInfo
         tableInfo.setTableFieldInfoList(tableFieldInfoList);
     }
 

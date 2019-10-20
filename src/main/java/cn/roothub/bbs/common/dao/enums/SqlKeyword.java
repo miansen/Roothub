@@ -3,6 +3,7 @@ package cn.roothub.bbs.common.dao.enums;
 import cn.roothub.bbs.common.dao.wrapper.segments.ISqlSegment;
 
 /**
+ * 常用的 SQL 片段
  * @Author: miansen.wang
  * @Date: 2019/9/15 16:07
  */

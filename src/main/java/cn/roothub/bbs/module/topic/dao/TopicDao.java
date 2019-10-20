@@ -3,13 +3,13 @@ package cn.roothub.bbs.module.topic.dao;
 import java.util.Date;
 import java.util.List;
 
-import cn.roothub.bbs.common.dao.IBaseDao;
+import cn.roothub.bbs.common.dao.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import cn.roothub.bbs.module.topic.model.Topic;
 import cn.roothub.bbs.module.user.model.User;
 import cn.roothub.bbs.module.tag.model.Tag;
 
-public interface TopicDao extends IBaseDao<Topic>{
+public interface TopicDao extends BaseMapper<Topic> {
 
 	/**
 	 * 查询所有话题

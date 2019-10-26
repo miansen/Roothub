@@ -1,11 +1,7 @@
 package cn.roothub.bbs.common.dao.injector.methods;
 
-import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.dao.builder.TableInfoBuilder;
-import static cn.roothub.bbs.common.dao.util.StringPool.NEWLINE;
-import static cn.roothub.bbs.common.dao.util.StringPool.QUOTE;
-import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_CHEV;
 
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
@@ -18,8 +14,6 @@ import org.apache.ibatis.session.Configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.stream.Collectors;
 
 /**
  * 此类提供了注入 SQL 的方法 inject()
@@ -55,21 +49,6 @@ public abstract class AbstractMethod {
             TableInfo tableInfo = TableInfoBuilder.initTableInfo(builderAssistant, modelClass);
             this.injectMappedStatement(mapperClass, modelClass, tableInfo);
         }
-    }
-
-    /**
-     * 初始化查询字段
-     * @param tableInfo
-     * @return
-     */
-    protected String initSqlSelectColumns (TableInfo tableInfo) {
-        String selectColumns = tableInfo.getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
-                .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
-        return "<choose>" + "\n"
-                + "<when test=\"" + "wrapper != null and wrapper.selectColumns != null" + QUOTE + RIGHT_CHEV + NEWLINE
-                + "${wrapper.selectColumns}" + NEWLINE + "</when>" + NEWLINE
-                + "<otherwise>" + selectColumns + "</otherwise>" + NEWLINE
-                + "</choose>";
     }
 
     /**

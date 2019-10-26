@@ -3,6 +3,11 @@ package cn.roothub.bbs.common.dao.metadata;
 import cn.roothub.bbs.common.dao.enums.IdType;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static cn.roothub.bbs.common.dao.util.StringPool.NEWLINE;
+import static cn.roothub.bbs.common.dao.util.StringPool.QUOTE;
+import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_CHEV;
 
 /**
  * TableInfo 存储了数据库对应的 model 所有的信息，
@@ -23,7 +28,7 @@ public class TableInfo {
     private Class<?> modelClass;
 
     /**
-     * 主键字段
+     * 数据库表的主键字段
      */
     private String keyColumn;
 
@@ -80,4 +85,40 @@ public class TableInfo {
     public void setTableFieldInfoList(List<TableFieldInfo> tableFieldInfoList) {
         this.tableFieldInfoList = tableFieldInfoList;
     }
+
+    /**
+     * 获取查询的字段
+     * <p>select (字段) from table where ...
+     * @return sql 脚本片段
+     */
+    public String getSelectColumns() {
+        String selectColumns = getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
+                .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
+        return "<choose>" + "\n"
+                + "<when test=\"" + "wrapper != null and wrapper.selectColumns != null" + QUOTE + RIGHT_CHEV + NEWLINE
+                + "${wrapper.selectColumns}" + NEWLINE + "</when>" + NEWLINE
+                + "<otherwise>" + selectColumns + "</otherwise>" + NEWLINE
+                + "</choose>";
+    }
+
+    /**
+     * 获取插入的字段
+     * <p>insert into table (字段) values (值);
+     * @return sql 脚本片段
+     */
+    public String getInsertColumns() {
+        String insertColumns = getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
+                .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
+        return insertColumns;
+    }
+
+    /**
+     * 获取插入的值
+     * <p>insert into table (字段) values (值);
+     * @return sql 脚本片段
+     */
+    public String getInsertValues() {
+        return null;
+    }
+
 }

@@ -20,6 +20,8 @@ public enum SqlMethod {
 
     SELECT_COUNT("selectCount", "查询满足条件的总记录数", "<script>\nSELECT COUNT(1) FROM %s %s\n</script>"),
 
+    INSERT("insert", "插入一条数据", "<script>\nINSERT INTO %s (%s) VALUES (%s)\n</script>"),
+
     /**
      * 更新
      */

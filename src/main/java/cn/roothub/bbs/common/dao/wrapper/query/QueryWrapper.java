@@ -41,6 +41,12 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
         this.select(columns);
     }
 
+    /**
+     * 设置查询字段
+     * <p>注意：如果不设置，则默认查询全部的字段
+     * @param columns 字段数组
+     * @return
+     */
     @Override
     public QueryWrapper<T> select(String... columns) {
         if (ArrayUtils.isNotEmpty(columns)) {

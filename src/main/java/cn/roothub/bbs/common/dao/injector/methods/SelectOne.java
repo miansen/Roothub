@@ -19,8 +19,8 @@ public class SelectOne extends AbstractMethod{
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod selectOne = SqlMethod.SELECT_ONE;
-        String sqlScript = String.format(selectOne.getSql(), initSqlSelectColumns(tableInfo), tableInfo.getTableName(), "<where>${wrapper.sqlSegment}</where>");
+        String sqlScript = String.format(selectOne.getSql(), tableInfo.getSelectColumns(), tableInfo.getTableName(), "<where>${wrapper.sqlSegment}</where>");
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
-        return this.addMappedStatement(mapperClass, selectOne.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, modelClass, new NoKeyGenerator(), null, null);
+        return this.addMappedStatement(mapperClass, selectOne.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, modelClass, new NoKeyGenerator(), null, tableInfo.getKeyColumn());
     }
 }

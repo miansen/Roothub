@@ -52,4 +52,10 @@ public interface BaseMapper<T> {
      */
     Integer selectCount(@Param("wrapper") QueryWrapper<T> queryWrapper);
 
+    /**
+     * 插入一条数据
+     * @param model 实体对象
+     * @return
+     */
+    int insert(T model);
 }

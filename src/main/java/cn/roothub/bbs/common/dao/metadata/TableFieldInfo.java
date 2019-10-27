@@ -4,6 +4,9 @@ import cn.roothub.bbs.common.util.StringUtil;
 
 import java.lang.reflect.Field;
 
+import static cn.roothub.bbs.common.dao.util.StringPool.HASH_LEFT_BRACE;
+import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_BRACE;
+
 /**
  * TableFieldInfo 存储了数据库表的所有字段信息
  * @Author: miansen.wang
@@ -65,5 +68,14 @@ public class TableFieldInfo {
 
     public void setSelect(boolean select) {
         this.select = select;
+    }
+
+    /**
+     * 获取插入时的属性
+     * <p>比如某个对象有个 name 的属性，在 mybatis 可以用 #{name} 获取
+     * @return
+     */
+    public String getInsertProperty() {
+        return HASH_LEFT_BRACE + property + RIGHT_BRACE;
     }
 }

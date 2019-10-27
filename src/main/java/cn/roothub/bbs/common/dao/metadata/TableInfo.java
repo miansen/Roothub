@@ -3,6 +3,7 @@ package cn.roothub.bbs.common.dao.metadata;
 import cn.roothub.bbs.common.dao.enums.IdType;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static cn.roothub.bbs.common.dao.util.StringPool.NEWLINE;
@@ -92,7 +93,7 @@ public class TableInfo {
      * @return sql 脚本片段
      */
     public String getSelectColumns() {
-        String selectColumns = getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
+        String selectColumns = tableFieldInfoList.stream().filter(TableFieldInfo::isSelect)
                 .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
         return "<choose>" + "\n"
                 + "<when test=\"" + "wrapper != null and wrapper.selectColumns != null" + QUOTE + RIGHT_CHEV + NEWLINE
@@ -107,7 +108,7 @@ public class TableInfo {
      * @return sql 脚本片段
      */
     public String getInsertColumns() {
-        String insertColumns = getTableFieldInfoList().stream().filter(TableFieldInfo::isSelect)
+        String insertColumns = tableFieldInfoList.stream().filter(Objects::nonNull)
                 .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
         return insertColumns;
     }
@@ -118,7 +119,9 @@ public class TableInfo {
      * @return sql 脚本片段
      */
     public String getInsertValues() {
-        return null;
+        String insertValues = tableFieldInfoList.stream().filter(Objects::nonNull)
+                .map(TableFieldInfo::getInsertProperty).collect(Collectors.joining("\n"));
+        return insertValues;
     }
 
 }

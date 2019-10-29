@@ -1,10 +1,60 @@
 package cn.roothub.bbs.common.dao.util;
 
 /**
+ * 生成 Mybatis 标签的工具类
  * @Author: miansen.wang
  * @Date: 2019/10/16 22:19
  */
-public class SqlScriptUtils implements StringPool{
+public class SqlScriptUtils implements StringPool {
+
+    /**
+     * 生成 choose 标签的脚本
+     * @param whenTest when 元素的 test 条件
+     * @param whenSqlScript when 元素的内容
+     * @param otherwise otherwise 元素的内容
+     * @return choose 标签脚本
+     */
+    public static String convertChoose(final String whenTest, final String whenSqlScript, final String otherwise) {
+        StringBuilder sb = new StringBuilder("<choose>");
+        sb.append(NEWLINE);
+        sb.append("<when test=").append(QUOTE).append(whenTest).append(QUOTE).append(RIGHT_CHEV);
+        sb.append(NEWLINE);
+        sb.append(whenSqlScript);
+        sb.append(NEWLINE);
+        sb.append("</when>");
+        sb.append(NEWLINE);
+        sb.append("<otherwise>").append(otherwise).append("</otherwise>");
+        sb.append(NEWLINE);
+        sb.append("</choose>");
+        return sb.toString();
+    }
+
+    /**
+     * 生成 trim 标签的脚本
+     * @param sqlScript sql 脚本片段
+     * @param prefix 以...开头
+     * @param suffix 以...结尾
+     * @param prefixOverrides 去掉最前面的哪个字符
+     * @param suffixOverrides 去掉最后面的哪个字符
+     * @return trim 标签脚本
+     */
+    public static String convertTrim(final String sqlScript, final String prefix, final String suffix,
+                                     final String prefixOverrides, final String suffixOverrides) {
+        StringBuilder sb = new StringBuilder("<trim");
+        if (!StringUtils.isEmpty(prefix)) {
+            sb.append(SPACE).append("prefix=").append(QUOTE).append(prefix).append(QUOTE);
+        }
+        if (!StringUtils.isEmpty(suffix)) {
+            sb.append(SPACE).append("suffix=").append(QUOTE).append(suffix).append(QUOTE);
+        }
+        if (!StringUtils.isEmpty(prefixOverrides)) {
+            sb.append(SPACE).append("prefixOverrides=").append(QUOTE).append(prefixOverrides).append(QUOTE);
+        }
+        if (!StringUtils.isEmpty(suffixOverrides)) {
+            sb.append(SPACE).append("suffixOverrides=").append(QUOTE).append(suffixOverrides).append(QUOTE);
+        }
+        return sb.append(RIGHT_CHEV).append(NEWLINE).append(sqlScript).append(NEWLINE).append("</trim>").toString();
+    }
 
     /**
      * 生成 foreach 标签的脚本
@@ -16,7 +66,7 @@ public class SqlScriptUtils implements StringPool{
      * @param separator 每次进行迭代之间以什么符号作为分隔符
      * @param open foreach 以什么开始
      * @param close foreach 以什么结束
-     * @return
+     * @return foreach 标签脚本
      */
     public static String convertForeach(final String sqlScript, final String collection, final String index,
                                         final String item, final String separator, final String open,
@@ -44,8 +94,12 @@ public class SqlScriptUtils implements StringPool{
     }
 
     public static void main(String[] args) {
-        String s = convertForeach("${item}", "coll", "index",
-                "item", ",", "(",")");
+        String s = convertChoose("wrapper != null and wrapper.selectColumns != null", "${wrapper.selectColumns}", "id, name");
         System.out.println(s);
+        String s1 = convertForeach("${item}", "coll", "index",
+                "item", ",", "(",")");
+        System.out.println(s1);
+        String s2 = convertTrim("#{id},#{name}", "(", ")", ",", ",");
+        System.out.println(s2);
     }
 }

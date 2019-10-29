@@ -1,14 +1,12 @@
 package cn.roothub.bbs.common.dao.metadata;
 
 import cn.roothub.bbs.common.dao.enums.IdType;
+import cn.roothub.bbs.common.dao.util.SqlScriptUtils;
+import cn.roothub.bbs.common.dao.util.StringPool;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static cn.roothub.bbs.common.dao.util.StringPool.NEWLINE;
-import static cn.roothub.bbs.common.dao.util.StringPool.QUOTE;
-import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_CHEV;
 
 /**
  * TableInfo 存储了数据库对应的 model 所有的信息，
@@ -16,7 +14,7 @@ import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_CHEV;
  * @Author: miansen.wang
  * @Date: 2019/8/26 23:15
  */
-public class TableInfo {
+public class TableInfo implements StringPool {
 
     /**
      * 实体类对应的表名
@@ -89,39 +87,39 @@ public class TableInfo {
 
     /**
      * 获取查询的字段
-     * <p>select (字段) from table where ...
+     * <p>select (字段) from table where ...</p>
+     * <p>位于 "字段" 部位</p>
      * @return sql 脚本片段
      */
     public String getSelectColumns() {
         String selectColumns = tableFieldInfoList.stream().filter(TableFieldInfo::isSelect)
-                .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
-        return "<choose>" + "\n"
-                + "<when test=\"" + "wrapper != null and wrapper.selectColumns != null" + QUOTE + RIGHT_CHEV + NEWLINE
-                + "${wrapper.selectColumns}" + NEWLINE + "</when>" + NEWLINE
-                + "<otherwise>" + selectColumns + "</otherwise>" + NEWLINE
-                + "</choose>";
+                .map(TableFieldInfo::getColumn).collect(Collectors.joining(COMMA));
+        return SqlScriptUtils.convertChoose("wrapper != null and wrapper.selectColumns != null",
+                "${wrapper.selectColumns}", selectColumns);
     }
 
     /**
      * 获取插入的字段
-     * <p>insert into table (字段) values (值);
+     * <p>insert into table (字段) values (值);</p>
+     * <p>位于 "字段" 部位</p>
      * @return sql 脚本片段
      */
     public String getInsertColumns() {
         String insertColumns = tableFieldInfoList.stream().filter(Objects::nonNull)
-                .map(TableFieldInfo::getColumn).collect(Collectors.joining(","));
-        return insertColumns;
+                .map(TableFieldInfo::getColumn).collect(Collectors.joining(COMMA));
+        return SqlScriptUtils.convertTrim(insertColumns, LEFT_BRACKET, RIGHT_BRACKET, COMMA, COMMA);
     }
 
     /**
      * 获取插入的值
-     * <p>insert into table (字段) values (值);
+     * <p>insert into table (字段) values (值);</p>
+     * <p>位于 "值" 部位</p>
      * @return sql 脚本片段
      */
     public String getInsertValues() {
         String insertValues = tableFieldInfoList.stream().filter(Objects::nonNull)
-                .map(TableFieldInfo::getInsertProperty).collect(Collectors.joining("\n"));
-        return insertValues;
+                .map(TableFieldInfo::getInsertProperty).collect(Collectors.joining(COMMA));
+        return SqlScriptUtils.convertTrim(insertValues, LEFT_BRACKET, RIGHT_BRACKET, COMMA, COMMA);
     }
 
 }

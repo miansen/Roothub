@@ -8,10 +8,29 @@ package cn.roothub.bbs.common.dao.util;
 public class SqlScriptUtils implements StringPool {
 
     /**
+     * 生成 if 标签的脚本
+     * @param ifTest if 标签的 test 条件
+     * @param ifSqlScript if 标签的内容
+     * @return if 标签脚本
+     */
+    public static String convertIf(final String ifTest, final String ifSqlScript) {
+        return String.format("<if test=\"%s\">%s</if>", ifTest, NEWLINE + ifSqlScript + NEWLINE);
+    }
+
+    /**
+     * 生成 where 标签的脚本
+     * @param whereSqlScript where 标签的内容
+     * @return where 标签脚本
+     */
+    public static String convertWhere(final String whereSqlScript) {
+        return "<where>" + NEWLINE + whereSqlScript + NEWLINE + "</where>";
+    }
+
+    /**
      * 生成 choose 标签的脚本
-     * @param whenTest when 元素的 test 条件
-     * @param whenSqlScript when 元素的内容
-     * @param otherwise otherwise 元素的内容
+     * @param whenTest when 标签的 test 条件
+     * @param whenSqlScript when 标签的内容
+     * @param otherwise otherwise 标签的内容
      * @return choose 标签脚本
      */
     public static String convertChoose(final String whenTest, final String whenSqlScript, final String otherwise) {
@@ -101,5 +120,9 @@ public class SqlScriptUtils implements StringPool {
         System.out.println(s1);
         String s2 = convertTrim("#{id},#{name}", "(", ")", ",", ",");
         System.out.println(s2);
+        String s3 = convertIf("wrapper != null and wrapper.selectColumns != null and wrapper.selectColumns != ''", "${wrapper.selectColumns}");
+        System.out.println(s3);
+        String s4 = convertWhere(s3);
+        System.out.println(s4);
     }
 }

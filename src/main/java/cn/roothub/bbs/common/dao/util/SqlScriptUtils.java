@@ -8,6 +8,24 @@ package cn.roothub.bbs.common.dao.util;
 public class SqlScriptUtils implements StringPool {
 
     /**
+     * 安全入参: #{参数}
+     * @param param
+     * @return #{参数} 脚本
+     */
+    public static String safeParam(final String param) {
+        return HASH_LEFT_BRACE + param + RIGHT_BRACE;
+    }
+
+    /**
+     * 非安全入参: ${参数}
+     * @param param
+     * @return ${参数}
+     */
+    public static String unSafeParam(final String param) {
+        return DOLLAR_LEFT_BRACE + param + RIGHT_BRACE;
+    }
+
+    /**
      * 生成 if 标签的脚本
      * @param ifTest if 标签的 test 条件
      * @param ifSqlScript if 标签的内容

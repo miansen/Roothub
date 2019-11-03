@@ -19,7 +19,7 @@ public class SqlScriptUtils implements StringPool {
     /**
      * 非安全入参: ${参数}
      * @param param
-     * @return ${参数}
+     * @return ${参数} 脚本
      */
     public static String unSafeParam(final String param) {
         return DOLLAR_LEFT_BRACE + param + RIGHT_BRACE;
@@ -33,6 +33,15 @@ public class SqlScriptUtils implements StringPool {
      */
     public static String convertIf(final String ifTest, final String ifSqlScript) {
         return String.format("<if test=\"%s\">%s</if>", ifTest, NEWLINE + ifSqlScript + NEWLINE);
+    }
+
+    /**
+     * 生成 set 标签的脚本
+     * @param setSqlScript set 标签的内容
+     * @return set 标签脚本
+     */
+    public static String convertSet(final String setSqlScript) {
+        return "<set>" + NEWLINE + setSqlScript + NEWLINE + "</set>";
     }
 
     /**

@@ -1,18 +1,17 @@
 package cn.roothub.bbs.common.dao.metadata;
 
+import cn.roothub.bbs.common.dao.util.SqlScriptUtils;
+import cn.roothub.bbs.common.dao.util.StringPool;
 import cn.roothub.bbs.common.util.StringUtil;
 
 import java.lang.reflect.Field;
-
-import static cn.roothub.bbs.common.dao.util.StringPool.HASH_LEFT_BRACE;
-import static cn.roothub.bbs.common.dao.util.StringPool.RIGHT_BRACE;
 
 /**
  * TableFieldInfo 存储了数据库表的所有字段信息
  * @Author: miansen.wang
  * @Date: 2019/9/1 15:28
  */
-public class TableFieldInfo {
+public class TableFieldInfo implements StringPool{
 
     /**
      * 数据库字段名
@@ -71,11 +70,20 @@ public class TableFieldInfo {
     }
 
     /**
-     * 获取插入时的属性
-     * <p>比如某个对象有个 name 的属性，在 mybatis 可以用 #{name} 获取
-     * @return
+     * 获取插入的值的表达式
+     * <p>insert into table (id, name, age...) values (#{id}, #{name}, #{age}...);</p>
+     * @return #{property}
      */
-    public String getInsertProperty() {
-        return HASH_LEFT_BRACE + property + RIGHT_BRACE;
+    public String getInsertExpression() {
+        return SqlScriptUtils.safeParam(property);
+    }
+
+    /**
+     * 获取更新的表达式
+     * <p>update table set id = #{id}, name = #{name}, age = #{age}... where...</p>
+     * @return column = #{property}
+     */
+    public String getSetExpression() {
+        return column + EQUALS + SqlScriptUtils.safeParam(property);
     }
 }

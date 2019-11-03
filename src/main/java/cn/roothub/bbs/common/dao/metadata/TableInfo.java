@@ -118,8 +118,19 @@ public class TableInfo implements StringPool {
      */
     public String getInsertValues() {
         String insertValues = tableFieldInfoList.stream().filter(Objects::nonNull)
-                .map(TableFieldInfo::getInsertProperty).collect(Collectors.joining(COMMA));
+                .map(TableFieldInfo::getInsertExpression).collect(Collectors.joining(COMMA));
         return SqlScriptUtils.convertTrim(insertValues, LEFT_BRACKET, RIGHT_BRACKET, COMMA, COMMA);
     }
 
+    /**
+     * 获取更新的 set 表达式
+     * <p>update table set (表达式) where...</p>
+     * <p>位于 "表达式" 部位</p>
+     * @return
+     */
+    public String getAllSetExpression() {
+        String setExpression = tableFieldInfoList.stream().filter(Objects::nonNull)
+                .map(TableFieldInfo::getSetExpression).collect(Collectors.joining(COMMA + NEWLINE));
+        return SqlScriptUtils.convertSet(setExpression);
+    }
 }

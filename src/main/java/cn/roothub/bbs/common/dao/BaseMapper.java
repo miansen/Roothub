@@ -1,6 +1,8 @@
 package cn.roothub.bbs.common.dao;
 
 import cn.roothub.bbs.common.dao.wrapper.query.QueryWrapper;
+import cn.roothub.bbs.common.dao.wrapper.update.UpdateWrapper;
+
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
@@ -18,44 +20,52 @@ import java.util.List;
 public interface BaseMapper<T> {
 
     /**
+     * 插入一条数据
+     * @param model 实体对象
+     * @return int
+     */
+    int insert(T model);
+
+    /**
+     * 更新满足条件的一条数据
+     * @param model 实体对象
+     * @param updateWrapper where 条件包装器
+     * @return int
+     */
+    int update(@Param("model") T model, @Param("wrapper") UpdateWrapper<T> updateWrapper);
+
+    /**
      * 根据 ID 查询一条数据
-     * @param id
-     * @return
+     * @param id 数据库主键值
+     * @return T
      */
     T selectById(Serializable id);
 
     /**
      * 根据 ID 集合，批量查询多条数据
-     * @param idList
-     * @return
+     * @param idList 数据库主键值集合
+     * @return List<T>
      */
     List<T> selectBatchIds(@Param("coll") Collection<? extends Serializable> idList);
 
     /**
      * 查询满足条件的一条数据
-     * @param queryWrapper
+     * @param queryWrapper where 条件包装器
      * @return T
      */
     T selectOne(@Param("wrapper") QueryWrapper<T> queryWrapper);
 
     /**
      * 查询满足条件的多条数据
-     * @param queryWrapper
-     * @return
+     * @param queryWrapper where 条件包装器
+     * @return List<T>
      */
     List<T> selectList(@Param("wrapper") QueryWrapper<T> queryWrapper);
 
     /**
      * 查询满足条件的总记录数
-     * @param queryWrapper
-     * @return
+     * @param queryWrapper where 条件包装器
+     * @return Integer
      */
     Integer selectCount(@Param("wrapper") QueryWrapper<T> queryWrapper);
-
-    /**
-     * 插入一条数据
-     * @param model 实体对象
-     * @return
-     */
-    int insert(T model);
 }

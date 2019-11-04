@@ -19,8 +19,8 @@ public class UpdateById extends AbstractMethod {
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod updateById = SqlMethod.UPDATE_BY_ID;
         String sqlScript = String.format(updateById.getSql(), tableInfo.getTableName(), tableInfo.getAllSetExpression(),
-                tableInfo.getKeyColumn(), null);
+                tableInfo.getKeyColumn(), tableInfo.getKeyProperty());
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
-        return this.addMappedStatement(mapperClass, updateById.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, Integer.class, new NoKeyGenerator(), null, tableInfo.getKeyColumn());
+        return this.addMappedStatement(mapperClass, updateById.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, Integer.class, new NoKeyGenerator(), tableInfo.getKeyProperty(), tableInfo.getKeyColumn());
     }
 }

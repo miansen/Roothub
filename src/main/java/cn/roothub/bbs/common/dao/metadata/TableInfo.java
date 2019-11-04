@@ -32,6 +32,11 @@ public class TableInfo implements StringPool {
     private String keyColumn;
 
     /**
+     * 实体类主键属性
+     */
+    private String keyProperty;
+
+    /**
      * 主键类型
      */
     private IdType idType = IdType.NONE;
@@ -67,6 +72,14 @@ public class TableInfo implements StringPool {
 
     public void setKeyColumn(String keyColumn) {
         this.keyColumn = keyColumn;
+    }
+
+    public String getKeyProperty() {
+        return keyProperty;
+    }
+
+    public void setKeyProperty(String keyProperty) {
+        this.keyProperty = keyProperty;
     }
 
     public IdType getIdType() {

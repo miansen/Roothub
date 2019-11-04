@@ -58,7 +58,7 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
     @Override
     public QueryWrapper<T> select(Predicate<TableFieldInfo> predicate) {
         if (super.modelClass == null) {
-            throw new BaseMapperException("modelClass must not null,please set modelClass before use this method!");
+            throw new BaseMapperException("modelClass must be not null,please set modelClass before use this method!");
         }
         return select(super.modelClass, predicate);
     }

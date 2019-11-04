@@ -7,7 +7,7 @@ import cn.roothub.bbs.common.util.StringUtil;
 import java.lang.reflect.Field;
 
 /**
- * TableFieldInfo 存储了数据库表的所有字段信息
+ * TableFieldInfo 存储了数据库表的字段信息
  * @Author: miansen.wang
  * @Date: 2019/9/1 15:28
  */

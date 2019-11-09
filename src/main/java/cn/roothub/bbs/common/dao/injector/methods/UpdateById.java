@@ -21,6 +21,6 @@ public class UpdateById extends AbstractMethod {
         String sqlScript = String.format(updateById.getSql(), tableInfo.getTableName(), tableInfo.getAllSetExpression(),
                 tableInfo.getKeyColumn(), tableInfo.getKeyProperty());
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
-        return this.addMappedStatement(mapperClass, updateById.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, Integer.class, new NoKeyGenerator(), tableInfo.getKeyProperty(), tableInfo.getKeyColumn());
+        return this.addMappedStatement(mapperClass, updateById.getMethod(), sqlSource, SqlCommandType.UPDATE, String.class, null, Integer.class, new NoKeyGenerator(), tableInfo.getKeyProperty(), tableInfo.getKeyColumn());
     }
 }

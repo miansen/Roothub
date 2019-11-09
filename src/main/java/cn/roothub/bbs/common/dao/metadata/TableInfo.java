@@ -102,13 +102,14 @@ public class TableInfo implements StringPool {
      * 获取查询的字段
      * <p>select (字段) from table where ...</p>
      * <p>位于 "字段" 部位</p>
+     * @param queryWrapper 是否使用 queryWrapper 查询
      * @return sql 脚本片段
      */
-    public String getSelectColumns() {
+    public String getSelectColumns(boolean queryWrapper) {
         String selectColumns = tableFieldInfoList.stream().filter(TableFieldInfo::isSelect)
                 .map(TableFieldInfo::getColumn).collect(Collectors.joining(COMMA));
-        return SqlScriptUtils.convertChoose("wrapper != null and wrapper.selectColumns != null",
-                "${wrapper.selectColumns}", selectColumns);
+        return queryWrapper ? SqlScriptUtils.convertChoose("wrapper != null and wrapper.selectColumns != null",
+                "${wrapper.selectColumns}", selectColumns) : selectColumns;
     }
 
     /**

@@ -35,6 +35,13 @@ public interface BaseMapper<T> {
     int update(@Param("model") T model, @Param("wrapper") UpdateWrapper<T> updateWrapper);
 
     /**
+     * 根据 ID 更新一条数据
+     * @param model 实体对象
+     * @return int
+     */
+    int updateById(@Param("model") T model);
+
+    /**
      * 根据 ID 查询一条数据
      * @param id 数据库主键值
      * @return T

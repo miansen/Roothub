@@ -19,9 +19,9 @@ public class SelectById extends AbstractMethod{
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod selectById = SqlMethod.SELECT_BY_ID;
-        String sqlScript = String.format(selectById.getSql(), tableInfo.getSelectColumns(),
-                tableInfo.getTableName(), tableInfo.getKeyColumn(), "${id}");
+        String sqlScript = String.format(selectById.getSql(), tableInfo.getSelectColumns(false),
+                tableInfo.getTableName(), tableInfo.getKeyColumn(), "id");
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
-        return this.addMappedStatement(mapperClass, selectById.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, modelClass, new NoKeyGenerator(), null, tableInfo.getKeyColumn());
+        return this.addMappedStatement(mapperClass, selectById.getMethod(), sqlSource, SqlCommandType.SELECT, null, null, modelClass, new NoKeyGenerator(), tableInfo.getKeyProperty(), tableInfo.getKeyColumn());
     }
 }

@@ -2,7 +2,6 @@ package cn.roothub.bbs.common.dao.builder;
 
 import cn.roothub.bbs.common.dao.annotation.TableId;
 import cn.roothub.bbs.common.dao.annotation.TableName;
-import cn.roothub.bbs.common.dao.exceptions.BaseMapperException;
 import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.util.StringUtil;
@@ -13,10 +12,16 @@ import org.springframework.util.CollectionUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.Objects;
+import java.util.Collections;
 
 /**
  * TableInfo 构建器

@@ -1,7 +1,7 @@
 package cn.roothub.bbs.common.dao.injector;
 
-import cn.roothub.bbs.common.dao.injector.methods.AbstractMethod;
-import cn.roothub.bbs.common.dao.injector.methods.SelectOne;
+import cn.roothub.bbs.common.dao.injector.methods.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,7 +14,13 @@ public class DefaultSqlInjector extends AbstractSqlInjector{
     @Override
     public List<AbstractMethod> getMethodList() {
         return (List)Stream.of(
-                new SelectOne()
+                new Insert(),
+                new SelectOne(),
+                new SelectList(),
+                new SelectById(),
+                new SelectBatchIds(),
+                new SelectCount(),
+                new UpdateById()
         ).collect(Collectors.toList());
     }
 }

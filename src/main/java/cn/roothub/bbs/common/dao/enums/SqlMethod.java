@@ -10,7 +10,7 @@ public enum SqlMethod {
     /**
      * 查询
      */
-    SELECT_BY_ID("selectById", "根据 ID 查询一条数据", "<script>\nSELECT %s FROM %s WHERE %s = %s\n</script>"),
+    SELECT_BY_ID("selectById", "根据 ID 查询一条数据", "<script>\nSELECT %s FROM %s WHERE %s = #{%s}\n</script>"),
 
     SELECT_BATCH_BY_IDS("selectBatchIds", "根据 ID 集合，批量查询多条数据", "<script>\nSELECT %s FROM %s WHERE %s IN (%s)\n</script>"),
 
@@ -28,7 +28,7 @@ public enum SqlMethod {
     /**
      * 更新
      */
-    UPDATE_BY_ID("updateById", "根据 ID 更新一条数据", "<script>\nUPDATE %s %s WHERE %s=#{%s} %s\n</script>"),
+    UPDATE_BY_ID("updateById", "根据 ID 更新一条数据", "<script>\nUPDATE %s %s WHERE %s=#{%s}\n</script>"),
 
     UPDATE("update", "更新满足条件的一条数据", "<script>\nUPDATE %s %s %s %s\n</script>");
 

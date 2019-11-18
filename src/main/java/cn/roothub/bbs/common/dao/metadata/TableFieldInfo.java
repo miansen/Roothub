@@ -71,19 +71,17 @@ public class TableFieldInfo implements StringPool{
 
     /**
      * 获取插入的值的表达式
-     * <p>insert into table (id, name, age...) values (#{id}, #{name}, #{age}...);</p>
-     * @return #{property}
+     * @return #{别名.property}
      */
-    public String getInsertExpression() {
-        return SqlScriptUtils.safeParam(property);
+    public String getInsertValueSegment() {
+        return SqlScriptUtils.safeParam("model." + property);
     }
 
     /**
      * 获取更新的表达式
-     * <p>update table set id = #{id}, name = #{name}, age = #{age}... where...</p>
-     * @return column = #{property}
+     * @return column = #{别名.property}
      */
-    public String getSetExpression() {
-        return column + EQUALS + SqlScriptUtils.safeParam(property);
+    public String getSetSegment() {
+        return column + EQUALS + SqlScriptUtils.safeParam("model." + property);
     }
 }

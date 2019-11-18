@@ -18,7 +18,7 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface TableName {
+public @interface Table {
 
     /**
      * 表名

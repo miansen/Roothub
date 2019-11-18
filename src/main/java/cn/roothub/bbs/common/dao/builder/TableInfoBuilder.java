@@ -1,7 +1,7 @@
 package cn.roothub.bbs.common.dao.builder;
 
-import cn.roothub.bbs.common.dao.annotation.TableId;
-import cn.roothub.bbs.common.dao.annotation.TableName;
+import cn.roothub.bbs.common.dao.annotation.Id;
+import cn.roothub.bbs.common.dao.annotation.Table;
 import cn.roothub.bbs.common.dao.metadata.TableFieldInfo;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.util.StringUtil;
@@ -75,7 +75,7 @@ public class TableInfoBuilder {
     public static void initTableName(Class<?> modelClass, TableInfo tableInfo) {
         String tableName = modelClass.getSimpleName();
         // 获取类上的 TableName 注解
-        TableName tableNameAnnotation = modelClass.getAnnotation(TableName.class);
+        Table tableNameAnnotation = modelClass.getAnnotation(Table.class);
         if (tableNameAnnotation != null && !"".equals(tableNameAnnotation.value())) {
             tableName = tableNameAnnotation.value();
         } else {
@@ -90,7 +90,7 @@ public class TableInfoBuilder {
      */
     public static void initTableId(TableInfo tableInfo, Field field) {
         // 获取字段上的 TableId 注解
-        TableId fieldAnnotation = field.getAnnotation(TableId.class);
+        Id fieldAnnotation = field.getAnnotation(Id.class);
         if (fieldAnnotation != null) {
             String keyColumn = field.getName();
             if (!"".equals(fieldAnnotation.value())) {

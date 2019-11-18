@@ -18,7 +18,7 @@ public class Insert extends AbstractMethod {
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod insert = SqlMethod.INSERT;
-        String sqlScript = String.format(insert.getSql(), tableInfo.getTableName(), tableInfo.getInsertColumns(), tableInfo.getInsertValues());
+        String sqlScript = String.format(insert.getSql(), tableInfo.getTableName(), tableInfo.getInsertColumnSegments(), tableInfo.getInsertValueSegments());
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
         return this.addMappedStatement(mapperClass, insert.getMethod(), sqlSource, SqlCommandType.INSERT, String.class, null, Integer.class, new NoKeyGenerator(), tableInfo.getKeyProperty(), tableInfo.getKeyColumn());
     }

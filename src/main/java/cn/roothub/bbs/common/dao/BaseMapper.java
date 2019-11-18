@@ -24,7 +24,7 @@ public interface BaseMapper<T> {
      * @param model 实体对象
      * @return int
      */
-    int insert(T model);
+    int insert(@Param("model") T model);
 
     /**
      * 更新满足条件的一条数据

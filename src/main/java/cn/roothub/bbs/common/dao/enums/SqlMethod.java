@@ -28,7 +28,7 @@ public enum SqlMethod {
     /**
      * 更新
      */
-    UPDATE_BY_ID("updateById", "根据 ID 更新一条数据", "<script>\nUPDATE %s %s WHERE %s=#{%s}\n</script>"),
+    UPDATE_BY_ID("updateById", "根据 ID 更新一条数据", "<script>\nUPDATE %s %s WHERE %s = %s\n</script>"),
 
     UPDATE("update", "更新满足条件的一条数据", "<script>\nUPDATE %s %s %s %s\n</script>");
 

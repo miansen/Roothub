@@ -99,13 +99,21 @@ public class TableInfo implements StringPool {
     }
 
     /**
-     * 获取查询的字段
+     * 获取主键 Segment
+     * @return #{别名.keyProperty}
+     */
+    public String getKeyPropertySegment() {
+        return SqlScriptUtils.safeParam("model." + keyProperty);
+    }
+
+    /**
+     * 获取查询字段
      * <p>select (字段) from table where ...</p>
      * <p>位于 "字段" 部位</p>
      * @param queryWrapper 是否使用 queryWrapper 查询
      * @return sql 脚本片段
      */
-    public String getSelectColumns(boolean queryWrapper) {
+    public String getSelectColumnSegments(boolean queryWrapper) {
         String selectColumns = tableFieldInfoList.stream().filter(TableFieldInfo::isSelect)
                 .map(TableFieldInfo::getColumn).collect(Collectors.joining(COMMA));
         return queryWrapper ? SqlScriptUtils.convertChoose("wrapper != null and wrapper.selectColumns != null",
@@ -118,7 +126,7 @@ public class TableInfo implements StringPool {
      * <p>位于 "字段" 部位</p>
      * @return sql 脚本片段
      */
-    public String getInsertColumns() {
+    public String getInsertColumnSegments() {
         String insertColumns = tableFieldInfoList.stream().filter(Objects::nonNull)
                 .map(TableFieldInfo::getColumn).collect(Collectors.joining(COMMA));
         return SqlScriptUtils.convertTrim(insertColumns, LEFT_BRACKET, RIGHT_BRACKET, COMMA, COMMA);
@@ -130,9 +138,9 @@ public class TableInfo implements StringPool {
      * <p>位于 "值" 部位</p>
      * @return sql 脚本片段
      */
-    public String getInsertValues() {
+    public String getInsertValueSegments() {
         String insertValues = tableFieldInfoList.stream().filter(Objects::nonNull)
-                .map(TableFieldInfo::getInsertExpression).collect(Collectors.joining(COMMA));
+                .map(TableFieldInfo::getInsertValueSegment).collect(Collectors.joining(COMMA));
         return SqlScriptUtils.convertTrim(insertValues, LEFT_BRACKET, RIGHT_BRACKET, COMMA, COMMA);
     }
 
@@ -142,9 +150,9 @@ public class TableInfo implements StringPool {
      * <p>位于 "表达式" 部位</p>
      * @return
      */
-    public String getAllSetExpression() {
-        String setExpression = tableFieldInfoList.stream().filter(Objects::nonNull)
-                .map(TableFieldInfo::getSetExpression).collect(Collectors.joining(COMMA + NEWLINE));
-        return SqlScriptUtils.convertSet(setExpression);
+    public String getSetSegments() {
+        String allSetSegment = tableFieldInfoList.stream().filter(Objects::nonNull)
+                .map(TableFieldInfo::getSetSegment).collect(Collectors.joining(COMMA));
+        return SqlScriptUtils.convertSet(allSetSegment);
     }
 }

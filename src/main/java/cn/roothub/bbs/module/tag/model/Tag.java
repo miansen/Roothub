@@ -1,7 +1,7 @@
 package cn.roothub.bbs.module.tag.model;
 
-import cn.roothub.bbs.common.dao.annotation.TableId;
-import cn.roothub.bbs.common.dao.annotation.TableName;
+import cn.roothub.bbs.common.dao.annotation.Id;
+import cn.roothub.bbs.common.dao.annotation.Table;
 import cn.roothub.bbs.common.dao.enums.IdType;
 import cn.roothub.bbs.common.model.IBaseModel;
 import java.util.Date;
@@ -13,13 +13,13 @@ import java.util.Date;
  * 下午8:09:32
  * TODO
  */
-@TableName(value = "tag")
+@Table(value = "tag")
 public class Tag implements IBaseModel{
 
 	/**
 	 * 标签ID
 	 */
-	@TableId(value = "tag_id", type = IdType.AUTO)
+	@Id(value = "tag_id", type = IdType.AUTO)
 	private Integer tagId;
 
 	/**

@@ -3,6 +3,7 @@ package cn.roothub.bbs.common.dao.config;
 import cn.roothub.bbs.common.dao.register.BaseMapperRegistry;
 import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -20,6 +21,9 @@ public class BaseMapperConfig {
 
     @Autowired
     private List<SqlSessionFactory> sqlSessionFactoryList;
+
+    @Autowired
+    private MapperScannerConfigurer mapperScannerConfigurer;
 
     @PostConstruct
     public void Inject () {

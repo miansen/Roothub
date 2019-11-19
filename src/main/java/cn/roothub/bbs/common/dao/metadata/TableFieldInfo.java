@@ -74,7 +74,7 @@ public class TableFieldInfo implements StringPool{
      * @return #{别名.property}
      */
     public String getInsertValueSegment() {
-        return SqlScriptUtils.safeParam("model." + property);
+        return SqlScriptUtils.safeParam(MODEL_DOT + property);
     }
 
     /**
@@ -82,6 +82,6 @@ public class TableFieldInfo implements StringPool{
      * @return column = #{别名.property}
      */
     public String getSetSegment() {
-        return column + EQUALS + SqlScriptUtils.safeParam("model." + property);
+        return column + EQUALS + SqlScriptUtils.safeParam(MODEL_DOT + property);
     }
 }

@@ -10,6 +10,7 @@ import org.apache.ibatis.mapping.SqlSource;
 
 /**
  * 插入一条数据
+ *
  * @Author: miansen.wang
  * @Date: 2019/10/26 17:34
  */

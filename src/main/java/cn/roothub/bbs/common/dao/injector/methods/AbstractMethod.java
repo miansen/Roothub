@@ -3,6 +3,7 @@ package cn.roothub.bbs.common.dao.injector.methods;
 import cn.roothub.bbs.common.dao.metadata.TableInfo;
 import cn.roothub.bbs.common.dao.builder.TableInfoBuilder;
 
+import cn.roothub.bbs.common.dao.util.SqlScriptUtils;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -18,6 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 此类提供了注入 SQL 的方法 inject()
  * 具体注入的逻辑在这个方法 injectMappedStatement() 里，由子类实现
+ *
  * @Author: miansen.wang
  * @Date: 2019/8/26 22:26
  */
@@ -40,7 +42,7 @@ public abstract class AbstractMethod {
      */
     protected MapperBuilderAssistant builderAssistant;
 
-    public void inject(MapperBuilderAssistant builderAssistant, Class<?> mapperClass, Class<?> modelClass){
+    public void inject(MapperBuilderAssistant builderAssistant, Class<?> mapperClass, Class<?> modelClass) {
         this.configuration = builderAssistant.getConfiguration();
         // 使用默认的语言驱动 XMLLanguageDriver
         this.languageDriver = this.configuration.getDefaultScriptingLanuageInstance();
@@ -53,6 +55,7 @@ public abstract class AbstractMethod {
 
     /**
      * 注入 MappedStatement，具体的注入逻辑由子类实现
+     *
      * @param mapperClass
      * @param modelClass
      * @param tableInfo
@@ -62,6 +65,7 @@ public abstract class AbstractMethod {
 
     /**
      * 添加 MappedStatement
+     *
      * @param mapperClass
      * @param id
      * @param sqlSource
@@ -74,7 +78,7 @@ public abstract class AbstractMethod {
      * @param keyColumn
      * @return
      */
-    protected MappedStatement addMappedStatement (Class<?> mapperClass, String id, SqlSource sqlSource, SqlCommandType sqlCommandType, Class<?> parameterClass, String resultMap, Class<?> resultType, KeyGenerator keyGenerator, String keyProperty, String keyColumn) {
+    protected MappedStatement addMappedStatement(Class<?> mapperClass, String id, SqlSource sqlSource, SqlCommandType sqlCommandType, Class<?> parameterClass, String resultMap, Class<?> resultType, KeyGenerator keyGenerator, String keyProperty, String keyColumn) {
         String statementName = mapperClass.getName() + "." + id;
         if (configuration.hasStatement(statementName)) {
             log.error(statementName + "Has been loaded by XML or SqlProvider, ignoring the injection of the SQL");
@@ -84,7 +88,26 @@ public abstract class AbstractMethod {
             if (sqlCommandType == SqlCommandType.SELECT) {
                 isSelect = true;
             }
-            return this.builderAssistant.addMappedStatement(id, sqlSource, StatementType.PREPARED, sqlCommandType, null, null, null, parameterClass, resultMap, resultType, null, !isSelect, isSelect, false, keyGenerator, keyProperty,keyColumn, this.configuration.getDatabaseId(), this.languageDriver, null);
+            return this.builderAssistant.addMappedStatement(id, sqlSource, StatementType.PREPARED, sqlCommandType, null, null, null, parameterClass, resultMap, resultType, null, !isSelect, isSelect, false, keyGenerator, keyProperty, keyColumn, this.configuration.getDatabaseId(), this.languageDriver, null);
         }
+    }
+
+    /**
+     * 根据 wrapper 条件操作的 where 脚本
+     * @return
+     */
+    protected String getWrapperScript() {
+        return SqlScriptUtils.convertWhere(
+                SqlScriptUtils.convertIf("wrapper != null and wrapper.sqlSegment != null and wrapper.sqlSegment != ''",
+                        "${wrapper.sqlSegment}")
+        );
+    }
+
+    /**
+     * 根据 ID 集合批量操作的 foreach 脚本
+     * @return
+     */
+    protected String getIdsScript() {
+        return SqlScriptUtils.convertForeach("${item}", "ids", "index", "item", ",", "(", ")");
     }
 }

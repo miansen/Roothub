@@ -1,6 +1,7 @@
 package cn.roothub.bbs.common.dao.util;
 
 /**
+ * BaseMapper 常量池
  * @Author: miansen.wang
  * @Date: 2019/9/15 14:26
  */
@@ -76,9 +77,16 @@ public interface StringPool {
 
     String SPACE_COMMA_SPACE = " , ";
 
+    // 实体类别名
+    String MODEL = "model";
+
+    // 实体类别名带后缀
+    String MODEL_DOT = MODEL + DOT;
+
     // ---------------------------------------------------------------- array
 
     String[] EMPTY_ARRAY = new String[0];
 
     byte[] BYTES_NEW_LINE = StringPool.NEWLINE.getBytes();
+
 }

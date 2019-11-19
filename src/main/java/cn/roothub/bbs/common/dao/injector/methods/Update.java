@@ -9,19 +9,17 @@ import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.mapping.SqlSource;
 
 /**
- * 查询满足条件的一条数据
- *
+ * 更新满足条件的数据
  * @Author: miansen.wang
- * @Date: 2019/8/29 22:01
+ * @Date: 2019/11/19 14:24
  */
-public class SelectOne extends AbstractMethod {
+public class Update extends AbstractMethod {
 
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        SqlMethod selectOne = SqlMethod.SELECT_ONE;
-        String sqlScript = String.format(selectOne.getSql(), tableInfo.getSelectColumnSegments(true),
-                tableInfo.getTableName(), getWrapperScript());
+        SqlMethod update = SqlMethod.UPDATE;
+        String sqlScript = String.format(update.getSql(), tableInfo.getTableName(), tableInfo.getSetSegments(), getWrapperScript());
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
-        return this.addMappedStatement(mapperClass, selectOne.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, modelClass, new NoKeyGenerator(), tableInfo.getKeyProperty(), tableInfo.getKeyColumn());
+        return this.addMappedStatement(mapperClass, update.getMethod(), sqlSource, SqlCommandType.UPDATE, String.class, null, Integer.class, new NoKeyGenerator(), tableInfo.getKeyProperty(), tableInfo.getKeyColumn());
     }
 }

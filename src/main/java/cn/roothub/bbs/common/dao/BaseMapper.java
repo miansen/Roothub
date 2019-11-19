@@ -27,7 +27,28 @@ public interface BaseMapper<T> {
     int insert(@Param("model") T model);
 
     /**
-     * 更新满足条件的一条数据
+     * 删除满足条件的数据
+     * @param updateWrapper where 条件包装器
+     * @return int
+     */
+    int delete(@Param("wrapper") UpdateWrapper<T> updateWrapper);
+
+    /**
+     * 根据 ID 删除一条数据
+     * @param id 主键 ID
+     * @return int
+     */
+    int deleteById(Serializable id);
+
+    /**
+     * 根据 ID 集合，批量删除多条数据
+     * @param ids 主键 ID 集合
+     * @return int
+     */
+    int deleteBatchIds(@Param("ids") Collection<? extends Serializable> ids);
+
+    /**
+     * 更新满足条件的数据
      * @param model 实体对象
      * @param updateWrapper where 条件包装器
      * @return int
@@ -43,17 +64,17 @@ public interface BaseMapper<T> {
 
     /**
      * 根据 ID 查询一条数据
-     * @param id 数据库主键值
+     * @param id 主键 ID
      * @return T
      */
     T selectById(Serializable id);
 
     /**
      * 根据 ID 集合，批量查询多条数据
-     * @param idList 数据库主键值集合
+     * @param ids 主键 ID 集合
      * @return List<T>
      */
-    List<T> selectBatchIds(@Param("coll") Collection<? extends Serializable> idList);
+    List<T> selectBatchIds(@Param("ids") Collection<? extends Serializable> ids);
 
     /**
      * 查询满足条件的一条数据

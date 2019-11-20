@@ -15,8 +15,8 @@ import java.util.List;
  * @Author: miansen.wang
  * @Date: 2019/8/29 22:24
  */
-@Configuration
-@DependsOn("uploadConfig")
+// @Configuration
+// @DependsOn("uploadConfig")
 public class BaseMapperConfig {
 
     @Autowired

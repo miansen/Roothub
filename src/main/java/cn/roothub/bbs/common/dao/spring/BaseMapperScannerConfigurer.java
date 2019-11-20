@@ -1,20 +1,25 @@
 package cn.roothub.bbs.common.dao.spring;
 
+import cn.roothub.bbs.common.dao.register.BaseMapperRegistry;
+import org.apache.ibatis.binding.MapperRegistry;
+import org.apache.ibatis.session.SqlSessionFactory;
+
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 与 spring 集成
  * @Author: miansen.wang
  * @Date: 2019/11/19 21:59
  */
-public class BaseMapperScannerConfigurer implements BeanDefinitionRegistryPostProcessor, ApplicationContextAware {
+@Configuration
+public class BaseMapperScannerConfigurer implements InitializingBean {
 
     /**
      * 之所以要注入 MapperScannerConfigurer，原因有两个：
@@ -24,22 +29,18 @@ public class BaseMapperScannerConfigurer implements BeanDefinitionRegistryPostPr
      *     BaseMapperScannerConfigurer 再给各个 DAO 层接口注册从 BaseMapper 继承来的通用的增删改查方法</li>
      * </ul>
      */
-    private MapperScannerConfigurer mapperScannerConfigurer;
+    //@Autowired
+    //private MapperScannerConfigurer mapperScannerConfigurer;
 
-    private ApplicationContext applicationContext;
-
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException {
-
-    }
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    public void afterPropertiesSet() throws Exception {
+        org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
+        MapperRegistry mapperRegistry = configuration.getMapperRegistry();
+        List<Class<?>> mappers = new ArrayList<>(mapperRegistry.getMappers());
+        BaseMapperRegistry baseMapperRegistry = new BaseMapperRegistry(configuration);
+        baseMapperRegistry.addMappers(mappers);
     }
 }

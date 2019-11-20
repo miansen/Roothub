@@ -8,7 +8,7 @@ import org.apache.ibatis.session.Configuration;
 import java.util.List;
 
 /**
- * Mapper 注册与绑定类，主要的作用是为 IBaseDao 的导出接口注入通用的 SQL
+ * Mapper 注册与绑定类，主要的作用是为 BaseMapper 的导出接口注入通用的增删改查方法
  * @Author: miansen.wang
  * @Date: 2019/8/29 22:36
  */
@@ -29,7 +29,7 @@ public class BaseMapperRegistry {
      */
     public void addMappers(List<Class<?>> mappers) {
         mappers.forEach(m -> {
-            // mapper 必须是接口且继承 IBaseDao，才能注入
+            // mapper 必须是接口且继承 BaseMapper，才能注入
             if (!m.isInterface() || !BaseMapper.class.isAssignableFrom(m)){
                 return;
             }

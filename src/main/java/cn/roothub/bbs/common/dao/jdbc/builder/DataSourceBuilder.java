@@ -1,5 +1,8 @@
 package cn.roothub.bbs.common.dao.jdbc.builder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.sql.DataSource;
 
 /**
@@ -14,7 +17,9 @@ public final class DataSourceBuilder<T extends DataSource> {
     private Class<? extends DataSource> type;
 
     private ClassLoader classLoader;
-
+    
+    private Map<String, String> properties = new HashMap<>();
+ 
     private DataSourceBuilder(ClassLoader classLoader) {
         this.classLoader = classLoader;
     }
@@ -26,8 +31,7 @@ public final class DataSourceBuilder<T extends DataSource> {
     public T build() {
         Class<? extends DataSource> type = this.getType();
         try {
-            DataSource dataSource = (DataSource) type.newInstance();
-            return dataSource;
+            return (T) type.newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -36,6 +40,26 @@ public final class DataSourceBuilder<T extends DataSource> {
         return null;
     }
 
+    public DataSourceBuilder<T> url(String url) {
+    	this.properties.put("url", url);
+    	return this;
+    }
+    
+    public DataSourceBuilder<T> driverClassName(String driverClassName) {
+    	this.properties.put("driverClassName", driverClassName);
+    	return this;
+    }
+    
+    public DataSourceBuilder<T> username(String username) {
+    	this.properties.put("username", username);
+    	return this;
+    }
+    
+    public DataSourceBuilder<T> password(String password) {
+    	this.properties.put("password", password);
+    	return this;
+    }
+    
     public static Class<? extends DataSource> findType(ClassLoader classLoader) {
         return null;
     }

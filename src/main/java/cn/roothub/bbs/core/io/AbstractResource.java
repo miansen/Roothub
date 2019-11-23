@@ -48,7 +48,24 @@ public abstract class AbstractResource implements Resource {
 
 	@Override
 	public File getFile() throws IOException {
-		throw new FileNotFoundException(getDescription() + " cannot be resolved to absolute file path");
+		URL url = getURL();
+		if (!"file".equals(url.getProtocol())) {
+			throw new FileNotFoundException(getDescription() + " cannot be resolved to absolute file path " + "because it does not reside in the file system: " + url);
+		} else {
+			try {
+				return new File(url.toURI().getSchemeSpecificPart());
+			} catch (URISyntaxException var3) {
+				return new File(url.getFile());
+			}
+		}
+	}
+
+	public File getFile(URI uri) throws IOException {
+		if (!"file".equals(uri.getScheme())) {
+			throw new FileNotFoundException(getDescription() + " cannot be resolved to absolute file path " + "because it does not reside in the file system: " + uri);
+		} else {
+			return new File(uri.getSchemeSpecificPart());
+		}
 	}
 
 	@Override

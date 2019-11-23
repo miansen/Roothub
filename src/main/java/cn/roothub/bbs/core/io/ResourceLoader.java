@@ -20,4 +20,6 @@ public interface ResourceLoader {
 	 * @return
 	 */
 	Resource getResource(String location);
+
+	ClassLoader getClassLoader();
 }

@@ -25,11 +25,14 @@ public final class DataSourceBuilder<T extends DataSource> {
     }
 
     public static DataSourceBuilder<?> create(ClassLoader classLoader) {
-        return new DataSourceBuilder(classLoader);
+        return new DataSourceBuilder<>(classLoader);
     }
 
     public T build() {
         Class<? extends DataSource> type = this.getType();
+        if (type.isInterface()) {
+			throw new RuntimeException("Specified class is an interface");
+		}
         try {
             return (T) type.newInstance();
         } catch (InstantiationException e) {

@@ -1,7 +1,6 @@
 package cn.roothub.bbs.core.io.support;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;

@@ -43,6 +43,12 @@ public final class DataSourceBuilder<T extends DataSource> {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
+	public <D extends DataSource> DataSourceBuilder<D> type(Class<D> type) {
+    	this.type = type;
+    	return (DataSourceBuilder<D>) this;
+    }
+    
     public DataSourceBuilder<T> url(String url) {
     	this.properties.put("url", url);
     	return this;

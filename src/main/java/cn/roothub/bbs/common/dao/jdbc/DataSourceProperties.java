@@ -2,6 +2,10 @@ package cn.roothub.bbs.common.dao.jdbc;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import cn.roothub.bbs.common.dao.jdbc.builder.DataSourceBuilder;
+
 /**
  * <p>数据库基本配置</p>
  * @author: miansen.wang
@@ -10,14 +14,19 @@ import java.util.List;
 public class DataSourceProperties {
 
 	/**
-	 * JDBC 驱动程序的完全限定名
+	 * JDBC 数据库连接池 Class
 	 */
-	private String driverClassName;
+	private Class<? extends DataSource> type;
 	
 	/**
 	 * JDBC 数据库连接池的完全限定名
 	 */
 	private String dataSourceClassName;
+	
+	/**
+	 * JDBC 驱动程序的完全限定名
+	 */
+	private String driverClassName;
 	
 	/**
 	 * 数据库的 JDBC URL
@@ -44,20 +53,38 @@ public class DataSourceProperties {
 	 */
 	private List<String> data;
 
-	public String getDriverClassName() {
-		return driverClassName;
+	/**
+	 * 使用此实例的属性初始化 {@link DataSourceBuilder}
+	 * @return
+	 */
+	public DataSourceBuilder<?> initializeDataSourceBuilder() {
+		return DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
+				.type(getType()).driverClassName(getDriverClassName()).url(getUrl())
+				.username(getUsername()).password(getPassword());
+	}
+	
+	public Class<? extends DataSource> getType() {
+		return type;
 	}
 
-	public void setDriverClassName(String driverClassName) {
-		this.driverClassName = driverClassName;
+	public void setType(Class<? extends DataSource> type) {
+		this.type = type;
 	}
-
+	
 	public String getDataSourceClassName() {
 		return dataSourceClassName;
 	}
 
 	public void setDataSourceClassName(String dataSourceClassName) {
 		this.dataSourceClassName = dataSourceClassName;
+	}
+
+	public String getDriverClassName() {
+		return driverClassName;
+	}
+
+	public void setDriverClassName(String driverClassName) {
+		this.driverClassName = driverClassName;
 	}
 
 	public String getUrl() {
@@ -102,9 +129,8 @@ public class DataSourceProperties {
 
 	@Override
 	public String toString() {
-		return "DataSourceProperties [driverClassName=" + driverClassName + ", dataSourceClassName="
-				+ dataSourceClassName + ", url=" + url + ", username=" + username + ", password=" + password
-				+ ", schema=" + schema + ", data=" + data + "]";
+		return "DataSourceProperties [type=" + type + ", driverClassName=" + driverClassName + ", url=" + url
+				+ ", username=" + username + ", password=" + password + ", schema=" + schema + ", data=" + data + "]";
 	}
 	
 }

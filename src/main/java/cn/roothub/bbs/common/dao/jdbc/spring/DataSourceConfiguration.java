@@ -47,7 +47,7 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, StringP
 	@Override
 	public DataSource getObject() throws Exception {
 		DataSource dataSource = null;
-		String dataSourceClassName = dataSourceProperties.getDataSourceClassName();
+		final String dataSourceClassName = dataSourceProperties.getDataSourceClassName();
 		if (dataSourceClassName == null) {
 			dataSource = new DriverManager().dataSource(dataSourceProperties);
 			return dataSource;
@@ -88,7 +88,7 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, StringP
 			ComboPooledDataSource dataSource = createDataSource(ComboPooledDataSource.class);
 			try {
 				dataSource.setDriverClass(dataSourceProperties.getDriverClassName());
-				dataSource.setJdbcUrl(dataSourceProperties.getUrl());
+				dataSource.setJdbcUrl(dataSourceProperties.getJdbcUrl());
 				dataSource.setUser(dataSourceProperties.getUsername());
 				dataSource.setPassword(dataSourceProperties.getPassword());
 				dataSource.setMaxPoolSize(30);
@@ -111,7 +111,7 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, StringP
 		public DriverManagerDataSource dataSource(DataSourceProperties dataSourceProperties) {
 			DriverManagerDataSource dataSource = createDataSource(DriverManagerDataSource.class);
 			dataSource.setDriverClassName(dataSourceProperties.getDriverClassName());
-			dataSource.setUrl(dataSourceProperties.getUrl());
+			dataSource.setUrl(dataSourceProperties.getJdbcUrl());
 			dataSource.setUsername(dataSourceProperties.getUsername());
 			dataSource.setPassword(dataSourceProperties.getPassword());
 			return dataSource;

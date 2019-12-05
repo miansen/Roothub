@@ -31,7 +31,17 @@ public class DataSourceProperties {
 	/**
 	 * 数据库的 JDBC URL
 	 */
-	private String url;
+	private String jdbcUrl;
+	
+	/**
+	 * 数据库 URL（不包含数据库名）
+	 */
+	private String dbUrl;
+	
+	/**
+	 * 数据库名
+	 */
+	private String database;
 	
 	/**
 	 * 数据库的登录用户名
@@ -59,7 +69,7 @@ public class DataSourceProperties {
 	 */
 	public DataSourceBuilder<?> initializeDataSourceBuilder() {
 		return DataSourceBuilder.create(Thread.currentThread().getContextClassLoader())
-				.type(getType()).driverClassName(getDriverClassName()).url(getUrl())
+				.type(getType()).driverClassName(getDriverClassName()).url(getJdbcUrl())
 				.username(getUsername()).password(getPassword());
 	}
 	
@@ -87,12 +97,35 @@ public class DataSourceProperties {
 		this.driverClassName = driverClassName;
 	}
 
-	public String getUrl() {
-		return url;
+	public String getJdbcUrl() {
+		return jdbcUrl;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setJdbcUrl(String jdbcUrl) {
+		this.jdbcUrl = jdbcUrl;
+	}
+	
+	public String getDbUrl() {
+		String[] var0 = getJdbcUrl().split("//");
+		String dbName = var0[0];
+		String[] var1 = var0[1].split("/|\\?");
+		dbUrl = dbName + var1[0];
+		return dbUrl;
+	}
+
+	public void setDbUrl(String dbUrl) {
+		this.dbUrl = dbUrl;
+	}
+	
+	public String getDatabase() {
+		String[] var0 = getJdbcUrl().split("//");
+		String[] var1 = var0[1].split("/|\\?");
+		database = var1[1];
+		return database;
+	}
+
+	public void setDatabase(String database) {
+		this.database = database;
 	}
 
 	public String getUsername() {
@@ -129,8 +162,10 @@ public class DataSourceProperties {
 
 	@Override
 	public String toString() {
-		return "DataSourceProperties [type=" + type + ", driverClassName=" + driverClassName + ", url=" + url
-				+ ", username=" + username + ", password=" + password + ", schema=" + schema + ", data=" + data + "]";
+		return "DataSourceProperties [type=" + type + ", dataSourceClassName=" + dataSourceClassName
+				+ ", driverClassName=" + driverClassName + ", jdbcUrl=" + jdbcUrl + ", dbUrl=" + dbUrl + ", database="
+				+ database + ", username=" + username + ", password=" + password + ", schema=" + schema + ", data="
+				+ data + "]";
 	}
-	
+
 }

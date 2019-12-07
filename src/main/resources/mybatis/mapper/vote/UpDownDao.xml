@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="cn.roothub.bbs.module.vote.dao.UpDownDao">
+<mapper namespace="wang.miansen.roothub.module.vote.dao.UpDownDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-    <resultMap id="BaseResultMap" type="cn.roothub.bbs.module.vote.model.UpDown">
+    <resultMap id="BaseResultMap" type="wang.miansen.roothub.module.vote.model.UpDown">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="uid" jdbcType="INTEGER" property="uid"/>
         <result column="tid" jdbcType="INTEGER" property="tid"/>
@@ -47,7 +47,7 @@
         </if>
     </select> -->
     <!-- 添加赞同或者反对记录 -->
-    <insert id="insert" parameterType="cn.roothub.bbs.module.vote.model.UpDown" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="wang.miansen.roothub.module.vote.model.UpDown" keyProperty="id" useGeneratedKeys="true">
         insert into up_down 
         (id, 
          uid,
@@ -80,7 +80,7 @@
     	and is_delete = '0'
     </select>
     <!-- 更新状态 -->
-    <update id="update" parameterType="cn.roothub.bbs.module.vote.model.UpDown">
+    <update id="update" parameterType="wang.miansen.roothub.module.vote.model.UpDown">
         update up_down
         set up_down = #{upDown,jdbcType=BIT},
         create_date = #{createDate,jdbcType=TIMESTAMP},

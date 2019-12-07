@@ -3,9 +3,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="cn.roothub.bbs.module.security.dao.RolePermissionRelDao">
+<mapper namespace="wang.miansen.roothub.module.security.dao.RolePermissionRelDao">
     
-	<select id="selectAllByRoleId" resultType="cn.roothub.bbs.module.security.model.RolePermissionRel">
+	<select id="selectAllByRoleId" resultType="wang.miansen.roothub.module.security.model.RolePermissionRel">
 		SELECT
         	*
 		FROM
@@ -14,7 +14,7 @@
 			role_id = #{roleId}
      </select>
    
-     <select id="selectAllByPermissionId" resultType="cn.roothub.bbs.module.security.model.RolePermissionRel">
+     <select id="selectAllByPermissionId" resultType="wang.miansen.roothub.module.security.model.RolePermissionRel">
 		SELECT
         	*
 		FROM

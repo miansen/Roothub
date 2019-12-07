@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="cn.roothub.bbs.module.follow.dao.FollowDao">
+<mapper namespace="wang.miansen.roothub.module.follow.dao.FollowDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="cn.roothub.bbs.module.user.model.User">
+	<resultMap id="BaseResultMap" type="wang.miansen.roothub.module.user.model.User">
         <id column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -85,7 +85,7 @@
         </if>
      </select>
      <!-- 添加关注 -->
-     <insert id="insert" parameterType="cn.roothub.bbs.module.follow.model.Follow" keyProperty="id" useGeneratedKeys="true">
+     <insert id="insert" parameterType="wang.miansen.roothub.module.follow.model.Follow" keyProperty="id" useGeneratedKeys="true">
      	insert into follow
      	(uid,
      	 fid,

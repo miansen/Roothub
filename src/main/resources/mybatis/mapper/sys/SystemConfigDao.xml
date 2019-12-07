@@ -3,9 +3,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="cn.roothub.bbs.module.sys.dao.SystemConfigDao">
+<mapper namespace="wang.miansen.roothub.module.sys.dao.SystemConfigDao">
     
-    <select id="selectById" resultType="cn.roothub.bbs.module.sys.model.SystemConfig">
+    <select id="selectById" resultType="wang.miansen.roothub.module.sys.model.SystemConfig">
 		SELECT
         	*
 		FROM
@@ -15,7 +15,7 @@
 		AND is_delete = 0
      </select>
     
-    <select id="selectByKey" resultType="cn.roothub.bbs.module.sys.model.SystemConfig">
+    <select id="selectByKey" resultType="wang.miansen.roothub.module.sys.model.SystemConfig">
 		SELECT
         	a.*
 		FROM
@@ -25,7 +25,7 @@
 		AND a.is_delete = 0
      </select>
     
-	<select id="selectAll" resultType="cn.roothub.bbs.module.sys.model.SystemConfig">
+	<select id="selectAll" resultType="wang.miansen.roothub.module.sys.model.SystemConfig">
 		SELECT
         	*
 		FROM
@@ -34,7 +34,7 @@
 			is_delete = 0
      </select>
 	
-	<select id="selectByPid" resultType="cn.roothub.bbs.module.sys.model.SystemConfig">
+	<select id="selectByPid" resultType="wang.miansen.roothub.module.sys.model.SystemConfig">
 		SELECT
         	*
 		FROM
@@ -44,7 +44,7 @@
 		AND is_delete = 0
      </select>
      
-     <select id="selectBatchKeys" resultType="cn.roothub.bbs.module.sys.model.SystemConfig">
+     <select id="selectBatchKeys" resultType="wang.miansen.roothub.module.sys.model.SystemConfig">
 		SELECT
         	a.*
 		FROM
@@ -58,7 +58,7 @@
 	    </foreach>
      </select>
      
-     <update id="update" parameterType="cn.roothub.bbs.module.sys.model.SystemConfig">
+     <update id="update" parameterType="wang.miansen.roothub.module.sys.model.SystemConfig">
      	UPDATE 
      		system_config a
      	SET

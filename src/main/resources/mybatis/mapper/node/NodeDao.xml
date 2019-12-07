@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.roothub.bbs.module.node.dao.NodeDao">
-    <resultMap id="BaseResultMap" type="cn.roothub.bbs.module.node.model.Node">
+<mapper namespace="wang.miansen.roothub.module.node.dao.NodeDao">
+    <resultMap id="BaseResultMap" type="wang.miansen.roothub.module.node.model.Node">
         <id column="node_id" jdbcType="INTEGER" property="nodeId"/>
         <result column="node_code" jdbcType="VARCHAR" property="nodeCode"/>
         <result column="node_title" jdbcType="VARCHAR" property="nodeTitle"/>
@@ -178,7 +178,7 @@
     </select>
 
     <!-- 更新节点 -->
-    <update id="update" parameterType="cn.roothub.bbs.module.node.model.Node">
+    <update id="update" parameterType="wang.miansen.roothub.module.node.model.Node">
         UPDATE 
         	node
         SET 
@@ -199,7 +199,7 @@
     </update>
 
     <!--添加节点-->
-    <insert id="insert" parameterType="cn.roothub.bbs.module.node.model.Node" keyProperty="node.nodeId" useGeneratedKeys="true">
+    <insert id="insert" parameterType="wang.miansen.roothub.module.node.model.Node" keyProperty="node.nodeId" useGeneratedKeys="true">
         INSERT INTO node
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="node.nodeCode != null and node.nodeCode != ''">

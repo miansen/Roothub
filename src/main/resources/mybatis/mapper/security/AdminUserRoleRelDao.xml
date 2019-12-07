@@ -3,10 +3,10 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
-<mapper namespace="cn.roothub.bbs.module.security.dao.AdminUserRoleRelDao">
+<mapper namespace="wang.miansen.roothub.module.security.dao.AdminUserRoleRelDao">
     
 	<!-- 根据后台用户ID查询所有的关联关系-->
-	<select id="selectAllByAdminUserId" resultType="cn.roothub.bbs.module.security.model.AdminUserRoleRel">
+	<select id="selectAllByAdminUserId" resultType="wang.miansen.roothub.module.security.model.AdminUserRoleRel">
 		SELECT
         	*
 		FROM
@@ -16,7 +16,7 @@
      </select>
    
      <!-- 根据角色ID查询所有的关联关系 -->
-     <select id="selectAllByRoleId" resultType="cn.roothub.bbs.module.security.model.AdminUserRoleRel">
+     <select id="selectAllByRoleId" resultType="wang.miansen.roothub.module.security.model.AdminUserRoleRel">
 		SELECT
         	*
 		FROM

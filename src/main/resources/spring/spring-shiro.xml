@@ -24,7 +24,7 @@
     </bean>
     
     <!-- 配置 Realm -->
-    <bean id="accountRealm" class="cn.roothub.bbs.config.realm.AccountRealm">
+    <bean id="accountRealm" class="wang.miansen.roothub.config.realm.AccountRealm">
     	<property name="credentialsMatcher">
     		<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
     			<!-- 加密算法的名称 -->
@@ -67,6 +67,6 @@
     
     <!-- 定义拦截规则 -->
     <bean id="filterChainDefinitionMapBuilder"
-    	  class="cn.roothub.bbs.config.ShiroConfig">
+    	  class="wang.miansen.roothub.config.ShiroConfig">
     </bean>
 </beans>

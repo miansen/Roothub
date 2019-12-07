@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="cn.roothub.bbs.module.security.dao.RoleDao">
+<mapper namespace="wang.miansen.roothub.module.security.dao.RoleDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="cn.roothub.bbs.module.security.model.Role">
+	<resultMap id="BaseResultMap" type="wang.miansen.roothub.module.security.model.Role">
         <id column="role_id" jdbcType="INTEGER" property="roleId"/>
         <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
@@ -24,7 +24,7 @@
     </resultMap>
     
 	<!-- 根据ID查询角色-->
-	<select id="selectById" resultType="cn.roothub.bbs.module.security.model.Role">
+	<select id="selectById" resultType="wang.miansen.roothub.module.security.model.Role">
 		SELECT
         	*
 		FROM
@@ -34,7 +34,7 @@
      </select>
      
      <!-- 根据名称查询角色-->
-	<select id="selectByName" resultType="cn.roothub.bbs.module.security.model.Role">
+	<select id="selectByName" resultType="wang.miansen.roothub.module.security.model.Role">
 		SELECT
         	*
 		FROM
@@ -44,7 +44,7 @@
      </select>
    
      <!-- 查询所有的后台用户 -->
-     <select id="selectAll" resultType="cn.roothub.bbs.module.security.model.Role">
+     <select id="selectAll" resultType="wang.miansen.roothub.module.security.model.Role">
 		SELECT
         	*
 		FROM
@@ -60,7 +60,7 @@
      </select>
      
      <!-- 根据后台用户ID查询所关联的所有角色 -->
-     <select id="selectAllByAdminUserId" resultType="cn.roothub.bbs.module.security.model.Role">
+     <select id="selectAllByAdminUserId" resultType="wang.miansen.roothub.module.security.model.Role">
 		SELECT
         	a.*
 		FROM
@@ -82,7 +82,7 @@
      </select>
      
      <!-- 新增角色 -->
-     <insert id="insert" parameterType="cn.roothub.bbs.module.security.model.Role" keyProperty="roleId" useGeneratedKeys="true">
+     <insert id="insert" parameterType="wang.miansen.roothub.module.security.model.Role" keyProperty="roleId" useGeneratedKeys="true">
      	INSERT INTO role
      	(role_name,
      	 create_date,
@@ -94,7 +94,7 @@
      </insert>
      
      <!--  更新角色 -->
-     <update id="update" parameterType="cn.roothub.bbs.module.security.model.Role">
+     <update id="update" parameterType="wang.miansen.roothub.module.security.model.Role">
      	UPDATE 
      		role
      	SET 

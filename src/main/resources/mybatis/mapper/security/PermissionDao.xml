@@ -3,9 +3,9 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.roothub.bbs.module.security.dao.PermissionDao">
+<mapper namespace="wang.miansen.roothub.module.security.dao.PermissionDao">
 	
-	<select id="selectById" resultType="cn.roothub.bbs.module.security.model.Permission">
+	<select id="selectById" resultType="wang.miansen.roothub.module.security.model.Permission">
 		SELECT
         	a.*
 		FROM
@@ -14,7 +14,7 @@
 			a.permission_id = #{id}
      </select>
 	
-	<select id="selectByName" resultType="cn.roothub.bbs.module.security.model.Permission">
+	<select id="selectByName" resultType="wang.miansen.roothub.module.security.model.Permission">
 		SELECT
         	a.*
 		FROM
@@ -23,7 +23,7 @@
 			a.permission_name = #{name}
      </select>
 	
-	<select id="selectBatchByRoleList" resultType="cn.roothub.bbs.module.security.model.Permission">
+	<select id="selectBatchByRoleList" resultType="wang.miansen.roothub.module.security.model.Permission">
 		SELECT
         	a.*
 		FROM
@@ -44,7 +44,7 @@
         </if>
      </select>
      
-     <select id="selectAllByRoleId" resultType="cn.roothub.bbs.module.security.model.Permission">
+     <select id="selectAllByRoleId" resultType="wang.miansen.roothub.module.security.model.Permission">
 		SELECT
         	a.*
 		FROM
@@ -56,7 +56,7 @@
 			b.role_id = #{roleId}
      </select>
    
-     <select id="selectAllByPid" resultType="cn.roothub.bbs.module.security.model.Permission">
+     <select id="selectAllByPid" resultType="wang.miansen.roothub.module.security.model.Permission">
 		SELECT
         	*
 		FROM
@@ -71,7 +71,7 @@
         </if>
      </select>
 
-     <insert id="insert" parameterType="cn.roothub.bbs.module.security.model.Permission" keyProperty="permissionId" useGeneratedKeys="true">
+     <insert id="insert" parameterType="wang.miansen.roothub.module.security.model.Permission" keyProperty="permissionId" useGeneratedKeys="true">
      	INSERT INTO permission
      	(permission_name,
      	 permission_value,
@@ -86,7 +86,7 @@
      	 #{updateDate})
      </insert>
      
-     <update id="update" parameterType="cn.roothub.bbs.module.security.model.Permission">
+     <update id="update" parameterType="wang.miansen.roothub.module.security.model.Permission">
      	UPDATE 
      		permission
      	SET 

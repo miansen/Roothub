@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="cn.roothub.bbs.module.security.dao.AdminUserDao">
+<mapper namespace="wang.miansen.roothub.module.security.dao.AdminUserDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="cn.roothub.bbs.module.security.model.AdminUser">
+	<resultMap id="BaseResultMap" type="wang.miansen.roothub.module.security.model.AdminUser">
         <id column="admin_user_id" jdbcType="INTEGER" property="adminUserId"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -62,7 +62,7 @@
      </select>
      
      <!-- 新增后台用户 -->
-     <insert id="insert" parameterType="cn.roothub.bbs.module.security.model.AdminUser" keyProperty="adminUserId" useGeneratedKeys="true">
+     <insert id="insert" parameterType="wang.miansen.roothub.module.security.model.AdminUser" keyProperty="adminUserId" useGeneratedKeys="true">
      	insert into admin_user
      	(username,
      	 password,
@@ -77,7 +77,7 @@
      	 #{updateDate})
      </insert>
      <!--  更新后台用户 -->
-     <update id="update" parameterType="cn.roothub.bbs.module.security.model.AdminUser">
+     <update id="update" parameterType="wang.miansen.roothub.module.security.model.AdminUser">
      	update admin_user
      	set username = #{username},
      		password = #{password},

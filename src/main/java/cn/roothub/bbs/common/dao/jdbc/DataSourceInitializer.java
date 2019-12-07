@@ -13,7 +13,7 @@ import cn.roothub.bbs.core.io.Resource;
 import cn.roothub.bbs.core.io.ResourceLoader;
 
 /**
- * <p></p>
+ * 数据源初始化器
  * @author: miansen.wang
  * @date: 2019-11-30
  */

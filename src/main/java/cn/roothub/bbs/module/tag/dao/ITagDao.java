@@ -1,6 +1,6 @@
 package cn.roothub.bbs.module.tag.dao;
 
-import cn.roothub.bbs.common.dao.BaseMapper;
+import cn.roothub.bbs.common.dao.mapper.BaseMapper;
 import cn.roothub.bbs.module.tag.model.Tag;
 
 /**

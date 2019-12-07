@@ -1,8 +1,8 @@
 package cn.roothub.bbs.module.tag.model;
 
-import cn.roothub.bbs.common.dao.annotation.Id;
-import cn.roothub.bbs.common.dao.annotation.Table;
-import cn.roothub.bbs.common.dao.enums.IdType;
+import cn.roothub.bbs.common.dao.mapper.annotation.Id;
+import cn.roothub.bbs.common.dao.mapper.annotation.Table;
+import cn.roothub.bbs.common.dao.mapper.enums.IdType;
 import cn.roothub.bbs.common.model.IBaseModel;
 import java.util.Date;
 

@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import wang.miansen.roothub.common.util.StringUtil;
+import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.core.base.Result;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
@@ -101,7 +101,7 @@ public class UserAdminController {
 	@RequestMapping(value = "/refreshToken",method = RequestMethod.GET)
 	@ResponseBody
 	public Result<String> refreshToken(){
-		return new Result(true, StringUtil.getUUID());
+		return new Result(true, StringUtils.getUUID());
 	}
 	
 	/**

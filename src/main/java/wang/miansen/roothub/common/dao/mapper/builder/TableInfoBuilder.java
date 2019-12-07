@@ -4,7 +4,7 @@ import wang.miansen.roothub.common.dao.mapper.annotation.Id;
 import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableFieldInfo;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableInfo;
-import wang.miansen.roothub.common.util.StringUtil;
+import wang.miansen.roothub.common.util.StringUtils;
 
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.springframework.aop.support.AopUtils;
@@ -79,7 +79,7 @@ public class TableInfoBuilder {
         if (tableNameAnnotation != null && !"".equals(tableNameAnnotation.value())) {
             tableName = tableNameAnnotation.value();
         } else {
-            tableName = StringUtil.camelToUnderline(tableName);
+            tableName = StringUtils.camelToUnderline(tableName);
         }
         tableInfo.setTableName(tableName);
     }
@@ -96,7 +96,7 @@ public class TableInfoBuilder {
             if (!"".equals(fieldAnnotation.value())) {
                 keyColumn = fieldAnnotation.value();
             } else {
-                keyColumn = StringUtil.camelToUnderline(keyColumn);
+                keyColumn = StringUtils.camelToUnderline(keyColumn);
             }
             tableInfo.setKeyColumn(keyColumn);
             tableInfo.setKeyProperty(field.getName());

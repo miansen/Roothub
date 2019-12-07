@@ -2,7 +2,7 @@ package wang.miansen.roothub.common.dao.mapper.metadata;
 
 import wang.miansen.roothub.common.dao.mapper.util.SqlScriptUtils;
 import wang.miansen.roothub.common.dao.mapper.util.StringPool;
-import wang.miansen.roothub.common.util.StringUtil;
+import wang.miansen.roothub.common.util.StringUtils;
 
 import java.lang.reflect.Field;
 
@@ -39,7 +39,7 @@ public class TableFieldInfo implements StringPool{
     private boolean select = true;
 
     public TableFieldInfo(Field field) {
-        this.column = StringUtil.camelToUnderline(field.getName());
+        this.column = StringUtils.camelToUnderline(field.getName());
         this.property = field.getName();
         this.propertyType = field.getType();
         this.modelClass = field.getDeclaringClass();

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import wang.miansen.roothub.third.service.RedisService;
-import wang.miansen.roothub.common.util.StringUtil;
+import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.core.exception.OperationRepeaException;
 import wang.miansen.roothub.modules.user.model.User;
@@ -219,7 +219,7 @@ public class UserServiceImpl implements UserService {
 		user.setCreateDate(new Date());
 		user.setUpdateDate(null);
 		user.setIsBlock(false);
-		user.setThirdAccessToken(StringUtil.getUUID());
+		user.setThirdAccessToken(StringUtils.getUUID());
 		user.setStatusCd("1000");
 		user.setUserType("2");
 		user.setAvatar("/resources/images/default-avatar.jpg");

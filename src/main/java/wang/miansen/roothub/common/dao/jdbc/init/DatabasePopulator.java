@@ -28,6 +28,11 @@ public class DatabasePopulator {
 	private String separator = ScriptUtils.DEFAULT_STATEMENT_SEPARATOR;
 
 	/**
+	 * SQL 脚本中单行注释的前缀，默认为 "--"。
+	 */
+	private String commentPrefix = ScriptUtils.DEFAULT_COMMENT_PREFIX;
+
+	/**
 	 * 执行 SQL 脚本发生错误时是否继续而不引发异常
 	 */
 	private boolean continueOnError = false;
@@ -55,14 +60,11 @@ public class DatabasePopulator {
 	/**
 	 * 使用指定的值创建新的实例
 	 * @param scripts 要执行的初始化或清理数据库的脚本（不允许为 null）
-	 * @param separator SQL 脚本语句分隔符，默认为 ";"
 	 * @param continueOnError 执行 SQL 脚本发生错误时是否继续而不引发异常
 	 * @param ignoreFailedDrops 执行 DROP 语句发生错误时是否继续而不引发异常
 	 */
-	public DatabasePopulator(List<Resource> scripts, String separator, boolean continueOnError,
-			boolean ignoreFailedDrops) {
+	public DatabasePopulator(List<Resource> scripts, boolean continueOnError, boolean ignoreFailedDrops) {
 		this.scripts = scripts;
-		this.separator = separator;
 		this.continueOnError = continueOnError;
 		this.ignoreFailedDrops = ignoreFailedDrops;
 	}
@@ -87,10 +89,18 @@ public class DatabasePopulator {
 
 	/**
 	 * 设置 SQL 脚本的语句分隔符，默认为 ";"。
-	 * @param separator 脚本语句分隔符
+	 * @param separator SQL 脚本语句分隔符
 	 */
 	public void setSeparator(String separator) {
 		this.separator = separator;
+	}
+
+	/**
+	 * SQL 脚本中单行注释的前缀，默认为 "--"。
+	 * @param commentPrefix SQL 脚本语句注释前缀
+	 */
+	public void setCommentPrefix(String commentPrefix) {
+		this.commentPrefix = commentPrefix;
 	}
 
 	/**

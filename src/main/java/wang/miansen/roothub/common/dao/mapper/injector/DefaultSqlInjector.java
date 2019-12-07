@@ -1,7 +1,5 @@
 package wang.miansen.roothub.common.dao.mapper.injector;
 
-import cn.roothub.bbs.common.dao.mapper.injector.methods.*;
-import cn.roothub.common.dao.mapper.injector.methods.*;
 import wang.miansen.roothub.common.dao.mapper.injector.methods.*;
 
 import java.util.List;

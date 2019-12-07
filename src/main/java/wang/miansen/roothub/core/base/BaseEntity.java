@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Map;
 
 import wang.miansen.roothub.common.util.MarkdownUtil;
-import wang.miansen.roothub.common.util.StringUtil;
+import wang.miansen.roothub.common.util.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Whitelist;
@@ -71,7 +71,7 @@ public class BaseEntity {
 					if (href.contains("//www.youtube.com/watch")) {
 						URL aUrl = new URL(href);
 						String query = aUrl.getQuery();
-						Map<String, Object> querys = StringUtil.formatParams(query);
+						Map<String, Object> querys = StringUtils.formatParams(query);
 						element.text("");
 						element.addClass("embed-responsive embed-responsive-16by9");
 						element.append("<iframe class='embedded_video' src='https://www.youtube.com/embed/" + querys.get("v") + "' frameborder='0' allowfullscreen></iframe>");

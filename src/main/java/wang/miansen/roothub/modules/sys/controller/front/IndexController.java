@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import wang.miansen.roothub.common.controller.BaseController;
 import wang.miansen.roothub.common.util.Base64Util;
-import wang.miansen.roothub.common.util.StringUtil;
+import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.config.SiteConfig;
 import wang.miansen.roothub.core.base.BaseEntity;
 import wang.miansen.roothub.core.base.PageDataBody;
@@ -329,7 +329,7 @@ public class IndexController extends BaseController {
 			return returnMap;
 		} else {
 			list.add("感谢您宝贵的建议!");
-			redisMap.put(StringUtil.getUUID(), info);
+			redisMap.put(StringUtils.getUUID(), info);
 			opsForHash.putAll("feedback", redisMap);
 			returnMap.put("success", true);
 			returnMap.put("msg", list);

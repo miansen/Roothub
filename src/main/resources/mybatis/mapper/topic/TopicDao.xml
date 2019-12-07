@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="wang.miansen.roothub.module.topic.dao.TopicDao">
+<mapper namespace="wang.miansen.roothub.modules.topic.dao.TopicDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="wang.miansen.roothub.module.topic.model.Topic">
+	<resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.topic.model.Topic">
         <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
         <result column="ptab" jdbcType="VARCHAR" property="ptab"/>
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
@@ -382,7 +382,7 @@
 		and create_date = #{date}
      </select>
      <!-- 发布话题 -->
-     <insert id="insert" parameterType="wang.miansen.roothub.module.topic.model.Topic" keyProperty="topicId" useGeneratedKeys="true">
+     <insert id="insert" parameterType="wang.miansen.roothub.modules.topic.model.Topic" keyProperty="topicId" useGeneratedKeys="true">
     insert into 
            topic 
            (topic_id,
@@ -439,7 +439,7 @@
              #{avatar},
              #{url})
   </insert>
-    <update id="updateByTopicId" parameterType="wang.miansen.roothub.module.topic.model.Topic">
+    <update id="updateByTopicId" parameterType="wang.miansen.roothub.modules.topic.model.Topic">
       UPDATE 
       	topic
       SET 
@@ -465,7 +465,7 @@
     	topic_id = #{topicId,jdbcType=INTEGER}
     </update>
     <!-- 更新主题的头像 -->
-	<update id="updateTopicAvatar" parameterType="wang.miansen.roothub.module.user.model.User">
+	<update id="updateTopicAvatar" parameterType="wang.miansen.roothub.modules.user.model.User">
         update topic
         set avatar = #{avatar}
         where author = #{userName}

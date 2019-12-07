@@ -14,9 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
   -->
-  <mapper namespace="wang.miansen.roothub.module.reply.dao.ReplyDao">
+  <mapper namespace="wang.miansen.roothub.modules.reply.dao.ReplyDao">
    <!-- 目的：为dao接口方法提供sql语句配置 -->
-   <resultMap id="BaseResultMap" type="wang.miansen.roothub.module.reply.model.Reply">
+   <resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.reply.model.Reply">
     <id column="reply_id" jdbcType="INTEGER" property="replyId"/>
     <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
     <result column="topic_author_id" jdbcType="INTEGER" property="topicAuthorId"/>
@@ -135,7 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <!-- 添加评论 -->
-  <insert id="insert" parameterType="wang.miansen.roothub.module.reply.model.Reply" keyProperty="reply_id" useGeneratedKeys="true">
+  <insert id="insert" parameterType="wang.miansen.roothub.modules.reply.model.Reply" keyProperty="reply_id" useGeneratedKeys="true">
     insert into 
     reply 
     (reply_id, 
@@ -173,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{statusCd})
   </insert>
   <!-- 根据ID更新评论 -->
-  <update id="update" parameterType="wang.miansen.roothub.module.reply.model.Reply">
+  <update id="update" parameterType="wang.miansen.roothub.modules.reply.model.Reply">
     update reply
     set topic_id = #{topicId},
     topic_author_id = #{topicAuthorId},

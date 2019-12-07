@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="wang.miansen.roothub.module.visit.dao.VisitDao">
+<mapper namespace="wang.miansen.roothub.modules.visit.dao.VisitDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-    <resultMap id="BaseResultMap" type="wang.miansen.roothub.module.visit.model.Visit">
+    <resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.visit.model.Visit">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="uid" jdbcType="INTEGER" property="uid"/>
         <result column="vid" jdbcType="INTEGER" property="vid"/>
@@ -46,7 +46,7 @@
         </if>
     </select>
     <!-- 添加访问记录 -->
-    <insert id="insert" parameterType="wang.miansen.roothub.module.visit.model.Visit" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="wang.miansen.roothub.modules.visit.model.Visit" keyProperty="id" useGeneratedKeys="true">
         insert into visit 
         (id, 
          uid,
@@ -82,7 +82,7 @@
         and vid = #{vid,jdbcType=INTEGER}
     </delete>
     <!-- 根据访问者ID和被访问者ID更新板块 -->
-    <update id="update" parameterType="wang.miansen.roothub.module.visit.model.Visit">
+    <update id="update" parameterType="wang.miansen.roothub.modules.visit.model.Visit">
         update visit
         set create_date = #{createDate,jdbcType=TIMESTAMP},
         is_delete = #{isDelete,jdbcType=BIT}

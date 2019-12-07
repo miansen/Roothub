@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.dto;
 
-import wang.miansen.roothub.module.user.model.User;
+import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.common.enums.InsertUserEnum;
 import wang.miansen.roothub.common.enums.UpdateUserEnum;
 

@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.dto;
 
-import wang.miansen.roothub.module.reply.model.Reply;
+import wang.miansen.roothub.modules.reply.model.Reply;
 import wang.miansen.roothub.common.enums.InsertReplyEnum;
 
 /**

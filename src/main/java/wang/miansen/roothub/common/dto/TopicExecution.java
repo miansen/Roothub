@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.dto;
 
-import wang.miansen.roothub.module.topic.model.Topic;
+import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.common.enums.InsertTopicEnum;
 
 public class TopicExecution {

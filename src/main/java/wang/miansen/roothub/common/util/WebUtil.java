@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import wang.miansen.roothub.module.user.model.User;
+import wang.miansen.roothub.modules.user.model.User;
 
 
 public class WebUtil {

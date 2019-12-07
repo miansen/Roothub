@@ -14,9 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
   -->
-  <mapper namespace="wang.miansen.roothub.module.notice.dao.NoticeDao">
+  <mapper namespace="wang.miansen.roothub.modules.notice.dao.NoticeDao">
    <!-- 目的：为dao接口方法提供sql语句配置 -->
-   <resultMap id="BaseResultMap" type="wang.miansen.roothub.module.notice.model.Notice">
+   <resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.notice.model.Notice">
     <id column="notice_id" jdbcType="INTEGER" property="noticeId"/>
     <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle"/>
     <result column="is_read" jdbcType="BIT" property="isRead"/>
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     where notice_id = #{noticeId}
   </select>
   <!-- 添加通知 -->
-  <insert id="insert" parameterType="wang.miansen.roothub.module.notice.model.Notice" keyProperty="notice_id" useGeneratedKeys="true">
+  <insert id="insert" parameterType="wang.miansen.roothub.modules.notice.model.Notice" keyProperty="notice_id" useGeneratedKeys="true">
     insert into 
     notice 
     (notice_id, 

@@ -3,8 +3,8 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="wang.miansen.roothub.module.node.dao.NodeTabDao">
-    <resultMap id="BaseResultMap" type="wang.miansen.roothub.module.node.model.NodeTab">
+<mapper namespace="wang.miansen.roothub.modules.node.dao.NodeTabDao">
+    <resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.node.model.NodeTab">
         <id column="node_tab_id" jdbcType="INTEGER" property="nodeTabId"/>
         <result column="node_tab_code" jdbcType="VARCHAR" property="nodeTabCode"/>
         <result column="node_tab_title" jdbcType="VARCHAR" property="nodeTabTitle"/>
@@ -43,7 +43,7 @@
     </select>
     
     <!-- 添加节点板块 -->
-    <insert id="insert" parameterType="wang.miansen.roothub.module.node.model.NodeTab" keyProperty="nodeTabId" useGeneratedKeys="true">
+    <insert id="insert" parameterType="wang.miansen.roothub.modules.node.model.NodeTab" keyProperty="nodeTabId" useGeneratedKeys="true">
         insert into node_tab 
         (node_tab_id, 
         node_tab_code, 
@@ -64,7 +64,7 @@
         #{updateDate,jdbcType=TIMESTAMP})
     </insert>
     <!-- 根据ID更新板块 -->
-    <update id="updateById" parameterType="wang.miansen.roothub.module.node.model.NodeTab">
+    <update id="updateById" parameterType="wang.miansen.roothub.modules.node.model.NodeTab">
         update node_tab
         set node_tab_code = #{nodeTabCode,jdbcType=VARCHAR},
         node_tab_title = #{nodeTabTitle,jdbcType=VARCHAR},

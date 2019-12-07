@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.dto;
 
-import wang.miansen.roothub.module.node.model.NodeTab;
+import wang.miansen.roothub.modules.node.model.NodeTab;
 import wang.miansen.roothub.common.enums.InsertEnum;
 import wang.miansen.roothub.common.enums.UpdateEnum;
 

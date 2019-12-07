@@ -6,7 +6,7 @@ import wang.miansen.roothub.common.dao.mapper.metadata.TableFieldInfo;
 import wang.miansen.roothub.common.dao.mapper.wrapper.AbstractWrapper;
 import wang.miansen.roothub.common.dao.mapper.util.ArrayUtils;
 import wang.miansen.roothub.common.dao.mapper.util.StringPool;
-import wang.miansen.roothub.module.tag.model.Tag;
+import wang.miansen.roothub.modules.tag.model.Tag;
 
 import java.util.HashMap;
 import java.util.Map;

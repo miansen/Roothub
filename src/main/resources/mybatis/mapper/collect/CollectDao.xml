@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="wang.miansen.roothub.module.collect.dao.CollectDao">
+<mapper namespace="wang.miansen.roothub.modules.collect.dao.CollectDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="wang.miansen.roothub.module.topic.model.Topic">
+	<resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.topic.model.Topic">
         <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
         <result column="ptab" jdbcType="VARCHAR" property="ptab"/>
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
@@ -67,7 +67,7 @@
         </if>
      </select>
      <!-- 添加收藏 -->
-     <insert id="insert" parameterType="wang.miansen.roothub.module.collect.model.Collect" keyProperty="id" useGeneratedKeys="true">
+     <insert id="insert" parameterType="wang.miansen.roothub.modules.collect.model.Collect" keyProperty="id" useGeneratedKeys="true">
      	insert into collect
      	(uid,
      	 tid,

@@ -3,7 +3,7 @@ package wang.miansen.roothub.common.util;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import wang.miansen.roothub.module.user.model.User;
+import wang.miansen.roothub.modules.user.model.User;
 
 public class CookieAndSessionUtil {
 

@@ -3,7 +3,7 @@ package wang.miansen.roothub.core.handler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import wang.miansen.roothub.module.user.model.User;
+import wang.miansen.roothub.modules.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

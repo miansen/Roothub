@@ -2,8 +2,8 @@ package wang.miansen.roothub.config;
 
 import java.util.List;
 
-import wang.miansen.roothub.module.sys.model.SystemConfig;
-import wang.miansen.roothub.module.sys.service.SystemConfigService;
+import wang.miansen.roothub.modules.sys.model.SystemConfig;
+import wang.miansen.roothub.modules.sys.service.SystemConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

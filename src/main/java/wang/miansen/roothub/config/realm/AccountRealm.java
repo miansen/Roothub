@@ -2,11 +2,11 @@ package wang.miansen.roothub.config.realm;
 
 import java.util.List;
 
-import wang.miansen.roothub.module.security.model.AdminUser;
-import wang.miansen.roothub.module.security.model.Permission;
-import wang.miansen.roothub.module.security.model.Role;
-import wang.miansen.roothub.module.security.service.AdminUserService;
-import wang.miansen.roothub.module.security.service.RoleService;
+import wang.miansen.roothub.modules.security.model.AdminUser;
+import wang.miansen.roothub.modules.security.model.Permission;
+import wang.miansen.roothub.modules.security.model.Role;
+import wang.miansen.roothub.modules.security.service.AdminUserService;
+import wang.miansen.roothub.modules.security.service.RoleService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -22,7 +22,7 @@ import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import wang.miansen.roothub.module.security.service.PermissionService;
+import wang.miansen.roothub.modules.security.service.PermissionService;
 
 /**
  * <p></p>

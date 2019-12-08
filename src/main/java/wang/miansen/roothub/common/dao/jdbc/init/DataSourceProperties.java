@@ -1,10 +1,13 @@
 package wang.miansen.roothub.common.dao.jdbc.init;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import wang.miansen.roothub.common.dao.jdbc.builder.DataSourceBuilder;
+import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
 
 /**
  * 数据库基本配置
@@ -21,7 +24,7 @@ public class DataSourceProperties {
 	/**
 	 * JDBC 数据库连接池的完全限定名
 	 */
-	private String dataSourceClassName;
+	private String dataSourceClassName = StringPool.DRIVERMANAGER;
 
 	/**
 	 * JDBC 驱动程序的完全限定名
@@ -54,19 +57,19 @@ public class DataSourceProperties {
 	private String password;
 
 	/**
-	 * DDL 脚本路径
+	 * DDL 脚本路径，超过两个用 {@code ","} 分割。
 	 */
-	private List<String> schema;
+	private String schema;
 
 	/**
-	 * DML 脚本路径
+	 * DML 脚本路径，超过两个用 {@code ","} 分割。
 	 */
-	private List<String> data;
+	private String data;
 
 	/**
 	 * 执行 SQL 脚本发生错误时是否继续而不引发异常
 	 */
-	private boolean continueOnError = false;
+	private boolean continueOnError = true;
 	
 	/**
 	 * SQL 脚本语句分隔符
@@ -160,18 +163,18 @@ public class DataSourceProperties {
 	}
 
 	public List<String> getSchema() {
-		return schema;
+		return new ArrayList<>(Arrays.asList(schema.split(",")));
 	}
 
-	public void setSchema(List<String> schema) {
+	public void setSchema(String schema) {
 		this.schema = schema;
 	}
 
 	public List<String> getData() {
-		return data;
+		return new ArrayList<>(Arrays.asList(data.split(",")));
 	}
 
-	public void setData(List<String> data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 

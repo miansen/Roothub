@@ -15,5 +15,5 @@ public interface StringPool {
 	
 	String DBCP2 = "org.apache.commons.dbcp2.BasicDataSource";
 	
-	String DRIVERMANAGER = "cn.roothub.bbs.common.dao.jdbc.datasource.DriverManagerDataSource";
+	String DRIVERMANAGER = "wang.miansen.roothub.common.dao.jdbc.datasource.DriverManagerDataSource";
 }

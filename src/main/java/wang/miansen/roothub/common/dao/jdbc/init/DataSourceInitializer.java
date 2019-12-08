@@ -65,16 +65,18 @@ public class DataSourceInitializer {
 
 	/**
 	 * 创建数据库
+	 * @return boolean
 	 */
-	public void createSchema() {
+	public boolean createSchema() {
 		List<Resource> scripts = getScripts(this.dataSourceProperties.getSchema());
 		if (!scripts.isEmpty()) {
 			if (!isEnabled()) {
 				logger.debug("Initialization disabled (not running DDL scripts)");
-				return;
+				return false;
 			}
 			runScripts(scripts);
 		}
+		return !scripts.isEmpty();
 	}
 
 	/**

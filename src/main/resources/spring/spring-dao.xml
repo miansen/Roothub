@@ -15,6 +15,8 @@
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
+		<property name="schema" value="${jdbc.schema}" />
+		<property name="data" value="${jdbc.data}" />
 	</bean>
 	
 	<bean id="dataSource" class="wang.miansen.roothub.common.dao.jdbc.spring.DataSourceConfiguration">
@@ -49,20 +51,20 @@
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
 		<!-- 扫描 model 包 使用别名 -->
 		<property name="typeAliasesPackage"
-				  value="cn.roothub.bbs.module.collect.model,
-				  		 cn.roothub.bbs.module.follow.model,
-				  		 cn.roothub.bbs.module.integral.model,
-				  		 cn.roothub.bbs.module.node.model,
-				  		 cn.roothub.bbs.module.notice.model,
-				  		 cn.roothub.bbs.module.reply.model,
-				  		 cn.roothub.bbs.module.security.model,
-				  		 cn.roothub.bbs.module.sys.model,
-				  		 cn.roothub.bbs.module.tab.model,
-				  		 cn.roothub.bbs.module.tag.model,
-				  		 cn.roothub.bbs.module.topic.model,
-				  		 cn.roothub.bbs.module.user.model,
-				  		 cn.roothub.bbs.module.visit.model,
-				  		 cn.roothub.bbs.module.vote.model"/>
+				  value="wang.miansen.roothub.modules.collect.model,
+				  		 wang.miansen.roothub.modules.follow.model,
+				  		 wang.miansen.roothub.modules.integral.model,
+				  		 wang.miansen.roothub.modules.node.model,
+				  		 wang.miansen.roothub.modules.notice.model,
+				  		 wang.miansen.roothub.modules.reply.model,
+				  		 wang.miansen.roothub.modules.security.model,
+				  		 wang.miansen.roothub.modules.sys.model,
+				  		 wang.miansen.roothub.modules.tab.model,
+				  		 wang.miansen.roothub.modules.tag.model,
+				  		 wang.miansen.roothub.modules.topic.model,
+				  		 wang.miansen.roothub.modules.user.model,
+				  		 wang.miansen.roothub.modules.visit.model,
+				  		 wang.miansen.roothub.modules.vote.model"/>
 		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
 		<property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
 	</bean>
@@ -73,19 +75,19 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<!-- 给出需要扫描Dao接口包 -->
 		<property name="basePackage"
-				  value="cn.roothub.bbs.module.collect.dao,
-				  		 cn.roothub.bbs.module.follow.dao,
-				  		 cn.roothub.bbs.module.integral.dao,
-				  		 cn.roothub.bbs.module.node.dao,
-				  		 cn.roothub.bbs.module.notice.dao,
-				  		 cn.roothub.bbs.module.reply.dao,
-				  		 cn.roothub.bbs.module.security.dao,
-				  		 cn.roothub.bbs.module.sys.dao,
-				  		 cn.roothub.bbs.module.tab.dao,
-				  		 cn.roothub.bbs.module.tag.dao,
-				  		 cn.roothub.bbs.module.topic.dao,
-				  		 cn.roothub.bbs.module.user.dao,
-				  		 cn.roothub.bbs.module.visit.dao,
-				  		 cn.roothub.bbs.module.vote.dao"/>
+				  value="wang.miansen.roothub.modules.collect.dao,
+				  		 wang.miansen.roothub.modules.follow.dao,
+				  		 wang.miansen.roothub.modules.integral.dao,
+				  		 wang.miansen.roothub.modules.node.dao,
+				  		 wang.miansen.roothub.modules.notice.dao,
+				  		 wang.miansen.roothub.modules.reply.dao,
+				  		 wang.miansen.roothub.modules.security.dao,
+				  		 wang.miansen.roothub.modules.sys.dao,
+				  		 wang.miansen.roothub.modules.tab.dao,
+				  		 wang.miansen.roothub.modules.tag.dao,
+				  		 wang.miansen.roothub.modules.topic.dao,
+				  		 wang.miansen.roothub.modules.user.dao,
+				  		 wang.miansen.roothub.modules.visit.dao,
+				  		 wang.miansen.roothub.modules.vote.dao"/>
 	</bean>
 </beans>

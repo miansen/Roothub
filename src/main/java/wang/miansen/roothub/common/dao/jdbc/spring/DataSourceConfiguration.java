@@ -6,22 +6,27 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import wang.miansen.roothub.common.dao.jdbc.datasource.DriverManagerDataSource;
+import wang.miansen.roothub.common.dao.jdbc.init.DataSourceInitializer;
 import wang.miansen.roothub.common.dao.jdbc.init.DataSourceProperties;
 import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
 
 /**
  * <p>与 Spring 集成，根据 {@link DataSourceProperties} 的 {@code dataSourceClassName} 属性创建数据源并注入到 IOC 容器。</p>
  * <p>如果 {@code dataSourceClassName} 属性为空，则会将 {@link DriverManagerDataSource} 作为缺省的数据源 。</p>
+ * 
  * @author: miansen.wang
  * @date: 2019-12-01
+ * @since 3.0.0
  */
-public class DataSourceConfiguration implements FactoryBean<DataSource>, StringPool {
+public class DataSourceConfiguration implements FactoryBean<DataSource>, ApplicationContextAware, StringPool {
 
 	private static final Logger logger = LoggerFactory.getLogger(DataSourceConfiguration.class);
 
@@ -29,6 +34,21 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, StringP
 	 * 数据库基本配置
 	 */
 	private DataSourceProperties dataSourceProperties;
+
+	/**
+	 * 数据源初始化器
+	 */
+	private DataSourceInitializer dataSourceInitializer;
+
+	/**
+	 * 数据源
+	 */
+	private DataSource dataSource;
+
+	/**
+	 * 上下文容器，主要的作用是防止重复初始化数据源。
+	 */
+	private ApplicationContext applicationContext;
 
 	/**
 	 * 创建数据源
@@ -48,10 +68,6 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, StringP
 	public DataSource getObject() throws Exception {
 		DataSource dataSource = null;
 		final String dataSourceClassName = dataSourceProperties.getDataSourceClassName();
-		if (dataSourceClassName == null) {
-			dataSource = new DriverManager().dataSource(dataSourceProperties);
-			return dataSource;
-		}
 		switch (dataSourceClassName) {
 		case C3P0:
 			dataSource = new C3p0().dataSource(dataSourceProperties);
@@ -65,6 +81,17 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, StringP
 		default:
 			dataSource = new DriverManager().dataSource(dataSourceProperties);
 			break;
+		}
+		this.dataSource = dataSource;
+		// 只存在父容器时才初始化数据源，防止重复初始化。
+		if (this.applicationContext.getParent() == null) {
+			DataSourceInitializer initializer = getDataSourceInitializer();
+			if (initializer != null) {
+				boolean schemaCreated = initializer.createSchema();
+				if (schemaCreated) {
+					initializer.initSchema();
+				}
+			}
 		}
 		return dataSource;
 	}
@@ -120,6 +147,18 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, StringP
 
 	public void setDataSourceProperties(DataSourceProperties dataSourceProperties) {
 		this.dataSourceProperties = dataSourceProperties;
+	}
+
+	public DataSourceInitializer getDataSourceInitializer() {
+		if (this.dataSourceInitializer == null) {
+			this.dataSourceInitializer = new DataSourceInitializer(this.dataSource, this.dataSourceProperties);
+		}
+		return this.dataSourceInitializer;
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
 	}
 
 }

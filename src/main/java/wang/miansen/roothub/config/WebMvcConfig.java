@@ -1,11 +1,14 @@
 package wang.miansen.roothub.config;
 
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
 
 /**
@@ -13,7 +16,7 @@ import wang.miansen.roothub.modules.sys.service.SystemConfigService;
  * @author: miansen.wang
  * @date: 2019-03-12
  */
-// @Configuration
+@Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 	@Autowired

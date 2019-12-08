@@ -44,20 +44,20 @@
 	</bean>
 
 	<!-- 4.扫描web相关的bean -->
-	<context:component-scan base-package="cn.roothub.bbs.module.collect.controller.**,
-										  cn.roothub.bbs.module.follow.controller.**,
-										  cn.roothub.bbs.module.integral.controller.**,
-										  cn.roothub.bbs.module.node.controller.**,
-										  cn.roothub.bbs.module.notice.controller.**,
-										  cn.roothub.bbs.module.reply.controller.**,
-										  cn.roothub.bbs.module.security.controller**,
-										  cn.roothub.bbs.module.sys.controller.**,
-										  cn.roothub.bbs.module.tab.controller.**,
-										  cn.roothub.bbs.module.tag.controller.**,
-										  cn.roothub.bbs.module.topic.controller.**,
-										  cn.roothub.bbs.module.user.controller.**,
-										  cn.roothub.bbs.module.visit.controller.**,
-										  cn.roothub.bbs.module.vote.controller.**" />
+	<context:component-scan base-package="wang.miansen.roothub.modules.collect.controller.**,
+										  wang.miansen.roothub.modules.follow.controller.**,
+										  wang.miansen.roothub.modules.integral.controller.**,
+										  wang.miansen.roothub.modules.node.controller.**,
+										  wang.miansen.roothub.modules.notice.controller.**,
+										  wang.miansen.roothub.modules.reply.controller.**,
+										  wang.miansen.roothub.modules.security.controller**,
+										  wang.miansen.roothub.modules.sys.controller.**,
+										  wang.miansen.roothub.modules.tab.controller.**,
+										  wang.miansen.roothub.modules.tag.controller.**,
+										  wang.miansen.roothub.modules.topic.controller.**,
+										  wang.miansen.roothub.modules.user.controller.**,
+										  wang.miansen.roothub.modules.visit.controller.**,
+										  wang.miansen.roothub.modules.vote.controller.**" />
 
 	<!-- 全局拦截器 -->
 	<mvc:interceptors>

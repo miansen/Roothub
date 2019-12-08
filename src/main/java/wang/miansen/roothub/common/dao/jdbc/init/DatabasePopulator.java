@@ -45,7 +45,7 @@ public class DatabasePopulator {
 	/**
 	 * 执行 SQL 脚本发生错误时是否继续而不引发异常
 	 */
-	private boolean continueOnError = false;
+	private boolean continueOnError = true;
 
 	/**
 	 * 执行 DROP 语句发生错误时是否继续而不引发异常

@@ -19,35 +19,35 @@
 		 作为 bean 注入到 IOC 容器 -->
 
 	<!--通用模块-->
-	<context:component-scan base-package="cn.roothub.bbs.common.**" />
+	<context:component-scan base-package="wang.miansen.roothub.common.**" />
 
 	<!--系统配置模块-->
-	<context:component-scan base-package="cn.roothub.bbs.config.**" />
+	<context:component-scan base-package="wang.miansen.roothub.config.**" />
 
 	<!--核心模块-->
-	<context:component-scan base-package="cn.roothub.bbs.core.**" />
+	<context:component-scan base-package="wang.miansen.roothub.core.**" />
 
 	<!--存储模块-->
-	<context:component-scan base-package="cn.roothub.bbs.store" />
+	<context:component-scan base-package="wang.miansen.roothub.store" />
 
 	<!--第三方集成模块-->
-	<context:component-scan base-package="cn.roothub.bbs.third.**" />
+	<context:component-scan base-package="wang.miansen.roothub.third.**" />
 
 	<!-- 业务模块，扫描 service.impl 包下所有使用注解的类型 -->
-	<context:component-scan base-package="cn.roothub.bbs.module.collect.service.impl,
-										  cn.roothub.bbs.module.follow.service.impl,
-										  cn.roothub.bbs.module.integral.service.impl,
-										  cn.roothub.bbs.module.node.service.impl,
-										  cn.roothub.bbs.module.notice.service.impl,
-										  cn.roothub.bbs.module.reply.service.impl,
-										  cn.roothub.bbs.module.security.service.impl,
-										  cn.roothub.bbs.module.sys.service.impl,
-										  cn.roothub.bbs.module.tab.service.impl,
-										  cn.roothub.bbs.module.tag.service.impl,
-										  cn.roothub.bbs.module.topic.service.impl,
-										  cn.roothub.bbs.module.user.service.impl,
-										  cn.roothub.bbs.module.visit.service.impl,
-										  cn.roothub.bbs.module.vote.service.impl" />
+	<context:component-scan base-package="wang.miansen.roothub.modules.collect.service.impl,
+										  wang.miansen.roothub.modules.follow.service.impl,
+										  wang.miansen.roothub.modules.integral.service.impl,
+										  wang.miansen.roothub.modules.node.service.impl,
+										  wang.miansen.roothub.modules.notice.service.impl,
+										  wang.miansen.roothub.modules.reply.service.impl,
+										  wang.miansen.roothub.modules.security.service.impl,
+										  wang.miansen.roothub.modules.sys.service.impl.**,
+										  wang.miansen.roothub.modules.tab.service.impl,
+										  wang.miansen.roothub.modules.tag.service.impl,
+										  wang.miansen.roothub.modules.topic.service.impl,
+										  wang.miansen.roothub.modules.user.service.impl,
+										  wang.miansen.roothub.modules.visit.service.impl,
+										  wang.miansen.roothub.modules.vote.service.impl" />
 
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"

@@ -193,9 +193,9 @@ public abstract class ScriptUtils {
 					i += separator.length() - 1;
 					continue;
 				}
-				// 遇到注释符
+				// 遇到行注释符
 				if (script.startsWith(commentPrefix, i)) {
-					// 跳过从注释开始到结束的任何内容
+					// 跳过从行注释开始到结束的任何内容
 					int indexOfNextNewline = script.indexOf("\n", i);
 					if (indexOfNextNewline > i) {
 						// 偏移量增加，下次遍历的时候跳过注释的所有内容。
@@ -206,7 +206,7 @@ public abstract class ScriptUtils {
 						break;
 					}
 				}
-				// 遇到块注释
+				// 遇到块注释符
 				if (script.startsWith(blockCommentStartDelimiter, i)) {
 					// 跳过任何块注释的内容
 					int indexOfCommentEnd = script.indexOf(blockCommentEndDelimiter, i);

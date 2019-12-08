@@ -1,3 +1,5 @@
+有问题加 QQ 群：985517425
+
 ## 在线地址：[https://www.roothub.cn](https://www.roothub.cn)
 
 登录后台帐号：admin，密码：123

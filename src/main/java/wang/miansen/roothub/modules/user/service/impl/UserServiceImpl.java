@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.modules.integral.model.Top100;

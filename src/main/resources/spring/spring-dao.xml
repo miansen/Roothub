@@ -9,7 +9,7 @@
 	<!-- 1.配置数据库相关参数properties的属性：${url} -->
 	<context:property-placeholder ignore-unresolvable="true" file-encoding="UTF-8" location="classpath:jdbc.properties" />
 
-	<bean id="dataSourceProperties" class="wang.miansen.roothub.common.dao.jdbc.DataSourceProperties">
+	<bean id="dataSourceProperties" class="wang.miansen.roothub.common.dao.jdbc.init.DataSourceProperties">
 		<!-- 配置连接池属性 -->
 		<property name="driverClassName" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />

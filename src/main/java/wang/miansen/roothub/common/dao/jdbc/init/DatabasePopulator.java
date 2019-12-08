@@ -68,6 +68,14 @@ public class DatabasePopulator {
 	}
 
 	/**
+	 * 使用指定的 SQL 脚本资源创建新的实例
+	 * @param scripts 要执行的初始化或清理数据库的脚本（不允许为 null）
+	 */
+	public DatabasePopulator(List<Resource> scripts) {
+		setScripts(scripts);
+	}
+	
+	/**
 	 * 使用指定的值创建新的实例
 	 * @param scripts 要执行的初始化或清理数据库的脚本（不允许为 null）
 	 * @param continueOnError 执行 SQL 脚本发生错误时是否继续而不引发异常
@@ -99,6 +107,14 @@ public class DatabasePopulator {
 	 */
 	public void setScripts(Resource... scripts) {
 		this.scripts = new ArrayList<>(Arrays.asList(scripts));
+	}
+	
+	/**
+	 * 设置要执行的脚本资源以初始化或清理数据库，替换之前添加的所有脚本。
+	 * @param scripts SQL 脚本资源
+	 */
+	public void setScripts(List<Resource> scripts) {
+		this.scripts = scripts;
 	}
 
 	/**

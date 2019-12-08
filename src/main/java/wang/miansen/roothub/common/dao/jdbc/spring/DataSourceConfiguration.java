@@ -4,8 +4,6 @@ import java.beans.PropertyVetoException;
 
 import javax.sql.DataSource;
 
-import wang.miansen.roothub.common.dao.jdbc.DataSourceProperties;
-import wang.miansen.roothub.common.dao.jdbc.datasource.DriverManagerDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +11,8 @@ import org.springframework.beans.factory.FactoryBean;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import wang.miansen.roothub.common.dao.jdbc.datasource.DriverManagerDataSource;
+import wang.miansen.roothub.common.dao.jdbc.init.DataSourceProperties;
 import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
 
 /**

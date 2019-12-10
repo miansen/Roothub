@@ -1,7 +1,10 @@
 package wang.miansen.roothub.common.dao.jdbc.init;
 
 import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +13,11 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import wang.miansen.roothub.common.dao.jdbc.builder.DataSourceBuilder;
+import wang.miansen.roothub.common.dao.jdbc.datasource.SimpleDriverDataSource;
 import wang.miansen.roothub.common.dao.jdbc.exceptions.ScriptException;
 import wang.miansen.roothub.common.dao.jdbc.exceptions.UncategorizedScriptException;
+import wang.miansen.roothub.common.dao.jdbc.util.StringUtils;
 import wang.miansen.roothub.core.io.Resource;
 import wang.miansen.roothub.core.io.DefaultResourceLoader;
 import wang.miansen.roothub.core.io.ResourceLoader;
@@ -61,6 +67,77 @@ public class DataSourceInitializer {
 		this.dataSource = dataSource;
 		this.dataSourceProperties = dataSourceProperties;
 		this.resourceLoader = (resourceLoader != null) ? resourceLoader : new DefaultResourceLoader();
+	}
+
+	/**
+	 * 创建数据库
+	 * @return boolean
+	 */
+	public boolean createDatabase() {
+		String database = this.dataSourceProperties.getDatabase();
+		if (!StringUtils.isEmpty(database)) {
+			String driverClassName = this.dataSourceProperties.getDriverClassName();
+			Connection connection = null;
+			Statement stmt = null;
+			ResultSet result = null;
+			try {
+				Class<?> driverClass = Class.forName(driverClassName);
+				Driver driver = (Driver) driverClass.newInstance();
+				SimpleDriverDataSource simpleDriverDataSource = new SimpleDriverDataSource(driver,
+						this.dataSourceProperties.getDbUrl(), this.dataSourceProperties.getUsername(),
+						this.dataSourceProperties.getPassword());
+				connection = simpleDriverDataSource.getConnection();
+				String checkDatabaseSql = "show databases like '" + database + "';";
+				String createDatabaseSql = "CREATE DATABASE IF NOT EXISTS " + database
+						+ " DEFAULT CHARSET utf8 COLLATE utf8_general_ci;";
+				stmt = connection.createStatement();
+				result = stmt.executeQuery(checkDatabaseSql);
+				if (result.next()) {
+					return true;
+				} else {
+					int createDatabaseResult = stmt.executeUpdate(createDatabaseSql);
+					if (createDatabaseResult > 0) {
+						return true;
+					}
+					return false;
+				}
+			} catch (ClassNotFoundException e) {
+				logger.debug("Initialization failed (Driver must not be null)", e);
+				return false;
+			} catch (InstantiationException e) {
+				logger.debug("Initialization failed (Failed to Create a new Driver)", e);
+				return false;
+			} catch (IllegalAccessException e) {
+				logger.debug("Initialization failed (Failed to Create a new Driver)", e);
+				return false;
+			} catch (SQLException e) {
+				logger.debug("Initialization failed (Failed to get JDBC Connection)", e);
+				return false;
+			} finally {
+				if (result != null) {
+					try {
+						result.close();
+					} catch (SQLException e) {
+						logger.debug("Failed close ResultSet", e);
+					}
+				}
+				if (stmt != null) {
+					try {
+						stmt.close();
+					} catch (SQLException e) {
+						logger.debug("Failed close Connection", e);
+					}
+				}
+				if (connection != null) {
+					try {
+						connection.close();
+					} catch (SQLException e) {
+						logger.debug("Failed close Statement", e);
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

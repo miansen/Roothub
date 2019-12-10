@@ -127,7 +127,7 @@ public class DataSourceProperties {
 		String[] var0 = getJdbcUrl().split("//");
 		String dbName = var0[0];
 		String[] var1 = var0[1].split("/|\\?");
-		dbUrl = dbName + var1[0];
+		dbUrl = dbName + "//" + var1[0];
 		return dbUrl;
 	}
 

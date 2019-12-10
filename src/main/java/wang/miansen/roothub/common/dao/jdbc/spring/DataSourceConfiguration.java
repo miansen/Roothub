@@ -87,9 +87,12 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, Applica
 		if (this.applicationContext.getParent() == null) {
 			DataSourceInitializer initializer = getDataSourceInitializer();
 			if (initializer != null) {
-				boolean schemaCreated = initializer.createSchema();
-				if (schemaCreated) {
-					initializer.initSchema();
+				boolean createDatabase = initializer.createDatabase();
+				if (createDatabase) {
+					boolean schemaCreated = initializer.createSchema();
+					if (schemaCreated) {
+						initializer.initSchema();
+					}
 				}
 			}
 		}

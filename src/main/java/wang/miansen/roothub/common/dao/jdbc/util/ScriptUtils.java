@@ -54,6 +54,7 @@ public abstract class ScriptUtils {
 	/**
 	 * 执行给定的 SQL 脚本。
 	 * <p>在执行所提供脚本中的个别语句之前，将删除语句分隔符和注释。
+	 * <p><b>注意：此方法不会关闭 JDBC connection。</b>
 	 * @param connection 用于填充、初始化或清理数据库的 JDBC 连接。请确保已配置并可用，不允许为 null。
 	 * @param resource 读取 SQL 脚本的资源
 	 * @param continueOnError 执行 SQL 脚本发生错误时是否继续而不引发异常
@@ -221,7 +222,6 @@ public abstract class ScriptUtils {
 				}
 				// 多个相邻的空白字将折叠为一个空格
 				if (c == ' ' || c == '\n' || c == '\t') {
-					// Avoid multiple adjacent whitespace characters
 					if (sb.length() > 0 && sb.charAt(sb.length() - 1) != ' ') {
 						c = ' ';
 					} else {

@@ -96,7 +96,7 @@ public class SimpleDriverDataSource extends AbstractDriverBasedDataSource {
 	 * @param driverClass JDBC 驱动程序 Class
 	 * @throws Exception
 	 */
-	public void setDriverClass(Class<? extends Driver> driverClass) throws Exception {
+	public void setDriver(Class<? extends Driver> driverClass) throws Exception {
 		this.driver = driverClass.newInstance();
 	}
 

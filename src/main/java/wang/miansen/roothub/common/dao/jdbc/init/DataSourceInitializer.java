@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import wang.miansen.roothub.common.dao.jdbc.builder.DataSourceBuilder;
 import wang.miansen.roothub.common.dao.jdbc.datasource.SimpleDriverDataSource;
 import wang.miansen.roothub.common.dao.jdbc.exceptions.ScriptException;
 import wang.miansen.roothub.common.dao.jdbc.exceptions.UncategorizedScriptException;

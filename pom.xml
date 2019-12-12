@@ -22,16 +22,16 @@
 			<version>4.11</version>
 		</dependency>
 
-	 <dependency>
-		 <groupId>cn.hutool</groupId>
-		 <artifactId>hutool-all</artifactId>
-		 <version>4.1.8</version>
-	 </dependency>
-	<dependency>
-		<groupId>org.apache.poi</groupId>
-		<artifactId>poi-ooxml</artifactId>
-		<version>3.17</version>
-	</dependency>
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>4.1.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.17</version>
+		</dependency>
 		<!-- 1.日志 -->
 		<!-- 实现slf4j接口并整合 -->
 		<dependency>
@@ -76,11 +76,8 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-	<!-- 	<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.5.4</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
+			<version>2.5.4</version> </dependency> -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -140,9 +137,9 @@
 		</dependency>
 		<!-- spring-data-redis -->
 		<dependency>
-    		<groupId>org.springframework.data</groupId>
-    		<artifactId>spring-data-redis</artifactId>
-    		<version>1.6.2.RELEASE</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.6.2.RELEASE</version>
 		</dependency>
 		<!-- commons-pool -->
 		<dependency>
@@ -185,28 +182,28 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
-    		<groupId>com.google.code.gson</groupId>
-    		<artifactId>gson</artifactId>
-    		<version>2.2.4</version>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
 		</dependency>
 		<!-- Shiro start -->
 		<dependency>
-    		<groupId>org.apache.shiro</groupId>
-    		<artifactId>shiro-core</artifactId>
-    		<version>1.4.0</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>1.4.0</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.apache.shiro</groupId>
-    		<artifactId>shiro-web</artifactId>
-    		<version>1.4.0</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>1.4.0</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.apache.shiro</groupId>
-    		<artifactId>shiro-spring</artifactId>
-    		<version>1.4.0</version>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.4.0</version>
 		</dependency>
 		<!-- Shiro end -->
-		
+
 		<!-- OSS start -->
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>
@@ -215,7 +212,7 @@
 		</dependency>
 		<!-- OSS end -->
 
-		<!--markdown start-->
+		<!--markdown start -->
 		<dependency>
 			<groupId>com.atlassian.commonmark</groupId>
 			<artifactId>commonmark</artifactId>
@@ -231,15 +228,22 @@
 			<artifactId>commonmark-ext-gfm-tables</artifactId>
 			<version>${commonmark.version}</version>
 		</dependency>
-		<!--markdown end-->
+		<!--markdown end -->
 
-		<!--jsoup start-->
+		<!--jsoup start -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.version}</version>
 		</dependency>
-		<!--jsoup end-->
+		<!--jsoup end -->
+
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.197</version>
+		</dependency>
 
 	</dependencies>
 	<build>

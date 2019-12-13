@@ -37,16 +37,6 @@ public class DataSourceProperties {
 	private String jdbcUrl;
 
 	/**
-	 * 数据库 URL（不包含数据库名）
-	 */
-	private String dbUrl;
-
-	/**
-	 * 数据库名
-	 */
-	private String database;
-
-	/**
 	 * 数据库的登录用户名
 	 */
 	private String username;
@@ -70,12 +60,12 @@ public class DataSourceProperties {
 	 * 执行 SQL 脚本发生错误时是否继续而不引发异常
 	 */
 	private boolean continueOnError = true;
-	
+
 	/**
 	 * SQL 脚本语句分隔符
 	 */
 	private String separator = ";";
-	
+
 	/**
 	 * 数据源初始化模式
 	 */
@@ -124,26 +114,26 @@ public class DataSourceProperties {
 	}
 
 	public String getDbUrl() {
-		String[] var0 = getJdbcUrl().split("//");
-		String dbName = var0[0];
-		String[] var1 = var0[1].split("/|\\?");
-		dbUrl = dbName + "//" + var1[0];
-		return dbUrl;
-	}
-
-	public void setDbUrl(String dbUrl) {
-		this.dbUrl = dbUrl;
+		String driverClassName = getDriverClassName();
+		if ("org.h2.Driver".equals(driverClassName)) {
+			return getJdbcUrl();
+		} else {
+			String[] var0 = getJdbcUrl().split("//");
+			String dbName = var0[0];
+			String[] var1 = var0[1].split("/|\\?");
+			return dbName + "//" + var1[0];
+		}
 	}
 
 	public String getDatabase() {
-		String[] var0 = getJdbcUrl().split("//");
-		String[] var1 = var0[1].split("/|\\?");
-		database = var1[1];
-		return database;
-	}
-
-	public void setDatabase(String database) {
-		this.database = database;
+		String driverClassName = getDriverClassName();
+		if ("org.h2.Driver".equals(driverClassName)) {
+			return null;
+		} else {
+			String[] var0 = getJdbcUrl().split("//");
+			String[] var1 = var0[1].split("/|\\?");
+			return var1[1];
+		}
 	}
 
 	public String getUsername() {

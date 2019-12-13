@@ -18,6 +18,11 @@ public enum DataSourceInitializationMode {
 	EMBEDDED,
 	
 	/**
+	 * 仅在创建数据库的时候初始化数据源。
+	 */
+	ONLY_CREATE_DATABASE,
+	
+	/**
 	 * 不要初始化数据源。
 	 */
 	NEVER

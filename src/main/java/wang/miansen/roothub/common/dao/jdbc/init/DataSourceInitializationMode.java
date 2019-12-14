@@ -13,12 +13,8 @@ public enum DataSourceInitializationMode {
 	ALWAYS,
 	
 	/**
-	 * 仅初始化嵌入的数据源。
-	 */
-	EMBEDDED,
-	
-	/**
 	 * 仅在创建数据库的时候初始化数据源。
+	 * <p><b>注意：这个模式不支持 H2Database。</b>
 	 */
 	ONLY_CREATE_DATABASE,
 	

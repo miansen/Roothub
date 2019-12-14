@@ -4,7 +4,6 @@ import java.beans.PropertyVetoException;
 
 import javax.sql.DataSource;
 
-import org.h2.tools.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -86,21 +85,11 @@ public class DataSourceConfiguration implements FactoryBean<DataSource>, Applica
 		this.dataSource = dataSource;
 		// 只存在父容器时才初始化数据源，防止重复初始化。
 		if (this.applicationContext.getParent() == null) {
-			// Server.createTcpServer().start();
 			DataSourceInitializer initializer = getDataSourceInitializer();
 			if (initializer != null) {
-				boolean createDatabase;
-				String driverClassName = this.dataSourceProperties.getDriverClassName();
-				if ("org.h2.Driver".equals(driverClassName)) {
-					createDatabase = true;
-				} else {
-					createDatabase = initializer.createDatabase();
-				}
-				if (createDatabase) {
-					boolean schemaCreated = initializer.createSchema();
-					if (schemaCreated) {
-						initializer.initSchema();
-					}
+				boolean schemaCreated = initializer.createSchema();
+				if (schemaCreated) {
+					initializer.initSchema();
 				}
 			}
 		}

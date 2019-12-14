@@ -92,7 +92,7 @@ public class DataSourceInitializer {
 				stmt = connection.createStatement();
 				result = stmt.executeQuery(checkDatabaseSql);
 				if (result.next()) {
-					return true;
+					return false;
 				} else {
 					int createDatabaseResult = stmt.executeUpdate(createDatabaseSql);
 					if (createDatabaseResult > 0) {
@@ -140,7 +140,7 @@ public class DataSourceInitializer {
 	}
 
 	/**
-	 * 创建数据库
+	 * 创建数据库表
 	 * @return boolean
 	 */
 	public boolean createSchema() {
@@ -220,10 +220,17 @@ public class DataSourceInitializer {
 	 */
 	private boolean isEnabled() {
 		DataSourceInitializationMode mode = this.dataSourceProperties.getInitializationMode();
+		String driverClassName = this.dataSourceProperties.getDriverClassName();
 		if (mode == DataSourceInitializationMode.NEVER) {
 			return false;
+		} else if (mode == DataSourceInitializationMode.ALWAYS) {
+			return true;
+		} else if (mode == DataSourceInitializationMode.ONLY_CREATE_DATABASE
+				&& DataSourceDriverType.MySQL.getDriverClassName().equals(driverClassName)) {
+			return createDatabase();
+		} else {
+			return true;
 		}
-		return true;
 	}
 
 }

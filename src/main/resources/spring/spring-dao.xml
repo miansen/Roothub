@@ -6,17 +6,16 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- 配置整合mybatis过程 -->
-	<!-- 1.配置数据库相关参数properties的属性：${url} -->
-	<context:property-placeholder ignore-unresolvable="true" file-encoding="UTF-8" location="classpath:jdbc.properties" />
 
 	<bean id="dataSourceProperties" class="wang.miansen.roothub.common.dao.jdbc.init.DataSourceProperties">
 		<!-- 配置连接池属性 -->
-		<property name="driverClassName" value="${jdbc.driver}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="schema" value="${jdbc.schema}" />
-		<property name="data" value="${jdbc.data}" />
+		<property name="driverClassName" value="${datasource.driver-class-name}" />
+		<property name="jdbcUrl" value="${datasource.url}" />
+		<property name="username" value="${datasource.username}" />
+		<property name="password" value="${datasource.password}" />
+		<property name="schema" value="${datasource.schema}" />
+		<property name="data" value="${datasource.data}" />
+		<property name="initializationMode" value="${datasource.initialization-mode}" />
 	</bean>
 	
 	<bean id="dataSource" class="wang.miansen.roothub.common.dao.jdbc.spring.DataSourceConfiguration">

@@ -16,6 +16,10 @@ import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
  */
 public class DataSourceProperties {
 
+	public DataSourceProperties() {
+		System.out.println("DataSourceProperties");
+	}
+	
 	/**
 	 * JDBC 数据库连接池 Class
 	 */
@@ -111,29 +115,6 @@ public class DataSourceProperties {
 
 	public void setJdbcUrl(String jdbcUrl) {
 		this.jdbcUrl = jdbcUrl;
-	}
-
-	public String getDbUrl() {
-		String driverClassName = getDriverClassName();
-		if ("org.h2.Driver".equals(driverClassName)) {
-			return getJdbcUrl();
-		} else {
-			String[] var0 = getJdbcUrl().split("//");
-			String dbName = var0[0];
-			String[] var1 = var0[1].split("/|\\?");
-			return dbName + "//" + var1[0];
-		}
-	}
-
-	public String getDatabase() {
-		String driverClassName = getDriverClassName();
-		if ("org.h2.Driver".equals(driverClassName)) {
-			return null;
-		} else {
-			String[] var0 = getJdbcUrl().split("//");
-			String[] var1 = var0[1].split("/|\\?");
-			return var1[1];
-		}
 	}
 
 	public String getUsername() {

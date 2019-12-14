@@ -73,7 +73,8 @@ public class DataSourceInitializer {
 	 * @return boolean
 	 */
 	public boolean createDatabase() {
-		String database = this.dataSourceProperties.getDatabase();
+		String jdbcUrl = this.dataSourceProperties.getJdbcUrl();
+		String database = getDatabase(jdbcUrl);
 		if (!StringUtils.isEmpty(database)) {
 			String driverClassName = this.dataSourceProperties.getDriverClassName();
 			Connection connection = null;
@@ -82,9 +83,8 @@ public class DataSourceInitializer {
 			try {
 				Class<?> driverClass = Class.forName(driverClassName);
 				Driver driver = (Driver) driverClass.newInstance();
-				SimpleDriverDataSource simpleDriverDataSource = new SimpleDriverDataSource(driver,
-						this.dataSourceProperties.getDbUrl(), this.dataSourceProperties.getUsername(),
-						this.dataSourceProperties.getPassword());
+				SimpleDriverDataSource simpleDriverDataSource = new SimpleDriverDataSource(driver, getDbUrl(jdbcUrl),
+						this.dataSourceProperties.getUsername(), this.dataSourceProperties.getPassword());
 				connection = simpleDriverDataSource.getConnection();
 				String checkDatabaseSql = "show databases like '" + database + "';";
 				String createDatabaseSql = "CREATE DATABASE IF NOT EXISTS " + database
@@ -231,6 +231,31 @@ public class DataSourceInitializer {
 		} else {
 			return true;
 		}
+	}
+
+	/**
+	 * 解析 jdbcUrl 从而得到 dbUrl
+	 * <p><b>注意：仅支持 MySQL</b>
+	 * @param jdbcUrl
+	 * @return dbUrl
+	 */
+	private String getDbUrl(String jdbcUrl) {
+		String[] var0 = jdbcUrl.split("//");
+		String dbName = var0[0];
+		String[] var1 = var0[1].split("/|\\?");
+		return dbName + "//" + var1[0];
+	}
+
+	/**
+	 * 解析 jdbcUrl 从而得到 database
+	 * <p><b>注意：仅支持 MySQL</b>
+	 * @param jdbcUrl
+	 * @return database
+	 */
+	private String getDatabase(String jdbcUrl) {
+		String[] var0 = jdbcUrl.split("//");
+		String[] var1 = var0[1].split("/|\\?");
+		return var1[1];
 	}
 
 }

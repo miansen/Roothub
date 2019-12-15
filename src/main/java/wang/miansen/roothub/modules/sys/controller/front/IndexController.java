@@ -144,6 +144,7 @@ public class IndexController extends BaseController {
 		user = userService.findByEmail(email);
 		ApiAssert.isNull(user, "邮箱已存在");
 		UserExecution save = userService.createUser(username, password, email);
+		CookieAndSessionUtil.setSession(request, "user", save.getUser());
 		return new Result<UserExecution>(true, save);
 	}
 
@@ -172,9 +173,9 @@ public class IndexController extends BaseController {
 		ApiAssert.notNull(user, "用户不存在");
 		ApiAssert.isTrue(new BCryptPasswordEncoder().matches(password, user.getPassword()), "密码不正确");
 		// 设置cookie
-		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(),
+		/*CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(),
 				Base64Util.encode(user.getThirdAccessToken()), siteConfig.getCookieConfig().getMaxAge(),
-				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
+				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);*/
 		// 设置session
 		CookieAndSessionUtil.setSession(request, "user", user);
 		return new Result<User>(true, user);
@@ -191,8 +192,8 @@ public class IndexController extends BaseController {
 	private String logout(HttpServletRequest request, HttpServletResponse response) {
 		// stringRedisTemplate.delete("user");
 		CookieAndSessionUtil.removeSession(request, "user");
-		CookieAndSessionUtil.removeCookie(response, siteConfig.getCookieConfig().getName(),
-				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly());
+		/*CookieAndSessionUtil.removeCookie(response, siteConfig.getCookieConfig().getName(),
+				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly());*/
 		return "redirect:/";
 	}
 

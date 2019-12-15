@@ -47,13 +47,15 @@ $(function () {
                 email: $("#email").val(),
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.success != null && data.success == false) {
-                    alert(data.error);
+                	toast(data.error);
                     return false;
                 } else {
-                    alert('注册成功，点击去登录');
-                    location.href = "/login";
+                	toast("注册成功！正在跳转至首页...", "success");
+                    setTimeout(function () {
+                        window.location.href = "/";
+                    }, 1000);
                 }
             },
             error: function (data) {

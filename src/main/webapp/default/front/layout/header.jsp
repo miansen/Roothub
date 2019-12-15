@@ -77,22 +77,32 @@
                         <!-- <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span> -->
                     </div>
                 </form>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="hidden-xs" id="shouye"><a href="/">首页</a></li>
-                    <li id="nodes"><a href="/nodes">节点</a></li>
-                    <li id="biaoqian"><a href="/tags">标签</a></li>
-                    <li id="loginli" style="display:none"><a href="/login">登录</a></li>
-                    <li id="zhuceli" style="display:none"><a href="/register">注册</a></li>
-                    <li class="hidden-md hidden-lg"><a href="/topic/create">发布话题</a></li>
-                    <li id="loginuser" style="display:none">
-                        <a href="/user/public"><span class="badge" id="badge"></span></a>
-                    </li>
-                    <li id="shezhili" style="display:none"><a href="/user/settings/profile">设置</a></li>
-                    <li id="tuichuli" style="display:none">
-                        <a href="javascript:if(confirm('确定要登出Roothub吗？'))location.href='/logout'">退出</a>
-                    </li>
-                </ul>
-            </div>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="hidden-xs" id="shouye"><a href="/">首页</a></li>
+						<li id="nodes"><a href="/nodes">节点</a></li>
+						<li id="biaoqian"><a href="/tags">标签</a></li>
+						<c:choose>
+							<c:when test="${sessionScope.user != null}">
+								<li id="loginuser">
+									<a href="/user/${sessionScope.user.userName}">
+										<span class="badge" id="badge">${sessionScope.user.userName}</span>
+									</a>
+								</li>
+								<li id="shezhili">
+									<a href="/user/settings/profile">设置</a>
+								</li>
+								<li id="tuichuli">
+									<a href="javascript:if(confirm('确定要登出Roothub吗？'))location.href='/logout'">退出</a>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li id="loginli"><a href="/login">登录</a></li>
+								<li id="zhuceli"><a href="/register">注册</a></li>
+							</c:otherwise>
+						</c:choose>
+						<li class="hidden-md hidden-lg"><a href="/topic/create">发布话题</a></li>
+					</ul>
+				</div>
         </div>
     </nav>
     <%--container 开始--%>
@@ -104,7 +114,7 @@
                 <!-- <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span> -->
             </div>
         </form>
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             $(function () {
                 $.ajax({
                     type: "get",
@@ -130,4 +140,4 @@
                     }
                 });
             });
-        </script>
+        </script> -->

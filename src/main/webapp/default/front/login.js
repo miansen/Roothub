@@ -20,7 +20,7 @@ $(function () {
             },
             success: function (data) {
                 if (data.success != null && data.success == false) {
-                    alert(data.error);
+                	toast(data.error);
                     return false;
                 } else {
                     location.href = "/";

@@ -51,8 +51,8 @@ public class BaseController {
 	 * @return
 	 */
 	public User getUser(HttpServletRequest request) {
-
-		String token = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
+		return CookieAndSessionUtil.getSession(request, "user");
+		/*String token = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
 		// ValueOperations<String, String> opsForValue =
 		// stringRedisTemplate.opsForValue();
 
@@ -73,7 +73,7 @@ public class BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}
+		}*/
 	}
 
 	public String isLogin(HttpServletRequest request, String errorPage, String suesscePage) {

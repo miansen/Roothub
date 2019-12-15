@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService {
 				}else {
 					// ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
 					// opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
-					redisService.setString(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
+					// redisService.setString(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
 					return new UserExecution(user.getUserName(),InsertUserEnum.SUCCESS,rootUser);
 				}
 			}

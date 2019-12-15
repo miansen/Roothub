@@ -221,7 +221,7 @@ public class UserServiceImpl implements UserService {
 		user.setThirdAccessToken(StringUtils.getUUID());
 		user.setStatusCd("1000");
 		user.setUserType("2");
-		user.setAvatar("/resources/images/default-avatar.jpg");
+		user.setAvatar("/default/front/common/images/default-avatar.jpg");
 		user.setSignature("这家伙很懒，什么都没留下");
 		return save(user);
 	}

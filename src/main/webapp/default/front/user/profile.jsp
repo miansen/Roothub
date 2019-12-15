@@ -51,7 +51,6 @@
     </div>
 </div>
 <script>
-    $("#shezhili").addClass("active");
     function updateUserProfile() {
         var errors = 0;
         var em = $("#error_message");

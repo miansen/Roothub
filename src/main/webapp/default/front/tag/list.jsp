@@ -23,7 +23,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    $("#biaoqian").addClass("active");
     var count = ${tag.totalRow};//数据总量
     var limit = ${tag.pageSize};//每页显示的条数
     var url = "/tags?p=";//url

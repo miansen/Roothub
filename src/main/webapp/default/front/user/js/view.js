@@ -1,4 +1,3 @@
-$("#loginuser").addClass("active");
 var userId = $("#user_id").attr("title");//当前主页用户的ID
 var authorName = $("#user_id").text();//当前主页用户的昵称
 var userName = $(".navbar .container ul #loginuser").text();//当前登录用户的昵称

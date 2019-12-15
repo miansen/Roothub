@@ -57,7 +57,7 @@
 <body>
 <%--wrapper 开始--%>
 <div class="wrapper">
-    <nav class="navbar navbar-default" style="border-radius: 0; margin-bottom: 10px;">
+    <nav class="navbar navbar-default" style="background-color: #fff;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"

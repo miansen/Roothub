@@ -1,5 +1,5 @@
 $(function () {
-    $("#shouye").addClass("active");
+    // $("#shouye").addClass("active");
 
     // 初始化板块的样式
     function section() {
@@ -14,15 +14,15 @@ $(function () {
         }
     };
 
-    section();
+    // section();
 
     //改变当前选中板块的样式
-    $("#tab li").each(function () {
+    /*$("#tab li").each(function () {
         if (tab == $(this).attr("class")) {
             $("#tab li").removeClass("active");
             $(this).addClass("active");
         }
-    });
+    });*/
 
     /*积分榜*/
     (function () {

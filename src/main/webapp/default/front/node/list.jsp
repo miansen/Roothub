@@ -21,7 +21,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $("#nodes").addClass("active");
-</script>
 <%@ include file="../layout/footer.jsp" %>

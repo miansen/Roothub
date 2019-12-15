@@ -73,36 +73,38 @@
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
         <div class="panel panel-default" id="session"></div>
-        <!-- 今日热议主题 -->
-        <div class="panel panel-default">
-            <div class="panel-heading"><span style="color: #ccc;">今日热议主题</span></div>
-            <table class="table" style="font-size: 14px;">
-                <tbody>
-                <c:forEach var="item" items="${findHot}">
-                    <tr>
-                        <c:if test="${fn:length(item.avatar) > 0}">
-                            <td width="24" valign="middle" align="center">
-                                <img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
-                            </td>
-                        </c:if>
-                        <td>
-                            <c:choose>
-                                <c:when test="${item.url != null}">
-                                    <a href="${item.url}">${item.title}</a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="/topic/${item.topicId}">${item.title}</a>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+        <!-- 今日热议帖子 -->
+        <c:if test="${findHot ne null && fn:length(findHot) > 0}">
+	        <div class="panel panel-default">
+	            <div class="panel-heading"><span>今日热议帖子</span></div>
+	            <table class="table" style="font-size: 14px;">
+	                <tbody>
+	                <c:forEach var="item" items="${findHot}">
+	                    <tr>
+	                        <c:if test="${fn:length(item.avatar) > 0}">
+	                            <td width="24" valign="middle" align="center">
+	                                <img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
+	                            </td>
+	                        </c:if>
+	                        <td>
+	                            <c:choose>
+	                                <c:when test="${item.url != null}">
+	                                    <a href="${item.url}">${item.title}</a>
+	                                </c:when>
+	                                <c:otherwise>
+	                                    <a href="/topic/${item.topicId}">${item.title}</a>
+	                                </c:otherwise>
+	                            </c:choose>
+	                        </td>
+	                    </tr>
+	                </c:forEach>
+	                </tbody>
+	            </table>
+	        </div>
+        </c:if>
         <!-- 今日等待回复的主题 -->
         <%-- <div class="panel panel-default">
-          <div class="panel-heading"><span style="color: #ccc;">今日等待回复主题</span></div>
+          <div class="panel-heading"><span>今日等待回复主题</span></div>
           <table class="table" style="font-size: 14px;">
             <tbody>
             <c:forEach var="item" items="${findTodayNoReply}">
@@ -127,7 +129,7 @@
         </div> --%>
         <!-- 积分榜 -->
         <div class="panel panel-default">
-            <div class="panel-heading"><span style="color: #ccc;">积分榜
+            <div class="panel-heading"><span>积分榜
                 <a class="dark" href="/top100" style="float: right;">TOP 100 &gt;&gt;</a></span>
             </div>
             <div class="panel-body">
@@ -136,18 +138,20 @@
                 </div>
             </div>
         </div>
-        <!-- 最热标签 -->
-        <div class="panel panel-default">
-            <div class="panel-heading"><span style="color: #ccc;">热门节点</span></div>
-            <div class="panel-body">
-                <c:forEach var="item" items="${nodeList2}">
-                    <a href="${item.url}" class="item_node"><span class="layui-badge layui-bg-primary">${item.nodeTitle}</span></a>
-                </c:forEach>
-            </div>
-        </div>
+        <!-- 热门节点 -->
+        <c:if test="${nodeList2 ne null && fn:length(nodeList2) > 0}">
+        	<div class="panel panel-default">
+            	<div class="panel-heading"><span>热门节点</span></div>
+	            <div class="panel-body">
+	                <c:forEach var="item" items="${nodeList2}">
+	                    <a href="${item.url}" class="item_node"><span class="layui-badge layui-bg-primary">${item.nodeTitle}</span></a>
+	                </c:forEach>
+	            </div>
+        	</div>
+        </c:if>
         <!-- 社区运行状况 -->
         <div class="panel panel-default">
-            <div class="panel-heading"><span style="color: #ccc;">社区运行状况</span></div>
+            <div class="panel-heading"><span>社区运行状况</span></div>
             <div class="cell">
                 <table cellpadding="5" cellspacing="0" border="0" width="100%">
                     <tbody style="font-size: 14px;">

@@ -135,12 +135,12 @@ body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino San
     background-clip: initial;
 	}
 /* a��ǩ������״̬ */
-.title a{color:#333}
-.title a:visited{color:/* #ccc */ #778087 /* #333 */}
+.title a{color:#3c8dbc}
+.title a:visited{color:#3c8dbc}
 .avatar{border-radius:4px; max-width:48px}
 .avatar-sm{border-radius:4px;max-width:24px}
 .avatar-lg{border-radius:4px;max-width:64px}
-.title{font-size:18px;font-weight:500;padding-bottom:5px}
+.title{font-size:16px;font-weight:500;padding-bottom:5px}
 .topic-detail-header{padding-bottom:0}
 .topic-detail-title{margin-top:0;font-weight:500}
 .topic-append-content{background-color:#fffff9}
@@ -388,7 +388,6 @@ img .avatar {
     border-color: transparent transparent #dddfe1;
 }
 .table_fade .fade{
-	color: #ccc;
     opacity: inherit;
 }
 .table_fade a{
@@ -404,7 +403,7 @@ img .avatar {
 	margin-bottom: 0;
 }
 a{
-	color: #778087;
+	color: #3c8dbc;
 	/* color:#4078c0; */
 }
 .media span{
@@ -413,6 +412,9 @@ a{
 }
 a:link {
     text-decoration: none;
+}
+a:hover {
+	color: #3c8dbc;
 }
 .bigger{
 	color: gray;
@@ -758,7 +760,7 @@ a.node:active, a.node:link, a.node:visited {
     height: 20px;
 }
 .layui-laypage a{
-	color: #778087;
+	color: #3c8dbc;
 }
 
 .CodeMirror {
@@ -784,4 +786,12 @@ a.node:active, a.node:link, a.node:visited {
 
 .layui-bg-primary {
     background-color: #337ab7!important;
+}
+.panel-default>.panel-heading {
+    background-color: #fff;
+}
+
+#paginate {
+    padding: 0px 15px;
+    background-color: #fff;
 }

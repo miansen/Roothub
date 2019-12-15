@@ -1,5 +1,9 @@
 SET MODE MYSQL;
 
+CREATE ALIAS IF NOT EXISTS NOW FOR "wang.miansen.roothub.common.dao.jdbc.h2.H2DatabaseFunctionExt.NOW";
+
+CREATE ALIAS IF NOT EXISTS TO_DAYS FOR "wang.miansen.roothub.common.dao.jdbc.h2.H2DatabaseFunctionExt.TO_DAYS";
+
 CREATE TABLE IF NOT EXISTS admin_user (
   admin_user_id int(11) NOT NULL AUTO_INCREMENT,
   username varchar(255) NOT NULL DEFAULT '',

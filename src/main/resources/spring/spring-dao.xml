@@ -29,8 +29,8 @@
 	
 	<!-- 2.2发布初始化数据源事件 -->
 	<bean id="dataSourceInitializedPublisher" class="wang.miansen.roothub.common.dao.jdbc.spring.DataSourceInitializedPublisher" >
-		<property name="dataSource" ref="dataSource" />
 		<property name="dataSourceProperties" ref="dataSourceProperties" />
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
 	<!-- 3.配置SqlSessionFactory对象 -->

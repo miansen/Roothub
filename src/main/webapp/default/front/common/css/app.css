@@ -135,8 +135,8 @@ body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino San
     background-clip: initial;
 	}
 /* a��ǩ������״̬ */
-.title a{color:#3c8dbc}
-.title a:visited{color:#3c8dbc}
+.title a{color:#777}
+/* .title a:visited{color:#3c8dbc} */
 .avatar{border-radius:4px; max-width:48px}
 .avatar-sm{border-radius:4px;max-width:24px}
 .avatar-lg{border-radius:4px;max-width:64px}
@@ -403,16 +403,16 @@ img .avatar {
 	margin-bottom: 0;
 }
 a{
-	color: #3c8dbc;
+	color: #777;
 	/* color:#4078c0; */
 }
 .media span{
 	/* color: #ccc; */
 	color: #778087;
 }
-a:link {
+/* a:link {
     text-decoration: none;
-}
+} */
 a:hover {
 	color: #3c8dbc;
 }
@@ -716,20 +716,6 @@ a.node:active, a.node:link, a.node:visited {
     color: #999;
 }
 
-.badge {
-    display: inline-block;
-    min-width: 10px;
-    padding: 3px 7px;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    /* background-color: #777; */
-    border-radius: 10px;
-}
-
 .media-right a{
 	color: #fff;
 }
@@ -760,7 +746,7 @@ a.node:active, a.node:link, a.node:visited {
     height: 20px;
 }
 .layui-laypage a{
-	color: #3c8dbc;
+	color: #777;
 }
 
 .CodeMirror {
@@ -794,4 +780,8 @@ a.node:active, a.node:link, a.node:visited {
 #paginate {
     padding: 0px 15px;
     background-color: #fff;
+    border-top: 0px solid #ddd;
+}
+.panel{
+	border: 1px solid #d1d5da;
 }

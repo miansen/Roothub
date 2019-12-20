@@ -173,31 +173,10 @@ public class TopicServiceImpl implements TopicService {
 	@Transactional
 	@Override
 	public TopicExecution saveTopic(Topic topic) {
-		try {
-			int insert = rootTopicDao.insert(topic);
-			/**
-			 * 根据话题名称、话题作者、话题标签、话题内容查询话题
-			 * 如果上面四个参数已存在于数据库中，则此处会报错
-			 * 2018.06.03 16：35
-			 */
-			// Topic rootTopic = rootTopicDao.selectByNameAndAuthorAndTagAndContent(topic.getTitle(), topic.getAuthor(),  topic.getTag(),topic.getContent());
-			if(insert <= 0) {
-				throw new OperationFailedException("发布话题失败！");
-			}else {
-				//发贴加积分
-				rootUserDao.updateScoreByName(Integer.valueOf(systemConfigService.getByKey("create_topic_score").getValue()), topic.getAuthor());
-				// Topic rootTopic = rootTopicDao.selectByTitleAndDate(topic.getTitle(), topic.getCreateDate());
-				return new TopicExecution(topic.getTitle(), InsertTopicEnum.SUCCESS, topic);
-			}
-		}catch (OperationFailedException e1) {
-			log.error("发布话题报错，错误信息: {}", e1.getMessage());
-			// throw e1;
-		}catch (Exception e) {
-			log.error("发布话题报错，错误信息: {}", e.getMessage());
-			// throw new OperationSystemException("insert into RootTopic error "+e.getMessage());
-		}
-		return null;
-		
+		rootTopicDao.insert(topic);
+		// 发贴加积分
+		rootUserDao.updateScoreByName(Integer.valueOf(systemConfigService.getByKey("create_topic_score").getValue()), topic.getAuthor());
+		return new TopicExecution(topic.getTitle(), InsertTopicEnum.SUCCESS, topic);
 	}
 	
 	@Override

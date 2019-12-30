@@ -38,7 +38,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
 		return retBool(baseMapper.insert(entity));
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean saveBatch(Collection<T> entityList) {
 		entityList.forEach(entity -> save(entity));
@@ -55,7 +55,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
 		return retBool(baseMapper.deleteById(id));
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean removeBatchIds(Collection<? extends Serializable> ids) {
 		ids.forEach(id -> removeById(id));
@@ -72,7 +72,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> implements BaseService<
 		return retBool(baseMapper.updateById(entity));
 	}
 
-	@Transactional
+	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean updateBatchIds(Collection<T> entityList) {
 		entityList.forEach(entity -> updateById(entity));

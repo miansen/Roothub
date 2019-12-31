@@ -5,154 +5,113 @@ import wang.miansen.roothub.common.model.IBaseModel;
 import java.util.Date;
 
 /**
- * 话题实体
- * Table: root_topic
- * @author sen
- * 2018年5月5日
- * 下午9:19:57
- * TODO
+ * 帖子实体类
+ * @author miansen.wang
+ * @date 2018-5-5 9:19:57
+ * @version 3.0
+ * @since 1.0
  */
 public class Topic implements IBaseModel {
 
 	/**
-	 * 话题标识
+	 * 帖子ID
 	 */
 	private Integer topicId;
-	
+
 	/**
-	 * 父版块标识
+	 * 版块ID
 	 */
-	private String ptab;
-	
+	private Integer tabId;
+
 	/**
-	 * 版块标识
+	 * 节点ID
 	 */
-	private String tab;
-	
+	private Integer nodeId;
+
 	/**
-	 * 话题标题
+	 * 作者ID
+	 */
+	private Integer userId;
+
+	/**
+	 * 标题
 	 */
 	private String title;
-	
+
 	/**
-	 * 话题内容标签
-	 */
-	private String tag;
-	
-	/**
-	 * 话题内容
+	 * 正文
 	 */
 	private String content;
-	
+
 	/**
 	 * 摘录
 	 */
 	private String excerpt;
-	
+
 	/**
-	 * 创建时间
+	 * 封面
 	 */
-	private Date createDate;
-	
+	private String avatar;
+
 	/**
-	 * 更新时间
+	 * 链接
 	 */
-	private Date updateDate;
-	
-	/**
-	 * 最后回复话题时间，用于排序
-	 */
-	private Date lastReplyTime;
-	
-	/**
-	 * 最后回复话题的用户id
-	 */
-	private String lastReplyAuthor;
-	
-	/**
-	 * 浏览量
-	 */
-	private Integer viewCount;
-	
-	/**
-	 * 话题作者id
-	 */
-	private String author;
-	
+	private String url;
+
 	/**
 	 * 1置顶 0默认
 	 */
 	private Boolean top;
-	
+
 	/**
 	 * 1精华 0默认
 	 */
 	private Boolean good;
-	
+
 	/**
-	 * 1显示 0不显示
+	 * 浏览量
 	 */
-	private Boolean showStatus;
-	
+	private Integer viewCount;
+
 	/**
-	 * 回复数量
+	 * 转载量
 	 */
-	private Integer replyCount;
-	
+	private Integer shareCount;
+
 	/**
-	 * 1删除 0默认
+	 * 好评量
 	 */
-	private Boolean isDelete;
-	
+	private Integer goodCount;
+
 	/**
-	 * 话题内容标签是否被统计过 1是 0否默认
+	 * 差评量
 	 */
-	private Boolean tagIsCount;
-	
+	private Integer badCount;
+
 	/**
-	 * 点赞
+	 * 创建时间
 	 */
-	private Integer postGoodCount;
-	
+	private Date createDate;
+
 	/**
-	 * 踩数
+	 * 更新时间
 	 */
-	private Integer postBadCount;
-	
+	private Date updateDate;
+
 	/**
-	 * 话题状态 1000:有效 1100:无效 1200:未生效
+	 * 类型，1000（文本）、1100（图片）、1200（视频）、1300（链接）
 	 */
-	private String statusCd;
-	
+	private String type;
+
 	/**
-	 * 所属节点
+	 * 状态，1000（有效）、1100（无效）、1200（未生效）
 	 */
-	private String nodeSlug;
-	
-	/**
-	 * 节点名称
-	 */
-	private String nodeTitle;
-	
+	private String status;
+
 	/**
 	 * 备注
 	 */
 	private String remark;
-	
-	/**
-	 * 话题作者头像
-	 */
-	private String avatar;
-	
-	private String url;
-
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
 
 	public Integer getTopicId() {
 		return topicId;
@@ -162,12 +121,28 @@ public class Topic implements IBaseModel {
 		this.topicId = topicId;
 	}
 
-	public String getTab() {
-		return tab;
+	public Integer getTabId() {
+		return tabId;
 	}
 
-	public void setTab(String tab) {
-		this.tab = tab;
+	public void setTabId(Integer tabId) {
+		this.tabId = tabId;
+	}
+
+	public Integer getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getTitle() {
@@ -178,14 +153,6 @@ public class Topic implements IBaseModel {
 		this.title = title;
 	}
 
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -193,7 +160,7 @@ public class Topic implements IBaseModel {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public String getExcerpt() {
 		return excerpt;
 	}
@@ -202,52 +169,20 @@ public class Topic implements IBaseModel {
 		this.excerpt = excerpt;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
-	public Date getUpdateDate() {
-		return updateDate;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	public Date getLastReplyTime() {
-		return lastReplyTime;
-	}
-
-	public void setLastReplyTime(Date lastReplyTime) {
-		this.lastReplyTime = lastReplyTime;
-	}
-
-	public String getLastReplyAuthor() {
-		return lastReplyAuthor;
-	}
-
-	public void setLastReplyAuthor(String lastReplyAuthor) {
-		this.lastReplyAuthor = lastReplyAuthor;
-	}
-
-	public Integer getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Integer viewCount) {
-		this.viewCount = viewCount;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Boolean getTop() {
@@ -266,76 +201,68 @@ public class Topic implements IBaseModel {
 		this.good = good;
 	}
 
-	public Boolean getShowStatus() {
-		return showStatus;
+	public Integer getViewCount() {
+		return viewCount;
 	}
 
-	public void setShowStatus(Boolean showStatus) {
-		this.showStatus = showStatus;
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
 	}
 
-	public Integer getReplyCount() {
-		return replyCount;
+	public Integer getShareCount() {
+		return shareCount;
 	}
 
-	public void setReplyCount(Integer replyCount) {
-		this.replyCount = replyCount;
+	public void setShareCount(Integer shareCount) {
+		this.shareCount = shareCount;
 	}
 
-	public Boolean getIsDelete() {
-		return isDelete;
+	public Integer getGoodCount() {
+		return goodCount;
 	}
 
-	public void setIsDelete(Boolean isDelete) {
-		this.isDelete = isDelete;
+	public void setGoodCount(Integer goodCount) {
+		this.goodCount = goodCount;
 	}
 
-	public Boolean getTagIsCount() {
-		return tagIsCount;
+	public Integer getBadCount() {
+		return badCount;
 	}
 
-	public void setTagIsCount(Boolean tagIsCount) {
-		this.tagIsCount = tagIsCount;
+	public void setBadCount(Integer badCount) {
+		this.badCount = badCount;
 	}
 
-	public Integer getPostGoodCount() {
-		return postGoodCount;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setPostGoodCount(Integer postGoodCount) {
-		this.postGoodCount = postGoodCount;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public Integer getPostBadCount() {
-		return postBadCount;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setPostBadCount(Integer postBadCount) {
-		this.postBadCount = postBadCount;
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public String getStatusCd() {
-		return statusCd;
+	public String getType() {
+		return type;
 	}
 
-	public void setStatusCd(String statusCd) {
-		this.statusCd = statusCd;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getNodeSlug() {
-		return nodeSlug;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setNodeSlug(String nodeSlug) {
-		this.nodeSlug = nodeSlug;
-	}
-
-	public String getNodeTitle() {
-		return nodeTitle;
-	}
-
-	public void setNodeTitle(String nodeTitle) {
-		this.nodeTitle = nodeTitle;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getRemark() {
@@ -346,32 +273,13 @@ public class Topic implements IBaseModel {
 		this.remark = remark;
 	}
 
-	public String getPtab() {
-		return ptab;
-	}
-
-	public void setPtab(String ptab) {
-		this.ptab = ptab;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	@Override
 	public String toString() {
-		return "Topic [topicId=" + topicId + ", ptab=" + ptab + ", tab=" + tab + ", title=" + title + ", tag=" + tag
-				+ ", content=" + content + ", excerpt=" + excerpt + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + ", lastReplyTime=" + lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor
-				+ ", viewCount=" + viewCount + ", author=" + author + ", top=" + top + ", good=" + good
-				+ ", showStatus=" + showStatus + ", replyCount=" + replyCount + ", isDelete=" + isDelete
-				+ ", tagIsCount=" + tagIsCount + ", postGoodCount=" + postGoodCount + ", postBadCount=" + postBadCount
-				+ ", statusCd=" + statusCd + ", nodeSlug=" + nodeSlug + ", nodeTitle=" + nodeTitle + ", remark="
-				+ remark + ", avatar=" + avatar + ", url=" + url + "]";
+		return "Topic [topicId=" + topicId + ", tabId=" + tabId + ", nodeId=" + nodeId + ", userId=" + userId
+				+ ", title=" + title + ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url="
+				+ url + ", top=" + top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount
+				+ ", goodCount=" + goodCount + ", badCount=" + badCount + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "]";
 	}
-	
+
 }

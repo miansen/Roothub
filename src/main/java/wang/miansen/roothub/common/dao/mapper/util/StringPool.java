@@ -77,11 +77,17 @@ public interface StringPool {
 
     String SPACE_COMMA_SPACE = " , ";
 
-    // 实体类别名
-    String MODEL = "model";
+    // 实体类的别名
+    String ENTITY = "entity";
 
-    // 实体类别名带后缀
-    String MODEL_DOT = MODEL + DOT;
+    // 实体类的别名带后缀
+    String ENTITY_DOT = ENTITY + StringPool.DOT;
+    
+    String WRAPPER = "wrapper";
+    
+    String WRAPPER_DOT = WRAPPER + StringPool.DOT;
+    
+    String COLLECTION = "ids";
 
     // ---------------------------------------------------------------- array
 

@@ -11,77 +11,77 @@ import java.lang.reflect.Field;
  * @Author: miansen.wang
  * @Date: 2019/9/1 15:28
  */
-public class TableFieldInfo implements StringPool{
+public class TableFieldInfo implements StringPool {
 
-    /**
-     * 数据库字段名
-     */
-    private final String column;
+	/**
+	 * 数据库字段名
+	 */
+	private final String column;
 
-    /**
-     * 实体类属性名
-     */
-    private final String property;
+	/**
+	 * 实体类属性名
+	 */
+	private final String property;
 
-    /**
-     * 属性类型
-     */
-    private final Class<?> propertyType;
+	/**
+	 * 属性类型
+	 */
+	private final Class<?> propertyType;
 
-    /**
-     * 实体类型
-     */
-    private final Class<?> modelClass;
+	/**
+	 * 实体类型
+	 */
+	private final Class<?> modelClass;
 
-    /**
-     * 是否查询该字段
-     */
-    private boolean select = true;
+	/**
+	 * 是否查询该字段
+	 */
+	private boolean select = true;
 
-    public TableFieldInfo(Field field) {
-        this.column = StringUtils.camelToUnderline(field.getName());
-        this.property = field.getName();
-        this.propertyType = field.getType();
-        this.modelClass = field.getDeclaringClass();
-    }
+	public TableFieldInfo(Field field) {
+		this.column = StringUtils.camelToUnderline(field.getName());
+		this.property = field.getName();
+		this.propertyType = field.getType();
+		this.modelClass = field.getDeclaringClass();
+	}
 
-    public String getColumn() {
-        return column;
-    }
+	public String getColumn() {
+		return column;
+	}
 
-    public String getProperty() {
-        return property;
-    }
+	public String getProperty() {
+		return property;
+	}
 
-    public Class<?> getPropertyType() {
-        return propertyType;
-    }
+	public Class<?> getPropertyType() {
+		return propertyType;
+	}
 
-    public Class<?> getModelClass() {
-        return modelClass;
-    }
+	public Class<?> getModelClass() {
+		return modelClass;
+	}
 
-    public boolean isSelect() {
-        return select;
-    }
+	public boolean isSelect() {
+		return select;
+	}
 
-    public void setSelect(boolean select) {
-        this.select = select;
-    }
+	public void setSelect(boolean select) {
+		this.select = select;
+	}
 
-    /**
-     * 获取插入的值的表达式
-     * @return #{别名.property}
-     */
-    public String getInsertValueSegment() {
-        return SqlScriptUtils.safeParam(MODEL_DOT + property);
-    }
+	/**
+	 * 获取插入的值的表达式
+	 * @return #{别名.property}
+	 */
+	public String getInsertValueSegment() {
+		return SqlScriptUtils.safeParam(ENTITY_DOT + property);
+	}
 
-    /**
-     * 获取更新的表达式
-     * @return column = #{别名.property}
-     */
-    public String getSetSegment() {
-        return column + EQUALS + SqlScriptUtils.safeParam(MODEL_DOT + property);
-    }
+	/**
+	 * 获取更新的表达式
+	 * @return column = #{别名.property}
+	 */
+	public String getSetSegment() {
+		return column + EQUALS + SqlScriptUtils.safeParam(ENTITY_DOT + property);
+	}
 }

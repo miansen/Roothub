@@ -103,7 +103,7 @@ public class TableInfo implements StringPool {
      * @return #{别名.keyProperty}
      */
     public String getKeyPropertySegment() {
-        return SqlScriptUtils.safeParam("model." + keyProperty);
+        return SqlScriptUtils.safeParam(ENTITY_DOT + keyProperty);
     }
 
     /**

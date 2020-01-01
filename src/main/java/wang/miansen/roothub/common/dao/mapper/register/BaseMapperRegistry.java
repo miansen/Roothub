@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.dao.mapper.register;
 
-import wang.miansen.roothub.common.dao.mapper.BaseMapper;
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dao.mapper.builder.BaseMapperBuilder;
 
 import org.apache.ibatis.session.Configuration;
@@ -30,7 +30,7 @@ public class BaseMapperRegistry {
     public void addMappers(List<Class<?>> mappers) {
         mappers.forEach(m -> {
             // mapper 必须是接口且继承 BaseMapper，才能注入
-            if (!m.isInterface() || !BaseMapper.class.isAssignableFrom(m)){
+            if (!m.isInterface() || !BaseDao.class.isAssignableFrom(m)){
                 return;
             }
             BaseMapperBuilder myBatisMapperAnnotationBuilder = new BaseMapperBuilder(configuration, m);

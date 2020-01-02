@@ -4,19 +4,21 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 
 /**
  * 该接口作为 Service 层的基础接口，定义了常用的业务增删改查方法，建议大部分的 Service 层接口继承。
  * 
- * @param <T> 数据库表映射实体类
+ * @param <T> 数据访问层的类型
+ * @param <T> 数据库表映射实体类的类型
  * 
  * @author: miansen.wang
  * @date: 2019-12-29
  * @since 3.0
  */
-public interface BaseService<T> {
+public interface BaseService<D extends BaseDao<T>, T> {
 
 	/**
 	 * 插入一条数据
@@ -72,7 +74,7 @@ public interface BaseService<T> {
 	 * @param entityList 实体对象集合
 	 * @return boolean
 	 */
-	boolean updateBatch(Collection<T> entityList);
+	boolean updateBatchIds(Collection<T> entityList);
 
 	/**
 	 * 根据 ID 查询一条数据
@@ -119,6 +121,12 @@ public interface BaseService<T> {
 	 * @param ids 主键 ID 集合
 	 * @return List
 	 */
-	List<T> listByIds(Collection<? extends Serializable> ids);
+	List<T> listBatchIds(Collection<? extends Serializable> ids);
+	
+	/**
+	 * 获取数据访问层
+	 * @return D
+	 */
+	D getDao();
 	
 }

@@ -3,13 +3,13 @@ package wang.miansen.roothub.modules.topic.dao;
 import java.util.Date;
 import java.util.List;
 
-import wang.miansen.roothub.common.dao.mapper.BaseMapper;
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.modules.tag.model.Tag;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
 import org.apache.ibatis.annotations.Param;
 
-public interface TopicDao extends BaseMapper<Topic> {
+public interface TopicDao extends BaseDao<Topic> {
 
 	/**
 	 * 查询所有话题

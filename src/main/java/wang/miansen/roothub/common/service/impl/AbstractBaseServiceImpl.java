@@ -3,17 +3,18 @@ package wang.miansen.roothub.common.service.impl;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import wang.miansen.roothub.common.dao.BaseDao;
+import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
+import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
-import wang.miansen.roothub.common.service.BaseService;
 
 /**
  * 该类是 Service impl 层的基础父类，实现了常用的业务增删改查方法，建议大部分的 Service impl 层继承。
@@ -26,33 +27,30 @@ import wang.miansen.roothub.common.service.BaseService;
  * @date 2019-12-29
  * @since 3.0
  */
-public abstract class AbstractServiceImpl<D extends BaseDao<T>, T> implements BaseService<D, T> {
+public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends BaseDTO> implements BaseService<DO, DTO> {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Autowired
-	protected D dao;
-
 	@Override
-	public boolean save(T entity) {
-		return retBool(dao.insert(entity));
+	public boolean save(DTO entity) {
+		return retBool(getBaseDao().insert(getBaseDO(entity)));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean saveBatch(Collection<T> entityList) {
+	public boolean saveBatch(Collection<DTO> entityList) {
 		entityList.forEach(entity -> save(entity));
 		return true;
 	}
 
 	@Override
-	public boolean remove(UpdateWrapper<T> updateWrapper) {
-		return retBool(dao.delete(updateWrapper));
+	public boolean remove(UpdateWrapper<DO> updateWrapper) {
+		return retBool(getBaseDao().delete(updateWrapper));
 	}
 
 	@Override
 	public boolean removeById(Serializable id) {
-		return retBool(dao.deleteById(id));
+		return retBool(getBaseDao().deleteById(id));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -63,60 +61,56 @@ public abstract class AbstractServiceImpl<D extends BaseDao<T>, T> implements Ba
 	}
 
 	@Override
-	public boolean update(T entity, UpdateWrapper<T> updateWrapper) {
-		return retBool(dao.update(entity, updateWrapper));
+	public boolean update(DTO dto, UpdateWrapper<DO> updateWrapper) {
+		return retBool(getBaseDao().update(getBaseDO(dto), updateWrapper));
 	}
 
 	@Override
-	public boolean updateById(T entity) {
-		return retBool(dao.updateById(entity));
+	public boolean updateById(DTO dto) {
+		return retBool(getBaseDao().updateById(getBaseDO(dto)));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean updateBatchIds(Collection<T> entityList) {
-		entityList.forEach(entity -> updateById(entity));
+	public boolean updateBatchIds(Collection<DTO> dtoList) {
+		dtoList.forEach(dto -> updateById(dto));
 		return true;
 	}
 
 	@Override
-	public T getById(Serializable id) {
-		return dao.selectById(id);
+	public DTO getById(Serializable id) {
+		return getBaseDTO(getBaseDao().selectById(id));
 	}
 
 	@Override
-	public T getOne(QueryWrapper<T> queryWrapper) {
-		return dao.selectOne(queryWrapper);
+	public DTO getOne(QueryWrapper<DO> queryWrapper) {
+		return getBaseDTO(getBaseDao().selectOne(queryWrapper));
 	}
 
 	@Override
 	public Integer count() {
-		return dao.selectCount(null);
+		return getBaseDao().selectCount(null);
 	}
 
 	@Override
-	public Integer count(QueryWrapper<T> queryWrapper) {
-		return dao.selectCount(queryWrapper);
+	public Integer count(QueryWrapper<DO> queryWrapper) {
+		return getBaseDao().selectCount(queryWrapper);
 	}
 
 	@Override
-	public List<T> list() {
-		return dao.selectList(null);
+	public List<DTO> list() {
+		return getBaseDao().selectList(null).stream().map(entity -> getBaseDTO(entity)).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<T> list(QueryWrapper<T> queryWrapper) {
-		return dao.selectList(queryWrapper);
+	public List<DTO> list(QueryWrapper<DO> queryWrapper) {
+		return getBaseDao().selectList(queryWrapper).stream().map(entity -> getBaseDTO(entity))
+				.collect(Collectors.toList());
 	}
 
 	@Override
-	public List<T> listBatchIds(Collection<? extends Serializable> ids) {
-		return dao.selectBatchIds(ids);
-	}
-
-	@Override
-	public D getDao() {
-		return dao;
+	public List<DTO> listBatchIds(Collection<? extends Serializable> ids) {
+		return getBaseDao().selectBatchIds(ids).stream().map(entity -> getBaseDTO(entity)).collect(Collectors.toList());
 	}
 
 	/**

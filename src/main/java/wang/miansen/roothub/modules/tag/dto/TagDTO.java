@@ -1,26 +1,16 @@
-package wang.miansen.roothub.modules.tag.model;
+package wang.miansen.roothub.modules.tag.dto;
 
-import wang.miansen.roothub.common.dao.mapper.annotation.Id;
-import wang.miansen.roothub.common.dao.mapper.annotation.Table;
-import wang.miansen.roothub.common.dao.mapper.enums.IdType;
-import wang.miansen.roothub.common.entity.BaseDO;
-
-import java.util.Date;
+import wang.miansen.roothub.common.dto.BaseDTO;
 
 /**
- * 标签实体
- * @author sen
- * 2018年6月3日
- * 下午8:09:32
- * TODO
+ * @author miansen.wang
+ * @date 2020-01-04
  */
-@Table(value = "tag")
-public class Tag implements BaseDO {
+public class TagDTO implements BaseDTO {
 
 	/**
 	 * 标签ID
 	 */
-	@Id(value = "tag_id", type = IdType.AUTO)
 	private Integer tagId;
 
 	/**
@@ -46,12 +36,12 @@ public class Tag implements BaseDO {
 	/**
 	 * 创建时间
 	 */
-	private Date createDate;
+	private String createDate;
 
 	/**
 	 * 更新时间
 	 */
-	private Date updateDate;
+	private String updateDate;
 
 	public Integer getTagId() {
 		return tagId;
@@ -93,19 +83,19 @@ public class Tag implements BaseDO {
 		this.tagContent = tagContent;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getUpdateDate() {
+	public String getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 

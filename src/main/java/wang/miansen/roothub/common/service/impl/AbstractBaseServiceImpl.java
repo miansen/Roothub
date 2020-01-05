@@ -18,10 +18,10 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 
 /**
  * 该类是 Service impl 层的基础父类，实现了常用的业务增删改查方法，建议大部分的 Service impl 层继承。
- * <p>继承该类后即可拥有简单的 CRUD 能力。
+ * <p>继承该类后即可拥有简单的业务 CRUD 能力。
  * 
- * @param <D> 数据访问层的类型
- * @param <T> 数据库表映射实体类的类型
+ * @param <DO> 数据库表映射实体类的类型
+ * @param <DTO> 数据传输的类型
  * 
  * @author miansen.wang
  * @date 2019-12-29
@@ -32,42 +32,42 @@ public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends Bas
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public boolean save(DTO entity) {
-		return retBool(getBaseDao().insert(getBaseDO(entity)));
+	public boolean save(DTO dto) {
+		return retBool(getDao().insert(getDTO2DOMapper().apply(dto)));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean saveBatch(Collection<DTO> entityList) {
-		entityList.forEach(entity -> save(entity));
+	public boolean saveBatch(Collection<DTO> dtoList) {
+		dtoList.forEach(dto -> save(dto));
 		return true;
 	}
 
 	@Override
 	public boolean remove(UpdateWrapper<DO> updateWrapper) {
-		return retBool(getBaseDao().delete(updateWrapper));
+		return retBool(getDao().delete(updateWrapper));
 	}
 
 	@Override
 	public boolean removeById(Serializable id) {
-		return retBool(getBaseDao().deleteById(id));
+		return retBool(getDao().deleteById(id));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public boolean removeBatchIds(Collection<? extends Serializable> ids) {
-		ids.forEach(id -> removeById(id));
+	public boolean removeBatchIds(Collection<? extends Serializable> idList) {
+		idList.forEach(id -> removeById(id));
 		return true;
 	}
 
 	@Override
 	public boolean update(DTO dto, UpdateWrapper<DO> updateWrapper) {
-		return retBool(getBaseDao().update(getBaseDO(dto), updateWrapper));
+		return retBool(getDao().update(getDTO2DOMapper().apply(dto), updateWrapper));
 	}
 
 	@Override
 	public boolean updateById(DTO dto) {
-		return retBool(getBaseDao().updateById(getBaseDO(dto)));
+		return retBool(getDao().updateById(getDTO2DOMapper().apply(dto)));
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -79,38 +79,37 @@ public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends Bas
 
 	@Override
 	public DTO getById(Serializable id) {
-		return getBaseDTO(getBaseDao().selectById(id));
+		return getDO2DTOMapper().apply(getDao().selectById(id));
 	}
 
 	@Override
 	public DTO getOne(QueryWrapper<DO> queryWrapper) {
-		return getBaseDTO(getBaseDao().selectOne(queryWrapper));
+		return getDO2DTOMapper().apply(getDao().selectOne(queryWrapper));
 	}
 
 	@Override
 	public Integer count() {
-		return getBaseDao().selectCount(null);
+		return getDao().selectCount(null);
 	}
 
 	@Override
 	public Integer count(QueryWrapper<DO> queryWrapper) {
-		return getBaseDao().selectCount(queryWrapper);
+		return getDao().selectCount(queryWrapper);
 	}
 
 	@Override
 	public List<DTO> list() {
-		return getBaseDao().selectList(null).stream().map(entity -> getBaseDTO(entity)).collect(Collectors.toList());
+		return getDao().selectList(null).stream().map(getDO2DTOMapper()).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<DTO> list(QueryWrapper<DO> queryWrapper) {
-		return getBaseDao().selectList(queryWrapper).stream().map(entity -> getBaseDTO(entity))
-				.collect(Collectors.toList());
+		return getDao().selectList(queryWrapper).stream().map(getDO2DTOMapper()).collect(Collectors.toList());
 	}
 
 	@Override
-	public List<DTO> listBatchIds(Collection<? extends Serializable> ids) {
-		return getBaseDao().selectBatchIds(ids).stream().map(entity -> getBaseDTO(entity)).collect(Collectors.toList());
+	public List<DTO> listBatchIds(Collection<? extends Serializable> idList) {
+		return getDao().selectBatchIds(idList).stream().map(getDO2DTOMapper()).collect(Collectors.toList());
 	}
 
 	/**

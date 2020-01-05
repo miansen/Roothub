@@ -3,6 +3,7 @@ package wang.miansen.roothub.common.service;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.dto.BaseDTO;
@@ -13,8 +14,8 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 /**
  * 该接口作为 Service 层的基础接口，定义了常用的业务增删改查方法，建议大部分的 Service 层接口继承。
  * 
- * @param <T> 数据访问层的类型
- * @param <T> 数据库表映射实体类的类型
+ * @param <DO> 数据库表映射实体类的类型
+ * @param <DTO> 数据传输的类型
  * 
  * @author: miansen.wang
  * @date: 2019-12-29
@@ -24,17 +25,17 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 
 	/**
 	 * 插入一条数据
-	 * @param dto 实体对象
+	 * @param dto 数据传输对象
 	 * @return boolean
 	 */
 	boolean save(DTO dto);
 
 	/**
 	 * 批量插入多条数据
-	 * @param entityList 实体对象集合
+	 * @param dtoList 数据传输对象集合
 	 * @return boolean
 	 */
-	boolean saveBatch(Collection<DTO> entityList);
+	boolean saveBatch(Collection<DTO> dtoList);
 
 	/**
 	 * 删除满足条件的数据
@@ -52,43 +53,43 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 
 	/**
 	 * 根据 ID 集合，批量删除多条数据
-	 * @param ids 主键 ID 集合
+	 * @param idList 主键 ID 集合
 	 * @return boolean
 	 */
-	boolean removeBatchIds(Collection<? extends Serializable> ids);
+	boolean removeBatchIds(Collection<? extends Serializable> idList);
 
 	/**
 	 * 更新满足条件的数据
 	 * @param updateWrapper where 条件包装器
 	 * @return boolean
 	 */
-	boolean update(DTO entity, UpdateWrapper<DO> updateWrapper);
+	boolean update(DTO dto, UpdateWrapper<DO> updateWrapper);
 
 	/**
-	 * 根据 ID 更新一条数据
-	 * @param entity 实体对象
+	 * 根据主键 ID 更新一条数据
+	 * @param dto 数据传输对象
 	 * @return boolean
 	 */
-	boolean updateById(DTO entity);
+	boolean updateById(DTO dto);
 
 	/**
-	 * 根据 ID 集合，批量更新多条数据
-	 * @param entityList 实体对象集合
+	 * 根据主键 ID 集合，批量更新多条数据
+	 * @param dtoList 数据传输对象集合
 	 * @return boolean
 	 */
-	boolean updateBatchIds(Collection<DTO> entityList);
+	boolean updateBatchIds(Collection<DTO> dtoList);
 
 	/**
-	 * 根据 ID 查询一条数据
+	 * 根据主键 ID 查询一条数据
 	 * @param id 主键 ID
-	 * @return T
+	 * @return DTO
 	 */
 	DTO getById(Serializable id);
 
 	/**
 	 * 查询满足条件的一条数据
 	 * @param queryWrapper where 条件包装器
-	 * @return T
+	 * @return DTO
 	 */
 	DTO getOne(QueryWrapper<DO> queryWrapper);
 
@@ -99,7 +100,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 	Integer count();
 
 	/**
-	 * 查询满足条件的总记录数
+	 * 查询满足条件的记录数
 	 * @param queryWrapper where 条件包装器
 	 * @return Integer
 	 */
@@ -119,25 +120,28 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 	List<DTO> list(QueryWrapper<DO> queryWrapper);
 
 	/**
-	 * 根据 ID 集合，批量查询多条数据
-	 * @param ids 主键 ID 集合
+	 * 根据主键 ID 集合，批量查询多条数据
+	 * @param idList 主键 ID 集合
 	 * @return List
 	 */
-	List<DTO> listBatchIds(Collection<? extends Serializable> ids);
+	List<DTO> listBatchIds(Collection<? extends Serializable> idList);
 	
 	/**
-	 * 获取数据库表映射的实体类
-	 * @param dto
+	 * 获取 DTO 转换 DO 的函数
 	 * @return
 	 */
-	DO getBaseDO(DTO dto);
+	Function<? super DTO, ? extends DO> getDTO2DOMapper();
 	
 	/**
-	 * 获取数据访问层
+	 * 取 DO 转换 DTO 的函数
 	 * @return
 	 */
-	BaseDao<DO> getBaseDao();
+	Function<? super DO, ? extends DTO> getDO2DTOMapper();
 	
-	DTO getBaseDTO(DO entity);
+	/**
+	 * 获取数据访问对象
+	 * @return
+	 */
+	BaseDao<DO> getDao();
 	
 }

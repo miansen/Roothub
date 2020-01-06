@@ -1,5 +1,10 @@
 package wang.miansen.roothub.common.dao.mapper.wrapper.query;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 import wang.miansen.roothub.common.dao.mapper.builder.TableInfoBuilder;
 import wang.miansen.roothub.common.dao.mapper.exceptions.BaseMapperException;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableFieldInfo;
@@ -8,20 +13,21 @@ import wang.miansen.roothub.common.dao.mapper.util.ArrayUtils;
 import wang.miansen.roothub.common.dao.mapper.util.StringPool;
 import wang.miansen.roothub.modules.tag.model.Tag;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 /**
+ * 查询条件包装器
+ * 
+ * @param <T> 数据库表映射实体类的类型
  *
- * @param <T> 数据库表映射实体类
- *
- * @Author: miansen.wang
- * @Date: 2019/9/15 16:50
+ * @author miansen.wang
+ * @date 2019-9-15 16:50
+ * @since 3.0
  */
+@SuppressWarnings("serial")
 public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String, Object> implements Query<T, QueryWrapper<T>, String>{
 
+	/**
+	 * 需要查询的字段
+	 */
     private String selectColumns;
 
     public QueryWrapper() {
@@ -80,7 +86,7 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
     }
 
     public static void main(String[] args) {
-        Map<String, Object> map = new HashMap<>();
+       /* Map<String, Object> map = new HashMap<>();
         map.put("age", 15);
         map.put("create_date", 2019);
         QueryWrapper<Tag> queryWrapper = new QueryWrapper<>(Tag.class);
@@ -106,7 +112,7 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
                 .likeRight("title", "like");
         System.out.println(queryWrapper2.getSqlSegment());
         Map<String, Object> paramNameValuePairs1 = queryWrapper.paramNameValuePairs;
-        Map<String, Object> paramNameValuePairs2 = queryWrapper2.paramNameValuePairs;
+        Map<String, Object> paramNameValuePairs2 = queryWrapper2.paramNameValuePairs;*/
         QueryWrapper<Object> queryWrapper3 = new QueryWrapper<>();
         queryWrapper3.eq("id", 1)
                 .and()
@@ -119,13 +125,14 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
                 .having("count(1) > 1")
                 .orderByDesc("id", "id2", "id3")
                 .orderByAsc("name")
-                .orderBy(false, "age");
+                .orderBy(false, "age")
+                .limit("0", "10");
         String sqlSegment3 = queryWrapper3.getSqlSegment();
         System.out.println(sqlSegment3);
 
-        queryWrapper.select("id","name","age");
+        /*queryWrapper.select("id","name","age");
         queryWrapper.select(i -> !i.getColumn().equals("name"));
         String selectColumns = queryWrapper.getSelectColumns();
-        System.out.println(selectColumns);
+        System.out.println(selectColumns);*/
     }
 }

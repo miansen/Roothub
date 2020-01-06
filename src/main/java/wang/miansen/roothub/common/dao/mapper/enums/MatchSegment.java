@@ -6,8 +6,10 @@ import java.util.function.Predicate;
 
 /**
  * 匹配 {@link SqlKeyword}
- * @Author: miansen.wang
- * @Date: 2019/9/23 21:34
+ * 
+ * @author miansen.wang
+ * @date 2019-9-23 21:34
+ * @since 3.0
  */
 public enum MatchSegment {
 
@@ -25,7 +27,9 @@ public enum MatchSegment {
 
     HAVING(i -> i == SqlKeyword.HAVING),
 
-    EXISTS(i -> i == SqlKeyword.EXISTS);
+    EXISTS(i -> i == SqlKeyword.EXISTS),
+	
+    LIMIT(i -> i == SqlKeyword.LIMIT);
 
     private final Predicate<ISqlSegment> predicate;
 

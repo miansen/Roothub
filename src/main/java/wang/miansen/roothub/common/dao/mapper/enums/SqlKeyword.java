@@ -28,7 +28,8 @@ public enum SqlKeyword implements ISqlSegment {
     EXISTS("EXISTS"),
     BETWEEN("BETWEEN"),
     ASC("ASC"),
-    DESC("DESC");
+    DESC("DESC"),
+    LIMIT("LIMIT");
 
     private String keyword;
 

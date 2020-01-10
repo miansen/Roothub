@@ -21,6 +21,6 @@ public interface Page<R> {
 	 * @param end
 	 * @return
 	 */
-	R limit(String start, String end);
+	R limit(Integer start, Integer end);
 	
 }

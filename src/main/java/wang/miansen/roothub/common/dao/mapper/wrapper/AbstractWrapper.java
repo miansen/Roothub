@@ -273,8 +273,9 @@ public abstract class AbstractWrapper<T, R extends AbstractWrapper<T, R, K, V>, 
 	}
 
 	@Override
-	public R limit(String start, String end) {
-		return addCondition(SqlKeyword.LIMIT, () -> start, () -> StringPool.COMMA, () -> end);
+	public R limit(Integer start, Integer end) {
+		return addCondition(SqlKeyword.LIMIT, () -> String.valueOf(start), () -> StringPool.COMMA,
+				() -> String.valueOf(end));
 	}
 
 	/**
@@ -337,12 +338,22 @@ public abstract class AbstractWrapper<T, R extends AbstractWrapper<T, R, K, V>, 
 	}
 
 	/**
-	 * 获取拼接好的 SQL 语句
+	 * 获取完整的 SQL 语句
+	 * <p>包含 where... group by... having... order by... limit...
 	 * @return
 	 */
 	@Override
 	public String getSqlSegment() {
 		return sqlSegmentBuilder.getSqlSegment();
+	}
+	
+	/**
+	 * 获取普通的 sql 语句
+	 * <p>只包含 where...
+	 * @return
+	 */
+	public String getNormalSqlSegment() {
+		return sqlSegmentBuilder.getNormalSqlSegment();
 	}
 
 }

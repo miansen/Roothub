@@ -126,7 +126,7 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
                 .orderByDesc("id", "id2", "id3")
                 .orderByAsc("name")
                 .orderBy(false, "age")
-                .limit("0", "10");
+                .limit(0, 10);
         String sqlSegment3 = queryWrapper3.getSqlSegment();
         System.out.println(sqlSegment3);
 

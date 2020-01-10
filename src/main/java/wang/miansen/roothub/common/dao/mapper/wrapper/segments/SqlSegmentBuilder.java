@@ -48,6 +48,7 @@ public class SqlSegmentBuilder implements ISqlSegment {
 
 	/**
 	 * 组装各个容器的 sql 片段，返回完整的 sql 语句。
+	 * <p>包含 where... group by... having... order by... limit...
 	 * @return
 	 */
 	@Override
@@ -55,4 +56,14 @@ public class SqlSegmentBuilder implements ISqlSegment {
 		return normal.getSqlSegment() + groupBy.getSqlSegment() + having.getSqlSegment() + orderBy.getSqlSegment()
 				+ limit.getSqlSegment();
 	}
+	
+	/**
+	 * 返回普通的 sql 语句。
+	 * <p>只包含 where...
+	 * @return
+	 */
+	public String getNormalSqlSegment() {
+		return normal.getSqlSegment();
+	}
+	
 }

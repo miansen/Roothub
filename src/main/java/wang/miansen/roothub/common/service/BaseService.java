@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
@@ -13,6 +14,7 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 
 /**
  * 该接口作为 Service 层的基础接口，定义了常用的业务增删改查方法，建议大部分的 Service 层接口继承。
+ * <p>注意：要继承该接口，对应的 {@code DO} 要继承 {@link BaseDO}，{@code DTO} 要继承 {@link BaseDTO}。
  * 
  * @param <DO> 数据库表映射实体类的类型
  * @param <DTO> 数据传输的类型
@@ -39,7 +41,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 
 	/**
 	 * 删除满足条件的数据
-	 * @param updateWrapper where 条件包装器
+	 * @param updateWrapper 条件包装器
 	 * @return boolean
 	 */
 	boolean remove(UpdateWrapper<DO> updateWrapper);
@@ -60,7 +62,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 
 	/**
 	 * 更新满足条件的数据
-	 * @param updateWrapper where 条件包装器
+	 * @param updateWrapper 条件包装器
 	 * @return boolean
 	 */
 	boolean update(DTO dto, UpdateWrapper<DO> updateWrapper);
@@ -88,7 +90,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 
 	/**
 	 * 查询满足条件的一条数据
-	 * @param queryWrapper where 条件包装器
+	 * @param queryWrapper 条件包装器
 	 * @return DTO
 	 */
 	DTO getOne(QueryWrapper<DO> queryWrapper);
@@ -101,7 +103,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 
 	/**
 	 * 查询满足条件的记录数
-	 * @param queryWrapper where 条件包装器
+	 * @param queryWrapper 条件包装器
 	 * @return Integer
 	 */
 	Integer count(QueryWrapper<DO> queryWrapper);
@@ -114,7 +116,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 
 	/**
 	 * 查询满足条件的多条数据
-	 * @param queryWrapper where 条件包装器
+	 * @param queryWrapper 条件包装器
 	 * @return List
 	 */
 	List<DTO> list(QueryWrapper<DO> queryWrapper);
@@ -125,6 +127,23 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 	 * @return List
 	 */
 	List<DTO> listBatchIds(Collection<? extends Serializable> idList);
+	
+	/**
+	 * 查询所有的数据并翻页
+	 * @param pageNumber 当前的页数
+	 * @param pageSize 每页显示多少条数据量
+	 * @return PageDataBody
+	 */
+	PageDataBody<DTO> page(Integer pageNumber, Integer pageSize);
+	
+	/**
+	 * 查询满足条件的多条数据并翻页
+	 * @param pageNumber 当前的页数
+	 * @param pageSize 每页显示多少条数据量
+	 * @param queryWrapper 条件包装器
+	 * @return PageDataBody
+	 */
+	PageDataBody<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper);
 	
 	/**
 	 * 获取 DTO 转换 DO 的函数

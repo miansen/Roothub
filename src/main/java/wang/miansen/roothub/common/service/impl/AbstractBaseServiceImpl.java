@@ -13,12 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.service.BaseService;
+import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 
 /**
- * 该类是 Service impl 层的基础父类，实现了常用的业务增删改查方法，建议大部分的 Service impl 层继承。
+ * 该类是 Service Impl 层的基础父类，实现了常用的业务增删改查方法，建议大部分的 Service Impl 层继承。
  * <p>继承该类后即可拥有简单的业务 CRUD 能力。
+ * <p>注意：要继承该类，对应的 {@code DO} 要继承 {@link BaseDO}，{@code DTO} 要继承 {@link BaseDTO}。
  * 
  * @param <DO> 数据库表映射实体类的类型
  * @param <DTO> 数据传输的类型
@@ -110,6 +112,23 @@ public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends Bas
 	@Override
 	public List<DTO> listBatchIds(Collection<? extends Serializable> idList) {
 		return getDao().selectBatchIds(idList).stream().map(getDO2DTOMapper()).collect(Collectors.toList());
+	}
+
+	@Override
+	public PageDataBody<DTO> page(Integer pageNumber, Integer pageSize) {
+		QueryWrapper<DO> queryWrapper = new QueryWrapper<>();
+		queryWrapper.limit((pageNumber - 1) * pageSize, pageSize);
+		List<DTO> list = list(queryWrapper);
+		Integer totalRow = count();
+		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+	}
+
+	@Override
+	public PageDataBody<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper) {
+		queryWrapper.limit((pageNumber - 1) * pageSize, pageSize);
+		List<DTO> list = list(queryWrapper);
+		Integer totalRow = count(queryWrapper);
+		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**

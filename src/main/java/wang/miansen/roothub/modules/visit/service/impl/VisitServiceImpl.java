@@ -2,13 +2,13 @@ package wang.miansen.roothub.modules.visit.service.impl;
 
 import java.util.List;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.DMLExecution;
 import wang.miansen.roothub.common.enums.InsertEnum;
 import wang.miansen.roothub.common.enums.UpdateEnum;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.exception.OperationFailedException;
-import wang.miansen.roothub.core.exception.OperationRepeaException;
-import wang.miansen.roothub.core.exception.OperationSystemException;
+import wang.miansen.roothub.common.exception.OperationFailedException;
+import wang.miansen.roothub.common.exception.OperationRepeaException;
+import wang.miansen.roothub.common.exception.OperationSystemException;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.visit.dao.VisitDao;
 import wang.miansen.roothub.modules.visit.model.Visit;
@@ -31,10 +31,10 @@ public class VisitServiceImpl implements VisitService {
 	 * 分页查询访问记录
 	 */
 	@Override
-	public PageDataBody<User> page(Integer vid, Integer pageNumber, Integer pageSize) {
+	public Page<User> page(Integer vid, Integer pageNumber, Integer pageSize) {
 		int totalRow = visitDao.count(vid);
 		List<User> list = visitDao.select(vid, (pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**

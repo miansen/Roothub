@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.node.service;
 
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.node.model.Node;
 
 /**
@@ -65,7 +65,7 @@ public interface NodeService {
 	 * @param pageSize:数据量
 	 * @return
 	 */
-	PageDataBody<Node> pageForAdmin(String nodeTitle, Integer pageNumber, Integer pageSize);
+	Page<Node> pageForAdmin(String nodeTitle, Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 统计节点

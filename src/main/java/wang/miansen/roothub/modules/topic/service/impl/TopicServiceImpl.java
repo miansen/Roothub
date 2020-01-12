@@ -3,10 +3,10 @@ package wang.miansen.roothub.modules.topic.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.TopicExecution;
 import wang.miansen.roothub.common.enums.InsertTopicEnum;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.exception.OperationFailedException;
+import wang.miansen.roothub.common.exception.OperationFailedException;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
 import wang.miansen.roothub.modules.tag.model.Tag;
 import wang.miansen.roothub.modules.topic.dao.TopicDao;
@@ -40,7 +40,7 @@ public class TopicServiceImpl implements TopicService {
 	 * 根据节点和节点板块查询话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab, String nodeTitle) {
+	public Page<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab, String nodeTitle) {
 		if(nodeTab.equals("all")) {
 			return pageAllByNode(pageNumber,pageSize,nodeTitle);
 		}else if(nodeTab.equals("good")) {
@@ -56,40 +56,40 @@ public class TopicServiceImpl implements TopicService {
 	 * 根据板块查询所有话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllByTab(Integer pageNumber, Integer pageSize, String tab) {
+	public Page<Topic> pageAllByTab(Integer pageNumber, Integer pageSize, String tab) {
 		List<Topic> list = rootTopicDao.selectAllByTab((pageNumber - 1) * pageSize, pageSize,tab);
 		int total = rootTopicDao.countTopicByTab(tab);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 	
 	/**
 	 * 根据节点查询所有话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllByNode(Integer pageNumber, Integer pageSize, String nodeTitle) {
+	public Page<Topic> pageAllByNode(Integer pageNumber, Integer pageSize, String nodeTitle) {
 		List<Topic> list = rootTopicDao.selectAllByNode((pageNumber - 1) * pageSize, pageSize,nodeTitle);
 		int total = rootTopicDao.countTopicByNode(nodeTitle);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 	/**
 	 * 根据节点查询精华话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageGood(Integer pageNumber, Integer pageSize,String nodeTitle) {
+	public Page<Topic> pageGood(Integer pageNumber, Integer pageSize,String nodeTitle) {
 		List<Topic> list = rootTopicDao.selectAllGood((pageNumber - 1) * pageSize, pageSize,nodeTitle);
 		int total = rootTopicDao.countTopicGoodByNode(nodeTitle);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 	/**
 	 * 根据节点查询无人回复的话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String nodeTitle) {
+	public Page<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String nodeTitle) {
 		List<Topic> list = rootTopicDao.selectAllNoReply((pageNumber - 1) * pageSize, pageSize,nodeTitle);
 		int total = rootTopicDao.countTopicNoReplyByNode(nodeTitle);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 	/**
@@ -113,10 +113,10 @@ public class TopicServiceImpl implements TopicService {
 	 * 根据昵称分页查询用户的所有话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageByAuthor(Integer pageNumber, Integer pageSize, String author) {
+	public Page<Topic> pageByAuthor(Integer pageNumber, Integer pageSize, String author) {
 		int totalRow = rootTopicDao.countAllByName(author);
 		List<Topic> list = rootTopicDao.selectByAuthor(author, (pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class TopicServiceImpl implements TopicService {
 	 * 收藏话题列表
 	 */
 	@Override
-	public PageDataBody<Topic> findCollectsById(Integer pageNumber, Integer pageSize, Integer uid) {
+	public Page<Topic> findCollectsById(Integer pageNumber, Integer pageSize, Integer uid) {
 		return null;
 	}
 
@@ -239,10 +239,10 @@ public class TopicServiceImpl implements TopicService {
 	 * 根据节点查询最新话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeTitle) {
+	public Page<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeTitle) {
 		List<Topic> list = rootTopicDao.selectAllNewest((pageNumber - 1) * pageSize, pageSize,nodeTitle);
 		int total = rootTopicDao.countTopicByNode(nodeTitle);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 	/**
@@ -257,20 +257,20 @@ public class TopicServiceImpl implements TopicService {
 	 * 分页查询所有标签
 	 */
 	@Override
-	public PageDataBody<Tag> findByTag(Integer pageNumber, Integer pageSize) {
+	public Page<Tag> findByTag(Integer pageNumber, Integer pageSize) {
 		int totalRow = rootTopicDao.countTag();
 		List<Tag> list = rootTopicDao.selectAllTag((pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
 	 * 根据标签查询话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageByTag(String tag, Integer pageNumber, Integer pageSize) {
+	public Page<Topic> pageByTag(String tag, Integer pageNumber, Integer pageSize) {
 		int totalRow = rootTopicDao.countByTag(tag);
 		List<Topic> list = rootTopicDao.selectByTag(tag, (pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
@@ -301,30 +301,30 @@ public class TopicServiceImpl implements TopicService {
 	 * 分页模糊查询
 	 */
 	@Override
-	public PageDataBody<Topic> pageLike(Integer pageNumber, Integer pageSize, String like) {
+	public Page<Topic> pageLike(Integer pageNumber, Integer pageSize, String like) {
 		List<Topic> list = rootTopicDao.selectByLike(like, (pageNumber - 1) * pageSize, pageSize);
 		int totalRow = rootTopicDao.countLike(like);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
 	 * 根据板块和昵称分页查询话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllByPtabAndAuthor(Integer pageNumber, Integer pageSize, String ptab, String author) {
+	public Page<Topic> pageAllByPtabAndAuthor(Integer pageNumber, Integer pageSize, String ptab, String author) {
 		int totalRow = rootTopicDao.countAllByNameAndPtab(author, ptab);
 		List<Topic> list = rootTopicDao.selectAllByPtabAndAuthor((pageNumber - 1) * pageSize, pageSize, ptab, author);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
 	 * 首页-最热话题
 	 */
 	@Override
-	public PageDataBody<Topic> findIndexHot(Integer pageNumber, Integer pageSize, String tab) {
+	public Page<Topic> findIndexHot(Integer pageNumber, Integer pageSize, String tab) {
 		int totalRow = rootTopicDao.countIndexHot(tab);
 		List<Topic> list = rootTopicDao.selectIndexHot((pageNumber - 1) * pageSize, pageSize, tab);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
@@ -357,11 +357,11 @@ public class TopicServiceImpl implements TopicService {
 	}
 
 	@Override
-	public PageDataBody<Topic> pageForAdmin(String author, String startDate, String endDate, Integer pageNumber,
+	public Page<Topic> pageForAdmin(String author, String startDate, String endDate, Integer pageNumber,
 			Integer pageSize) {
 		List<Topic> list = rootTopicDao.selectAllForAdmin(author, startDate, endDate, (pageNumber - 1) * pageSize, pageSize);
 		int totalRow = countAllForAdmin(author, startDate, endDate);
-		return new PageDataBody<Topic>(list, pageNumber, pageSize, totalRow);
+		return new Page<Topic>(list, pageNumber, pageSize, totalRow);
 	}
 
 	@Override

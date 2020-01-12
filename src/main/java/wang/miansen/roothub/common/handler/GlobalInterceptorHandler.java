@@ -1,4 +1,4 @@
-package wang.miansen.roothub.core.handler;
+package wang.miansen.roothub.common.handler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

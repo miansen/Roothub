@@ -1,7 +1,7 @@
 package wang.miansen.roothub.modules.visit.service;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.DMLExecution;
-import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.visit.model.Visit;
 
@@ -21,7 +21,7 @@ public interface VisitService {
 	 * @param pageSize 每页显示的数据量
 	 * @return
 	 */
-	PageDataBody<User> page(Integer vid, Integer pageNumber, Integer pageSize);
+	Page<User> page(Integer vid, Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 添加访问记录

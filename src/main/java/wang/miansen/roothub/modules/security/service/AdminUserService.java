@@ -1,7 +1,8 @@
 package wang.miansen.roothub.modules.security.service;
 
 import java.util.Map;
-import wang.miansen.roothub.core.base.PageDataBody;
+
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.security.model.AdminUser;
 
 /**
@@ -17,10 +18,10 @@ public interface AdminUserService {
 	AdminUser getById(Integer id);
 	
 	// 获取所有的后台用户
-	PageDataBody<AdminUser> page(Integer pageNumber, Integer pageSize);
+	Page<AdminUser> page(Integer pageNumber, Integer pageSize);
 	
 	// 获取所有的后台用户以及对应的角色列表
-	PageDataBody<AdminUser> pageRoles(Integer pageNumber, Integer pageSize);
+	Page<AdminUser> pageRoles(Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 新增后台用户

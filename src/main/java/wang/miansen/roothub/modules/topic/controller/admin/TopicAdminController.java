@@ -2,10 +2,10 @@ package wang.miansen.roothub.modules.topic.controller.admin;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.config.SiteConfig;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
-import wang.miansen.roothub.core.exception.ApiAssert;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.topic.model.Topic;
@@ -53,7 +53,7 @@ public class TopicAdminController {
 		if (StringUtils.isEmpty(startDate)) startDate = null;
 	    if (StringUtils.isEmpty(endDate)) endDate = null;
 	    if (StringUtils.isEmpty(author)) author = null;
-		PageDataBody<Topic> page = topicService.pageForAdmin(author, startDate, endDate, p, 25);
+		Page<Topic> page = topicService.pageForAdmin(author, startDate, endDate, p, 25);
 		model.addAttribute("page", page);
 	    model.addAttribute("startDate", startDate);
 	    model.addAttribute("endDate", endDate);

@@ -1,8 +1,8 @@
 package wang.miansen.roothub.modules.node.controller.admin;
 
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
-import wang.miansen.roothub.core.exception.ApiAssert;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -38,7 +38,7 @@ public class NodeAdminController {
 	public String list(@RequestParam(value = "nodeTitle",required = false) String nodeTitle,
 					   @RequestParam(value = "p",defaultValue = "1") Integer p,Model model) {
 		if(StringUtils.isEmpty(nodeTitle)) nodeTitle = null;
-		PageDataBody<Node> page = nodeService.pageForAdmin(nodeTitle, p, 25);
+		Page<Node> page = nodeService.pageForAdmin(nodeTitle, p, 25);
 		model.addAttribute("page", page);
 		model.addAttribute("nodeTitle", nodeTitle);
 		model.addAttribute("p", p);
@@ -138,7 +138,7 @@ public class NodeAdminController {
 							 @RequestParam(value = "p",defaultValue = "1") Integer p,
 							 Model model){
 		if(StringUtils.isEmpty(nodeTitle)) nodeTitle = null;
-		PageDataBody<Node> page = nodeService.pageForAdmin(nodeTitle, p, 25);
+		Page<Node> page = nodeService.pageForAdmin(nodeTitle, p, 25);
 		model.addAttribute("page", page);
 		model.addAttribute("nodeTitle", nodeTitle);
 		model.addAttribute("p", p);

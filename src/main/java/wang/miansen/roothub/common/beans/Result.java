@@ -1,4 +1,4 @@
-package wang.miansen.roothub.core.base;
+package wang.miansen.roothub.common.beans;
 
 /**
  * 封装JSON对象，所有的返回结果都使用它

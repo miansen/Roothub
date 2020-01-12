@@ -1,7 +1,9 @@
 package wang.miansen.roothub.modules.security.controller.admin;
 
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.util.ApiAssert;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import wang.miansen.roothub.modules.security.model.Role;
-import wang.miansen.roothub.core.exception.ApiAssert;
 import wang.miansen.roothub.modules.security.service.PermissionService;
 import wang.miansen.roothub.modules.security.service.RoleService;
 
@@ -34,7 +35,7 @@ public class RoleAdminController {
 	@RequiresPermissions("role:list")
 	@RequestMapping(value = "/list")
 	public String list(@RequestParam(value = "p",defaultValue = "1") Integer p,Model model) {
-		PageDataBody<Role> page = roleService.page(p, 25);
+		Page<Role> page = roleService.page(p, 25);
 		model.addAttribute("page", page);
 		model.addAttribute("p", p);
 		return "/default/admin/role/list";

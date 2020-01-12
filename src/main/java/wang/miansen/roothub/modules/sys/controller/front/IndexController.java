@@ -7,14 +7,14 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import wang.miansen.roothub.common.beans.BaseEntity;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.Base64Util;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.config.SiteConfig;
-import wang.miansen.roothub.core.base.BaseEntity;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
-import wang.miansen.roothub.core.exception.ApiAssert;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.model.NodeTab;
 import wang.miansen.roothub.modules.node.service.NodeService;
@@ -85,7 +85,7 @@ public class IndexController extends BaseController {
 	private String index(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "p", defaultValue = "1") Integer p,
 			@RequestParam(value = "tab", defaultValue = "all") String tab) {
-		PageDataBody<Topic> page = topicService.pageAllByTab(p, 25, tab);
+		Page<Topic> page = topicService.pageAllByTab(p, 25, tab);
 		List<Tab> tabList = tabService.selectAll();
 		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
 		// 热门话题榜
@@ -93,7 +93,7 @@ public class IndexController extends BaseController {
 		// 今日等待回复的话题
 		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 10);
 		// 最热标签
-		PageDataBody<Tag> tag = topicService.findByTag(1, 10);
+		Page<Tag> tag = topicService.findByTag(1, 10);
 		List<Node> nodeList2 = nodeService.findAll(0, 10);
 		// 注册会员的数量
 		int countUserAll = userService.countUserAll();
@@ -206,7 +206,7 @@ public class IndexController extends BaseController {
 	 */
 	@RequestMapping(value = "/tags", method = RequestMethod.GET)
 	private String tag(HttpServletRequest request, @RequestParam(value = "p", defaultValue = "1") Integer p) {
-		PageDataBody<Tag> tag = topicService.findByTag(p, 50);
+		Page<Tag> tag = topicService.findByTag(p, 50);
 		request.setAttribute("tag", tag);
 		return "/default/front/tag/list";
 	}
@@ -239,7 +239,7 @@ public class IndexController extends BaseController {
 		if (search == null || search.equals("")) {
 			return "search";
 		}
-		PageDataBody<Topic> pageLike = topicService.pageLike(p, 50, search);
+		Page<Topic> pageLike = topicService.pageLike(p, 50, search);
 		// BaseEntity baseEntity = new BaseEntity();
 		// request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("pageLike", pageLike);

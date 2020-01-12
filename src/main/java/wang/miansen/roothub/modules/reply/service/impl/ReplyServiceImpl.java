@@ -3,9 +3,8 @@ package wang.miansen.roothub.modules.reply.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.ReplyExecution;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.exception.OperationRepeaException;
 import wang.miansen.roothub.modules.reply.model.Reply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +17,9 @@ import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.modules.reply.model.ReplyAndTopicByName;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.common.enums.InsertReplyEnum;
-import wang.miansen.roothub.core.exception.OperationFailedException;
-import wang.miansen.roothub.core.exception.OperationSystemException;
+import wang.miansen.roothub.common.exception.OperationFailedException;
+import wang.miansen.roothub.common.exception.OperationRepeaException;
+import wang.miansen.roothub.common.exception.OperationSystemException;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
@@ -69,10 +69,10 @@ public class ReplyServiceImpl implements ReplyService{
 	 * 分页查询全部话题
 	 */
 	@Override
-	public PageDataBody<Reply> findAll(Integer pageNumber, Integer pageSize) {
+	public Page<Reply> findAll(Integer pageNumber, Integer pageSize) {
 		int totalRow = replyDao.countAll();
 		List<Reply> list = replyDao.selectAll((pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
@@ -87,10 +87,10 @@ public class ReplyServiceImpl implements ReplyService{
 	 * 分页查询评论列表
 	 */
 	@Override
-	public PageDataBody<Reply> page(Integer pageNumber, Integer pageSize, Integer topicId) {
+	public Page<Reply> page(Integer pageNumber, Integer pageSize, Integer topicId) {
 		int totalRow = replyDao.countByTopicId(topicId);
 		List<Reply> list = replyDao.selectByTopicId((pageNumber - 1) * pageSize, pageSize, topicId);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 	
 	@Transactional
@@ -162,10 +162,10 @@ public class ReplyServiceImpl implements ReplyService{
 	 * 关联话题表
 	 */
 	@Override
-	public PageDataBody<ReplyAndTopicByName> findAllByNameAndTopic(String replyAuthorName, Integer pageNumber, Integer pageSize) {
+	public Page<ReplyAndTopicByName> findAllByNameAndTopic(String replyAuthorName, Integer pageNumber, Integer pageSize) {
 		int totalRow = replyDao.countByName(replyAuthorName);
 		List<ReplyAndTopicByName> list = replyDao.selectAllByNameAndTopic(replyAuthorName, (pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
@@ -193,11 +193,11 @@ public class ReplyServiceImpl implements ReplyService{
 	 * 后台评论分页列表
 	 */
 	@Override
-	public PageDataBody<Map<String, Object>> pageForAdmin(String author, String topic, String startDate, String endDate,
+	public Page<Map<String, Object>> pageForAdmin(String author, String topic, String startDate, String endDate,
 			Integer pageNumber, Integer pageSize) {
 		List<Map<String,Object>> list = replyDao.selectAllForAdmin(author, topic, startDate, endDate, (pageNumber - 1) * pageSize, pageSize);
 		int totalRow = countAllForAdmin(author, topic, startDate, endDate);
-		return new PageDataBody<Map<String, Object>>(list, pageNumber, pageSize, totalRow);
+		return new Page<Map<String, Object>>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**

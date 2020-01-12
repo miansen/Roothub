@@ -3,11 +3,12 @@ package wang.miansen.roothub.modules.node.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.modules.node.model.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.node.dao.NodeDao;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
@@ -65,9 +66,9 @@ public class NodeServiceImpl implements NodeService{
 
 	// 后台节点列表
 	@Override
-	public PageDataBody<Node> pageForAdmin(String nodeTitle, Integer pageNumber, Integer pageSize) {
+	public Page<Node> pageForAdmin(String nodeTitle, Integer pageNumber, Integer pageSize) {
 		List<Node> list = nodeDao.listForAdmin(nodeTitle, (pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<Node>(list, pageNumber, pageSize, count(nodeTitle));
+		return new Page<Node>(list, pageNumber, pageSize, count(nodeTitle));
 	}
 
 	// 统计节点列表

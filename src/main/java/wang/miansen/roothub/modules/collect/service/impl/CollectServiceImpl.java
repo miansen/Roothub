@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.collect.service.impl;
 
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.collect.dao.CollectDao;
 import wang.miansen.roothub.modules.collect.model.Collect;
 import wang.miansen.roothub.modules.collect.service.CollectService;
@@ -20,10 +20,10 @@ public class CollectServiceImpl implements CollectService {
 	 * 分页查询收藏的话题
 	 */
 	@Override
-	public PageDataBody<Topic> page(Integer pageNumber, Integer pageSize, Integer uid) {
+	public Page<Topic> page(Integer pageNumber, Integer pageSize, Integer uid) {
 		int total = collectDao.count(uid);
 		List<Topic> list = collectDao.selectAllByCollect((pageNumber - 1) * pageSize, pageSize, uid);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 	/**

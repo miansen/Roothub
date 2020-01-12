@@ -1,9 +1,10 @@
-package wang.miansen.roothub.core.handler;
+package wang.miansen.roothub.common.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
-import wang.miansen.roothub.core.base.Result;
-import wang.miansen.roothub.core.exception.ApiException;
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.exception.ApiException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;

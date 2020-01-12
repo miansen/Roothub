@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import wang.miansen.roothub.common.entity.BaseDO;
-import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.common.dto.BaseDTO;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
@@ -134,7 +134,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 	 * @param pageSize 每页显示多少条数据量
 	 * @return PageDataBody
 	 */
-	PageDataBody<DTO> page(Integer pageNumber, Integer pageSize);
+	Page<DTO> page(Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 查询满足条件的多条数据并翻页
@@ -143,7 +143,7 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 	 * @param queryWrapper 条件包装器
 	 * @return PageDataBody
 	 */
-	PageDataBody<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper);
+	Page<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper);
 	
 	/**
 	 * 获取 DTO 转换 DO 的函数

@@ -1,4 +1,4 @@
-package wang.miansen.roothub.core.base;
+package wang.miansen.roothub.common.beans;
 
 import java.net.MalformedURLException;
 import java.net.URL;

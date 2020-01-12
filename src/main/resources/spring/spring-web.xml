@@ -84,7 +84,7 @@
 			<mvc:mapping path="/vote" />
 			<mvc:mapping path="/?tab=member" />
 			<!-- 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 -->
-			<bean class="wang.miansen.roothub.core.handler.GlobalInterceptorHandler" />
+			<bean class="wang.miansen.roothub.common.handler.GlobalInterceptorHandler" />
 		</mvc:interceptor>
 	</mvc:interceptors> 
 </beans>

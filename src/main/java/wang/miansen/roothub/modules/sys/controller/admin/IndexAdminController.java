@@ -3,7 +3,7 @@ package wang.miansen.roothub.modules.sys.controller.admin;
 import java.lang.management.ManagementFactory;
 import java.text.DecimalFormat;
 
-import wang.miansen.roothub.core.base.Result;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.security.model.AdminUser;

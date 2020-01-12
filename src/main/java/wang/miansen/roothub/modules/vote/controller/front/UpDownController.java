@@ -3,9 +3,9 @@ package wang.miansen.roothub.modules.vote.controller.front;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
 import wang.miansen.roothub.common.dto.DMLExecution;
-import wang.miansen.roothub.core.base.Result;
 import wang.miansen.roothub.modules.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

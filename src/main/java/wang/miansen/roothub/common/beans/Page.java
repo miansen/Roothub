@@ -1,4 +1,4 @@
-package wang.miansen.roothub.core.base;
+package wang.miansen.roothub.common.beans;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  * @param <T>
  * TODO
  */
-public class PageDataBody<T> implements Serializable{
+public class Page<T> implements Serializable{
 
 	/**
 	 * 
@@ -24,7 +24,7 @@ public class PageDataBody<T> implements Serializable{
     private long totalPage;                // total page 总共有多少页
     private long totalRow;                // total row 总共有多少条数据量
     
-	public PageDataBody(List<T> list, int pageNumber, int pageSize, long totalRow) {
+	public Page(List<T> list, int pageNumber, int pageSize, long totalRow) {
 		super();
 		this.list = list;
 		this.pageNumber = pageNumber;

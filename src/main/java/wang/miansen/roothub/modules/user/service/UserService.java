@@ -2,7 +2,8 @@ package wang.miansen.roothub.modules.user.service;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import wang.miansen.roothub.core.base.PageDataBody;
+
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.integral.model.Top100;
@@ -83,7 +84,7 @@ public interface UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	PageDataBody<User> page(Integer pageNumber, Integer pageSize);
+	Page<User> page(Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 更新用户
@@ -130,7 +131,7 @@ public interface UserService {
 	 */
 	int countToday();
 	
-	PageDataBody<User> pageForAdmin(String username, String email, Integer pageNumber, Integer pageSize);
+	Page<User> pageForAdmin(String username, String email, Integer pageNumber, Integer pageSize);
 	
 	int countAllForAdmin(String username,String email);
 	

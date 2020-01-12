@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.exception.ApiAssert;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.security.dao.RoleDao;
 import wang.miansen.roothub.modules.security.model.Role;
 import wang.miansen.roothub.modules.security.model.RolePermissionRel;
@@ -41,10 +41,10 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public PageDataBody<Role> page(Integer pageNumber, Integer pageSize) {
+	public Page<Role> page(Integer pageNumber, Integer pageSize) {
 		List<Role> list = roleDao.selectAll((pageNumber - 1) * pageSize, pageSize);
 		int countAll = this.countAll();
-		return new PageDataBody<>(list, pageNumber, pageSize, countAll);
+		return new Page<>(list, pageNumber, pageSize, countAll);
 	}
 
 	@Override

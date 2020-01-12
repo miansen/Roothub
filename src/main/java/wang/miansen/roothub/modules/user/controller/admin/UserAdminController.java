@@ -4,8 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.util.StringUtils;
-import wang.miansen.roothub.core.base.Result;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

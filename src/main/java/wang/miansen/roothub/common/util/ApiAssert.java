@@ -1,6 +1,8 @@
-package wang.miansen.roothub.core.exception;
+package wang.miansen.roothub.common.util;
 
 import org.springframework.util.StringUtils;
+
+import wang.miansen.roothub.common.exception.ApiException;
 /**
  * 
  * @author miansen.wang

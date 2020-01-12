@@ -1,6 +1,6 @@
 package wang.miansen.roothub.modules.follow.service;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.follow.model.Follow;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
@@ -14,7 +14,7 @@ public interface FollowService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<User> page(Integer pageNumber, Integer pageSize, Integer uid);
+	Page<User> page(Integer pageNumber, Integer pageSize, Integer uid);
 	
 	/**
 	 * 关注人的主题
@@ -23,7 +23,7 @@ public interface FollowService {
 	 * @param uid
 	 * @return
 	 */
-	PageDataBody<Topic> pageTopic(Integer pageNumber,Integer pageSize,Integer uid);
+	Page<Topic> pageTopic(Integer pageNumber,Integer pageSize,Integer uid);
 	
 	/**
 	 * 关注我的人
@@ -32,7 +32,7 @@ public interface FollowService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<User> followMe(Integer pageNumber, Integer pageSize, Integer fid);
+	Page<User> followMe(Integer pageNumber, Integer pageSize, Integer fid);
 	
 	/**
 	 * 添加关注

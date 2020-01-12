@@ -3,8 +3,12 @@ package wang.miansen.roothub.modules.topic.controller.front;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+
+import wang.miansen.roothub.common.beans.BaseEntity;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
-import wang.miansen.roothub.core.base.BaseEntity;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
+
 import wang.miansen.roothub.common.dto.TopicExecution;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.reply.model.Reply;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
-import wang.miansen.roothub.core.exception.ApiAssert;
 import wang.miansen.roothub.modules.tab.model.Tab;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.node.service.NodeService;
@@ -69,7 +72,7 @@ public class TopicController extends BaseController {
         //更新话题
         topicService.updateTopic(topic);
         // 查询回复
-        PageDataBody<Reply> replyPage = replyService.page(p, 50, id);
+        Page<Reply> replyPage = replyService.page(p, 50, id);
 
         String tag = topic.getTag();
         // 将标签封装成list
@@ -154,7 +157,7 @@ public class TopicController extends BaseController {
      */
     @RequestMapping(value = "/tag/{name}", method = RequestMethod.GET)
     private String tag(@PathVariable String name, Model model, @RequestParam(value = "p", defaultValue = "1") Integer p) {
-        PageDataBody<Topic> pageByTag = topicService.pageByTag(name, p, 20);
+        Page<Topic> pageByTag = topicService.pageByTag(name, p, 20);
         model.addAttribute("tagName", name);
         model.addAttribute("pageByTag", pageByTag);
         return "/default/front/tag/view";

@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import wang.miansen.roothub.config.SiteConfig;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
 import wang.miansen.roothub.modules.reply.model.ReplyAndTopicByName;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
-import wang.miansen.roothub.core.exception.ApiAssert;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.follow.service.FollowService;
@@ -27,7 +24,10 @@ import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.modules.visit.service.VisitService;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.util.ApiAssert;
 
 /**
  * 
@@ -63,14 +63,14 @@ public class UserApiController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/collect",method = RequestMethod.GET)
-	private Result<PageDataBody> collectList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
+	private Result<Page> collectList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		User user = userService.findByName(name);
 		/*if(user == null) {
 			return new Result<PageDataBody>(true, "用户不存在");
 		}*/
 		ApiAssert.notNull(user, "用户不存在");
-		PageDataBody<Topic> page = collectDaoService.page(p, 20, user.getUserId());
-		return new Result<PageDataBody>(true, page);
+		Page<Topic> page = collectDaoService.page(p, 20, user.getUserId());
+		return new Result<Page>(true, page);
 	}
 	
 	/**
@@ -80,9 +80,9 @@ public class UserApiController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/topic",method = RequestMethod.GET)
-	private Result<PageDataBody> topicList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<Topic> page = topicService.pageByAuthor(p, 20, name);
-		return new Result<PageDataBody>(true, page);
+	private Result<Page> topicList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
+		Page<Topic> page = topicService.pageByAuthor(p, 20, name);
+		return new Result<Page>(true, page);
 	}
 	
 	/**
@@ -92,9 +92,9 @@ public class UserApiController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/reply",method = RequestMethod.GET)
-	private Result<PageDataBody> replyList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<ReplyAndTopicByName> page = replyService.findAllByNameAndTopic(name, p, 20);
-		return new Result<PageDataBody>(true, page);
+	private Result<Page> replyList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
+		Page<ReplyAndTopicByName> page = replyService.findAllByNameAndTopic(name, p, 20);
+		return new Result<Page>(true, page);
 	}
 	
 	/**
@@ -104,9 +104,9 @@ public class UserApiController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/follow/topic",method = RequestMethod.GET)
-	private Result<PageDataBody> followList(@RequestParam(value = "uid",defaultValue = "-1") Integer uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<Topic> page = followService.pageTopic(p, 20, uid);
-		return new Result<PageDataBody>(true, page);
+	private Result<Page> followList(@RequestParam(value = "uid",defaultValue = "-1") Integer uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
+		Page<Topic> page = followService.pageTopic(p, 20, uid);
+		return new Result<Page>(true, page);
 	}
 	
 	/**
@@ -116,9 +116,9 @@ public class UserApiController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/fans",method = RequestMethod.GET)
-	private Result<PageDataBody> fansList(@RequestParam(value = "fid",defaultValue = "-1") Integer fid,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<User> page = followService.followMe(p, 20, fid);
-		return new Result<PageDataBody>(true, page);
+	private Result<Page> fansList(@RequestParam(value = "fid",defaultValue = "-1") Integer fid,@RequestParam(value = "p",defaultValue = "1") Integer p){
+		Page<User> page = followService.followMe(p, 20, fid);
+		return new Result<Page>(true, page);
 	}
 	
 	/**
@@ -128,9 +128,9 @@ public class UserApiController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/topic/qna",method = RequestMethod.GET)
-	private  Result<PageDataBody> qnaTopicList(@RequestParam(value = "name",defaultValue = "-1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<Topic> page = topicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
-		return new Result<PageDataBody>(true, page);
+	private  Result<Page> qnaTopicList(@RequestParam(value = "name",defaultValue = "-1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
+		Page<Topic> page = topicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
+		return new Result<Page>(true, page);
 	}
 	
 	/**
@@ -140,10 +140,10 @@ public class UserApiController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/visit",method = RequestMethod.GET)
-	private Result<PageDataBody> visitList(@RequestParam(value = "vid",defaultValue = "-1") Integer vid,
+	private Result<Page> visitList(@RequestParam(value = "vid",defaultValue = "-1") Integer vid,
 										   @RequestParam(value = "p",defaultValue = "1") Integer p){
-		PageDataBody<User> page = visitService.page(vid, p, 10);
-		return new Result<PageDataBody>(true, page);
+		Page<User> page = visitService.page(vid, p, 10);
+		return new Result<Page>(true, page);
 	}
 	
 	@RequestMapping(value = "/api/test",method = RequestMethod.GET)

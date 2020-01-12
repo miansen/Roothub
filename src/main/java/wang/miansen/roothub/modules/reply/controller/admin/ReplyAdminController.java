@@ -3,8 +3,8 @@ package wang.miansen.roothub.modules.reply.controller.admin;
 import java.util.Date;
 import java.util.Map;
 
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.modules.reply.model.Reply;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +50,7 @@ public class ReplyAdminController {
 	    if (StringUtils.isEmpty(topic)) topic = null;
 	    if (StringUtils.isEmpty(startDate)) startDate = null;
 	    if (StringUtils.isEmpty(endDate)) endDate = null;
-	    PageDataBody<Map<String, Object>> page = replyService.pageForAdmin(author, topic, startDate, endDate, p, 25);
+	    Page<Map<String, Object>> page = replyService.pageForAdmin(author, topic, startDate, endDate, p, 25);
 	    model.addAttribute("page", page);
 	    model.addAttribute("author", author);
 	    model.addAttribute("topic", topic);

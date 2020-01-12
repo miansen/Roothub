@@ -3,8 +3,9 @@ package wang.miansen.roothub.modules.security.controller.admin;
 import java.util.List;
 import java.util.Map;
 
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.security.model.AdminUser;
 import wang.miansen.roothub.modules.security.model.Role;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
-import wang.miansen.roothub.core.exception.ApiAssert;
+
 import wang.miansen.roothub.modules.security.service.AdminUserService;
 import wang.miansen.roothub.modules.security.service.RoleService;
 
@@ -41,7 +42,7 @@ public class AdminUserAdminController {
 	@RequiresPermissions("admin_user:list")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String list(Model modle, @RequestParam(defaultValue = "1") Integer p) {
-		PageDataBody<AdminUser> page = adminUserService.pageRoles(p, 25);
+		Page<AdminUser> page = adminUserService.pageRoles(p, 25);
 		modle.addAttribute("page", page);
 		modle.addAttribute("p", p);
 		return "/default/admin/admin_user/list";
@@ -50,7 +51,7 @@ public class AdminUserAdminController {
 	@RequiresPermissions("admin_user:add")
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(Model model) {
-		PageDataBody<Role> page = roleService.page(1, 100);
+		Page<Role> page = roleService.page(1, 100);
 		model.addAttribute("page", page);
 		return "/default/admin/admin_user/add";
 	}

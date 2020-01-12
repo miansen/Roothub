@@ -5,11 +5,10 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import wang.miansen.roothub.common.beans.BaseEntity;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
-import wang.miansen.roothub.core.base.BaseEntity;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
-import wang.miansen.roothub.core.exception.ApiAssert;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
@@ -33,6 +32,7 @@ import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.visit.service.VisitService;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
 
@@ -69,8 +69,8 @@ public class UserController extends BaseController {
 			return "error-page/404";
 		}
 		User user2 = getUser(request);//当前用户
-		PageDataBody<Topic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
-		PageDataBody<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, rp, 20);
+		Page<Topic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
+		Page<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, rp, 20);
 		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countReply = rootReplyService.countByName(name);//评论的数量
@@ -107,7 +107,7 @@ public class UserController extends BaseController {
 	private String topics(Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
 		User user2 = getUser(request);//当前用户
 		if(user2 == null) return "error-page/404.jsp";
-		PageDataBody<Topic> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
+		Page<Topic> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
 		int countCollect = collectDaoService.count(user2.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user2.getUserName());//未读通知的数量
@@ -139,7 +139,7 @@ public class UserController extends BaseController {
 			return "error-page/404.jsp";
 		}
 		User user2 = getUser(request);//当前用户
-		PageDataBody<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, p, 20);
+		Page<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, p, 20);
 		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countReply = rootReplyService.countByName(user.getUserName());//评论的数量

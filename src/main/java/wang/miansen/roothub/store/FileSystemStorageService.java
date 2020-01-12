@@ -8,10 +8,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.stream.Stream;
 
+import wang.miansen.roothub.common.exception.StorageException;
 import wang.miansen.roothub.common.util.Base64Util;
 import wang.miansen.roothub.common.util.FileNameUtil;
 import wang.miansen.roothub.config.properties.StorageProperties;
-import wang.miansen.roothub.core.exception.StorageException;
 import wang.miansen.roothub.third.service.OSSService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

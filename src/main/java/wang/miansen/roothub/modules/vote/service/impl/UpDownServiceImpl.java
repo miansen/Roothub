@@ -8,8 +8,8 @@ import wang.miansen.roothub.modules.vote.dao.UpDownDao;
 import wang.miansen.roothub.modules.vote.model.UpDown;
 import wang.miansen.roothub.common.enums.InsertEnum;
 import wang.miansen.roothub.common.enums.UpdateEnum;
-import wang.miansen.roothub.core.exception.OperationFailedException;
-import wang.miansen.roothub.core.exception.OperationSystemException;
+import wang.miansen.roothub.common.exception.OperationFailedException;
+import wang.miansen.roothub.common.exception.OperationSystemException;
 import wang.miansen.roothub.modules.vote.service.UpDownService;
 
 /**

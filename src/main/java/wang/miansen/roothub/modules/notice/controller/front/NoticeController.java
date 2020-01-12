@@ -2,8 +2,8 @@ package wang.miansen.roothub.modules.notice.controller.front;
 
 import javax.servlet.http.HttpServletRequest;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.controller.BaseController;
-import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
@@ -63,7 +63,7 @@ public class NoticeController extends BaseController {
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//统计未读通知的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
-		PageDataBody<Notice> page = rootNoticeService.pageByAuthor(p, 20, user.getUserName());//查询所有通知
+		Page<Notice> page = rootNoticeService.pageByAuthor(p, 20, user.getUserName());//查询所有通知
 		rootNoticeService.updateIsRead(user.getUserName());//将通知都置为已读
 		request.setAttribute("countByAuthor", countByAuthor);
 		request.setAttribute("notReadNotice", notReadNotice);

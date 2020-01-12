@@ -3,8 +3,8 @@ package wang.miansen.roothub.modules.security.controller.admin;
 import java.util.Date;
 import java.util.Map;
 
-import wang.miansen.roothub.core.base.Result;
-import wang.miansen.roothub.core.exception.ApiAssert;
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.security.model.Permission;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;

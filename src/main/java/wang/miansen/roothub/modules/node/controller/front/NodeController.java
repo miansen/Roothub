@@ -5,9 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
-import wang.miansen.roothub.core.exception.ApiAssert;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.model.NodeTab;
 import wang.miansen.roothub.modules.node.service.NodeService;
@@ -69,7 +69,7 @@ public class NodeController {
 			throw new RuntimeException("节点不存在， 返回 > <a href='/'>主页<a/>");
 		}
 		List<NodeTab> nodeTabList = nodeTabService.findAll();
-		PageDataBody<Topic> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, name);
+		Page<Topic> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, name);
 		Node parentNode = nodeService.findByTitle(node.getParentNodeCode());//父节点
 		List<Node> adjacencyNode = nodeService.adjacencyNode(node);//相邻节点
 		List<Node> childrenNode = nodeService.findChildrenNode(node.getNodeTitle(), null, null);//子节点

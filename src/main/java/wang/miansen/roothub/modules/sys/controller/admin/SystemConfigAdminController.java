@@ -3,7 +3,7 @@ package wang.miansen.roothub.modules.sys.controller.admin;
 import java.util.List;
 import java.util.Map;
 
-import wang.miansen.roothub.core.base.Result;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.modules.sys.model.SystemConfig;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

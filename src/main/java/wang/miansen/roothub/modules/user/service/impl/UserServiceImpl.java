@@ -6,8 +6,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import wang.miansen.roothub.third.service.RedisService;
 import wang.miansen.roothub.common.util.StringUtils;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.exception.OperationRepeaException;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.store.StorageService;
@@ -18,12 +16,14 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.modules.user.dao.UserDao;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.common.enums.InsertUserEnum;
 import wang.miansen.roothub.common.enums.UpdateUserEnum;
-import wang.miansen.roothub.core.exception.OperationFailedException;
-import wang.miansen.roothub.core.exception.OperationSystemException;
+import wang.miansen.roothub.common.exception.OperationFailedException;
+import wang.miansen.roothub.common.exception.OperationRepeaException;
+import wang.miansen.roothub.common.exception.OperationSystemException;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
@@ -113,10 +113,10 @@ public class UserServiceImpl implements UserService {
 	 * 分页查询所有用户，倒叙
 	 */
 	@Override
-	public PageDataBody<User> page(Integer pageNumber, Integer pageSize) {
+	public Page<User> page(Integer pageNumber, Integer pageSize) {
 		List<User> list = rootUserDao.selectAll((pageNumber - 1) * pageSize, pageSize);
 		int totalRow = rootUserDao.countUserAll();
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**
@@ -272,10 +272,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PageDataBody<User> pageForAdmin(String username, String email, Integer pageNumber, Integer pageSize) {
+	public Page<User> pageForAdmin(String username, String email, Integer pageNumber, Integer pageSize) {
 		List<User> list = rootUserDao.selectAllForAdmin(username, email, (pageNumber - 1) * pageSize, pageSize);
 		int totalRow = countAllForAdmin(username, email);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	@Override

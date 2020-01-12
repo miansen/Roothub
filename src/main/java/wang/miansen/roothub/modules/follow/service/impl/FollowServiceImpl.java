@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.follow.service.impl;
 
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.follow.dao.FollowDao;
 import wang.miansen.roothub.modules.follow.model.Follow;
 import wang.miansen.roothub.modules.follow.service.FollowService;
@@ -21,10 +21,10 @@ public class FollowServiceImpl implements FollowService {
 	 * 我关注的人
 	 */
 	@Override
-	public PageDataBody<User> page(Integer pageNumber, Integer pageSize, Integer uid) {
+	public Page<User> page(Integer pageNumber, Integer pageSize, Integer uid) {
 		int total = followDao.countByUid(uid);
 		List<User> list = followDao.select((pageNumber - 1) * pageSize, pageSize, uid);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 	/**
@@ -71,20 +71,20 @@ public class FollowServiceImpl implements FollowService {
 	 * 关注我的人
 	 */
 	@Override
-	public PageDataBody<User> followMe(Integer pageNumber, Integer pageSize, Integer fid) {
+	public Page<User> followMe(Integer pageNumber, Integer pageSize, Integer fid) {
 		int total = followDao.countByFid(fid);
 		List<User> list = followDao.selectByFid((pageNumber - 1) * pageSize, pageSize, fid);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 	/**
 	 * 关注的人的主题
 	 */
 	@Override
-	public PageDataBody<Topic> pageTopic(Integer pageNumber, Integer pageSize, Integer uid) {
+	public Page<Topic> pageTopic(Integer pageNumber, Integer pageSize, Integer uid) {
 		int total = followDao.countTopic(uid);
 		List<Topic> list = followDao.selectTopic((pageNumber - 1) * pageSize, pageSize, uid);
-		return new PageDataBody<>(list, pageNumber, pageSize, total);
+		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
 }

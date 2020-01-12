@@ -2,7 +2,8 @@ package wang.miansen.roothub.modules.reply.service;
 
 import java.util.List;
 import java.util.Map;
-import wang.miansen.roothub.core.base.PageDataBody;
+
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.ReplyExecution;
 import wang.miansen.roothub.modules.reply.model.ReplyAndTopicByName;
 import wang.miansen.roothub.modules.reply.model.Reply;
@@ -35,7 +36,7 @@ public interface ReplyService {
 	 * @param pageSize
 	 * @return
 	 */
-	PageDataBody<Reply> findAll(Integer pageNumber, Integer pageSize);
+	Page<Reply> findAll(Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 根据评论人昵称分页查询全部评论
@@ -44,7 +45,7 @@ public interface ReplyService {
 	 * @param pageSize
 	 * @return
 	 */
-	PageDataBody<ReplyAndTopicByName> findAllByNameAndTopic(String replyAuthorName,Integer pageNumber, Integer pageSize);
+	Page<ReplyAndTopicByName> findAllByNameAndTopic(String replyAuthorName,Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 根据话题ID查询评论列表
@@ -60,7 +61,7 @@ public interface ReplyService {
 	 * @param topicId
 	 * @return
 	 */
-	PageDataBody<Reply> page(Integer pageNumber, Integer pageSize, Integer topicId);
+	Page<Reply> page(Integer pageNumber, Integer pageSize, Integer topicId);
 	
 	/**
 	 * 添加评论
@@ -121,7 +122,7 @@ public interface ReplyService {
 	 * @param pageSize: 返回数据量
 	 * @return
 	 */
-	PageDataBody<Map<String,Object>> pageForAdmin(String author,String topic,String startDate,String endDate,Integer pageNumber, Integer pageSize);
+	Page<Map<String,Object>> pageForAdmin(String author,String topic,String startDate,String endDate,Integer pageNumber, Integer pageSize);
     
 	/**
 	 * 统计后台评论

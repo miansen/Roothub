@@ -3,7 +3,6 @@ package wang.miansen.roothub.common.controller;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import wang.miansen.roothub.core.base.Result;
 import wang.miansen.roothub.store.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
-import wang.miansen.roothub.core.exception.ApiAssert;
+
+import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.common.util.ApiAssert;
 
 @Controller
 @RequestMapping("/common")

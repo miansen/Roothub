@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 
@@ -115,20 +115,20 @@ public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends Bas
 	}
 
 	@Override
-	public PageDataBody<DTO> page(Integer pageNumber, Integer pageSize) {
+	public Page<DTO> page(Integer pageNumber, Integer pageSize) {
 		QueryWrapper<DO> queryWrapper = new QueryWrapper<>();
 		queryWrapper.limit((pageNumber - 1) * pageSize, pageSize);
 		List<DTO> list = list(queryWrapper);
 		Integer totalRow = count();
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	@Override
-	public PageDataBody<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper) {
+	public Page<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper) {
 		queryWrapper.limit((pageNumber - 1) * pageSize, pageSize);
 		List<DTO> list = list(queryWrapper);
 		Integer totalRow = count(queryWrapper);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**

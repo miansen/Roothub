@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.SimpleHashUtil;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.exception.ApiAssert;
 import wang.miansen.roothub.modules.security.model.AdminUser;
 import wang.miansen.roothub.modules.security.model.AdminUserRoleRel;
 import wang.miansen.roothub.modules.security.service.AdminUserService;
@@ -49,19 +49,19 @@ public class AdminUserServiceImpl implements AdminUserService {
 	}
 
 	@Override
-	public PageDataBody<AdminUser> page(Integer pageNumber, Integer pageSize) {
+	public Page<AdminUser> page(Integer pageNumber, Integer pageSize) {
 		List<AdminUser> list = adminUserDao.selectAll((pageNumber - 1) * pageSize, pageSize);
 		int countAll = this.countAll();
-		return new PageDataBody<>(list, pageNumber, pageSize, countAll);
+		return new Page<>(list, pageNumber, pageSize, countAll);
 	}
 
 	@Override
-	public PageDataBody<AdminUser> pageRoles(Integer pageNumber, Integer pageSize) {
+	public Page<AdminUser> pageRoles(Integer pageNumber, Integer pageSize) {
 		List<AdminUser> adminUsers = adminUserDao.selectAll((pageNumber - 1) * pageSize, pageSize);
 		int countAll = this.countAll();
 		adminUsers.forEach(
 				adminUser -> adminUser.setRoles(roleService.getByAdminUserId(adminUser.getAdminUserId(), null, null)));
-		return new PageDataBody<>(adminUsers, pageNumber, pageSize, countAll);
+		return new Page<>(adminUsers, pageNumber, pageSize, countAll);
 	}
 
 	@Override

@@ -2,11 +2,11 @@ package wang.miansen.roothub.modules.notice.service.impl;
 
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
 import wang.miansen.roothub.modules.notice.model.Notice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.notice.dao.NoticeDao;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 
@@ -36,10 +36,10 @@ public class NoticeServiceImpl implements NoticeService{
 	 * 根据昵称分页查询通知列表
 	 */
 	@Override
-	public PageDataBody<Notice> pageByAuthor(Integer pageNumber, Integer pageSize, String author) {
+	public Page<Notice> pageByAuthor(Integer pageNumber, Integer pageSize, String author) {
 		int totalRow = rootNoticeDao.countByAuthor(author);
 		List<Notice> list = rootNoticeDao.selectAll(author, (pageNumber - 1) * pageSize, pageSize);
-		return new PageDataBody<>(list, pageNumber, pageSize, totalRow);
+		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
 	/**

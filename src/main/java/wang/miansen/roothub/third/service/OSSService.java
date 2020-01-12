@@ -3,9 +3,10 @@ package wang.miansen.roothub.third.service;
 import java.io.IOException;
 import java.io.InputStream;
 
+import wang.miansen.roothub.common.exception.StorageException;
 import wang.miansen.roothub.common.util.FileNameUtil;
 import wang.miansen.roothub.config.properties.StorageProperties;
-import wang.miansen.roothub.core.exception.StorageException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

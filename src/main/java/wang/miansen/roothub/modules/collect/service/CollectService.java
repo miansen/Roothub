@@ -1,6 +1,6 @@
 package wang.miansen.roothub.modules.collect.service;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.collect.model.Collect;
 import wang.miansen.roothub.modules.topic.model.Topic;
 
@@ -19,7 +19,7 @@ public interface CollectService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> page(Integer pageNumber, Integer pageSize, Integer uid);
+	Page<Topic> page(Integer pageNumber, Integer pageSize, Integer uid);
 	
 	/**
      * 添加收藏

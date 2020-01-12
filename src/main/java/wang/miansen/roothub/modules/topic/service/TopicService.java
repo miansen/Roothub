@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.topic.service;
 
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.TopicExecution;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
@@ -18,7 +18,7 @@ public interface TopicService {
 	 * @param ptab
 	 * @return
 	 */
-	PageDataBody<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab, String nodeTitle);
+	Page<Topic> pageByNodeAndNodeTab(Integer pageNumber, Integer pageSize, String nodeTab, String nodeTitle);
 	
 	/**
 	 * 模糊查询话题列表
@@ -27,7 +27,7 @@ public interface TopicService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> pageLike(Integer pageNumber, Integer pageSize, String like);
+	Page<Topic> pageLike(Integer pageNumber, Integer pageSize, String like);
 	
 	/**
 	 * 根据板块查询所有话题
@@ -36,7 +36,7 @@ public interface TopicService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> pageAllByTab(Integer pageNumber, Integer pageSize,String tab);
+	Page<Topic> pageAllByTab(Integer pageNumber, Integer pageSize,String tab);
 	
 	/**
 	 * 根据节点查询所有话题
@@ -45,7 +45,7 @@ public interface TopicService {
 	 * @param nodeCode
 	 * @return
 	 */
-	PageDataBody<Topic> pageAllByNode(Integer pageNumber, Integer pageSize,String nodeCode);
+	Page<Topic> pageAllByNode(Integer pageNumber, Integer pageSize,String nodeCode);
 	
 	/**
 	 * 根据板块和昵称分页查询
@@ -55,7 +55,7 @@ public interface TopicService {
 	 * @param author:作者昵称
 	 * @return
 	 */
-	PageDataBody<Topic> pageAllByPtabAndAuthor(Integer pageNumber, Integer pageSize,String ptab,String author);
+	Page<Topic> pageAllByPtabAndAuthor(Integer pageNumber, Integer pageSize,String ptab,String author);
 	
 	/**
 	 * 根据节点查询最新话题
@@ -64,12 +64,12 @@ public interface TopicService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeCode);
+	Page<Topic> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeCode);
 	
 	/**
 	 * 根据节点查询查询精华话题
 	 */
-	PageDataBody<Topic> pageGood(Integer pageNumber, Integer pageSize,String nodeCode);
+	Page<Topic> pageGood(Integer pageNumber, Integer pageSize,String nodeCode);
 	
 	/**
 	 * 根据节点查询无人回复的话题
@@ -77,7 +77,7 @@ public interface TopicService {
 	 * @param pageSize
 	 * @return
 	 */
-	PageDataBody<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String nodeCode);
+	Page<Topic> pageNoReply(Integer pageNumber, Integer pageSize,String nodeCode);
 
 	/**
 	 * 根据ID查询话题
@@ -119,7 +119,7 @@ public interface TopicService {
 	 * @param tab 子版块
 	 * @return
 	 */
-	PageDataBody<Topic> findIndexHot(Integer start,Integer limit,String tab);
+	Page<Topic> findIndexHot(Integer start,Integer limit,String tab);
 	
 	/**
 	 * 根据作者昵称分页查询所有话题
@@ -128,7 +128,7 @@ public interface TopicService {
 	 * @param author
 	 * @return
 	 */
-	PageDataBody<Topic> pageByAuthor(Integer pageNumber, Integer pageSize, String author);
+	Page<Topic> pageByAuthor(Integer pageNumber, Integer pageSize, String author);
 	
 	/**
 	 * 查询所有话题
@@ -195,7 +195,7 @@ public interface TopicService {
 	 * @param uid
 	 * @return
 	 */
-	PageDataBody<Topic> findCollectsById(Integer pageNumber, Integer pageSize, Integer uid);
+	Page<Topic> findCollectsById(Integer pageNumber, Integer pageSize, Integer uid);
 	
 	/**
 	 * 查询用户发布主题的数量
@@ -216,7 +216,7 @@ public interface TopicService {
 	 * @param pageSize
 	 * @return
 	 */
-	PageDataBody<Tag> findByTag(Integer pageNumber, Integer pageSize);
+	Page<Tag> findByTag(Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 根据标签查询话题
@@ -225,7 +225,7 @@ public interface TopicService {
 	 * @param pageSize
 	 * @return
 	 */
-	PageDataBody<Topic> pageByTag(String tag,Integer pageNumber, Integer pageSize);
+	Page<Topic> pageByTag(String tag,Integer pageNumber, Integer pageSize);
 	
 	/**
      * 根据板块统计所有话题
@@ -254,7 +254,7 @@ public interface TopicService {
      */
     int countToday();
     
-    PageDataBody<Topic> pageForAdmin(String author,String startDate,String endDate,Integer pageNumber, Integer pageSize);
+    Page<Topic> pageForAdmin(String author,String startDate,String endDate,Integer pageNumber, Integer pageSize);
     
     int countAllForAdmin(String author,String startDate,String endDate);
     

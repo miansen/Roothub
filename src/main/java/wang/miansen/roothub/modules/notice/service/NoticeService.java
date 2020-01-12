@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.notice.service;
 
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.notice.model.Notice;
 
 public interface NoticeService {
@@ -34,7 +34,7 @@ public interface NoticeService {
 	 * @param author
 	 * @return
 	 */
-	PageDataBody<Notice> pageByAuthor(Integer pageNumber, Integer pageSize, String author);
+	Page<Notice> pageByAuthor(Integer pageNumber, Integer pageSize, String author);
 	
 	/**
 	 * 将用户的通知都置为已读

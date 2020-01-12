@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.security.service;
 
 import java.util.List;
 
-import wang.miansen.roothub.core.base.PageDataBody;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.security.model.Role;
 
 /**
@@ -18,7 +18,7 @@ public interface RoleService {
 	Role getByName(String name);
 	
 	//分页查询所有角色
-	PageDataBody<Role> page(Integer pageNumber, Integer pageSize);
+	Page<Role> page(Integer pageNumber, Integer pageSize);
 	
 	// 根据后台用户ID查询所关联的所有角色
 	List<Role> getByAdminUserId(Integer adminUserId,Integer pageNumber, Integer pageSize);

@@ -1,4 +1,4 @@
-package wang.miansen.roothub.core.exception;
+package wang.miansen.roothub.common.exception;
 
 /**
  * 用户禁用状态发布话题异常

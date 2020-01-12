@@ -3,10 +3,10 @@ package wang.miansen.roothub.modules.follow.controller.front;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 
+import wang.miansen.roothub.common.beans.BaseEntity;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
-import wang.miansen.roothub.core.base.BaseEntity;
-import wang.miansen.roothub.core.base.PageDataBody;
-import wang.miansen.roothub.core.base.Result;
 import wang.miansen.roothub.modules.follow.service.FollowService;
 import wang.miansen.roothub.modules.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,7 +139,7 @@ public class FollowController extends BaseController {
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
-		PageDataBody<Topic> pageTopic = followService.pageTopic(p, 20, user.getUserId());
+		Page<Topic> pageTopic = followService.pageTopic(p, 20, user.getUserId());
 		BaseEntity baseEntity = new BaseEntity();
 		request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("countCollect", countCollect);

@@ -129,19 +129,19 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 	List<DTO> listBatchIds(Collection<? extends Serializable> idList);
 	
 	/**
-	 * 查询所有的数据并翻页
+	 * 查询所有的数据并分页
 	 * @param pageNumber 当前的页数
-	 * @param pageSize 每页显示多少条数据量
-	 * @return PageDataBody
+	 * @param pageSize 每页显示多少条数据
+	 * @return Page
 	 */
 	Page<DTO> page(Integer pageNumber, Integer pageSize);
 	
 	/**
-	 * 查询满足条件的多条数据并翻页
+	 * 查询满足条件的多条数据并分页
 	 * @param pageNumber 当前的页数
-	 * @param pageSize 每页显示多少条数据量
+	 * @param pageSize 每页显示多少条数据
 	 * @param queryWrapper 条件包装器
-	 * @return PageDataBody
+	 * @return Page
 	 */
 	Page<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper);
 	

@@ -1,13 +1,18 @@
 package wang.miansen.roothub.common.service.impl;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.transaction.annotation.Transactional;
 
 import wang.miansen.roothub.common.entity.BaseDO;
@@ -127,7 +132,9 @@ public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends Bas
 	public Page<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper) {
 		queryWrapper.limit((pageNumber - 1) * pageSize, pageSize);
 		List<DTO> list = list(queryWrapper);
-		Integer totalRow = count(queryWrapper);
+		CountWrapperHelper<DO> helper = new CountWrapperHelper<>(queryWrapper);
+		QueryWrapper<DO> countWrapper = (QueryWrapper<DO>) helper.getInstance();
+		Integer totalRow = count(countWrapper);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -138,6 +145,32 @@ public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends Bas
 	 */
 	private static boolean retBool(Integer result) {
 		return result != null && result >= 1;
+	}
+	
+	class CountWrapperHelper<T> implements MethodInterceptor {
+
+		private QueryWrapper<T> queryWrapper;
+		
+		public CountWrapperHelper(QueryWrapper<T> queryWrapper) {
+			this.queryWrapper = queryWrapper;
+		}
+
+		public Object getInstance() {
+			Enhancer en = new Enhancer();
+			en.setSuperclass(queryWrapper.getClass());
+			en.setCallback(this);
+			return en.create();
+		}
+		
+		@Override
+		public Object intercept(Object proxy, Method method, Object[] args,
+				MethodProxy methodProxy) throws Throwable {
+			if (Objects.equals(method.getName(), "getSqlSegment")) {
+				return queryWrapper.getNormalSqlSegment();
+			}
+			return methodProxy.invokeSuper(proxy, args);
+		}
+		
 	}
 
 }

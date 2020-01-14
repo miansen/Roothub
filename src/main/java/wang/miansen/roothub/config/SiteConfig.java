@@ -19,6 +19,8 @@ public class SiteConfig {
 	@Value("${intro}")
 	private String intro;
 	
+	private String theme;
+	
 	public CookieConfig getCookieConfig() {
 		return cookieConfig;
 	}
@@ -33,6 +35,22 @@ public class SiteConfig {
 
 	public void setIntro(String intro) {
 		this.intro = intro;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+	
+	public String getFrontPath() {
+		return "/" + theme + "/front";
+	}
+	
+	public String getAdminPath() {
+		return "/" + theme + "/admin";
 	}
 	
 }

@@ -10,6 +10,7 @@ package wang.miansen.roothub.common.beans;
  */
 public class Result<T> {
 
+	private String code;
 	private boolean success;//是否成功标志
 	private T data;//成功时返回的对象
 	private String error;//错误信息
@@ -17,14 +18,23 @@ public class Result<T> {
 		
 	}
 
+	public Result(String code, boolean success) {
+		this.code = code;
+		this.success = success;
+	}
+
+
+
 	// 成功时的构造器
-	public Result(boolean success, T data) {
+	public Result(String code, boolean success, T data) {
+		this.code = code;
 		this.success = success;
 		this.data = data;
 	}
 
 	// 失败时的构造器
-	public Result(boolean success, String error) {
+	public Result(String code, boolean success, String error) {
+		this.code = code;
 		this.success = success;
 		this.error = error;
 	}

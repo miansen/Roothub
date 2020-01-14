@@ -1,12 +1,16 @@
 package wang.miansen.roothub.modules.collect.controller.front;
 
 import java.util.Date;
+import java.util.function.Function;
+
 import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.collect.model.Collect;
 import wang.miansen.roothub.modules.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +79,7 @@ public class CollectController extends BaseController {
 			collect = collectDaoService.isCollect(user.getUserId(), tid);
 		}
 		if(collect == 0) {
-			return new Result<>(false, "未收藏此此话题");
+			return new Result<>("201", false, "未收藏此此话题");
 		}
 		return new Result<Integer>(true, collect);
 	}
@@ -96,9 +100,9 @@ public class CollectController extends BaseController {
 		int insert = collectDaoService.insert(collect);
 		if(insert == 1) {
 			String info = "收藏成功";
-			return new Result<Integer>(true,info);
+			return new Result<Integer>("200", true,info);
 		}
-		return new Result<>(false,"收藏失败");
+		return new Result<>("201", false,"收藏失败");
 	}
 	
 	/**
@@ -113,9 +117,9 @@ public class CollectController extends BaseController {
 		int delete = collectDaoService.delete(getUser(request).getUserId(), tid);
 		if(delete == 1) {
 			String info = "取消收藏成功";
-			return new Result<Integer>(true,info);
+			return new Result<Integer>("200", true,info);
 		}
-		return new Result<>(false,"取消收藏失败");
+		return new Result<>("201", false,"取消收藏失败");
 	}
 	
 	/**
@@ -128,5 +132,50 @@ public class CollectController extends BaseController {
 	private Result<Integer> count(Integer tid){
 		int countByTid = collectDaoService.countByTid(tid);
 		return new Result<Integer>(true, countByTid);
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
+	 */
+	@Override
+	protected Function getDTO2VO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
+	 */
+	@Override
+	protected Function getVO2DTO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
+	 */
+	@Override
+	protected BaseService getService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
+	 */
+	@Override
+	protected String getModuleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
+	 */
+	@Override
+	protected QueryWrapper getQueryWrapper() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

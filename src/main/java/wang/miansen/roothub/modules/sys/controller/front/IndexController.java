@@ -3,6 +3,8 @@ package wang.miansen.roothub.modules.sys.controller.front;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +13,7 @@ import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.Base64Util;
 import wang.miansen.roothub.common.util.StringUtils;
@@ -38,6 +41,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import wang.miansen.roothub.common.dto.UserExecution;
+import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.tab.model.Tab;
 import wang.miansen.roothub.modules.collect.service.CollectService;
@@ -428,5 +432,50 @@ public class IndexController extends BaseController {
 		// 关闭writer，释放内存
 		// 关闭writer，释放内存
 		writer.close();
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
+	 */
+	@Override
+	protected Function getDTO2VO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
+	 */
+	@Override
+	protected Function getVO2DTO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
+	 */
+	@Override
+	protected BaseService getService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
+	 */
+	@Override
+	protected String getModuleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
+	 */
+	@Override
+	protected QueryWrapper getQueryWrapper() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

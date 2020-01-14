@@ -18,7 +18,7 @@ public class SiteConfig {
 	private CookieConfig cookieConfig;
 	@Value("${intro}")
 	private String intro;
-	
+	@Value("${theme}")
 	private String theme;
 	
 	public CookieConfig getCookieConfig() {

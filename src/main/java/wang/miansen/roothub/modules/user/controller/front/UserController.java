@@ -2,6 +2,8 @@ package wang.miansen.roothub.modules.user.controller.front;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.function.Function;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,6 +11,7 @@ import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import wang.miansen.roothub.common.dto.UserExecution;
+import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.reply.model.ReplyAndTopicByName;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.collect.service.CollectService;
@@ -240,7 +244,7 @@ public class UserController extends BaseController {
 		ApiAssert.notNull(user, "请先登录");
 		ApiAssert.notEmpty(avatarBase64, "头像不能为空");
 		rootUserService.updateAvatar(avatarBase64, path, user, request);
-		return new Result(true, "更新成功");
+		return new Result<>("200", true, "更新成功");
 	}
 	
 	/**
@@ -250,22 +254,67 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/user/settings/changePassword",method = RequestMethod.GET)
 	private String changePassword(HttpServletRequest request) {
-		return isLogin(request, "error-page/500", "/default/front/user/changePassword");
+		return "/default/front/user/changePassword";
 	}
 	
 	@RequestMapping(value = "/user/setting/changePassword",method = RequestMethod.POST)
 	@ResponseBody
 	private Result<UserExecution> changePassword(HttpServletRequest request,String oldPassword,String newPassword){
 		if(newPassword == null) {
-			return new Result<>(false,"密码不能为空");
+			return new Result<>("201", false,"密码不能为空");
 		}
 		User user = getUser(request);
 		if(!user.getPassword().equals(oldPassword)) {
-			return new Result<>(false,"旧密码不正确");
+			return new Result<>("201", false,"旧密码不正确");
 		}
 		//加密保存
 		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
 		UserExecution updateUser = rootUserService.updateUser(user);
-		return new Result<UserExecution>(true,updateUser);
+		return new Result<UserExecution>("200", true,updateUser);
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
+	 */
+	@Override
+	protected Function getDTO2VO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
+	 */
+	@Override
+	protected Function getVO2DTO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
+	 */
+	@Override
+	protected BaseService getService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
+	 */
+	@Override
+	protected String getModuleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
+	 */
+	@Override
+	protected QueryWrapper getQueryWrapper() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

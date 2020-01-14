@@ -2,12 +2,15 @@ package wang.miansen.roothub.modules.topic.controller.front;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+
 import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import wang.miansen.roothub.common.dto.TopicExecution;
+import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.reply.model.Reply;
@@ -162,4 +166,49 @@ public class TopicController extends BaseController {
         model.addAttribute("pageByTag", pageByTag);
         return "/default/front/tag/view";
     }
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
+	 */
+	@Override
+	protected Function getDTO2VO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
+	 */
+	@Override
+	protected Function getVO2DTO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
+	 */
+	@Override
+	protected BaseService getService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
+	 */
+	@Override
+	protected String getModuleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
+	 */
+	@Override
+	protected QueryWrapper getQueryWrapper() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

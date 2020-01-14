@@ -1,11 +1,15 @@
 package wang.miansen.roothub.modules.vote.controller.front;
 
 import java.util.Date;
+import java.util.function.Function;
+
 import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dto.DMLExecution;
+import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +35,7 @@ public class UpDownController extends BaseController {
 	@RequestMapping(value = "/vote",method = RequestMethod.GET)
 	private Result<DMLExecution> up(Integer tid, boolean vote, HttpServletRequest request){
 		User user = getUser(request);
-		if(user == null) return new Result<>(false,"未登录");
+		if(user == null) return new Result<>("201", false,"未登录");
 		UpDown upDown = new UpDown();
 		upDown.setUid(user.getUserId());
 		upDown.setTid(tid);
@@ -47,5 +51,50 @@ public class UpDownController extends BaseController {
 		int countUpOrDown = upDownService.countUpOrDown(tid, vote?1:0);
 		Integer integer = new Integer(countUpOrDown);
 		return new Result<Integer>(true, integer);
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
+	 */
+	@Override
+	protected Function getDTO2VO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
+	 */
+	@Override
+	protected Function getVO2DTO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
+	 */
+	@Override
+	protected BaseService getService() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
+	 */
+	@Override
+	protected String getModuleName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* (non-Javadoc)
+	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
+	 */
+	@Override
+	protected QueryWrapper getQueryWrapper() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

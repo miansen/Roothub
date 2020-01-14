@@ -77,7 +77,7 @@ public class UserAdminController {
 	@ResponseBody
 	public Result<String> edit(User user){
 		userService.updateAdmin(user);
-		return new Result(true, "编辑成功");
+		return new Result<>("200", true, "编辑成功");
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class UserAdminController {
 	@ResponseBody
 	public Result<String> delete(Integer id){
 		userService.deleteAdmin(id);
-		return new Result(true, "删除成功");
+		return new Result<>("200", true, "删除成功");
 	}
 	
 	/**
@@ -100,7 +100,7 @@ public class UserAdminController {
 	@RequestMapping(value = "/refreshToken",method = RequestMethod.GET)
 	@ResponseBody
 	public Result<String> refreshToken(){
-		return new Result(true, StringUtils.getUUID());
+		return new Result<>("200", true, StringUtils.getUUID());
 	}
 	
 	/**

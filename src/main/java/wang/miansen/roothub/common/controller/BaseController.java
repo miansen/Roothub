@@ -106,10 +106,10 @@ public abstract class BaseController<DO extends BaseDO, DTO extends BaseDTO, VO 
 	 */
 	@RequestMapping(value = "/remove/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public Result<VO> remove(@PathVariable(value = "id") Integer id, HttpServletRequest request,
+	public Result<String> remove(@PathVariable(value = "id") Integer id, HttpServletRequest request,
 			HttpServletResponse response) {
 		this.getService().removeById(id);
-		return new Result<>("200", true);
+		return new Result<>("200", true, "删除成功");
 	}
 
 	/**

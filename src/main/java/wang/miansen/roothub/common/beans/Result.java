@@ -18,9 +18,10 @@ public class Result<T> {
 		
 	}
 
-	public Result(String code, boolean success) {
-		this.code = code;
+	// 成功时的构造器
+	public Result(boolean success, T data) {
 		this.success = success;
+		this.data = data;
 	}
 
 

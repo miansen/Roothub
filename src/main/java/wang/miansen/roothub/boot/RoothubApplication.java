@@ -1,28 +1,22 @@
-package wang.miansen.roothub;
+package wang.miansen.roothub.boot;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ImportResource;
 
 /**
+ * 以 SpringBoot 的方式启动项目
+ * 
  * @author miansen.wang
  * @date 2020-01-15
+ * @since 3.0
  */
 @SpringBootApplication
 @ImportResource({"classpath*:spring/spring-*.xml"})
-public class RoothubApplication extends SpringBootServletInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return configureApplication(builder);
-	}
+public class RoothubApplication {
 
 	public static void main(String[] args) {
-		configureApplication(new SpringApplicationBuilder()).run(args);
+		SpringApplication.run(RoothubApplication.class, args);
 	}
-
-	private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
-		return builder.sources(RoothubApplication.class);
-	}
+	
 }

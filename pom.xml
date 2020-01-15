@@ -12,6 +12,7 @@
 		<java.version>1.8</java.version>
 		<jsoup.version>1.11.3</jsoup.version>
 		<commonmark.version>0.12.1</commonmark.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
@@ -252,13 +253,21 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>2.1.0.RELEASE</version>
+			<version>1.2.0.RELEASE</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<version>2.1.0.RELEASE</version>
-			 <scope>provided</scope>
+			<version>1.2.0.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		<!--引入Spring Boot内嵌的Tomcat对JSP的解析包，不加解析不了jsp页面-->
+		<dependency>
+   			<groupId>org.apache.tomcat.embed</groupId>
+   			<artifactId>tomcat-embed-jasper</artifactId>
+   			<version>8.0.15</version>
+   			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -276,18 +285,6 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>1.5.9.RELEASE</version>
-        <executions>
-            <execution>
-                <goals>
-                    <goal>repackage</goal>
-                </goals>
-            </execution>
-        </executions>
-    </plugin>
 		</plugins>
 	</build>
 </project>

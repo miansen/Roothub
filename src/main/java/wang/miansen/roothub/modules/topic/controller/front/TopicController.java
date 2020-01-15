@@ -10,6 +10,7 @@ import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.topic.service.TabService;
 
 @Controller
-public class TopicController extends BaseController {
+public class TopicController extends SessionController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -167,48 +168,5 @@ public class TopicController extends BaseController {
         return "/default/front/tag/view";
     }
 
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
-	 */
-	@Override
-	protected Function getDTO2VO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
-	 */
-	@Override
-	protected Function getVO2DTO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
-	 */
-	@Override
-	protected BaseService getService() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
-	 */
-	@Override
-	protected String getModuleName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
-	 */
-	@Override
-	protected QueryWrapper getQueryWrapper() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

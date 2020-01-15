@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dto.DMLExecution;
 import wang.miansen.roothub.common.service.BaseService;
@@ -27,7 +28,7 @@ import wang.miansen.roothub.modules.vote.service.UpDownService;
  */
 @RestController
 @RequestMapping(value = "/topic")
-public class UpDownController extends BaseController {
+public class UpDownController extends SessionController {
 
 	@Autowired
 	private UpDownService upDownService;
@@ -53,48 +54,5 @@ public class UpDownController extends BaseController {
 		return new Result<Integer>(true, integer);
 	}
 
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
-	 */
-	@Override
-	protected Function getDTO2VO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
-	 */
-	@Override
-	protected Function getVO2DTO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
-	 */
-	@Override
-	protected BaseService getService() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
-	 */
-	@Override
-	protected String getModuleName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
-	 */
-	@Override
-	protected QueryWrapper getQueryWrapper() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

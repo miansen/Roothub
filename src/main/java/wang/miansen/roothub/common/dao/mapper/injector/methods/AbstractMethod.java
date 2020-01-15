@@ -81,7 +81,7 @@ public abstract class AbstractMethod {
     protected MappedStatement addMappedStatement(Class<?> mapperClass, String id, SqlSource sqlSource, SqlCommandType sqlCommandType, Class<?> parameterClass, String resultMap, Class<?> resultType, KeyGenerator keyGenerator, String keyProperty, String keyColumn) {
         String statementName = mapperClass.getName() + "." + id;
         if (configuration.hasStatement(statementName)) {
-            log.error(statementName + "Has been loaded by XML or SqlProvider, ignoring the injection of the SQL");
+            log.warn("MappedStatement [" + statementName + "] Has been loaded by XML or SqlProvider, ignoring the injection of the SQL.");
             return null;
         } else {
             boolean isSelect = false;

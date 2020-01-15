@@ -9,6 +9,7 @@ import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.follow.service.FollowService;
@@ -34,7 +35,7 @@ import wang.miansen.roothub.modules.topic.service.TopicService;
  * TODO
  */
 @Controller
-public class FollowController extends BaseController {
+public class FollowController extends SessionController {
 
 	@Autowired
 	private FollowService followService;
@@ -152,50 +153,5 @@ public class FollowController extends BaseController {
 		request.setAttribute("user", user);
 		request.setAttribute("page", pageTopic);
 		return "/default/front/follow/list";
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
-	 */
-	@Override
-	protected Function getDTO2VO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
-	 */
-	@Override
-	protected Function getVO2DTO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
-	 */
-	@Override
-	protected BaseService getService() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
-	 */
-	@Override
-	protected String getModuleName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
-	 */
-	@Override
-	protected QueryWrapper getQueryWrapper() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

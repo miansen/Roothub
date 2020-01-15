@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.config.SiteConfig;
 import wang.miansen.roothub.modules.reply.model.ReplyAndTopicByName;
 import wang.miansen.roothub.modules.topic.model.Topic;
@@ -40,7 +41,7 @@ import wang.miansen.roothub.common.util.ApiAssert;
  * TODO
  */
 @RestController
-public class UserApiController extends BaseController{
+public class UserApiController extends SessionController{
 
 	@Autowired
 	private CollectService collectDaoService;
@@ -231,48 +232,4 @@ public class UserApiController extends BaseController{
 		return new Result<List>("200", true, list);
 	}
 
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getDTO2VO()
-	 */
-	@Override
-	protected Function getDTO2VO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getVO2DTO()
-	 */
-	@Override
-	protected Function getVO2DTO() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getService()
-	 */
-	@Override
-	protected BaseService getService() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getModuleName()
-	 */
-	@Override
-	protected String getModuleName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/* (non-Javadoc)
-	 * @see wang.miansen.roothub.common.controller.BaseController#getQueryWrapper()
-	 */
-	@Override
-	protected QueryWrapper getQueryWrapper() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

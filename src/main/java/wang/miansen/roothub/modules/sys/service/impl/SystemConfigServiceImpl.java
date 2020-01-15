@@ -17,9 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.reflect.TypeToken;
 
-import wang.miansen.roothub.third.service.RedisService;
 import wang.miansen.roothub.modules.sys.model.SystemConfig;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
+import wang.miansen.roothub.third.RedisService;
 import wang.miansen.roothub.common.util.JsonUtil;
 import wang.miansen.roothub.common.util.RedisConstants;
 
@@ -43,16 +43,6 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 	private Map<String,Object> uploadConfig;
 	
 	private Integer age;
-	
-	static {
-		System.out.println("SystemConfigServiceImpl初始化。。。");
-	}
-	
-	
-	
-	public SystemConfigServiceImpl() {
-		System.out.println("SystemConfigServiceImpl构造器初始化。。。");
-	}
 
 	/**
 	 * key是父节点的description,value是所有子节点对象

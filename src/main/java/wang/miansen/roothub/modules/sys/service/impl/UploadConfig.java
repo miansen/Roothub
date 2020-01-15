@@ -8,14 +8,14 @@ import wang.miansen.roothub.common.util.JsonUtil;
 import wang.miansen.roothub.common.util.RedisConstants;
 import wang.miansen.roothub.modules.sys.dao.SystemConfigDao;
 import wang.miansen.roothub.modules.sys.model.SystemConfig;
+import wang.miansen.roothub.third.RedisService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.reflect.TypeToken;
-
-import wang.miansen.roothub.third.service.RedisService;
 
 /**
  * <p></p>

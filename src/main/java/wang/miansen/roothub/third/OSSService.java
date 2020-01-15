@@ -1,24 +1,27 @@
-package wang.miansen.roothub.third.service;
+package wang.miansen.roothub.third;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.model.ObjectMetadata;
+import com.aliyun.oss.model.PutObjectResult;
 
 import wang.miansen.roothub.common.exception.StorageException;
 import wang.miansen.roothub.common.util.FileNameUtil;
 import wang.miansen.roothub.config.properties.StorageProperties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.model.ObjectMetadata;
-import com.aliyun.oss.model.PutObjectResult;
-
 /**
- * <p></p>
+ * 阿里云 OSS 集成
+ * 
  * @author: miansen.wang
  * @date: 2019-04-13
  */

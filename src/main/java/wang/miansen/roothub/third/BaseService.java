@@ -1,7 +1,8 @@
-package wang.miansen.roothub.third.service;
+package wang.miansen.roothub.third;
 
 /**
- * <p></p>
+ * 第三方集成服务接口
+ * 
  * @author: miansen.wang
  * @date: 2019-03-10
  */

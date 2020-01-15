@@ -12,7 +12,8 @@ import wang.miansen.roothub.common.exception.StorageException;
 import wang.miansen.roothub.common.util.Base64Util;
 import wang.miansen.roothub.common.util.FileNameUtil;
 import wang.miansen.roothub.config.properties.StorageProperties;
-import wang.miansen.roothub.third.service.OSSService;
+import wang.miansen.roothub.third.OSSService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;

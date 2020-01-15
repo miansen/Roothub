@@ -1,24 +1,25 @@
-package wang.miansen.roothub.third.service;
+package wang.miansen.roothub.third;
 
 import java.util.Arrays;
 import java.util.List;
 
-import wang.miansen.roothub.modules.sys.model.SystemConfig;
-import wang.miansen.roothub.modules.sys.service.SystemConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+import wang.miansen.roothub.modules.sys.model.SystemConfig;
+import wang.miansen.roothub.modules.sys.service.SystemConfigService;
+
 /**
- * <p>
- *     Redis 配置与获取
- * </p>
+ * 集成 Redis
  * 
  * @author: miansen.wang
  * @date: 2019-03-10
@@ -52,16 +53,6 @@ public class RedisService implements BaseService<JedisPool> {
 	private Boolean openRedis;
 
 	private JedisPool jedisPool;
-
-	static {
-		System.out.println("redisService初始化。。。");
-	}
-	
-	
-	
-	public RedisService() {
-		System.out.println("redisService构造器初始化。。。");
-	}
 
 	/**
 	 * redis连接池初始化

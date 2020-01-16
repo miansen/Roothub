@@ -13,7 +13,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import wang.miansen.roothub.common.dao.jdbc.datasource.DriverManagerDataSource;
 import wang.miansen.roothub.common.dao.jdbc.init.DataSourceProperties;
-import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
+import wang.miansen.roothub.common.dao.jdbc.util.DataSourceTypeNames;
 
 /**
  * <p>与 Spring 集成，根据 {@link DataSourceProperties} 的 {@code dataSourceClassName} 属性创建数据源并注入到 IOC 容器。</p>
@@ -23,7 +23,7 @@ import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
  * @date: 2019-12-01
  * @since 3.0.0
  */
-public class DataSourceConfiguration implements FactoryBean<DataSource>, StringPool {
+public class DataSourceConfiguration implements FactoryBean<DataSource>, DataSourceTypeNames {
 
 	private static final Logger logger = LoggerFactory.getLogger(DataSourceConfiguration.class);
 

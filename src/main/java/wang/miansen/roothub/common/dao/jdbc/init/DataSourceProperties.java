@@ -7,7 +7,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import wang.miansen.roothub.common.dao.jdbc.builder.DataSourceBuilder;
-import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
+import wang.miansen.roothub.common.dao.jdbc.util.DataSourceTypeNames;
 
 /**
  * 数据库基本配置
@@ -16,10 +16,6 @@ import wang.miansen.roothub.common.dao.jdbc.util.StringPool;
  */
 public class DataSourceProperties {
 
-	public DataSourceProperties() {
-		System.out.println("DataSourceProperties");
-	}
-	
 	/**
 	 * JDBC 数据库连接池 Class
 	 */
@@ -28,7 +24,7 @@ public class DataSourceProperties {
 	/**
 	 * JDBC 数据库连接池的完全限定名
 	 */
-	private String dataSourceClassName = StringPool.DRIVERMANAGER;
+	private String dataSourceClassName;
 
 	/**
 	 * JDBC 驱动程序的完全限定名

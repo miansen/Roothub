@@ -1,11 +1,13 @@
 package wang.miansen.roothub.common.dao.jdbc.util;
 
 /**
- * <p>数据源类型</p>
- * @author: miansen.wang
- * @date: 2019-12-01
+ * 可以支持的 JDBC 数据库连接池的完全限定名
+ * 
+ * @author miansen.wang
+ * @date 2019-12-01
+ * @since 3.0
  */
-public interface StringPool {
+public interface DataSourceTypeNames {
 
 	String C3P0 = "com.mchange.v2.c3p0.ComboPooledDataSource";
 	

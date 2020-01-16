@@ -46,10 +46,6 @@ public class StorageProperties implements BaseProperties{
 	// 上传类型
 	private String uploadType;
 	
-	static {
-		System.out.println("StorageProperties初始化。。。");
-	}
-	
 	@Autowired
 	@Qualifier("uploadConfig")
 	private SystemConfigService systemConfigService;

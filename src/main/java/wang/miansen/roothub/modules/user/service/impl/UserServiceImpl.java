@@ -14,7 +14,6 @@ import wang.miansen.roothub.third.RedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.modules.user.dao.UserDao;
@@ -41,9 +40,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao rootUserDao;
-	
-	@Autowired
-	private StringRedisTemplate stringRedisTemplate;
 	
 	@Autowired
 	private StorageService storageService;
@@ -290,8 +286,6 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public void updateAdmin(User user) {
-		// 删除Redis里面的缓存
-		stringRedisTemplate.delete(findById(user.getUserId()).getThirdAccessToken());
 		// 如果密码不为空，则加密在保存
 		if(!StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
@@ -315,8 +309,6 @@ public class UserServiceImpl implements UserService {
 		collectService.deleteByUid(user.getUserId());
 		// 删除通知
 		noticeService.deleteByTargetAuthorName(user.getUserName());
-		// 删除Redis里面的缓存
-		stringRedisTemplate.delete(findById(user.getUserId()).getThirdAccessToken());
 		// 删除用户
 		deleteUserById(user.getUserId());
 	}

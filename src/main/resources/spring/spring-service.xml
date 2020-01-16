@@ -12,9 +12,6 @@
 	<!-- 引入 application 配置文件 -->
 	<context:property-placeholder ignore-unresolvable="true" file-encoding="UTF-8" location="classpath:application.properties" />
 
-	<!-- 引入redis配置文件 -->
-	<import resource="spring-redis.xml"/>
-
 	<!-- 自动扫描包，将使用 @Component、@Service、@Controller、@Repository 等注解的类
 		 作为 bean 注入到 IOC 容器 -->
 

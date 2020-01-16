@@ -16,9 +16,9 @@ public class SiteConfig {
 
 	@Autowired
 	private CookieConfig cookieConfig;
-	@Value("${intro}")
+	@Value("${roothub.intro}")
 	private String intro;
-	@Value("${theme}")
+	@Value("${roothub.theme}")
 	private String theme;
 	
 	public CookieConfig getCookieConfig() {

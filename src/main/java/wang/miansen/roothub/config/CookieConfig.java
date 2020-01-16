@@ -13,16 +13,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CookieConfig {
 	
-	@Value("${cookie.name}")
+	@Value("${roothub.cookie.name}")
 	private String name;
 
-	@Value("${cookie.maxAge}")
+	@Value("${roothub.cookie.maxAge}")
 	private int maxAge;
 	
-	@Value("${cookie.path}")
+	@Value("${roothub.cookie.path}")
 	private String path;
 	
-	@Value("${cookie.httpOnly}")
+	@Value("${roothub.cookie.httpOnly}")
 	private boolean httpOnly;
 
 	public String getName() {

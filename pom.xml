@@ -1,219 +1,185 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>wang.miansen</groupId>
 	<artifactId>roothub</artifactId>
 	<packaging>war</packaging>
-	<version>3.0.0-SNAPSHOT</version>
-	<name>Roothub Maven Webapp</name>
+	<version>3.0</version>
+	<name>Roothub</name>
 	<url>https://github.com/miansen/Roothub</url>
+	<description>免费简单的Java论坛</description>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<web.xml.version>3.1</web.xml.version>
+		<springframework.version>4.1.7.RELEASE</springframework.version>
+		<spring-boot-starter.version>1.2.0.RELEASE</spring-boot-starter.version>
+		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis-spring.version>1.2.3</mybatis-spring.version>
+		<shiro.version>1.4.0</shiro.version>
+		<mysql-connector-java.version>5.1.37</mysql-connector-java.version>
+		<h2.version>1.4.197</h2.version>
+		<tomcat-embed-jasper.version>8.0.15</tomcat-embed-jasper.version>
+		<c3p0.version>0.9.1.2</c3p0.version>
+		<junit.version>4.11</junit.version>
+		<logback.version>1.1.1</logback.version>
+		<standard.version>1.1.2</standard.version>
+		<jstl.version>1.2</jstl.version>
+		<jedis.version>2.9.0</jedis.version>
+		<aliyun-sdk-oss.version>2.8.3</aliyun-sdk-oss.version>
+		<gson.version>2.2.4</gson.version>
 		<jsoup.version>1.11.3</jsoup.version>
 		<commonmark.version>0.12.1</commonmark.version>
+		<fastjson.version>1.2.41</fastjson.version>
+		<commons-io.version>1.3.1</commons-io.version>
+		<commons-fileupload.version>1.3.1</commons-fileupload.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<dependencies>
+	
 		<!-- 单元测试 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>cn.hutool</groupId>
-			<artifactId>hutool-all</artifactId>
-			<version>4.1.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.17</version>
-		</dependency>
-		<!-- 1.日志 -->
-		<!-- 实现slf4j接口并整合 -->
+		<!-- logback日志，实现slf4j接口并整合 -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			<version>1.1.1</version>
+			<version>${logback.version}</version>
 		</dependency>
 
-		<!-- 2.数据库 -->
+		<!-- MySQL数据库驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.37</version>
+			<version>${mysql-connector-java.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- h2数据库驱动 -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>${h2.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- c3p0连接池 -->
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
+			<version>${c3p0.version}</version>
 		</dependency>
 
 		<!-- DAO: MyBatis -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.3.0</version>
+			<version>${mybatis.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.2.3</version>
+			<version>${mybatis-spring.version}</version>
 		</dependency>
 
 		<!-- 3.Servlet web -->
 		<dependency>
 			<groupId>taglibs</groupId>
 			<artifactId>standard</artifactId>
-			<version>1.1.2</version>
+			<version>${standard.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<version>${jstl.version}</version>
 		</dependency>
-		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-databind</artifactId> 
-			<version>2.5.4</version> </dependency> -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-		</dependency>
-
+		
 		<!-- 4.Spring -->
 		<!-- 1)Spring核心 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<!-- 2)Spring DAO层 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<!-- 3)Spring web -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
 		<!-- 4)Spring test -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>4.1.7.RELEASE</version>
+			<version>${springframework.version}</version>
 		</dependency>
-		<!-- redis客户端:Jedis -->
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
-		</dependency>
-		<!-- spring-data-redis -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>1.6.2.RELEASE</version>
-		</dependency>
-		<!-- commons-pool -->
-		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-			<version>1.6</version>
-		</dependency>
-		<dependency>
-			<groupId>com.dyuproject.protostuff</groupId>
-			<artifactId>protostuff-core</artifactId>
-			<version>1.0.8</version>
-		</dependency>
-		<dependency>
-			<groupId>com.dyuproject.protostuff</groupId>
-			<artifactId>protostuff-runtime</artifactId>
-			<version>1.0.8</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.3.1</version>
-		</dependency>
-		<!-- Map工具类 -->
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.41</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
-		</dependency>
-		<!-- Shiro start -->
+		
+		<!-- 权限管理 Shiro -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
-			<version>1.4.0</version>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-web</artifactId>
-			<version>1.4.0</version>
+			<version>${shiro.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
-			<version>1.4.0</version>
+			<version>${shiro.version}</version>
 		</dependency>
-		<!-- Shiro end -->
 
-		<!-- OSS start -->
+		<!-- redis客户端:Jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
+		</dependency>
+		
+		<!-- 阿里云对象存储 OSS -->
 		<dependency>
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
-			<version>2.8.3</version>
+			<version>${aliyun-sdk-oss.version}</version>
 		</dependency>
-		<!-- OSS end -->
 
-		<!--markdown start -->
+		<!--用于解析markdown -->
 		<dependency>
 			<groupId>com.atlassian.commonmark</groupId>
 			<artifactId>commonmark</artifactId>
@@ -229,46 +195,61 @@
 			<artifactId>commonmark-ext-gfm-tables</artifactId>
 			<version>${commonmark.version}</version>
 		</dependency>
-		<!--markdown end -->
 
-		<!--jsoup start -->
+		<!--用于解析HTML -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.version}</version>
 		</dependency>
-		<!--jsoup end -->
 
-		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<!--用于解析JSON -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.4.197</version>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		
+		<!-- JSON工具类 -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${gson.version}</version>
+		</dependency>
+		
+		<!-- 因为在 spring-web.xml 里配置了上传下载文件的大小，所以需要引入这两个依赖，否则会报错。 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>19.0</version>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload.version}</version>
 		</dependency>
+		
+		<!-- 使用 SpringBoot 的方式启动项目 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>1.2.0.RELEASE</version>
+			<version>${spring-boot-starter.version}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<version>1.2.0.RELEASE</version>
+			<version>${spring-boot-starter.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		<!--引入Spring Boot内嵌的Tomcat对JSP的解析包，不加解析不了jsp页面-->
+		<!--引入Spring Boot内嵌的Tomcat对JSP的解析包，不然解析不了jsp页面-->
 		<dependency>
    			<groupId>org.apache.tomcat.embed</groupId>
    			<artifactId>tomcat-embed-jasper</artifactId>
-   			<version>8.0.15</version>
+   			<version>${tomcat-embed-jasper.version}</version>
    			<scope>provided</scope>
 		</dependency>
+		
 	</dependencies>
 	<build>
 		<!-- 项目名称 -->
@@ -278,11 +259,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<!-- web.xml版本 -->
-				<version>3.1</version>
+				<version>${web.xml.version}</version>
 				<configuration>
 					<!-- jdk版本 -->
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 				</configuration>
 			</plugin>
 		</plugins>

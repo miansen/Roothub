@@ -2,6 +2,7 @@ package wang.miansen.roothub.modules.tab.dao;
 
 import java.util.List;
 
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.modules.tab.model.Tab;
 
 /**
@@ -11,7 +12,7 @@ import wang.miansen.roothub.modules.tab.model.Tab;
  * 下午8:57:48
  * TODO
  */
-public interface TabDao {
+public interface TabDao extends BaseDao<Tab>{
 
 	/**
 	 * 查询所有板块

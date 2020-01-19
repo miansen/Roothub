@@ -1,18 +1,15 @@
-package wang.miansen.roothub.modules.node.model;
+package wang.miansen.roothub.modules.node.dto;
 
 import java.util.Date;
 
-import wang.miansen.roothub.common.dao.mapper.annotation.Id;
-import wang.miansen.roothub.common.dao.mapper.enums.IdType;
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
 
 /**
  * @author miansen.wang
  * @date 2018年11月3日 上午11:38:30
  */
-public class Node implements BaseDO {
+public class NodeDTO implements BaseDTO {
 
-	@Id(value = "topic_id", type = IdType.AUTO)
 	private Integer nodeId;
 	private String nodeCode;
 	private String nodeTitle;

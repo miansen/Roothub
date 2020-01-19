@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.UserExecution;
+import wang.miansen.roothub.common.service.BaseService;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.integral.model.Top100;
 
@@ -15,7 +17,7 @@ import wang.miansen.roothub.modules.integral.model.Top100;
  * 下午9:10:40
  * TODO
  */
-public interface UserService {
+public interface UserService extends BaseService<User, UserDTO>{
 
 	/**
 	 * 根据ID查找用户
@@ -84,7 +86,7 @@ public interface UserService {
 	 * @param pageSize
 	 * @return
 	 */
-	Page<User> page(Integer pageNumber, Integer pageSize);
+	// Page<User> page(Integer pageNumber, Integer pageSize);
 	
 	/**
 	 * 更新用户

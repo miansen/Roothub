@@ -2,6 +2,7 @@ package wang.miansen.roothub.modules.node.dao;
 
 import java.util.List;
 
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.modules.node.model.Node;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
  * @author miansen.wang
  * @date 2018年11月3日 上午11:41:39
  */
-public interface NodeDao {
+public interface NodeDao extends BaseDao<Node>{
 
 	/**
 	 * 查询全部节点

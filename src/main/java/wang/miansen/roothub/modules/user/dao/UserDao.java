@@ -5,9 +5,10 @@ import java.util.List;
 import wang.miansen.roothub.modules.user.model.User;
 import org.apache.ibatis.annotations.Param;
 
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.modules.integral.model.Top100;
 
-public interface UserDao {
+public interface UserDao extends BaseDao<User>{
 
 	/**
 	 * 查询所有用户

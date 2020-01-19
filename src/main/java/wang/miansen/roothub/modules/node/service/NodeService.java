@@ -3,13 +3,15 @@ package wang.miansen.roothub.modules.node.service;
 import java.util.List;
 
 import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.service.BaseService;
+import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.model.Node;
 
 /**
  * @author miansen.wang
  * @date 2018年11月3日 下午2:46:55
  */
-public interface NodeService {
+public interface NodeService extends BaseService<Node, NodeDTO>{
 
 	/**
 	 * 查询全部节点

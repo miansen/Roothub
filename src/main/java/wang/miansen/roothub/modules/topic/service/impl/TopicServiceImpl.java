@@ -1,23 +1,34 @@
 package wang.miansen.roothub.modules.topic.service.impl;
 
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 import wang.miansen.roothub.common.dto.TopicExecution;
 import wang.miansen.roothub.common.enums.InsertTopicEnum;
 import wang.miansen.roothub.common.exception.OperationFailedException;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
+import wang.miansen.roothub.modules.node.dto.NodeDTO;
+import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
+import wang.miansen.roothub.modules.tab.dto.TabDTO;
 import wang.miansen.roothub.modules.tag.model.Tag;
 import wang.miansen.roothub.modules.topic.dao.TopicDao;
 import wang.miansen.roothub.modules.topic.dto.TopicDTO;
 import wang.miansen.roothub.modules.topic.model.Topic;
+import wang.miansen.roothub.modules.topic.service.TabService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.user.dao.UserDao;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
+import wang.miansen.roothub.modules.user.service.UserService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +44,15 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 	
 	@Autowired
 	private TopicDao rootTopicDao;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private NodeService nodeService;
+	
+	@Autowired
+	private TabService tabService;
 	
 	@Autowired
 	private UserDao rootUserDao;
@@ -385,6 +405,9 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 		return topicDTO -> {
 			Topic topic = new Topic();
 			BeanUtils.copyProperties(topicDTO, topic);
+			topic.setTabId(topicDTO.getTabDTO().getId());
+			topic.setNodeId(topicDTO.getNodeDTO().getNodeId());
+			topic.setUserId(topicDTO.getUserDTO().getUserId());
 			return topic;
 		};
 	}
@@ -394,6 +417,12 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 		return topic -> {
 			TopicDTO topicDTO = new TopicDTO();
 			BeanUtils.copyProperties(topic, topicDTO);
+			TabDTO tabDTO = tabService.getById(topic.getTabId());
+			UserDTO userDTO = userService.getById(topic.getUserId());
+			NodeDTO nodeDTO = nodeService.getById(topic.getNodeId());
+			topicDTO.setTabDTO(tabDTO);
+			topicDTO.setNodeDTO(nodeDTO);
+			topicDTO.setUserDTO(userDTO);
 			return topicDTO;
 		};
 	}

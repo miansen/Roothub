@@ -1,10 +1,8 @@
-package wang.miansen.roothub.modules.user.model;
+package wang.miansen.roothub.modules.user.dto;
 
 import java.util.Date;
 
-import wang.miansen.roothub.common.dao.mapper.annotation.Id;
-import wang.miansen.roothub.common.dao.mapper.enums.IdType;
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
 
 /**
  * @author sen
@@ -13,12 +11,11 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * 用户实体
  * Table: root_user
  */
-public class User implements BaseDO {
+public class UserDTO implements BaseDTO {
 
 	/**
 	 * 用户标识
 	 */
-	@Id(value = "topic_id", type = IdType.AUTO)
 	private Integer userId;
 	
 	/**

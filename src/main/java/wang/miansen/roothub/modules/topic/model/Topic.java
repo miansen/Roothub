@@ -16,33 +16,33 @@ import wang.miansen.roothub.common.entity.BaseDO;
 public class Topic implements BaseDO {
 
 	/**
-	 * 话题标识
+	 * 帖子ID
 	 */
 	@Id(value = "topic_id", type = IdType.AUTO)
 	private Integer topicId;
 	
 	/**
-	 * 父版块标识
+	 * 版块ID
 	 */
-	private String ptab;
+	private Integer tabId;
 	
 	/**
-	 * 版块标识
+	 * 节点ID
 	 */
-	private String tab;
+	private Integer nodeId;
 	
 	/**
-	 * 话题标题
+	 * 作者ID
+	 */
+	private Integer userId;
+	
+	/**
+	 * 标题
 	 */
 	private String title;
 	
 	/**
-	 * 话题内容标签
-	 */
-	private String tag;
-	
-	/**
-	 * 话题内容
+	 * 正文
 	 */
 	private String content;
 	
@@ -50,6 +50,46 @@ public class Topic implements BaseDO {
 	 * 摘录
 	 */
 	private String excerpt;
+	
+	/**
+	 * 封面
+	 */
+	private String avatar;
+	
+	/**
+	 * 链接
+	 */
+	private String url;
+	
+	/**
+	 * true 置顶 false 默认
+	 */
+	private Boolean top;
+	
+	/**
+	 * true 精华 false默认
+	 */
+	private Boolean good;
+	
+	/**
+	 * 浏览量
+	 */
+	private Integer viewCount;
+	
+	/**
+	 * 转载量
+	 */
+	private Integer shareCount;
+	
+	/**
+	 * 好评量
+	 */
+	private Integer goodCount;
+	
+	/**
+	 * 差评量
+	 */
+	private Integer postGoodCount;
 	
 	/**
 	 * 创建时间
@@ -62,99 +102,19 @@ public class Topic implements BaseDO {
 	private Date updateDate;
 	
 	/**
-	 * 最后回复话题时间，用于排序
+	 * 类型，1000（文本）、1100（图片）、1200（视频）、1300（链接）
 	 */
-	private Date lastReplyTime;
+	private String type;
 	
 	/**
-	 * 最后回复话题的用户id
+	 * 状态，1000（有效）、1100（无效）、1200（未生效）
 	 */
-	private String lastReplyAuthor;
-	
-	/**
-	 * 浏览量
-	 */
-	private Integer viewCount;
-	
-	/**
-	 * 话题作者id
-	 */
-	private String author;
-	
-	/**
-	 * 1置顶 0默认
-	 */
-	private Boolean top;
-	
-	/**
-	 * 1精华 0默认
-	 */
-	private Boolean good;
-	
-	/**
-	 * 1显示 0不显示
-	 */
-	private Boolean showStatus;
-	
-	/**
-	 * 回复数量
-	 */
-	private Integer replyCount;
-	
-	/**
-	 * 1删除 0默认
-	 */
-	private Boolean isDelete;
-	
-	/**
-	 * 话题内容标签是否被统计过 1是 0否默认
-	 */
-	private Boolean tagIsCount;
-	
-	/**
-	 * 点赞
-	 */
-	private Integer postGoodCount;
-	
-	/**
-	 * 踩数
-	 */
-	private Integer postBadCount;
-	
-	/**
-	 * 话题状态 1000:有效 1100:无效 1200:未生效
-	 */
-	private String statusCd;
-	
-	/**
-	 * 所属节点
-	 */
-	private String nodeSlug;
-	
-	/**
-	 * 节点名称
-	 */
-	private String nodeTitle;
+	private String status;
 	
 	/**
 	 * 备注
 	 */
 	private String remark;
-	
-	/**
-	 * 话题作者头像
-	 */
-	private String avatar;
-	
-	private String url;
-
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
 
 	public Integer getTopicId() {
 		return topicId;
@@ -164,12 +124,28 @@ public class Topic implements BaseDO {
 		this.topicId = topicId;
 	}
 
-	public String getTab() {
-		return tab;
+	public Integer getTabId() {
+		return tabId;
 	}
 
-	public void setTab(String tab) {
-		this.tab = tab;
+	public void setTabId(Integer tabId) {
+		this.tabId = tabId;
+	}
+
+	public Integer getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getTitle() {
@@ -180,14 +156,6 @@ public class Topic implements BaseDO {
 		this.title = title;
 	}
 
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -195,7 +163,7 @@ public class Topic implements BaseDO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public String getExcerpt() {
 		return excerpt;
 	}
@@ -204,52 +172,20 @@ public class Topic implements BaseDO {
 		this.excerpt = excerpt;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
-	public Date getUpdateDate() {
-		return updateDate;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	public Date getLastReplyTime() {
-		return lastReplyTime;
-	}
-
-	public void setLastReplyTime(Date lastReplyTime) {
-		this.lastReplyTime = lastReplyTime;
-	}
-
-	public String getLastReplyAuthor() {
-		return lastReplyAuthor;
-	}
-
-	public void setLastReplyAuthor(String lastReplyAuthor) {
-		this.lastReplyAuthor = lastReplyAuthor;
-	}
-
-	public Integer getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Integer viewCount) {
-		this.viewCount = viewCount;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Boolean getTop() {
@@ -268,36 +204,28 @@ public class Topic implements BaseDO {
 		this.good = good;
 	}
 
-	public Boolean getShowStatus() {
-		return showStatus;
+	public Integer getViewCount() {
+		return viewCount;
 	}
 
-	public void setShowStatus(Boolean showStatus) {
-		this.showStatus = showStatus;
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
 	}
 
-	public Integer getReplyCount() {
-		return replyCount;
+	public Integer getShareCount() {
+		return shareCount;
 	}
 
-	public void setReplyCount(Integer replyCount) {
-		this.replyCount = replyCount;
+	public void setShareCount(Integer shareCount) {
+		this.shareCount = shareCount;
 	}
 
-	public Boolean getIsDelete() {
-		return isDelete;
+	public Integer getGoodCount() {
+		return goodCount;
 	}
 
-	public void setIsDelete(Boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-
-	public Boolean getTagIsCount() {
-		return tagIsCount;
-	}
-
-	public void setTagIsCount(Boolean tagIsCount) {
-		this.tagIsCount = tagIsCount;
+	public void setGoodCount(Integer goodCount) {
+		this.goodCount = goodCount;
 	}
 
 	public Integer getPostGoodCount() {
@@ -308,36 +236,36 @@ public class Topic implements BaseDO {
 		this.postGoodCount = postGoodCount;
 	}
 
-	public Integer getPostBadCount() {
-		return postBadCount;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setPostBadCount(Integer postBadCount) {
-		this.postBadCount = postBadCount;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public String getStatusCd() {
-		return statusCd;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setStatusCd(String statusCd) {
-		this.statusCd = statusCd;
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public String getNodeSlug() {
-		return nodeSlug;
+	public String getType() {
+		return type;
 	}
 
-	public void setNodeSlug(String nodeSlug) {
-		this.nodeSlug = nodeSlug;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getNodeTitle() {
-		return nodeTitle;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setNodeTitle(String nodeTitle) {
-		this.nodeTitle = nodeTitle;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getRemark() {
@@ -348,31 +276,13 @@ public class Topic implements BaseDO {
 		this.remark = remark;
 	}
 
-	public String getPtab() {
-		return ptab;
-	}
-
-	public void setPtab(String ptab) {
-		this.ptab = ptab;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	@Override
 	public String toString() {
-		return "Topic [topicId=" + topicId + ", ptab=" + ptab + ", tab=" + tab + ", title=" + title + ", tag=" + tag
-				+ ", content=" + content + ", excerpt=" + excerpt + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + ", lastReplyTime=" + lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor
-				+ ", viewCount=" + viewCount + ", author=" + author + ", top=" + top + ", good=" + good
-				+ ", showStatus=" + showStatus + ", replyCount=" + replyCount + ", isDelete=" + isDelete
-				+ ", tagIsCount=" + tagIsCount + ", postGoodCount=" + postGoodCount + ", postBadCount=" + postBadCount
-				+ ", statusCd=" + statusCd + ", nodeSlug=" + nodeSlug + ", nodeTitle=" + nodeTitle + ", remark="
-				+ remark + ", avatar=" + avatar + ", url=" + url + "]";
+		return "Topic [topicId=" + topicId + ", tabId=" + tabId + ", nodeId=" + nodeId + ", userId=" + userId
+				+ ", title=" + title + ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url="
+				+ url + ", top=" + top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount
+				+ ", goodCount=" + goodCount + ", postGoodCount=" + postGoodCount + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "]";
 	}
+
 }

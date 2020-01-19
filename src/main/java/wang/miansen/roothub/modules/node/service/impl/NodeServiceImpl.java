@@ -2,23 +2,30 @@ package wang.miansen.roothub.modules.node.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 import wang.miansen.roothub.modules.node.model.Node;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.dao.BaseDao;
+import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.modules.node.dao.NodeDao;
+import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.user.model.User;
 
 /**
  * @author miansen.wang
  * @date 2018年11月3日 下午2:48:24
  */
 @Service
-public class NodeServiceImpl implements NodeService{
+public class NodeServiceImpl extends AbstractBaseServiceImpl<Node, NodeDTO> implements NodeService{
 
 	@Autowired
 	private NodeDao nodeDao;
@@ -125,5 +132,28 @@ public class NodeServiceImpl implements NodeService{
 	@Override
 	public int countToday() {
 		return nodeDao.countToday();
+	}
+
+	@Override
+	public Function<? super NodeDTO, ? extends Node> getDTO2DOMapper() {
+		return nodeDTO -> {
+			Node node = new Node();
+			BeanUtils.copyProperties(nodeDTO, node);
+			return node;
+		};
+	}
+
+	@Override
+	public Function<? super Node, ? extends NodeDTO> getDO2DTOMapper() {
+		return node -> {
+			NodeDTO nodeDTO = new NodeDTO();
+			BeanUtils.copyProperties(node, nodeDTO);
+			return nodeDTO;
+		};
+	}
+
+	@Override
+	public BaseDao<Node> getDao() {
+		return nodeDao;
 	}
 }

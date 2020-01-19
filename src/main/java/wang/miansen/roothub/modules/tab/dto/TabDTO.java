@@ -1,10 +1,8 @@
-package wang.miansen.roothub.modules.tab.model;
+package wang.miansen.roothub.modules.tab.dto;
 
 import java.util.Date;
 
-import wang.miansen.roothub.common.dao.mapper.annotation.Id;
-import wang.miansen.roothub.common.dao.mapper.enums.IdType;
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
 
 /**
  * 父板块
@@ -13,12 +11,11 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * 下午8:53:45
  * TODO
  */
-public class Tab implements BaseDO {
+public class TabDTO implements BaseDTO {
 
 	/**
 	 * id，主键
 	 */
-	@Id(value = "topic_id", type = IdType.AUTO)
 	private Integer id;
 	
 	/**

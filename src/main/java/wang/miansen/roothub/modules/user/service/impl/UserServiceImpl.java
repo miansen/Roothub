@@ -3,6 +3,8 @@ package wang.miansen.roothub.modules.user.service.impl;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
+
 import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.util.StringUtils;
@@ -13,11 +15,14 @@ import wang.miansen.roothub.third.RedisService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.modules.user.dao.UserDao;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.common.enums.InsertUserEnum;
@@ -25,16 +30,18 @@ import wang.miansen.roothub.common.enums.UpdateUserEnum;
 import wang.miansen.roothub.common.exception.OperationFailedException;
 import wang.miansen.roothub.common.exception.OperationRepeaException;
 import wang.miansen.roothub.common.exception.OperationSystemException;
+import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
+import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.JsonUtil;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> implements UserService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -110,12 +117,12 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * 分页查询所有用户，倒叙
 	 */
-	@Override
+	/*@Override
 	public Page<User> page(Integer pageNumber, Integer pageSize) {
 		List<User> list = rootUserDao.selectAll((pageNumber - 1) * pageSize, pageSize);
 		int totalRow = rootUserDao.countUserAll();
 		return new Page<>(list, pageNumber, pageSize, totalRow);
-	}
+	}*/
 
 	/**
 	 * 更新用户
@@ -311,6 +318,29 @@ public class UserServiceImpl implements UserService {
 		noticeService.deleteByTargetAuthorName(user.getUserName());
 		// 删除用户
 		deleteUserById(user.getUserId());
+	}
+
+	@Override
+	public Function<? super UserDTO, ? extends User> getDTO2DOMapper() {
+		return userDTO -> {
+			User user = new User();
+			BeanUtils.copyProperties(userDTO, user);
+			return user;
+		};
+	}
+
+	@Override
+	public Function<? super User, ? extends UserDTO> getDO2DTOMapper() {
+		return user -> {
+			UserDTO userDTO = new UserDTO();
+			BeanUtils.copyProperties(user, userDTO);
+			return userDTO;
+		};
+	}
+
+	@Override
+	public BaseDao<User> getDao() {
+		return rootUserDao;
 	}
 
 }

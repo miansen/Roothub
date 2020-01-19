@@ -59,7 +59,7 @@ $(function () {
         var nodeTitle = node ? node : $("#node option:selected").val();
 
         // 标签
-        var tag = $("#tag").val().trim();
+        // var tag = $("#tag").val().trim();
 
         if (!title || title.length > 120) {
             toast("请输入标题，且最大长度在120个字符以内");
@@ -69,19 +69,19 @@ $(function () {
             toast("请选择一个节点");
             return;
         }
-        if (!tag || tag.length == 0) {
+        /*if (!tag || tag.length == 0) {
             toast("请至少输入一个标签");
             return;
-        }
+        }*/
 
         // 将标签以空格分割
-        var tags = tag.split(/\s+/);
-        for (var i = 0; i < tags.length; i++) {
+        // var tags = tag.split(/\s+/);
+        /*for (var i = 0; i < tags.length; i++) {
             if (tags[i].length > 10) {
                 toast("每个标签的最大长度不能超过10个字符");
                 return;
             }
-        }
+        }*/
 
         $.ajax({
             url: '/topic/save',
@@ -93,13 +93,13 @@ $(function () {
                 title: title,
                 content: contentHtml,
                 nodeTitle: nodeTitle,
-                tag: tag,
+                // tag: tag,
                 type: "0"
             },
             success: function (data) {
                 //console.log(JSON.stringify(data));
                 if (data.success != null && data.success == true) {
-                    window.location.href = "/topic/" + data.data.topic.topicId;
+                    window.location.href = "/topics/" + data.data.topic.topicId;
                 } else {
                     toast(data.error);
                 }
@@ -135,7 +135,7 @@ $(function () {
         var nodeTitle = node ? node : $("#node option:selected").val();
 
         // 标签
-        var tag = $("#tag").val().trim();
+        // var tag = $("#tag").val().trim();
 
         if (!title || title.length > 120) {
             toast("请输入标题，且最大长度在120个字符以内");
@@ -145,31 +145,31 @@ $(function () {
             toast("请选择一个节点");
             return;
         }
-        if (!tag || tag.length == 0) {
+        /*if (!tag || tag.length == 0) {
             toast("请至少输入一个标签");
             return;
-        }
+        }*/
 
         // 将标签以空格分割
-        var tags = tag.split(/\s+/);
-        for (var i = 0; i < tags.length; i++) {
+        // var tags = tag.split(/\s+/);
+        /*for (var i = 0; i < tags.length; i++) {
             if (tags[i].length > 10) {
                 toast("每个标签的最大长度不能超过10个字符");
                 return;
             }
-        }
+        }*/
 
         $.post("/topic/save", {
             title: title,
             content: content,
             nodeTitle: nodeTitle,
-            tag: tag,
+            // tag: tag,
             type: "1"
         }, function (data) {
             if (data.success != null && data.success == true) {
                 toast("发布帖子成功", "success");
                 setTimeout(function () {
-                    window.location.href = "/topic/" + data.data.topic.topicId
+                    window.location.href = "/topics/" + data.data.topic.topicId
                 }, 700);
             } else {
                 toast(data.error);

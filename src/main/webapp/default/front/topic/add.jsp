@@ -55,13 +55,13 @@
                     </c:choose>
 
                     <%--标签--%>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="form-group">
                             <label for="title">标签</label>
                             <input type="text" class="form-control" id="tag" name="title"
                                    placeholder="请为你的主题选择一个标签。恰当的归类会让你发布的信息更加有用">
                         </div>
-                    </div>
+                    </div> -->
 
                     <button type="button" id="wangEditor-btn" class="btn btn-primary">发布</button>
                     <button type="button" id="codemirror-btn" class="btn btn-primary" style="display: none;">发布</button>

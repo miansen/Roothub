@@ -109,7 +109,7 @@
         </div>
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
-        <div class="panel panel-default" id="session"></div>
+        <%@ include file="../common/session.jsp" %>
     </div>
 </div>
 <script src="/default/front/topic/js/view.js"></script>

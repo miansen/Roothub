@@ -150,7 +150,7 @@ function voteTopic(tid, action) {
 }
 
 /*****作者其它话题*****/
-(function () {
+/*(function () {
     var userName = $('.author').text();
     $(".col-md-3").append('\
 				<div class="panel panel-default">\
@@ -181,7 +181,7 @@ function voteTopic(tid, action) {
 
         }
     });
-})();
+})();*/
 
 /*****切换编辑器*****/
 function switchEditor(self) {

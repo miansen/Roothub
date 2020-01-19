@@ -35,7 +35,7 @@
     <script src="/default/front/common/layui/layui-paginate.js"></script>
 
     <%--系统全局通用 js 文件--%>
-    <script src="/default/front/common/js/login_info.js"></script>
+    <!-- <script src="/default/front/common/js/login_info.js"></script> -->
     <script src="/default/front/common/js/formatDate.js"></script>
     <script src="/default/front/common/js/bootstrap.min.js"></script>
 

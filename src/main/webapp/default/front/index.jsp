@@ -29,7 +29,7 @@
                                         <a href="${item.url}" target="_blank">${item.title}</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="/topic/${item.topicId}">${item.title}</a>
+                                        <a href="/topics/${item.topicId}">${item.title}</a>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -75,7 +75,7 @@
         </div>
     </div>
     <div class="col-md-3 hidden-sm hidden-xs">
-        <div class="panel panel-default" id="session"></div>
+        <%@ include file="./common/session.jsp" %>
         <!-- 今日热议帖子 -->
         <c:if test="${findHot ne null && fn:length(findHot) > 0}">
 	        <div class="panel panel-default">
@@ -95,7 +95,7 @@
 	                                    <a href="${item.url}">${item.title}</a>
 	                                </c:when>
 	                                <c:otherwise>
-	                                    <a href="/topic/${item.topicId}">${item.title}</a>
+	                                    <a href="/topics/${item.topicId}">${item.title}</a>
 	                                </c:otherwise>
 	                            </c:choose>
 	                        </td>

@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,12 +26,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import wang.miansen.roothub.common.dto.TopicExecution;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.reply.model.Reply;
+import wang.miansen.roothub.modules.topic.dto.TopicDTO;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.tab.model.Tab;
@@ -38,12 +42,11 @@ import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.topic.vo.TopicVO;
 import wang.miansen.roothub.modules.topic.service.TabService;
 
 @Controller
-public class TopicController extends SessionController {
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class TopicController extends AbstractBaseController<Topic, TopicDTO, TopicVO> {
 
     @Autowired
     private TopicService topicService;
@@ -67,44 +70,52 @@ public class TopicController extends SessionController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/topic/{id}", method = RequestMethod.GET)
-    private String detail(@PathVariable Integer id, Model model, @RequestParam(value = "p", defaultValue = "1") Integer p, HttpServletRequest request) {
-        Topic topic = topicService.findByTopicId(id);
+    @RequestMapping(value = "/topics/{id}", method = RequestMethod.GET)
+    public ModelAndView detail(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response) {
+    	ModelAndView mv = new ModelAndView();
+    	// Topic topic = topicService.findByTopicId(id);
+    	TopicDTO topicDTO = topicService.getById(id);
         User user = getUser(request);
-        ApiAssert.notNull(topic, "话题消失了~");
+        ApiAssert.notNull(topicDTO, "话题消失了~");
         // 浏览量+1
-        topic.setViewCount(topic.getViewCount() + 1);
+        topicDTO.setViewCount(topicDTO.getViewCount() + 1);
         //更新话题
-        topicService.updateTopic(topic);
+        // topicService.updateTopic(topic);
+        topicService.updateById(topicDTO);
+        String p = request.getParameter("p");
+        if (wang.miansen.roothub.common.util.StringUtils.isBlank(p)) {
+        	p = "1";
+        }
         // 查询回复
-        Page<Reply> replyPage = replyService.page(p, 50, id);
+        Page<Reply> replyPage = replyService.page(Integer.valueOf(p), 50, id);
 
-        String tag = topic.getTag();
+        // String tag = topic.getTag();
         // 将标签封装成list
-        List<String> tags = Arrays.asList(tag.split("\\s+"));
+        // List<String> tags = Arrays.asList(tag.split("\\s+"));
 
         // 话题被收藏的数量
         int countByTid = collectService.countByTid(id);
         // 发布的主题的数量
-        int countTopicByUserName = 0;
+        // int countTopicByUserName = 0;
         // 收藏话题的数量
-        int countCollect = 0;
+        // int countCollect = 0;
         // 未读通知的数量
-        int notReadNotice = 0;
-        if (user != null) {
+        // int notReadNotice = 0;
+        /*if (user != null) {
             countTopicByUserName = topicService.countByUserName(user.getUserName());
             countCollect = collectService.count(user.getUserId());
             notReadNotice = noticeService.countNotReadNotice(user.getUserName());
-        }
-        model.addAttribute("topic", topic);
-        model.addAttribute("replyPage", replyPage);
-        model.addAttribute("tags", tags);
-        model.addAttribute("user", user);
-        model.addAttribute("countByTid", countByTid);
-        request.setAttribute("countTopicByUserName", countTopicByUserName);
-        request.setAttribute("countCollect", countCollect);
-        request.setAttribute("notReadNotice", notReadNotice);
-        return "/default/front/topic/view";
+        }*/
+        mv.addObject("topic", getDTO2VO().apply(topicDTO));
+        mv.addObject("replyPage", replyPage);
+        // request.setAttribute("tags", tags);
+        mv.addObject("user", user);
+        mv.addObject("countByTid", countByTid);
+        // mv.addObject("countTopicByUserName", countTopicByUserName);
+        // mv.addObject("countCollect", countCollect);
+        // mv.addObject("notReadNotice", notReadNotice);
+        mv.setViewName(this.getFrontPrefix() + "/view");
+        return mv;
     }
 
     /**
@@ -114,7 +125,7 @@ public class TopicController extends SessionController {
      * @return
      */
     @RequestMapping(value = "/topic/create", method = RequestMethod.GET)
-    private String create(String n, HttpServletRequest request) {
+    private String add(String n, HttpServletRequest request) {
         List<Tab> tabList = tabService.selectAll();
         List<Node> nodeList = nodeService.findAll(null, null);
         request.setAttribute("tabList", tabList);
@@ -168,5 +179,37 @@ public class TopicController extends SessionController {
         return "/default/front/tag/view";
     }
 
+	@Override
+	protected Function<? super TopicDTO, ? extends TopicVO> getDTO2VO() {
+		return topicDTO -> {
+			TopicVO topicVO = new TopicVO();
+			BeanUtils.copyProperties(topicDTO, topicVO);
+			return topicVO;
+		};
+	}
+
+	@Override
+	protected Function<? super TopicVO, ? extends TopicDTO> getVO2DTO() {
+		return topicVO -> {
+			TopicDTO topicDTO = new TopicDTO();
+			BeanUtils.copyProperties(topicVO, topicDTO);
+			return topicDTO;
+		};
+	}
+
+	@Override
+	protected BaseService<Topic, TopicDTO> getService() {
+		return topicService;
+	}
+
+	@Override
+	protected String getModuleName() {
+		return "topic";
+	}
+
+	@Override
+	protected QueryWrapper<Topic> getQueryWrapper() {
+		return null;
+	}
 
 }

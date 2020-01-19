@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.tag.dto.TagDTO;
@@ -20,7 +20,7 @@ import wang.miansen.roothub.modules.tag.vo.TagVO;
  */
 @Controller
 @RequestMapping(value = "/tag")
-public class TagController extends BaseController<Tag, TagDTO, TagVO> {
+public class TagController extends AbstractBaseController<Tag, TagDTO, TagVO> {
 
 	@Autowired
 	private TagService tagService;

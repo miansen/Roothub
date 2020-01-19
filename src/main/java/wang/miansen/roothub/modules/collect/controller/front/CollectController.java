@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
@@ -80,7 +80,7 @@ public class CollectController extends SessionController {
 			collect = collectDaoService.isCollect(user.getUserId(), tid);
 		}
 		if(collect == 0) {
-			return new Result<>("201", false, "未收藏此此话题");
+			return new Result<>(201, false, "未收藏此此话题");
 		}
 		return new Result<Integer>(true, collect);
 	}
@@ -101,9 +101,9 @@ public class CollectController extends SessionController {
 		int insert = collectDaoService.insert(collect);
 		if(insert == 1) {
 			String info = "收藏成功";
-			return new Result<Integer>("200", true,info);
+			return new Result<Integer>(201, true,info);
 		}
-		return new Result<>("201", false,"收藏失败");
+		return new Result<>(201, false,"收藏失败");
 	}
 	
 	/**
@@ -118,9 +118,9 @@ public class CollectController extends SessionController {
 		int delete = collectDaoService.delete(getUser(request).getUserId(), tid);
 		if(delete == 1) {
 			String info = "取消收藏成功";
-			return new Result<Integer>("200", true,info);
+			return new Result<Integer>(201, true,info);
 		}
-		return new Result<>("201", false,"取消收藏失败");
+		return new Result<>(201, false,"取消收藏失败");
 	}
 	
 	/**

@@ -28,7 +28,7 @@ import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.modules.visit.service.VisitService;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.ApiAssert;
@@ -74,7 +74,7 @@ public class UserApiController extends SessionController{
 		}*/
 		ApiAssert.notNull(user, "用户不存在");
 		Page<Topic> page = collectDaoService.page(p, 20, user.getUserId());
-		return new Result<Page>("200", true, page);
+		return new Result<Page>(200, true, page);
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class UserApiController extends SessionController{
 	@RequestMapping(value = "/api/user/topic",method = RequestMethod.GET)
 	private Result<Page> topicList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		Page<Topic> page = topicService.pageByAuthor(p, 20, name);
-		return new Result<Page>("200", true, page);
+		return new Result<Page>(200, true, page);
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class UserApiController extends SessionController{
 	@RequestMapping(value = "/api/user/reply",method = RequestMethod.GET)
 	private Result<Page> replyList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		Page<ReplyAndTopicByName> page = replyService.findAllByNameAndTopic(name, p, 20);
-		return new Result<Page>("200", true, page);
+		return new Result<Page>(200, true, page);
 	}
 	
 	/**
@@ -110,7 +110,7 @@ public class UserApiController extends SessionController{
 	@RequestMapping(value = "/api/user/follow/topic",method = RequestMethod.GET)
 	private Result<Page> followList(@RequestParam(value = "uid",defaultValue = "-1") Integer uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		Page<Topic> page = followService.pageTopic(p, 20, uid);
-		return new Result<Page>("200", true, page);
+		return new Result<Page>(200, true, page);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class UserApiController extends SessionController{
 	@RequestMapping(value = "/api/user/fans",method = RequestMethod.GET)
 	private Result<Page> fansList(@RequestParam(value = "fid",defaultValue = "-1") Integer fid,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		Page<User> page = followService.followMe(p, 20, fid);
-		return new Result<Page>("200", true, page);
+		return new Result<Page>(200, true, page);
 	}
 	
 	/**
@@ -134,7 +134,7 @@ public class UserApiController extends SessionController{
 	@RequestMapping(value = "/api/user/topic/qna",method = RequestMethod.GET)
 	private  Result<Page> qnaTopicList(@RequestParam(value = "name",defaultValue = "-1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		Page<Topic> page = topicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
-		return new Result<Page>("200", true, page);
+		return new Result<Page>(200, true, page);
 	}
 	
 	/**
@@ -147,12 +147,12 @@ public class UserApiController extends SessionController{
 	private Result<Page> visitList(@RequestParam(value = "vid",defaultValue = "-1") Integer vid,
 										   @RequestParam(value = "p",defaultValue = "1") Integer p){
 		Page<User> page = visitService.page(vid, p, 10);
-		return new Result<Page>("200", true, page);
+		return new Result<Page>(200, true, page);
 	}
 	
 	@RequestMapping(value = "/api/test",method = RequestMethod.GET)
 	private Result<Integer> test(Integer p){
-		return new Result<Integer>("200", true, p);
+		return new Result<Integer>(200, true, p);
 	}
 	
 	/**
@@ -188,7 +188,7 @@ public class UserApiController extends SessionController{
 	@RequestMapping(value = "/api/user/top100",method = RequestMethod.GET)
 	private Result<List> top100(@RequestParam(value = "limit",defaultValue = "100")Integer limit){
 		List<Top100> scores = userService.scores(limit);
-		return new Result<List>("200", true, scores);
+		return new Result<List>(200, true, scores);
 	}
 	
 	/**
@@ -201,7 +201,7 @@ public class UserApiController extends SessionController{
 		HashMap<String,Object> map = new HashMap<>();
 		if(user == null) {
 			map.put("intro", citeConfig.getIntro());
-			return new Result<>("201", false, map);
+			return new Result<>(201, false, map);
 		}else {
 			map.put("userName", user.getUserName());
 			map.put("avatar", user.getAvatar());
@@ -216,7 +216,7 @@ public class UserApiController extends SessionController{
 			map.put("countFollow", countFollow);
 			map.put("countNotReadNotice", countNotReadNotice);
 			map.put("countScore", countScore);
-			return new Result<Map>("200", true, map);
+			return new Result<Map>(200, true, map);
 		}
 	}
 	
@@ -229,7 +229,7 @@ public class UserApiController extends SessionController{
 	@RequestMapping(value = "/api/user/other/topic",method = RequestMethod.GET)
 	private Result<List> otherTopic(String userName,Integer topicId){
 		List<Topic> list = topicService.findOther(userName, topicId);
-		return new Result<List>("200", true, list);
+		return new Result<List>(200, true, list);
 	}
 
 }

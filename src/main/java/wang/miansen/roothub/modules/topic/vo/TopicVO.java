@@ -1,24 +1,19 @@
-package wang.miansen.roothub.modules.topic.model;
+package wang.miansen.roothub.modules.topic.vo;
 
 import java.util.Date;
 
-import wang.miansen.roothub.common.dao.mapper.annotation.Id;
-import wang.miansen.roothub.common.dao.mapper.enums.IdType;
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
+import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
- * 帖子实体类
  * @author miansen.wang
- * @date 2018-5-5 9:19:57
- * @version 3.0
- * @since 1.0
+ * @date 2020-01-19
  */
-public class Topic implements BaseDO {
+public class TopicVO implements BaseVO {
 
 	/**
 	 * 话题标识
 	 */
-	@Id(value = "topic_id", type = IdType.AUTO)
 	private Integer topicId;
 	
 	/**
@@ -366,13 +361,14 @@ public class Topic implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Topic [topicId=" + topicId + ", ptab=" + ptab + ", tab=" + tab + ", title=" + title + ", tag=" + tag
+		return "TopicDTO {topicId=" + topicId + ", ptab=" + ptab + ", tab=" + tab + ", title=" + title + ", tag=" + tag
 				+ ", content=" + content + ", excerpt=" + excerpt + ", createDate=" + createDate + ", updateDate="
 				+ updateDate + ", lastReplyTime=" + lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor
 				+ ", viewCount=" + viewCount + ", author=" + author + ", top=" + top + ", good=" + good
 				+ ", showStatus=" + showStatus + ", replyCount=" + replyCount + ", isDelete=" + isDelete
 				+ ", tagIsCount=" + tagIsCount + ", postGoodCount=" + postGoodCount + ", postBadCount=" + postBadCount
 				+ ", statusCd=" + statusCd + ", nodeSlug=" + nodeSlug + ", nodeTitle=" + nodeTitle + ", remark="
-				+ remark + ", avatar=" + avatar + ", url=" + url + "]";
+				+ remark + ", avatar=" + avatar + ", url=" + url + "}";
 	}
+
 }

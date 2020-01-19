@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.modules.reply.service.ReplyService;
@@ -245,7 +245,7 @@ public class UserController extends SessionController {
 		ApiAssert.notNull(user, "请先登录");
 		ApiAssert.notEmpty(avatarBase64, "头像不能为空");
 		rootUserService.updateAvatar(avatarBase64, path, user, request);
-		return new Result<>("200", true, "更新成功");
+		return new Result<>(200, true, "更新成功");
 	}
 	
 	/**
@@ -262,16 +262,16 @@ public class UserController extends SessionController {
 	@ResponseBody
 	private Result<UserExecution> changePassword(HttpServletRequest request,String oldPassword,String newPassword){
 		if(newPassword == null) {
-			return new Result<>("201", false,"密码不能为空");
+			return new Result<>(201, false,"密码不能为空");
 		}
 		User user = getUser(request);
 		if(!user.getPassword().equals(oldPassword)) {
-			return new Result<>("201", false,"旧密码不正确");
+			return new Result<>(201, false,"旧密码不正确");
 		}
 		//加密保存
 		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
 		UserExecution updateUser = rootUserService.updateUser(user);
-		return new Result<UserExecution>("200", true,updateUser);
+		return new Result<UserExecution>(200, true,updateUser);
 	}
 
 

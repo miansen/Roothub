@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import wang.miansen.roothub.common.beans.BaseEntity;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
@@ -56,13 +56,13 @@ public class FollowController extends SessionController {
 	@ResponseBody
 	private Result<Integer> isFollow(Integer fid, HttpServletRequest request){
 		User user = getUser(request);
-		if(user == null) return new Result<>("201", false, "未关注");
+		if(user == null) return new Result<>(201, false, "未关注");
 		if(user.getUserId() == fid) {
-			return new Result<>("201", false, "同一用户");
+			return new Result<>(201, false, "同一用户");
 		}
 		int follow = followService.isFollow(user.getUserId(), fid);
 		if(follow == 0) {
-			return new Result<>("201", false, "未关注");
+			return new Result<>(201, false, "未关注");
 		}
 		return new Result<>(true, follow);
 	}
@@ -83,9 +83,9 @@ public class FollowController extends SessionController {
 		int insert = followService.insert(follow);
 		if(insert == 1) {
 			String info = "关注成功";
-			return new Result<Integer>("200", true,info);
+			return new Result<Integer>(200, true,info);
 		}
-		return new Result<>("201", false,"关注失败");
+		return new Result<>(201, false,"关注失败");
 	};
 	
 	/**
@@ -100,9 +100,9 @@ public class FollowController extends SessionController {
 		int delete = followService.delete(getUser(request).getUserId(), fid);
 		if(delete == 1) {
 			String info = "取消关注成功";
-			return new Result<Integer>("200", true,info);
+			return new Result<Integer>(200, true,info);
 		}
-		return new Result<>("201", false,"取消关注失败");
+		return new Result<>(201, false,"取消关注失败");
 	}
 	
 	/**

@@ -4,10 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import wang.miansen.roothub.modules.user.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 
 /**
  * 全局拦截器
@@ -16,14 +15,11 @@ import wang.miansen.roothub.common.controller.BaseController;
  */
 public class GlobalInterceptorHandler implements HandlerInterceptor{
 	
-	@Autowired
-	private BaseController baseController;
-
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		User user = baseController.getUser(request);
+		User user = CookieAndSessionUtil.getSession(request, "user");
 		
 		//抛出异常，交给全局异常处理（这样会输出错误信息）
 		//ApiAssert.notNull(user, "页面受到了保护，登录后才能访问~点击去<a href='/login'>登录</a>");

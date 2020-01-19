@@ -6,7 +6,7 @@ import java.util.function.Function;
 import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.BaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dto.DMLExecution;
@@ -36,7 +36,7 @@ public class UpDownController extends SessionController {
 	@RequestMapping(value = "/vote",method = RequestMethod.GET)
 	private Result<DMLExecution> up(Integer tid, boolean vote, HttpServletRequest request){
 		User user = getUser(request);
-		if(user == null) return new Result<>("201", false,"未登录");
+		if(user == null) return new Result<>(201, false,"未登录");
 		UpDown upDown = new UpDown();
 		upDown.setUid(user.getUserId());
 		upDown.setTid(tid);

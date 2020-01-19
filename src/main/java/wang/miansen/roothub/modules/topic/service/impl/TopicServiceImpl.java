@@ -2,27 +2,32 @@ package wang.miansen.roothub.modules.topic.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dto.TopicExecution;
 import wang.miansen.roothub.common.enums.InsertTopicEnum;
 import wang.miansen.roothub.common.exception.OperationFailedException;
+import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
 import wang.miansen.roothub.modules.tag.model.Tag;
 import wang.miansen.roothub.modules.topic.dao.TopicDao;
+import wang.miansen.roothub.modules.topic.dto.TopicDTO;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.modules.user.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class TopicServiceImpl implements TopicService {
+public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> implements TopicService {
 
 	private Logger log = LoggerFactory.getLogger(TopicServiceImpl.class);
 	
@@ -373,6 +378,29 @@ public class TopicServiceImpl implements TopicService {
 	@Override
 	public Topic findById(Integer id) {
 		return rootTopicDao.selectByTopicId(id);
+	}
+
+	@Override
+	public Function<? super TopicDTO, ? extends Topic> getDTO2DOMapper() {
+		return topicDTO -> {
+			Topic topic = new Topic();
+			BeanUtils.copyProperties(topicDTO, topic);
+			return topic;
+		};
+	}
+
+	@Override
+	public Function<? super Topic, ? extends TopicDTO> getDO2DTOMapper() {
+		return topic -> {
+			TopicDTO topicDTO = new TopicDTO();
+			BeanUtils.copyProperties(topic, topicDTO);
+			return topicDTO;
+		};
+	}
+
+	@Override
+	public BaseDao<Topic> getDao() {
+		return rootTopicDao;
 	}
 
 }

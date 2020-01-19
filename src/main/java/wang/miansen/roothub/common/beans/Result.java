@@ -10,10 +10,10 @@ package wang.miansen.roothub.common.beans;
  */
 public class Result<T> {
 
-	private String code;
+	private int code;
 	private boolean success;//是否成功标志
 	private T data;//成功时返回的对象
-	private String error;//错误信息
+	private String msg;//错误信息
 	public Result() {
 		
 	}
@@ -24,20 +24,24 @@ public class Result<T> {
 		this.data = data;
 	}
 
-
+	public Result(int code, String msg, T data) {
+		this.code = code;
+		this.msg = msg;
+		this.data = data;
+	}
 
 	// 成功时的构造器
-	public Result(String code, boolean success, T data) {
+	public Result(int code, boolean success, T data) {
 		this.code = code;
 		this.success = success;
 		this.data = data;
 	}
 
 	// 失败时的构造器
-	public Result(String code, boolean success, String error) {
+	public Result(int code, boolean success, String msg) {
 		this.code = code;
 		this.success = success;
-		this.error = error;
+		this.msg = msg;
 	}
 
 	public boolean isSuccess() {
@@ -56,17 +60,17 @@ public class Result<T> {
 		this.data = data;
 	}
 
-	public String getError() {
-		return error;
+	public String getMsg() {
+		return msg;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 	@Override
 	public String toString() {
-		return "Result [success=" + success + ", data=" + data + ", error=" + error + "]";
+		return "Result [success=" + success + ", data=" + data + ", msg=" + msg + "]";
 	}
 	
 }

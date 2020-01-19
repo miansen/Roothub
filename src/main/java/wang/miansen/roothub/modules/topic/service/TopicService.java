@@ -4,11 +4,13 @@ import java.util.List;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.TopicExecution;
+import wang.miansen.roothub.common.service.BaseService;
+import wang.miansen.roothub.modules.topic.dto.TopicDTO;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.tag.model.Tag;
 
-public interface TopicService {
+public interface TopicService extends BaseService<Topic, TopicDTO> {
 
 	/**
 	 * 根据节点和sectionName查询话题

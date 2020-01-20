@@ -71,7 +71,7 @@ public interface BaseController<VO extends BaseVO> {
 	 * @param response 当前的HTTP响应
 	 * @return Result
 	 */
-	Result<VO> save(VO vo, HttpServletRequest request, HttpServletResponse response);
+	Result<VO> save(VO vo, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	/**
 	 * 删除接口

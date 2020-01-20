@@ -1,9 +1,11 @@
 package wang.miansen.roothub.common.handler;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.exception.ApiException;
+import wang.miansen.roothub.common.exception.BaseApiException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -50,11 +52,13 @@ public class GlobalExceptionHandler {
 	 * 接口错误统一处理
 	 * @param e
 	 * @return
-	 * @throws ApiException
+	 * @throws BaseApiException
 	 */
-	@ExceptionHandler(value = ApiException.class)
+	@ExceptionHandler(value = BaseApiException.class)
 	@ResponseBody
-	public Result<String> jsonErrorHandler(ApiException e) throws ApiException{
-		return new Result(false, e.getMessage());
+	public Result<String> jsonErrorHandler(BaseApiException e, HttpServletRequest request, HttpServletResponse response) throws BaseApiException {
+		response.setStatus(e.getHttpCode());
+		Result<String> result = new Result<>(e.getErrorCode(), e.getMessage());
+		return result;
 	}
 }

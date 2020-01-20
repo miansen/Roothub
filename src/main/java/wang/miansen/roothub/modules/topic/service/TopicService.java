@@ -166,9 +166,9 @@ public interface TopicService extends BaseService<Topic, TopicDTO> {
 	 * 发布话题
 	 * @param topic
 	 */
-	TopicExecution saveTopic(Topic topic);
+	// TopicExecution saveTopic(Topic topic);
 	
-	TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle,String tag,User user);
+	// TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle,String tag,User user);
 	
 	/**
 	 * 更新话题

@@ -30,8 +30,8 @@ public class NodeServiceImpl extends AbstractBaseServiceImpl<Node, NodeDTO> impl
 	@Autowired
 	private NodeDao nodeDao;
 	
-	@Autowired
-	private TopicService topicService;
+	// @Autowired
+	// private TopicService topicService;
 	
 	//根据板块查询节点
 	@Override
@@ -89,9 +89,9 @@ public class NodeServiceImpl extends AbstractBaseServiceImpl<Node, NodeDTO> impl
 	public void update(Integer nodeId, String parentNodeCode, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
 		Node node = findById(nodeId);
 		// 先更新话题的节点名称
-		if(!nodeTitle.equals(node.getNodeTitle())) {
+		/*if(!nodeTitle.equals(node.getNodeTitle())) {
 			topicService.updateNodeTitile(node.getNodeTitle(), nodeTitle);
-		}
+		}*/
 		node.setParentNodeCode(parentNodeCode);
 		node.setNodeCode(nodeTitle);
 		node.setNodeTitle(nodeTitle);
@@ -121,7 +121,7 @@ public class NodeServiceImpl extends AbstractBaseServiceImpl<Node, NodeDTO> impl
 	public void deleteById(Integer id) {
 		Node node = findById(id);
 		// 先将话题的节点设置为 null
-		topicService.updateNodeTitile(node.getNodeTitle(), null);
+		// topicService.updateNodeTitile(node.getNodeTitle(), null);
 		// 然后在删除节点
 		nodeDao.deleteById(id);
 	}

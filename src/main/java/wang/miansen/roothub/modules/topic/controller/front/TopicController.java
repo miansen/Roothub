@@ -145,7 +145,7 @@ public class TopicController extends AbstractBaseController<Topic, TopicDTO, Top
      * @param request
      * @return
      */
-    @RequestMapping(value = "/topic/save", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
     @ResponseBody
     private Result<TopicExecution> save(String title, String content,
                                         String nodeTitle, String tag,
@@ -161,7 +161,7 @@ public class TopicController extends AbstractBaseController<Topic, TopicDTO, Top
         }
         TopicExecution saveTopic = topicService.createTopic(title, content, null, null, nodeTitle, tag, user);
         return new Result<TopicExecution>(true, saveTopic);
-    }
+    }*/
 
     /**
      * 根据标签分页查找话题

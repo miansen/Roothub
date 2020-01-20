@@ -42,8 +42,8 @@ public class ReplyServiceImpl implements ReplyService{
 	@Autowired
 	private UserDao userDao;
 	
-	@Autowired
-	private TopicService topicService;
+	// @Autowired
+	// private TopicService topicService;
 	
 	@Autowired
 	@Qualifier("systemConfigServiceImpl")
@@ -124,11 +124,11 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public void deleteByReplyId(Integer replyId) {
 		Reply reply = findById(replyId);
-		Topic topic = topicService.findById(reply.getTopicId());
+		// Topic topic = topicService.findById(reply.getTopicId());
 		// 话题评论数 - 1
-		topic.setReplyCount(topic.getReplyCount() - 1);
+		// topic.setReplyCount(topic.getReplyCount() - 1);
 		// 更新话题
-		topicService.updateTopic(topic);
+		// topicService.updateTopic(topic);
 		// 删除评论
 		replyDao.deleteByReplyId(replyId);
 	}

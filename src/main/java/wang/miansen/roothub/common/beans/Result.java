@@ -14,6 +14,7 @@ public class Result<T> {
 	private boolean success;//是否成功标志
 	private T data;//成功时返回的对象
 	private String msg;//错误信息
+	private String errorCode;
 	public Result() {
 		
 	}
@@ -37,6 +38,12 @@ public class Result<T> {
 		this.data = data;
 	}
 
+	// 失败时的构造器
+	public Result(String errorCode, String msg) {
+		this.errorCode = errorCode;
+		this.msg = msg;
+	}
+	
 	// 失败时的构造器
 	public Result(int code, boolean success, String msg) {
 		this.code = code;
@@ -68,9 +75,25 @@ public class Result<T> {
 		this.msg = msg;
 	}
 
-	@Override
+	public int getCode() {
+		return code;
+	}
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+	public String getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	/*@Override
 	public String toString() {
 		return "Result [success=" + success + ", data=" + data + ", msg=" + msg + "]";
-	}
+	}*/
 	
 }

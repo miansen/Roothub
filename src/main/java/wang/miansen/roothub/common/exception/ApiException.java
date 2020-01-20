@@ -1,10 +1,14 @@
 package wang.miansen.roothub.common.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * 
  * @author miansen.wang
  * @date 2018年10月31日 下午5:29:58
  */
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ApiException extends RuntimeException {
 
 	private int code;

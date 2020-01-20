@@ -14,6 +14,7 @@ import wang.miansen.roothub.common.dto.TopicExecution;
 import wang.miansen.roothub.common.enums.InsertTopicEnum;
 import wang.miansen.roothub.common.exception.OperationFailedException;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
+import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
@@ -21,6 +22,8 @@ import wang.miansen.roothub.modules.tab.dto.TabDTO;
 import wang.miansen.roothub.modules.tag.model.Tag;
 import wang.miansen.roothub.modules.topic.dao.TopicDao;
 import wang.miansen.roothub.modules.topic.dto.TopicDTO;
+import wang.miansen.roothub.modules.topic.enums.TopicErrorCodeEnum;
+import wang.miansen.roothub.modules.topic.exception.TopicException;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.topic.service.TabService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
@@ -195,16 +198,16 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 	/**
 	 * 发布话题
 	 */
-	@Transactional
+	/*@Transactional
 	@Override
 	public TopicExecution saveTopic(Topic topic) {
 		rootTopicDao.insert(topic);
 		// 发贴加积分
 		rootUserDao.updateScoreByName(Integer.valueOf(systemConfigService.getByKey("create_topic_score").getValue()), topic.getAuthor());
 		return new TopicExecution(topic.getTitle(), InsertTopicEnum.SUCCESS, topic);
-	}
+	}*/
 	
-	@Override
+	/*@Override
 	public TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle, String tag,User user) {
 		Topic topic = new Topic();
 		topic.setPtab(null);
@@ -234,7 +237,7 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 		topic.setUrl(null);
 		TopicExecution saveTopic = saveTopic(topic);
 		return saveTopic;
-	}
+	}*/
 
 	/**
 	 * 更新话题
@@ -398,6 +401,31 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 	@Override
 	public Topic findById(Integer id) {
 		return rootTopicDao.selectByTopicId(id);
+	}
+	
+	@Override
+	public boolean save(TopicDTO topicDTO) {
+		String title = topicDTO.getTitle();
+		if (StringUtils.isEmail(title)) {
+			throw new TopicException(TopicErrorCodeEnum.TITLE_MISSING);
+		}
+		Integer nodeId = topicDTO.getNodeDTO().getNodeId();
+		if (nodeId == null) {
+			throw new TopicException(TopicErrorCodeEnum.NODE_ID_MISSING);
+		}
+		NodeDTO nodeDTO = nodeService.getById(nodeId);
+		if (nodeDTO == null) {
+			throw new TopicException(TopicErrorCodeEnum.INVALIDATE_NODE);
+		}
+		Integer userId = topicDTO.getUserDTO().getUserId();
+		if (userId == null) {
+			throw new TopicException(TopicErrorCodeEnum.USER_ID_MISSING);
+		}
+		UserDTO userDTO = userService.getById(userId);
+		if (userDTO == null) {
+			throw new TopicException(TopicErrorCodeEnum.INVALIDATE_USER);
+		}
+		return super.save(topicDTO);
 	}
 
 	@Override

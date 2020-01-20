@@ -98,7 +98,7 @@ public class TopicAdminController {
 	 * @param id
 	 * @return
 	 */
-	@RequiresPermissions("topic:delete")
+	/*@RequiresPermissions("topic:delete")
 	@RequestMapping(value = "/delete",method = RequestMethod.GET)
 	@ResponseBody
 	public Result<String> delete(@RequestParam("id") Integer id){
@@ -109,7 +109,7 @@ public class TopicAdminController {
 		// 删除关联的评论
 		replyService.deleteByTopicId(id);
 		return new Result(true, "删除成功！");
-	}
+	}*/
 	
 	/**
 	 * 编辑话题页面
@@ -134,7 +134,7 @@ public class TopicAdminController {
 	 * @param nodeTitle
 	 * @return
 	 */
-	@RequiresPermissions("topic:edit")
+	/*@RequiresPermissions("topic:edit")
 	@RequestMapping(value = "/edit",method = RequestMethod.POST)
 	@ResponseBody
 	public Result<String> edit(@RequestParam("id") Integer id,@RequestParam("title") String title,
@@ -148,5 +148,5 @@ public class TopicAdminController {
 		topic.setUpdateDate(new Date());
 		topicService.updateTopic(topic);
 		return new Result(true, "编辑成功！");
-	}
+	}*/
 }

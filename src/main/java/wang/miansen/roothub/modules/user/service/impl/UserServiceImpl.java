@@ -51,8 +51,8 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	@Autowired
 	private StorageService storageService;
 	
-	@Autowired
-	private TopicService topicService;
+	// @Autowired
+	// private TopicService topicService;
 	
 	@Autowired
 	private ReplyService replyService;
@@ -270,7 +270,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 		// 更新用户
 		updateUser(user);
 		// 更新话题
-		topicService.updateTopicAvatar(user);
+		// topicService.updateTopicAvatar(user);
 		// 重新设置 session
 		CookieAndSessionUtil.removeSession(request, "user");
 		CookieAndSessionUtil.setSession(request, "user", user);
@@ -309,7 +309,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	public void deleteAdmin(Integer id) {
 		User user = findById(id);
 		// 删除话题
-		topicService.deleteByAuthor(user.getUserName());
+		// topicService.deleteByAuthor(user.getUserName());
 		// 删除评论
 		replyService.deleteByReplyAuthorName(user.getUserName());
 		// 删除收藏

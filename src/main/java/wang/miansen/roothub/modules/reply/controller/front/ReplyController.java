@@ -54,7 +54,7 @@ public class ReplyController extends SessionController {
      * @param type：类型      0：富文本 1：Markdown
      * @return
      */
-    @RequestMapping(value = "/reply/save", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/reply/save", method = RequestMethod.POST)
     @ResponseBody
     private Result<ReplyExecution> save(HttpServletRequest request,
                                         @RequestParam("topicId") Integer topicId,
@@ -103,7 +103,7 @@ public class ReplyController extends SessionController {
             noticeService.save(notice);//添加通知
         }
         return new Result<ReplyExecution>(true, save);
-    }
+    }*/
 
 
 }

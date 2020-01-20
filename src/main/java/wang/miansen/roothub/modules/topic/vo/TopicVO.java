@@ -1,8 +1,5 @@
 package wang.miansen.roothub.modules.topic.vo;
 
-import java.util.Date;
-
-import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
@@ -12,32 +9,37 @@ import wang.miansen.roothub.common.vo.BaseVO;
 public class TopicVO implements BaseVO {
 
 	/**
-	 * 话题标识
+	 * 帖子 ID
 	 */
 	private Integer topicId;
 	
 	/**
-	 * 父版块标识
+	 * 板块 ID
 	 */
-	private String ptab;
+	private Integer tabId;
 	
 	/**
-	 * 版块标识
+	 * 版块名称
 	 */
-	private String tab;
+	private String tabName;
 	
 	/**
-	 * 话题标题
+	 * 节点 ID
+	 */
+	private Integer nodeId;
+	
+	/**
+	 * 节点名称
+	 */
+	private String nodeName;
+	
+	/**
+	 * 帖子标题
 	 */
 	private String title;
 	
 	/**
-	 * 话题内容标签
-	 */
-	private String tag;
-	
-	/**
-	 * 话题内容
+	 * 正文
 	 */
 	private String content;
 	
@@ -47,24 +49,24 @@ public class TopicVO implements BaseVO {
 	private String excerpt;
 	
 	/**
-	 * 创建时间
+	 * 封面
 	 */
-	private Date createDate;
+	private String avatar;
 	
 	/**
-	 * 更新时间
+	 * 链接
 	 */
-	private Date updateDate;
+	private String url;
 	
 	/**
-	 * 最后回复话题时间，用于排序
+	 * true 置顶 false 默认
 	 */
-	private Date lastReplyTime;
+	private Boolean top;
 	
 	/**
-	 * 最后回复话题的用户id
+	 * true 精华 false默认
 	 */
-	private String lastReplyAuthor;
+	private Boolean good;
 	
 	/**
 	 * 浏览量
@@ -72,84 +74,44 @@ public class TopicVO implements BaseVO {
 	private Integer viewCount;
 	
 	/**
-	 * 话题作者id
+	 * 转载量
 	 */
-	private String author;
+	private Integer shareCount;
 	
 	/**
-	 * 1置顶 0默认
+	 * 好评量
 	 */
-	private Boolean top;
+	private Integer goodCount;
 	
 	/**
-	 * 1精华 0默认
-	 */
-	private Boolean good;
-	
-	/**
-	 * 1显示 0不显示
-	 */
-	private Boolean showStatus;
-	
-	/**
-	 * 回复数量
-	 */
-	private Integer replyCount;
-	
-	/**
-	 * 1删除 0默认
-	 */
-	private Boolean isDelete;
-	
-	/**
-	 * 话题内容标签是否被统计过 1是 0否默认
-	 */
-	private Boolean tagIsCount;
-	
-	/**
-	 * 点赞
+	 * 差评量
 	 */
 	private Integer postGoodCount;
 	
 	/**
-	 * 踩数
+	 * 创建时间
 	 */
-	private Integer postBadCount;
+	private String createDate;
 	
 	/**
-	 * 话题状态 1000:有效 1100:无效 1200:未生效
+	 * 更新时间
 	 */
-	private String statusCd;
+	private String updateDate;
 	
 	/**
-	 * 所属节点
+	 * 类型：文本、图片、视频、链接
 	 */
-	private String nodeSlug;
+	private String type;
 	
 	/**
-	 * 节点名称
+	 * 状态：有效、无效、未生效
 	 */
-	private String nodeTitle;
+	private String status;
 	
 	/**
 	 * 备注
 	 */
 	private String remark;
-	
-	/**
-	 * 话题作者头像
-	 */
-	private String avatar;
-	
-	private String url;
-
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
 
 	public Integer getTopicId() {
 		return topicId;
@@ -159,12 +121,36 @@ public class TopicVO implements BaseVO {
 		this.topicId = topicId;
 	}
 
-	public String getTab() {
-		return tab;
+	public Integer getTabId() {
+		return tabId;
 	}
 
-	public void setTab(String tab) {
-		this.tab = tab;
+	public void setTabId(Integer tabId) {
+		this.tabId = tabId;
+	}
+
+	public String getTabName() {
+		return tabName;
+	}
+
+	public void setTabName(String tabName) {
+		this.tabName = tabName;
+	}
+
+	public Integer getNodeId() {
+		return nodeId;
+	}
+
+	public void setNodeId(Integer nodeId) {
+		this.nodeId = nodeId;
+	}
+
+	public String getNodeName() {
+		return nodeName;
+	}
+
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
 	}
 
 	public String getTitle() {
@@ -175,14 +161,6 @@ public class TopicVO implements BaseVO {
 		this.title = title;
 	}
 
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
-
 	public String getContent() {
 		return content;
 	}
@@ -190,7 +168,7 @@ public class TopicVO implements BaseVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 	public String getExcerpt() {
 		return excerpt;
 	}
@@ -199,52 +177,20 @@ public class TopicVO implements BaseVO {
 		this.excerpt = excerpt;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
-	public Date getUpdateDate() {
-		return updateDate;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	public Date getLastReplyTime() {
-		return lastReplyTime;
-	}
-
-	public void setLastReplyTime(Date lastReplyTime) {
-		this.lastReplyTime = lastReplyTime;
-	}
-
-	public String getLastReplyAuthor() {
-		return lastReplyAuthor;
-	}
-
-	public void setLastReplyAuthor(String lastReplyAuthor) {
-		this.lastReplyAuthor = lastReplyAuthor;
-	}
-
-	public Integer getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Integer viewCount) {
-		this.viewCount = viewCount;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public Boolean getTop() {
@@ -263,36 +209,28 @@ public class TopicVO implements BaseVO {
 		this.good = good;
 	}
 
-	public Boolean getShowStatus() {
-		return showStatus;
+	public Integer getViewCount() {
+		return viewCount;
 	}
 
-	public void setShowStatus(Boolean showStatus) {
-		this.showStatus = showStatus;
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
 	}
 
-	public Integer getReplyCount() {
-		return replyCount;
+	public Integer getShareCount() {
+		return shareCount;
 	}
 
-	public void setReplyCount(Integer replyCount) {
-		this.replyCount = replyCount;
+	public void setShareCount(Integer shareCount) {
+		this.shareCount = shareCount;
 	}
 
-	public Boolean getIsDelete() {
-		return isDelete;
+	public Integer getGoodCount() {
+		return goodCount;
 	}
 
-	public void setIsDelete(Boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-
-	public Boolean getTagIsCount() {
-		return tagIsCount;
-	}
-
-	public void setTagIsCount(Boolean tagIsCount) {
-		this.tagIsCount = tagIsCount;
+	public void setGoodCount(Integer goodCount) {
+		this.goodCount = goodCount;
 	}
 
 	public Integer getPostGoodCount() {
@@ -303,36 +241,36 @@ public class TopicVO implements BaseVO {
 		this.postGoodCount = postGoodCount;
 	}
 
-	public Integer getPostBadCount() {
-		return postBadCount;
+	public String getCreateDate() {
+		return createDate;
 	}
 
-	public void setPostBadCount(Integer postBadCount) {
-		this.postBadCount = postBadCount;
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 
-	public String getStatusCd() {
-		return statusCd;
+	public String getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setStatusCd(String statusCd) {
-		this.statusCd = statusCd;
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public String getNodeSlug() {
-		return nodeSlug;
+	public String getType() {
+		return type;
 	}
 
-	public void setNodeSlug(String nodeSlug) {
-		this.nodeSlug = nodeSlug;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getNodeTitle() {
-		return nodeTitle;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setNodeTitle(String nodeTitle) {
-		this.nodeTitle = nodeTitle;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public String getRemark() {
@@ -343,32 +281,14 @@ public class TopicVO implements BaseVO {
 		this.remark = remark;
 	}
 
-	public String getPtab() {
-		return ptab;
-	}
-
-	public void setPtab(String ptab) {
-		this.ptab = ptab;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
 	@Override
 	public String toString() {
-		return "TopicDTO {topicId=" + topicId + ", ptab=" + ptab + ", tab=" + tab + ", title=" + title + ", tag=" + tag
-				+ ", content=" + content + ", excerpt=" + excerpt + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + ", lastReplyTime=" + lastReplyTime + ", lastReplyAuthor=" + lastReplyAuthor
-				+ ", viewCount=" + viewCount + ", author=" + author + ", top=" + top + ", good=" + good
-				+ ", showStatus=" + showStatus + ", replyCount=" + replyCount + ", isDelete=" + isDelete
-				+ ", tagIsCount=" + tagIsCount + ", postGoodCount=" + postGoodCount + ", postBadCount=" + postBadCount
-				+ ", statusCd=" + statusCd + ", nodeSlug=" + nodeSlug + ", nodeTitle=" + nodeTitle + ", remark="
-				+ remark + ", avatar=" + avatar + ", url=" + url + "}";
+		return "TopicVO {topicId=" + topicId + ", tabId=" + tabId + ", tabName=" + tabName + ", nodeId=" + nodeId
+				+ ", nodeName=" + nodeName + ", title=" + title + ", content=" + content + ", excerpt=" + excerpt
+				+ ", avatar=" + avatar + ", url=" + url + ", top=" + top + ", good=" + good + ", viewCount=" + viewCount
+				+ ", shareCount=" + shareCount + ", goodCount=" + goodCount + ", postGoodCount=" + postGoodCount
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", type=" + type + ", status=" + status
+				+ ", remark=" + remark + "}";
 	}
-
+	
 }

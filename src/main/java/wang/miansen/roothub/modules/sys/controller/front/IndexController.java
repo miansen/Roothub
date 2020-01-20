@@ -28,6 +28,7 @@ import wang.miansen.roothub.modules.tag.model.Tag;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -350,6 +351,12 @@ public class IndexController extends SessionController {
 		request.setAttribute("row2", row2);
 		request.setAttribute("row3", row3);
 		return "/default/front/common/excel";
+	}
+	
+	@RequestMapping("/**")
+	public String noHandleMethod(HttpServletRequest request, HttpServletResponse response) {
+		response.setStatus(HttpStatus.SC_NOT_FOUND);
+		return "/default/front/error/404";
 	}
 
 }

@@ -5,8 +5,8 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
@@ -16,24 +16,19 @@ import wang.miansen.roothub.common.exception.BaseException;
 
 /**
  * 全局异常处理
- * <p>这个类可以处理 Controller 层和 DispatcherServlet 抛出的异常，
- * 但是无法处理 404 错误。因为 Spring MVC 默认 404 不抛出错误。
+ * <p>注意：这个只能处理 Controller 层抛出的异常，无法处理 DispatcherServlet 抛出的异常，
+ * 所以用 {@link GlobalExceptionHandler} 替代。
  * 
  * @author miansen.wang
- * @date 2018年10月31日 下午4:03:45
+ * @date 2020-01-21
+ * @since 3.0
  */
-@ControllerAdvice
-public class GlobalExceptionHandler {
-	
-	/**
-	 * 错误页面统一处理
-	 * @param request
-	 * @param e
-	 * @return
-	 * @throws Exception
-	 */
-	@ExceptionHandler(value = Exception.class)
-	public ModelAndView defaultErrorHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws Exception {
+// @Component
+public class BaseExceptionHandler implements HandlerExceptionResolver {
+
+	@Override
+	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
+			Exception e) {
 		String contentType = request.getContentType();
 		if (Objects.equals("application/json", contentType)) {
 			MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
@@ -67,6 +62,6 @@ public class GlobalExceptionHandler {
 				return mv;
 			}
 		}
-	  }
-	
+	}
+
 }

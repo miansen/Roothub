@@ -17,6 +17,12 @@
 	<mvc:annotation-driven />
 
 	<!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 -->
+	<!-- 特别说明：因为我们在 web.xml 里配置了 DispatcherServlet 的拦截路径是 "/"，所以除了动态请求外，
+	静态资源（比如：http://localhost:8080/app.css） 也会被拦截，DispatcherServlet 会将它们当成一个普通请求处理，
+	因此找不到对应处理器将导致错误。这里我们配置了 <mvc:default-servlet-handler /> 后，
+	会在 Spring MVC 上下文中定义一个 org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler，
+	它会像一个检查员，对进入 DispatcherServlet 的 URL 进行筛查，如果发现是静态资源的请求，就将该请求转由 Web 应用服务器默认的
+	Servlet 处理，如果不是静态资源的请求，才由 DispatcherServlet 继续处理。 -->
 	<mvc:default-servlet-handler />
 
 	<!-- 3.配置jsp 显示ViewResolver -->

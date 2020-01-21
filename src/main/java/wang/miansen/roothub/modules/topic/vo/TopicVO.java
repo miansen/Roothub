@@ -34,6 +34,16 @@ public class TopicVO implements BaseVO {
 	private String nodeName;
 	
 	/**
+	 * 用户 ID
+	 */
+	private Integer userId;
+	
+	/**
+	 * 用户名称
+	 */
+	private String userName;
+	
+	/**
 	 * 帖子标题
 	 */
 	private String title;
@@ -151,6 +161,22 @@ public class TopicVO implements BaseVO {
 
 	public void setNodeName(String nodeName) {
 		this.nodeName = nodeName;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getTitle() {
@@ -284,11 +310,11 @@ public class TopicVO implements BaseVO {
 	@Override
 	public String toString() {
 		return "TopicVO {topicId=" + topicId + ", tabId=" + tabId + ", tabName=" + tabName + ", nodeId=" + nodeId
-				+ ", nodeName=" + nodeName + ", title=" + title + ", content=" + content + ", excerpt=" + excerpt
-				+ ", avatar=" + avatar + ", url=" + url + ", top=" + top + ", good=" + good + ", viewCount=" + viewCount
-				+ ", shareCount=" + shareCount + ", goodCount=" + goodCount + ", postGoodCount=" + postGoodCount
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", type=" + type + ", status=" + status
-				+ ", remark=" + remark + "}";
+				+ ", nodeName=" + nodeName + ", userId=" + userId + ", userName=" + userName + ", title=" + title
+				+ ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url=" + url + ", top="
+				+ top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount="
+				+ goodCount + ", postGoodCount=" + postGoodCount + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
 	}
 	
 }

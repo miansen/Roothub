@@ -10,7 +10,7 @@
 	<!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
 	<property name="LOG_HOME" value="./logs" />
 
-	<!-- 控制台输出（开发环境使用） -->
+	<!-- 控制台输出（DEBUG级别） -->
 	<appender name="console_debug" class="ch.qos.logback.core.ConsoleAppender">
 		<!--此日志appender是为开发环境使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -26,11 +26,43 @@
 		</encoder>
 	</appender>
 
-	<!-- 控制台输出（生产环境使用） -->
+	<!-- 控制台输出（INFO级别） -->
 	<appender name="console_info" class="ch.qos.logback.core.ConsoleAppender">
 		<!--此日志appender是为生产环境使用，配置 INFO 级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
 			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
+			<!-- 设置字符集 -->
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	<!-- 控制台输出（WRAN级别） -->
+	<appender name="console_warn" class="ch.qos.logback.core.ConsoleAppender">
+		<!--此日志appender是为生产环境使用，配置 INFO 级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WRAN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
+			<!-- 设置字符集 -->
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	
+	<!-- 控制台输出（ERROR级别） -->
+	<appender name="console_error" class="ch.qos.logback.core.ConsoleAppender">
+		<!--此日志appender是为生产环境使用，配置 INFO 级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
@@ -232,6 +264,8 @@
 	<root level="info">
 		<!--<appender-ref ref="console_debug" />-->
 		<appender-ref ref="console_info" />
+		<appender-ref ref="console_warn" />
+		<appender-ref ref="console_error" />
 		<!--<appender-ref ref="file_debug" />-->
 		<appender-ref ref="file_info" />
 		<appender-ref ref="file_warn" />

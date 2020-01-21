@@ -16,17 +16,21 @@ import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.exception.BaseApiException;
+import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.DateUtil;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
+import wang.miansen.roothub.modules.tab.dto.TabDTO;
 import wang.miansen.roothub.modules.topic.dto.TopicDTO;
 import wang.miansen.roothub.modules.topic.enums.TopicErrorCodeEnum;
 import wang.miansen.roothub.modules.topic.exception.TopicApiException;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.topic.vo.TopicVO;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 
 /**
@@ -44,16 +48,7 @@ public class TopicApiController extends AbstractBaseController<Topic, TopicDTO, 
 	
 	@Override
 	@RequestMapping(value = "/topic", method = RequestMethod.POST)
-	public Result<TopicVO> save(@RequestBody TopicVO vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		/*User user = getUser(request);
-		if (user == null) {
-			throw new TopicApiException(TopicErrorCodeEnum.USER_BE_BANNED);
-		}
-        ApiAssert.notNull(user, "请先登录");*/
-        // ApiAssert.notEmpty(vo.getTitle(), "帖子标题不能为空");
-        // ApiAssert.notNull(vo.getNodeId(), "节点 ID 不能为空");
-        // NodeDTO nodeDTO = nodeService.getById(vo.getNodeId());
-        // ApiAssert.notNull(nodeDTO, "节点不存在，请重新选择节点。");
+	public Result<TopicVO> save(@RequestBody TopicVO vo, HttpServletRequest request, HttpServletResponse response) {
 		return super.save(vo, request, response);
 	}
 
@@ -102,8 +97,18 @@ public class TopicApiController extends AbstractBaseController<Topic, TopicDTO, 
 		return topicVO -> {
 			TopicDTO topicDTO = new TopicDTO();
 			BeanUtils.copyProperties(topicVO, topicDTO);
-			// NodeDTO nodeDTO = nodeService.getById(topicVO.getNodeId());
-			topicDTO.setNodeDTO(null);
+			TabDTO tabDTO = new TabDTO();
+			NodeDTO nodeDTO = new NodeDTO();
+			UserDTO userDTO = new UserDTO();
+			tabDTO.setId(topicVO.getTabId());
+			tabDTO.setTabName(topicVO.getTabName());
+			nodeDTO.setNodeId(topicVO.getNodeId());
+			nodeDTO.setNodeTitle(topicVO.getNodeName());
+			userDTO.setUserId(topicVO.getUserId());
+			userDTO.setUserName(topicVO.getUserName());
+			topicDTO.setTabDTO(tabDTO);
+			topicDTO.setNodeDTO(nodeDTO);
+			topicDTO.setUserDTO(userDTO);
 			topicDTO.setCreateDate(DateUtil.string2Date(topicVO.getCreateDate(), DateUtil.FORMAT_DATETIME));
 			topicDTO.setUpdateDate(DateUtil.string2Date(topicVO.getUpdateDate(), DateUtil.FORMAT_DATETIME));
 			return topicDTO;

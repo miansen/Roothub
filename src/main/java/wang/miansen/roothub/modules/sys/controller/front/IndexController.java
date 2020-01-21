@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import wang.miansen.roothub.common.dto.UserExecution;
+import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.tab.model.Tab;
@@ -353,10 +354,10 @@ public class IndexController extends SessionController {
 		return "/default/front/common/excel";
 	}
 	
-	@RequestMapping("/**")
+	/*@RequestMapping("/**")
 	public String noHandleMethod(HttpServletRequest request, HttpServletResponse response) {
 		response.setStatus(HttpStatus.SC_NOT_FOUND);
 		return "/default/front/error/404";
-	}
+	}*/
 
 }

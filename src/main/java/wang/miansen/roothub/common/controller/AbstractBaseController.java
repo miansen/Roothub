@@ -92,7 +92,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		return mv;
 	}
 
-	public Result<VO> save(VO vo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Result<VO> save(VO vo, HttpServletRequest request, HttpServletResponse response) {
 		this.getService().save(this.getVO2DTO().apply(vo));
 		return new Result<>(ResultStatus.OK.getValue(), ResultStatus.OK.getReasonPhrase(), vo);
 	}

@@ -4,7 +4,6 @@ import java.util.Date;
 
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
-import wang.miansen.roothub.modules.tab.dto.TabDTO;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 
 /**
@@ -14,11 +13,6 @@ import wang.miansen.roothub.modules.user.dto.UserDTO;
 public class TopicDTO implements BaseDTO {
 
 	private Integer topicId;
-	
-	/**
-	 * 版块
-	 */
-	private TabDTO tabDTO;
 	
 	/**
 	 * 节点
@@ -116,14 +110,6 @@ public class TopicDTO implements BaseDTO {
 
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
-	}
-
-	public TabDTO getTabDTO() {
-		return tabDTO;
-	}
-
-	public void setTabDTO(TabDTO tabDTO) {
-		this.tabDTO = tabDTO;
 	}
 
 	public NodeDTO getNodeDTO() {
@@ -272,11 +258,11 @@ public class TopicDTO implements BaseDTO {
 
 	@Override
 	public String toString() {
-		return "TopicDTO [topicId=" + topicId + ", tabDTO=" + tabDTO + ", nodeDTO=" + nodeDTO + ", userDTO=" + userDTO
-				+ ", title=" + title + ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url="
-				+ url + ", top=" + top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount
-				+ ", goodCount=" + goodCount + ", postGoodCount=" + postGoodCount + ", createDate=" + createDate
-				+ ", updateDate=" + updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "]";
+		return "TopicDTO {topicId=" + topicId + ", nodeDTO=" + nodeDTO + ", userDTO=" + userDTO + ", title=" + title
+				+ ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url=" + url + ", top="
+				+ top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount="
+				+ goodCount + ", postGoodCount=" + postGoodCount + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
 	}
 
 }

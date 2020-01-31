@@ -22,11 +22,6 @@ public class Topic implements BaseDO {
 	private Integer topicId;
 	
 	/**
-	 * 版块ID
-	 */
-	private Integer tabId;
-	
-	/**
 	 * 节点ID
 	 */
 	private Integer nodeId;
@@ -67,7 +62,7 @@ public class Topic implements BaseDO {
 	private Boolean top;
 	
 	/**
-	 * true 精华 false默认
+	 * true 精华 false 默认
 	 */
 	private Boolean good;
 	
@@ -89,7 +84,7 @@ public class Topic implements BaseDO {
 	/**
 	 * 差评量
 	 */
-	private Integer postGoodCount;
+	private Integer badCount;
 	
 	/**
 	 * 创建时间
@@ -122,14 +117,6 @@ public class Topic implements BaseDO {
 
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
-	}
-
-	public Integer getTabId() {
-		return tabId;
-	}
-
-	public void setTabId(Integer tabId) {
-		this.tabId = tabId;
 	}
 
 	public Integer getNodeId() {
@@ -228,12 +215,12 @@ public class Topic implements BaseDO {
 		this.goodCount = goodCount;
 	}
 
-	public Integer getPostGoodCount() {
-		return postGoodCount;
+	public Integer getBadCount() {
+		return badCount;
 	}
 
-	public void setPostGoodCount(Integer postGoodCount) {
-		this.postGoodCount = postGoodCount;
+	public void setBadCount(Integer badCount) {
+		this.badCount = badCount;
 	}
 
 	public Date getCreateDate() {
@@ -278,11 +265,11 @@ public class Topic implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Topic [topicId=" + topicId + ", tabId=" + tabId + ", nodeId=" + nodeId + ", userId=" + userId
-				+ ", title=" + title + ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url="
-				+ url + ", top=" + top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount
-				+ ", goodCount=" + goodCount + ", postGoodCount=" + postGoodCount + ", createDate=" + createDate
-				+ ", updateDate=" + updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "]";
+		return "Topic {topicId=" + topicId + ", nodeId=" + nodeId + ", userId=" + userId + ", title=" + title
+				+ ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url=" + url + ", top="
+				+ top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount="
+				+ goodCount + ", badCount=" + badCount + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
 	}
 
 }

@@ -25,7 +25,6 @@ import wang.miansen.roothub.modules.topic.dto.TopicDTO;
 import wang.miansen.roothub.modules.topic.enums.TopicErrorCodeEnum;
 import wang.miansen.roothub.modules.topic.exception.TopicException;
 import wang.miansen.roothub.modules.topic.model.Topic;
-import wang.miansen.roothub.modules.topic.service.TabService;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
@@ -53,9 +52,6 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 	
 	@Autowired
 	private NodeService nodeService;
-	
-	@Autowired
-	private TabService tabService;
 	
 	@Autowired
 	private UserDao rootUserDao;
@@ -406,7 +402,7 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 	@Override
 	public boolean save(TopicDTO topicDTO) {
 		String title = topicDTO.getTitle();
-		if (StringUtils.isEmail(title)) {
+		if (StringUtils.notBlank(title)) {
 			throw new TopicException(TopicErrorCodeEnum.TITLE_MISSING);
 		}
 		Integer nodeId = topicDTO.getNodeDTO().getNodeId();
@@ -433,7 +429,6 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 		return topicDTO -> {
 			Topic topic = new Topic();
 			BeanUtils.copyProperties(topicDTO, topic);
-			topic.setTabId(topicDTO.getTabDTO().getId());
 			topic.setNodeId(topicDTO.getNodeDTO().getNodeId());
 			topic.setUserId(topicDTO.getUserDTO().getUserId());
 			return topic;
@@ -445,10 +440,8 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 		return topic -> {
 			TopicDTO topicDTO = new TopicDTO();
 			BeanUtils.copyProperties(topic, topicDTO);
-			TabDTO tabDTO = tabService.getById(topic.getTabId());
 			UserDTO userDTO = userService.getById(topic.getUserId());
 			NodeDTO nodeDTO = nodeService.getById(topic.getNodeId());
-			topicDTO.setTabDTO(tabDTO);
 			topicDTO.setNodeDTO(nodeDTO);
 			topicDTO.setUserDTO(userDTO);
 			return topicDTO;

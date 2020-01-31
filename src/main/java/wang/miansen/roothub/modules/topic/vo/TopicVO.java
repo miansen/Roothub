@@ -14,16 +14,6 @@ public class TopicVO implements BaseVO {
 	private Integer topicId;
 	
 	/**
-	 * 板块 ID
-	 */
-	private Integer tabId;
-	
-	/**
-	 * 版块名称
-	 */
-	private String tabName;
-	
-	/**
 	 * 节点 ID
 	 */
 	private Integer nodeId;
@@ -129,22 +119,6 @@ public class TopicVO implements BaseVO {
 
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
-	}
-
-	public Integer getTabId() {
-		return tabId;
-	}
-
-	public void setTabId(Integer tabId) {
-		this.tabId = tabId;
-	}
-
-	public String getTabName() {
-		return tabName;
-	}
-
-	public void setTabName(String tabName) {
-		this.tabName = tabName;
 	}
 
 	public Integer getNodeId() {
@@ -309,12 +283,12 @@ public class TopicVO implements BaseVO {
 
 	@Override
 	public String toString() {
-		return "TopicVO {topicId=" + topicId + ", tabId=" + tabId + ", tabName=" + tabName + ", nodeId=" + nodeId
-				+ ", nodeName=" + nodeName + ", userId=" + userId + ", userName=" + userName + ", title=" + title
-				+ ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url=" + url + ", top="
-				+ top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount="
-				+ goodCount + ", postGoodCount=" + postGoodCount + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
+		return "TopicVO {topicId=" + topicId + ", nodeId=" + nodeId + ", nodeName=" + nodeName + ", userId=" + userId
+				+ ", userName=" + userName + ", title=" + title + ", content=" + content + ", excerpt=" + excerpt
+				+ ", avatar=" + avatar + ", url=" + url + ", top=" + top + ", good=" + good + ", viewCount=" + viewCount
+				+ ", shareCount=" + shareCount + ", goodCount=" + goodCount + ", postGoodCount=" + postGoodCount
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", type=" + type + ", status=" + status
+				+ ", remark=" + remark + "}";
 	}
-	
+
 }

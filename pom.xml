@@ -253,7 +253,7 @@
 	</dependencies>
 	<build>
 		<!-- 项目名称 -->
-		<finalName>roothub</finalName>
+		<finalName>Roothub</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

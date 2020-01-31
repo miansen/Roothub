@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +27,8 @@ import wang.miansen.roothub.common.exception.BaseException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
+	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+	
 	/**
 	 * 错误页面统一处理
 	 * @param request
@@ -34,6 +38,7 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView defaultErrorHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.error(e.getMessage());
 		String contentType = request.getContentType();
 		if (Objects.equals("application/json", contentType)) {
 			MappingJackson2JsonView jsonView = new MappingJackson2JsonView();

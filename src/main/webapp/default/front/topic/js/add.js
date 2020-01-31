@@ -84,7 +84,7 @@ $(function () {
         }*/
 
         $.ajax({
-            url: '/topic/save',
+            url: 'api/v3/topic',
             type: 'post',
             async: false,
             cache: false,
@@ -159,7 +159,7 @@ $(function () {
             }
         }*/
 
-        $.post("/topic/save", {
+        $.post("api/v3/topic", {
             title: title,
             content: content,
             nodeTitle: nodeTitle,

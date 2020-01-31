@@ -16,22 +16,16 @@ import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
-import wang.miansen.roothub.common.exception.BaseApiException;
-import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.DateUtil;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
-import wang.miansen.roothub.modules.tab.dto.TabDTO;
 import wang.miansen.roothub.modules.topic.dto.TopicDTO;
-import wang.miansen.roothub.modules.topic.enums.TopicErrorCodeEnum;
-import wang.miansen.roothub.modules.topic.exception.TopicApiException;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.topic.vo.TopicVO;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
-import wang.miansen.roothub.modules.user.model.User;
+import wang.miansen.roothub.modules.user.service.UserService;
 
 /**
  * @author miansen.wang
@@ -44,7 +38,11 @@ public class TopicApiController extends AbstractBaseController<Topic, TopicDTO, 
 	@Autowired
 	private TopicService topicService;
 	
-	@Autowired NodeService nodeService;
+	@Autowired 
+	private NodeService nodeService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Override
 	@RequestMapping(value = "/topic", method = RequestMethod.POST)
@@ -82,10 +80,10 @@ public class TopicApiController extends AbstractBaseController<Topic, TopicDTO, 
 		return topicDTO -> {
 			TopicVO topicVO = new TopicVO();
 			BeanUtils.copyProperties(topicDTO, topicVO);
-			topicVO.setTabId(topicDTO.getTabDTO().getId());
-			topicVO.setTabName(topicDTO.getTabDTO().getTabName());
 			topicVO.setNodeId(topicDTO.getNodeDTO().getNodeId());
 			topicVO.setNodeName(topicDTO.getNodeDTO().getNodeTitle());
+			topicVO.setUserId(topicDTO.getUserDTO().getUserId());
+			topicVO.setUserName(topicDTO.getUserDTO().getUserName());
 			topicVO.setCreateDate(DateUtil.formatDateTime(topicDTO.getCreateDate()));
 			topicVO.setUpdateDate(DateUtil.formatDateTime(topicDTO.getUpdateDate()));
 			return topicVO;
@@ -97,16 +95,8 @@ public class TopicApiController extends AbstractBaseController<Topic, TopicDTO, 
 		return topicVO -> {
 			TopicDTO topicDTO = new TopicDTO();
 			BeanUtils.copyProperties(topicVO, topicDTO);
-			TabDTO tabDTO = new TabDTO();
-			NodeDTO nodeDTO = new NodeDTO();
-			UserDTO userDTO = new UserDTO();
-			tabDTO.setId(topicVO.getTabId());
-			tabDTO.setTabName(topicVO.getTabName());
-			nodeDTO.setNodeId(topicVO.getNodeId());
-			nodeDTO.setNodeTitle(topicVO.getNodeName());
-			userDTO.setUserId(topicVO.getUserId());
-			userDTO.setUserName(topicVO.getUserName());
-			topicDTO.setTabDTO(tabDTO);
+			NodeDTO nodeDTO = nodeService.getById(topicVO.getNodeId());
+			UserDTO userDTO = userService.getById(topicVO.getUserId());
 			topicDTO.setNodeDTO(nodeDTO);
 			topicDTO.setUserDTO(userDTO);
 			topicDTO.setCreateDate(DateUtil.string2Date(topicVO.getCreateDate(), DateUtil.FORMAT_DATETIME));

@@ -83,19 +83,24 @@ $(function () {
             }
         }*/
 
-        $.ajax({
-            url: 'api/v3/topic',
-            type: 'post',
-            async: false,
-            cache: false,
-            dataType: 'json',
-            data: {
+        var data = {
                 title: title,
                 content: contentHtml,
                 nodeTitle: nodeTitle,
                 // tag: tag,
                 type: "0"
-            },
+            };
+        	console.log(data);
+        	var url = 'api/v3/topic';
+        	console.log(url);
+        $.ajax({
+            url: url,
+            contentType:"application/json; charset=utf-8",
+            type: 'post',
+            async: false,
+            cache: false,
+            dataType: 'json',
+            data: data,
             success: function (data) {
                 //console.log(JSON.stringify(data));
                 if (data.success != null && data.success == true) {

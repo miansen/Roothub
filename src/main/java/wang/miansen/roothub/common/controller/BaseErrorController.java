@@ -38,8 +38,8 @@ public class BaseErrorController implements ErrorController {
 	@ResponseBody
 	public ResponseEntity<Result<String>> error(HttpServletRequest request) {
 		HttpStatus status = getStatus(request);
-		return new ResponseEntity<Result<String>>(
-				new Result<>(String.valueOf(status.value()), BaseErrorCodeEnum.INTERNAL_ERROR.getMessage()), status);
+		return new ResponseEntity<Result<String>>(new Result<>(BaseErrorCodeEnum.INTERNAL_ERROR.getErrorCode(),
+				BaseErrorCodeEnum.INTERNAL_ERROR.getMessage()), status);
 	}
 
 	private HttpStatus getStatus(HttpServletRequest request) {

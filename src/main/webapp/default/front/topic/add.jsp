@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../common/common.jsp" %>
 <%@ include file="../layout/header.jsp" %>
 <div class="row">
     <div class="col-md-9">
@@ -98,5 +99,9 @@
         </div>
     </div>
 </div>
-<script src="/default/front/topic/js/add.js"></script>
+<script type="text/javascript">
+var contextPath = ${pageContext.request.contextPath}
+console.log(contextPath);
+</script>
+<script src="/default/front/topic/js/add.js" />
 <%@ include file="../layout/footer.jsp" %>

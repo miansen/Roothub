@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.slf4j.Logger;
@@ -15,7 +17,6 @@ import org.slf4j.LoggerFactory;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.beans.ResultStatus;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.entity.BaseDO;
@@ -92,34 +93,37 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		return mv;
 	}
 
-	public Result<VO> save(VO vo, HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<Result<VO>> save(VO vo, HttpServletRequest request, HttpServletResponse response) {
 		this.getService().save(this.getVO2DTO().apply(vo));
-		return new Result<>(ResultStatus.OK.getValue(), ResultStatus.OK.getReasonPhrase(), vo);
+		return new ResponseEntity<Result<VO>>(
+				new Result<>(this.getDTO2VO().apply(this.getService().getById(vo.getPrimaryKey()))),
+				HttpStatus.CREATED);
 	}
 
-	public Result<VO> remove(Integer id, HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<Result<VO>> remove(Integer id, HttpServletRequest request, HttpServletResponse response) {
 		this.getService().removeById(id);
-		return new Result<>(ResultStatus.NO_CONTENT.getValue(), ResultStatus.NO_CONTENT.getReasonPhrase(), null);
+		return new ResponseEntity<Result<VO>>(new Result<>(null), HttpStatus.NO_CONTENT);
 	}
 
-	public Result<VO> update(Integer id, VO vo, HttpServletRequest request, HttpServletResponse response) {
+	public ResponseEntity<Result<VO>> update(VO vo, HttpServletRequest request, HttpServletResponse response) {
 		this.getService().updateById(getVO2DTO().apply(vo));
-		return new Result<>(ResultStatus.OK.getValue(), ResultStatus.OK.getReasonPhrase(), vo);
+		return new ResponseEntity<Result<VO>>(
+				new Result<>(this.getDTO2VO().apply(this.getService().getById(vo.getPrimaryKey()))),
+				HttpStatus.CREATED);
 	}
 
-	public Result<VO> getOne(Integer id, HttpServletRequest request, HttpServletResponse response) {
-		DTO dto = this.getService().getById(id);
-		VO vo = getDTO2VO().apply(dto);
-		return new Result<>(ResultStatus.OK.getValue(), ResultStatus.OK.getReasonPhrase(), vo);
+	public ResponseEntity<Result<VO>> getOne(Integer id, HttpServletRequest request, HttpServletResponse response) {
+		return new ResponseEntity<Result<VO>>(new Result<VO>(getDTO2VO().apply(this.getService().getById(id))),
+				HttpStatus.OK);
 	}
 
-	public Result<Page<? extends VO>> page(Integer pageNumber, HttpServletRequest request,
+	public ResponseEntity<Result<Page<? extends VO>>> page(Integer pageNumber, HttpServletRequest request,
 			HttpServletResponse response) {
 		Page<DTO> dtoPage = this.getService().page(pageNumber, 25, this.getQueryWrapper());
 		List<? extends VO> voList = dtoPage.getList().stream().map(getDTO2VO()).collect(Collectors.toList());
 		Page<? extends VO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
 				dtoPage.getTotalRow());
-		return new Result<>(ResultStatus.OK.getValue(), ResultStatus.OK.getReasonPhrase(), voPage);
+		return new ResponseEntity<Result<Page<? extends VO>>>(new Result<>(voPage), HttpStatus.OK);
 	}
 
 	protected abstract Function<? super DTO, ? extends VO> getDTO2VO();

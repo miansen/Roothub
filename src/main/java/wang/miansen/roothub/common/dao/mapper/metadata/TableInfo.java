@@ -1,18 +1,19 @@
 package wang.miansen.roothub.common.dao.mapper.metadata;
 
-import wang.miansen.roothub.common.dao.mapper.enums.IdType;
-import wang.miansen.roothub.common.dao.mapper.util.SqlScriptUtils;
-import wang.miansen.roothub.common.dao.mapper.util.StringPool;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import wang.miansen.roothub.common.dao.mapper.enums.IdType;
+import wang.miansen.roothub.common.dao.mapper.util.SqlScriptUtils;
+import wang.miansen.roothub.common.dao.mapper.util.StringPool;
+
 /**
- * TableInfo 存储了数据库对应的 model 所有的信息，
+ * TableInfo 存储了数据库对应的实体类所有的信息，
  * 包括表主键 ID 类型、表名称、表字段信息列表等等信息，这些信息通过反射获取。
- * @Author: miansen.wang
- * @Date: 2019/8/26 23:15
+ * 
+ * @author: miansen.wang
+ * @date: 2019-8-26 23:15
  */
 public class TableInfo implements StringPool {
 

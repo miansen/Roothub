@@ -2,8 +2,10 @@ package wang.miansen.roothub.common.dao.mapper.enums;
 
 /**
  * 常用的增删改查方法
- * @Author: miansen.wang
- * @Date: 2019/9/4 22:14
+ * 
+ * @author miansen.wang
+ * @date 2019-9-4 22:14
+ * @since 3.0
  */
 public enum SqlMethod {
 

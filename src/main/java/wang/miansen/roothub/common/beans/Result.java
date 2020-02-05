@@ -50,6 +50,10 @@ public class Result<T> {
 		this.success = success;
 		this.msg = msg;
 	}
+	
+	public Result(T data) {
+		this.data = data;
+	}
 
 	public boolean isSuccess() {
 		return success;

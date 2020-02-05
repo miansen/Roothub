@@ -1,7 +1,5 @@
 package wang.miansen.roothub.common.handler;
 
-import java.util.Objects;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,9 +36,9 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(value = Exception.class)
 	public ModelAndView defaultErrorHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		logger.error(e.getMessage());
+		logger.error(e.getMessage(), e);
 		String contentType = request.getContentType();
-		if (Objects.equals("application/json", contentType)) {
+		if (contentType.indexOf("application/json") != -1) {
 			MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 			jsonView.setExtractValueFromSingleKeyModel(true);
 			ModelAndView mv = new ModelAndView(jsonView);

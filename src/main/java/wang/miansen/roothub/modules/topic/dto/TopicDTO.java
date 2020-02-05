@@ -12,7 +12,7 @@ import wang.miansen.roothub.modules.user.dto.UserDTO;
  */
 public class TopicDTO implements BaseDTO {
 
-	private Integer topicId;
+	private String topicId;
 	
 	/**
 	 * 节点
@@ -77,7 +77,7 @@ public class TopicDTO implements BaseDTO {
 	/**
 	 * 差评量
 	 */
-	private Integer postGoodCount;
+	private Integer badCount;
 	
 	/**
 	 * 创建时间
@@ -104,11 +104,11 @@ public class TopicDTO implements BaseDTO {
 	 */
 	private String remark;
 
-	public Integer getTopicId() {
+	public String getTopicId() {
 		return topicId;
 	}
 
-	public void setTopicId(Integer topicId) {
+	public void setTopicId(String topicId) {
 		this.topicId = topicId;
 	}
 
@@ -208,12 +208,12 @@ public class TopicDTO implements BaseDTO {
 		this.goodCount = goodCount;
 	}
 
-	public Integer getPostGoodCount() {
-		return postGoodCount;
+	public Integer getBadCount() {
+		return badCount;
 	}
 
-	public void setPostGoodCount(Integer postGoodCount) {
-		this.postGoodCount = postGoodCount;
+	public void setBadCount(Integer badCount) {
+		this.badCount = badCount;
 	}
 
 	public Date getCreateDate() {
@@ -261,8 +261,8 @@ public class TopicDTO implements BaseDTO {
 		return "TopicDTO {topicId=" + topicId + ", nodeDTO=" + nodeDTO + ", userDTO=" + userDTO + ", title=" + title
 				+ ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url=" + url + ", top="
 				+ top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount="
-				+ goodCount + ", postGoodCount=" + postGoodCount + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
+				+ goodCount + ", badCount=" + badCount + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
 	}
 
 }

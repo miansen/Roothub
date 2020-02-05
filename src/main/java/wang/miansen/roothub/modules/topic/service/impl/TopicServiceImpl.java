@@ -400,9 +400,9 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 	}
 	
 	@Override
-	public boolean save(TopicDTO topicDTO) {
+	public boolean save(TopicDTO topicDTO) throws TopicException {
 		String title = topicDTO.getTitle();
-		if (StringUtils.notBlank(title)) {
+		if (StringUtils.isBlank(title)) {
 			throw new TopicException(TopicErrorCodeEnum.TITLE_MISSING);
 		}
 		Integer nodeId = topicDTO.getNodeDTO().getNodeId();
@@ -421,6 +421,15 @@ public class TopicServiceImpl extends AbstractBaseServiceImpl<Topic, TopicDTO> i
 		if (userDTO == null) {
 			throw new TopicException(TopicErrorCodeEnum.INVALIDATE_USER);
 		}
+		topicDTO.setTop(false);
+		topicDTO.setGood(false);
+		topicDTO.setViewCount(0);
+		topicDTO.setShareCount(0);
+		topicDTO.setGoodCount(0);
+		topicDTO.setBadCount(0);
+		topicDTO.setCreateDate(new Date());
+		topicDTO.setType("1000");
+		topicDTO.setStatus("1000");
 		return super.save(topicDTO);
 	}
 

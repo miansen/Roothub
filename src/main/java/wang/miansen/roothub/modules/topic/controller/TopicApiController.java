@@ -7,24 +7,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.topic.dto.TopicDTO;
+import wang.miansen.roothub.modules.topic.enums.TopicErrorCodeEnum;
+import wang.miansen.roothub.modules.topic.exception.TopicException;
 import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.topic.vo.TopicVO;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
+import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 
 /**
@@ -46,33 +50,15 @@ public class TopicApiController extends AbstractBaseController<Topic, TopicDTO, 
 	
 	@Override
 	@RequestMapping(value = "/topic", method = RequestMethod.POST)
-	public Result<TopicVO> save(@RequestBody TopicVO vo, HttpServletRequest request, HttpServletResponse response) {
-		return super.save(vo, request, response);
-	}
-
-	@Override
-	public Result<TopicVO> remove(Integer id, HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return super.remove(id, request, response);
-	}
-
-	@Override
-	public Result<TopicVO> update(Integer id, TopicVO vo, HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return super.update(id, vo, request, response);
-	}
-
-	@Override
-	public Result<TopicVO> getOne(Integer id, HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return super.getOne(id, request, response);
-	}
-
-	@Override
-	public Result<Page<? extends TopicVO>> page(Integer pageNumber, HttpServletRequest request,
-			HttpServletResponse response) {
-		// TODO Auto-generated method stub
-		return super.page(pageNumber, request, response);
+	public ResponseEntity<Result<TopicVO>> save(@RequestBody TopicVO topicVO, HttpServletRequest request, HttpServletResponse response) {
+		User user = getUser(request);
+		if (user == null) {
+			throw new TopicException(TopicErrorCodeEnum.INVALIDATE_USER);
+		}
+		topicVO.setTopicId(IDGenerator.generateID());
+		topicVO.setUserId(user.getUserId());
+		topicVO.setUserName(user.getUserName());
+		return super.save(topicVO, request, response);
 	}
 
 	@Override

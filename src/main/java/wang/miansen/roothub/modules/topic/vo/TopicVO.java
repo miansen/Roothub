@@ -8,10 +8,12 @@ import wang.miansen.roothub.common.vo.BaseVO;
  */
 public class TopicVO implements BaseVO {
 
+	private static final long serialVersionUID = 4899815331871315247L;
+
 	/**
 	 * 帖子 ID
 	 */
-	private Integer topicId;
+	private String topicId;
 	
 	/**
 	 * 节点 ID
@@ -113,11 +115,11 @@ public class TopicVO implements BaseVO {
 	 */
 	private String remark;
 
-	public Integer getTopicId() {
+	public String getTopicId() {
 		return topicId;
 	}
 
-	public void setTopicId(Integer topicId) {
+	public void setTopicId(String topicId) {
 		this.topicId = topicId;
 	}
 
@@ -289,6 +291,11 @@ public class TopicVO implements BaseVO {
 				+ ", shareCount=" + shareCount + ", goodCount=" + goodCount + ", postGoodCount=" + postGoodCount
 				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", type=" + type + ", status=" + status
 				+ ", remark=" + remark + "}";
+	}
+
+	@Override
+	public String getPrimaryKey() {
+		return topicId;
 	}
 
 }

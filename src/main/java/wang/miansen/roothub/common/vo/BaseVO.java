@@ -15,6 +15,6 @@ public interface BaseVO extends Serializable {
 	 * 获取主键
 	 * @return
 	 */
-	Integer getPrimaryKey();
+	String getPrimaryKey();
 	
 }

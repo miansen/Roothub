@@ -18,8 +18,8 @@ public class Topic implements BaseDO {
 	/**
 	 * 帖子ID
 	 */
-	@Id(value = "topic_id", type = IdType.AUTO)
-	private Integer topicId;
+	@Id(value = "topic_id", type = IdType.UUID)
+	private String topicId;
 	
 	/**
 	 * 节点ID
@@ -111,11 +111,11 @@ public class Topic implements BaseDO {
 	 */
 	private String remark;
 
-	public Integer getTopicId() {
+	public String getTopicId() {
 		return topicId;
 	}
 
-	public void setTopicId(Integer topicId) {
+	public void setTopicId(String topicId) {
 		this.topicId = topicId;
 	}
 

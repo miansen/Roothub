@@ -44,11 +44,4 @@ public class IDGenerator {
 		return new Date(Long.parseLong(timeInfo, 16));
 	}
 	
-	public static void main(String[] args) {
-		String id = IDGenerator.generateID();
-		System.out.println(id);
-		Date date = IDGenerator.getIDCreateTime(id);
-		System.out.println(date);
-	}
-	
 }

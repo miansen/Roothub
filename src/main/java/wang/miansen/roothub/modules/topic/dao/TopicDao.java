@@ -158,7 +158,7 @@ public interface TopicDao extends BaseDao<Topic> {
      * @param rootTopic
      * @return
      */
-    int insert(Topic rootTopic);
+    // int insert(Topic rootTopic);
     
     /**
      * 根据ID更新话题

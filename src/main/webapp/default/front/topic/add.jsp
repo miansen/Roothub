@@ -48,7 +48,7 @@
                                 <label for="node">节点</label>
                                 <select id="node" class="form-control" name="node">
                                     <c:forEach var="item" items="${nodeList}" varStatus="status">
-                                        <option value="${item.nodeTitle}">${item.nodeTitle}</option>
+                                        <option value="${item.nodeId}">${item.nodeTitle}</option>
                                     </c:forEach>
                                 </select>
                             </div>

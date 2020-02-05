@@ -18,7 +18,7 @@ public class User implements BaseDO {
 	/**
 	 * 用户标识
 	 */
-	@Id(value = "topic_id", type = IdType.AUTO)
+	@Id(value = "user_id", type = IdType.AUTO)
 	private Integer userId;
 	
 	/**

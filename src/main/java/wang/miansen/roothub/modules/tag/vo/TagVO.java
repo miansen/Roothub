@@ -8,10 +8,12 @@ import wang.miansen.roothub.common.vo.BaseVO;
  */
 public class TagVO implements BaseVO {
 
+	private static final long serialVersionUID = 2297537422753323536L;
+
 	/**
 	 * 标签ID
 	 */
-	private Integer tagId;
+	private String tagId;
 
 	/**
 	 * 标签名称
@@ -43,11 +45,11 @@ public class TagVO implements BaseVO {
 	 */
 	private String updateDate;
 
-	public Integer getTagId() {
+	public String getTagId() {
 		return tagId;
 	}
 
-	public void setTagId(Integer tagId) {
+	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
 
@@ -103,6 +105,11 @@ public class TagVO implements BaseVO {
 	public String toString() {
 		return "TagVO {tagId=" + tagId + ", tagName=" + tagName + ", tagState=" + tagState + ", tagAvatar=" + tagAvatar
 				+ ", tagContent=" + tagContent + ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
+	}
+
+	@Override
+	public String getPrimaryKey() {
+		return tagId;
 	}
 
 }

@@ -382,7 +382,7 @@
 		and create_date = #{date}
      </select>
      <!-- 发布话题 -->
-     <insert id="insert" parameterType="wang.miansen.roothub.modules.topic.model.Topic" keyProperty="topicId" useGeneratedKeys="true">
+     <!-- <insert id="insert" parameterType="wang.miansen.roothub.modules.topic.model.Topic" keyProperty="topicId" useGeneratedKeys="true">
     insert into 
            topic 
            (topic_id,
@@ -438,7 +438,7 @@
              #{remark},
              #{avatar},
              #{url})
-  </insert>
+  </insert> -->
     <update id="updateByTopicId" parameterType="wang.miansen.roothub.modules.topic.model.Topic">
       UPDATE 
       	topic

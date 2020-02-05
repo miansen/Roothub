@@ -11,7 +11,7 @@ public class TagDTO implements BaseDTO {
 	/**
 	 * 标签ID
 	 */
-	private Integer tagId;
+	private String tagId;
 
 	/**
 	 * 标签名称
@@ -43,11 +43,11 @@ public class TagDTO implements BaseDTO {
 	 */
 	private String updateDate;
 
-	public Integer getTagId() {
+	public String getTagId() {
 		return tagId;
 	}
 
-	public void setTagId(Integer tagId) {
+	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
 

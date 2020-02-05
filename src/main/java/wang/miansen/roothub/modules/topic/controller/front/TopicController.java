@@ -71,7 +71,7 @@ public class TopicController extends AbstractBaseController<Topic, TopicDTO, Top
      * @return
      */
     @RequestMapping(value = "/topics/{id}", method = RequestMethod.GET)
-    public ModelAndView detail(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView detail(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) {
     	ModelAndView mv = new ModelAndView();
     	// Topic topic = topicService.findByTopicId(id);
     	TopicDTO topicDTO = topicService.getById(id);
@@ -87,14 +87,14 @@ public class TopicController extends AbstractBaseController<Topic, TopicDTO, Top
         	p = "1";
         }
         // 查询回复
-        Page<Reply> replyPage = replyService.page(Integer.valueOf(p), 50, id);
+        Page<Reply> replyPage = replyService.page(Integer.valueOf(p), 50, 1);
 
         // String tag = topic.getTag();
         // 将标签封装成list
         // List<String> tags = Arrays.asList(tag.split("\\s+"));
 
         // 话题被收藏的数量
-        int countByTid = collectService.countByTid(id);
+        int countByTid = collectService.countByTid(1);
         // 发布的主题的数量
         // int countTopicByUserName = 0;
         // 收藏话题的数量

@@ -20,8 +20,8 @@ public class Tag implements BaseDO {
 	/**
 	 * 标签ID
 	 */
-	@Id(value = "tag_id", type = IdType.AUTO)
-	private Integer tagId;
+	@Id(value = "tag_id", type = IdType.UUID)
+	private String tagId;
 
 	/**
 	 * 标签名称
@@ -53,11 +53,11 @@ public class Tag implements BaseDO {
 	 */
 	private Date updateDate;
 
-	public Integer getTagId() {
+	public String getTagId() {
 		return tagId;
 	}
 
-	public void setTagId(Integer tagId) {
+	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
 
@@ -111,14 +111,8 @@ public class Tag implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Tag{" +
-				"tagId=" + tagId +
-				", tagName='" + tagName + '\'' +
-				", tagState='" + tagState + '\'' +
-				", tagAvatar='" + tagAvatar + '\'' +
-				", tagContent='" + tagContent + '\'' +
-				", createDate=" + createDate +
-				", updateDate=" + updateDate +
-				'}';
+		return "Tag {tagId=" + tagId + ", tagName=" + tagName + ", tagState=" + tagState + ", tagAvatar=" + tagAvatar
+				+ ", tagContent=" + tagContent + ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
 	}
+
 }

@@ -84,23 +84,20 @@ $(function () {
         }*/
 
         var data = {
-                title: title,
-                content: contentHtml,
-                nodeTitle: nodeTitle,
-                // tag: tag,
-                type: "0"
+                "title": title,
+                "content": contentHtml,
+                "nodeId": nodeTitle,
             };
         	console.log(data);
-        	var url = 'api/v3/topic';
-        	console.log(url);
+        	console.log(JSON.stringify(data));
         $.ajax({
-            url: url,
-            contentType:"application/json; charset=utf-8",
+            url: '/api/v3/topic',
+            contentType:"application/json;charset=utf-8",
             type: 'post',
             async: false,
             cache: false,
             dataType: 'json',
-            data: data,
+            data: JSON.stringify(data),
             success: function (data) {
                 //console.log(JSON.stringify(data));
                 if (data.success != null && data.success == true) {

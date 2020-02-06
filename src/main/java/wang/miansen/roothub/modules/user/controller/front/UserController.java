@@ -13,7 +13,6 @@ import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
-import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.modules.visit.model.Visit;
@@ -31,11 +30,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.modules.reply.model.ReplyAndTopicByName;
-import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.collect.service.CollectService;
+import wang.miansen.roothub.modules.comment.model.ReplyAndTopicByName;
+import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.post.model.Post;
+import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.visit.service.VisitService;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
@@ -46,11 +46,11 @@ public class UserController extends SessionController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
-	private ReplyService rootReplyService;
+	private CommentService rootReplyService;
 	@Autowired
 	private UserService rootUserService;
 	@Autowired
-	private TopicService rootTopicService;
+	private PostService rootTopicService;
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
@@ -74,7 +74,7 @@ public class UserController extends SessionController {
 			return "error-page/404";
 		}
 		User user2 = getUser(request);//当前用户
-		Page<Topic> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
+		Page<Post> topicPage = rootTopicService.pageByAuthor(tp, 20, name);
 		Page<ReplyAndTopicByName> replyPage = rootReplyService.findAllByNameAndTopic(name, rp, 20);
 		int countTopic = rootTopicService.countByUserName(user.getUserName());//主题数量
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
@@ -112,7 +112,7 @@ public class UserController extends SessionController {
 	private String topics(Model model,@RequestParam(value = "p", defaultValue = "1") Integer p,HttpServletRequest request) {
 		User user2 = getUser(request);//当前用户
 		if(user2 == null) return "error-page/404.jsp";
-		Page<Topic> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
+		Page<Post> topicPage = rootTopicService.pageByAuthor(p, 50, user2.getUserName());
 		int countCollect = collectDaoService.count(user2.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user2.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user2.getUserName());//未读通知的数量

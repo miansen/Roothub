@@ -12,7 +12,9 @@ import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.model.NodeTab;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.node.service.NodeTabService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.post.model.Post;
+import wang.miansen.roothub.modules.post.service.PostService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import wang.miansen.roothub.modules.topic.model.Topic;
 
 /**
  * @author miansen.wang
@@ -33,7 +33,7 @@ public class NodeController {
 	@Autowired
 	private NodeService nodeService;
 	@Autowired
-	private TopicService topicService;
+	private PostService topicService;
 	@Autowired
 	private NodeTabService nodeTabService;
 	
@@ -69,7 +69,7 @@ public class NodeController {
 			throw new RuntimeException("节点不存在， 返回 > <a href='/'>主页<a/>");
 		}
 		List<NodeTab> nodeTabList = nodeTabService.findAll();
-		Page<Topic> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, name);
+		Page<Post> page = topicService.pageByNodeAndNodeTab(p, 20, nodeTab, name);
 		Node parentNode = nodeService.findByTitle(node.getParentNodeCode());//父节点
 		List<Node> adjacencyNode = nodeService.adjacencyNode(node);//相邻节点
 		List<Node> childrenNode = nodeService.findChildrenNode(node.getNodeTitle(), null, null);//子节点

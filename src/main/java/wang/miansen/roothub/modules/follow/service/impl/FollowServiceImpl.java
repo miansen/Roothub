@@ -6,7 +6,7 @@ import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.follow.dao.FollowDao;
 import wang.miansen.roothub.modules.follow.model.Follow;
 import wang.miansen.roothub.modules.follow.service.FollowService;
-import wang.miansen.roothub.modules.topic.model.Topic;
+import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,9 +81,9 @@ public class FollowServiceImpl implements FollowService {
 	 * 关注的人的主题
 	 */
 	@Override
-	public Page<Topic> pageTopic(Integer pageNumber, Integer pageSize, Integer uid) {
+	public Page<Post> pageTopic(Integer pageNumber, Integer pageSize, Integer uid) {
 		int total = followDao.countTopic(uid);
-		List<Topic> list = followDao.selectTopic((pageNumber - 1) * pageSize, pageSize, uid);
+		List<Post> list = followDao.selectTopic((pageNumber - 1) * pageSize, pageSize, uid);
 		return new Page<>(list, pageNumber, pageSize, total);
 	}
 

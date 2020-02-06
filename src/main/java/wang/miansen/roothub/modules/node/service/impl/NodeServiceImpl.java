@@ -17,7 +17,7 @@ import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.modules.node.dao.NodeDao;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.user.model.User;
 
 /**

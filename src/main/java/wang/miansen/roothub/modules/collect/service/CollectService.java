@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.collect.service;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.collect.model.Collect;
-import wang.miansen.roothub.modules.topic.model.Topic;
+import wang.miansen.roothub.modules.post.model.Post;
 
 /**
  * @author sen
@@ -19,7 +19,7 @@ public interface CollectService {
 	 * @param tab
 	 * @return
 	 */
-	Page<Topic> page(Integer pageNumber, Integer pageSize, Integer uid);
+	Page<Post> page(Integer pageNumber, Integer pageSize, Integer uid);
 	
 	/**
      * 添加收藏

@@ -10,7 +10,7 @@ import wang.miansen.roothub.common.dto.BaseDTO;
  */
 public class NodeDTO implements BaseDTO {
 
-	private Integer nodeId;
+	private String nodeId;
 	private String nodeCode;
 	private String nodeTitle;
 	private String avatarNormal;
@@ -25,11 +25,11 @@ public class NodeDTO implements BaseDTO {
 	private boolean isDelete;
 	private Integer countTopic;
 
-	public Integer getNodeId() {
+	public String getNodeId() {
 		return nodeId;
 	}
 
-	public void setNodeId(Integer nodeId) {
+	public void setNodeId(String nodeId) {
 		this.nodeId = nodeId;
 	}
 

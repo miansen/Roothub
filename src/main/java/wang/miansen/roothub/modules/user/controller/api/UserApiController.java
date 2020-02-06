@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.config.SiteConfig;
-import wang.miansen.roothub.modules.reply.model.ReplyAndTopicByName;
-import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.modules.collect.service.CollectService;
+import wang.miansen.roothub.modules.comment.model.ReplyAndTopicByName;
+import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.follow.service.FollowService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
-import wang.miansen.roothub.modules.reply.service.ReplyService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.post.model.Post;
+import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.modules.visit.service.VisitService;
 import wang.miansen.roothub.common.beans.Page;
@@ -46,13 +46,13 @@ public class UserApiController extends SessionController{
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private TopicService topicService;
+	private PostService topicService;
 	@Autowired
 	private NoticeService noticeService;
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private ReplyService replyService;
+	private CommentService replyService;
 	@Autowired
 	private FollowService followService;
 	@Autowired
@@ -73,7 +73,7 @@ public class UserApiController extends SessionController{
 			return new Result<PageDataBody>(true, "用户不存在");
 		}*/
 		ApiAssert.notNull(user, "用户不存在");
-		Page<Topic> page = collectDaoService.page(p, 20, user.getUserId());
+		Page<Post> page = collectDaoService.page(p, 20, user.getUserId());
 		return new Result<Page>(200, true, page);
 	}
 	
@@ -85,7 +85,7 @@ public class UserApiController extends SessionController{
 	 */
 	@RequestMapping(value = "/api/user/topic",method = RequestMethod.GET)
 	private Result<Page> topicList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		Page<Topic> page = topicService.pageByAuthor(p, 20, name);
+		Page<Post> page = topicService.pageByAuthor(p, 20, name);
 		return new Result<Page>(200, true, page);
 	}
 	
@@ -109,7 +109,7 @@ public class UserApiController extends SessionController{
 	 */
 	@RequestMapping(value = "/api/user/follow/topic",method = RequestMethod.GET)
 	private Result<Page> followList(@RequestParam(value = "uid",defaultValue = "-1") Integer uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		Page<Topic> page = followService.pageTopic(p, 20, uid);
+		Page<Post> page = followService.pageTopic(p, 20, uid);
 		return new Result<Page>(200, true, page);
 	}
 	
@@ -133,7 +133,7 @@ public class UserApiController extends SessionController{
 	 */
 	@RequestMapping(value = "/api/user/topic/qna",method = RequestMethod.GET)
 	private  Result<Page> qnaTopicList(@RequestParam(value = "name",defaultValue = "-1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		Page<Topic> page = topicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
+		Page<Post> page = topicService.pageAllByPtabAndAuthor(p, 20, "qna", name);
 		return new Result<Page>(200, true, page);
 	}
 	
@@ -228,7 +228,7 @@ public class UserApiController extends SessionController{
 	 */
 	@RequestMapping(value = "/api/user/other/topic",method = RequestMethod.GET)
 	private Result<List> otherTopic(String userName,Integer topicId){
-		List<Topic> list = topicService.findOther(userName, topicId);
+		List<Post> list = topicService.findOther(userName, topicId);
 		return new Result<List>(200, true, list);
 	}
 

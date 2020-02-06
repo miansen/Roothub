@@ -1,7 +1,7 @@
 package wang.miansen.roothub.common.dto;
 
-import wang.miansen.roothub.modules.reply.model.Reply;
 import wang.miansen.roothub.common.enums.InsertReplyEnum;
+import wang.miansen.roothub.modules.comment.model.Comment;
 
 /**
  * 存储添加评论的结果
@@ -15,7 +15,7 @@ public class ReplyExecution {
 	private String replyAuthorName;//当前回复用户昵称
 	private int state;// 结果状态
 	private String stateInfo;// 状态标识
-	private Reply reply;//成功对象
+	private Comment reply;//成功对象
 	
 	public ReplyExecution() {
 		super();
@@ -38,7 +38,7 @@ public class ReplyExecution {
 	 * @param stateEnum
 	 * @param reply
 	 */
-	public ReplyExecution(String replyAuthorName,InsertReplyEnum stateEnum,Reply reply) {
+	public ReplyExecution(String replyAuthorName,InsertReplyEnum stateEnum,Comment reply) {
 		this.replyAuthorName = replyAuthorName;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
@@ -69,11 +69,11 @@ public class ReplyExecution {
 		this.stateInfo = stateInfo;
 	}
 
-	public Reply getReply() {
+	public Comment getReply() {
 		return reply;
 	}
 
-	public void setReply(Reply reply) {
+	public void setReply(Comment reply) {
 		this.reply = reply;
 	}
 

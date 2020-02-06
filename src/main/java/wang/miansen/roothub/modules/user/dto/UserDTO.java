@@ -16,7 +16,7 @@ public class UserDTO implements BaseDTO {
 	/**
 	 * 用户标识
 	 */
-	private Integer userId;
+	private String userId;
 	
 	/**
 	 * 用户昵称
@@ -118,11 +118,11 @@ public class UserDTO implements BaseDTO {
 	 */
 	private String remark;
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

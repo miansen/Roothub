@@ -1,14 +1,14 @@
 package wang.miansen.roothub.common.dto;
 
-import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.common.enums.InsertTopicEnum;
+import wang.miansen.roothub.modules.post.model.Post;
 
 public class TopicExecution {
 
 	private String title;//话题名称
 	private int state;// 结果状态
 	private String stateInfo;// 状态标识
-	private Topic topic;//成功对象
+	private Post topic;//成功对象
 	
 	public TopicExecution() {
 		super();
@@ -31,7 +31,7 @@ public class TopicExecution {
 	 * @param stateEnum
 	 * @param topic
 	 */
-	public TopicExecution(String title,InsertTopicEnum stateEnum,Topic topic) {
+	public TopicExecution(String title,InsertTopicEnum stateEnum,Post topic) {
 		this.title = title;
 		this.state = stateEnum.getState();
 		this.stateInfo = stateEnum.getStateInfo();
@@ -62,11 +62,11 @@ public class TopicExecution {
 		this.stateInfo = stateInfo;
 	}
 
-	public Topic getTopic() {
+	public Post getTopic() {
 		return topic;
 	}
 
-	public void setTopic(Topic topic) {
+	public void setTopic(Post topic) {
 		this.topic = topic;
 	}
 

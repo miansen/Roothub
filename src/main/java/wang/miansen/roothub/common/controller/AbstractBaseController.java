@@ -55,7 +55,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		return mv;
 	}
 
-	public ModelAndView delete(Integer id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView delete(String id, HttpServletRequest request, HttpServletResponse response) {
 		DTO dto = this.getService().getById(id);
 		VO vo = getDTO2VO().apply(dto);
 		ModelAndView mv = new ModelAndView();
@@ -64,7 +64,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		return mv;
 	}
 
-	public ModelAndView edit(Integer id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView edit(String id, HttpServletRequest request, HttpServletResponse response) {
 		DTO dto = this.getService().getById(id);
 		VO vo = getDTO2VO().apply(dto);
 		ModelAndView mv = new ModelAndView();
@@ -73,7 +73,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		return mv;
 	}
 
-	public ModelAndView detail(Integer id, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView detail(String id, HttpServletRequest request, HttpServletResponse response) {
 		DTO dto = this.getService().getById(id);
 		VO vo = getDTO2VO().apply(dto);
 		ModelAndView mv = new ModelAndView();

@@ -4,11 +4,11 @@ import java.lang.management.ManagementFactory;
 import java.text.DecimalFormat;
 
 import wang.miansen.roothub.common.beans.Result;
+import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.node.service.NodeService;
-import wang.miansen.roothub.modules.reply.service.ReplyService;
+import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.security.model.AdminUser;
 import wang.miansen.roothub.modules.security.service.AdminUserService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
 import wang.miansen.roothub.modules.user.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -34,9 +34,9 @@ public class IndexAdminController {
 	@Autowired
 	private AdminUserService adminUserService;
 	@Autowired
-	private TopicService topicService;
+	private PostService topicService;
 	@Autowired
-	private ReplyService replyService;
+	private CommentService replyService;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -48,7 +48,7 @@ public class IndexAdminController {
 		// 查询当天新增话题
 	    model.addAttribute("topic_count", topicService.countToday());
 	    // 查询当天新增评论
-	    model.addAttribute("comment_count", replyService.countToday());
+	    model.addAttribute("comment_count", replyService.count());
 	    // 查询当天新增用户
 	    model.addAttribute("user_count", userService.countToday());
 	    //查询当天新增节点

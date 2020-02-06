@@ -19,7 +19,7 @@ public class User implements BaseDO {
 	 * 用户标识
 	 */
 	@Id(value = "user_id", type = IdType.AUTO)
-	private Integer userId;
+	private String userId;
 	
 	/**
 	 * 用户昵称
@@ -121,11 +121,11 @@ public class User implements BaseDO {
 	 */
 	private String remark;
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

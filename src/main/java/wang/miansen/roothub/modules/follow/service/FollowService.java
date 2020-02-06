@@ -2,7 +2,7 @@ package wang.miansen.roothub.modules.follow.service;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.modules.follow.model.Follow;
-import wang.miansen.roothub.modules.topic.model.Topic;
+import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.user.model.User;
 
 public interface FollowService {
@@ -23,7 +23,7 @@ public interface FollowService {
 	 * @param uid
 	 * @return
 	 */
-	Page<Topic> pageTopic(Integer pageNumber,Integer pageSize,Integer uid);
+	Page<Post> pageTopic(Integer pageNumber,Integer pageSize,Integer uid);
 	
 	/**
 	 * 关注我的人

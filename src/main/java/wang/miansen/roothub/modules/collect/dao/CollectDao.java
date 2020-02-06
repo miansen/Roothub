@@ -3,9 +3,9 @@ package wang.miansen.roothub.modules.collect.dao;
 import java.util.List;
 
 import wang.miansen.roothub.modules.collect.model.Collect;
-import org.apache.ibatis.annotations.Param;
+import wang.miansen.roothub.modules.post.model.Post;
 
-import wang.miansen.roothub.modules.topic.model.Topic;
+import org.apache.ibatis.annotations.Param;
 
 public interface CollectDao {
 
@@ -15,7 +15,7 @@ public interface CollectDao {
 	 * @param limit
 	 * @return
 	 */
-    List<Topic> selectAllByCollect(@Param("start") Integer start, @Param("limit") Integer limit,@Param("uid")Integer uid);
+    List<Post> selectAllByCollect(@Param("start") Integer start, @Param("limit") Integer limit,@Param("uid")Integer uid);
     
     /**
      * 添加收藏

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 
 import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
+import wang.miansen.roothub.modules.post.service.TabService;
 import wang.miansen.roothub.modules.tab.dao.TabDao;
 import wang.miansen.roothub.modules.tab.dto.TabDTO;
 import wang.miansen.roothub.modules.tab.model.Tab;
-import wang.miansen.roothub.modules.topic.service.TabService;
 import wang.miansen.roothub.modules.user.model.User;
 
 @Service

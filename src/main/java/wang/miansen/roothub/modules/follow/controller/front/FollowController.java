@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import wang.miansen.roothub.modules.follow.model.Follow;
-import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.post.model.Post;
+import wang.miansen.roothub.modules.post.service.PostService;
 
 /**
  * 
@@ -42,7 +42,7 @@ public class FollowController extends SessionController {
 	@Autowired
 	private CollectService collectDaoService;
 	@Autowired
-	private TopicService rootTopicService;
+	private PostService rootTopicService;
 	@Autowired
 	private NoticeService rootNoticeService;
 	
@@ -144,7 +144,7 @@ public class FollowController extends SessionController {
 		int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
-		Page<Topic> pageTopic = followService.pageTopic(p, 20, user.getUserId());
+		Page<Post> pageTopic = followService.pageTopic(p, 20, user.getUserId());
 		BaseEntity baseEntity = new BaseEntity();
 		request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("countCollect", countCollect);

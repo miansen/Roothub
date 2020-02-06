@@ -32,10 +32,10 @@ import wang.miansen.roothub.common.exception.OperationRepeaException;
 import wang.miansen.roothub.common.exception.OperationSystemException;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.modules.collect.service.CollectService;
+import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
-import wang.miansen.roothub.modules.reply.service.ReplyService;
-import wang.miansen.roothub.modules.topic.model.Topic;
-import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.post.model.Post;
+import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.JsonUtil;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
@@ -55,7 +55,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	// private TopicService topicService;
 	
 	@Autowired
-	private ReplyService replyService;
+	private CommentService replyService;
 	
 	@Autowired
 	private CollectService collectService;

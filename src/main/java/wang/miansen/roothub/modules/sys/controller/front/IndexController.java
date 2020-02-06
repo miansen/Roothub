@@ -23,7 +23,6 @@ import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.model.NodeTab;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.node.service.NodeTabService;
-import wang.miansen.roothub.modules.reply.service.ReplyService;
 import wang.miansen.roothub.modules.tag.model.Tag;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
@@ -40,12 +39,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.modules.topic.model.Topic;
 import wang.miansen.roothub.modules.tab.model.Tab;
 import wang.miansen.roothub.modules.collect.service.CollectService;
+import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
-import wang.miansen.roothub.modules.topic.service.TabService;
+import wang.miansen.roothub.modules.post.model.Post;
+import wang.miansen.roothub.modules.post.service.PostService;
+import wang.miansen.roothub.modules.post.service.TabService;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
 
@@ -57,13 +57,13 @@ public class IndexController extends SessionController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private TopicService topicService;
+	private PostService topicService;
 	@Autowired
 	private NodeTabService nodeTabService;
 	@Autowired
 	private NoticeService noticeService;
 	@Autowired
-	private ReplyService replyService;
+	private CommentService replyService;
 	@Autowired
 	private CollectService collectDaoService;
 	
@@ -86,13 +86,13 @@ public class IndexController extends SessionController {
 	private String index(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "p", defaultValue = "1") Integer p,
 			@RequestParam(value = "tab", defaultValue = "all") String tab) {
-		Page<Topic> page = topicService.pageAllByTab(p, 25, tab);
+		Page<Post> page = topicService.pageAllByTab(p, 25, tab);
 		List<Tab> tabList = tabService.selectAll();
 		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
 		// 热门话题榜
-		List<Topic> findHot = topicService.findHot(0, 10);
+		List<Post> findHot = topicService.findHot(0, 10);
 		// 今日等待回复的话题
-		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 10);
+		List<Post> findTodayNoReply = topicService.findTodayNoReply(0, 10);
 		// 最热标签
 		Page<Tag> tag = topicService.findByTag(1, 10);
 		List<Node> nodeList2 = nodeService.findAll(0, 10);
@@ -101,7 +101,7 @@ public class IndexController extends SessionController {
 		// 所有话题的数量
 		int countAllTopic = topicService.countAllTopic(null);
 		// 所有评论的数量
-		int countAllReply = replyService.countAll();
+		int countAllReply = replyService.count();
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
 		request.setAttribute("findTodayNoReply", findTodayNoReply);
@@ -240,7 +240,7 @@ public class IndexController extends SessionController {
 		if (search == null || search.equals("")) {
 			return "search";
 		}
-		Page<Topic> pageLike = topicService.pageLike(p, 50, search);
+		Page<Post> pageLike = topicService.pageLike(p, 50, search);
 		// BaseEntity baseEntity = new BaseEntity();
 		// request.setAttribute("baseEntity", baseEntity);
 		request.setAttribute("pageLike", pageLike);
@@ -345,7 +345,7 @@ public class IndexController extends SessionController {
 	 */
 	@RequestMapping(value = "/excel")
 	private String excel(HttpServletRequest request) {
-		List<Topic> row1 = topicService.findAll();// 全部话题
+		List<Post> row1 = topicService.findAll();// 全部话题
 		List<Tab> row2 = tabService.selectAll();// 父板块
 		List<NodeTab> row3 = nodeTabService.findAll();// 子版块
 		request.setAttribute("row1", row1);

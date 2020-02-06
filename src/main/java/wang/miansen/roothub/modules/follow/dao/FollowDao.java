@@ -3,7 +3,7 @@ package wang.miansen.roothub.modules.follow.dao;
 import java.util.List;
 
 import wang.miansen.roothub.modules.follow.model.Follow;
-import wang.miansen.roothub.modules.topic.model.Topic;
+import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.user.model.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,7 +25,7 @@ public interface FollowDao {
 	 * @param uid
 	 * @return
 	 */
-	List<Topic> selectTopic(@Param("start")Integer start, @Param("limit")Integer limit, @Param("uid")Integer uid);
+	List<Post> selectTopic(@Param("start")Integer start, @Param("limit")Integer limit, @Param("uid")Integer uid);
 	
 	/**
 	 * 关注我的人

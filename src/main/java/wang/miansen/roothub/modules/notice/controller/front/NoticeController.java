@@ -11,7 +11,7 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
-import wang.miansen.roothub.modules.topic.service.TopicService;
+import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class NoticeController extends SessionController {
 	@Autowired
 	private UserService rootUserService;
 	@Autowired
-	private TopicService rootTopicService;
+	private PostService rootTopicService;
 	@Autowired
 	private CollectService collectDaoService;
 	

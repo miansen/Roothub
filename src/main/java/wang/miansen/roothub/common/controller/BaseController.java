@@ -36,7 +36,7 @@ public interface BaseController<VO extends BaseVO> {
 	 * @param response 当前的HTTP响应
 	 * @return 要呈现的 ModelAndView
 	 */
-	ModelAndView delete(Integer id, HttpServletRequest request, HttpServletResponse response);
+	ModelAndView delete(String id, HttpServletRequest request, HttpServletResponse response);
 
 	/**
 	 * 返回编辑页面
@@ -45,7 +45,7 @@ public interface BaseController<VO extends BaseVO> {
 	 * @param response 当前的HTTP响应
 	 * @return 要呈现的 ModelAndView
 	 */
-	ModelAndView edit(Integer id, HttpServletRequest request, HttpServletResponse response);
+	ModelAndView edit(String id, HttpServletRequest request, HttpServletResponse response);
 
 	/**
 	 * 返回详情页面
@@ -54,7 +54,7 @@ public interface BaseController<VO extends BaseVO> {
 	 * @param response 当前的HTTP响应
 	 * @return 要呈现的 ModelAndView
 	 */
-	ModelAndView detail(Integer id, HttpServletRequest request, HttpServletResponse response);
+	ModelAndView detail(String id, HttpServletRequest request, HttpServletResponse response);
 
 	/**
 	 * 返回列表页面

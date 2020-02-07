@@ -1,19 +1,14 @@
-package wang.miansen.roothub.modules.follow.model;
+package wang.miansen.roothub.modules.follow.vo;
 
-import java.util.Date;
-
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
- * 关注实体
- * @author sen
- * 2018年7月1日
- * 下午8:28:39
- * TODO
+ * @author miansen.wang
+ * @date 2020-02-07
  */
-public class Follow implements BaseDO {
+public class FollowVO implements BaseVO {
 
-	private static final long serialVersionUID = -7347985930759632454L;
+	private static final long serialVersionUID = -8919635128894048822L;
 
 	/**
 	 * 关注ID
@@ -33,56 +28,72 @@ public class Follow implements BaseDO {
 	/**
 	 * 创建时间
 	 */
-	private Date createDate;
+	private String createDate;
 
 	/**
 	 * 更新时间
 	 */
-	private Date updateDate;
+	private String updateDate;
 
 	public String getFollowId() {
 		return followId;
 	}
 
+
 	public void setFollowId(String followId) {
 		this.followId = followId;
 	}
+
 
 	public String getSourceId() {
 		return sourceId;
 	}
 
+
 	public void setSourceId(String sourceId) {
 		this.sourceId = sourceId;
 	}
+
 
 	public String getTargetId() {
 		return targetId;
 	}
 
+
 	public void setTargetId(String targetId) {
 		this.targetId = targetId;
 	}
 
-	public Date getCreateDate() {
+
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getUpdateDate() {
+
+	public String getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+
+	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 
+
+	@Override
+	public String getPrimaryKey() {
+		return followId;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Follow {followId=" + followId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
+		return "FollowVO {followId=" + followId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
 				+ createDate + ", updateDate=" + updateDate + "}";
 	}
 

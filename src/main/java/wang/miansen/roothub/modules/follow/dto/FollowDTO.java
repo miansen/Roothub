@@ -1,19 +1,16 @@
-package wang.miansen.roothub.modules.follow.model;
+package wang.miansen.roothub.modules.follow.dto;
 
 import java.util.Date;
 
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
 
 /**
- * 关注实体
- * @author sen
- * 2018年7月1日
- * 下午8:28:39
- * TODO
+ * @author miansen.wang
+ * @date 2020-02-07
  */
-public class Follow implements BaseDO {
+public class FollowDTO implements BaseDTO {
 
-	private static final long serialVersionUID = -7347985930759632454L;
+	private static final long serialVersionUID = 5573310575974424746L;
 
 	/**
 	 * 关注ID
@@ -82,7 +79,7 @@ public class Follow implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Follow {followId=" + followId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
+		return "FollowDTO {followId=" + followId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
 				+ createDate + ", updateDate=" + updateDate + "}";
 	}
 

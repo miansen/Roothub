@@ -1,120 +1,115 @@
-package wang.miansen.roothub.modules.user.dto;
+package wang.miansen.roothub.modules.user.vo;
 
-import java.util.Date;
-
-import wang.miansen.roothub.common.dto.BaseDTO;
+import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
- * @author sen
- * 2018年5月5日
- * 下午8:46:50
- * 用户实体
- * Table: root_user
+ * @author miansen.wang
+ * @date 2020-02-07
  */
-public class UserDTO implements BaseDTO {
+public class UserVO implements BaseVO {
 
-	private static final long serialVersionUID = 8303601775999413679L;
+	private static final long serialVersionUID = 2447971261715799545L;
 
 	/**
 	 * 用户标识
 	 */
 	private String userId;
-	
+
 	/**
 	 * 用户昵称
 	 */
 	private String userName;
-	
+
 	/**
 	 * 用户密码
 	 */
 	private String password;
-	
+
 	/**
 	 * 用户性别
 	 */
 	private String userSex;
-	
+
 	/**
 	 * 用户地址
 	 */
 	private String userAddr;
-	
+
 	/**
 	 * 积分
 	 */
 	private Integer score;
-	
+
 	/**
 	 * 头像
 	 */
 	private String avatar;
-	
+
 	/**
 	 * 邮箱
 	 */
 	private String email;
-	
+
 	/**
 	 * 个人主页
 	 */
 	private String url;
-	
+
 	/**
 	 * 个性签名
 	 */
 	private String signature;
-	
+
 	/**
 	 * 第三方账户ID
 	 */
 	private String thirdId;
-	
+
 	/**
 	 * 邮箱是否接收社区消息
 	 */
 	private Boolean receiveMsg;
-	
+
 	/**
 	 * 创建时间
 	 */
-	private Date createDate;
-	
+	private String createDate;
+
 	/**
 	 * 修改时间
 	 */
-	private Date updateDate;
-	
+	private String updateDate;
+
 	/**
 	 * 禁用 0：默认 1：禁用
 	 */
 	private Boolean isBlock;
-	
+
 	/**
 	 * 第三方登录获取的access_token
 	 */
 	private String thirdAccessToken;
-	
+
 	/**
 	 * 用户状态 1000:有效 1100:无效 1200:未生效
 	 */
 	private String statusCd;
-	
+
 	/**
 	 * 用户登入ip
 	 */
 	private String loginIp;
-	
+
 	/**
 	 * 用户最后登入ip
 	 */
 	private String lastLoginIp;
-	
+
 	/**
 	 * 用户类型 0:超级管理员 1:版主 2:普通用户
 	 */
 	private String userType;
-	
+
 	/**
 	 * 备注
 	 */
@@ -144,6 +139,7 @@ public class UserDTO implements BaseDTO {
 		this.password = password;
 	}
 
+
 	public String getUserSex() {
 		return userSex;
 	}
@@ -172,6 +168,7 @@ public class UserDTO implements BaseDTO {
 		return avatar;
 	}
 
+
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
 	}
@@ -183,6 +180,7 @@ public class UserDTO implements BaseDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 
 	public String getUrl() {
 		return url;
@@ -216,19 +214,19 @@ public class UserDTO implements BaseDTO {
 		this.receiveMsg = receiveMsg;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getUpdateDate() {
+	public String getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 
@@ -289,13 +287,18 @@ public class UserDTO implements BaseDTO {
 	}
 
 	@Override
+	public String getPrimaryKey() {
+		return userId;
+	}
+
+	@Override
 	public String toString() {
-		return "RootUser [userId=" + userId + ", userName=" + userName + ", password=" + password + ", userSex="
-				+ userSex + ", userAddr=" + userAddr + ", score=" + score + ", avatar=" + avatar + ", email=" + email
-				+ ", url=" + url + ", signature=" + signature + ", thirdId=" + thirdId + ", receiveMsg=" + receiveMsg
+		return "UserVO {userId=" + userId + ", userName=" + userName + ", password=" + password + ", userSex=" + userSex
+				+ ", userAddr=" + userAddr + ", score=" + score + ", avatar=" + avatar + ", email=" + email + ", url="
+				+ url + ", signature=" + signature + ", thirdId=" + thirdId + ", receiveMsg=" + receiveMsg
 				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", isBlock=" + isBlock
 				+ ", thirdAccessToken=" + thirdAccessToken + ", statusCd=" + statusCd + ", loginIp=" + loginIp
-				+ ", lastLoginIp=" + lastLoginIp + ", userType=" + userType + ", remark=" + remark + "]";
+				+ ", lastLoginIp=" + lastLoginIp + ", userType=" + userType + ", remark=" + remark + "}";
 	}
-	
+
 }

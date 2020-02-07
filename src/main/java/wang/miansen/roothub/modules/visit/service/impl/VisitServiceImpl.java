@@ -44,10 +44,10 @@ public class VisitServiceImpl implements VisitService {
 	@Transactional
 	public DMLExecution save(Visit visit) {
 		try {
-			if (visit.getUid() == visit.getVid()) {
+			if (visit.getSourceId() == visit.getTargetId()) {
 				throw new OperationRepeaException("访问者与被访问者为同一用户！");
 			}
-			int isVisit = visitDao.isVisit(visit.getUid(), visit.getVid());
+			int isVisit = visitDao.isVisit(visit.getSourceId(), visit.getTargetId());
 			if (isVisit == 0) {
 				int insert = visitDao.insert(visit);
 				if (insert <= 0) {

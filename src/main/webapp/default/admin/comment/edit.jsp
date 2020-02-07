@@ -60,18 +60,18 @@
   	    	  'redo'  // 重复
   	        ];
   	    editor.create();
-  	    editor.txt.html('${fn:replace(reply.replyContent,vEnter,'')}');
+  	    editor.txt.html('${fn:replace(comment.content,vEnter,'')}');
 		  $("#from").submit(function() {
 			if (confirm("确定编辑此评论吗？")) {
 				var contentHtml = editor.txt.html();
 				$.ajax({
-					url: '/admin/reply/edit',
+					url: '/admin/comment/edit',
 					type: 'post',
 					async: false,
 					cache: false,
 					dataType: 'json',
 					data: {
-						id: ${reply.replyId},
+						id: ${commentVO.commentId},
 						content: contentHtml
 					},
 					success: function(data) {

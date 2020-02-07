@@ -1,40 +1,37 @@
-package wang.miansen.roothub.modules.collect.model;
+package wang.miansen.roothub.modules.collect.dto;
 
 import java.util.Date;
 
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
 
 /**
- * 收藏实体
- * @author sen
- * 2018年6月29日
- * 下午5:15:14
- * TODO
+ * @author miansen.wang
+ * @date 2020-02-07
  */
-public class Collect implements BaseDO {
+public class CollectDTO implements BaseDTO {
 
-	private static final long serialVersionUID = 8711880740944927277L;
-	
+	private static final long serialVersionUID = -3656304318261444264L;
+
 	/**
 	 * 收藏ID
 	 */
 	private String collectId;
-	
+
 	/**
 	 * 用户ID
 	 */
 	private String userId;
-	
+
 	/**
 	 * 主题ID
 	 */
 	private String postId;
-	
+
 	/**
 	 * 创建时间
 	 */
 	private Date createDate;
-	
+
 	/**
 	 * 更新时间
 	 */
@@ -82,8 +79,8 @@ public class Collect implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Collect {collectId=" + collectId + ", userId=" + userId + ", postId=" + postId + ", createDate="
+		return "CollectDTO {collectId=" + collectId + ", userId=" + userId + ", postId=" + postId + ", createDate="
 				+ createDate + ", updateDate=" + updateDate + "}";
 	}
-	
+
 }

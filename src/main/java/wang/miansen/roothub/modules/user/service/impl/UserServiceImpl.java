@@ -23,6 +23,7 @@ import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
+import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.common.enums.InsertUserEnum;
@@ -32,6 +33,7 @@ import wang.miansen.roothub.common.exception.OperationRepeaException;
 import wang.miansen.roothub.common.exception.OperationSystemException;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.modules.collect.service.CollectService;
+import wang.miansen.roothub.modules.comment.model.Comment;
 import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.post.model.Post;
@@ -55,7 +57,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	// private TopicService topicService;
 	
 	@Autowired
-	private CommentService replyService;
+	private CommentService commentService;
 	
 	@Autowired
 	private CollectService collectService;
@@ -160,7 +162,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	 * 根据ID删除用户
 	 */
 	@Override
-	public void deleteUserById(Integer userId) {
+	public void deleteUserById(String userId) {
 		rootUserDao.deleteUserByUserId(userId);	
 	}
 
@@ -311,7 +313,12 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 		// 删除话题
 		// topicService.deleteByAuthor(user.getUserName());
 		// 删除评论
-		replyService.deleteByReplyAuthorName(user.getUserName());
+		// commentService.deleteByReplyAuthorName(user.getUserName());
+		
+		UpdateWrapper<Comment> updateWrapper = new UpdateWrapper<>();
+		updateWrapper.eq("user_id", user.getUserId());
+		// 删除评论
+		commentService.remove(updateWrapper);
 		// 删除收藏
 		collectService.deleteByUid(user.getUserId());
 		// 删除通知

@@ -1,18 +1,25 @@
 package wang.miansen.roothub.modules.follow.service.impl;
 
 import java.util.List;
+import java.util.function.Function;
 
 import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.dao.BaseDao;
+import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
+import wang.miansen.roothub.modules.collect.model.Collect;
 import wang.miansen.roothub.modules.follow.dao.FollowDao;
+import wang.miansen.roothub.modules.follow.dto.FollowDTO;
 import wang.miansen.roothub.modules.follow.model.Follow;
 import wang.miansen.roothub.modules.follow.service.FollowService;
 import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.user.model.User;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FollowServiceImpl implements FollowService {
+public class FollowServiceImpl extends AbstractBaseServiceImpl<Follow, FollowDTO> implements FollowService {
 
 	@Autowired
 	private FollowDao followDao;
@@ -39,7 +46,7 @@ public class FollowServiceImpl implements FollowService {
 	 * 取消关注
 	 */
 	@Override
-	public int delete(Integer uid, Integer fid) {
+	public int delete(String uid, String fid) {
 		return followDao.delete(uid, fid);
 	}
 
@@ -63,7 +70,7 @@ public class FollowServiceImpl implements FollowService {
 	 * 我是否已关注了
 	 */
 	@Override
-	public int isFollow(Integer uid, Integer fid) {
+	public int isFollow(String uid, String fid) {
 		return followDao.isFollow(uid, fid);
 	}
 
@@ -81,10 +88,37 @@ public class FollowServiceImpl implements FollowService {
 	 * 关注的人的主题
 	 */
 	@Override
-	public Page<Post> pageTopic(Integer pageNumber, Integer pageSize, Integer uid) {
+	public Page<Post> pageTopic(Integer pageNumber, Integer pageSize, String uid) {
 		int total = followDao.countTopic(uid);
 		List<Post> list = followDao.selectTopic((pageNumber - 1) * pageSize, pageSize, uid);
 		return new Page<>(list, pageNumber, pageSize, total);
+	}
+
+	@Override
+	public Function<? super FollowDTO, ? extends Follow> getDTO2DOMapper() {
+		return followDTO -> {
+			Follow follow = new Follow();
+			if (followDTO != null) {
+				BeanUtils.copyProperties(followDTO, follow);
+			}
+			return follow;
+		};
+	}
+
+	@Override
+	public Function<? super Follow, ? extends FollowDTO> getDO2DTOMapper() {
+		return follow -> {
+			FollowDTO followDTO = new FollowDTO();
+			if (follow != null) {
+				BeanUtils.copyProperties(follow, followDTO);
+			}
+			return followDTO;
+		};
+	}
+
+	@Override
+	public BaseDao<Follow> getDao() {
+		return followDao;
 	}
 
 }

@@ -1,32 +1,29 @@
-package wang.miansen.roothub.modules.follow.model;
+package wang.miansen.roothub.modules.visit.dto;
 
 import java.util.Date;
 
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.dto.BaseDTO;
 
 /**
- * 关注实体
- * @author sen
- * 2018年7月1日
- * 下午8:28:39
- * TODO
+ * @author miansen.wang
+ * @date 2020-02-07
  */
-public class Follow implements BaseDO {
+public class VisitDTO implements BaseDTO {
 
-	private static final long serialVersionUID = -7347985930759632454L;
+	private static final long serialVersionUID = -1824160488403048889L;
 
 	/**
-	 * 关注ID
+	 * 访问ID
 	 */
-	private String followId;
+	private String visitId;
 
 	/**
-	 * 关注者ID
+	 * 访问者ID
 	 */
 	private String sourceId;
 
 	/**
-	 * 被关注者ID
+	 * 被访问者ID
 	 */
 	private String targetId;
 
@@ -40,12 +37,12 @@ public class Follow implements BaseDO {
 	 */
 	private Date updateDate;
 
-	public String getFollowId() {
-		return followId;
+	public String getVisitId() {
+		return visitId;
 	}
 
-	public void setFollowId(String followId) {
-		this.followId = followId;
+	public void setVisitId(String visitId) {
+		this.visitId = visitId;
 	}
 
 	public String getSourceId() {
@@ -82,7 +79,7 @@ public class Follow implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Follow {followId=" + followId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
+		return "VisitDTO {visitId=" + visitId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
 				+ createDate + ", updateDate=" + updateDate + "}";
 	}
 

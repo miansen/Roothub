@@ -1,27 +1,18 @@
-package wang.miansen.roothub.modules.visit.model;
+package wang.miansen.roothub.modules.visit.vo;
 
-import java.util.Date;
-
-import wang.miansen.roothub.common.dao.mapper.annotation.Id;
-import wang.miansen.roothub.common.dao.mapper.annotation.Table;
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
- * 访问记录
- * @author sen
- * 2018年8月4日
- * 上午11:28:01
- * TODO
+ * @author miansen.wang
+ * @date 2020-02-07
  */
-@Table("visit")
-public class Visit implements BaseDO {
+public class VisitVO implements BaseVO {
 
-	private static final long serialVersionUID = 160283767535840192L;
+	private static final long serialVersionUID = -5653061817547475903L;
 
 	/**
 	 * 访问ID
 	 */
-	@Id("visit_id")
 	private String visitId;
 
 	/**
@@ -37,56 +28,73 @@ public class Visit implements BaseDO {
 	/**
 	 * 创建时间
 	 */
-	private Date createDate;
+	private String createDate;
 
 	/**
 	 * 更新时间
 	 */
-	private Date updateDate;
+	private String updateDate;
+
 
 	public String getVisitId() {
 		return visitId;
 	}
 
+
 	public void setVisitId(String visitId) {
 		this.visitId = visitId;
 	}
+
 
 	public String getSourceId() {
 		return sourceId;
 	}
 
+
 	public void setSourceId(String sourceId) {
 		this.sourceId = sourceId;
 	}
+
 
 	public String getTargetId() {
 		return targetId;
 	}
 
+
 	public void setTargetId(String targetId) {
 		this.targetId = targetId;
 	}
 
-	public Date getCreateDate() {
+
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getUpdateDate() {
+
+	public String getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+
+	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 
+
+	@Override
+	public String getPrimaryKey() {
+		return visitId;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Visit {visitId=" + visitId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
+		return "VisitVO {visitId=" + visitId + ", sourceId=" + sourceId + ", targetId=" + targetId + ", createDate="
 				+ createDate + ", updateDate=" + updateDate + "}";
 	}
 

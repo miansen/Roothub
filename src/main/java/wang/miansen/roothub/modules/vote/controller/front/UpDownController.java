@@ -38,7 +38,7 @@ public class UpDownController extends SessionController {
 		User user = getUser(request);
 		if(user == null) return new Result<>(201, false,"未登录");
 		UpDown upDown = new UpDown();
-		upDown.setUid(user.getUserId());
+		upDown.setUid(Integer.valueOf(user.getUserId()));
 		upDown.setTid(tid);
 		upDown.setUpDown(vote);
 		upDown.setCreateDate(new Date());

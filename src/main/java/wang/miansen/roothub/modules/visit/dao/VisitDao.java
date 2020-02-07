@@ -37,7 +37,7 @@ public interface VisitDao {
 	 * @param vid
 	 * @return
 	 */
-	int isVisit(@Param("uid") Integer uid,@Param("vid") Integer vid);
+	int isVisit(@Param("uid") String uid,@Param("vid") String vid);
 	
 	/**
 	 * 添加访问记录

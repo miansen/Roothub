@@ -18,7 +18,7 @@ public class PostVO implements BaseVO {
 	/**
 	 * 节点 ID
 	 */
-	private Integer nodeId;
+	private String nodeId;
 	
 	/**
 	 * 节点名称
@@ -28,7 +28,7 @@ public class PostVO implements BaseVO {
 	/**
 	 * 用户 ID
 	 */
-	private Integer userId;
+	private String userId;
 	
 	/**
 	 * 用户名称
@@ -123,11 +123,11 @@ public class PostVO implements BaseVO {
 		this.topicId = topicId;
 	}
 
-	public Integer getNodeId() {
+	public String getNodeId() {
 		return nodeId;
 	}
 
-	public void setNodeId(Integer nodeId) {
+	public void setNodeId(String nodeId) {
 		this.nodeId = nodeId;
 	}
 
@@ -139,11 +139,11 @@ public class PostVO implements BaseVO {
 		this.nodeName = nodeName;
 	}
 
-	public Integer getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 

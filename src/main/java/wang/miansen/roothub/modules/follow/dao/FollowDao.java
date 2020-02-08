@@ -18,7 +18,7 @@ public interface FollowDao extends BaseDao<Follow> {
 	 * @param uid
 	 * @return
 	 */
-	List<User> select(@Param("start") Integer start, @Param("limit") Integer limit, @Param("uid") Integer uid);
+	List<User> select(@Param("start") Integer start, @Param("limit") Integer limit, @Param("uid") String uid);
 
 	/**
 	 * 关注人的主题
@@ -58,7 +58,7 @@ public interface FollowDao extends BaseDao<Follow> {
 	 * @param uid
 	 * @return
 	 */
-	int countByUid(@Param("uid") Integer uid);
+	int countByUid(@Param("uid") String uid);
 
 	/**
 	 * 统计用户被关注的数量

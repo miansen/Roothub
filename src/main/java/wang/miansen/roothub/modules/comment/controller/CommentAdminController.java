@@ -149,7 +149,7 @@ public class CommentAdminController extends AbstractBaseController<Comment, Comm
 		return commentDTO -> {
 			CommentVO commentVO = new CommentVO();
 			BeanUtils.copyProperties(commentDTO, commentVO);
-			commentVO.setPostId(commentDTO.getPostDTO().getTopicId());
+			commentVO.setPostId(commentDTO.getPostDTO().getPostId());
 			commentVO.setPostName(commentDTO.getPostDTO().getTitle());
 			commentVO.setPostAvatar(commentDTO.getPostDTO().getAvatar());
 			commentVO.setUserId(commentDTO.getUserDTO().getUserId());

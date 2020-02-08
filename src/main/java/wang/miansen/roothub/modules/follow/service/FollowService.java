@@ -16,7 +16,7 @@ public interface FollowService extends BaseService<Follow, FollowDTO> {
 	 * @param tab
 	 * @return
 	 */
-	Page<User> page(Integer pageNumber, Integer pageSize, Integer uid);
+	Page<User> page(Integer pageNumber, Integer pageSize, String uid);
 
 	/**
 	 * 关注人的主题
@@ -56,7 +56,7 @@ public interface FollowService extends BaseService<Follow, FollowDTO> {
 	 * @param uid
 	 * @return
 	 */
-	int countByUid(Integer uid);
+	int countByUid(String uid);
 
 	/**
 	 * 统计用户被关注的数量

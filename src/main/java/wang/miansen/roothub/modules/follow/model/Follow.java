@@ -2,6 +2,8 @@ package wang.miansen.roothub.modules.follow.model;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.dao.mapper.annotation.Id;
+import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.entity.BaseDO;
 
 /**
@@ -11,6 +13,7 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * 下午8:28:39
  * TODO
  */
+@Table("follow")
 public class Follow implements BaseDO {
 
 	private static final long serialVersionUID = -7347985930759632454L;
@@ -18,6 +21,7 @@ public class Follow implements BaseDO {
 	/**
 	 * 关注ID
 	 */
+	@Id("follow_id")
 	private String followId;
 
 	/**

@@ -147,13 +147,13 @@ public interface BaseService<DO extends BaseDO, DTO extends BaseDTO> {
 	Page<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper) throws BaseException;
 
 	/**
-	 * 获取 DTO 转换 DO 的函数
+	 * DTO 转换 DO 的函数
 	 * @return
 	 */
 	Function<? super DTO, ? extends DO> getDTO2DOMapper();
 
 	/**
-	 * 取 DO 转换 DTO 的函数
+	 * DO 转换 DTO 的函数
 	 * @return
 	 */
 	Function<? super DO, ? extends DTO> getDO2DTOMapper();

@@ -19,6 +19,7 @@ import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
+import wang.miansen.roothub.common.util.ApplicationContextUtil;
 
 /**
  * 评论 Service Impl
@@ -32,12 +33,6 @@ public class CommentServiceImpl extends AbstractBaseServiceImpl<Comment, Comment
 
 	@Autowired
 	private CommentDao commentDao;
-
-	@Autowired
-	private PostService topicService;
-
-	@Autowired
-	private UserService userService;
 
 	@Override
 	public int countToday() {
@@ -66,24 +61,32 @@ public class CommentServiceImpl extends AbstractBaseServiceImpl<Comment, Comment
 	@Override
 	public Function<? super CommentDTO, ? extends Comment> getDTO2DOMapper() {
 		return commentDTO -> {
-			Comment comment = new Comment();
-			BeanUtils.copyProperties(commentDTO, comment);
-			comment.setPostId(commentDTO.getPostDTO().getTopicId());
-			comment.setUser_id(commentDTO.getUserDTO().getUserId());
-			return comment;
+			if (commentDTO != null) {
+				Comment comment = new Comment();
+				BeanUtils.copyProperties(commentDTO, comment);
+				comment.setPostId(commentDTO.getPostDTO().getPostId());
+				comment.setUserId(commentDTO.getUserDTO().getUserId());
+				return comment;
+			}
+			return null;
 		};
 	}
 
 	@Override
 	public Function<? super Comment, ? extends CommentDTO> getDO2DTOMapper() {
 		return comment -> {
-			CommentDTO commentDTO = new CommentDTO();
-			BeanUtils.copyProperties(comment, commentDTO);
-			PostDTO topicDTO = topicService.getById(commentDTO.getPostDTO().getTopicId());
-			UserDTO userDTO = userService.getById(commentDTO.getUserDTO().getUserId());
-			commentDTO.setPostDTO(topicDTO);
-			commentDTO.setUserDTO(userDTO);
-			return commentDTO;
+			if (comment != null) {
+				CommentDTO commentDTO = new CommentDTO();
+				BeanUtils.copyProperties(comment, commentDTO);
+				PostService postService = ApplicationContextUtil.getBean(PostService.class);
+				UserService userService = ApplicationContextUtil.getBean(UserService.class);
+				PostDTO topicDTO = postService.getById(comment.getPostId());
+				UserDTO userDTO = userService.getById(comment.getUserId());
+				commentDTO.setPostDTO(topicDTO);
+				commentDTO.setUserDTO(userDTO);
+				return commentDTO;
+			}
+			return null;
 		};
 	}
 

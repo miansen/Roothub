@@ -97,7 +97,7 @@ public class UserApiController extends SessionController{
 	 */
 	@RequestMapping(value = "/api/user/reply",method = RequestMethod.GET)
 	private Result<Page> replyList(@RequestParam(value = "name",defaultValue = "1") String name,@RequestParam(value = "p",defaultValue = "1") Integer p){
-		Page<ReplyAndTopicByName> page = replyService.findAllByNameAndTopic(name, p, 20);
+		Page<ReplyAndTopicByName> page = null;//replyService.findAllByNameAndTopic(name, p, 20);
 		return new Result<Page>(200, true, page);
 	}
 	
@@ -108,7 +108,7 @@ public class UserApiController extends SessionController{
 	 * @return
 	 */
 	@RequestMapping(value = "/api/user/follow/topic",method = RequestMethod.GET)
-	private Result<Page> followList(@RequestParam(value = "uid",defaultValue = "-1") Integer uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
+	private Result<Page> followList(@RequestParam(value = "uid",defaultValue = "-1") String uid,@RequestParam(value = "p",defaultValue = "1") Integer p){
 		Page<Post> page = followService.pageTopic(p, 20, uid);
 		return new Result<Page>(200, true, page);
 	}
@@ -169,7 +169,7 @@ public class UserApiController extends SessionController{
 			map.put("msg", "用户名不能为空");
 			return map;
 		}else if(type.equals("reply")){
-			int countByName = replyService.countByName(userName);
+			int countByName = 0;//replyService.countByName(userName);
 			map.put("success", true);
 			map.put("msg", countByName);
 			return map;

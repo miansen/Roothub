@@ -2,6 +2,10 @@ package wang.miansen.roothub.modules.notice.model;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.dao.mapper.annotation.Id;
+import wang.miansen.roothub.common.dao.mapper.annotation.Table;
+import wang.miansen.roothub.common.dao.mapper.enums.IdType;
+
 /**
  * 回复实体
  * Table: root_notice
@@ -10,11 +14,13 @@ import java.util.Date;
  * 下午9:39:24
  * TODO
  */
+@Table(value = "notice")
 public class Notice {
 
 	/**
 	 * 消息通知标识
 	 */
+	@Id(value = "notice_id", type = IdType.UUID)
 	private Integer noticeId;
 	
 	/**

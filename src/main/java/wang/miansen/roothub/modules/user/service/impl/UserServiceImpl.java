@@ -49,25 +49,25 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 
 	@Autowired
 	private UserDao rootUserDao;
-	
+
 	@Autowired
 	private StorageService storageService;
-	
+
 	// @Autowired
 	// private TopicService topicService;
-	
+
 	@Autowired
 	private CommentService commentService;
-	
+
 	@Autowired
 	private CollectService collectService;
-	
+
 	@Autowired
 	private NoticeService noticeService;
 
 	@Autowired
 	private RedisService redisService;
-	
+
 	/**
 	 * 根据ID查找用户
 	 */
@@ -119,12 +119,11 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	/**
 	 * 分页查询所有用户，倒叙
 	 */
-	/*@Override
-	public Page<User> page(Integer pageNumber, Integer pageSize) {
-		List<User> list = rootUserDao.selectAll((pageNumber - 1) * pageSize, pageSize);
-		int totalRow = rootUserDao.countUserAll();
-		return new Page<>(list, pageNumber, pageSize, totalRow);
-	}*/
+	/*
+	 * @Override public Page<User> page(Integer pageNumber, Integer pageSize) { List<User> list =
+	 * rootUserDao.selectAll((pageNumber - 1) * pageSize, pageSize); int totalRow = rootUserDao.countUserAll(); return
+	 * new Page<>(list, pageNumber, pageSize, totalRow); }
+	 */
 
 	/**
 	 * 更新用户
@@ -133,19 +132,19 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	@Override
 	public UserExecution updateUser(User user) {
 		try {
-			if(user == null) {
+			if (user == null) {
 				throw new OperationRepeaException("用户不存在");
-			}else {
+			} else {
 				int updateUser = rootUserDao.updateUser(user);
 				User rootUser = rootUserDao.selectByUserName(user.getUserName());
-				if(updateUser <= 0) {
+				if (updateUser <= 0) {
 					throw new OperationFailedException("修改失败");
-				}else {
-					//更新redis
+				} else {
+					// 更新redis
 					// ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
 					// opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
 					redisService.setString(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
-					return new UserExecution(user.getUserName(),UpdateUserEnum.SUCCESS,rootUser);
+					return new UserExecution(user.getUserName(), UpdateUserEnum.SUCCESS, rootUser);
 				}
 			}
 		} catch (OperationRepeaException e1) {
@@ -153,8 +152,8 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 		} catch (OperationFailedException e2) {
 			throw e2;
 		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
-			throw new OperationSystemException("update RootUser erroe "+e.getMessage());
+			logger.error(e.getMessage(), e);
+			throw new OperationSystemException("update RootUser erroe " + e.getMessage());
 		}
 	}
 
@@ -163,7 +162,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	 */
 	@Override
 	public void deleteUserById(String userId) {
-		rootUserDao.deleteUserByUserId(userId);	
+		rootUserDao.deleteUserByUserId(userId);
 	}
 
 	/**
@@ -181,25 +180,25 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	@Override
 	public UserExecution save(User user) {
 		try {
-			if(user.getUserName() == null && user.getUserName().equals("")) {
+			if (user.getUserName() == null && user.getUserName().equals("")) {
 				throw new OperationRepeaException("用户名不能为空");
 			}
-			if(user.getPassword() == null && user.getPassword().equals("")) {
+			if (user.getPassword() == null && user.getPassword().equals("")) {
 				throw new OperationRepeaException("密码不能为空");
 			}
 			User userName = rootUserDao.selectByUserName(user.getUserName());
-			if(userName != null) {
+			if (userName != null) {
 				throw new OperationRepeaException("昵称已存在");
-			}else {
+			} else {
 				int insertUser = rootUserDao.insertUser(user);
 				User rootUser = rootUserDao.selectByUserName(user.getUserName());
-				if(insertUser <= 0) {
+				if (insertUser <= 0) {
 					throw new OperationFailedException("注册失败");
-				}else {
+				} else {
 					// ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
 					// opsForValue.set(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
 					// redisService.setString(rootUser.getThirdAccessToken(), JsonUtil.objectToJson(rootUser));
-					return new UserExecution(user.getUserName(),InsertUserEnum.SUCCESS,rootUser);
+					return new UserExecution(user.getUserName(), InsertUserEnum.SUCCESS, rootUser);
 				}
 			}
 		} catch (OperationRepeaException e1) {
@@ -207,12 +206,12 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 		} catch (OperationFailedException e2) {
 			throw e2;
 		} catch (Exception e) {
-			logger.error(e.getMessage(),e);
-			throw new OperationSystemException("insert into RootUser error "+e.getMessage());
+			logger.error(e.getMessage(), e);
+			throw new OperationSystemException("insert into RootUser error " + e.getMessage());
 		}
 	}
 
-	public UserExecution createUser(String username,String password,String email) {
+	public UserExecution createUser(String username, String password, String email) {
 		User user = new User();
 		user.setUserName(username);
 		// 密码加密处理
@@ -232,6 +231,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 		user.setSignature("这家伙很懒，什么都没留下");
 		return save(user);
 	}
+
 	/**
 	 * 统计所有注册会员的数量
 	 */
@@ -250,7 +250,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	 * 积分值
 	 */
 	@Override
-	public int countScore(Integer userId) {
+	public int countScore(String userId) {
 		return rootUserDao.countScore(userId);
 	}
 
@@ -296,7 +296,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	@Override
 	public void updateAdmin(User user) {
 		// 如果密码不为空，则加密在保存
-		if(!StringUtils.isEmpty(user.getPassword())) {
+		if (!StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		}
 		user.setUpdateDate(new Date());
@@ -314,7 +314,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 		// topicService.deleteByAuthor(user.getUserName());
 		// 删除评论
 		// commentService.deleteByReplyAuthorName(user.getUserName());
-		
+
 		UpdateWrapper<Comment> updateWrapper = new UpdateWrapper<>();
 		updateWrapper.eq("user_id", user.getUserId());
 		// 删除评论
@@ -330,18 +330,24 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	@Override
 	public Function<? super UserDTO, ? extends User> getDTO2DOMapper() {
 		return userDTO -> {
-			User user = new User();
-			BeanUtils.copyProperties(userDTO, user);
-			return user;
+			if (userDTO != null) {
+				User user = new User();
+				BeanUtils.copyProperties(userDTO, user);
+				return user;
+			}
+			return null;
 		};
 	}
 
 	@Override
 	public Function<? super User, ? extends UserDTO> getDO2DTOMapper() {
 		return user -> {
-			UserDTO userDTO = new UserDTO();
-			BeanUtils.copyProperties(user, userDTO);
-			return userDTO;
+			if (user != null) {
+				UserDTO userDTO = new UserDTO();
+				BeanUtils.copyProperties(user, userDTO);
+				return userDTO;
+			}
+			return null;
 		};
 	}
 

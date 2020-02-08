@@ -4,6 +4,7 @@ import java.util.Date;
 
 import wang.miansen.roothub.common.dao.mapper.annotation.Id;
 import wang.miansen.roothub.common.dao.mapper.annotation.Table;
+import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.entity.BaseDO;
 
 /**
@@ -13,7 +14,7 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * 上午11:28:01
  * TODO
  */
-@Table("visit")
+@Table(value = "visit")
 public class Visit implements BaseDO {
 
 	private static final long serialVersionUID = 160283767535840192L;
@@ -21,7 +22,7 @@ public class Visit implements BaseDO {
 	/**
 	 * 访问ID
 	 */
-	@Id("visit_id")
+	@Id(value = "visit_id", type = IdType.UUID)
 	private String visitId;
 
 	/**

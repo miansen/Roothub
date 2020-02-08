@@ -120,7 +120,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	 */
 	@RequestMapping(value = "/follow/count/for", method = RequestMethod.GET)
 	@ResponseBody
-	private Result<Integer> countByUid(Integer uid, HttpServletRequest request) {
+	private Result<Integer> countByUid(String uid, HttpServletRequest request) {
 		int countByUid = followService.countByUid(uid);
 		return new Result<Integer>(true, countByUid);
 	}

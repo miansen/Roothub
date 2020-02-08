@@ -2,6 +2,8 @@ package wang.miansen.roothub.modules.collect.model;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.dao.mapper.annotation.Id;
+import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.entity.BaseDO;
 
 /**
@@ -11,6 +13,7 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * 下午5:15:14
  * TODO
  */
+@Table("collect")
 public class Collect implements BaseDO {
 
 	private static final long serialVersionUID = 8711880740944927277L;
@@ -18,6 +21,7 @@ public class Collect implements BaseDO {
 	/**
 	 * 收藏ID
 	 */
+	@Id("collect_id")
 	private String collectId;
 	
 	/**

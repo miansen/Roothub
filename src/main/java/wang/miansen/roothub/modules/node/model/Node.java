@@ -3,6 +3,7 @@ package wang.miansen.roothub.modules.node.model;
 import java.util.Date;
 
 import wang.miansen.roothub.common.dao.mapper.annotation.Id;
+import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.entity.BaseDO;
 
@@ -10,9 +11,11 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * @author miansen.wang
  * @date 2018年11月3日 上午11:38:30
  */
+@Table("node")
 public class Node implements BaseDO {
 
-	@Id(value = "topic_id", type = IdType.AUTO)
+	private static final long serialVersionUID = -7346089878757372971L;
+	@Id(value = "node_id", type = IdType.UUID)
 	private Integer nodeId;
 	private String nodeCode;
 	private String nodeTitle;

@@ -28,7 +28,7 @@ public class FollowServiceImpl extends AbstractBaseServiceImpl<Follow, FollowDTO
 	 * 我关注的人
 	 */
 	@Override
-	public Page<User> page(Integer pageNumber, Integer pageSize, Integer uid) {
+	public Page<User> page(Integer pageNumber, Integer pageSize, String uid) {
 		int total = followDao.countByUid(uid);
 		List<User> list = followDao.select((pageNumber - 1) * pageSize, pageSize, uid);
 		return new Page<>(list, pageNumber, pageSize, total);
@@ -54,7 +54,7 @@ public class FollowServiceImpl extends AbstractBaseServiceImpl<Follow, FollowDTO
 	 * 我关注的数量
 	 */
 	@Override
-	public int countByUid(Integer uid) {
+	public int countByUid(String uid) {
 		return followDao.countByUid(uid);
 	}
 

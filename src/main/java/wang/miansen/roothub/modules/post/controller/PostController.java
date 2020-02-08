@@ -169,10 +169,19 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 
 	@Override
 	protected Function<? super PostDTO, ? extends PostVO> getDTO2VO() {
-		return topicDTO -> {
-			PostVO topicVO = new PostVO();
-			BeanUtils.copyProperties(topicDTO, topicVO);
-			return topicVO;
+		return postDTO -> {
+			if (postDTO != null) {
+				PostVO postVO = new PostVO();
+				BeanUtils.copyProperties(postDTO, postVO);
+				postVO.setNodeId(postDTO.getNodeDTO().getNodeId());
+				postVO.setNodeName(postDTO.getNodeDTO().getNodeTitle());
+				postVO.setUserId(postDTO.getUserDTO().getUserId());
+				postVO.setUserName(postDTO.getUserDTO().getUserId());
+				postVO.setCreateDate(DateUtil.formatDateTime(postDTO.getCreateDate()));
+				postVO.setUpdateDate(DateUtil.formatDateTime(postDTO.getUpdateDate()));
+				return postVO;
+			}
+			return null;
 		};
 	}
 
@@ -189,7 +198,7 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 		return commentDTO -> {
 			CommentVO commentVO = new CommentVO();
 			BeanUtils.copyProperties(commentDTO, commentVO);
-			commentVO.setPostId(commentDTO.getPostDTO().getTopicId());
+			commentVO.setPostId(commentDTO.getPostDTO().getPostId());
 			commentVO.setPostName(commentDTO.getPostDTO().getTitle());
 			commentVO.setPostAvatar(commentDTO.getPostDTO().getAvatar());
 			commentVO.setUserId(commentDTO.getUserDTO().getUserId());

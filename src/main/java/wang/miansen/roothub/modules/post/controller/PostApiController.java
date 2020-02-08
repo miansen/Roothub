@@ -55,7 +55,7 @@ public class PostApiController extends AbstractBaseController<Post, PostDTO, Pos
 		if (user == null) {
 			throw new PostException(PostErrorCodeEnum.INVALIDATE_USER);
 		}
-		topicVO.setTopicId(IDGenerator.generateID());
+		topicVO.setPostId(IDGenerator.generateID());
 		topicVO.setUserId(user.getUserId());
 		topicVO.setUserName(user.getUserName());
 		return super.save(topicVO, request, response);

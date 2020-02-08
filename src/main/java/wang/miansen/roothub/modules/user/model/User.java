@@ -3,6 +3,7 @@ package wang.miansen.roothub.modules.user.model;
 import java.util.Date;
 
 import wang.miansen.roothub.common.dao.mapper.annotation.Id;
+import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.entity.BaseDO;
 
@@ -13,12 +14,15 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * 用户实体
  * Table: root_user
  */
+@Table("user")
 public class User implements BaseDO {
+
+	private static final long serialVersionUID = 6547778271310706787L;
 
 	/**
 	 * 用户标识
 	 */
-	@Id(value = "user_id", type = IdType.AUTO)
+	@Id(value = "user_id", type = IdType.UUID)
 	private String userId;
 	
 	/**

@@ -20,7 +20,7 @@ public enum PostErrorCodeEnum {
 
 	INVALIDATE_NODE(400, "Post.InvalidateNode", "无效的节点"),
 	
-	INVALIDATE_USER(400, "Post.InvalidateNode", "无效的用户");
+	INVALIDATE_USER(400, "Post.InvalidateUser", "无效的用户");
 
 	private int httpCode;
 

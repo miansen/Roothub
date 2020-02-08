@@ -137,18 +137,24 @@ public class NodeServiceImpl extends AbstractBaseServiceImpl<Node, NodeDTO> impl
 	@Override
 	public Function<? super NodeDTO, ? extends Node> getDTO2DOMapper() {
 		return nodeDTO -> {
-			Node node = new Node();
-			BeanUtils.copyProperties(nodeDTO, node);
-			return node;
+			if (nodeDTO != null) {
+				Node node = new Node();
+				BeanUtils.copyProperties(nodeDTO, node);
+				return node;
+			}
+			return null;
 		};
 	}
 
 	@Override
 	public Function<? super Node, ? extends NodeDTO> getDO2DTOMapper() {
 		return node -> {
-			NodeDTO nodeDTO = new NodeDTO();
-			BeanUtils.copyProperties(node, nodeDTO);
-			return nodeDTO;
+			if (node != null) {
+				NodeDTO nodeDTO = new NodeDTO();
+				BeanUtils.copyProperties(node, nodeDTO);
+				return nodeDTO;
+			}
+			return null;
 		};
 	}
 

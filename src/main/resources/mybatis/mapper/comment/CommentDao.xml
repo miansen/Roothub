@@ -14,9 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
   -->
-  <mapper namespace="wang.miansen.roothub.modules.reply.dao.ReplyDao">
+  <mapper namespace="wang.miansen.roothub.modules.comment.dao.CommentDao">
    <!-- 目的：为dao接口方法提供sql语句配置 -->
-   <resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.reply.model.Reply">
+   <resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.comment.model.Comment">
     <id column="reply_id" jdbcType="INTEGER" property="replyId"/>
     <result column="topic_id" jdbcType="INTEGER" property="topicId"/>
     <result column="topic_author_id" jdbcType="INTEGER" property="topicAuthorId"/>
@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     is_delete,is_read,is_show,reply_good_count,reply_bad_count,reply_type,reply_read_count,status_cd
   </sql>
   <!-- 查询所有评论 -->
-  <select id="selectAll" resultType="Reply">
+  <select id="selectAll" resultType="Comment">
     SELECT
     <include refid="Base_Column_List"/>
     FROM
@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </if>
   </select>
   <!-- 根据评论ID查询评论 -->
-  <select id="selectByReplyId" resultType="Reply">
+  <select id="selectByReplyId" resultType="Comment">
     SELECT
     <include refid="Base_Column_List"/>
     FROM
@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    -->
 
   <!-- 根据话题ID分页查询评论 -->
-  <select id="selectByTopicId" resultType="Reply">
+  <select id="selectByTopicId" resultType="Comment">
     SELECT
     	a.*,
     	b.avatar
@@ -116,7 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </if>
   </select>
   <!-- 根据话题作者ID查询评论 -->
-  <select id="selectByTopicAuthorId" resultType="Reply">
+  <select id="selectByTopicAuthorId" resultType="Comment">
     SELECT
     <include refid="Base_Column_List"/>
     FROM
@@ -125,7 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     order create_date desc
   </select>
   <!-- 根据评论人ID查询评论 -->
-  <select id="selectByReplyAuthorId" resultType="Reply">
+  <select id="selectByReplyAuthorId" resultType="Comment">
     SELECT
     <include refid="Base_Column_List"/>
     FROM
@@ -135,7 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <!-- 添加评论 -->
-  <insert id="insert" parameterType="wang.miansen.roothub.modules.reply.model.Reply" keyProperty="reply_id" useGeneratedKeys="true">
+  <insert id="insert" parameterType="wang.miansen.roothub.modules.comment.model.Comment" keyProperty="reply_id" useGeneratedKeys="true">
     insert into 
     reply 
     (reply_id, 
@@ -173,7 +173,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     #{statusCd})
   </insert>
   <!-- 根据ID更新评论 -->
-  <update id="update" parameterType="wang.miansen.roothub.modules.reply.model.Reply">
+  <update id="update" parameterType="wang.miansen.roothub.modules.comment.model.Comment">
     update reply
     set topic_id = #{topicId},
     topic_author_id = #{topicAuthorId},

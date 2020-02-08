@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 	public ModelAndView defaultErrorHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.error(e.getMessage(), e);
 		String contentType = request.getContentType();
-		if (contentType.indexOf("application/json") != -1) {
+		if (contentType !=null && contentType.indexOf("application/json") != -1) {
 			MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 			jsonView.setExtractValueFromSingleKeyModel(true);
 			ModelAndView mv = new ModelAndView(jsonView);

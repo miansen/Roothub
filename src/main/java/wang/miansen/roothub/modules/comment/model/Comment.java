@@ -16,6 +16,8 @@ import wang.miansen.roothub.common.dao.mapper.annotation.Id;
 @Table("comment")
 public class Comment implements BaseDO {
 
+	private static final long serialVersionUID = -6899805232180464418L;
+
 	/**
 	 * 评论ID
 	 */
@@ -30,7 +32,7 @@ public class Comment implements BaseDO {
 	/**
 	 * 用户ID
 	 */
-	private String user_id;
+	private String userId;
 
 	/**
 	 * 评论内容
@@ -98,12 +100,12 @@ public class Comment implements BaseDO {
 		this.postId = postId;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getContent() {
@@ -188,7 +190,7 @@ public class Comment implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Comment {commentId=" + commentId + ", postId=" + postId + ", user_id=" + user_id + ", content="
+		return "Comment {commentId=" + commentId + ", postId=" + postId + ", userId=" + userId + ", content="
 				+ content + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount=" + goodCount
 				+ ", badCount=" + badCount + ", createDate=" + createDate + ", updateDate=" + updateDate + ", type="
 				+ type + ", status=" + status + ", remark=" + remark + "}";

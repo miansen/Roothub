@@ -32,8 +32,8 @@ public class ApplicationContextUtil implements ApplicationContextAware {
 		try {
 			return context.getBean(clazz);
 		} catch (BeansException e) {
-			log.debug("Spring getBaen: " + clazz,e);
+			// log.debug("Spring getBaen: " + clazz,e);
+			throw e;
 		}
-		return null;
 	}
 }

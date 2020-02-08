@@ -7,12 +7,18 @@ import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 
 /**
+ * 帖子 DTO
  * @author miansen.wang
  * @date 2020-01-19
  */
 public class PostDTO implements BaseDTO {
 
-	private String topicId;
+	private static final long serialVersionUID = 2051297348577358951L;
+
+	/**
+	 * 帖子ID
+	 */
+	private String postId;
 	
 	/**
 	 * 节点
@@ -65,6 +71,11 @@ public class PostDTO implements BaseDTO {
 	private Integer viewCount;
 	
 	/**
+	 * 评论量
+	 */
+	private Integer commentCount;
+	
+	/**
 	 * 转载量
 	 */
 	private Integer shareCount;
@@ -104,12 +115,12 @@ public class PostDTO implements BaseDTO {
 	 */
 	private String remark;
 
-	public String getTopicId() {
-		return topicId;
+	public String getPostId() {
+		return postId;
 	}
 
-	public void setTopicId(String topicId) {
-		this.topicId = topicId;
+	public void setPostId(String postId) {
+		this.postId = postId;
 	}
 
 	public NodeDTO getNodeDTO() {
@@ -191,6 +202,14 @@ public class PostDTO implements BaseDTO {
 	public void setViewCount(Integer viewCount) {
 		this.viewCount = viewCount;
 	}
+	
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
+	}
 
 	public Integer getShareCount() {
 		return shareCount;
@@ -258,11 +277,12 @@ public class PostDTO implements BaseDTO {
 
 	@Override
 	public String toString() {
-		return "TopicDTO {topicId=" + topicId + ", nodeDTO=" + nodeDTO + ", userDTO=" + userDTO + ", title=" + title
+		return "PostDTO {postId=" + postId + ", nodeDTO=" + nodeDTO + ", userDTO=" + userDTO + ", title=" + title
 				+ ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url=" + url + ", top="
-				+ top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount="
-				+ goodCount + ", badCount=" + badCount + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
+				+ top + ", good=" + good + ", viewCount=" + viewCount + ", commentCount=" + commentCount
+				+ ", shareCount=" + shareCount + ", goodCount=" + goodCount + ", badCount=" + badCount + ", createDate="
+				+ createDate + ", updateDate=" + updateDate + ", type=" + type + ", status=" + status + ", remark="
+				+ remark + "}";
 	}
 
 }

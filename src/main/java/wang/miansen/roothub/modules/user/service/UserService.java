@@ -125,7 +125,7 @@ public interface UserService extends BaseService<User, UserDTO> {
 	 * @param userId
 	 * @return
 	 */
-	int countScore(Integer userId);
+	int countScore(String userId);
 
 	/**
 	 * 统计当天用户数

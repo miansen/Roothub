@@ -194,7 +194,7 @@ public interface UserDao extends BaseDao<User> {
 	 * @param userId
 	 * @return
 	 */
-	int countScore(Integer userId);
+	int countScore(String userId);
 
 	/**
 	 * 统计当天用户数

@@ -52,7 +52,7 @@
         </if>
      </select>
      <!-- 关注的人的主题 -->
-	<select id="selectTopic" resultType="Topic">
+	<select id="selectTopic" resultType="Post">
 		SELECT
         	c.*
 		FROM

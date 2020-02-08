@@ -14,9 +14,9 @@
     6.parameterType:输入参数类型
     7.resultType:输出参数类型
     -->
-<mapper namespace="wang.miansen.roothub.modules.topic.dao.TopicDao">
+<mapper namespace="wang.miansen.roothub.modules.post.dao.PostDao">
 	<!-- 目的：为dao接口方法提供sql语句配置 -->
-	<resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.topic.model.Topic">
+	<resultMap id="BaseResultMap" type="wang.miansen.roothub.modules.post.model.Post">
         <id column="topic_id" jdbcType="INTEGER" property="topicId"/>
         <result column="ptab" jdbcType="VARCHAR" property="ptab"/>
         <result column="tab" jdbcType="VARCHAR" property="tab"/>
@@ -56,7 +56,7 @@
         status_cd,node_slug,node_title,remark,avatar,url
     </sql>
 	<!-- 根据板块查询所有话题 -->
-	<select id="selectAllByTab" resultType="Topic">
+	<select id="selectAllByTab" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -88,7 +88,7 @@
         </if>
      </select>
      <!-- 根据节点查询所有话题 -->
-	<select id="selectAllByNode" resultType="Topic">
+	<select id="selectAllByNode" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -106,7 +106,7 @@
         </if>
      </select>
      <!-- 根据昵称和板块查询话题 -->
-	<select id="selectAllByPtabAndAuthor" resultType="Topic">
+	<select id="selectAllByPtabAndAuthor" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -127,7 +127,7 @@
         </if>
      </select>
      <!-- 模糊查询所有话题 -->
-	<select id="selectByLike" resultType="Topic">
+	<select id="selectByLike" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -142,7 +142,7 @@
         </if>
      </select>
      <!-- 查询最新话题 -->
-	<select id="selectAllNewest" resultType="Topic">
+	<select id="selectAllNewest" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -160,7 +160,7 @@
         </if>
      </select>
      <!-- 根据板块查询话题 -->
-	<select id="selectByTab" resultType="Topic">
+	<select id="selectByTab" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -175,7 +175,7 @@
         </if>
      </select>
     <!-- 根据节点查询精华话题 -->
-	<select id="selectAllGood" resultType="Topic">
+	<select id="selectAllGood" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -194,7 +194,7 @@
         </if>
      </select>
      <!-- 查询无人评论的话题 -->
-	<select id="selectAllNoReply" resultType="Topic">
+	<select id="selectAllNoReply" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -213,7 +213,7 @@
         </if>
      </select>
       <!-- 侧边栏-今日热门话题 -->
-	<select id="selectHot" resultType="Topic">
+	<select id="selectHot" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -228,7 +228,7 @@
         </if>
      </select>
      <!-- 侧边栏-今日热门话题 -->
-	<select id="selectTodayNoReply" resultType="Topic">
+	<select id="selectTodayNoReply" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -247,7 +247,7 @@
         </if>
      </select>
       <!-- 首页-热门话题 -->
-	<select id="selectIndexHot" resultType="Topic">
+	<select id="selectIndexHot" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -282,7 +282,7 @@
         </if>
      </select>
      <!-- 根据作者昵称分页查询所有话题 -->
-	<select id="selectByAuthor" resultType="Topic">
+	<select id="selectByAuthor" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -298,7 +298,7 @@
         </if>
      </select>
      <!-- 根据话题ID查询话题 -->
-	<select id="selectByTopicId" resultType="Topic">
+	<select id="selectByTopicId" resultType="Post">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
@@ -306,7 +306,7 @@
 		where topic_id = #{topicId}
      </select>
      <!-- 根据话题名称查询话题 -->
-	<select id="selectByTopicName" resultType="Topic">
+	<select id="selectByTopicName" resultType="Post">
 		SELECT
     topic_id,
 		tab, 
@@ -330,7 +330,7 @@
 		where title = #{title}
      </select>
       <!-- 根据话题名称、话题作者、话题标签、话题内容查询话题 -->
-	<select id="selectByNameAndAuthorAndTagAndContent" resultType="Topic">
+	<select id="selectByNameAndAuthorAndTagAndContent" resultType="Post">
 		SELECT
     topic_id,
 		tab, 
@@ -357,7 +357,7 @@
 		and content = #{content}
      </select>
      <!-- 根据标题和时间查询话题 -->
-     <select id="selectByTitleAndDate" resultType="Topic">
+     <select id="selectByTitleAndDate" resultType="Post">
 		SELECT
     topic_id,
 		tab, 
@@ -439,7 +439,7 @@
              #{avatar},
              #{url})
   </insert> -->
-    <update id="updateByTopicId" parameterType="wang.miansen.roothub.modules.topic.model.Topic">
+    <update id="updateByTopicId" parameterType="wang.miansen.roothub.modules.post.model.Post">
       UPDATE 
       	topic
       SET 
@@ -609,7 +609,7 @@
         </if>
      </select>
        <!-- 根据标签查询话题 -->
-  <select id="selectByTag" resultType="Topic">
+  <select id="selectByTag" resultType="Post">
     SELECT
         <include refid="Base_Column_List"/>
     FROM
@@ -623,7 +623,7 @@
             </if>
         </if>
      </select>
- 	<select id="selectOther" resultType="Topic">
+ 	<select id="selectOther" resultType="Post">
 	SELECT
 	  a.topic_id,
 	  a.title
@@ -646,7 +646,7 @@
     </select>
     
     <!-- 后台话题列表 -->
-    <select id="selectAllForAdmin" resultType="Topic">
+    <select id="selectAllForAdmin" resultType="Post">
 		SELECT
         <include refid="Admin_Column_List"/>
 		FROM

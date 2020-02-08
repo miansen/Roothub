@@ -17,6 +17,8 @@ import wang.miansen.roothub.common.entity.BaseDO;
 @Table("post")
 public class Post implements BaseDO {
 
+	private static final long serialVersionUID = -706787028101440813L;
+
 	/**
 	 * 帖子ID
 	 */
@@ -72,6 +74,11 @@ public class Post implements BaseDO {
 	 * 浏览量
 	 */
 	private Integer viewCount;
+	
+	/**
+	 * 评论量
+	 */
+	private Integer commentCount;
 
 	/**
 	 * 转载量
@@ -201,6 +208,14 @@ public class Post implements BaseDO {
 		this.viewCount = viewCount;
 	}
 
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
+	}
+
 	public Integer getShareCount() {
 		return shareCount;
 	}
@@ -269,9 +284,10 @@ public class Post implements BaseDO {
 	public String toString() {
 		return "Post {postId=" + postId + ", nodeId=" + nodeId + ", userId=" + userId + ", title=" + title
 				+ ", content=" + content + ", excerpt=" + excerpt + ", avatar=" + avatar + ", url=" + url + ", top="
-				+ top + ", good=" + good + ", viewCount=" + viewCount + ", shareCount=" + shareCount + ", goodCount="
-				+ goodCount + ", badCount=" + badCount + ", createDate=" + createDate + ", updateDate=" + updateDate
-				+ ", type=" + type + ", status=" + status + ", remark=" + remark + "}";
+				+ top + ", good=" + good + ", viewCount=" + viewCount + ", commentCount=" + commentCount
+				+ ", shareCount=" + shareCount + ", goodCount=" + goodCount + ", badCount=" + badCount + ", createDate="
+				+ createDate + ", updateDate=" + updateDate + ", type=" + type + ", status=" + status + ", remark="
+				+ remark + "}";
 	}
-
+	
 }

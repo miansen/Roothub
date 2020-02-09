@@ -19,7 +19,7 @@ import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
-import wang.miansen.roothub.common.util.ApplicationContextUtil;
+import wang.miansen.roothub.common.util.ApplicationContextUtils;
 
 /**
  * 评论 Service Impl
@@ -78,8 +78,8 @@ public class CommentServiceImpl extends AbstractBaseServiceImpl<Comment, Comment
 			if (comment != null) {
 				CommentDTO commentDTO = new CommentDTO();
 				BeanUtils.copyProperties(comment, commentDTO);
-				PostService postService = ApplicationContextUtil.getBean(PostService.class);
-				UserService userService = ApplicationContextUtil.getBean(UserService.class);
+				PostService postService = ApplicationContextUtils.getBean(PostService.class);
+				UserService userService = ApplicationContextUtils.getBean(UserService.class);
 				PostDTO topicDTO = postService.getById(comment.getPostId());
 				UserDTO userDTO = userService.getById(comment.getUserId());
 				commentDTO.setPostDTO(topicDTO);

@@ -2,10 +2,14 @@ package wang.miansen.roothub.modules.post.model;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.annotation.Conver;
 import wang.miansen.roothub.common.dao.mapper.annotation.Id;
 import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.enums.ConverPolicy;
+import wang.miansen.roothub.common.enums.ConverType;
+import wang.miansen.roothub.modules.post.enums.PostTypeEnum;
 
 /**
  * 帖子实体类
@@ -14,7 +18,7 @@ import wang.miansen.roothub.common.entity.BaseDO;
  * @version 3.0
  * @since 1.0
  */
-@Table("post")
+@Table(value = "post")
 public class Post implements BaseDO {
 
 	private static final long serialVersionUID = -706787028101440813L;
@@ -28,11 +32,13 @@ public class Post implements BaseDO {
 	/**
 	 * 节点ID
 	 */
+	@Conver(targets = {"nodeDTO"}, type = ConverType.DTO, policy = ConverPolicy.ID2DTO, service = "nodeServiceImpl")
 	private String nodeId;
 
 	/**
 	 * 作者ID
 	 */
+	@Conver(targets = {"userDTO"}, type = ConverType.DTO, policy = ConverPolicy.ID2DTO, service = "userServiceImpl")
 	private String userId;
 
 	/**
@@ -74,7 +80,7 @@ public class Post implements BaseDO {
 	 * 浏览量
 	 */
 	private Integer viewCount;
-	
+
 	/**
 	 * 评论量
 	 */
@@ -108,6 +114,10 @@ public class Post implements BaseDO {
 	/**
 	 * 类型，1000（文本）、1100（图片）、1200（视频）、1300（链接）
 	 */
+	@Conver(targets = {"userDTO"}, type = ConverType.DTO, policy = ConverPolicy.PROPERTY_CONVER_MASTERDATA, 
+			masterData = PostTypeEnum.class)
+	@Conver(targets = {"userDTO"}, type = ConverType.DTO, policy = ConverPolicy.PROPERTY_CONVER_MASTERDATA, 
+	masterData = PostTypeEnum.class)
 	private String type;
 
 	/**
@@ -289,5 +299,5 @@ public class Post implements BaseDO {
 				+ createDate + ", updateDate=" + updateDate + ", type=" + type + ", status=" + status + ", remark="
 				+ remark + "}";
 	}
-	
+
 }

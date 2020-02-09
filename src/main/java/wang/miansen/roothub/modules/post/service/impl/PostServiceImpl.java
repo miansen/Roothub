@@ -1,18 +1,16 @@
 package wang.miansen.roothub.modules.post.service.impl;
 
-import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
-import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
-import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
-import wang.miansen.roothub.common.dto.TopicExecution;
-import wang.miansen.roothub.common.enums.InsertTopicEnum;
-import wang.miansen.roothub.common.exception.OperationFailedException;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
@@ -24,37 +22,22 @@ import wang.miansen.roothub.modules.post.exception.PostException;
 import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.sys.service.SystemConfigService;
-import wang.miansen.roothub.modules.tab.dto.TabDTO;
 import wang.miansen.roothub.modules.tag.model.Tag;
-import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 @Service
 public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> implements PostService {
 
-	private Logger log = LoggerFactory.getLogger(PostServiceImpl.class);
-	
 	@Autowired
-	private PostDao rootTopicDao;
+	private PostDao postDao;
 	
 	@Autowired
 	private UserService userService;
 	
 	@Autowired
 	private NodeService nodeService;
-	
-	@Autowired
-	private UserDao rootUserDao;
 	
 	@Autowired
 	@Qualifier("systemConfigServiceImpl")
@@ -81,8 +64,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageAllByTab(Integer pageNumber, Integer pageSize, String tab) {
-		List<Post> list = rootTopicDao.selectAllByTab((pageNumber - 1) * pageSize, pageSize,tab);
-		int total = rootTopicDao.countTopicByTab(tab);
+		List<Post> list = postDao.selectAllByTab((pageNumber - 1) * pageSize, pageSize,tab);
+		int total = postDao.countTopicByTab(tab);
 		return new Page<>(list, pageNumber, pageSize, total);
 	}
 	
@@ -91,8 +74,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageAllByNode(Integer pageNumber, Integer pageSize, String nodeTitle) {
-		List<Post> list = rootTopicDao.selectAllByNode((pageNumber - 1) * pageSize, pageSize,nodeTitle);
-		int total = rootTopicDao.countTopicByNode(nodeTitle);
+		List<Post> list = postDao.selectAllByNode((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = postDao.countTopicByNode(nodeTitle);
 		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
@@ -101,8 +84,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageGood(Integer pageNumber, Integer pageSize,String nodeTitle) {
-		List<Post> list = rootTopicDao.selectAllGood((pageNumber - 1) * pageSize, pageSize,nodeTitle);
-		int total = rootTopicDao.countTopicGoodByNode(nodeTitle);
+		List<Post> list = postDao.selectAllGood((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = postDao.countTopicGoodByNode(nodeTitle);
 		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
@@ -111,8 +94,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageNoReply(Integer pageNumber, Integer pageSize,String nodeTitle) {
-		List<Post> list = rootTopicDao.selectAllNoReply((pageNumber - 1) * pageSize, pageSize,nodeTitle);
-		int total = rootTopicDao.countTopicNoReplyByNode(nodeTitle);
+		List<Post> list = postDao.selectAllNoReply((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = postDao.countTopicNoReplyByNode(nodeTitle);
 		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
@@ -121,7 +104,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Post findByTopicId(Integer topicId) {
-		return rootTopicDao.selectByTopicId(topicId);
+		return postDao.selectByTopicId(topicId);
 	}
 
 	/**
@@ -138,8 +121,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageByAuthor(Integer pageNumber, Integer pageSize, String author) {
-		int totalRow = rootTopicDao.countAllByName(author);
-		List<Post> list = rootTopicDao.selectByAuthor(author, (pageNumber - 1) * pageSize, pageSize);
+		int totalRow = postDao.countAllByName(author);
+		List<Post> list = postDao.selectByAuthor(author, (pageNumber - 1) * pageSize, pageSize);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -148,7 +131,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public List<Post> findAll() {
-		return rootTopicDao.selectAll();
+		return postDao.selectAll();
 	}
 
 	/**
@@ -156,7 +139,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public void deleteByTopicId(Integer topicId) {
-		rootTopicDao.deleteById(topicId);
+		postDao.deleteById(topicId);
 	}
 
 	/**
@@ -164,7 +147,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public void deleteByAuthor(String author) {
-		rootTopicDao.deleteByAuthor(author);
+		postDao.deleteByAuthor(author);
 	}
 
 	/**
@@ -172,10 +155,10 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public void topByTopicId(Integer topicId) {
-		Post topic = rootTopicDao.selectByTopicId(topicId);
+		Post topic = postDao.selectByTopicId(topicId);
 		if(topic != null) {
 			topic.setTop(!topic.getTop());
-			rootTopicDao.updateByTopicId(topic);
+			postDao.updateByTopicId(topic);
 		}
 	}
 
@@ -184,10 +167,10 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public void goodByTopicId(Integer topicId) {
-		Post topic = rootTopicDao.selectByTopicId(topicId);
+		Post topic = postDao.selectByTopicId(topicId);
 		if(topic != null) {
 			topic.setGood(!topic.getGood());
-			rootTopicDao.updateByTopicId(topic);
+			postDao.updateByTopicId(topic);
 		}
 	}
 
@@ -240,7 +223,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public void updateTopic(Post topic) {
-		rootTopicDao.updateByTopicId(topic);
+		postDao.updateByTopicId(topic);
 	}
 
 	/**
@@ -256,7 +239,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public int countByUserName(String userName) {
-		return rootTopicDao.countAllByName(userName);
+		return postDao.countAllByName(userName);
 	}
 
 	/**
@@ -264,8 +247,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageAllNewest(Integer pageNumber, Integer pageSize,String nodeTitle) {
-		List<Post> list = rootTopicDao.selectAllNewest((pageNumber - 1) * pageSize, pageSize,nodeTitle);
-		int total = rootTopicDao.countTopicByNode(nodeTitle);
+		List<Post> list = postDao.selectAllNewest((pageNumber - 1) * pageSize, pageSize,nodeTitle);
+		int total = postDao.countTopicByNode(nodeTitle);
 		return new Page<>(list, pageNumber, pageSize, total);
 	}
 
@@ -274,7 +257,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public List<Post> findHot(Integer start, Integer limit) {
-		return rootTopicDao.selectHot(start, limit);
+		return postDao.selectHot(start, limit);
 	}
 
 	/**
@@ -282,8 +265,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Tag> findByTag(Integer pageNumber, Integer pageSize) {
-		int totalRow = rootTopicDao.countTag();
-		List<Tag> list = rootTopicDao.selectAllTag((pageNumber - 1) * pageSize, pageSize);
+		int totalRow = postDao.countTag();
+		List<Tag> list = postDao.selectAllTag((pageNumber - 1) * pageSize, pageSize);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -292,8 +275,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageByTag(String tag, Integer pageNumber, Integer pageSize) {
-		int totalRow = rootTopicDao.countByTag(tag);
-		List<Post> list = rootTopicDao.selectByTag(tag, (pageNumber - 1) * pageSize, pageSize);
+		int totalRow = postDao.countByTag(tag);
+		List<Post> list = postDao.selectByTag(tag, (pageNumber - 1) * pageSize, pageSize);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -302,7 +285,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public void updateTopicAvatar(User user) {
-		rootTopicDao.updateTopicAvatar(user);
+		postDao.updateTopicAvatar(user);
 	}
 
 	/**
@@ -310,7 +293,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public void updateNodeTitile(String oldNodeTitle, String newNodeTitle) {
-		rootTopicDao.updateNodeTitile(oldNodeTitle, newNodeTitle);
+		postDao.updateNodeTitile(oldNodeTitle, newNodeTitle);
 	}
 
 	/**
@@ -318,7 +301,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public int countAllTopic(String tab) {
-		return rootTopicDao.countTopicByTab(tab);
+		return postDao.countTopicByTab(tab);
 	}
 
 	/**
@@ -326,8 +309,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageLike(Integer pageNumber, Integer pageSize, String like) {
-		List<Post> list = rootTopicDao.selectByLike(like, (pageNumber - 1) * pageSize, pageSize);
-		int totalRow = rootTopicDao.countLike(like);
+		List<Post> list = postDao.selectByLike(like, (pageNumber - 1) * pageSize, pageSize);
+		int totalRow = postDao.countLike(like);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -336,8 +319,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> pageAllByPtabAndAuthor(Integer pageNumber, Integer pageSize, String ptab, String author) {
-		int totalRow = rootTopicDao.countAllByNameAndPtab(author, ptab);
-		List<Post> list = rootTopicDao.selectAllByPtabAndAuthor((pageNumber - 1) * pageSize, pageSize, ptab, author);
+		int totalRow = postDao.countAllByNameAndPtab(author, ptab);
+		List<Post> list = postDao.selectAllByPtabAndAuthor((pageNumber - 1) * pageSize, pageSize, ptab, author);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -346,8 +329,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public Page<Post> findIndexHot(Integer pageNumber, Integer pageSize, String tab) {
-		int totalRow = rootTopicDao.countIndexHot(tab);
-		List<Post> list = rootTopicDao.selectIndexHot((pageNumber - 1) * pageSize, pageSize, tab);
+		int totalRow = postDao.countIndexHot(tab);
+		List<Post> list = postDao.selectIndexHot((pageNumber - 1) * pageSize, pageSize, tab);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 
@@ -356,7 +339,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public List<Post> findTodayNoReply(Integer start, Integer limit) {
-		return rootTopicDao.selectTodayNoReply(start, limit);
+		return postDao.selectTodayNoReply(start, limit);
 	}
 
 	/**
@@ -364,7 +347,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public List<Post> findOther(String userName, Integer topicId) {
-		return rootTopicDao.selectOther(userName, topicId);
+		return postDao.selectOther(userName, topicId);
 	}
 
 	/**
@@ -372,41 +355,41 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	 */
 	@Override
 	public int countTopicByNode(String nodeTitle) {
-		return rootTopicDao.countTopicByNode(nodeTitle);
+		return postDao.countTopicByNode(nodeTitle);
 	}
 
 	@Override
 	public int countToday() {
-		return rootTopicDao.countToday();
+		return postDao.countToday();
 	}
 
 	@Override
 	public Page<Post> pageForAdmin(String author, String startDate, String endDate, Integer pageNumber,
 			Integer pageSize) {
-		List<Post> list = rootTopicDao.selectAllForAdmin(author, startDate, endDate, (pageNumber - 1) * pageSize, pageSize);
+		List<Post> list = postDao.selectAllForAdmin(author, startDate, endDate, (pageNumber - 1) * pageSize, pageSize);
 		int totalRow = countAllForAdmin(author, startDate, endDate);
 		return new Page<Post>(list, pageNumber, pageSize, totalRow);
 	}
 
 	@Override
 	public int countAllForAdmin(String author,String startDate,String endDate) {
-		return rootTopicDao.countAllForAdmin(author, startDate, endDate);
+		return postDao.countAllForAdmin(author, startDate, endDate);
 	}
 
 	
 	@Override
 	public Post findById(Integer id) {
-		return rootTopicDao.selectByTopicId(id);
+		return postDao.selectByTopicId(id);
 	}
 	
 	@Override
 	public boolean save(PostDTO topicDTO) throws PostException {
 		String title = topicDTO.getTitle();
-		if (StringUtils.isBlank(title)) {
+		if (StringUtils.isEmpty(title)) {
 			throw new PostException(PostErrorCodeEnum.TITLE_MISSING);
 		}
 		String nodeId = topicDTO.getNodeDTO().getNodeId();
-		if (StringUtils.isBlank(nodeId)) {
+		if (StringUtils.isEmpty(nodeId)) {
 			throw new PostException(PostErrorCodeEnum.NODE_ID_MISSING);
 		}
 		NodeDTO nodeDTO = nodeService.getById(nodeId);
@@ -414,7 +397,7 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 			throw new PostException(PostErrorCodeEnum.INVALIDATE_NODE);
 		}
 		String userId = topicDTO.getUserDTO().getUserId();
-		if (StringUtils.isBlank(userId)) {
+		if (StringUtils.isEmpty(userId)) {
 			throw new PostException(PostErrorCodeEnum.USER_ID_MISSING);
 		}
 		UserDTO userDTO = userService.getById(userId);
@@ -446,20 +429,25 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 
 	@Override
 	public Function<? super Post, ? extends PostDTO> getDO2DTOMapper() {
-		return topic -> {
-			PostDTO topicDTO = new PostDTO();
+		return post -> {
+			if (post != null) {
+				PostDTO postDTO = new PostDTO();
+				wang.miansen.roothub.common.util.BeanUtils.DO2DTO(post, postDTO);
+				return postDTO;
+			}
+			/*PostDTO topicDTO = new PostDTO();
 			BeanUtils.copyProperties(topic, topicDTO);
 			UserDTO userDTO = userService.getById(topic.getUserId());
 			NodeDTO nodeDTO = nodeService.getById(topic.getNodeId());
 			topicDTO.setNodeDTO(nodeDTO);
-			topicDTO.setUserDTO(userDTO);
-			return topicDTO;
+			topicDTO.setUserDTO(userDTO);*/
+			return null;
 		};
 	}
 
 	@Override
 	public BaseDao<Post> getDao() {
-		return rootTopicDao;
+		return postDao;
 	}
 
 }

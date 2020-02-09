@@ -86,7 +86,7 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 		// 更新话题
 		postService.updateById(topicDTO);
 		String p = request.getParameter("p");
-		if (wang.miansen.roothub.common.util.StringUtils.isBlank(p)) {
+		if (wang.miansen.roothub.common.util.StringUtils.isEmpty(p)) {
 			p = "1";
 		}
 		// 查询回复

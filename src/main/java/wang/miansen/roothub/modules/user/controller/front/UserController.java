@@ -374,15 +374,20 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 				NodeDTO nodeDTO = postDTO.getNodeDTO();
 				UserDTO userDTO = postDTO.getUserDTO();
 				if (nodeDTO != null) {
-					postVO.setNodeId(postDTO.getNodeDTO().getNodeId());
-					postVO.setNodeName(postDTO.getNodeDTO().getNodeTitle());
+					postVO.setNodeId(nodeDTO.getNodeId());
+					postVO.setNodeName(nodeDTO.getNodeTitle());
 				}
 				if (userDTO != null) {
-					postVO.setUserId(postDTO.getUserDTO().getUserId());
-					postVO.setUserName(postDTO.getUserDTO().getUserName());
+					postVO.setUserId(userDTO.getUserId());
+					postVO.setUserName(userDTO.getUserName());
 				}
 				postVO.setCreateDate(DateUtil.formatDateTime(postDTO.getCreateDate()));
 				postVO.setUpdateDate(DateUtil.formatDateTime(postDTO.getUpdateDate()));
+				try {
+					wang.miansen.roothub.common.util.BeanUtils.id2DTO(postDTO, "userDTO", userDTO.getUserId(), "userService");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				return postVO;
 			}
 			return null;

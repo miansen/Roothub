@@ -246,7 +246,7 @@ public class WebUtil {
     public static void renderFile(HttpServletRequest request, HttpServletResponse response, File file) throws IOException {
         response.setHeader("Accept-Ranges", "bytes");
         response.setHeader("Content-disposition", "attachment; filename=" + encodeFileName(file.getName()));
-        if (StringUtils.isBlank(request.getHeader("Range"))) {
+        if (StringUtils.isEmpty(request.getHeader("Range"))) {
             normalRender(response, file);
         } else {
             rangeRender(request, response, file);
@@ -351,7 +351,7 @@ public class WebUtil {
         }
         long fileLength = file.length();
         for (int i = 0; i < range.length; i++) {
-            if (StringUtils.notBlank(arr[i])) {
+            if (StringUtils.notEmpty(arr[i])) {
                 range[i] = Long.parseLong(arr[i].trim());
                 if (range[i] >= fileLength) {
                     range[i] = fileLength - 1;

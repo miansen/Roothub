@@ -44,7 +44,7 @@ public class StringUtils {
 	 * @return
 	 */
 	public static String camelToUnderline(String param) {
-		if (isBlank(param)) {
+		if (isEmpty(param)) {
 			return "";
 		} else {
 			int len = param.length();
@@ -64,14 +64,14 @@ public class StringUtils {
 	/**
 	 * 字符串为 null 或者为  "" 时返回 true
 	 */
-	public static boolean isBlank(String str) {
+	public static boolean isEmpty(String str) {
 		return str == null || "".equals(str.trim());
 	}
 
 	/**
 	 * 字符串不为 null 而且不为  "" 时返回 true
 	 */
-	public static boolean notBlank(String str) {
+	public static boolean notEmpty(String str) {
 		return str != null && !"".equals(str.trim());
 	}
 
@@ -94,7 +94,7 @@ public class StringUtils {
 	}
 
 	public static boolean isEmail(String email) {
-		if (isBlank(email)) {
+		if (isEmpty(email)) {
 			return false;
 		} else {
 			Pattern pattern = Pattern.compile(check);
@@ -138,14 +138,14 @@ public class StringUtils {
 	}
 
 	public static String noHtml(String s) {
-		if (isBlank(s))
+		if (isEmpty(s))
 			return "";
 		else
 			return s.replaceAll("<[.[^<]]*>", "");
 	}
 
 	public static String transHtml(String s) {
-		if (isBlank(s))
+		if (isEmpty(s))
 			return "";
 		else
 			return s.replace("<", "&lt;").replace(">", "&gt;");

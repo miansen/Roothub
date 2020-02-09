@@ -1,7 +1,17 @@
 package wang.miansen.roothub.common.util;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.aop.support.AopUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +52,28 @@ public final class ReflectionUtils {
 			return Object.class;
 		}
 		return (Class<?>) params[index];
+	}
+
+	/**
+	 * 获取指定类的所有字段
+	 * @param clazz 类的 class 对象
+	 * @return Field List 集合
+	 */
+	public static List<Field> getFieldList(Class<?> clazz) {
+		if (Objects.isNull(clazz) || Object.class.equals(clazz)) {
+			return Collections.emptyList();
+		}
+		// 如果 class 是代理对象，则需要获取原来的 class
+		if (AopUtils.isAopProxy(clazz) || AopUtils.isJdkDynamicProxy(clazz) || AopUtils.isCglibProxy(clazz)) {
+			clazz = AopUtils.getTargetClass(clazz);
+		}
+		return Stream.of(clazz.getDeclaredFields()).filter(field -> {
+			// 排除被 static 修饰的字段（Field 的 getModifiers() 方法返回 int 类型值表示该字段的修饰符）
+			return !Modifier.isStatic(field.getModifiers());
+		}).filter(field -> {
+			// 排除被 Transient 修饰的字段
+			return !Modifier.isTransient(field.getModifiers());
+		}).collect(Collectors.toCollection(LinkedList::new));
 	}
 
 }

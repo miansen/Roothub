@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
  * @date: 2019-04-01
  */
 @Component
-public class ApplicationContextUtil implements ApplicationContextAware {
+public class ApplicationContextUtils implements ApplicationContextAware {
 
-	private static Logger log = LoggerFactory.getLogger(ApplicationContextUtil.class);
+	private static Logger log = LoggerFactory.getLogger(ApplicationContextUtils.class);
 	
 	private static ApplicationContext context;
 	
@@ -29,11 +29,10 @@ public class ApplicationContextUtil implements ApplicationContextAware {
 	}
 
 	public static <T> T getBean(Class<T> clazz) {
-		try {
-			return context.getBean(clazz);
-		} catch (BeansException e) {
-			// log.debug("Spring getBaen: " + clazz,e);
-			throw e;
-		}
+		return context.getBean(clazz);
+	}
+	
+	public static Object getBean(String name) {
+		return context.getBean(name);
 	}
 }

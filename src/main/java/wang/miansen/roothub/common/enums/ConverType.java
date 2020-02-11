@@ -8,10 +8,12 @@ package wang.miansen.roothub.common.enums;
  */
 public enum ConverType {
 
-	DO,
+	DO2DTO,
 	
-	DTO,
+	DTO2DO,
 	
-	VO;
+	DTO2VO,
+	
+	VO2DTO;
 	
 }

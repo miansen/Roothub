@@ -2,6 +2,7 @@ package wang.miansen.roothub.common.enums;
 
 /**
  * 转换的策略
+ * 
  * @author miansen.wang
  * @date 2020-02-09
  * @since 3.0
@@ -9,29 +10,43 @@ package wang.miansen.roothub.common.enums;
 public enum ConverPolicy {
 
 	/**
-	 * ID 转换成 DTO
+	 * ID 转 DTO
 	 */
-	ID2DTO,
+	ID_CONVER_DTO,
+
+	/**
+	 * 编码转枚举
+	 */
+	CODE_CONVER_ENUM,
 	
 	/**
-	 * DTO 转换成 ID
+	 * 枚举转编码
 	 */
-	DTO2ID,
+	ENUM_CONVER_CODE,
+
+	/**
+	 * 枚举转说明
+	 */
+	ENUM_CONVER_DESC,
 	
 	/**
-	 * DTO 转换成 属性
+	 * 说明转枚举
 	 */
-	DTO2PROPERTY,
+	DESC_CONVER_ENUM,
+
+	/**
+	 * 时间转字符串
+	 */
+	DATE_CONVER_STRING,
 	
 	/**
-	 * 字符串转换成时间
+	 * 字符串转时间
 	 */
-	STRING2DATE,
+	STRING_CONVER_DATE,
 	
 	/**
-	 * 时间转换成字符串
+	 * 属性复制
 	 */
-	DATE2STRING,
-	
-	PROPERTY_CONVER_MASTERDATA;
+	COPY_PROPERTIES;
+
 }

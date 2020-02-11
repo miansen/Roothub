@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import org.springframework.util.StringUtils;
 
-public class DateUtil {
+public class DateUtils {
 
 	public static final String FORMAT_DATETIME = "yyyy-MM-dd HH:mm:ss";
 	  public static final String FORMAT_DATE = "yyyy-MM-dd";

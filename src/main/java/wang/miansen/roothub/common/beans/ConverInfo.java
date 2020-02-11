@@ -3,6 +3,7 @@ package wang.miansen.roothub.common.beans;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 
+import wang.miansen.roothub.common.enums.BaseMasterDataEnum;
 import wang.miansen.roothub.common.enums.ConverPolicy;
 import wang.miansen.roothub.common.enums.ConverType;
 
@@ -21,85 +22,130 @@ public class ConverInfo {
 	private Field field;
 
 	/**
-	 * 目标属性名数组
-	 */
-	private String[] targets;
-
-	/**
 	 * 转换的类型
 	 */
 	private ConverType type;
 
 	/**
+	 * 目标属性名数组
+	 */
+	private String[] targets;
+
+	/**
 	 * 转换的策略
 	 */
-	private ConverPolicy strategy;
+	private ConverPolicy policy;
 
 	/**
 	 * service bean name
 	 */
 	private String service;
 
-	public ConverInfo(Field field, String[] targets, ConverType type, ConverPolicy strategy) {
+	/**
+	 * 主数据枚举 Class
+	 */
+	private Class<? extends BaseMasterDataEnum> enumClass;
+
+	public ConverInfo(Field field, ConverType type, String[] targets, ConverPolicy policy) {
 		this.field = field;
-		this.targets = targets;
 		this.type = type;
-		this.strategy = strategy;
+		this.targets = targets;
+		this.policy = policy;
 	}
 
 
-	public ConverInfo(Field field, String[] targets, ConverType type, ConverPolicy strategy, String service) {
+	public ConverInfo(Field field, ConverType type, String[] targets, ConverPolicy policy, String service) {
 		this.field = field;
-		this.targets = targets;
 		this.type = type;
-		this.strategy = strategy;
+		this.targets = targets;
+		this.policy = policy;
 		this.service = service;
 	}
+
+	public ConverInfo(Field field, ConverType type, String[] targets, ConverPolicy policy,
+			Class<? extends BaseMasterDataEnum> enumClass) {
+		this.field = field;
+		this.type = type;
+		this.targets = targets;
+		this.policy = policy;
+		this.enumClass = enumClass;
+	}
+
+	public ConverInfo(Field field, ConverType type, String[] targets, ConverPolicy policy, String service,
+			Class<? extends BaseMasterDataEnum> enumClass) {
+		this.field = field;
+		this.type = type;
+		this.targets = targets;
+		this.policy = policy;
+		this.service = service;
+		this.enumClass = enumClass;
+	}
+
 
 	public Field getField() {
 		return field;
 	}
 
+
 	public void setField(Field field) {
 		this.field = field;
 	}
 
-	public String[] getTargets() {
-		return targets;
-	}
-
-	public void setTargets(String[] targets) {
-		this.targets = targets;
-	}
 
 	public ConverType getType() {
 		return type;
 	}
 
+
 	public void setType(ConverType type) {
 		this.type = type;
 	}
 
-	public ConverPolicy getStrategy() {
-		return strategy;
+
+	public String[] getTargets() {
+		return targets;
 	}
 
-	public void setStrategy(ConverPolicy strategy) {
-		this.strategy = strategy;
+
+	public void setTargets(String[] targets) {
+		this.targets = targets;
 	}
+
+
+	public ConverPolicy getPolicy() {
+		return policy;
+	}
+
+
+	public void setPolicy(ConverPolicy policy) {
+		this.policy = policy;
+	}
+
 
 	public String getService() {
 		return service;
 	}
 
+
 	public void setService(String service) {
 		this.service = service;
 	}
 
+
+	public Class<? extends BaseMasterDataEnum> getEnumClass() {
+		return enumClass;
+	}
+
+
+	public void setEnumClass(Class<? extends BaseMasterDataEnum> enumClass) {
+		this.enumClass = enumClass;
+	}
+
+
 	@Override
 	public String toString() {
-		return "ConverInfo {field=" + field + ", targets=" + Arrays.toString(targets) + ", type=" + type + ", strategy="
-				+ strategy + ", service=" + service + "}";
+		return "ConverInfo {field=" + field + ", type=" + type + ", targets=" + Arrays.toString(targets) + ", policy="
+				+ policy + ", service=" + service + ", enumClass=" + enumClass + "}";
 	}
 
 }

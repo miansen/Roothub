@@ -1,6 +1,7 @@
 package wang.miansen.roothub.common.util;
 
 import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,8 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.BeansException;
+
 import wang.miansen.roothub.common.annotation.Conver;
 import wang.miansen.roothub.common.annotation.DO2DTO;
+import wang.miansen.roothub.common.annotation.DTO2DO;
 import wang.miansen.roothub.common.beans.ConverInfo;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.entity.BaseDO;
@@ -48,38 +52,54 @@ public class BeanUtils {
 	 * 的指定属性 {@code propertyName} 中。
 	 * 
 	 * @param target 目标对象
-	 * @param propertyName 属性名
-	 * @param id 指定的 id
-	 * @param serviceName service bean name
+	 * @param targetPropertyName 目标对象的属性名
+	 * @param id id 值
+	 * @param serviceBeanName service bean name
 	 */
 	@SuppressWarnings("unchecked")
-	public static void idConverObject(Object target, String targetPropertyName, String id, String serviceName)
+	public static void idConverDTO(Object target, String targetPropertyName, String id, String serviceBeanName)
 			throws FatalBeanException {
 		try {
 			Assert.notNull(target, "Target must not be null");
-			Assert.notNull(targetPropertyName, "targetPropertyName must not be null");
+			Assert.notNull(targetPropertyName, "TargetPropertyName must not be null");
 			Assert.notNull(id, "Id must not be null");
-			Assert.notNull(serviceName, "ServiceName must not be null");
+			Assert.notNull(serviceBeanName, "Service bean name must not be null");
 
 			BaseService<? extends BaseDO, ? extends BaseDTO> service = (BaseService<? extends BaseDO, ? extends BaseDTO>) ApplicationContextUtils
-					.getBean(serviceName);
+					.getBean(serviceBeanName);
 			Object object = service.getById(id);
 			Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName, target.getClass());
 			writeMethod.invoke(target, object);
 		} catch (Throwable e) {
-			throw new FatalBeanException(
-					"Failed idConverObject [target: '" + target.getClass().getSimpleName() + "', targetPropertyName: '"
-							+ targetPropertyName + "', id: '" + id + "', serviceName: '" + serviceName + "']",
-					e);
+			throw new FatalBeanException("Could not id conver dto [target: '" + target.getClass().getSimpleName()
+					+ "', targetPropertyName: '" + targetPropertyName + "', id: '" + id + "', serviceBeanName: '"
+					+ serviceBeanName + "']", e);
 		}
 
+	}
+
+	public static void DTOConverId(Object target, String targetPropertyName, BaseDTO dto) throws FatalBeanException {
+		try {
+			Assert.notNull(target, "Target must not be null");
+			Assert.notNull(targetPropertyName, "Target property name must not be null");
+			Assert.notNull(dto, "DTO must not be null");
+
+			// Method readMethod = ReflectionUtils.getReadMethod(targetPropertyName, dto.getClass());
+			// Object id = readMethod.invoke(dto);
+			Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName, target.getClass());
+			writeMethod.invoke(target, dto.getPrimaryKey());
+		} catch (Throwable e) {
+			throw new FatalBeanException("Could not dto conver id [target: '" + target.getClass().getSimpleName()
+					+ "', targetPropertyName: '" + targetPropertyName + "', DTO: '" + dto.getClass().getSimpleName()
+					+ "]", e);
+		}
 	}
 
 	public static void codeConverEnum(Object target, String targetPropertyName, Integer code,
 			Class<? extends BaseMasterDataEnum> enumClass) throws FatalBeanException {
 		try {
 			Assert.notNull(target, "Target must not be null");
-			Assert.notNull(targetPropertyName, "targetPropertyName must not be null");
+			Assert.notNull(targetPropertyName, "target property name must not be null");
 			Assert.notNull(code, "Code must not be null");
 			Assert.notNull(enumClass, "Enum class must not be null");
 
@@ -92,9 +112,25 @@ public class BeanUtils {
 				}
 			}
 		} catch (Throwable e) {
-			throw new FatalBeanException("Could not code conver enum data [target: '"
-					+ target.getClass().getSimpleName() + "', targetPropertyName: '" + targetPropertyName + "', code: '"
-					+ code + "', enumClass: '" + enumClass.getSimpleName() + "']", e);
+			throw new FatalBeanException("Could not code conver enum [target: '" + target.getClass().getSimpleName()
+					+ "', targetPropertyName: '" + targetPropertyName + "', code: '" + code + "', enumClass: '"
+					+ enumClass.getSimpleName() + "']", e);
+		}
+	}
+
+	public static void enumConverCode(Object target, String targetPropertyName, BaseMasterDataEnum baseMasterDataEnum)
+			throws FatalBeanException {
+		try {
+			Assert.notNull(target, "Target must not be null");
+			Assert.notNull(targetPropertyName, "Target property name must not be null");
+			Assert.notNull(baseMasterDataEnum, "Enum must not be null");
+
+			Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName, target.getClass());
+			writeMethod.invoke(target, baseMasterDataEnum.getCode());
+		} catch (Throwable e) {
+			throw new FatalBeanException("Could not enum conver code [target: '" + target.getClass().getSimpleName()
+					+ "', targetPropertyName: '" + targetPropertyName + "', enum: '"
+					+ baseMasterDataEnum.getClass().getSimpleName() + "']", e);
 		}
 	}
 
@@ -102,25 +138,25 @@ public class BeanUtils {
 		try {
 			Assert.notNull(baseDO, "BaseDO must not be null");
 			Assert.notNull(baseDTO, "BaseDTO must not be null");
+
 			org.springframework.beans.BeanUtils.copyProperties(baseDO, baseDTO);
-			List<ConverInfo> converInfoList = getConverDTOField(baseDO);
+			List<ConverInfo> converInfoList = getConverDTOField(baseDO.getClass(), DO2DTO.class);
 			for (ConverInfo converInfo : converInfoList) {
 				ConverPolicy policy = converInfo.getPolicy();
 				Field field = converInfo.getField();
 				String fieldName = field.getName();
-				// Object fieldValue = field.get(baseDO);
 				String[] targets = converInfo.getTargets();
 				switch (policy) {
-					case ID_CONVER_OBJECT:
+					case ID_CONVER_DTO:
 						String service = converInfo.getService();
 						Assert.notNull(service,
-								"The conver policy is ID_CONVER_OBJECT, so service bean name must not be null");
+								"The conver policy is ID_CONVER_DTO, so service bean name must not be null");
 						Method idReadMethod = ReflectionUtils.getReadMethod(fieldName, baseDO.getClass());
 						String id = (String) idReadMethod.invoke(baseDO);
 						if (StringUtils.notEmpty(id)) {
 							for (int i = 0; i < targets.length; i++) {
 								String target = targets[i];
-								idConverObject(baseDTO, target, id, service);
+								idConverDTO(baseDTO, target, id, service);
 							}
 						}
 						break;
@@ -146,19 +182,70 @@ public class BeanUtils {
 		}
 	}
 
+	public static void DTO2DO(BaseDTO baseDTO, BaseDO baseDO) throws FatalBeanException {
+		try {
+			Assert.notNull(baseDTO, "BaseDTO must not be null");
+			Assert.notNull(baseDO, "BaseDO must not be null");
+
+			org.springframework.beans.BeanUtils.copyProperties(baseDTO, baseDO);
+			List<ConverInfo> converInfoList = getConverDTOField(baseDTO.getClass(), DTO2DO.class);
+			for (ConverInfo converInfo : converInfoList) {
+				ConverPolicy policy = converInfo.getPolicy();
+				Field field = converInfo.getField();
+				String fieldName = field.getName();
+				String[] targets = converInfo.getTargets();
+				switch (policy) {
+					case DTO_CONVER_ID:
+						Method dtoReadMethod = ReflectionUtils.getReadMethod(fieldName, baseDTO.getClass());
+						BaseDTO dto = (BaseDTO) dtoReadMethod.invoke(baseDTO);
+						if (dto != null) {
+							for (int i = 0; i < targets.length; i++) {
+								String target = targets[i];
+								DTOConverId(baseDO, target, dto);
+							}
+						}
+						break;
+					case ENUM_CONVER_CODE:
+						Method enumReadMethod = ReflectionUtils.getReadMethod(fieldName, baseDTO.getClass());
+						BaseMasterDataEnum baseMasterDataEnum = (BaseMasterDataEnum) enumReadMethod.invoke(baseDTO);
+						if (baseMasterDataEnum != null) {
+							for (int i = 0; i < targets.length; i++) {
+								String target = targets[i];
+								enumConverCode(baseDO, target, baseMasterDataEnum);
+							}
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		} catch (Throwable e) {
+			throw new FatalBeanException("Could not DTO2DO [DTO: '" + baseDTO.getClass().getSimpleName() + "', DO: '"
+					+ baseDO.getClass().getSimpleName() + "']", e);
+		}
+	}
+
 	/**
-	 * 获取标有 {@link DO2DTO} 注解的字段
-	 * @param baseDO
-	 * @return List
+	 * 获取类中标有指定注解的字段，并包装成 {@link ConverInfo} 对象返回。
+	 * @param clazz 字段所属的类
+	 * @param annotationClass 指定的注解
+	 * @return {@link ConverInfo} List
 	 */
-	private static List<ConverInfo> getConverDTOField(BaseDO baseDO) {
+	private static List<ConverInfo> getConverDTOField(Class<?> clazz, Class<? extends Annotation> annotationClass) {
 		List<ConverInfo> converInfoList = new ArrayList<>();
-		List<Field> fieldList = ReflectionUtils.getFieldList(baseDO.getClass());
+		List<Field> fieldList = ReflectionUtils.getFieldList(clazz);
 		fieldList.forEach(field -> {
-			DO2DTO do2dto = field.getAnnotation(DO2DTO.class);
-			if (do2dto != null) {
-				converInfoList.add(new ConverInfo(field, ConverType.DO2DTO, do2dto.targets(), do2dto.policy(),
-						do2dto.service(), do2dto.enumClass()));
+			Annotation annotation = field.getAnnotation(annotationClass);
+			if (annotation != null) {
+				if (annotation instanceof DO2DTO) {
+					DO2DTO do2dto = (DO2DTO) annotation;
+					converInfoList.add(new ConverInfo(field, ConverType.DO2DTO, do2dto.targets(), do2dto.policy(),
+							do2dto.service(), do2dto.enumClass()));
+				}
+				if (annotation instanceof DTO2DO) {
+					DTO2DO dto2do = (DTO2DO) annotation;
+					converInfoList.add(new ConverInfo(field, ConverType.DTO2DO, dto2do.targets(), dto2do.policy()));
+				}
 			}
 		});
 		return converInfoList;

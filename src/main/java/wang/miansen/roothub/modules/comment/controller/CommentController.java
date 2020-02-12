@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.comment.dto.CommentDTO;
 import wang.miansen.roothub.modules.comment.model.Comment;
 import wang.miansen.roothub.modules.comment.service.CommentService;
@@ -43,8 +43,8 @@ public class CommentController extends AbstractBaseController<Comment, CommentDT
 			commentVO.setUserId(commentDTO.getUserDTO().getUserId());
 			commentVO.setUserName(commentDTO.getUserDTO().getUserName());
 			commentVO.setUserAvatar(commentDTO.getUserDTO().getAvatar());
-			commentVO.setCreateDate(DateUtil.formatDateTime(commentDTO.getCreateDate()));
-			commentVO.setUpdateDate(DateUtil.formatDateTime(commentDTO.getUpdateDate()));
+			commentVO.setCreateDate(DateUtils.formatDateTime(commentDTO.getCreateDate()));
+			commentVO.setUpdateDate(DateUtils.formatDateTime(commentDTO.getUpdateDate()));
 			return commentVO;
 		};
 	}
@@ -58,8 +58,8 @@ public class CommentController extends AbstractBaseController<Comment, CommentDT
 			UserDTO userDTO = userService.getById(commentVO.getUserId());
 			commentDTO.setPostDTO(topicDTO);
 			commentDTO.setUserDTO(userDTO);
-			commentDTO.setCreateDate(DateUtil.string2Date(commentVO.getCreateDate(), DateUtil.FORMAT_DATETIME));
-			commentDTO.setUpdateDate(DateUtil.string2Date(commentVO.getUpdateDate(), DateUtil.FORMAT_DATETIME));
+			commentDTO.setCreateDate(DateUtils.string2Date(commentVO.getCreateDate(), DateUtils.FORMAT_DATETIME));
+			commentDTO.setUpdateDate(DateUtils.string2Date(commentVO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
 			return commentDTO;
 		};
 	}

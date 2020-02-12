@@ -2,8 +2,12 @@ package wang.miansen.roothub.modules.post.dto;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.annotation.DTO2DO;
+import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
+import wang.miansen.roothub.common.enums.ConverPolicy;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
+import wang.miansen.roothub.modules.post.enums.PostTypeEnum;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 
 /**
@@ -23,11 +27,15 @@ public class PostDTO implements BaseDTO {
 	/**
 	 * 节点
 	 */
+	@DTO2DO(targets = {"nodeId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2VO(targets = {"nodeId", "nodeName"}, policy = ConverPolicy.COPY_PROPERTIES)
 	private NodeDTO nodeDTO;
 	
 	/**
 	 * 作者
 	 */
+	@DTO2DO(targets = {"userId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2VO(targets = {"userId", "userName"}, policy = ConverPolicy.COPY_PROPERTIES)
 	private UserDTO userDTO;
 	
 	/**
@@ -93,22 +101,28 @@ public class PostDTO implements BaseDTO {
 	/**
 	 * 创建时间
 	 */
+	@DTO2VO(targets = {"createDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date createDate;
 	
 	/**
 	 * 更新时间
 	 */
+	@DTO2VO(targets = {"updateDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date updateDate;
 	
 	/**
 	 * 类型，1000（文本）、1100（图片）、1200（视频）、1300（链接）
 	 */
-	private String type;
+	private Integer type;
 	
 	/**
 	 * 状态，1000（有效）、1100（无效）、1200（未生效）
 	 */
-	private String status;
+	private Integer status;
+	
+	@DTO2DO(targets = {"type"}, policy = ConverPolicy.ENUM_CONVER_CODE)
+	@DTO2VO(targets = {"type"}, policy = ConverPolicy.ENUM_CONVER_DESC)
+	private PostTypeEnum postTypeEnum;
 	
 	/**
 	 * 备注
@@ -251,19 +265,19 @@ public class PostDTO implements BaseDTO {
 		this.updateDate = updateDate;
 	}
 
-	public String getType() {
+	public Integer getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
@@ -273,6 +287,14 @@ public class PostDTO implements BaseDTO {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	public PostTypeEnum getPostTypeEnum() {
+		return postTypeEnum;
+	}
+
+	public void setPostTypeEnum(PostTypeEnum postTypeEnum) {
+		this.postTypeEnum = postTypeEnum;
 	}
 
 	@Override

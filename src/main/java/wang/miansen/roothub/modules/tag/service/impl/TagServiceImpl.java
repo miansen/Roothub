@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
-import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.tag.dao.ITagDao;
 import wang.miansen.roothub.modules.tag.dto.TagDTO;
 import wang.miansen.roothub.modules.tag.model.Tag;
@@ -32,8 +32,8 @@ public class TagServiceImpl extends AbstractBaseServiceImpl<Tag, TagDTO> impleme
 			tag.setTagAvatar(tagDTO.getTagAvatar());
 			tag.setTagContent(tagDTO.getTagContent());
 			tag.setTagState(tagDTO.getTagState());
-			tag.setCreateDate(DateUtil.string2Date(tagDTO.getCreateDate(), DateUtil.FORMAT_DATETIME));
-			tag.setUpdateDate(DateUtil.string2Date(tagDTO.getUpdateDate(), DateUtil.FORMAT_DATETIME));
+			tag.setCreateDate(DateUtils.string2Date(tagDTO.getCreateDate(), DateUtils.FORMAT_DATETIME));
+			tag.setUpdateDate(DateUtils.string2Date(tagDTO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
 			return tag;
 		};
 	}
@@ -47,8 +47,8 @@ public class TagServiceImpl extends AbstractBaseServiceImpl<Tag, TagDTO> impleme
 			tagDTO.setTagAvatar(tagDO.getTagAvatar());
 			tagDTO.setTagContent(tagDO.getTagContent());
 			tagDTO.setTagState(tagDO.getTagState());
-			tagDTO.setCreateDate(DateUtil.formatDateTime(tagDO.getCreateDate()));
-			tagDTO.setUpdateDate(DateUtil.formatDateTime(tagDO.getUpdateDate()));
+			tagDTO.setCreateDate(DateUtils.formatDateTime(tagDO.getCreateDate()));
+			tagDTO.setUpdateDate(DateUtils.formatDateTime(tagDO.getUpdateDate()));
 			return tagDTO;
 		};
 	}

@@ -411,8 +411,8 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 		topicDTO.setGoodCount(0);
 		topicDTO.setBadCount(0);
 		topicDTO.setCreateDate(new Date());
-		topicDTO.setType("1000");
-		topicDTO.setStatus("1000");
+		topicDTO.setType(1000);
+		topicDTO.setStatus(1000);
 		return super.save(topicDTO);
 	}
 

@@ -12,7 +12,7 @@ import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.follow.service.FollowService;
 import wang.miansen.roothub.modules.follow.vo.FollowVO;
 import wang.miansen.roothub.modules.user.model.User;
@@ -169,8 +169,8 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 			if (followDTO != null) {
 				BeanUtils.copyProperties(followDTO, followVO);
 			}
-			followVO.setCreateDate(DateUtil.formatDateTime(followDTO.getCreateDate()));
-			followVO.setUpdateDate(DateUtil.formatDateTime(followDTO.getUpdateDate()));
+			followVO.setCreateDate(DateUtils.formatDateTime(followDTO.getCreateDate()));
+			followVO.setUpdateDate(DateUtils.formatDateTime(followDTO.getUpdateDate()));
 			return followVO;
 		};
 	}
@@ -182,8 +182,8 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 			if (followVO != null) {
 				BeanUtils.copyProperties(followVO, followDTO);
 			}
-			followDTO.setCreateDate(DateUtil.string2Date(followVO.getCreateDate(), DateUtil.FORMAT_DATETIME));
-			followDTO.setUpdateDate(DateUtil.string2Date(followVO.getUpdateDate(), DateUtil.FORMAT_DATETIME));
+			followDTO.setCreateDate(DateUtils.string2Date(followVO.getCreateDate(), DateUtils.FORMAT_DATETIME));
+			followDTO.setUpdateDate(DateUtils.string2Date(followVO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
 			return followDTO;
 		};
 	}

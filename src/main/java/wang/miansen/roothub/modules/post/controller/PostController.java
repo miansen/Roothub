@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 import wang.miansen.roothub.common.dto.TopicExecution;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.ApiAssert;
-import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.tab.model.Tab;
@@ -177,8 +177,8 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 				postVO.setNodeName(postDTO.getNodeDTO().getNodeTitle());
 				postVO.setUserId(postDTO.getUserDTO().getUserId());
 				postVO.setUserName(postDTO.getUserDTO().getUserId());
-				postVO.setCreateDate(DateUtil.formatDateTime(postDTO.getCreateDate()));
-				postVO.setUpdateDate(DateUtil.formatDateTime(postDTO.getUpdateDate()));
+				postVO.setCreateDate(DateUtils.formatDateTime(postDTO.getCreateDate()));
+				postVO.setUpdateDate(DateUtils.formatDateTime(postDTO.getUpdateDate()));
 				return postVO;
 			}
 			return null;
@@ -204,8 +204,8 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 			commentVO.setUserId(commentDTO.getUserDTO().getUserId());
 			commentVO.setUserName(commentDTO.getUserDTO().getUserName());
 			commentVO.setUserAvatar(commentDTO.getUserDTO().getAvatar());
-			commentVO.setCreateDate(DateUtil.formatDateTime(commentDTO.getCreateDate()));
-			commentVO.setUpdateDate(DateUtil.formatDateTime(commentDTO.getUpdateDate()));
+			commentVO.setCreateDate(DateUtils.formatDateTime(commentDTO.getCreateDate()));
+			commentVO.setUpdateDate(DateUtils.formatDateTime(commentDTO.getUpdateDate()));
 			return commentVO;
 		};
 	}

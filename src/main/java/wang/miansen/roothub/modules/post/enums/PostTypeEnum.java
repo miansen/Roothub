@@ -1,5 +1,7 @@
 package wang.miansen.roothub.modules.post.enums;
 
+import wang.miansen.roothub.common.enums.BaseMasterDataEnum;
+
 /**
  * 帖子类型枚举
  * 
@@ -7,7 +9,7 @@ package wang.miansen.roothub.modules.post.enums;
  * @date 2020-02-09
  * @since 3.0
  */
-public enum PostTypeEnum {
+public enum PostTypeEnum implements BaseMasterDataEnum {
 
 	TEXT(1000, "文本"),
 
@@ -21,13 +23,13 @@ public enum PostTypeEnum {
 
 	private Integer code;
 
-	private String value;
+	private String desc;
 
-	private PostTypeEnum(Integer code, String value) {
+	private PostTypeEnum(Integer code, String desc) {
 		this.code = code;
-		this.value = value;
+		this.desc = desc;
 	}
-
+	
 	public Integer getCode() {
 		return code;
 	}
@@ -36,15 +38,15 @@ public enum PostTypeEnum {
 		this.code = code;
 	}
 
-	public String getValue() {
-		return value;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setValue(String value) {
-		this.value = value;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
-	public static PostTypeEnum codeOf(Integer code) {
+	public PostTypeEnum codeOf(Integer code) {
 		for (PostTypeEnum postTypeEnum : values()) {
 			if (postTypeEnum.getCode() == code) {
 				return postTypeEnum;

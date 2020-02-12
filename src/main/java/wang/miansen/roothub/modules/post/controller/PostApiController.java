@@ -17,7 +17,7 @@ import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
@@ -70,8 +70,8 @@ public class PostApiController extends AbstractBaseController<Post, PostDTO, Pos
 			topicVO.setNodeName(topicDTO.getNodeDTO().getNodeTitle());
 			topicVO.setUserId(topicDTO.getUserDTO().getUserId());
 			topicVO.setUserName(topicDTO.getUserDTO().getUserName());
-			topicVO.setCreateDate(DateUtil.formatDateTime(topicDTO.getCreateDate()));
-			topicVO.setUpdateDate(DateUtil.formatDateTime(topicDTO.getUpdateDate()));
+			topicVO.setCreateDate(DateUtils.formatDateTime(topicDTO.getCreateDate()));
+			topicVO.setUpdateDate(DateUtils.formatDateTime(topicDTO.getUpdateDate()));
 			return topicVO;
 		};
 	}
@@ -85,8 +85,8 @@ public class PostApiController extends AbstractBaseController<Post, PostDTO, Pos
 			UserDTO userDTO = userService.getById(topicVO.getUserId());
 			topicDTO.setNodeDTO(nodeDTO);
 			topicDTO.setUserDTO(userDTO);
-			topicDTO.setCreateDate(DateUtil.string2Date(topicVO.getCreateDate(), DateUtil.FORMAT_DATETIME));
-			topicDTO.setUpdateDate(DateUtil.string2Date(topicVO.getUpdateDate(), DateUtil.FORMAT_DATETIME));
+			topicDTO.setCreateDate(DateUtils.string2Date(topicVO.getCreateDate(), DateUtils.FORMAT_DATETIME));
+			topicDTO.setUpdateDate(DateUtils.string2Date(topicVO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
 			return topicDTO;
 		};
 	}

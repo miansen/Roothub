@@ -52,7 +52,7 @@ import wang.miansen.roothub.modules.post.vo.PostVO;
 import wang.miansen.roothub.modules.visit.service.VisitService;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
-import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
 
 @Controller
@@ -324,8 +324,8 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 			if (userDTO != null) {
 				BeanUtils.copyProperties(userDTO, userVO);
 			}
-			userVO.setCreateDate(DateUtil.formatDateTime(userDTO.getCreateDate()));
-			userVO.setUpdateDate(DateUtil.formatDateTime(userDTO.getUpdateDate()));
+			userVO.setCreateDate(DateUtils.formatDateTime(userDTO.getCreateDate()));
+			userVO.setUpdateDate(DateUtils.formatDateTime(userDTO.getUpdateDate()));
 			return userVO;
 		};
 	}
@@ -337,8 +337,8 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 			if (userVO != null) {
 				BeanUtils.copyProperties(userVO, userDTO);
 			}
-			userDTO.setCreateDate(DateUtil.string2Date(userVO.getCreateDate(), DateUtil.FORMAT_DATETIME));
-			userDTO.setUpdateDate(DateUtil.string2Date(userVO.getUpdateDate(), DateUtil.FORMAT_DATETIME));
+			userDTO.setCreateDate(DateUtils.string2Date(userVO.getCreateDate(), DateUtils.FORMAT_DATETIME));
+			userDTO.setUpdateDate(DateUtils.string2Date(userVO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
 			return userDTO;
 		};
 	}
@@ -381,10 +381,10 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 					postVO.setUserId(userDTO.getUserId());
 					postVO.setUserName(userDTO.getUserName());
 				}
-				postVO.setCreateDate(DateUtil.formatDateTime(postDTO.getCreateDate()));
-				postVO.setUpdateDate(DateUtil.formatDateTime(postDTO.getUpdateDate()));
+				postVO.setCreateDate(DateUtils.formatDateTime(postDTO.getCreateDate()));
+				postVO.setUpdateDate(DateUtils.formatDateTime(postDTO.getUpdateDate()));
 				try {
-					wang.miansen.roothub.common.util.BeanUtils.id2DTO(postDTO, "userDTO", userDTO.getUserId(), "userService");
+					wang.miansen.roothub.common.util.BeanUtils.idConverDTO(postDTO, "userDTO", userDTO.getUserId(), "userService");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

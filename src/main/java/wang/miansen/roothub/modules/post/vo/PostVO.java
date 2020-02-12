@@ -1,6 +1,9 @@
 package wang.miansen.roothub.modules.post.vo;
 
+import wang.miansen.roothub.common.annotation.VO2DTO;
+import wang.miansen.roothub.common.enums.ConverPolicy;
 import wang.miansen.roothub.common.vo.BaseVO;
+import wang.miansen.roothub.modules.post.enums.PostTypeEnum;
 
 /**
  * 帖子 VO
@@ -19,6 +22,7 @@ public class PostVO implements BaseVO {
 	/**
 	 * 节点 ID
 	 */
+	@VO2DTO(targets = {"nodeDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "nodeServiceImpl")
 	private String nodeId;
 
 	/**
@@ -29,6 +33,7 @@ public class PostVO implements BaseVO {
 	/**
 	 * 用户 ID
 	 */
+	@VO2DTO(targets = {"userDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "userServiceImpl")
 	private String userId;
 
 	/**
@@ -99,16 +104,19 @@ public class PostVO implements BaseVO {
 	/**
 	 * 创建时间
 	 */
+	@VO2DTO(targets = {"createDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String createDate;
 
 	/**
 	 * 更新时间
 	 */
+	@VO2DTO(targets = {"updateDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String updateDate;
 
 	/**
 	 * 类型：文本、图片、视频、链接
 	 */
+	@VO2DTO(targets = {"postTypeEnum"}, policy = ConverPolicy.DESC_CONVER_ENUM, enumClass = PostTypeEnum.class)
 	private String type;
 
 	/**

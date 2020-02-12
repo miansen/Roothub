@@ -13,7 +13,7 @@ import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.controller.SessionController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.common.util.DateUtil;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.collect.dto.CollectDTO;
 import wang.miansen.roothub.modules.collect.model.Collect;
 import wang.miansen.roothub.modules.user.model.User;
@@ -151,8 +151,8 @@ public class CollectController extends AbstractBaseController<Collect, CollectDT
 			if (collectDTO != null) {
 				BeanUtils.copyProperties(collectDTO, collectVO);
 			}
-			collectVO.setCreateDate(DateUtil.formatDateTime(collectDTO.getCreateDate()));
-			collectVO.setUpdateDate(DateUtil.formatDateTime(collectDTO.getUpdateDate()));
+			collectVO.setCreateDate(DateUtils.formatDateTime(collectDTO.getCreateDate()));
+			collectVO.setUpdateDate(DateUtils.formatDateTime(collectDTO.getUpdateDate()));
 			return collectVO;
 		};
 	}
@@ -164,8 +164,8 @@ public class CollectController extends AbstractBaseController<Collect, CollectDT
 			if (collectVO != null) {
 				BeanUtils.copyProperties(collectVO, collectDTO);
 			}
-			collectDTO.setCreateDate(DateUtil.string2Date(collectVO.getCreateDate(), DateUtil.FORMAT_DATETIME));
-			collectDTO.setUpdateDate(DateUtil.string2Date(collectVO.getUpdateDate(), DateUtil.FORMAT_DATETIME));
+			collectDTO.setCreateDate(DateUtils.string2Date(collectVO.getCreateDate(), DateUtils.FORMAT_DATETIME));
+			collectDTO.setUpdateDate(DateUtils.string2Date(collectVO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
 			return collectDTO;
 		};
 	}

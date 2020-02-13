@@ -502,6 +502,15 @@ public class BeanUtils {
 					DTO2DO dto2do = (DTO2DO) annotation;
 					converInfoList.add(new ConverInfo(field, ConverType.DTO2DO, dto2do.targets(), dto2do.policy()));
 				}
+				if (annotation instanceof DTO2VO) {
+					DTO2VO dto2vo = (DTO2VO) annotation;
+					converInfoList.add(new ConverInfo(field, ConverType.DTO2VO, dto2vo.targets(), dto2vo.policy()));
+				}
+				if (annotation instanceof VO2DTO) {
+					VO2DTO vo2dto = (VO2DTO) annotation;
+					converInfoList.add(new ConverInfo(field, ConverType.VO2DTO, vo2dto.targets(), vo2dto.policy(),
+							vo2dto.service(), vo2dto.enumClass()));
+				}
 			}
 		});
 		return converInfoList;

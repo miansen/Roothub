@@ -1,6 +1,5 @@
 package wang.miansen.roothub.modules.post.controller;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -8,37 +7,26 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import wang.miansen.roothub.common.beans.BaseEntity;
-import wang.miansen.roothub.common.beans.Page;
-import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.AbstractBaseController;
-import wang.miansen.roothub.common.controller.SessionController;
-import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import wang.miansen.roothub.common.dto.TopicExecution;
+import wang.miansen.roothub.common.beans.BaseEntity;
+import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.controller.AbstractBaseController;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.ApiAssert;
-import wang.miansen.roothub.common.util.DateUtils;
+import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.modules.node.model.Node;
-import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.tab.model.Tab;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.comment.dto.CommentDTO;
-import wang.miansen.roothub.modules.comment.model.Comment;
 import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.comment.vo.CommentVO;
 import wang.miansen.roothub.modules.node.service.NodeService;
@@ -172,13 +160,7 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 		return postDTO -> {
 			if (postDTO != null) {
 				PostVO postVO = new PostVO();
-				BeanUtils.copyProperties(postDTO, postVO);
-				postVO.setNodeId(postDTO.getNodeDTO().getNodeId());
-				postVO.setNodeName(postDTO.getNodeDTO().getNodeTitle());
-				postVO.setUserId(postDTO.getUserDTO().getUserId());
-				postVO.setUserName(postDTO.getUserDTO().getUserId());
-				postVO.setCreateDate(DateUtils.formatDateTime(postDTO.getCreateDate()));
-				postVO.setUpdateDate(DateUtils.formatDateTime(postDTO.getUpdateDate()));
+				BeanUtils.DTO2VO(postDTO, postVO);
 				return postVO;
 			}
 			return null;
@@ -187,26 +169,24 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 
 	@Override
 	protected Function<? super PostVO, ? extends PostDTO> getVO2DTO() {
-		return topicVO -> {
-			PostDTO topicDTO = new PostDTO();
-			BeanUtils.copyProperties(topicVO, topicDTO);
-			return topicDTO;
+		return postVO -> {
+			if (postVO != null) {
+				PostDTO postDTO = new PostDTO();
+				BeanUtils.VO2DTO(postVO, postDTO);
+				return postDTO;
+			}
+			return null;
 		};
 	}
 
 	private Function<? super CommentDTO, ? extends CommentVO> getCommentDTO2CommentVO() {
 		return commentDTO -> {
-			CommentVO commentVO = new CommentVO();
-			BeanUtils.copyProperties(commentDTO, commentVO);
-			commentVO.setPostId(commentDTO.getPostDTO().getPostId());
-			commentVO.setPostName(commentDTO.getPostDTO().getTitle());
-			commentVO.setPostAvatar(commentDTO.getPostDTO().getAvatar());
-			commentVO.setUserId(commentDTO.getUserDTO().getUserId());
-			commentVO.setUserName(commentDTO.getUserDTO().getUserName());
-			commentVO.setUserAvatar(commentDTO.getUserDTO().getAvatar());
-			commentVO.setCreateDate(DateUtils.formatDateTime(commentDTO.getCreateDate()));
-			commentVO.setUpdateDate(DateUtils.formatDateTime(commentDTO.getUpdateDate()));
-			return commentVO;
+			if (commentDTO != null) {
+				CommentVO commentVO = new CommentVO();
+				BeanUtils.DTO2VO(commentDTO, commentVO);
+				return commentVO;
+			}
+			return null;
 		};
 	}
 

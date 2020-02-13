@@ -25,7 +25,6 @@ import wang.miansen.roothub.modules.visit.model.Visit;
 import wang.miansen.roothub.store.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,6 +50,7 @@ import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.post.vo.PostVO;
 import wang.miansen.roothub.modules.visit.service.VisitService;
 import wang.miansen.roothub.common.util.ApiAssert;
+import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
@@ -320,26 +320,24 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 	@Override
 	protected Function<? super UserDTO, ? extends UserVO> getDTO2VO() {
 		return userDTO -> {
-			UserVO userVO = new UserVO();
 			if (userDTO != null) {
-				BeanUtils.copyProperties(userDTO, userVO);
+				UserVO userVO = new UserVO();
+				BeanUtils.DTO2VO(userDTO, userVO);
+				return userVO;
 			}
-			userVO.setCreateDate(DateUtils.formatDateTime(userDTO.getCreateDate()));
-			userVO.setUpdateDate(DateUtils.formatDateTime(userDTO.getUpdateDate()));
-			return userVO;
+			return null;
 		};
 	}
 
 	@Override
 	protected Function<? super UserVO, ? extends UserDTO> getVO2DTO() {
 		return userVO -> {
-			UserDTO userDTO = new UserDTO();
 			if (userVO != null) {
-				BeanUtils.copyProperties(userVO, userDTO);
+				UserDTO userDTO = new UserDTO();
+				BeanUtils.VO2DTO(userVO, userDTO);
+				return userDTO;
 			}
-			userDTO.setCreateDate(DateUtils.string2Date(userVO.getCreateDate(), DateUtils.FORMAT_DATETIME));
-			userDTO.setUpdateDate(DateUtils.string2Date(userVO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
-			return userDTO;
+			return null;
 		};
 	}
 
@@ -370,24 +368,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		return postDTO -> {
 			if (postDTO != null) {
 				PostVO postVO = new PostVO();
-				BeanUtils.copyProperties(postDTO, postVO);
-				NodeDTO nodeDTO = postDTO.getNodeDTO();
-				UserDTO userDTO = postDTO.getUserDTO();
-				if (nodeDTO != null) {
-					postVO.setNodeId(nodeDTO.getNodeId());
-					postVO.setNodeName(nodeDTO.getNodeTitle());
-				}
-				if (userDTO != null) {
-					postVO.setUserId(userDTO.getUserId());
-					postVO.setUserName(userDTO.getUserName());
-				}
-				postVO.setCreateDate(DateUtils.formatDateTime(postDTO.getCreateDate()));
-				postVO.setUpdateDate(DateUtils.formatDateTime(postDTO.getUpdateDate()));
-				try {
-					wang.miansen.roothub.common.util.BeanUtils.idConverDTO(postDTO, "userDTO", userDTO.getUserId(), "userService");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				BeanUtils.DTO2VO(postDTO, postVO);
 				return postVO;
 			}
 			return null;

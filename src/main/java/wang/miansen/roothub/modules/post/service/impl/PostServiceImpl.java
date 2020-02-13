@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
+import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
@@ -418,12 +418,13 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 
 	@Override
 	public Function<? super PostDTO, ? extends Post> getDTO2DOMapper() {
-		return topicDTO -> {
-			Post topic = new Post();
-			BeanUtils.copyProperties(topicDTO, topic);
-			topic.setNodeId(topicDTO.getNodeDTO().getNodeId());
-			topic.setUserId(topicDTO.getUserDTO().getUserId());
-			return topic;
+		return postDTO -> {
+			if (postDTO != null) {
+				Post post = new Post();
+				BeanUtils.DTO2DO(postDTO, post);
+				return post;
+			}
+			return null;
 		};
 	}
 
@@ -432,15 +433,9 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 		return post -> {
 			if (post != null) {
 				PostDTO postDTO = new PostDTO();
-				wang.miansen.roothub.common.util.BeanUtils.DO2DTO(post, postDTO);
+				BeanUtils.DO2DTO(post, postDTO);
 				return postDTO;
 			}
-			/*PostDTO topicDTO = new PostDTO();
-			BeanUtils.copyProperties(topic, topicDTO);
-			UserDTO userDTO = userService.getById(topic.getUserId());
-			NodeDTO nodeDTO = nodeService.getById(topic.getNodeId());
-			topicDTO.setNodeDTO(nodeDTO);
-			topicDTO.setUserDTO(userDTO);*/
 			return null;
 		};
 	}

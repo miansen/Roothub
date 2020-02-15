@@ -27,6 +27,11 @@ public class ConverInfo {
 	private ConverType type;
 
 	/**
+	 * 来源属性名数组
+	 */
+	private String[] sources;
+	
+	/**
 	 * 目标属性名数组
 	 */
 	private String[] targets;
@@ -101,21 +106,25 @@ public class ConverInfo {
 		this.type = type;
 	}
 
+	public String[] getSources() {
+		return sources;
+	}
+
+	public void setSources(String[] sources) {
+		this.sources = sources;
+	}
 
 	public String[] getTargets() {
 		return targets;
 	}
 
-
 	public void setTargets(String[] targets) {
 		this.targets = targets;
 	}
 
-
 	public ConverPolicy getPolicy() {
 		return policy;
 	}
-
 
 	public void setPolicy(ConverPolicy policy) {
 		this.policy = policy;

@@ -21,6 +21,8 @@ import wang.miansen.roothub.common.enums.ConverType;
 import wang.miansen.roothub.common.exception.FatalBeanException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.vo.BaseVO;
+import wang.miansen.roothub.modules.node.dto.NodeDTO;
+import wang.miansen.roothub.modules.node.model.Node;
 
 /**
  * DO DTO VO 互相转换的工具类
@@ -323,6 +325,7 @@ public class BeanUtils {
 				Field field = converInfo.getField();
 				String fieldName = field.getName();
 				String[] targets = converInfo.getTargets();
+				String[] sources = converInfo.getSources();
 				switch (policy) {
 					case COPY_PROPERTIES:
 						Method sourceReadMethod = ReflectionUtils.getReadMethod(fieldName, baseDTO.getClass());
@@ -330,7 +333,14 @@ public class BeanUtils {
 						if (source != null) {
 							for (int i = 0; i < targets.length; i++) {
 								String targetPropertyName = targets[i];
-								copyPropertie(source, baseDO, targetPropertyName);
+								// 特别处理
+								if (sources.length > 0) {
+									Object value = doExpression(sources[i], baseDTO);
+									Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName, baseDO.getClass());
+									writeMethod.invoke(baseDO, value);
+								} else {
+									copyPropertie(source, baseDO, targetPropertyName);
+								}
 							}
 						}
 						break;
@@ -481,6 +491,35 @@ public class BeanUtils {
 	}
 
 	/**
+	 * 处理表达式
+	 * <p>支持 {@code object.object.object...} 的形式，前提是要有对应的 {@code get} 方法
+	 * 
+	 * @param expression 表达式
+	 * @param Object 表达式所属的对象
+	 * @return Object
+	 * @throws Exception
+	 */
+	private static Object doExpression(String expression, Object object) throws Exception {
+		Assert.notNull(expression, "Expression must not be null");
+		Assert.notNull(object, "Object must not be null");
+		
+		Object value = null;
+		Object next = object;
+		String[] segments = expression.split("\\.");
+		if (segments.length == 1) {
+			Method readMethod = ReflectionUtils.getReadMethod(segments[0], object.getClass());
+			value = readMethod.invoke(object);
+		} else {
+			for (int i = 0; i < segments.length - 1; i++) {
+				Method readMethod = ReflectionUtils.getReadMethod(segments[i], next.getClass());
+				next = readMethod.invoke(next);
+				value = doExpression(segments[i + 1], next);
+			}
+		}
+		return value;
+	}
+	
+	/**
 	 * 获取类中标有指定注解的字段，并包装成 {@link ConverInfo} 对象返回。
 	 * 
 	 * @param clazz 字段所属的类
@@ -500,7 +539,9 @@ public class BeanUtils {
 				}
 				if (annotation instanceof DTO2DO) {
 					DTO2DO dto2do = (DTO2DO) annotation;
-					converInfoList.add(new ConverInfo(field, ConverType.DTO2DO, dto2do.targets(), dto2do.policy()));
+					ConverInfo converInfo = new ConverInfo(field, ConverType.DTO2DO, dto2do.targets(), dto2do.policy());
+					converInfo.setSources(dto2do.sources());
+					converInfoList.add(converInfo);
 				}
 				if (annotation instanceof DTO2VO) {
 					DTO2VO dto2vo = (DTO2VO) annotation;

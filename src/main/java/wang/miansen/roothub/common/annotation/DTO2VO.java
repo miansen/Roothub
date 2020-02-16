@@ -20,6 +20,13 @@ import wang.miansen.roothub.common.enums.ConverPolicy;
 public @interface DTO2VO {
 
 	/**
+	 * 来源属性名
+	 * <p>如果为空，则默认为注解字段名
+	 * @return 来源属性名数组
+	 */
+	String[] sources() default {};
+	
+	/**
 	 * 目标属性名
 	 * @return 目标属性名数组
 	 */

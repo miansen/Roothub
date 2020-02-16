@@ -23,6 +23,7 @@ import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.vo.BaseVO;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.model.Node;
+import wang.miansen.roothub.modules.node.vo.NodeVO;
 
 /**
  * DO DTO VO 互相转换的工具类
@@ -383,6 +384,7 @@ public class BeanUtils {
 				Field field = converInfo.getField();
 				String fieldName = field.getName();
 				String[] targets = converInfo.getTargets();
+				String[] sources = converInfo.getSources();
 				switch (policy) {
 					case COPY_PROPERTIES:
 						Method sourceReadMethod = ReflectionUtils.getReadMethod(fieldName, baseDTO.getClass());
@@ -390,7 +392,13 @@ public class BeanUtils {
 						if (source != null) {
 							for (int i = 0; i < targets.length; i++) {
 								String targetPropertyName = targets[i];
-								copyPropertie(source, baseVO, targetPropertyName);
+								if (sources.length > 0) {
+									Object value = doExpression(sources[i], baseDTO);
+									Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName, baseVO.getClass());
+									writeMethod.invoke(baseVO, value);
+								} else {
+									copyPropertie(source, baseVO, targetPropertyName);
+								}
 							}
 						}
 						break;
@@ -507,7 +515,7 @@ public class BeanUtils {
 		Object next = object;
 		String[] segments = expression.split("\\.");
 		if (segments.length == 1) {
-			Method readMethod = ReflectionUtils.getReadMethod(segments[0], object.getClass());
+			Method readMethod = ReflectionUtils.getReadMethod(segments[0], next.getClass());
 			value = readMethod.invoke(object);
 		} else {
 			for (int i = 0; i < segments.length - 1; i++) {
@@ -545,7 +553,9 @@ public class BeanUtils {
 				}
 				if (annotation instanceof DTO2VO) {
 					DTO2VO dto2vo = (DTO2VO) annotation;
-					converInfoList.add(new ConverInfo(field, ConverType.DTO2VO, dto2vo.targets(), dto2vo.policy()));
+					ConverInfo converInfo = new ConverInfo(field, ConverType.DTO2VO, dto2vo.targets(), dto2vo.policy());
+					converInfo.setSources(dto2vo.sources());
+					converInfoList.add(converInfo);
 				}
 				if (annotation instanceof VO2DTO) {
 					VO2DTO vo2dto = (VO2DTO) annotation;
@@ -555,6 +565,34 @@ public class BeanUtils {
 			}
 		});
 		return converInfoList;
+	}
+	
+	public static Object getSource(String expression) {
+		return null;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		String expression = "parentNodeDTO.parentNodeDTO.nodeId";
+
+		NodeDTO grandpaNodeDTO = new NodeDTO();
+		grandpaNodeDTO.setNodeId("grandpaNode123");
+		grandpaNodeDTO.setNodeName("爷爷节点");
+		
+		NodeDTO parentNodeDTO = new NodeDTO();
+		parentNodeDTO.setNodeId("parentNode123");
+		parentNodeDTO.setNodeName("父节点");
+		parentNodeDTO.setParentNodeDTO(grandpaNodeDTO);
+		
+		NodeDTO nodeDTO = new NodeDTO();
+		nodeDTO.setNodeId("node123");
+		nodeDTO.setParentNodeDTO(parentNodeDTO);
+		nodeDTO.setNodeName("子节点");
+		// Object value = doExpression(expression, nodeDTO);
+		// System.out.println(value);
+		Node node = new Node();
+		NodeVO nodeVO = new NodeVO();
+		// DTO2DO(nodeDTO, node);
+		DTO2VO(nodeDTO, nodeVO);
 	}
 
 }

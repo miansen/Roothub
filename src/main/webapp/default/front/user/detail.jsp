@@ -45,14 +45,12 @@
                 <a href="javascript:void(0);" onclick="fansList()" class="cell_tab">粉丝</a>
                 <a href="javascript:void(0);" onclick="topicQnaList()" class="cell_tab">提问</a>
             </div>
-            <div class="itemList">
-            	<c:forEach var="postVO" items="${postVOPage.list}">
-                    <div class="panel-body paginate-bot"
-                    style="border-bottom: 1px solid #e2e2e2;">
+            <div class="panel-body paginate-bot">
+                <c:forEach var="postVO" items="${postVOPage.list}">
                     <div class="media">
                         <c:if test="${fn:length(postVO.avatar) > 0}">
                             <div class="media-left">
-                                <img src="${postVO.avatar}" class="avatar img-circle" alt="">
+                                <img src="${contextPath}${postVO.avatar}" class="avatar img-circle" alt="">
                             </div>
                         </c:if>
                         <div class="media-body">
@@ -62,41 +60,41 @@
                                         <a href="${postVO.url}" target="_blank">${postVO.title}</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="/posts/${postVO.postId}">${postVO.title}</a>
+                                        <a href="${contextPath}/posts/${postVO.postId}">${postVO.title}</a>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
                             <div class="tip">
                                 <p class="gray">
                                     <c:if test="${postVO.top}">
-                                        <span class="label label-primary">置顶</span> <span>•</span>
+                                        <span class="label label-primary">置顶</span>
+                                        <span>•</span>
                                     </c:if>
                                     <c:if test="${postVO.good}">
-                                        <span class="label label-success">精华</span> <span>•</span>
+                                        <span class="label label-primary">精华</span>
+                                        <span>•</span>
                                     </c:if>
-                                     <c:if test="${not empty postVO.nodeName}">
-                                     	<span><a href="/n/${postVO.nodeName}" class="node">${postVO.nodeName}</a></span>
+                                    <a href="${contextPath}/users/${postVO.userName}">${postVO.userName}</a>
+                                    <c:if test="${not empty postVO.nodeName}">
                                     	<span>•</span>
+                                     	<span><a href="/n/${postVO.nodeName}" class="node">${postVO.nodeName}</a></span>
                                      </c:if>
-                                    <a href="/users/${postVO.userName}">${postVO.userName}</a>
-                                    <c:if test="${postVO.viewCount > 0}">
+                                  	<c:if test="${postVO.viewCount > 0}">
                                         <span class="hidden-sm hidden-xs">•</span>
                                         <span class="hidden-sm hidden-xs">${postVO.viewCount}次点击</span>
                                     </c:if>
-
-                                    <!-- 评论数量 -->
                                     <c:if test="${postVO.commentCount > 0}">
                                         <span class="hidden-sm hidden-xs">•</span>
                                         <span class="hidden-sm hidden-xs"><a
-                                                href="/posts/${postVO.postId}">${postVO.commentCount}个评论</a></span>
+                                                href="${contextPath}/posts/${postVO.postId}">${postVO.commentCount}个评论</a></span>
                                     </c:if>
-
-                                    <span>•</span>
-                                    <span>${postVO.createDate}</span>
+                                    <c:if test="${not empty postVO.createDate}">
+                                        <span class="hidden-sm hidden-xs">•</span>
+                                    	<span>${postVO.createDate}</span>
+                                    </c:if>
                                 </p>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </c:forEach>
             </div>

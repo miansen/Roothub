@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.StringUtils;
@@ -414,6 +416,31 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 		topicDTO.setType(1000);
 		topicDTO.setStatus(1000);
 		return super.save(topicDTO);
+	}
+	
+	@Override
+	public Page<PostDTO> pageByNode(Integer pageNumber, Integer pageSize, String nodeName, String tabName) throws BaseException {
+		Page<PostDTO> page = null;
+		QueryWrapper<Post> queryWrapper = new QueryWrapper<>();
+		switch (tabName) {
+			case "good":
+				queryWrapper.eq("good", "1");
+				page = page(pageNumber, pageSize, queryWrapper);
+				break;
+			case "new":
+				queryWrapper.orderByDesc("create_date");
+				page = page(pageNumber, pageSize, queryWrapper);
+				break;
+			case "noReply":
+				queryWrapper.eq("comment_count", "0");
+				page = page(pageNumber, pageSize, queryWrapper);
+				break;
+			default:
+				queryWrapper.orderByDesc("create_date");
+				page = page(pageNumber, pageSize, queryWrapper);
+				break;
+		}
+		return page;
 	}
 
 	@Override

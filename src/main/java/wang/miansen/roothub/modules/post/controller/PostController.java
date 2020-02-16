@@ -23,15 +23,21 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.BeanUtils;
+import wang.miansen.roothub.common.util.StringUtils;
+import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.tab.model.Tab;
 import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.comment.dto.CommentDTO;
+import wang.miansen.roothub.modules.comment.model.Comment;
 import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.comment.vo.CommentVO;
 import wang.miansen.roothub.modules.node.service.NodeService;
+import wang.miansen.roothub.modules.node.vo.NodeVO;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.post.dto.PostDTO;
+import wang.miansen.roothub.modules.post.enums.PostErrorCodeEnum;
+import wang.miansen.roothub.modules.post.exception.PostException;
 import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.post.service.TabService;
@@ -58,55 +64,55 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 	private BaseEntity baseEntity;
 
 	/**
-	 * 话题详情
-	 *
-	 * @param id
-	 * @param model
-	 * @return
+	 * 帖子详情
 	 */
 	@RequestMapping(value = "/posts/{postId}", method = RequestMethod.GET)
 	public ModelAndView detail(@PathVariable String postId, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		PostDTO topicDTO = postService.getById(postId);
-		ApiAssert.notNull(topicDTO, "话题消失了~");
-		// 浏览量+1
-		topicDTO.setViewCount(topicDTO.getViewCount() + 1);
-		// 更新话题
-		postService.updateById(topicDTO);
-		String p = request.getParameter("p");
-		if (wang.miansen.roothub.common.util.StringUtils.isEmpty(p)) {
-			p = "1";
+		PostDTO postDTO = postService.getById(postId);
+		if (postDTO == null) {
+			throw new PostException(PostErrorCodeEnum.NOT_FOUND);
 		}
-		// 查询回复
-		Page<CommentVO> commentVOPage = doCommentDTO2CommentVO(commentService.page(Integer.valueOf(p), 25));
-
-		// 话题被收藏的数量
-		// int countByTid = collectService.countByTid(1);
+		// 浏览量+1
+		postDTO.setViewCount(postDTO.getViewCount() + 1);
+		postService.updateById(postDTO);
+		PostVO postVO = getDTO2VO().apply(postDTO);
+		Integer pageNumber = 1;
+		String page = request.getParameter("page");
+		if (StringUtils.notEmpty(page)) {
+			try {
+				pageNumber = Integer.valueOf(page);
+			} catch (NumberFormatException e) {
+				pageNumber = 1;
+			}
+		}
+		// 评论
+		QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("post_id", postDTO.getPostId());
+		queryWrapper.orderByDesc("create_date");
+		Page<CommentVO> commentVOPage = commentDTOPage2CommentVOPage(commentService.page(pageNumber, 25, queryWrapper));
+		// 帖子被收藏的数量
 		int countByTid = 0;
-		
-		mv.addObject("topic", getDTO2VO().apply(topicDTO));
+		mv.addObject("postVO", postVO);
 		mv.addObject("commentVOPage", commentVOPage);
 		mv.addObject("countByTid", countByTid);
-		mv.setViewName(this.getFrontPrefix() + "/view");
+		mv.setViewName(this.getFrontPrefix() + "/detail");
 		return mv;
 	}
-
+	
 	/**
-	 * 发布话题页面
-	 *
-	 * @param request
-	 * @return
+	 * 发布帖子页面
 	 */
-	@RequestMapping(value = "/topic/create", method = RequestMethod.GET)
-	private String add(String n, HttpServletRequest request) {
-		List<Tab> tabList = tabService.selectAll();
-		List<Node> nodeList = nodeService.findAll(null, null);
-		request.setAttribute("tabList", tabList);
-		request.setAttribute("nodeList", nodeList);
-		request.setAttribute("node", n);
-		return "/default/front/topic/add";
+	@RequestMapping(value = "/post/add", method = RequestMethod.GET)
+	@Override
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		Page<NodeVO> nodeVOPage = nodeDTOPage2NodeVOPage(nodeService.page(1, 25));
+		mv.addObject("nodeVOPage", nodeVOPage);
+		mv.setViewName(this.getFrontPrefix() + "/add");
+		return mv;
 	}
-
+	
 	/**
 	 * 发布话题接口
 	 *
@@ -147,14 +153,6 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 		return "/default/front/tag/view";
 	}
 
-	private Page<CommentVO> doCommentDTO2CommentVO(Page<CommentDTO> commentDTOPage) {
-		List<CommentDTO> commentDTOList = commentDTOPage.getList();
-		List<CommentVO> commentVOList = commentDTOList.stream().map(getCommentDTO2CommentVO())
-				.collect(Collectors.toList());
-		return new Page<CommentVO>(commentVOList, commentDTOPage.getPageNumber(), commentDTOPage.getPageSize(),
-				commentDTOPage.getTotalRow());
-	}
-
 	@Override
 	protected Function<? super PostDTO, ? extends PostVO> getDTO2VO() {
 		return postDTO -> {
@@ -179,12 +177,39 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 		};
 	}
 
-	private Function<? super CommentDTO, ? extends CommentVO> getCommentDTO2CommentVO() {
+	private Page<CommentVO> commentDTOPage2CommentVOPage(Page<CommentDTO> commentDTOPage) {
+		List<CommentDTO> commentDTOList = commentDTOPage.getList();
+		List<CommentVO> commentVOList = commentDTOList.stream().map(commentDTO2CommentVO())
+				.collect(Collectors.toList());
+		return new Page<CommentVO>(commentVOList, commentDTOPage.getPageNumber(), commentDTOPage.getPageSize(),
+				commentDTOPage.getTotalRow());
+	}
+	
+	private Function<? super CommentDTO, ? extends CommentVO> commentDTO2CommentVO() {
 		return commentDTO -> {
 			if (commentDTO != null) {
 				CommentVO commentVO = new CommentVO();
 				BeanUtils.DTO2VO(commentDTO, commentVO);
 				return commentVO;
+			}
+			return null;
+		};
+	}
+	
+	private Page<NodeVO> nodeDTOPage2NodeVOPage(Page<NodeDTO> nodeDTOPage) {
+		List<NodeDTO> nodeDTOList = nodeDTOPage.getList();
+		List<NodeVO> nodeVOList = nodeDTOList.stream().map(nodeDTO2NodeVO())
+				.collect(Collectors.toList());
+		return new Page<NodeVO>(nodeVOList, nodeDTOPage.getPageNumber(), nodeDTOPage.getPageSize(),
+				nodeDTOPage.getTotalRow());
+	}
+	
+	private Function<? super NodeDTO, ? extends NodeVO> nodeDTO2NodeVO() {
+		return nodeDTO -> {
+			if (nodeDTO != null) {
+				NodeVO nodeVO = new NodeVO();
+				BeanUtils.DTO2VO(nodeDTO, nodeVO);
+				return nodeVO;
 			}
 			return null;
 		};

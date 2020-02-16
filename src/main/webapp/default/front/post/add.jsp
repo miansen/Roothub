@@ -2,12 +2,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../common/common.jsp" %>
 <%@ include file="../layout/header.jsp" %>
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
-            <div class="panel-heading"><a href="/">主页</a> / 发布话题</div>
+            <div class="panel-heading"><a href="/">首页</a> / 发布帖子</div>
             <div class="panel-body">
                 <form id="form">
 
@@ -15,7 +14,14 @@
                     <div class="form-group">
                         <label for="title">标题</label>
                         <input type="text" class="form-control" id="title" name="title"
-                               placeholder="请输入话题标题，如果标题能够表达完整内容，则正文可以为空">
+                               placeholder="请输入帖子标题，如果标题能够表达完整内容，则正文可以为空">
+                    </div>
+                    
+                    <%--链接--%>
+                    <div class="form-group">
+                        <label for="url">链接</label>
+                        <input type="text" class="form-control" id="url" name="url"
+                               placeholder="如果是转载的帖子，请务必填上原文的链接">
                     </div>
 
                     <%--正文（富文本编辑器）--%>
@@ -37,24 +43,17 @@
                         </label>
                         <textarea name="content" id="codemirror-content" class="form-control" placeholder="内容，支持Markdown语法"></textarea>
                     </div>
-
                     <%--节点--%>
-                    <c:choose>
-                        <c:when test="${node != null}">
-                            <input type="hidden" value="${node}" id="hidden-node">
-                        </c:when>
-                        <c:otherwise>
-                            <div class="form-group">
-                                <label for="node">节点</label>
-                                <select id="node" class="form-control" name="node">
-                                    <c:forEach var="item" items="${nodeList}" varStatus="status">
-                                        <option value="${item.nodeId}">${item.nodeTitle}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </c:otherwise>
-                    </c:choose>
-
+                    <c:if test="${nodeVOPage != null && fn:length(nodeVOPage.list) > 0}">
+                    	<div class="form-group">
+                           <label for="node">节点</label>
+                           <select id="node" class="form-control" name="node">
+                               <c:forEach var="nodeVO" items="${nodeVOPage.list}" varStatus="status">
+                                   <option value="${nodeVO.nodeId}">${nodeVO.nodeName}</option>
+                               </c:forEach>
+                           </select>
+                        </div>
+                    </c:if>
                     <%--标签--%>
                     <!-- <div class="form-group">
                         <div class="form-group">
@@ -73,12 +72,12 @@
     <div class="col-md-3 hidden-sm hidden-xs">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <b>话题发布指南</b>
+                <b>帖子发布指南</b>
             </div>
             <div class="panel-body">
                 <p>• 在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。</p>
                 <p>• 保持对陌生人的友善。用知识去帮助别人。</p>
-                <p>• 如果是转载的文章，请务必只填上原文的URL，内容就不用复制过来了。</p>
+                <p>• 如果是转载的帖子，请务必只填上原文的URL，内容就不用复制过来了。</p>
                 <p>• 请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。</p>
             </div>
         </div>
@@ -99,9 +98,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-var contextPath = ${pageContext.request.contextPath}
-console.log(contextPath);
-</script>
-<script src="/default/front/topic/js/add.js" />
+<script src="/default/front/post/js/add.js" />
 <%@ include file="../layout/footer.jsp" %>

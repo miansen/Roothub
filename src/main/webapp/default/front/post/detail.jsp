@@ -9,75 +9,75 @@
             <div class="panel-body topic-detail-header">
                 <div class="media">
                     <div class="media-body">
-                        <a href="/">主页</a>
-                        <input type="hidden" value="${topic.topicId}" id="hidden-topicId">
-                        <c:if test="${topic.nodeName != null}">
+                        <a href="/">首页</a>
+                        <input type="hidden" value="${postVO.postId}" id="hidden-topicId">
+                        <c:if test="${postVO.nodeName != null}">
                             <span class="chevron">&nbsp;›&nbsp;</span>
-                            <a href="/n/${topic.nodeName}" class="topic-detail-node">${topic.nodeName}</a>
+                            <a href="${contextPath}/nodes/${postVO.nodeName}" class="topic-detail-node">${postVO.nodeName}</a>
                         </c:if>
                         <div class="sep10"></div>
                         <c:choose>
-                            <c:when test="${topic.url != null}">
-                                <h2><a href="${topic.url}" target="_blank">${topic.title}</a></h2>
+                            <c:when test="${postVO.url != null}">
+                                <h2><a href="${postVO.url}" target="_blank">${postVO.title}</a></h2>
                             </c:when>
                             <c:otherwise>
-                                <h2>${topic.title}</h2>
+                                <h2>${postVO.title}</h2>
                             </c:otherwise>
                         </c:choose>
                         <p>
-                        <div id="topic_${topic.topicId}_votes" class="votes">
-                        <a href="javascript:" onclick="voteTopic(${topic.topicId},true);" class="vote vote_up" title="0 赞同">
+                        <div id="topic_${postVO.postId}_votes" class="votes">
+                        <a href="javascript:" onclick="voteTopic(${postVO.postId},true);" class="vote vote_up" title="0 赞同">
                             <li class="fa fa-chevron-up"></li>
                         </a>
-                        <a href="javascript:" onclick="voteTopic(${topic.topicId},false);" class="vote vote_down" title="0 反对">
+                        <a href="javascript:" onclick="voteTopic(${postVO.postId},false);" class="vote vote_down" title="0 反对">
                             <li class="fa fa-chevron-down"></li>
                         </a>
                         </div>
                         <span>•</span>
-                        <c:if test="${topic.top}">
+                        <c:if test="${postVO.top}">
                             <span class="label label-primary">置顶</span>
                             <span>•</span>
                         </c:if>
-                        <c:if test="${topic.good}">
+                        <c:if test="${postVO.good}">
                             <span class="label label-success">精华</span>
                             <span>•</span>
                         </c:if>
-                        <span class="author"><a href="/user/${topic.userName}">${topic.userName}</a></span>
+                        <span class="author"><a href="${contextPath}/users/${postVO.userName}">${postVO.userName}</a></span>
                         <span>•</span>
-                        <span><fmt:formatDate type="both" value="${topic.createDate}"/></span>
+                        <span>${postVO.createDate}</span>
                         <span>•</span>
-                        <span>${topic.viewCount}次点击</span>
+                        <span>${postVO.viewCount}次点击</span>
                         </p>
                     </div>
                     <div class="media-right">
-                        <img src="${topic.avatar}" class="avatar-lg img-circle">
+                        <img src="${postVO.avatar}" class="avatar-lg img-circle">
                     </div>
                 </div>
             </div>
             <div class="divide"></div>
             <div class="panel-body topic-detail-content show_big_image">
-                ${topic.content}
-                <div>
+                ${postVO.content}
+                <%-- <div>
                     <c:forEach var="tag" items="${tags}">
                         <a href="/tag/${tag}">
                             <span class="label label-success">${tag}</span>
                         </a>
                     </c:forEach>
 
-                </div>
+                </div> --%>
             </div>
             <div class="panel-footer" style="display: none" id="collect">
                 <a href="javascript:window.open('http://service.weibo.com/share/share.php?url=https://roothub.cn/topic/${topic.topicId}?r=${topic.userName}&amp;title=${topic.title}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');">分享微博</a>&nbsp;
                 <a href="javascript:void(0);" class="collectTopic" onclick="save()"></a> <span class="pull-right"><span id="collectCount">${countByTid}</span>个收藏</span>
             </div>
         </div>
-        <c:if test="${topic.replyCount == 0}">
+        <c:if test="${postVO.commentCount == 0}">
             <div class="panel panel-default">
                 <div class="panel-body text-center">目前暂无评论</div>
             </div>
         </c:if>
-        <c:if test="${topic.replyCount > 0}">
-            <jsp:include page="../reply/list.jsp"></jsp:include>
+        <c:if test="${postVO.commentCount > 0}">
+            <jsp:include page="../comment/list.jsp"></jsp:include>
         </c:if>
         <div class="panel panel-default" id="pinglun" style="display: none">
             <div class="panel-heading">
@@ -104,7 +104,6 @@
 
                 <button type="button" id="wangEditor-btn" class="btn btn-primary">评论</button>
                 <button type="button" id="codemirror-btn" class="btn btn-primary" style="display: none;">评论</button>
-                <div class="fr"><a href="/">← Roothub</a></div>
             </div>
         </div>
     </div>
@@ -112,15 +111,15 @@
         <%@ include file="../common/session.jsp" %>
     </div>
 </div>
-<script src="/default/front/topic/js/view.js"></script>
+<script src="/default/front/post/js/detail.js"></script>
 <script type="text/javascript">
 
     // 数据总量
-    var count = ${replyPage.totalRow};
+    var count = ${commentVOPage.totalRow};
     //每页显示的条数
-    var limit = ${replyPage.pageSize};
+    var limit = ${commentVOPage.pageSize};
     //url
-    var url = "/topic/${topic.topicId}?p=";
+    var url = "/post/${postVO.postId}?page=";
 
     function page() {
         var page = location.search.match(/p=(\d+)/);

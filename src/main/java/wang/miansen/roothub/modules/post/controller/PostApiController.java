@@ -67,7 +67,7 @@ public class PostApiController extends AbstractBaseController<Post, PostDTO, Pos
 			PostVO topicVO = new PostVO();
 			BeanUtils.copyProperties(topicDTO, topicVO);
 			topicVO.setNodeId(topicDTO.getNodeDTO().getNodeId());
-			topicVO.setNodeName(topicDTO.getNodeDTO().getNodeTitle());
+			topicVO.setNodeName(topicDTO.getNodeDTO().getNodeName());
 			topicVO.setUserId(topicDTO.getUserDTO().getUserId());
 			topicVO.setUserName(topicDTO.getUserDTO().getUserName());
 			topicVO.setCreateDate(DateUtils.formatDateTime(topicDTO.getCreateDate()));

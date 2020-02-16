@@ -9,7 +9,7 @@
             <div class="node_header">
                 <div class="node_avatar">
                     <div style="float: left; display: inline-block; margin-right: 10px; margin-bottom: initial!important;">
-                        <img src="${nodeVO.avatar}" border="0" align="default" width="72">
+                        <img src="${contextPath}${nodeVO.avatar}" border="0" align="default" width="72">
                     </div>
                 </div>
                 <div class="node_info">
@@ -20,10 +20,10 @@
                     <span class="f12">${nodeVO.nodeDesc}</span>
                     <div class="sep10"></div>
                     <div class="node_header_tabs">
-                         <a href="/nodes/${nodeVO.nodeName}?tabName=all" class="${tabName eq "all" ? "node_header_tab_current" : "node_header_tab"}">全部</a>
-                         <a href="/nodes/${nodeVO.nodeName}?tabName=new" class="${tabName eq "new" ? "node_header_tab_current" : "node_header_tab"}">最新</a>
-                    	 <a href="/nodes/${nodeVO.nodeName}?tabName=good" class="${tabName eq "good" ? "node_header_tab_current" : "node_header_tab"}">精华</a>
-                    	 <a href="/nodes/${nodeVO.nodeName}?tabName=noReply" class="${tabName eq "noReply" ? "node_header_tab_current" : "node_header_tab"}">等待评论</a>
+                         <a href="${contextPath}/nodes/${nodeVO.nodeName}?tabName=all" class="${tabName eq "all" ? "node_header_tab_current" : "node_header_tab"}">全部</a>
+                         <a href="${contextPath}/nodes/${nodeVO.nodeName}?tabName=new" class="${tabName eq "new" ? "node_header_tab_current" : "node_header_tab"}">最新</a>
+                    	 <a href="${contextPath}/nodes/${nodeVO.nodeName}?tabName=good" class="${tabName eq "good" ? "node_header_tab_current" : "node_header_tab"}">精华</a>
+                    	 <a href="${contextPath}/nodes/${nodeVO.nodeName}?tabName=noReply" class="${tabName eq "noReply" ? "node_header_tab_current" : "node_header_tab"}">等待评论</a>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <div class="media">
                         <c:if test="${fn:length(postVO.avatar) > 0}">
                             <div class="media-left">
-                                <img src="${postVO.avatar}" class="avatar img-circle" alt="">
+                                <img src="${contextPath}${postVO.avatar}" class="avatar img-circle" alt="">
                             </div>
                         </c:if>
                         <div class="media-body">
@@ -42,7 +42,7 @@
                                         <a href="${postVO.url}" target="_blank">${postVO.title}</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="/posts/${postVO.postId}">${postVO.title}</a>
+                                        <a href="${contextPath}/posts/${postVO.postId}">${postVO.title}</a>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -54,17 +54,23 @@
                                     <c:if test="${postVO.good}">
                                         <span class="label label-primary">精华</span> <span>•</span>
                                     </c:if>
-                                    <a href="/users/${postVO.userName}">${postVO.userName}</a>
-                                    <span class="hidden-sm hidden-xs">•</span>
-                                    <span class="hidden-sm hidden-xs">${postVO.viewCount}次点击</span>
-                                    <span>•</span>
-                                    <span>${postVO.createDate}</span>
+                                    <a href="${contextPath}/users/${postVO.userName}">${postVO.userName}</a>
+                                  	<c:if test="${postVO.viewCount > 0}">
+                                        <span class="hidden-sm hidden-xs">•</span>
+                                        <span class="hidden-sm hidden-xs">${postVO.viewCount}次点击</span>
+                                    </c:if>
+                                    <c:if test="${postVO.commentCount > 0}">
+                                        <span class="hidden-sm hidden-xs">•</span>
+                                        <span class="hidden-sm hidden-xs"><a
+                                                href="${contextPath}/posts/${postVO.postId}">${postVO.commentCount}个评论</a></span>
+                                    </c:if>
+                                    <c:if test="${not empty postVO.createDate}">
+                                        <span class="hidden-sm hidden-xs">•</span>
+                                    	<span>${postVO.createDate}</span>
+                                    </c:if>
                                 </p>
                             </div>
                         </div>
-                        <div class="media-right"><span class="badge badge-default"><a
-                                href="/posts/${postVO.postId}">${postVO.commentCount}</a></span></div>
-                        <div class="divide mar-top-5"></div>
                     </div>
                 </c:forEach>
             </div>
@@ -84,7 +90,7 @@
 	                        <div class="cell" style="border-bottom: 0px solid #e2e2e2;">
 	                            <strong class="gray">父节点</strong>
 	                            <div class="sep10"></div>
-	                            <img src="${parentNodeVO.avatar}" border="0" align="absmiddle" width="24">&nbsp;
+	                            <img src="${contextPath}${parentNodeVO.avatar}" border="0" align="absmiddle" width="24">&nbsp;
 	                            <a href="/nodes/${parentNodeVO.nodeName}">${parentNodeVO.nodeName}</a>
 	                        </div>
 	                    </c:if>
@@ -93,7 +99,7 @@
 	                            <strong class="gray">相关节点</strong>
 	                            <c:forEach var="item" items="${adjacencyNodeVOPage.list}" varStatus="status">
 	                                <div class="sep10"></div>
-	                                <img src="${item.avatar}" border="0" align="absmiddle" width="24">&nbsp;
+	                                <img src="${contextPath}${item.avatar}" border="0" align="absmiddle" width="24">&nbsp;
 	                                <a href="/nodes/${item.nodeName}">${item.nodeName}</a>
 	                                <div class="sep10"></div>
 	                            </c:forEach>
@@ -104,7 +110,7 @@
 	                            <strong class="gray">子节点</strong>
 	                            <c:forEach var="item" items="${childrenNodeVOPage.list}" varStatus="status">
 	                                <div class="sep10"></div>
-	                                <img src="${item.avatar}" border="0" align="absmiddle" width="24">&nbsp;
+	                                <img src="${contextPath}${item.avatar}" border="0" align="absmiddle" width="24">&nbsp;
 	                                <a href="/nodes/${item.nodeName}">${item.nodeName}</a>
 	                                <div class="sep10"></div>
 	                            </c:forEach>

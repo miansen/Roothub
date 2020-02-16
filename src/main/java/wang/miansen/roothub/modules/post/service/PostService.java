@@ -4,6 +4,7 @@ import java.util.List;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.TopicExecution;
+import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.post.dto.PostDTO;
@@ -261,4 +262,15 @@ public interface PostService extends BaseService<Post, PostDTO> {
     int countAllForAdmin(String author,String startDate,String endDate);
     
     Post findById(Integer id);
+
+	/**
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param nodeName
+	 * @param tabName
+	 * @return
+	 * @throws BaseException
+	 */
+	Page<PostDTO> pageByNode(Integer pageNumber, Integer pageSize, String nodeName, String tabName)
+			throws BaseException;
 }

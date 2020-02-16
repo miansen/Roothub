@@ -10,8 +10,8 @@
 			<div class="panel-body" id="nologin">
 				<p>嗨~听说最近互联网上有很多趣事哦，愿意跟我们分享一下吗？</p>
 				<p>
-					<a href="/topic/create?n=流行" style="font-size: 14px;"><button
-							class="btn btn-success">发布话题</button></a>
+					<a href="/post/add" style="font-size: 14px;"><button
+							class="btn btn-success">发布帖子</button></a>
 				</p>
 			</div>
 		</c:when>
@@ -33,8 +33,8 @@
 						</div>
 					</div>
 					<div style="margin-top: 15px;">
-						<a href="/topic/create" style="font-size: 14px;"><button
-								class="btn btn-success">发布话题</button></a>
+						<a href="/post/add" style="font-size: 14px;"><button
+								class="btn btn-success">发布帖子</button></a>
 					</div>
 				</div>
 				<div class="sep10" style="height: 10px;"></div>
@@ -44,7 +44,7 @@
 						<tr>
 							<td width="33%" align="center"><a href="/user/topics"
 								class="dark" style="display: block;"><span class="bigger">0</span>
-									<div class="sep3"></div> <span class="fade">我的主题</span></a></td>
+									<div class="sep3"></div> <span class="fade">我的帖子</span></a></td>
 							<td width="34%"
 								style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);"
 								align="center"><a href="/collect/topics" class="dark"

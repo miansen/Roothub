@@ -2,7 +2,9 @@ package wang.miansen.roothub.modules.user.dto;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
+import wang.miansen.roothub.common.enums.ConverPolicy;
 
 /**
  * @author sen
@@ -78,11 +80,13 @@ public class UserDTO implements BaseDTO {
 	/**
 	 * 创建时间
 	 */
+	@DTO2VO(targets = {"createDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date createDate;
 	
 	/**
 	 * 修改时间
 	 */
+	@DTO2VO(targets = {"updateDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date updateDate;
 	
 	/**

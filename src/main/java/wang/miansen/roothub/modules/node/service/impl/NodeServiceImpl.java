@@ -56,14 +56,14 @@ public class NodeServiceImpl extends AbstractBaseServiceImpl<Node, NodeDTO> impl
 	}
 
 	//相邻节点
-	@Override
+	/*@Override
 	public List<Node> adjacencyNode(Node node) {
 		if(node.getParentNodeCode() != null) {
 			return nodeDao.selectAtherNode(node.getNodeCode(), node.getParentNodeCode(), null, null);
 		}else {
 			return nodeDao.selectAtherParentNode(node.getNodeCode(), node.getTabId(), null, null);
 		}
-	}
+	}*/
 
 	//查询全部节点
 	@Override
@@ -86,19 +86,19 @@ public class NodeServiceImpl extends AbstractBaseServiceImpl<Node, NodeDTO> impl
 
 	@Transactional
 	@Override
-	public void update(Integer nodeId, String parentNodeCode, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+	public void update(Integer nodeId, String parentNodeCode, String nodeName, String avatarNormal, String avatarLarge, String nodeDesc) {
 		Node node = findById(nodeId);
 		// 先更新话题的节点名称
 		/*if(!nodeTitle.equals(node.getNodeTitle())) {
 			topicService.updateNodeTitile(node.getNodeTitle(), nodeTitle);
 		}*/
-		node.setParentNodeCode(parentNodeCode);
-		node.setNodeCode(nodeTitle);
-		node.setNodeTitle(nodeTitle);
-		node.setAvatarNormal(avatarNormal);
-		node.setAvatarLarge(avatarLarge);
+		// node.setParentNodeCode(parentNodeCode);
+		node.setNodeCode(nodeName);
+		node.setNodeName(nodeName);
+		// node.setAvatarNormal(avatarNormal);
+		// node.setAvatarLarge(avatarLarge);
 		node.setNodeDesc(nodeDesc);
-		node.setUrl("/n/" + nodeTitle);
+		node.setUrl("/n/" + nodeName);
 		node.setUpdateDate(new Date());
 		// 最后在更新节点
 		nodeDao.update(node);

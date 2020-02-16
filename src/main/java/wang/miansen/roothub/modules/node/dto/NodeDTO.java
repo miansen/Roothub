@@ -2,28 +2,70 @@ package wang.miansen.roothub.modules.node.dto;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.annotation.DTO2DO;
+import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
+import wang.miansen.roothub.common.enums.ConverPolicy;
 
 /**
+ * 节点 DTO
+ * 
  * @author miansen.wang
  * @date 2018年11月3日 上午11:38:30
  */
 public class NodeDTO implements BaseDTO {
 
+	private static final long serialVersionUID = 281937364772145384L;
+
+	/**
+	 * 节点ID
+	 */
 	private String nodeId;
+
+	/**
+	 * 父节点
+	 */
+	@DTO2DO(sources = {"parentNodeDTO.nodeId"}, targets = {"parentNodeId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2VO(sources = {"parentNodeDTO.nodeId", "parentNodeDTO.nodeName"}, targets = {"parentNodeId",
+			"parentNodeName"}, policy = ConverPolicy.COPY_PROPERTIES)
+	private NodeDTO parentNodeDTO;
+
+	/**
+	 * 节点编码
+	 */
 	private String nodeCode;
-	private String nodeTitle;
-	private String avatarNormal;
-	private String avatarMini;
-	private String avatarLarge;
+
+	/**
+	 * 节点名字
+	 */
+	private String nodeName;
+
+	/**
+	 * 节点说明
+	 */
 	private String nodeDesc;
-	private Integer tabId;
+
+	/**
+	 * 节点图标
+	 */
+	private String avatar;
+
+	/**
+	 * 链接
+	 */
 	private String url;
-	private String parentNodeCode;
+
+	/**
+	 * 创建时间
+	 */
+	@DTO2VO(targets = {"createDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date createDate;
+
+	/**
+	 * 更新时间
+	 */
+	@DTO2VO(targets = {"updateDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date updateDate;
-	private boolean isDelete;
-	private Integer countTopic;
 
 	public String getNodeId() {
 		return nodeId;
@@ -31,6 +73,14 @@ public class NodeDTO implements BaseDTO {
 
 	public void setNodeId(String nodeId) {
 		this.nodeId = nodeId;
+	}
+
+	public NodeDTO getParentNodeDTO() {
+		return parentNodeDTO;
+	}
+
+	public void setParentNodeDTO(NodeDTO parentNodeDTO) {
+		this.parentNodeDTO = parentNodeDTO;
 	}
 
 	public String getNodeCode() {
@@ -41,36 +91,12 @@ public class NodeDTO implements BaseDTO {
 		this.nodeCode = nodeCode;
 	}
 
-	public String getNodeTitle() {
-		return nodeTitle;
+	public String getNodeName() {
+		return nodeName;
 	}
 
-	public void setNodeTitle(String nodeTitle) {
-		this.nodeTitle = nodeTitle;
-	}
-
-	public String getAvatarNormal() {
-		return avatarNormal;
-	}
-
-	public void setAvatarNormal(String avatarNormal) {
-		this.avatarNormal = avatarNormal;
-	}
-
-	public String getAvatarMini() {
-		return avatarMini;
-	}
-
-	public void setAvatarMini(String avatarMini) {
-		this.avatarMini = avatarMini;
-	}
-
-	public String getAvatarLarge() {
-		return avatarLarge;
-	}
-
-	public void setAvatarLarge(String avatarLarge) {
-		this.avatarLarge = avatarLarge;
+	public void setNodeName(String nodeName) {
+		this.nodeName = nodeName;
 	}
 
 	public String getNodeDesc() {
@@ -81,12 +107,12 @@ public class NodeDTO implements BaseDTO {
 		this.nodeDesc = nodeDesc;
 	}
 
-	public Integer getTabId() {
-		return tabId;
+	public String getAvatar() {
+		return avatar;
 	}
 
-	public void setTabId(Integer tabId) {
-		this.tabId = tabId;
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 
 	public String getUrl() {
@@ -95,14 +121,6 @@ public class NodeDTO implements BaseDTO {
 
 	public void setUrl(String url) {
 		this.url = url;
-	}
-
-	public String getParentNodeCode() {
-		return parentNodeCode;
-	}
-
-	public void setParentNodeCode(String parentNodeCode) {
-		this.parentNodeCode = parentNodeCode;
 	}
 
 	public Date getCreateDate() {
@@ -121,29 +139,11 @@ public class NodeDTO implements BaseDTO {
 		this.updateDate = updateDate;
 	}
 
-	public boolean getIsDelete() {
-		return isDelete;
-	}
-
-	public void setIsDelete(boolean isDelete) {
-		this.isDelete = isDelete;
-	}
-
-	public Integer getCountTopic() {
-		return countTopic;
-	}
-
-	public void setCountTopic(Integer countTopic) {
-		this.countTopic = countTopic;
-	}
-
 	@Override
 	public String toString() {
-		return "Node [nodeId=" + nodeId + ", nodeCode=" + nodeCode + ", nodeTitle=" + nodeTitle + ", avatarNormal="
-				+ avatarNormal + ", avatarMini=" + avatarMini + ", avatarLarge=" + avatarLarge + ", nodeDesc="
-				+ nodeDesc + ", tabId=" + tabId + ", url=" + url + ", parentNodeCode=" + parentNodeCode
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", isDelete=" + isDelete
-				+ ", countTopic=" + countTopic + "]";
+		return "NodeDTO {nodeId=" + nodeId + ", parentNodeDTO=" + parentNodeDTO + ", nodeCode=" + nodeCode
+				+ ", nodeName=" + nodeName + ", nodeDesc=" + nodeDesc + ", avatar=" + avatar + ", url=" + url
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
 	}
 
 }

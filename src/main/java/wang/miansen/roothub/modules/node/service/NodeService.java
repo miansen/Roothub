@@ -58,7 +58,7 @@ public interface NodeService extends BaseService<Node, NodeDTO>{
 	 * @param node
 	 * @return
 	 */
-	List<Node> adjacencyNode(Node node);
+	// List<Node> adjacencyNode(Node node);
 	
 	/**
 	 * 后台节点列表

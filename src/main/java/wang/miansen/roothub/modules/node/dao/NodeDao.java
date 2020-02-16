@@ -78,7 +78,7 @@ public interface NodeDao extends BaseDao<Node>{
 	 * @param limit
 	 * @return
 	 */
-	List<Node> selectAtherParentNode(@Param("nodeCode") String nodeCode,@Param("tabId") Integer tabId,
+	List<Node> selectAtherParentNode(@Param("nodeCode") String nodeCode,@Param("tabId") String tabId,
 			 						 @Param("start") Integer start, @Param("limit") Integer limit);
 	
 	/**

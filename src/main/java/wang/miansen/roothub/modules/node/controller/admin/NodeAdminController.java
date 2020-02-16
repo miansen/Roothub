@@ -114,13 +114,13 @@ public class NodeAdminController {
 	@RequestMapping(value = "/add",method = RequestMethod.POST)
 	@ResponseBody
 	public Result add(@RequestBody Node node){
-		ApiAssert.notNull(node.getNodeTitle(),"节点名称不能为空");
-		ApiAssert.isNull(nodeService.findByTitle(node.getNodeTitle()),"节点已存在");
-		node.setNodeCode(node.getNodeTitle());
-		node.setAvatarMini(node.getAvatarNormal());
-		node.setUrl("/n/"+node.getNodeTitle());
+		ApiAssert.notNull(node.getNodeName(),"节点名称不能为空");
+		ApiAssert.isNull(nodeService.findByTitle(node.getNodeName()),"节点已存在");
+		node.setNodeCode(node.getNodeName());
+		// node.setAvatarMini(node.getAvatarNormal());
+		node.setUrl("/n/"+node.getNodeName());
 		node.setCreateDate(new Date());
-		node.setIsDelete(false);
+		// node.setIsDelete(false);
 		nodeService.save(node);
 		return new Result(true,"添加成功");
 	}

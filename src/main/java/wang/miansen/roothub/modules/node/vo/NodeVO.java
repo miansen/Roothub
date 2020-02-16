@@ -1,36 +1,34 @@
-package wang.miansen.roothub.modules.node.model;
+package wang.miansen.roothub.modules.node.vo;
 
-import java.util.Date;
-
-import wang.miansen.roothub.common.annotation.DO2DTO;
-import wang.miansen.roothub.common.dao.mapper.annotation.Id;
-import wang.miansen.roothub.common.dao.mapper.annotation.Table;
-import wang.miansen.roothub.common.dao.mapper.enums.IdType;
-import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.annotation.VO2DTO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
+import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
- * 节点实体类
+ * 节点 VO
  * 
  * @author miansen.wang
- * @date 2018年11月3日 上午11:38:30
+ * @date 2020-02-15
  */
-@Table("node")
-public class Node implements BaseDO {
+public class NodeVO implements BaseVO {
 
-	private static final long serialVersionUID = -7346089878757372971L;
-	
+	private static final long serialVersionUID = -5069765161106805619L;
+
 	/**
 	 * 节点ID
 	 */
-	@Id(value = "node_id", type = IdType.UUID)
 	private String nodeId;
 	
 	/**
 	 * 父节点ID
 	 */
-	@DO2DTO(targets = {"parentNodeDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "nodeServiceImpl")
+	@VO2DTO(targets = {"parentNodeDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "nodeServiceImpl")
 	private String parentNodeId;
+	
+	/**
+	 * 父节点名字
+	 */
+	private String parentNodeName;
 	
 	/**
 	 * 节点编码
@@ -60,12 +58,19 @@ public class Node implements BaseDO {
 	/**
 	 * 创建时间
 	 */
-	private Date createDate;
+	@VO2DTO(targets = {"createDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
+	private String createDate;
 	
 	/**
 	 * 更新时间
 	 */
-	private Date updateDate;
+	@VO2DTO(targets = {"updateDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
+	private String updateDate;
+	
+	@Override
+	public String getPrimaryKey() {
+		return nodeId;
+	}
 
 	public String getNodeId() {
 		return nodeId;
@@ -81,6 +86,14 @@ public class Node implements BaseDO {
 
 	public void setParentNodeId(String parentNodeId) {
 		this.parentNodeId = parentNodeId;
+	}
+
+	public String getParentNodeName() {
+		return parentNodeName;
+	}
+
+	public void setParentNodeName(String parentNodeName) {
+		this.parentNodeName = parentNodeName;
 	}
 
 	public String getNodeCode() {
@@ -123,27 +136,27 @@ public class Node implements BaseDO {
 		this.url = url;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 
-	public Date getUpdateDate() {
+	public String getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(Date updateDate) {
+	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Node {nodeId=" + nodeId + ", parentNodeId=" + parentNodeId + ", nodeCode=" + nodeCode + ", nodeName="
-				+ nodeName + ", nodeDesc=" + nodeDesc + ", avatar=" + avatar + ", url=" + url + ", createDate="
-				+ createDate + ", updateDate=" + updateDate + "}";
+		return "NodeVO {nodeId=" + nodeId + ", parentNodeId=" + parentNodeId + ", parentNodeName=" + parentNodeName
+				+ ", nodeCode=" + nodeCode + ", nodeName=" + nodeName + ", nodeDesc=" + nodeDesc + ", avatar=" + avatar
+				+ ", url=" + url + ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
 	}
-
+	
 }

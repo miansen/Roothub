@@ -68,7 +68,7 @@ public class NodeController extends AbstractBaseController<Node, NodeDTO, NodeVO
 		// 节点
 		NodeVO nodeVO = getDTO2VO().apply(nodeDTO);
 		// 帖子
-		Page<PostDTO> postDTOPage = postService.pageByNode(Integer.valueOf(pageNumber), 25, name, tabName);
+		Page<PostDTO> postDTOPage = postService.pageByNode(Integer.valueOf(pageNumber), 25, nodeVO.getNodeId(), tabName);
 		Page<PostVO> postVOPage = postDTOPage2PostVOPage(postDTOPage);
 		// 父节点
 		NodeVO parentNodeVO = null;

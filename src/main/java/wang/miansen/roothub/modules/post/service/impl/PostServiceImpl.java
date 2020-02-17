@@ -419,16 +419,14 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 	}
 	
 	@Override
-	public Page<PostDTO> pageByNode(Integer pageNumber, Integer pageSize, String nodeName, String tabName) throws BaseException {
+	public Page<PostDTO> pageByNode(Integer pageNumber, Integer pageSize, String nodeId, String tabName) throws BaseException {
 		Page<PostDTO> page = null;
 		QueryWrapper<Post> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("node_id", nodeId);
+		queryWrapper.orderByDesc("create_date");
 		switch (tabName) {
 			case "good":
 				queryWrapper.eq("good", "1");
-				page = page(pageNumber, pageSize, queryWrapper);
-				break;
-			case "new":
-				queryWrapper.orderByDesc("create_date");
 				page = page(pageNumber, pageSize, queryWrapper);
 				break;
 			case "noReply":
@@ -436,7 +434,6 @@ public class PostServiceImpl extends AbstractBaseServiceImpl<Post, PostDTO> impl
 				page = page(pageNumber, pageSize, queryWrapper);
 				break;
 			default:
-				queryWrapper.orderByDesc("create_date");
 				page = page(pageNumber, pageSize, queryWrapper);
 				break;
 		}

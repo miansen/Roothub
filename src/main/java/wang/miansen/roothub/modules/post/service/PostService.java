@@ -271,6 +271,6 @@ public interface PostService extends BaseService<Post, PostDTO> {
 	 * @return
 	 * @throws BaseException
 	 */
-	Page<PostDTO> pageByNode(Integer pageNumber, Integer pageSize, String nodeName, String tabName)
+	Page<PostDTO> pageByNode(Integer pageNumber, Integer pageSize, String nodeId, String tabName)
 			throws BaseException;
 }

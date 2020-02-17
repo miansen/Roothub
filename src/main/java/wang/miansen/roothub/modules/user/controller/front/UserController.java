@@ -136,8 +136,9 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		}
 		QueryWrapper<Post> postQueryWrapper = new QueryWrapper<>();
 		postQueryWrapper.eq("user_id", userDTO.getUserId());
+		postQueryWrapper.orderByDesc("create_date");
 		Page<PostDTO> postDTOPage = postService.page(Integer.valueOf(pageNumber), 25, postQueryWrapper);
-		Page<PostVO> postVOPage = doPostDTO2PostVO(postDTOPage);
+		Page<PostVO> postVOPage = postDTOPage2PostVOPage(postDTOPage);
 		mv.setViewName(this.getFrontPrefix() + "/detail");
 		mv.addObject("userVO", getDTO2VO().apply(userDTO));
 		mv.addObject("postVOPage", postVOPage);
@@ -356,15 +357,15 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		return null;
 	}
 	
-	private Page<PostVO> doPostDTO2PostVO(Page<PostDTO> postDTOPage) {
+	private Page<PostVO> postDTOPage2PostVOPage(Page<PostDTO> postDTOPage) {
 		List<PostDTO> postDTOList = postDTOPage.getList();
-		List<PostVO> postVOList = postDTOList.stream().map(getPostDTO2PostVO())
+		List<PostVO> postVOList = postDTOList.stream().map(postDTO2PostVO())
 				.collect(Collectors.toList());
 		return new Page<PostVO>(postVOList, postDTOPage.getPageNumber(), postDTOPage.getPageSize(),
 				postDTOPage.getTotalRow());
 	}
 	
-	private Function<? super PostDTO, ? extends PostVO> getPostDTO2PostVO() {
+	private Function<? super PostDTO, ? extends PostVO> postDTO2PostVO() {
 		return postDTO -> {
 			if (postDTO != null) {
 				PostVO postVO = new PostVO();

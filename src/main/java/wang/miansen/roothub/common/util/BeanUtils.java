@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import wang.miansen.roothub.common.annotation.DO2DTO;
 import wang.miansen.roothub.common.annotation.DTO2DO;
 import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.annotation.VO2DTO;
 import wang.miansen.roothub.common.beans.ConverInfo;
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.enums.BaseMasterDataEnum;
@@ -21,6 +23,8 @@ import wang.miansen.roothub.common.enums.ConverType;
 import wang.miansen.roothub.common.exception.FatalBeanException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.vo.BaseVO;
+import wang.miansen.roothub.modules.comment.dto.CommentDTO;
+import wang.miansen.roothub.modules.comment.vo.CommentVO;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.vo.NodeVO;
@@ -337,7 +341,8 @@ public class BeanUtils {
 								// 特别处理
 								if (sources.length > 0) {
 									Object value = doExpression(sources[i], baseDTO);
-									Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName, baseDO.getClass());
+									Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName,
+											baseDO.getClass());
 									writeMethod.invoke(baseDO, value);
 								} else {
 									copyPropertie(source, baseDO, targetPropertyName);
@@ -394,7 +399,8 @@ public class BeanUtils {
 								String targetPropertyName = targets[i];
 								if (sources.length > 0) {
 									Object value = doExpression(sources[i], baseDTO);
-									Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName, baseVO.getClass());
+									Method writeMethod = ReflectionUtils.getWriteMethod(targetPropertyName,
+											baseVO.getClass());
 									writeMethod.invoke(baseVO, value);
 								} else {
 									copyPropertie(source, baseVO, targetPropertyName);
@@ -498,6 +504,23 @@ public class BeanUtils {
 		}
 	}
 
+	public static <T> Page<T> DTOPage2VOPage(Page<? extends BaseDTO> DTOPage, Class<T> clazz)
+			throws FatalBeanException {
+		List<? extends BaseDTO> list = DTOPage.getList();
+		list.stream().map(dto -> {
+			BaseVO vo = null;
+			try {
+				vo = (BaseVO) clazz.newInstance();
+			} catch (Throwable e) {
+				throw new FatalBeanException("Could not DTOPage2VOPage [DTO Page: '"
+						+ DTOPage.getClass().getSimpleName() + "', VO Class: '" + clazz.getSimpleName() + "']", e);
+			}
+			DTO2VO(dto, vo);
+			return vo;
+		}).collect(Collectors.toList());
+		return new Page<T>((List<T>) list, DTOPage.getPageNumber(), DTOPage.getPageSize(), DTOPage.getTotalRow());
+	}
+
 	/**
 	 * 处理表达式
 	 * <p>支持 {@code object.object.object...} 的形式，前提是要有对应的 {@code get} 方法
@@ -510,7 +533,7 @@ public class BeanUtils {
 	private static Object doExpression(String expression, Object object) throws Exception {
 		Assert.notNull(expression, "Expression must not be null");
 		Assert.notNull(object, "Object must not be null");
-		
+
 		Object value = null;
 		Object next = object;
 		String[] segments = expression.split("\\.");
@@ -526,7 +549,7 @@ public class BeanUtils {
 		}
 		return value;
 	}
-	
+
 	/**
 	 * 获取类中标有指定注解的字段，并包装成 {@link ConverInfo} 对象返回。
 	 * 
@@ -566,33 +589,9 @@ public class BeanUtils {
 		});
 		return converInfoList;
 	}
-	
+
 	public static Object getSource(String expression) {
 		return null;
-	}
-	
-	public static void main(String[] args) throws Exception {
-		String expression = "parentNodeDTO.parentNodeDTO.nodeId";
-
-		NodeDTO grandpaNodeDTO = new NodeDTO();
-		grandpaNodeDTO.setNodeId("grandpaNode123");
-		grandpaNodeDTO.setNodeName("爷爷节点");
-		
-		NodeDTO parentNodeDTO = new NodeDTO();
-		parentNodeDTO.setNodeId("parentNode123");
-		parentNodeDTO.setNodeName("父节点");
-		parentNodeDTO.setParentNodeDTO(grandpaNodeDTO);
-		
-		NodeDTO nodeDTO = new NodeDTO();
-		nodeDTO.setNodeId("node123");
-		nodeDTO.setParentNodeDTO(parentNodeDTO);
-		nodeDTO.setNodeName("子节点");
-		// Object value = doExpression(expression, nodeDTO);
-		// System.out.println(value);
-		Node node = new Node();
-		NodeVO nodeVO = new NodeVO();
-		// DTO2DO(nodeDTO, node);
-		DTO2VO(nodeDTO, nodeVO);
 	}
 
 }

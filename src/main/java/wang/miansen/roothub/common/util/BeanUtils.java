@@ -311,6 +311,18 @@ public class BeanUtils {
 		}
 	}
 
+	public static void DO2DTO(BaseDO baseDO, Class<? extends BaseDTO> dtoClass) throws FatalBeanException {
+		Assert.notNull(baseDO, "BaseDO must not be null");
+		Assert.notNull(dtoClass, "DTO Class must not be null");
+		
+		try {
+			BaseDTO dto = dtoClass.newInstance();
+			DO2DTO(baseDO, dto);
+		} catch (Throwable e) {
+			throw new FatalBeanException("Could not DO2DTO [DO: '" + baseDO.getClass().getSimpleName() + "', DTO: '"
+					+ dtoClass.getSimpleName() + "']", e);
+		}
+	}
 	/**
 	 * DTO 转 DO
 	 * 
@@ -370,6 +382,19 @@ public class BeanUtils {
 		}
 	}
 
+	public static void DTO2DO(BaseDTO baseDTO, Class<? extends BaseDO> doClass) throws FatalBeanException {
+		Assert.notNull(baseDTO, "BaseDTO must not be null");
+		Assert.notNull(doClass, "DO Class must not be null");
+		
+		try {
+			BaseDO baseDO = doClass.newInstance();
+			DTO2DO(baseDTO, baseDO);
+		} catch (Throwable e) {
+			throw new FatalBeanException("Could not DTO2DO [DTO: '" + baseDTO.getClass().getSimpleName() + "', DO: '"
+					+ doClass.getSimpleName() + "']", e);
+		}
+	}
+	
 	/**
 	 * DTO 转 VO
 	 * 
@@ -438,6 +463,20 @@ public class BeanUtils {
 		}
 	}
 
+	public static void DTO2VO(BaseDTO baseDTO, Class<? extends BaseVO> voClass) throws FatalBeanException {
+		Assert.notNull(baseDTO, "BaseDTO must not be null");
+		Assert.notNull(voClass, "VO Class must not be null");
+		
+		try {
+			BaseVO baseVO = voClass.newInstance();
+			DTO2VO(baseDTO, baseVO);
+		} catch (Throwable e) {
+			throw new FatalBeanException("Could not DTO2VO [DTO: '" + baseDTO.getClass().getSimpleName() + "', VO: '"
+					+ voClass.getSimpleName() + "']", e);
+		}
+		
+	}
+	
 	/**
 	 * VO 转 DTO
 	 * 
@@ -501,6 +540,19 @@ public class BeanUtils {
 		} catch (Throwable e) {
 			throw new FatalBeanException("Could not VO2DTO [VO: '" + baseVO.getClass().getSimpleName() + "', DTO: '"
 					+ baseDTO.getClass().getSimpleName() + "']", e);
+		}
+	}
+	
+	public static void VO2DTO(BaseVO baseVO, Class<? extends BaseDTO> dtoClass) throws FatalBeanException {
+		Assert.notNull(baseVO, "BaseVO must not be null");
+		Assert.notNull(dtoClass, "DTO Class must not be null");
+		
+		try {
+			BaseDTO baseDTO = dtoClass.newInstance();
+			VO2DTO(baseVO, baseDTO);
+		} catch (Throwable e) {
+			throw new FatalBeanException("Could not VO2DTO [VO: '" + baseVO.getClass().getSimpleName() + "', DTO: '"
+					+ dtoClass.getSimpleName() + "']", e);
 		}
 	}
 

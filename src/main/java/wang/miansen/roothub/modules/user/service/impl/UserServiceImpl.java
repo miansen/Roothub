@@ -1,33 +1,41 @@
 package wang.miansen.roothub.modules.user.service.impl;
 
+import java.io.Serializable;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.user.model.User;
+import wang.miansen.roothub.modules.user.model.UserRoleRel;
+import wang.miansen.roothub.modules.user.service.UserRoleRelService;
 import wang.miansen.roothub.modules.user.service.UserService;
 import wang.miansen.roothub.store.StorageService;
 import wang.miansen.roothub.third.RedisService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
+import wang.miansen.roothub.modules.user.dto.UserRoleRelDTO;
+import wang.miansen.roothub.modules.user.exception.UserException;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.common.enums.InsertUserEnum;
 import wang.miansen.roothub.common.enums.UpdateUserEnum;
+import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.exception.OperationFailedException;
 import wang.miansen.roothub.common.exception.OperationRepeaException;
 import wang.miansen.roothub.common.exception.OperationSystemException;
@@ -38,8 +46,12 @@ import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
 import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.post.service.PostService;
+import wang.miansen.roothub.modules.role.dto.RoleDTO;
+import wang.miansen.roothub.modules.role.service.RoleService;
+import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.JsonUtil;
+import wang.miansen.roothub.common.util.SimpleHashUtil;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
 
 @Service
@@ -67,6 +79,12 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 
 	@Autowired
 	private RedisService redisService;
+
+	@Autowired
+	private RoleService roleService;
+
+	@Autowired
+	private UserRoleRelService userRoleRelService;
 
 	/**
 	 * 根据ID查找用户
@@ -215,7 +233,8 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 		User user = new User();
 		user.setUserName(username);
 		// 密码加密处理
-		user.setPassword(new BCryptPasswordEncoder().encode(password));
+		// user.setPassword(new BCryptPasswordEncoder().encode(password));
+		user.setPassword(SimpleHashUtil.simpleHash("MD5", password, username, 1024).toHex());
 		user.setScore(10);
 		user.setEmail(email);
 		user.setUrl(null);
@@ -329,25 +348,21 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 
 	@Override
 	public Function<? super UserDTO, ? extends User> getDTO2DOMapper() {
-		return userDTO -> {
-			if (userDTO != null) {
-				User user = new User();
-				BeanUtils.copyProperties(userDTO, user);
-				return user;
-			}
-			return null;
-		};
+		return userDTO -> (User) BeanUtils.DTO2DO(userDTO, User.class);
 	}
 
 	@Override
 	public Function<? super User, ? extends UserDTO> getDO2DTOMapper() {
 		return user -> {
-			if (user != null) {
-				UserDTO userDTO = new UserDTO();
-				BeanUtils.copyProperties(user, userDTO);
-				return userDTO;
-			}
-			return null;
+			UserDTO userDTO = (UserDTO) BeanUtils.DO2DTO(user, UserDTO.class);
+			QueryWrapper<UserRoleRel> queryWrapper = new QueryWrapper<>();
+			queryWrapper.eq("user_id", userDTO.getUserId());
+			List<UserRoleRelDTO> userRoleRelDTOs = this.userRoleRelService.list(queryWrapper);
+			List<String> roleIds = userRoleRelDTOs.stream().filter(Objects::nonNull).map(dto -> dto.getRoleId())
+					.collect(Collectors.toList());
+			List<RoleDTO> roleDTOs = this.roleService.listBatchIds(roleIds);
+			userDTO.setRoleDTOs(roleDTOs);
+			return userDTO;
 		};
 	}
 

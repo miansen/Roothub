@@ -1,10 +1,12 @@
 package wang.miansen.roothub.modules.user.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
+import wang.miansen.roothub.modules.role.dto.RoleDTO;
 
 /**
  * @author sen
@@ -123,6 +125,11 @@ public class UserDTO implements BaseDTO {
 	 * 备注
 	 */
 	private String remark;
+	
+	/**
+	 * 角色
+	 */
+	private List<RoleDTO> roleDTOs;
 
 	public String getUserId() {
 		return userId;
@@ -292,14 +299,23 @@ public class UserDTO implements BaseDTO {
 		this.remark = remark;
 	}
 
+	public List<RoleDTO> getRoleDTOs() {
+		return roleDTOs;
+	}
+
+	public void setRoleDTOs(List<RoleDTO> roleDTOs) {
+		this.roleDTOs = roleDTOs;
+	}
+
 	@Override
 	public String toString() {
-		return "RootUser [userId=" + userId + ", userName=" + userName + ", password=" + password + ", userSex="
+		return "UserDTO [userId=" + userId + ", userName=" + userName + ", password=" + password + ", userSex="
 				+ userSex + ", userAddr=" + userAddr + ", score=" + score + ", avatar=" + avatar + ", email=" + email
 				+ ", url=" + url + ", signature=" + signature + ", thirdId=" + thirdId + ", receiveMsg=" + receiveMsg
 				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", isBlock=" + isBlock
 				+ ", thirdAccessToken=" + thirdAccessToken + ", statusCd=" + statusCd + ", loginIp=" + loginIp
-				+ ", lastLoginIp=" + lastLoginIp + ", userType=" + userType + ", remark=" + remark + "]";
+				+ ", lastLoginIp=" + lastLoginIp + ", userType=" + userType + ", remark=" + remark + ", roleDTOs="
+				+ roleDTOs + "]";
 	}
 	
 }

@@ -6,7 +6,9 @@ package wang.miansen.roothub.modules.user.enums;
  */
 public enum UserErrorCodeEnum {
 
-	INVALIDATE_USER(404, "User.InvalidateUser", "无效的用户");
+	INVALIDATE_USER(404, "User.InvalidateUser", "无效的用户"),
+	
+	NOT_FOUND(404, "User.NotFound", "用户不存在");
 	
 	private int httpCode;
 

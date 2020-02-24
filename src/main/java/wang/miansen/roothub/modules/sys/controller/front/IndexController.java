@@ -24,10 +24,15 @@ import wang.miansen.roothub.modules.node.model.NodeTab;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.node.service.NodeTabService;
 import wang.miansen.roothub.modules.tag.model.Tag;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.http.HttpStatus;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,20 +138,27 @@ public class IndexController extends SessionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	@ResponseBody
-	private Result<UserExecution> register(@RequestParam("username") String username,
-                                           @RequestParam("password") String password, @RequestParam("email") String email,
-                                           HttpServletRequest request) {
-		ApiAssert.notEmpty(username, "请输入用户名");
-		ApiAssert.notEmpty(password, "请输入密码");
-		ApiAssert.notEmpty(email, "请输入邮箱");
-		User user = userService.findByName(username);
-		ApiAssert.isNull(user, "用户已存在");
-		user = userService.findByEmail(email);
-		ApiAssert.isNull(user, "邮箱已存在");
-		UserExecution save = userService.createUser(username, password, email);
+	private String register(@RequestParam(value = "userName", required = true) String userName,
+			@RequestParam(value = "password", required = true) String password,
+			@RequestParam(value = "email", required = true) String email, HttpServletRequest request,
+			HttpServletResponse response) {
+		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("user_name", userName);
+		UserDTO userDTO = this.userService.getOne(queryWrapper);
+		if (userDTO != null) {
+			request.setAttribute("error", "用户名已存在");
+			return "/default/front/register";
+		}
+		queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("email", email);
+		userDTO = this.userService.getOne(queryWrapper);
+		if (userDTO != null) {
+			request.setAttribute("error", "邮箱已存在");
+			return "/default/front/register";
+		}
+		UserExecution save = userService.createUser(userName, password, email);
 		CookieAndSessionUtil.setSession(request, "user", save.getUser());
-		return new Result<UserExecution>(true, save);
+		return "redirect:/";
 	}
 
 	/**
@@ -172,13 +184,19 @@ public class IndexController extends SessionController {
 			HttpServletRequest request, HttpServletResponse response) {
 		User user = userService.findByName(username);
 		ApiAssert.notNull(user, "用户不存在");
-		ApiAssert.isTrue(new BCryptPasswordEncoder().matches(password, user.getPassword()), "密码不正确");
+		// ApiAssert.isTrue(new BCryptPasswordEncoder().matches(password, user.getPassword()), "密码不正确");
 		// 设置cookie
 		/*CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(),
 				Base64Util.encode(user.getThirdAccessToken()), siteConfig.getCookieConfig().getMaxAge(),
 				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);*/
 		// 设置session
 		CookieAndSessionUtil.setSession(request, "user", user);
+		Subject subject = SecurityUtils.getSubject();
+		if(!subject.isAuthenticated()) {
+			UsernamePasswordToken token = new UsernamePasswordToken(username, password, false);
+			//进行验证，这里可以捕获异常，然后返回对应信息
+			subject.login(token);
+		}
 		return new Result<User>(true, user);
 	}
 

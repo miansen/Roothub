@@ -50,6 +50,7 @@ import wang.miansen.roothub.modules.role.dto.RoleDTO;
 import wang.miansen.roothub.modules.role.service.RoleService;
 import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
+import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.JsonUtil;
 import wang.miansen.roothub.common.util.SimpleHashUtil;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
@@ -231,6 +232,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 
 	public UserExecution createUser(String username, String password, String email) {
 		User user = new User();
+		user.setUserId(IDGenerator.generateID());
 		user.setUserName(username);
 		// 密码加密处理
 		// user.setPassword(new BCryptPasswordEncoder().encode(password));
@@ -355,13 +357,15 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	public Function<? super User, ? extends UserDTO> getDO2DTOMapper() {
 		return user -> {
 			UserDTO userDTO = (UserDTO) BeanUtils.DO2DTO(user, UserDTO.class);
-			QueryWrapper<UserRoleRel> queryWrapper = new QueryWrapper<>();
-			queryWrapper.eq("user_id", userDTO.getUserId());
-			List<UserRoleRelDTO> userRoleRelDTOs = this.userRoleRelService.list(queryWrapper);
-			List<String> roleIds = userRoleRelDTOs.stream().filter(Objects::nonNull).map(dto -> dto.getRoleId())
-					.collect(Collectors.toList());
-			List<RoleDTO> roleDTOs = this.roleService.listBatchIds(roleIds);
-			userDTO.setRoleDTOs(roleDTOs);
+			if (userDTO != null) {
+				QueryWrapper<UserRoleRel> queryWrapper = new QueryWrapper<>();
+				queryWrapper.eq("user_id", userDTO.getUserId());
+				List<UserRoleRelDTO> userRoleRelDTOs = this.userRoleRelService.list(queryWrapper);
+				List<String> roleIds = userRoleRelDTOs.stream().filter(Objects::nonNull).map(dto -> dto.getRoleId())
+						.collect(Collectors.toList());
+				List<RoleDTO> roleDTOs = this.roleService.listBatchIds(roleIds);
+				userDTO.setRoleDTOs(roleDTOs);
+			}
 			return userDTO;
 		};
 	}

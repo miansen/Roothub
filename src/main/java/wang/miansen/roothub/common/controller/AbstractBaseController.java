@@ -7,23 +7,20 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.servlet.ModelAndView;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
+
 import wang.miansen.roothub.common.beans.Page;
-import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.vo.BaseVO;
-import wang.miansen.roothub.config.SiteConfig;
+import wang.miansen.roothub.config.ApplicationConfig;
 import wang.miansen.roothub.modules.user.model.User;
 
 /**
@@ -47,29 +44,53 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	private SiteConfig siteConfig;
+	protected ApplicationConfig applicationConfig;
 
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName(this.getFrontPrefix() + "/add");
+		mv.setViewName(this.getJspPrefix() + "/add");
+		return mv;
+	}
+	
+	@Override
+	public ModelAndView save(VO vo, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		this.getService().save(this.getVO2DTO().apply(vo));
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 
 	public ModelAndView delete(String id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
 		DTO dto = this.getService().getById(id);
 		VO vo = getDTO2VO().apply(dto);
-		ModelAndView mv = new ModelAndView();
 		mv.addObject(vo.getClass().getSimpleName(), vo);
-		mv.setViewName(this.getFrontPrefix() + "/delete");
+		mv.setViewName(this.getJspPrefix() + "/delete");
+		return mv;
+	}
+	
+	@Override
+	public ModelAndView remove(String id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		this.getService().removeById(id);
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 
 	public ModelAndView edit(String id, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
 		DTO dto = this.getService().getById(id);
 		VO vo = getDTO2VO().apply(dto);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName(this.getFrontPrefix() + "/edit");
+		mv.setViewName(this.getJspPrefix() + "/edit");
 		mv.addObject(vo.getClass().getSimpleName(), vo);
+		return mv;
+	}
+	
+	@Override
+	public ModelAndView update(VO vo, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		this.getService().updateById(getVO2DTO().apply(vo));
+		mv.setViewName("redirect:/");
 		return mv;
 	}
 
@@ -77,7 +98,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		DTO dto = this.getService().getById(id);
 		VO vo = getDTO2VO().apply(dto);
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName(this.getFrontPrefix() + "/detail");
+		mv.setViewName(this.getJspPrefix() + "/detail");
 		mv.addObject(vo.getClass().getSimpleName(), vo);
 		return mv;
 	}
@@ -88,42 +109,9 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		Page<? extends VO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
 				dtoPage.getTotalRow());
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName(this.getFrontPrefix() + "/list");
+		mv.setViewName(this.getJspPrefix() + "/list");
 		mv.addObject("page", voPage);
 		return mv;
-	}
-
-	public ResponseEntity<Result<VO>> save(VO vo, HttpServletRequest request, HttpServletResponse response) {
-		this.getService().save(this.getVO2DTO().apply(vo));
-		return new ResponseEntity<Result<VO>>(
-				new Result<>(this.getDTO2VO().apply(this.getService().getById(vo.getPrimaryKey()))),
-				HttpStatus.CREATED);
-	}
-
-	public ResponseEntity<Result<VO>> remove(Integer id, HttpServletRequest request, HttpServletResponse response) {
-		this.getService().removeById(id);
-		return new ResponseEntity<Result<VO>>(new Result<>(null), HttpStatus.NO_CONTENT);
-	}
-
-	public ResponseEntity<Result<VO>> update(VO vo, HttpServletRequest request, HttpServletResponse response) {
-		this.getService().updateById(getVO2DTO().apply(vo));
-		return new ResponseEntity<Result<VO>>(
-				new Result<>(this.getDTO2VO().apply(this.getService().getById(vo.getPrimaryKey()))),
-				HttpStatus.CREATED);
-	}
-
-	public ResponseEntity<Result<VO>> getOne(Integer id, HttpServletRequest request, HttpServletResponse response) {
-		return new ResponseEntity<Result<VO>>(new Result<VO>(getDTO2VO().apply(this.getService().getById(id))),
-				HttpStatus.OK);
-	}
-
-	public ResponseEntity<Result<Page<? extends VO>>> page(Integer pageNumber, HttpServletRequest request,
-			HttpServletResponse response) {
-		Page<DTO> dtoPage = this.getService().page(pageNumber, 25, this.getQueryWrapper());
-		List<? extends VO> voList = dtoPage.getList().stream().map(getDTO2VO()).collect(Collectors.toList());
-		Page<? extends VO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
-				dtoPage.getTotalRow());
-		return new ResponseEntity<Result<Page<? extends VO>>>(new Result<>(voPage), HttpStatus.OK);
 	}
 
 	protected abstract Function<? super DTO, ? extends VO> getDTO2VO();
@@ -137,7 +125,15 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	protected abstract QueryWrapper<DO> getQueryWrapper();
 
 	protected String getFrontPrefix() {
-		return siteConfig.getFrontPath() + "/" + getModuleName();
+		return applicationConfig.getFrontPath() + "/" + getModuleName();
+	}
+	
+	/**
+	 * JSP 页面的路径前缀
+	 * @return
+	 */
+	protected String getJspPrefix() {
+		return "/" + this.applicationConfig.getTheme() + "/" + getModuleName();
 	}
 
 	/**

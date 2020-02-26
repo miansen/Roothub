@@ -2,17 +2,23 @@ package wang.miansen.roothub.modules.role.model;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.dao.mapper.annotation.Id;
+import wang.miansen.roothub.common.dao.mapper.annotation.Table;
+import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.entity.BaseDO;
 
 /**
  * 角色实体类
+ * 
  * @author miansen.wang
  * @date 2020-02-23
  */
+@Table(value = "role")
 public class Role implements BaseDO {
 
 	private static final long serialVersionUID = -6603188377095625503L;
 	
+	@Id(value = "role_id", type = IdType.UUID)
 	private String roleId;
 	
 	private String roleName;

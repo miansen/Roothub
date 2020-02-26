@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import wang.miansen.roothub.common.controller.AbstractBaseController;
@@ -30,12 +31,20 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 
 	@Autowired
 	private RoleService roleService;
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	@Override
-	public ModelAndView list(Integer pageNumber, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
+			HttpServletRequest request, HttpServletResponse response) {
 		return super.list(pageNumber, request, response);
 	}
+
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	@Override
+	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
+		return super.add(request, response);
+	}
+
 
 	@Override
 	protected Function<? super RoleDTO, ? extends RoleVO> getDTO2VO() {
@@ -46,7 +55,7 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 	protected Function<? super RoleVO, ? extends RoleDTO> getVO2DTO() {
 		return roleVO -> (RoleDTO) BeanUtils.VO2DTO(roleVO, RoleDTO.class);
 	}
-	
+
 	@Override
 	protected BaseService<Role, RoleDTO> getService() {
 		return roleService;
@@ -59,12 +68,12 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 
 	@Override
 	protected String getFrontPrefix() {
-		return super.siteConfig.getAdminPath() + "/" + getModuleName();
+		return super.applicationConfig.getAdminPath() + "/" + getModuleName();
 	}
 
 	@Override
 	protected QueryWrapper<Role> getQueryWrapper() {
-		return null;
+		return new QueryWrapper<>();
 	}
 
 }

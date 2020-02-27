@@ -25,11 +25,6 @@ public class RoleVO implements BaseVO {
 	@VO2DTO(targets = {"updateDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String updateDate;
 
-	@Override
-	public String getPrimaryKey() {
-		return roleId;
-	}
-
 	public String getRoleId() {
 		return roleId;
 	}
@@ -70,6 +65,16 @@ public class RoleVO implements BaseVO {
 		this.updateDate = updateDate;
 	}
 
+	@Override
+	public String getPrimaryKey() {
+		return roleId;
+	}
+	
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.roleId = primaryKey;
+	}
+	
 	@Override
 	public String toString() {
 		return "RoleVO [roleId=" + roleId + ", roleName=" + roleName + ", roleDesc=" + roleDesc + ", createDate="

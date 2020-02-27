@@ -1,5 +1,6 @@
 package wang.miansen.roothub.modules.role.controller;
 
+import java.util.Date;
 import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,12 +18,15 @@ import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.BeanUtils;
+import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
 import wang.miansen.roothub.modules.role.model.Role;
 import wang.miansen.roothub.modules.role.service.RoleService;
 import wang.miansen.roothub.modules.role.vo.RoleVO;
 
 /**
+ * 角色后台管理 Controller
+ * 
  * @author miansen.wang
  * @date 2020-02-23
  */
@@ -45,6 +50,14 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 		return super.add(request, response);
 	}
 
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@Override
+	public ModelAndView save(RoleVO roleVO, HttpServletRequest request, HttpServletResponse response) {
+		roleVO.setCreateDate(DateUtils.formatDateTime(new Date()));
+		ModelAndView mv = super.save(roleVO, request, response);
+		mv.setViewName("redirect:/admin/role/list");
+		return mv;
+	}
 
 	@Override
 	protected Function<? super RoleDTO, ? extends RoleVO> getDTO2VO() {
@@ -67,8 +80,8 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 	}
 
 	@Override
-	protected String getFrontPrefix() {
-		return super.applicationConfig.getAdminPath() + "/" + getModuleName();
+	protected String getJspPrefix() {
+		return "/admin/" + getModuleName();
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import wang.miansen.roothub.modules.comment.vo.CommentVO;
 import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.vo.NodeVO;
+import wang.miansen.roothub.modules.user.dto.UserRoleRelDTO;
 
 /**
  * DO DTO VO 互相转换的工具类
@@ -262,9 +263,11 @@ public class BeanUtils {
 	 * @param baseDTO
 	 * @throws FatalBeanException
 	 */
-	public static void DO2DTO(BaseDO baseDO, BaseDTO baseDTO) throws FatalBeanException {
+	public static BaseDTO DO2DTO(BaseDO baseDO, BaseDTO baseDTO) throws FatalBeanException {
 		try {
-			Assert.notNull(baseDO, "BaseDO must not be null");
+			if (baseDO == null) {
+				return null;
+			}
 			Assert.notNull(baseDTO, "BaseDTO must not be null");
 
 			org.springframework.beans.BeanUtils.copyProperties(baseDO, baseDTO);
@@ -309,15 +312,12 @@ public class BeanUtils {
 			throw new FatalBeanException("Could not DO2DTO [DO: '" + baseDO.getClass().getSimpleName() + "', DTO: '"
 					+ baseDTO.getClass().getSimpleName() + "']", e);
 		}
+		return baseDTO;
 	}
 
-	public static void DO2DTO(BaseDO baseDO, Class<? extends BaseDTO> dtoClass) throws FatalBeanException {
-		Assert.notNull(baseDO, "BaseDO must not be null");
-		Assert.notNull(dtoClass, "DTO Class must not be null");
-		
+	public static BaseDTO DO2DTO(BaseDO baseDO, Class<? extends BaseDTO> dtoClass) throws FatalBeanException {
 		try {
-			BaseDTO dto = dtoClass.newInstance();
-			DO2DTO(baseDO, dto);
+			return DO2DTO(baseDO, dtoClass.newInstance());
 		} catch (Throwable e) {
 			throw new FatalBeanException("Could not DO2DTO [DO: '" + baseDO.getClass().getSimpleName() + "', DTO: '"
 					+ dtoClass.getSimpleName() + "']", e);
@@ -330,9 +330,12 @@ public class BeanUtils {
 	 * @param baseDO
 	 * @throws FatalBeanException
 	 */
-	public static void DTO2DO(BaseDTO baseDTO, BaseDO baseDO) throws FatalBeanException {
+	public static BaseDO DTO2DO(BaseDTO baseDTO, BaseDO baseDO) throws FatalBeanException {
 		try {
-			Assert.notNull(baseDTO, "BaseDTO must not be null");
+			if (baseDTO == null) {
+				return null;
+			}
+			// Assert.notNull(baseDTO, "BaseDTO must not be null");
 			Assert.notNull(baseDO, "BaseDO must not be null");
 
 			org.springframework.beans.BeanUtils.copyProperties(baseDTO, baseDO);
@@ -380,15 +383,12 @@ public class BeanUtils {
 			throw new FatalBeanException("Could not DTO2DO [DTO: '" + baseDTO.getClass().getSimpleName() + "', DO: '"
 					+ baseDO.getClass().getSimpleName() + "']", e);
 		}
+		return baseDO;
 	}
 
-	public static void DTO2DO(BaseDTO baseDTO, Class<? extends BaseDO> doClass) throws FatalBeanException {
-		Assert.notNull(baseDTO, "BaseDTO must not be null");
-		Assert.notNull(doClass, "DO Class must not be null");
-		
+	public static BaseDO DTO2DO(BaseDTO baseDTO, Class<? extends BaseDO> doClass) throws FatalBeanException {
 		try {
-			BaseDO baseDO = doClass.newInstance();
-			DTO2DO(baseDTO, baseDO);
+			return DTO2DO(baseDTO, doClass.newInstance());
 		} catch (Throwable e) {
 			throw new FatalBeanException("Could not DTO2DO [DTO: '" + baseDTO.getClass().getSimpleName() + "', DO: '"
 					+ doClass.getSimpleName() + "']", e);
@@ -402,9 +402,11 @@ public class BeanUtils {
 	 * @param baseVO
 	 * @throws FatalBeanException
 	 */
-	public static void DTO2VO(BaseDTO baseDTO, BaseVO baseVO) throws FatalBeanException {
+	public static BaseVO DTO2VO(BaseDTO baseDTO, BaseVO baseVO) throws FatalBeanException {
 		try {
-			Assert.notNull(baseDTO, "BaseDTO must not be null");
+			if (baseDTO == null) {
+				return null;
+			}
 			Assert.notNull(baseVO, "BaseVO must not be null");
 
 			org.springframework.beans.BeanUtils.copyProperties(baseDTO, baseVO);
@@ -461,15 +463,12 @@ public class BeanUtils {
 			throw new FatalBeanException("Could not DTO2VO [DTO: '" + baseDTO.getClass().getSimpleName() + "', VO: '"
 					+ baseVO.getClass().getSimpleName() + "']", e);
 		}
+		return baseVO;
 	}
 
-	public static void DTO2VO(BaseDTO baseDTO, Class<? extends BaseVO> voClass) throws FatalBeanException {
-		Assert.notNull(baseDTO, "BaseDTO must not be null");
-		Assert.notNull(voClass, "VO Class must not be null");
-		
+	public static BaseVO DTO2VO(BaseDTO baseDTO, Class<? extends BaseVO> voClass) throws FatalBeanException {
 		try {
-			BaseVO baseVO = voClass.newInstance();
-			DTO2VO(baseDTO, baseVO);
+			return DTO2VO(baseDTO, voClass.newInstance());
 		} catch (Throwable e) {
 			throw new FatalBeanException("Could not DTO2VO [DTO: '" + baseDTO.getClass().getSimpleName() + "', VO: '"
 					+ voClass.getSimpleName() + "']", e);
@@ -484,13 +483,15 @@ public class BeanUtils {
 	 * @param baseDTO
 	 * @throws FatalBeanException
 	 */
-	public static void VO2DTO(BaseVO baseVO, BaseDTO baseDTO) throws FatalBeanException {
+	public static BaseDTO VO2DTO(BaseVO baseVO, BaseDTO baseDTO) throws FatalBeanException {
 		try {
-			Assert.notNull(baseVO, "BaseVO must not be null");
+			if (baseVO == null) {
+				return null;
+			}
 			Assert.notNull(baseDTO, "BaseDTO must not be null");
 
-			org.springframework.beans.BeanUtils.copyProperties(baseDTO, baseVO);
-			List<ConverInfo> converInfoList = getConverInfoList(baseDTO.getClass(), VO2DTO.class);
+			org.springframework.beans.BeanUtils.copyProperties(baseVO, baseDTO);
+			List<ConverInfo> converInfoList = getConverInfoList(baseVO.getClass(), VO2DTO.class);
 			for (ConverInfo converInfo : converInfoList) {
 				ConverPolicy policy = converInfo.getPolicy();
 				Field field = converInfo.getField();
@@ -525,11 +526,11 @@ public class BeanUtils {
 						break;
 					case STRING_CONVER_DATE:
 						Method dateStringReadMethod = ReflectionUtils.getReadMethod(fieldName, baseVO.getClass());
-						String dateString = (String) dateStringReadMethod.invoke(baseDTO);
+						String dateString = (String) dateStringReadMethod.invoke(baseVO);
 						if (StringUtils.notEmpty(dateString)) {
 							for (int i = 0; i < targets.length; i++) {
 								String targetPropertyName = targets[i];
-								stringConverDate(baseVO, targetPropertyName, dateString);
+								stringConverDate(baseDTO, targetPropertyName, dateString);
 							}
 						}
 						break;
@@ -541,15 +542,12 @@ public class BeanUtils {
 			throw new FatalBeanException("Could not VO2DTO [VO: '" + baseVO.getClass().getSimpleName() + "', DTO: '"
 					+ baseDTO.getClass().getSimpleName() + "']", e);
 		}
+		return baseDTO;
 	}
 	
-	public static void VO2DTO(BaseVO baseVO, Class<? extends BaseDTO> dtoClass) throws FatalBeanException {
-		Assert.notNull(baseVO, "BaseVO must not be null");
-		Assert.notNull(dtoClass, "DTO Class must not be null");
-		
+	public static BaseDTO VO2DTO(BaseVO baseVO, Class<? extends BaseDTO> dtoClass) throws FatalBeanException {
 		try {
-			BaseDTO baseDTO = dtoClass.newInstance();
-			VO2DTO(baseVO, baseDTO);
+			return VO2DTO(baseVO, dtoClass.newInstance());
 		} catch (Throwable e) {
 			throw new FatalBeanException("Could not VO2DTO [VO: '" + baseVO.getClass().getSimpleName() + "', DTO: '"
 					+ dtoClass.getSimpleName() + "']", e);
@@ -644,6 +642,23 @@ public class BeanUtils {
 
 	public static Object getSource(String expression) {
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		UserRoleRelDTO dto1 = new UserRoleRelDTO();
+		dto1.setRoleId("1");
+		UserRoleRelDTO dto2 = new UserRoleRelDTO();
+		dto2.setRoleId("2");
+		UserRoleRelDTO dto3 = new UserRoleRelDTO();
+		dto3.setRoleId("3");
+		
+		List<UserRoleRelDTO> userRoleRelDTOList = new ArrayList<>();
+		userRoleRelDTOList.add(dto1);
+		userRoleRelDTOList.add(dto2);
+		userRoleRelDTOList.add(dto3);
+		
+		List<String> roleIds = userRoleRelDTOList.stream().map(dto -> dto.getRoleId()).collect(Collectors.toList());
+		roleIds.forEach(System.out::println);
 	}
 
 }

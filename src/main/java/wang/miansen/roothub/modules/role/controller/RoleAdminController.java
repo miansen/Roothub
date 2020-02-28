@@ -19,6 +19,7 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.DateUtils;
+import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
 import wang.miansen.roothub.modules.role.model.Role;
 import wang.miansen.roothub.modules.role.service.RoleService;
@@ -53,8 +54,23 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Override
 	public ModelAndView save(RoleVO roleVO, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		String roleName = roleVO.getRoleName();
+		if (StringUtils.isEmpty(roleName)) {
+			mv.setViewName(this.getJspPrefix() + "/add");
+			mv.addObject("error", "角色名不能为空");
+			return mv;
+		}
+		QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("role_name", roleVO.getRoleName());
+		RoleDTO roleDTO = this.roleService.getOne(queryWrapper);
+		if (roleDTO != null) {
+			mv.setViewName(this.getJspPrefix() + "/add");
+			mv.addObject("error", "角色名已存在");
+			return mv;
+		}
 		roleVO.setCreateDate(DateUtils.formatDateTime(new Date()));
-		ModelAndView mv = super.save(roleVO, request, response);
+		mv = super.save(roleVO, request, response);
 		mv.setViewName("redirect:/admin/role/list");
 		return mv;
 	}
@@ -86,7 +102,9 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 
 	@Override
 	protected QueryWrapper<Role> getQueryWrapper() {
-		return new QueryWrapper<>();
+		QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+		queryWrapper.orderByDesc("create_date");
+		return queryWrapper;
 	}
 
 }

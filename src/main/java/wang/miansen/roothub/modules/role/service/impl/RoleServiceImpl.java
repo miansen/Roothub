@@ -12,6 +12,7 @@ import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.common.util.BeanUtils;
+import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.permission.service.PermissionService;
 import wang.miansen.roothub.modules.role.dao.RoleDao;
@@ -49,13 +50,17 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, RoleDTO> impl
 	public Function<? super Role, ? extends RoleDTO> getDO2DTOMapper() {
 		return role -> {
 			RoleDTO roleDTO = (RoleDTO) BeanUtils.DO2DTO(role, RoleDTO.class);
-			QueryWrapper<RolePermissionRel> queryWrapper = new QueryWrapper<>();
-			queryWrapper.eq("role_id", roleDTO.getRoleId());
-			List<RolePermissionRelDTO> rolePermissionRelDTOs = this.rolePermissionRelService.list(queryWrapper);
-			List<String> permissionIds = rolePermissionRelDTOs.stream().filter(Objects::nonNull)
-					.map(dto -> dto.getPermissionId()).collect(Collectors.toList());
-			List<PermissionDTO> permissionDTOs = this.permissionService.listBatchIds(permissionIds);
-			roleDTO.setPermissionDTOs(permissionDTOs);
+			if (roleDTO != null) {
+				QueryWrapper<RolePermissionRel> queryWrapper = new QueryWrapper<>();
+				queryWrapper.eq("role_id", roleDTO.getRoleId());
+				List<RolePermissionRelDTO> rolePermissionRelDTOs = this.rolePermissionRelService.list(queryWrapper);
+				List<String> permissionIds = rolePermissionRelDTOs.stream().filter(Objects::nonNull)
+						.map(dto -> dto.getPermissionId()).collect(Collectors.toList());
+				if (CollectionUtils.isNotEmpty(permissionIds)) {
+					List<PermissionDTO> permissionDTOs = this.permissionService.listBatchIds(permissionIds);
+					roleDTO.setPermissionDTOs(permissionDTOs);
+				}
+			}
 			return roleDTO;
 		};
 	}

@@ -3,6 +3,7 @@ package wang.miansen.roothub.modules.permission.dto;
 import java.util.Date;
 
 import wang.miansen.roothub.common.annotation.DTO2DO;
+import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
 
@@ -30,21 +31,29 @@ public class PermissionDTO implements BaseDTO {
 	 * 权限值
 	 */
 	private String permissionValue;
+	
+	/**
+	 * 权限描述
+	 */
+	private String permissionDesc;
 
 	/**
 	 * 父级权限
 	 */
 	@DTO2DO(sources = {"parentPermissionDTO.permissionId"}, targets = {"permissionId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2VO(targets = {"parentPermissionVO"}, policy = ConverPolicy.DTO_CONVER_VO)
 	private PermissionDTO parentPermissionDTO;
 
 	/**
 	 * 创建时间
 	 */
+	@DTO2VO(targets = {"createDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date createDate;
 
 	/**
 	 * 更新时间
 	 */
+	@DTO2VO(targets = {"updateDate"}, policy = ConverPolicy.DATE_CONVER_STRING)
 	private Date updateDate;
 
 	public String getPermissionId() {
@@ -69,6 +78,14 @@ public class PermissionDTO implements BaseDTO {
 
 	public void setPermissionValue(String permissionValue) {
 		this.permissionValue = permissionValue;
+	}
+	
+	public String getPermissionDesc() {
+		return permissionDesc;
+	}
+
+	public void setPermissionDesc(String permissionDesc) {
+		this.permissionDesc = permissionDesc;
 	}
 
 	public PermissionDTO getParentPermissionDTO() {
@@ -98,8 +115,9 @@ public class PermissionDTO implements BaseDTO {
 	@Override
 	public String toString() {
 		return "PermissionDTO [permissionId=" + permissionId + ", permissionName=" + permissionName
-				+ ", permissionValue=" + permissionValue + ", parentPermissionDTO=" + parentPermissionDTO
-				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+				+ ", permissionValue=" + permissionValue + ", permissionDesc=" + permissionDesc
+				+ ", parentPermissionDTO=" + parentPermissionDTO + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
 
 }

@@ -3,6 +3,9 @@ package wang.miansen.roothub.modules.permission.model;
 import java.util.Date;
 
 import wang.miansen.roothub.common.annotation.DO2DTO;
+import wang.miansen.roothub.common.dao.mapper.annotation.Id;
+import wang.miansen.roothub.common.dao.mapper.annotation.Table;
+import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
 
@@ -12,6 +15,7 @@ import wang.miansen.roothub.common.enums.ConverPolicy;
  * @author miansen.wang
  * @date 2020-02-23
  */
+@Table(value = "permission")
 public class Permission implements BaseDO {
 
 	private static final long serialVersionUID = -7554322590178419319L;
@@ -19,6 +23,7 @@ public class Permission implements BaseDO {
 	/**
 	 * 权限ID
 	 */
+	@Id(value = "permission_id", type = IdType.UUID)
 	private String permissionId;
 
 	/**
@@ -30,6 +35,11 @@ public class Permission implements BaseDO {
 	 * 权限值
 	 */
 	private String permissionValue;
+	
+	/**
+	 * 权限描述
+	 */
+	private String permissionDesc;
 
 	/**
 	 * 父级权限ID
@@ -70,6 +80,14 @@ public class Permission implements BaseDO {
 	public void setPermissionValue(String permissionValue) {
 		this.permissionValue = permissionValue;
 	}
+	
+	public String getPermissionDesc() {
+		return permissionDesc;
+	}
+
+	public void setPermissionDesc(String permissionDesc) {
+		this.permissionDesc = permissionDesc;
+	}
 
 	public String getParentPermissionId() {
 		return parentPermissionId;
@@ -98,8 +116,8 @@ public class Permission implements BaseDO {
 	@Override
 	public String toString() {
 		return "Permission [permissionId=" + permissionId + ", permissionName=" + permissionName + ", permissionValue="
-				+ permissionValue + ", parentPermissionId=" + parentPermissionId + ", createDate=" + createDate
-				+ ", updateDate=" + updateDate + "]";
+				+ permissionValue + ", permissionDesc=" + permissionDesc + ", parentPermissionId=" + parentPermissionId
+				+ ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
 
 }

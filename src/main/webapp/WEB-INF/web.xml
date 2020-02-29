@@ -55,7 +55,7 @@
     <url-pattern>*.ttf</url-pattern>
   </servlet-mapping>-->
   
-  <!-- 字符集过滤器 -->
+  <!-- 字符集过滤器，如果不设置，表单提交 Controoler 后中文会乱码 -->
     <filter>
     	<description>字符集过滤器</description>
         <filter-name>encodingFilter</filter-name>
@@ -65,6 +65,10 @@
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
         </init-param>
+        <init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
     </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
@@ -85,6 +89,13 @@
         <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+  <jsp-config>
+		<taglib>
+			<taglib-uri>/WEB-INF/classes/ui/common.tld</taglib-uri>
+			<taglib-location>/WEB-INF/classes/ui/common.tld</taglib-location>
+		</taglib>
+	</jsp-config>
     
     <!-- 出错页面定义 -->
     <error-page>

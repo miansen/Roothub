@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<description>通用标签</description>
+	<tlib-version>2.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>common</short-name>
+	<tag>
+		<name>table</name>
+		<tag-class>wang.miansen.roothub.common.ui.taglib.TableTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<attribute>
+			<description>分页对象 迭代其中的 list 对象，从而填充表格的 th 和 td。 其中
+				pageNumber、pageSize、totalPage、totalRow 属性作为分页的依据。</description>
+			<name>page</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>表头的名字，多个的话用 ";" 号分割。 注意：如果为空的话，将默认使用字段名作为表头的名字。
+			</description>
+			<name>th</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>单元格的属性名，根据属性名从 page 中获取属性值。
+				注意：属性名必须和字段名一样，否则会抛出异常。如果为空的话，将默认使用所有字段的值作为单元格的内容。</description>
+			<name>td</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>是否显示行号，true 显示，false 不显示。默认是 false。</description>
+			<name>row</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>paginate</name>
+		<tag-class>wang.miansen.roothub.common.ui.taglib.PaginateTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<attribute>
+			<description>数据总量</description>
+			<name>totalRow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>每页显示的数据量，默认是25条</description>
+			<name>pageSize</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>当前是多少页，默认是第一页</description>
+			<name>pageNumber</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>请求参数，默认是?pageNumber=pageNumber</description>
+			<name>requestParma</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>连续显示的分页数，默认是5页</description>
+			<name>groups</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>颜色主题，默认是#337ab7</description>
+			<name>theme</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>是否开启跳页，true 开启，false 不开启。默认是 false</description>
+			<name>skip</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>分页对象 当 totalRow、pageSize 或者 pageNumber 为空时， 将使用
+				page.pageNumber、page.pageSize、page.totalPage、page.totalRow
+				属性作为分页的依据。</description>
+			<name>page</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

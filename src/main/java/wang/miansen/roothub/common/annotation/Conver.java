@@ -7,8 +7,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import javax.validation.groups.Default;
-
 import wang.miansen.roothub.common.enums.ConverType;
 import wang.miansen.roothub.common.enums.ConverPolicy;
 

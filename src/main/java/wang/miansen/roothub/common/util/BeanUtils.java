@@ -455,6 +455,20 @@ public class BeanUtils {
 							}
 						}
 						break;
+					case DTO_CONVER_VO:
+						Method dtoReadMethod = ReflectionUtils.getReadMethod(fieldName, baseDTO.getClass());
+						BaseDTO dto = (BaseDTO) dtoReadMethod.invoke(baseDTO);
+						if (dto != null) {
+							for (int i = 0; i < targets.length; i++) {
+								String targetPropertyName = targets[i];
+								Method voReadMethod = ReflectionUtils.getReadMethod(targetPropertyName, baseVO.getClass());
+								BaseVO vo = (BaseVO) voReadMethod.invoke(baseVO);
+								if (vo != null) {
+									DTO2VO(dto, vo);
+								}
+							}
+						}
+						break;
 					default:
 						break;
 				}
@@ -531,6 +545,20 @@ public class BeanUtils {
 							for (int i = 0; i < targets.length; i++) {
 								String targetPropertyName = targets[i];
 								stringConverDate(baseDTO, targetPropertyName, dateString);
+							}
+						}
+						break;
+					case VO_CONVER_DTO: 
+						Method voReadMethod = ReflectionUtils.getReadMethod(fieldName, baseVO.getClass());
+						BaseVO vo = (BaseVO) voReadMethod.invoke(baseVO);
+						if (vo != null) {
+							for (int i = 0; i < targets.length; i++) {
+								String targetPropertyName = targets[i];
+								Method dtoReadMethod = ReflectionUtils.getReadMethod(targetPropertyName, baseDTO.getClass());
+								BaseDTO dto = (BaseDTO) dtoReadMethod.invoke(baseDTO);
+								if (dto != null) {
+									VO2DTO(vo, dto);
+								}
 							}
 						}
 						break;

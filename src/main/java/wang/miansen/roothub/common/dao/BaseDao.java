@@ -1,14 +1,14 @@
 package wang.miansen.roothub.common.dao;
 
-import wang.miansen.roothub.common.dao.mapper.util.StringPool;
-import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
-import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
-
-import org.apache.ibatis.annotations.Param;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import wang.miansen.roothub.common.dao.mapper.util.StringPool;
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.dao.mapper.wrapper.update.UpdateWrapper;
 
 /**
  * 该接口作为 Dao 层的基础接口，定义了常用的数据库增删改查方法，建议大部分的 Dao 层接口继承。

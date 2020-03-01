@@ -38,6 +38,7 @@ public class GlobalExceptionHandler {
 	public ModelAndView defaultErrorHandler(Exception e, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.error(e.getMessage(), e);
 		String contentType = request.getContentType();
+		String contextPath = request.getContextPath();
 		if (contentType !=null && contentType.indexOf("application/json") != -1) {
 			MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 			jsonView.setExtractValueFromSingleKeyModel(true);
@@ -60,13 +61,13 @@ public class GlobalExceptionHandler {
 				response.setStatus(be.getHttpCode());
 				mv.addObject("exception", be.getMessage());
 				mv.addObject("errorCode", be.getErrorCode());
-				mv.setViewName("/default/front/error/error");
+				mv.setViewName(""+contextPath+"/default/front/error/error");
 				return mv;
 			} else {
 				response.setStatus(BaseErrorCodeEnum.INTERNAL_ERROR.getHttpCode());
 				mv.addObject("exception", BaseErrorCodeEnum.INTERNAL_ERROR.getMessage());
 				mv.addObject("errorCode", BaseErrorCodeEnum.INTERNAL_ERROR.getErrorCode());
-				mv.setViewName("/default/front/error/error");
+				mv.setViewName(""+contextPath+"/default/front/error/error");
 				return mv;
 			}
 		}

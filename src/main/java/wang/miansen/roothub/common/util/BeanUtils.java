@@ -23,11 +23,6 @@ import wang.miansen.roothub.common.enums.ConverType;
 import wang.miansen.roothub.common.exception.FatalBeanException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.vo.BaseVO;
-import wang.miansen.roothub.modules.comment.dto.CommentDTO;
-import wang.miansen.roothub.modules.comment.vo.CommentVO;
-import wang.miansen.roothub.modules.node.dto.NodeDTO;
-import wang.miansen.roothub.modules.node.model.Node;
-import wang.miansen.roothub.modules.node.vo.NodeVO;
 import wang.miansen.roothub.modules.user.dto.UserRoleRelDTO;
 
 /**
@@ -461,11 +456,11 @@ public class BeanUtils {
 						if (dto != null) {
 							for (int i = 0; i < targets.length; i++) {
 								String targetPropertyName = targets[i];
-								Method voReadMethod = ReflectionUtils.getReadMethod(targetPropertyName, baseVO.getClass());
-								BaseVO vo = (BaseVO) voReadMethod.invoke(baseVO);
-								if (vo != null) {
-									DTO2VO(dto, vo);
-								}
+								Method voWriteMethod = ReflectionUtils.getWriteMethod(targetPropertyName, baseVO.getClass());
+								Class<? extends BaseVO> clazz = baseVO.getClass();
+								BaseVO vo = clazz.newInstance();
+								DTO2VO(dto, vo);
+								voWriteMethod.invoke(baseVO, vo);
 							}
 						}
 						break;
@@ -554,11 +549,11 @@ public class BeanUtils {
 						if (vo != null) {
 							for (int i = 0; i < targets.length; i++) {
 								String targetPropertyName = targets[i];
-								Method dtoReadMethod = ReflectionUtils.getReadMethod(targetPropertyName, baseDTO.getClass());
-								BaseDTO dto = (BaseDTO) dtoReadMethod.invoke(baseDTO);
-								if (dto != null) {
-									VO2DTO(vo, dto);
-								}
+								Method dtoWriteMethod = ReflectionUtils.getWriteMethod(targetPropertyName, baseDTO.getClass());
+								Class<? extends BaseDTO> clazz = baseDTO.getClass();
+								BaseDTO dto = clazz.newInstance();
+								VO2DTO(vo, dto);
+								dtoWriteMethod.invoke(baseDTO, dto);
 							}
 						}
 						break;

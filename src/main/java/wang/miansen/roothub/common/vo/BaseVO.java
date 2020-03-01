@@ -17,4 +17,9 @@ public interface BaseVO extends Serializable {
 	 */
 	String getPrimaryKey();
 	
+	/**
+	 * 设置主键
+	 */
+	void setPrimaryKey(String primaryKey);
+	
 }

@@ -47,6 +47,10 @@ public enum ConverPolicy {
 	/**
 	 * 属性复制
 	 */
-	COPY_PROPERTIES;
+	COPY_PROPERTIES,
+	
+	DTO_CONVER_VO,
+	
+	VO_CONVER_DTO;
 
 }

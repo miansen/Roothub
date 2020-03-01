@@ -40,7 +40,7 @@ public class PermissionDTO implements BaseDTO {
 	/**
 	 * 父级权限
 	 */
-	@DTO2DO(sources = {"parentPermissionDTO.permissionId"}, targets = {"permissionId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2DO(sources = {"parentPermissionDTO.permissionId"}, targets = {"parentPermissionId"}, policy = ConverPolicy.COPY_PROPERTIES)
 	@DTO2VO(targets = {"parentPermissionVO"}, policy = ConverPolicy.DTO_CONVER_VO)
 	private PermissionDTO parentPermissionDTO;
 

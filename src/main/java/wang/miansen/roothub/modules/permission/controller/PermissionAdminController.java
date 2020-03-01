@@ -1,7 +1,11 @@
 package wang.miansen.roothub.modules.permission.controller;
 
+import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.DateUtils;
+import wang.miansen.roothub.common.util.ReflectionUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.permission.model.Permission;
@@ -43,7 +49,7 @@ public class PermissionAdminController extends AbstractBaseController<Permission
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
 		return super.add(request, response);
 	}
-	
+
 	@RequestMapping(value = "/add/parent", method = RequestMethod.GET)
 	public ModelAndView addParent(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
@@ -80,9 +86,10 @@ public class PermissionAdminController extends AbstractBaseController<Permission
 		mv.setViewName(redirect(request, "/admin/permission/list"));
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/save/parent", method = RequestMethod.POST)
-	public ModelAndView saveParent(PermissionVO permissionVO, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView saveParent(PermissionVO permissionVO, HttpServletRequest request,
+			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String permissionName = permissionVO.getPermissionName();
 		if (StringUtils.isEmpty(permissionName)) {
@@ -110,6 +117,37 @@ public class PermissionAdminController extends AbstractBaseController<Permission
 	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
 			HttpServletRequest request, HttpServletResponse response) {
 		return super.list(pageNumber, request, response);
+	}
+
+	/**
+	 * 父权限页面
+	 * 
+	 * @param pageNumber
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/list/parent", method = RequestMethod.GET)
+	public ModelAndView listParent(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
+			@RequestParam(value = "permissionName", defaultValue = "") String permissionName,
+			HttpServletRequest request, HttpServletResponse response) {
+		QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+		if (StringUtils.notEmpty(permissionName)) {
+			queryWrapper.eq("permission_name", permissionName);
+		}
+		queryWrapper.isNull("parent_permission_id");
+		queryWrapper.orderByDesc("create_date");
+		Page<PermissionDTO> dtoPage = this.getService().page(pageNumber, 25, queryWrapper);
+		List<? extends PermissionVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
+				.collect(Collectors.toList());
+		Page<? extends PermissionVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
+				dtoPage.getTotalRow());
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(this.getJspPrefix() + "/list_parent");
+		mv.addObject("page", voPage);
+		mv.addObject("pageNumber", pageNumber);
+		mv.addObject("permissionName", permissionName);
+		return mv;
 	}
 
 	@Override

@@ -11,8 +11,10 @@ import javax.servlet.jsp.tagext.TryCatchFinally;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import wang.miansen.roothub.common.util.ApplicationContextUtils;
 import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
+import wang.miansen.roothub.config.ApplicationConfig;
 
 /**
  * 自定义 JSP 标签的基础抽象父类
@@ -50,6 +52,24 @@ public abstract class AbstractBaseTag extends BodyTagSupport implements DynamicA
 	 */
 	protected Map<String, String> vars = new HashMap<>();
 	
+	protected ApplicationConfig applicationConfig;
+	
+	public AbstractBaseTag() {
+		init();
+	}
+
+	/**
+	 * 对象实例化时做一些初始化操作，子类可按需重写。
+	 * <p>注意：子类如果重写，则必须显示的调用 {@code super.init()}。
+	 */
+	protected void init() {
+		try {
+			applicationConfig = ApplicationContextUtils.getBean(ApplicationConfig.class);
+		} catch (Exception e) {
+			logger.error("Failed get bean [ApplicationConfig]");
+		}
+	}
+
 	@Override
 	public int doStartTag() throws JspException {
 		return EVAL_BODY_BUFFERED;

@@ -133,9 +133,9 @@ public abstract class AbstractBaseServiceImpl<DO extends BaseDO, DTO extends Bas
 	public Page<DTO> page(Integer pageNumber, Integer pageSize, QueryWrapper<DO> queryWrapper) throws BaseException {
 		queryWrapper.limit((pageNumber - 1) * pageSize, pageSize);
 		List<DTO> list = list(queryWrapper);
-		CountWrapperHelper<DO> helper = new CountWrapperHelper<>(queryWrapper);
-		QueryWrapper<DO> countWrapper = (QueryWrapper<DO>) helper.getInstance();
-		Integer totalRow = count(countWrapper);
+		// CountWrapperHelper<DO> helper = new CountWrapperHelper<>(queryWrapper);
+		// QueryWrapper<DO> countWrapper = (QueryWrapper<DO>) helper.getInstance();
+		Integer totalRow = count(queryWrapper);
 		return new Page<>(list, pageNumber, pageSize, totalRow);
 	}
 

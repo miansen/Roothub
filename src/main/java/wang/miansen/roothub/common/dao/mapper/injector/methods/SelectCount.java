@@ -19,7 +19,7 @@ public class SelectCount extends AbstractMethod {
     @Override
     public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
         SqlMethod selectCount = SqlMethod.SELECT_COUNT;
-        String sqlScript = String.format(selectCount.getSql(), tableInfo.getTableName(), getWrapperScript());
+        String sqlScript = String.format(selectCount.getSql(), tableInfo.getTableName(), getNormalSqlSegment());
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, modelClass);
         return this.addMappedStatement(mapperClass, selectCount.getMethod(), sqlSource, SqlCommandType.SELECT, String.class, null, Integer.class, new NoKeyGenerator(), null, tableInfo.getKeyColumn());
     }

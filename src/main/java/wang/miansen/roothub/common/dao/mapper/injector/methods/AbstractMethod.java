@@ -102,6 +102,18 @@ public abstract class AbstractMethod {
                         "${wrapper.sqlSegment}")
         );
     }
+    
+    /**
+     * 获取 where 片段，不包含 group by、desc、having 等语句
+     * 
+     * @return
+     */
+    protected String getNormalSqlSegment() {
+        return SqlScriptUtils.convertWhere(
+                SqlScriptUtils.convertIf("wrapper != null and wrapper.normalSqlSegment != null and wrapper.normalSqlSegment != ''",
+                        "${wrapper.normalSqlSegment}")
+        );
+    }
 
     /**
      * 根据 ID 集合批量操作的 foreach 脚本

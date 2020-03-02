@@ -1,6 +1,8 @@
 package wang.miansen.roothub.common.ui.taglib;
 
 import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.ui.support.TableTagTdSupport;
+import wang.miansen.roothub.common.ui.support.TableTagThSupport;
 import wang.miansen.roothub.common.ui.util.HtmlElementUtils;
 
 /**
@@ -37,6 +39,10 @@ public class TableTag extends AbstractBaseTag {
 	 */
 	private String row;
 	
+	private TableTagThSupport tableTagThSupport;
+	
+	private TableTagTdSupport tableTagTdSupport;
+	
 	@Override
 	public void release() {
 		page = null;
@@ -50,7 +56,7 @@ public class TableTag extends AbstractBaseTag {
 	protected String getBodyContentString(String bodyContent) {
 		try {
 			StringBuilder out = new StringBuilder();
-			String table = HtmlElementUtils.convertTable(getId(), page, vars);
+			String table = HtmlElementUtils.convertTable(getId(), page, vars, tableTagThSupport, tableTagTdSupport);
 			out.append(table);
 			return out.toString();
 		} catch (Exception e) {
@@ -97,4 +103,20 @@ public class TableTag extends AbstractBaseTag {
 		super.vars.put("row", row);
 	}
 
+	public TableTagThSupport getTableTagThSupport() {
+		return tableTagThSupport;
+	}
+
+	public void setTableTagThSupport(TableTagThSupport tableTagThSupport) {
+		this.tableTagThSupport = tableTagThSupport;
+	}
+
+	public TableTagTdSupport getTableTagTdSupport() {
+		return tableTagTdSupport;
+	}
+
+	public void setTableTagTdSupport(TableTagTdSupport tableTagTdSupport) {
+		this.tableTagTdSupport = tableTagTdSupport;
+	}
+	
 }

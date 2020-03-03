@@ -2,18 +2,17 @@
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
 	version="2.0">
-	<description>通用标签</description>
+	<description>Roothub JSP Tag Library.</description>
 	<tlib-version>2.0</tlib-version>
 	<jsp-version>2.0</jsp-version>
-	<short-name>common</short-name>
+	<short-name>rui</short-name>
 	<tag>
 		<name>table</name>
-		<tag-class>wang.miansen.roothub.common.ui.taglib.TableTag
-		</tag-class>
+		<tag-class>wang.miansen.roothub.common.ui.DefaultTableTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
 		<attribute>
-			<description>分页对象 迭代其中的 list 对象，从而填充表格的 th 和 td。 其中
+			<description>分页对象（不允许为空）。迭代其中的 list 对象，从而填充表格的 th 和 td。 其中
 				pageNumber、pageSize、totalPage、totalRow 属性作为分页的依据。</description>
 			<name>page</name>
 			<required>false</required>
@@ -42,7 +41,7 @@
 	</tag>
 	<tag>
 		<name>paginate</name>
-		<tag-class>wang.miansen.roothub.common.ui.taglib.PaginateTag
+		<tag-class>wang.miansen.roothub.common.ui.PaginateTag
 		</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
@@ -96,5 +95,11 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+	</tag>
+	<tag>
+		<name>adminLayout</name>
+		<tag-class>wang.miansen.roothub.common.ui.AdminLayoutTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 </taglib>

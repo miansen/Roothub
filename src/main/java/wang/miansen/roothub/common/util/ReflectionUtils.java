@@ -119,4 +119,64 @@ public final class ReflectionUtils {
 		}
 	}
 
+	/**
+	 * 根据给定的表达式和对象，获取字段的值。支持 <b>"."</b> 操作符。使用例子如下：
+	 * <code>
+	 * 	<pre>
+	 * class Foo {
+	 * 	Boo boo;
+	 * 	public Boo getBoo() {
+	 * 		return boo;
+	 * 	}
+	 * 	public void setBooe(Boo boo) {
+	 * 		this.boo = boo;
+	 * 	}
+	 * }
+	 * class Boo {
+	 * 	String name;
+	 * 	public String getName() {
+	 * 		return name;
+	 * 	}
+	 * 	public void setName(String name) {
+	 * 		this.name = name;
+	 * 	}
+	 * }
+	 * public static void main(String[] args) {
+	 * 	String expression = "boo.name";
+	 * 	Foo foo = new Foo();
+	 * 	Boo boo = new Boo();
+	 * 	boo.setName("boo");
+	 * 	foo.setBoo(boo);
+	 * 	doExpression(expression, foo);// return "boo"
+	 * }
+	 * 	</pre>
+	 * </code>
+	 * 
+	 * @param expression 表达式，支持 <b>"."</b> 操作符
+	 * @param object 表达式作用的对象
+	 * @return Object
+	 * @throws Exception
+	 */
+	public static Object doExpression(String expression, Object object) throws Exception {
+		// Assert.notNull(expression, "Expression must not be null");
+		// Assert.notNull(object, "Object must not be null");
+		if (object == null) {
+			return object;
+		}
+		Object value = null;
+		Object next = object;
+		String[] segments = expression.split("\\.");
+		if (segments.length == 1) {
+			Method readMethod = getReadMethod(segments[0], next.getClass());
+			value = readMethod.invoke(object);
+		} else {
+			for (int i = 0; i < segments.length - 1; i++) {
+				Method readMethod = getReadMethod(segments[i], next.getClass());
+				next = readMethod.invoke(next);
+				value = doExpression(segments[i + 1], next);
+			}
+		}
+		return value;
+	}
+
 }

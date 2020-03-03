@@ -1,4 +1,4 @@
-package wang.miansen.roothub.common.ui.taglib;
+package wang.miansen.roothub.common.ui;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.ui.support.TableTagTdSupport;
@@ -6,14 +6,14 @@ import wang.miansen.roothub.common.ui.support.TableTagThSupport;
 import wang.miansen.roothub.common.ui.util.HtmlElementUtils;
 
 /**
- * 表格标签
+ * 表格标签抽象父类
  * 
  * @author miansen.wang
  * @date 2020-02-29
  * @since 3.0
  */
 @SuppressWarnings("serial")
-public class TableTag extends AbstractBaseTag {
+public abstract class AbstractTableTag extends AbstractBaseTag {
 
 	/**
 	 * 分页对象
@@ -21,28 +21,24 @@ public class TableTag extends AbstractBaseTag {
 	 * <p>其中 pageNumber、pageSize、totalPage、totalRow 属性作为分页的依据。
 	 */
 	private Page<?> page;
-	
+
 	/**
 	 * 表头的名字，多个的话用 ";" 号分割。
 	 * <p>注意：如果为空的话，将默认使用字段名作为表头的名字。
 	 */
 	private String th;
-	
+
 	/**
 	 * 单元格的属性名，根据属性名从 {@code page} 中获取属性值。
 	 * <p>注意：属性名必须和字段名一样，否则会抛出异常。如果为空的话，将默认使用所有字段的值作为单元格的内容。
 	 */
 	private String td;
-	
+
 	/**
 	 * 是否显示行号，默认是 false。
 	 */
 	private String row;
-	
-	private TableTagThSupport tableTagThSupport;
-	
-	private TableTagTdSupport tableTagTdSupport;
-	
+
 	@Override
 	public void release() {
 		page = null;
@@ -56,7 +52,8 @@ public class TableTag extends AbstractBaseTag {
 	protected String getBodyContentString(String bodyContent) {
 		try {
 			StringBuilder out = new StringBuilder();
-			String table = HtmlElementUtils.convertTable(getId(), page, vars, tableTagThSupport, tableTagTdSupport);
+			String table = HtmlElementUtils.convertTable(getId(), page, vars, getTableTagThSupport(),
+					getTableTagTdSupport());
 			out.append(table);
 			return out.toString();
 		} catch (Exception e) {
@@ -90,7 +87,7 @@ public class TableTag extends AbstractBaseTag {
 		this.td = td;
 		super.vars.put("td", td);
 	}
-	
+
 	public String getRow() {
 		if (row == null) {
 			row = "false";
@@ -103,20 +100,10 @@ public class TableTag extends AbstractBaseTag {
 		super.vars.put("row", row);
 	}
 
-	public TableTagThSupport getTableTagThSupport() {
-		return tableTagThSupport;
-	}
+	protected abstract TableTagThSupport getTableTagThSupport();
 
-	public void setTableTagThSupport(TableTagThSupport tableTagThSupport) {
-		this.tableTagThSupport = tableTagThSupport;
-	}
 
-	public TableTagTdSupport getTableTagTdSupport() {
-		return tableTagTdSupport;
-	}
+	protected abstract TableTagTdSupport getTableTagTdSupport();
 
-	public void setTableTagTdSupport(TableTagTdSupport tableTagTdSupport) {
-		this.tableTagTdSupport = tableTagTdSupport;
-	}
-	
+
 }

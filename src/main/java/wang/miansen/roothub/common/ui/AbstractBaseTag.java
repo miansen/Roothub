@@ -1,4 +1,4 @@
-package wang.miansen.roothub.common.ui.taglib;
+package wang.miansen.roothub.common.ui;
 
 import java.util.HashMap;
 import java.util.Map;

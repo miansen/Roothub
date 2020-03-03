@@ -134,8 +134,7 @@ public abstract class HtmlElementUtils {
 			Object object = list.get(j);
 			if (tds != null && tds.length > 0) {
 				for (String td : tds) {
-					Method readMethod = ReflectionUtils.getReadMethod(td, object.getClass());
-					Object result = readMethod.invoke(object);
+					Object result = ReflectionUtils.doExpression(td, object);
 					if (result != null) {
 						sb.append("<td>" + result.toString() + "</td>");
 					} else {
@@ -147,8 +146,7 @@ public abstract class HtmlElementUtils {
 				List<Field> fieldList = ReflectionUtils.getFieldList(object.getClass());
 				for (Field field : fieldList) {
 					String fieldName = field.getName();
-					Method readMethod = ReflectionUtils.getReadMethod(fieldName, object.getClass());
-					Object result = readMethod.invoke(object);
+					Object result = ReflectionUtils.doExpression(fieldName, object);
 					if (result != null) {
 						sb.append("<td>" + result.toString() + "</td>");
 					} else {

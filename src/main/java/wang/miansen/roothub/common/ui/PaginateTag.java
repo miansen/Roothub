@@ -1,4 +1,4 @@
-package wang.miansen.roothub.common.ui.taglib;
+package wang.miansen.roothub.common.ui;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.ui.util.HtmlElementUtils;

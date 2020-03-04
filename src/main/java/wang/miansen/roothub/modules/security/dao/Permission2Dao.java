@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Param;
  * @author miansen.wang
  * @date 2019年2月26日 下午20:41:45
  */
-public interface PermissionDao {
+public interface Permission2Dao {
 
 	Permission selectById(@Param("id") Integer id);
 	

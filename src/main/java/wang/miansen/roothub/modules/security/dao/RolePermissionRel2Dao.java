@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * @author: miansen.wang
  * @date: 2019-03-01
  */
-public interface RolePermissionRelDao {
+public interface RolePermissionRel2Dao {
 
 	List<RolePermissionRel> selectAllByRoleId(@Param("roleId") Integer roleId);
 	

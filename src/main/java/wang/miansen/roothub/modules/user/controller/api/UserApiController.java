@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import wang.miansen.roothub.common.controller.SessionController;
-import wang.miansen.roothub.config.SiteConfig;
+import wang.miansen.roothub.config.ApplicationConfig;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.modules.collect.service.CollectService;
@@ -58,7 +58,7 @@ public class UserApiController extends SessionController{
 	@Autowired
 	private VisitService visitService;
 	@Autowired
-	private SiteConfig citeConfig;
+	private ApplicationConfig citeConfig;
 	
 	/**
 	 * 用户的收藏

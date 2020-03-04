@@ -49,6 +49,7 @@ import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
 import wang.miansen.roothub.modules.role.service.RoleService;
 import wang.miansen.roothub.common.util.BeanUtils;
+import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.JsonUtil;
@@ -363,8 +364,10 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 				List<UserRoleRelDTO> userRoleRelDTOs = this.userRoleRelService.list(queryWrapper);
 				List<String> roleIds = userRoleRelDTOs.stream().filter(Objects::nonNull).map(dto -> dto.getRoleId())
 						.collect(Collectors.toList());
-				List<RoleDTO> roleDTOs = this.roleService.listBatchIds(roleIds);
-				userDTO.setRoleDTOs(roleDTOs);
+				if (CollectionUtils.isNotEmpty(roleIds)) {
+					List<RoleDTO> roleDTOs = this.roleService.listBatchIds(roleIds);
+					userDTO.setRoleDTOs(roleDTOs);
+				}
 			}
 			return userDTO;
 		};

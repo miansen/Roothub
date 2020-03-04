@@ -292,6 +292,11 @@ public class UserVO implements BaseVO {
 	}
 
 	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.userId = primaryKey;
+	}
+	
+	@Override
 	public String toString() {
 		return "UserVO {userId=" + userId + ", userName=" + userName + ", password=" + password + ", userSex=" + userSex
 				+ ", userAddr=" + userAddr + ", score=" + score + ", avatar=" + avatar + ", email=" + email + ", url="

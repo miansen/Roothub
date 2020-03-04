@@ -139,7 +139,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		postQueryWrapper.orderByDesc("create_date");
 		Page<PostDTO> postDTOPage = postService.page(Integer.valueOf(pageNumber), 25, postQueryWrapper);
 		Page<PostVO> postVOPage = postDTOPage2PostVOPage(postDTOPage);
-		mv.setViewName(this.getFrontPrefix() + "/detail");
+		mv.setViewName(this.getJspPrefix() + "/detail");
 		mv.addObject("userVO", getDTO2VO().apply(userDTO));
 		mv.addObject("postVOPage", postVOPage);
 		return mv;

@@ -28,7 +28,7 @@
         a.admin_user_id,a.username,a.password,a.avatar,a.create_date,a.update_date
     </sql>
 	<!-- 根据用户名查询后台用户 -->
-	<select id="selectByName" resultType="AdminUser">
+	<select id="selectByName" resultType="wang.miansen.roothub.modules.security.model.AdminUser">
 		SELECT
         	a.*
 		FROM
@@ -37,7 +37,7 @@
 			a.username = #{name}
      </select>
      <!-- 根据ID查询后台用户 -->
-	<select id="selectById" resultType="AdminUser">
+	<select id="selectById" resultType="wang.miansen.roothub.modules.security.model.AdminUser">
 		SELECT
         	a.*
 		FROM
@@ -46,7 +46,7 @@
 			a.admin_user_id = #{id}
      </select>
      <!-- 查询所有的后台用户 -->
-     <select id="selectAll" resultType="AdminUser">
+     <select id="selectAll" resultType="wang.miansen.roothub.modules.security.model.AdminUser">
 		SELECT
         	a.*
 		FROM

@@ -5,7 +5,6 @@ import java.util.function.Function;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.controller.AbstractBaseController;
+import wang.miansen.roothub.common.controller.AbstractBaseApiController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.common.util.DateUtils;
+import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.IDGenerator;
-import wang.miansen.roothub.modules.node.dto.NodeDTO;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.post.dto.PostDTO;
 import wang.miansen.roothub.modules.post.enums.PostErrorCodeEnum;
@@ -27,7 +25,6 @@ import wang.miansen.roothub.modules.post.exception.PostException;
 import wang.miansen.roothub.modules.post.model.Post;
 import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.post.vo.PostVO;
-import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 
@@ -37,10 +34,10 @@ import wang.miansen.roothub.modules.user.service.UserService;
  */
 @RestController
 @RequestMapping(value = "api/v3")
-public class PostApiController extends AbstractBaseController<Post, PostDTO, PostVO> {
+public class PostApiController extends AbstractBaseApiController<Post, PostDTO, PostVO> {
 
 	@Autowired
-	private PostService topicService;
+	private PostService postService;
 	
 	@Autowired 
 	private NodeService nodeService;
@@ -49,56 +46,32 @@ public class PostApiController extends AbstractBaseController<Post, PostDTO, Pos
 	private UserService userService;
 	
 	@Override
-	@RequestMapping(value = "/topic", method = RequestMethod.POST)
-	public ResponseEntity<Result<PostVO>> save(@RequestBody PostVO topicVO, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/post", method = RequestMethod.POST)
+	public ResponseEntity<Result<PostVO>> save(@RequestBody PostVO postVO, HttpServletRequest request, HttpServletResponse response) {
 		User user = getUser(request);
 		if (user == null) {
 			throw new PostException(PostErrorCodeEnum.INVALIDATE_USER);
 		}
-		topicVO.setPostId(IDGenerator.generateID());
-		topicVO.setUserId(user.getUserId());
-		topicVO.setUserName(user.getUserName());
-		return super.save(topicVO, request, response);
+		postVO.setPostId(IDGenerator.generateID());
+		postVO.setUserId(user.getUserId());
+		postVO.setUserName(user.getUserName());
+		return super.save(postVO, request, response);
 	}
 
 	@Override
 	protected Function<? super PostDTO, ? extends PostVO> getDTO2VO() {
-		return topicDTO -> {
-			PostVO topicVO = new PostVO();
-			BeanUtils.copyProperties(topicDTO, topicVO);
-			topicVO.setNodeId(topicDTO.getNodeDTO().getNodeId());
-			topicVO.setNodeName(topicDTO.getNodeDTO().getNodeName());
-			topicVO.setUserId(topicDTO.getUserDTO().getUserId());
-			topicVO.setUserName(topicDTO.getUserDTO().getUserName());
-			topicVO.setCreateDate(DateUtils.formatDateTime(topicDTO.getCreateDate()));
-			topicVO.setUpdateDate(DateUtils.formatDateTime(topicDTO.getUpdateDate()));
-			return topicVO;
-		};
+		return postDTO -> (PostVO) BeanUtils.DTO2VO(postDTO, PostVO.class);		
+
 	}
 
 	@Override
 	protected Function<? super PostVO, ? extends PostDTO> getVO2DTO() {
-		return topicVO -> {
-			PostDTO topicDTO = new PostDTO();
-			BeanUtils.copyProperties(topicVO, topicDTO);
-			NodeDTO nodeDTO = nodeService.getById(topicVO.getNodeId());
-			UserDTO userDTO = userService.getById(topicVO.getUserId());
-			topicDTO.setNodeDTO(nodeDTO);
-			topicDTO.setUserDTO(userDTO);
-			topicDTO.setCreateDate(DateUtils.string2Date(topicVO.getCreateDate(), DateUtils.FORMAT_DATETIME));
-			topicDTO.setUpdateDate(DateUtils.string2Date(topicVO.getUpdateDate(), DateUtils.FORMAT_DATETIME));
-			return topicDTO;
-		};
+		return postVO -> (PostDTO) BeanUtils.VO2DTO(postVO, PostDTO.class);
 	}
 
 	@Override
 	protected BaseService<Post, PostDTO> getService() {
-		return topicService;
-	}
-
-	@Override
-	protected String getModuleName() {
-		return "topic";
+		return postService;
 	}
 
 	@Override

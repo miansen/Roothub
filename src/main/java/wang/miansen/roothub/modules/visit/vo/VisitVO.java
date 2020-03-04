@@ -85,12 +85,15 @@ public class VisitVO implements BaseVO {
 		this.updateDate = updateDate;
 	}
 
-
 	@Override
 	public String getPrimaryKey() {
 		return visitId;
 	}
 
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.visitId = primaryKey;
+	}
 
 	@Override
 	public String toString() {

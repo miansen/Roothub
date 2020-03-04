@@ -244,6 +244,11 @@ public class CommentVO implements BaseVO {
 	}
 
 	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.commentId = primaryKey;
+	}
+	
+	@Override
 	public String toString() {
 		return "CommentVO {commentId=" + commentId + ", postId=" + postId + ", postName=" + postName + ", postAvatar="
 				+ postAvatar + ", userId=" + userId + ", userName=" + userName + ", userAvatar=" + userAvatar

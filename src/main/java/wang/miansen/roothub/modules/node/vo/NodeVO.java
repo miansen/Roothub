@@ -67,11 +67,6 @@ public class NodeVO implements BaseVO {
 	@VO2DTO(targets = {"updateDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String updateDate;
 	
-	@Override
-	public String getPrimaryKey() {
-		return nodeId;
-	}
-
 	public String getNodeId() {
 		return nodeId;
 	}
@@ -151,6 +146,16 @@ public class NodeVO implements BaseVO {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	@Override
+	public String getPrimaryKey() {
+		return nodeId;
+	}
+	
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.nodeId = primaryKey;
+	}
 
 	@Override
 	public String toString() {
@@ -158,5 +163,5 @@ public class NodeVO implements BaseVO {
 				+ ", nodeCode=" + nodeCode + ", nodeName=" + nodeName + ", nodeDesc=" + nodeDesc + ", avatar=" + avatar
 				+ ", url=" + url + ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
 	}
-	
+
 }

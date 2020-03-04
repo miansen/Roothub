@@ -91,12 +91,15 @@ public class CollectVO implements BaseVO {
 		return collectId;
 	}
 
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.collectId = primaryKey;
+	}
 
 	@Override
 	public String toString() {
 		return "CollectVO {collectId=" + collectId + ", userId=" + userId + ", postId=" + postId + ", createDate="
 				+ createDate + ", updateDate=" + updateDate + "}";
 	}
-
 
 }

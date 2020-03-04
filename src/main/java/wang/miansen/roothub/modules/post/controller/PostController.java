@@ -96,7 +96,7 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 		mv.addObject("postVO", postVO);
 		mv.addObject("commentVOPage", commentVOPage);
 		mv.addObject("countByTid", countByTid);
-		mv.setViewName(this.getFrontPrefix() + "/detail");
+		mv.setViewName(this.getJspPrefix() + "/detail");
 		return mv;
 	}
 	
@@ -109,7 +109,7 @@ public class PostController extends AbstractBaseController<Post, PostDTO, PostVO
 		ModelAndView mv = new ModelAndView();
 		Page<NodeVO> nodeVOPage = nodeDTOPage2NodeVOPage(nodeService.page(1, 25));
 		mv.addObject("nodeVOPage", nodeVOPage);
-		mv.setViewName(this.getFrontPrefix() + "/add");
+		mv.setViewName(this.getJspPrefix() + "/add");
 		return mv;
 	}
 	

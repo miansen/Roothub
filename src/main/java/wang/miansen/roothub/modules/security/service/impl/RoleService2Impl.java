@@ -7,7 +7,7 @@ import java.util.List;
 
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.util.ApiAssert;
-import wang.miansen.roothub.modules.security.dao.RoleDao;
+import wang.miansen.roothub.modules.security.dao.Role2Dao;
 import wang.miansen.roothub.modules.security.model.Role;
 import wang.miansen.roothub.modules.security.model.RolePermissionRel;
 import wang.miansen.roothub.modules.security.service.RolePermissionRelService;
@@ -24,10 +24,10 @@ import wang.miansen.roothub.modules.security.service.AdminUserRoleRelService;
  * @date 2019年2月27日 下午9:11:21
  */
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleService2Impl implements RoleService {
 	
 	@Autowired
-	private RoleDao roleDao;
+	private Role2Dao roleDao;
 	
 	@Autowired
 	private RolePermissionRelService rolePermissionRelService;

@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  * @author miansen.wang
  * @date 2019年2月26日 下午19:32:47
  */
-public interface RoleDao {
+public interface Role2Dao {
 	
 	// 根据ID查询角色
 	Role selectById(@Param("id") Integer id);

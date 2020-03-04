@@ -309,6 +309,11 @@ public class PostVO implements BaseVO {
 	public String getPrimaryKey() {
 		return postId;
 	}
+	
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.postId = primaryKey;
+	}
 
 	@Override
 	public String toString() {

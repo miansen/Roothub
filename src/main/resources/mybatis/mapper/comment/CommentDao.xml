@@ -135,7 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
 
   <!-- 添加评论 -->
-  <insert id="insert" parameterType="wang.miansen.roothub.modules.comment.model.Comment" keyProperty="reply_id" useGeneratedKeys="true">
+  <insert id="insert" parameterType="wang.miansen.roothub.modules.comment.model.Comment" keyProperty="comment_id" useGeneratedKeys="true">
     insert into 
     reply 
     (reply_id, 

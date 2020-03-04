@@ -5,7 +5,7 @@ import java.util.Date;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.common.util.ApiAssert;
-import wang.miansen.roothub.config.SiteConfig;
+import wang.miansen.roothub.config.ApplicationConfig;
 import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.post.model.Post;
@@ -33,7 +33,7 @@ public class PostAdminController {
 	@Autowired
 	private PostService topicService;
 	@Autowired
-	private SiteConfig siteConfig;
+	private ApplicationConfig siteConfig;
 	@Autowired
 	private NodeService nodeService;
 	@Autowired

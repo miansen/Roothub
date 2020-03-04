@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import wang.miansen.roothub.modules.security.dao.PermissionDao;
+import wang.miansen.roothub.modules.security.dao.Permission2Dao;
 import wang.miansen.roothub.modules.security.model.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ import wang.miansen.roothub.modules.security.service.RolePermissionRelService;
  * @date: 2019-03-01
  */
 @Service
-public class PermissionServiceImpl implements PermissionService {
+public class Permission2ServiceImpl implements PermissionService {
 
 	@Autowired
-	private PermissionDao permissionDao;
+	private Permission2Dao permissionDao;
 	
 	@Autowired
 	private RolePermissionRelService rolePermissionRelService;

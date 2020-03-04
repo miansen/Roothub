@@ -38,13 +38,6 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 	@Autowired
 	private RoleService roleService;
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	@Override
-	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
-			HttpServletRequest request, HttpServletResponse response) {
-		return super.list(pageNumber, request, response);
-	}
-
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	@Override
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
@@ -58,7 +51,7 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 		String roleName = roleVO.getRoleName();
 		if (StringUtils.isEmpty(roleName)) {
 			mv.setViewName(this.getJspPrefix() + "/add");
-			mv.addObject("error", "角色名不能为空");
+			mv.addObject("error", "角色名称不能为空");
 			return mv;
 		}
 		QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
@@ -66,15 +59,22 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 		RoleDTO roleDTO = this.roleService.getOne(queryWrapper);
 		if (roleDTO != null) {
 			mv.setViewName(this.getJspPrefix() + "/add");
-			mv.addObject("error", "角色名已存在");
+			mv.addObject("error", "角色名称已存在");
 			return mv;
 		}
 		roleVO.setCreateDate(DateUtils.formatDateTime(new Date()));
 		mv = super.save(roleVO, request, response);
-		mv.setViewName("redirect:/admin/role/list");
+		mv.setViewName(redirect(request, "/admin/role/list"));
 		return mv;
 	}
 
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@Override
+	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
+			HttpServletRequest request, HttpServletResponse response) {
+		return super.list(pageNumber, request, response);
+	}
+	
 	@Override
 	protected Function<? super RoleDTO, ? extends RoleVO> getDTO2VO() {
 		return roleDTO -> (RoleVO) BeanUtils.DTO2VO(roleDTO, RoleVO.class);

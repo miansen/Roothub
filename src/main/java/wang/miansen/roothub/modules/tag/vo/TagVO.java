@@ -102,14 +102,19 @@ public class TagVO implements BaseVO {
 	}
 
 	@Override
+	public String getPrimaryKey() {
+		return tagId;
+	}
+	
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.tagId = primaryKey;
+	}
+	
+	@Override
 	public String toString() {
 		return "TagVO {tagId=" + tagId + ", tagName=" + tagName + ", tagState=" + tagState + ", tagAvatar=" + tagAvatar
 				+ ", tagContent=" + tagContent + ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
-	}
-
-	@Override
-	public String getPrimaryKey() {
-		return tagId;
 	}
 
 }

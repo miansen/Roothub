@@ -18,7 +18,7 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.util.ApiAssert;
 import wang.miansen.roothub.common.util.Base64Util;
 import wang.miansen.roothub.common.util.StringUtils;
-import wang.miansen.roothub.config.SiteConfig;
+import wang.miansen.roothub.config.ApplicationConfig;
 import wang.miansen.roothub.modules.node.model.Node;
 import wang.miansen.roothub.modules.node.model.NodeTab;
 import wang.miansen.roothub.modules.node.service.NodeService;
@@ -75,7 +75,7 @@ public class IndexController extends SessionController {
 	@Autowired
 	private TabService tabService;
 	@Autowired
-	private SiteConfig siteConfig;
+	private ApplicationConfig siteConfig;
 	@Autowired
 	private BaseEntity baseEntity;
 	@Autowired

@@ -102,7 +102,7 @@ public class NodeController extends AbstractBaseController<Node, NodeDTO, NodeVO
 		mv.addObject("childrenNodeVOPage", childrenNodeVOPage);
 		mv.addObject("adjacencyNodeVOPage", adjacencyNodeVOPage);
 		mv.addObject("postCount", postCount);
-		mv.setViewName(this.getFrontPrefix() + "/detail");
+		mv.setViewName(this.getJspPrefix() + "/detail");
 		return mv;
 	}
 

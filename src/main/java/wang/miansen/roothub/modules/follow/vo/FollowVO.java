@@ -90,6 +90,10 @@ public class FollowVO implements BaseVO {
 		return followId;
 	}
 
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.followId = primaryKey;
+	}
 
 	@Override
 	public String toString() {

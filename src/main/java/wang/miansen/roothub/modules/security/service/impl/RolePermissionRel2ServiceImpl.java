@@ -7,7 +7,7 @@ import java.util.List;
 import wang.miansen.roothub.modules.security.model.RolePermissionRel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import wang.miansen.roothub.modules.security.dao.RolePermissionRelDao;
+import wang.miansen.roothub.modules.security.dao.RolePermissionRel2Dao;
 import wang.miansen.roothub.modules.security.service.RolePermissionRelService;
 
 /**
@@ -16,10 +16,10 @@ import wang.miansen.roothub.modules.security.service.RolePermissionRelService;
  * @date: 2019-03-01
  */
 @Service
-public class RolePermissionRelServiceImpl implements RolePermissionRelService {
+public class RolePermissionRel2ServiceImpl implements RolePermissionRelService {
 
 	@Autowired
-	private RolePermissionRelDao rolePermissionRelDao;
+	private RolePermissionRel2Dao rolePermissionRelDao;
 	
 	@Override
 	public List<RolePermissionRel> getAllByRoleId(Integer roleId) {

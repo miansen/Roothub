@@ -213,43 +213,47 @@
 
 	<!--注意：由于通常都是用类的全限定名作为 logger 的 name，所以 logger 在哪个类里就配置哪个类-->
 
-	<logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger" level="DEBUG">
+	<logger name="org.apache.ibatis.logging.jdbc.BaseJdbcLogger" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="org.mybatis.spring.SqlSessionUtils" level="DEBUG">
+	<logger name="org.mybatis.spring.SqlSessionUtils" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="org.mybatis.spring.transaction.SpringManagedTransaction" level="DEBUG">
+	<logger name="org.mybatis.spring.transaction.SpringManagedTransaction" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="java.sql.Connection" level="DEBUG">
+	<logger name="java.sql.Connection" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="java.sql.Statement" level="DEBUG">
+	<logger name="java.sql.Statement" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="java.sql.PreparedStatement" level="DEBUG">
+	<logger name="java.sql.PreparedStatement" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="wang.miansen.roothub.common.dao.jdbc.datasource.AbstractDataSource" level="DEBUG">
+	<logger name="wang.miansen.roothub.common.dao.jdbc.datasource.AbstractDataSource" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="wang.miansen.roothub.common.dao.jdbc.spring.DataSourceConfiguration" level="DEBUG">
+	<logger name="wang.miansen.roothub.common.dao.jdbc.spring.DataSourceConfiguration" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="wang.miansen.roothub.common.dao.jdbc.init.DataSourceInitializer" level="DEBUG">
+	<logger name="wang.miansen.roothub.common.dao.jdbc.init.DataSourceInitializer" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
-	<logger name="wang.miansen.roothub.common.dao.jdbc.util.ScriptUtils" level="DEBUG">
+	<logger name="wang.miansen.roothub.common.dao.jdbc.util.ScriptUtils" level="DEBUG" addtivity="false">
+		<appender-ref ref="console_debug" />
+		<appender-ref ref="file_debug" />
+	</logger>
+	<logger name="wang.miansen.roothub.modules.permission.dao.PermissionDao" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>

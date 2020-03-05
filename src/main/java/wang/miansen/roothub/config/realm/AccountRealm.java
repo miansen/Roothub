@@ -2,11 +2,20 @@ package wang.miansen.roothub.config.realm;
 
 import java.util.List;
 
+import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
+import wang.miansen.roothub.modules.role.dto.RoleDTO;
 import wang.miansen.roothub.modules.security.model.AdminUser;
 import wang.miansen.roothub.modules.security.model.Permission;
 import wang.miansen.roothub.modules.security.model.Role;
 import wang.miansen.roothub.modules.security.service.AdminUserService;
 import wang.miansen.roothub.modules.security.service.RoleService;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
+import wang.miansen.roothub.modules.user.enums.UserErrorCodeEnum;
+import wang.miansen.roothub.modules.user.exception.UserException;
+import wang.miansen.roothub.modules.user.model.User;
+import wang.miansen.roothub.modules.user.service.UserService;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -31,7 +40,7 @@ import wang.miansen.roothub.modules.security.service.PermissionService;
  */
 public class AccountRealm extends AuthorizingRealm {
 
-	private Logger log = LoggerFactory.getLogger(AuthorizingRealm.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuthorizingRealm.class);
 	
 	@Autowired
 	private AdminUserService adminUserService;
@@ -41,6 +50,9 @@ public class AccountRealm extends AuthorizingRealm {
 	
 	@Autowired
 	private PermissionService permissionService;
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 用户权限配置
@@ -52,19 +64,27 @@ public class AccountRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		// 获取 principal
-		AdminUser principal = (AdminUser)principals.getPrimaryPrincipal();
+		// AdminUser principal = (AdminUser)principals.getPrimaryPrincipal();
+		UserDTO userDTO = (UserDTO) principals.getPrimaryPrincipal();
 		// 获取用户
-		AdminUser adminUser = adminUserService.getByName(principal.getUsername());
-		if(adminUser != null) {
+		// AdminUser adminUser = adminUserService.getByName(principal.getUsername());
+		if(userDTO != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			
-			List<Role> roles = roleService.getByAdminUserId(adminUser.getAdminUserId(), null, null);
+			// List<Role> roles = roleService.getByAdminUserId(adminUser.getAdminUserId(), null, null);
+			// 角色
+			List<RoleDTO> roleDTOs = userDTO.getRoleDTOs();
 			// 赋予角色
-			roles.forEach(role -> info.addRole(role.getRoleName()));
+			// roles.forEach(role -> info.addRole(role.getRoleName()));
+			roleDTOs.forEach(roleDTO -> info.addRole(roleDTO.getRoleName()));
 			
-			List<Permission> permissions = permissionService.getBatchByRoleList(roles);
+			// List<Permission> permissions = permissionService.getBatchByRoleList(roles);
 			// 赋予权限
-			permissions.forEach(permission -> info.addStringPermission(permission.getPermissionValue()));
+			// permissions.forEach(permission -> info.addStringPermission(permission.getPermissionValue()));
+			roleDTOs.forEach(roleDTO -> {
+				List<PermissionDTO> permissionDTOs = roleDTO.getPermissionDTOs();
+				permissionDTOs.forEach(permissionDTO -> info.addStringPermission(permissionDTO.getPermissionValue()));
+			});
 			return info;
 		}
 		return null;
@@ -76,16 +96,20 @@ public class AccountRealm extends AuthorizingRealm {
 		// 1. 把 AuthenticationToken 转换为 UsernamePasswordToken 
 		UsernamePasswordToken upToken = (UsernamePasswordToken) token;
 		
-		// 2. 从 UsernamePasswordToken 中来获取 username
-		String username = upToken.getUsername();
+		// 2. 从 UsernamePasswordToken 中来获取 userName
+		String userName = upToken.getUsername();
 				
-		log.debug("用户：{} 正在登录...", username);
+		logger.debug("用户：{} 正在登录...", userName);
 		
 		// 3.从数据库中查询 username 对应的用户记录
-		AdminUser adminUser = adminUserService.getByName(username);
+		// AdminUser adminUser = adminUserService.getByName(username);
+		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("user_name", userName);
+		UserDTO userDTO = this.userService.getOne(queryWrapper);
 		
 		// 4.如果用户不存在，则抛出未知用户的异常
-		if(adminUser == null) throw new UnknownAccountException("用户不存在!");
+		// if(adminUser == null) throw new UnknownAccountException("用户不存在!");
+		if (userDTO == null) throw new UserException(UserErrorCodeEnum.NOT_FOUND);
 		
 		// 5.根据用户的情况, 来构建 AuthenticationInfo 对象并返回，通常使用的实现类为: SimpleAuthenticationInfo
 		
@@ -96,27 +120,28 @@ public class AccountRealm extends AuthorizingRealm {
 		 * 也可以通过 PrincipalCollection.asSet() 拿到所有的 principal，返回的是 set 集合
 		 */
 		// Object principal = username;
-		AdminUser principal = new AdminUser();
-		principal.setAdminUserId(adminUser.getAdminUserId());
-		principal.setUsername(username);
-		principal.setAvatar(adminUser.getAvatar());
+		// AdminUser principal = new AdminUser();
+		// principal.setAdminUserId(adminUser.getAdminUserId());
+		// principal.setUsername(username);
+		// principal.setAvatar(adminUser.getAvatar());
 		
 		// 5.2 credentials: 密码
-		Object credentials = adminUser.getPassword();
+		// Object credentials = adminUser.getPassword();
+		Object credentials = userDTO.getPassword();
 		
 		// 5.3 realmName: 当前 realm 对象的 name. 调用父类的 getName() 方法即可
 		String realmName = getName();
 		
 		// 5.4 盐值加密
-		ByteSource credentialsSalt = ByteSource.Util.bytes(username);
+		ByteSource credentialsSalt = ByteSource.Util.bytes(userName);
 		
-		return new SimpleAuthenticationInfo(principal, credentials, credentialsSalt, realmName);
+		return new SimpleAuthenticationInfo(userDTO, credentials, credentialsSalt, realmName);
 	}
 	
 	public static void main(String[] args) {
 		String hashAlgorithmName = "MD5";
 		Object credentials = "123";
-		Object salt = ByteSource.Util.bytes("admin");;
+		Object salt = ByteSource.Util.bytes("admin");
 		int hashIterations = 1024;
 		Object result = new SimpleHash(hashAlgorithmName, credentials, salt, hashIterations);
 		System.out.println(result);

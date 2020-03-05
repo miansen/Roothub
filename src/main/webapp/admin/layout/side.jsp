@@ -150,7 +150,7 @@
     </ul>
   </section>
   <!-- /.sidebar -->
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
   	$(function(){
   		$.ajax({
   			url: "/admin/user/info",
@@ -167,5 +167,5 @@
   			}
   		});
   	})
-  </script>
+  </script> -->
 </aside>

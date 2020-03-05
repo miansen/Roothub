@@ -19,6 +19,7 @@ import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
+import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.vo.BaseVO;
 import wang.miansen.roothub.config.ApplicationConfig;
 import wang.miansen.roothub.modules.user.model.User;
@@ -55,6 +56,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	@Override
 	public ModelAndView save(VO vo, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
+		vo.setPrimaryKey(IDGenerator.generateID());
 		this.getService().save(this.getVO2DTO().apply(vo));
 		mv.setViewName("redirect:/");
 		return mv;
@@ -111,6 +113,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(this.getJspPrefix() + "/list");
 		mv.addObject("page", voPage);
+		mv.addObject("pageNumber", pageNumber);
 		return mv;
 	}
 
@@ -123,10 +126,6 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	protected abstract String getModuleName();
 
 	protected abstract QueryWrapper<DO> getQueryWrapper();
-
-	protected String getFrontPrefix() {
-		return applicationConfig.getFrontPath() + "/" + getModuleName();
-	}
 	
 	/**
 	 * JSP 页面的路径前缀
@@ -146,8 +145,26 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		return CookieAndSessionUtil.getSession(request, "user");
 	}
 
-	protected String redirect(String path) {
+	/**
+	 * 重定向
+	 * 
+	 * @param request 当前的HTTP请求
+	 * @param path 重定向的路径
+	 * @return String
+	 */
+	protected String redirect(HttpServletRequest request, String path) {
 		return "redirect:" + path;
+	}
+	
+	/**
+	 * 转发
+	 * 
+	 * @param request 当前的HTTP请求
+	 * @param path 转发的路径
+	 * @return String
+	 */
+	protected String forward(HttpServletRequest request, String path) {
+		return "forward:" + path;
 	}
 
 }

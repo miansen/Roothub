@@ -6,7 +6,7 @@
             <div class="panel-heading"><a href="/">首页</a> / 注册</div>
             <div class="panel-body">
             	<c:if test="${not empty error}">
-        			<div class="text-red">${error}</div>
+        			<div class="alert alert-danger" role="alert">${error}</div>
       			</c:if>
                 <form role="form" id="form" action="${contextPath}/register" method="post">
                     <div class="form-group">

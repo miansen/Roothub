@@ -1,11 +1,12 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>    
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ include file="../layout/header.jsp"%>
-<!-- 内容主体区域 -->
-<div class="content-wrapper" style="padding: 50px 0 40px;">
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../common/contextPath.jsp" %>
+
+
 	<section class="content-header">
     <h1>
       角色
@@ -30,18 +31,20 @@
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th>#</th>
+            <th>角色ID</th>
             <th>角色名称</th>
+            <th>角色描述</th>
             <th>创建日期</th>
             <th>操作</th>
           </tr>
           </thead>
           <tbody>
-          <c:forEach var="role" items="${page.list}">
+          <c:forEach var="roleVO" items="${page.list}">
             <tr>
-              <td>${role.roleId}</td>
-              <td>${role.roleName}</td>
-              <td><fmt:formatDate type="both" value="${role.createDate}" /></td>
+              <td>${roleVO.roleId}</td>
+              <td>${roleVO.roleName}</td>
+              <td>${roleVO.roleDesc}</td>
+              <td>${roleVO.createDate}</td>
               <td>
                 <shiro:hasPermission name="role:edit">
                   <a href="/admin/role/edit?id=${role.roleId}" class="btn btn-xs btn-warning">编辑</a>
@@ -55,7 +58,9 @@
           </tbody>
         </table>
       </div>
-      <div class="panel-footer" id="paginate"></div>
+      <div class="panel-footer" id="paginate" style="padding: 0px 15px;"></div>
+      <common:table page="${page}"  class="table table-bordered" />
+      <common:paginate page="${page}" class="panel-footer" style="padding: 0px 18px;" />
     </div>
   </section>
   <script type="text/javascript">
@@ -65,10 +70,8 @@
   	   
   	  	var count = ${page.totalRow};//数据总量
   	 	var limit = ${page.pageSize};//每页显示的条数
-  	 	var p = ${p};//当前页数
-  	 	var url = "?p=";//路径
-  	 	paginate(count,limit,p,url);
+  	 	var pageNumber = ${pageNumber};//当前页数
+  	 	var url = "?pageNumber=";//路径
+  	 	paginate(count,limit,pageNumber,url);
   	});
   </script>
-</div>
-<%@ include file="../layout/footer.jsp"%>

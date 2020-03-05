@@ -17,7 +17,7 @@ import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
  * @author miansen.wang
  * @date 2020-01-21
  */
-@Controller
+//@Controller
 public class BaseErrorController implements ErrorController {
 
 	@Override

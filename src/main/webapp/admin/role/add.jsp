@@ -1,11 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>    
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ include file="../layout/header.jsp"%>
-<!-- 内容主体区域 -->
-<div class="content-wrapper" style="padding: 50px 0 40px;">
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../common/contextPath.jsp" %>
+
 	<section class="content-header">
     <h1>
       角色
@@ -24,11 +24,18 @@
       </div>
       <!-- /.box-header -->
       <div class="box-body">
-        <form id="form" action="/admin/role/edit" method="post">
+      <c:if test="${not empty error}">
+  			<div class="alert alert-danger" role="alert">${error}</div>
+		</c:if>
+        <form id="form" action="${contextPath}/admin/role/save" method="post">
           <input type="hidden" name="roleId" id="roleId" value="${role.roleId}">
           <div class="form-group">
-            <label>角色名</label>
-            <input type="text" name="roleName" id="roleName" class="form-control" placeholder="角色名">
+            <label>角色名称</label>
+            <input type="text" name="roleName" id="roleName" class="form-control" placeholder="角色名称">
+          </div>
+          <div class="form-group">
+            <label>角色描述</label>
+            <input type="text" name="roleDesc" id="roleDesc" class="form-control" placeholder="角色描述">
           </div>
           <div class="form-group">
             <c:forEach items="${permissionMap}" var="permissions" > 
@@ -59,10 +66,10 @@
   	    	permissionIds.push($(this).val());
   	      });
   	      if(!roleName) {
-  	        toast('角色名不能为空');
+  	        toast('角色名称不能为空');
   	        return false;
   	      }
-  	      $.ajax({
+  	      /* $.ajax({
   	        url: '/admin/role/add',
   	        async: true,
   	        cache: false,
@@ -83,10 +90,8 @@
   	            toast(data.error,'error');
   	          }
   	        }
-  	      })
-  	      return false;
+  	      }) */
+  	      // return false;
   	    })
   	});
   </script>
-</div>
-<%@ include file="../layout/footer.jsp"%>

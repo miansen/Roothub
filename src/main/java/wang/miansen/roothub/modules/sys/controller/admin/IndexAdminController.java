@@ -75,8 +75,44 @@ public class IndexAdminController {
 	    model.addAttribute("systemCpuLoad", df.format(systemCpuLoad));
 	    model.addAttribute("processCpuLoad", df.format(processCpuLoad));
 
-		return "/default/admin/index";
+		return "/admin/index";
 	}
+	
+		// 后台首页
+		@RequestMapping(value = "/index/console", method = RequestMethod.GET)
+		public String console(Model model) {
+			// 查询当天新增话题
+		    model.addAttribute("topic_count", topicService.countToday());
+		    // 查询当天新增评论
+		    model.addAttribute("comment_count", replyService.count());
+		    // 查询当天新增用户
+		    model.addAttribute("user_count", userService.countToday());
+		    //查询当天新增节点
+		    model.addAttribute("node_count", nodeService.countToday());
+		    // 获取操作系统的名字
+		    model.addAttribute("os_name", System.getProperty("os.name"));
+		    // 内存
+		    int kb = 1024;
+		    OperatingSystemMXBean osmxb = (OperatingSystemMXBean) ManagementFactory
+		        .getOperatingSystemMXBean();
+		    // 总的物理内存（G）
+		    float totalMemorySize = (float) osmxb.getTotalPhysicalMemorySize() / kb / kb / kb;
+		    
+		    //已使用的物理内存（G）
+		    float usedMemory = (float) (osmxb.getTotalPhysicalMemorySize() - osmxb.getFreePhysicalMemorySize()) / kb / kb /kb;
+		    // 获取系统cpu负载
+		    double systemCpuLoad = osmxb.getSystemCpuLoad();
+		    // 获取jvm线程负载
+		    double processCpuLoad = osmxb.getProcessCpuLoad();
+		    
+		    DecimalFormat df = new DecimalFormat("0.0");
+		    model.addAttribute("totalMemorySize", df.format(totalMemorySize));
+		    model.addAttribute("usedMemory", df.format(usedMemory));
+		    model.addAttribute("systemCpuLoad", df.format(systemCpuLoad));
+		    model.addAttribute("processCpuLoad", df.format(processCpuLoad));
+
+			return "/admin/console";
+		}
 	
 	// 后台登录页面
 	@RequestMapping(value = "/login", method = RequestMethod.GET)

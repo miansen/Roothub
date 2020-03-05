@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * TODO
  */
 @Component
-public class SiteConfig {
+public class ApplicationConfig {
 
 	@Autowired
 	private CookieConfig cookieConfig;
@@ -20,6 +20,9 @@ public class SiteConfig {
 	private String intro;
 	@Value("${roothub.theme}")
 	private String theme;
+	
+	@Value("${roothub.site.name}")
+	private String siteName;
 	
 	public CookieConfig getCookieConfig() {
 		return cookieConfig;
@@ -36,6 +39,14 @@ public class SiteConfig {
 	public void setIntro(String intro) {
 		this.intro = intro;
 	}
+	
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
+	}
 
 	public String getTheme() {
 		return theme;
@@ -43,14 +54,6 @@ public class SiteConfig {
 
 	public void setTheme(String theme) {
 		this.theme = theme;
-	}
-	
-	public String getFrontPath() {
-		return "/" + theme + "/front";
-	}
-	
-	public String getAdminPath() {
-		return "/" + theme + "/admin";
 	}
 	
 }

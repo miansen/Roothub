@@ -95,6 +95,10 @@
 			<taglib-uri>/WEB-INF/classes/ui/common.tld</taglib-uri>
 			<taglib-location>/WEB-INF/classes/ui/common.tld</taglib-location>
 		</taglib>
+		<taglib>
+			<taglib-uri>/WEB-INF/classes/ui/permission.tld</taglib-uri>
+			<taglib-location>/WEB-INF/classes/ui/permission.tld</taglib-location>
+		</taglib>
 	</jsp-config>
     
     <!-- 出错页面定义 -->

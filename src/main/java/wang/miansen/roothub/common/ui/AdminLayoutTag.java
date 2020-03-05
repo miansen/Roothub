@@ -132,6 +132,12 @@ public class AdminLayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<li class=\"header\">MAIN NAVIGATION</li>");
 		sb.append("\t\n");
+		sb.append("<li><a href=\""+contextPath+"/admin/index/console\" id=\"console\"><i class=\"fa fa-sign-out\"></i><span>首页</span></a></li>");
+		sb.append("\t\n");
+		sb.append("<li><a href=\""+contextPath+"/admin/role/add\" target=\"roothub-iframe\"><i class=\"fa fa-sign-out\"></i><span>角色添加</span></a></li>");
+		sb.append("\t\n");
+		sb.append("<li><a href=\""+contextPath+"/admin/role/list\" target=\"roothub-iframe\"><i class=\"fa fa-sign-out\"></i><span>角色列表</span></a></li>");
+		sb.append("\t\n");
 		sb.append("<li><a href=\""+contextPath+"/admin/logout\"><i class=\"fa fa-sign-out\"></i><span>登出</span></a></li>");
 		sb.append("\t\n");
 		sb.append("</ul>");
@@ -140,7 +146,15 @@ public class AdminLayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("</aside>");
 		sb.append("\t\n");
+		sb.append("<div class=\"content-wrapper\" style=\"padding: 50px 0 40px;\">");
+		sb.append("\t\n");
+		sb.append("<iframe name=\"roothub-iframe\" style=\"width: 100%;height: 100%;\">");
+		sb.append("\t\n");
 		sb.append(bodyContent);
+		sb.append("\t\n");
+		sb.append("</iframe>");
+		sb.append("\t\n");
+		sb.append("</div>");
 		sb.append("\t\n");
 		sb.append("<footer class=\"main-footer\" style=\"position: fixed; bottom: 0; width: 100%;\">");
 		sb.append("\t\n");

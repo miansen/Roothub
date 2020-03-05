@@ -37,7 +37,8 @@ $(function () {
             alert('邮箱格式不正确');
             return false;
         }
-        $.ajax({
+        $("#reg_btn").click();
+        /*$.ajax({
             type: "post",
             url: "/register",
             dataType: "json",
@@ -61,6 +62,6 @@ $(function () {
             error: function (data) {
 
             }
-        });
+        });*/
     });
 });

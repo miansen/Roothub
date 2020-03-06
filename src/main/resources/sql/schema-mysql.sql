@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `admin_user` (
+CREATE TABLE `admin_user` (
   `admin_user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL DEFAULT '',
   `password` varchar(255) NOT NULL DEFAULT '',
@@ -7,30 +7,9 @@ CREATE TABLE IF NOT EXISTS `admin_user` (
   `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`admin_user_id`),
   UNIQUE KEY `uk_admin_user_username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员表';
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员表';
 
-CREATE TABLE IF NOT EXISTS `role` (
-  `role_id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_name` varchar(255) NOT NULL DEFAULT '',
-  `create_date` datetime DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`role_id`),
-  UNIQUE KEY `uk_role_role_name` (`role_name`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色表';
-
-CREATE TABLE IF NOT EXISTS `permission` (
-  `permission_id` int(11) NOT NULL AUTO_INCREMENT,
-  `permission_name` varchar(255) NOT NULL DEFAULT '',
-  `permission_value` varchar(255) NOT NULL DEFAULT '',
-  `pid` int(11) NOT NULL DEFAULT '0',
-  `create_date` datetime DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`permission_id`),
-  UNIQUE KEY `permission_name_uk` (`permission_name`),
-  UNIQUE KEY `permission_value_uk` (`permission_value`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='权限表';
-
-CREATE TABLE IF NOT EXISTS `admin_user_role_rel` (
+CREATE TABLE `admin_user_role_rel` (
   `admin_user_role_rel_id` int(11) NOT NULL AUTO_INCREMENT,
   `admin_user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
@@ -40,58 +19,66 @@ CREATE TABLE IF NOT EXISTS `admin_user_role_rel` (
   KEY `key_admin_user_role_rel_role_id` (`role_id`) USING BTREE,
   KEY `key_admin_user_role_rel_admin_user_id` (`admin_user_id`) USING BTREE,
   CONSTRAINT `fk_admin_user_role_rel_admin_user_id` FOREIGN KEY (`admin_user_id`) REFERENCES `admin_user` (`admin_user_id`),
-  CONSTRAINT `fk_admin_user_role_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色用户关系表';
+  CONSTRAINT `fk_admin_user_role_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role_bak` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色用户关系表';
 
-CREATE TABLE IF NOT EXISTS `role_permission_rel` (
-  `role_permission_rel_id` int(11) NOT NULL AUTO_INCREMENT,
-  `role_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`role_permission_rel_id`),
-  KEY `key_role_permission_rel_role_id` (`role_id`) USING BTREE,
-  KEY `key_role_permission_rel_permission_id` (`permission_id`) USING BTREE,
-  CONSTRAINT `fk_role_permission_rel_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`),
-  CONSTRAINT `fk_role_permission_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色权限关系表';
-
-CREATE TABLE IF NOT EXISTS `collect` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
-  `uid` int(11) DEFAULT NULL COMMENT '用户ID',
-  `tid` int(11) DEFAULT NULL COMMENT '主题ID',
+CREATE TABLE `collect` (
+  `collect_id` varchar(36) NOT NULL COMMENT '收藏ID',
+  `user_id` varchar(36) NOT NULL COMMENT '用户ID',
+  `post_id` varchar(36) NOT NULL COMMENT '帖子ID',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='收藏表';
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`collect_id`),
+  KEY `key_user_id` (`user_id`),
+  KEY `key_post_id` (`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='收藏表';
 
-CREATE TABLE IF NOT EXISTS `follow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `uid` int(11) DEFAULT NULL COMMENT '关注者ID',
-  `fid` int(11) DEFAULT NULL COMMENT '被关注者ID',
+CREATE TABLE `comment` (
+  `comment_id` varchar(36) NOT NULL COMMENT '评论ID',
+  `post_id` varchar(36) NOT NULL COMMENT '帖子ID',
+  `user_id` varchar(36) NOT NULL COMMENT '用户ID',
+  `content` longtext COMMENT '评论内容',
+  `view_count` int(11) DEFAULT '0' COMMENT '浏览量',
+  `share_count` int(11) DEFAULT '0' COMMENT '转载量',
+  `good_count` int(11) DEFAULT '0' COMMENT '好评量',
+  `bad_count` int(11) DEFAULT '0' COMMENT '差评量',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='关注表';
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `type` varchar(16) DEFAULT NULL COMMENT '类型，1000（文本）、1100（图片）、1200（视频）、1300（链接）',
+  `status` varchar(4) DEFAULT '1000' COMMENT '状态，1000（有效）、1100（无效）、1200（未生效）',
+  `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`comment_id`),
+  KEY `key_user_id` (`user_id`),
+  KEY `key_post_id` (`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='评论表';
 
-CREATE TABLE IF NOT EXISTS `node` (
-  `node_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `node_code` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '节点编码',
-  `node_title` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '节点名称',
-  `avatar_normal` varchar(250) CHARACTER SET utf8 DEFAULT NULL COMMENT '节点头像',
-  `avatar_mini` varchar(250) CHARACTER SET utf8 DEFAULT NULL COMMENT '节点小头像',
-  `avatar_large` varchar(250) CHARACTER SET utf8 DEFAULT NULL COMMENT '节点背景头像',
-  `node_desc` varchar(2000) CHARACTER SET utf8 DEFAULT NULL COMMENT '节点描述',
-  `tab_id` int(11) DEFAULT NULL COMMENT '板块ID',
-  `url` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT 'url',
-  `parent_node_code` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT '父节点',
+CREATE TABLE `follow` (
+  `follow_id` varchar(36) NOT NULL COMMENT '关注ID',
+  `source_id` varchar(36) NOT NULL COMMENT '关注者ID',
+  `target_id` varchar(36) NOT NULL COMMENT '被关注者ID',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`follow_id`),
+  KEY `key_source_id` (`source_id`),
+  KEY `key_target_id` (`target_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='关注表';
+
+CREATE TABLE `node` (
+  `node_id` int(11) NOT NULL COMMENT '主键ID',
+  `parent_node_id` int(11) DEFAULT NULL COMMENT '父节点ID',
+  `node_code` varchar(50) DEFAULT NULL COMMENT '节点编码',
+  `node_name` varchar(50) NOT NULL COMMENT '节点名称',
+  `node_desc` varchar(2000) DEFAULT NULL COMMENT '节点描述',
+  `avatar` varchar(250) DEFAULT NULL COMMENT '节点图标',
+  `url` varchar(50) DEFAULT NULL COMMENT 'url',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '修改时间',
-  `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0:否 1:是',
   PRIMARY KEY (`node_id`),
-  UNIQUE KEY `uk_node_title` (`node_title`),
-  KEY `key_node_code` (`node_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='节点表';
+  UNIQUE KEY `uk_node_name` (`node_name`),
+  KEY `key_parent_node_id` (`parent_node_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='节点表';
 
-CREATE TABLE IF NOT EXISTS `node_tab` (
+CREATE TABLE `node_tab` (
   `node_tab_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '节点板块id',
   `node_tab_code` varchar(45) DEFAULT NULL COMMENT '节点板块编码',
   `node_tab_title` varchar(45) DEFAULT NULL COMMENT '节点板块名称',
@@ -103,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `node_tab` (
   PRIMARY KEY (`node_tab_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='节点板块表';
 
-CREATE TABLE IF NOT EXISTS `notice` (
+CREATE TABLE `notice` (
   `notice_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '消息通知标识',
   `notice_title` varchar(200) DEFAULT '' COMMENT '通知标题',
   `is_read` tinyint(1) DEFAULT NULL COMMENT '是否已读：0:默认 1:已读',
@@ -120,31 +107,84 @@ CREATE TABLE IF NOT EXISTS `notice` (
   `notice_content` longtext COMMENT '通知内容',
   `status_cd` varchar(4) DEFAULT NULL COMMENT '通知状态 1000:有效 1100:无效 1200:未生效',
   PRIMARY KEY (`notice_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='消息通知表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='消息通知表';
 
-CREATE TABLE IF NOT EXISTS `reply` (
-  `reply_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '回复标识',
-  `topic_id` int(11) DEFAULT NULL COMMENT '话题id',
-  `topic_author_id` int(11) DEFAULT NULL COMMENT '话题作者id',
-  `reply_content` longtext COMMENT '回复内容',
-  `create_date` datetime DEFAULT NULL COMMENT '回复时间',
+CREATE TABLE `permission` (
+  `permission_id` varchar(36) NOT NULL,
+  `permission_name` varchar(250) NOT NULL,
+  `permission_value` varchar(250) NOT NULL,
+  `permission_desc` varchar(500) DEFAULT NULL,
+  `parent_permission_id` varchar(36) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`permission_id`),
+  UNIQUE KEY `uk_permission_name` (`permission_name`),
+  UNIQUE KEY `uk_permission_value` (`permission_value`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='权限表';
+
+CREATE TABLE `post` (
+  `post_id` varchar(36) NOT NULL COMMENT '帖子ID',
+  `node_id` int(11) DEFAULT NULL COMMENT '节点ID',
+  `user_id` int(11) DEFAULT NULL COMMENT '作者ID',
+  `title` varchar(250) NOT NULL COMMENT '标题',
+  `content` longtext COMMENT '正文',
+  `excerpt` varchar(500) DEFAULT NULL COMMENT '摘录',
+  `avatar` varchar(250) DEFAULT NULL COMMENT '封面',
+  `url` varchar(250) DEFAULT NULL COMMENT '链接',
+  `top` tinyint(1) DEFAULT '0' COMMENT '1置顶 0默认',
+  `good` tinyint(1) DEFAULT '0' COMMENT '1精华 0默认',
+  `view_count` int(11) DEFAULT '0' COMMENT '浏览量',
+  `comment_count` int(11) DEFAULT '0' COMMENT '评论量',
+  `share_count` int(11) DEFAULT '0' COMMENT '转载量',
+  `good_count` int(11) DEFAULT '0' COMMENT '好评量',
+  `bad_count` int(11) DEFAULT '0' COMMENT '差评量',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
-  `reply_author_id` int(11) DEFAULT NULL COMMENT '当前回复用户id',
-  `reply_author_name` varchar(50) DEFAULT NULL COMMENT '当前回复用户昵称',
-  `is_delete` tinyint(1) DEFAULT '0' COMMENT '是否删除 0:默认 1:删除',
-  `is_read` tinyint(1) DEFAULT '0' COMMENT '是否已读 0:默认 1:未读',
-  `is_show` tinyint(1) DEFAULT '0' COMMENT '是否可见 0:默认 1:不可见',
-  `reply_good_count` int(10) DEFAULT '0' COMMENT '点赞',
-  `reply_bad_count` int(10) DEFAULT '0' COMMENT '踩数',
-  `reply_type` varchar(16) DEFAULT NULL COMMENT '回复类型',
-  `reply_read_count` int(11) DEFAULT NULL COMMENT '回复阅读数量',
-  `status_cd` varchar(4) DEFAULT '1000' COMMENT '回复状态 1000:有效 1100:无效 1200:未生效',
-  PRIMARY KEY (`reply_id`),
-  KEY `key_topic_id` (`topic_id`),
-  KEY `key_reply_author_name` (`reply_author_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='回复表';
+  `type` int(11) DEFAULT NULL COMMENT '类型，1000（文本）、1100（图片）、1200（视频）、1300（链接）',
+  `status` int(11) DEFAULT NULL COMMENT '状态，1000（有效）、1100（无效）、1200（未生效）',
+  `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`post_id`),
+  KEY `key_node_id` (`node_id`),
+  KEY `key_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='帖子表';
 
-CREATE TABLE IF NOT EXISTS `system_config` (
+CREATE TABLE `role` (
+  `role_id` varchar(36) NOT NULL,
+  `role_name` varchar(250) NOT NULL,
+  `role_desc` varchar(500) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `uk_role_name` (`role_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色表';
+
+CREATE TABLE `role_permission_rel` (
+  `role_permission_rel_id` varchar(36) NOT NULL,
+  `role_id` varchar(36) NOT NULL,
+  `permission_id` varchar(36) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`role_permission_rel_id`),
+  KEY `key_role_permission_rel_role_id` (`role_id`),
+  KEY `key_role_permission_rel_permission_id` (`permission_id`),
+  CONSTRAINT `fk_role_permission_rel_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`),
+  CONSTRAINT `fk_role_permission_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色权限关联关系表';
+
+CREATE TABLE `sidebar` (
+  `sidebar_id` varchar(36) NOT NULL,
+  `parent_sidebar_id` varchar(36) DEFAULT NULL,
+  `permission_id` varchar(36) DEFAULT NULL,
+  `user_id` varchar(36) DEFAULT NULL,
+  `sidebar_name` varchar(50) DEFAULT NULL,
+  `sidebar_url` varchar(500) DEFAULT NULL,
+  `sidebar_sort` int(11) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`sidebar_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `system_config` (
   `system_config_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
@@ -155,9 +195,9 @@ CREATE TABLE IF NOT EXISTS `system_config` (
   `reboot` int(11) NOT NULL DEFAULT '0',
   `is_delete` tinyint(1) DEFAULT '0' COMMENT '是否删除 0: 否 1: 是',
   PRIMARY KEY (`system_config_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COMMENT='系统配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `tab` (
+CREATE TABLE `tab` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
   `tab_name` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT '名称',
   `tab_desc` varchar(250) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述',
@@ -165,43 +205,21 @@ CREATE TABLE IF NOT EXISTS `tab` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `tab_order` int(2) DEFAULT NULL COMMENT '排列顺序',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='父板块表';
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COMMENT='父板块表';
 
-CREATE TABLE IF NOT EXISTS `topic` (
-  `topic_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章ID',
-  `ptab` varchar(50) DEFAULT NULL COMMENT '父板块',
-  `tab` varchar(50) DEFAULT NULL COMMENT '版块',
-  `title` varchar(250) NOT NULL COMMENT '标题',
-  `tag` varchar(250) DEFAULT NULL COMMENT '标签',
-  `content` longtext COMMENT '正文',
-  `excerpt` varchar(500) DEFAULT NULL COMMENT '摘录',
+CREATE TABLE `tag` (
+  `tag_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标签主键',
+  `tag_name` varchar(25) CHARACTER SET utf8 NOT NULL COMMENT '标签名称',
+  `tag_state` varchar(10) CHARACTER SET utf8 DEFAULT NULL COMMENT '标签状态',
+  `tag_avatar` varchar(250) CHARACTER SET utf8 DEFAULT NULL COMMENT '标签图标',
+  `tag_content` varchar(2500) CHARACTER SET utf8 DEFAULT NULL COMMENT '标签简介',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '更新时间',
-  `last_reply_time` datetime DEFAULT NULL COMMENT '最后回复时间，用于排序',
-  `last_reply_author` varchar(50) DEFAULT NULL COMMENT '最后回复用户',
-  `view_count` int(11) DEFAULT '0' COMMENT '浏览量',
-  `author` varchar(50) DEFAULT NULL COMMENT '作者',
-  `top` tinyint(1) DEFAULT '0' COMMENT '1置顶 0默认',
-  `good` tinyint(1) DEFAULT '0' COMMENT '1精华 0默认',
-  `show_status` tinyint(1) DEFAULT NULL COMMENT '1显示 0不显示',
-  `reply_count` int(11) NOT NULL DEFAULT '0' COMMENT '回复数量',
-  `is_delete` tinyint(1) DEFAULT '0' COMMENT '1删除 0默认',
-  `tag_is_count` int(1) DEFAULT '0' COMMENT '文章内容标签是否被统计过 1是 0否默认',
-  `post_good_count` int(10) DEFAULT '0' COMMENT '点赞',
-  `post_bad_count` int(10) DEFAULT '0' COMMENT '踩数',
-  `status_cd` varchar(4) DEFAULT NULL COMMENT '文章状态 1000:有效 1100:无效 1200:未生效',
-  `node_slug` varchar(50) DEFAULT NULL COMMENT '节点编码',
-  `node_title` varchar(50) DEFAULT NULL COMMENT '节点名称',
-  `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
-  `avatar` varchar(250) DEFAULT NULL COMMENT '头图',
-  `url` varchar(250) DEFAULT NULL COMMENT 'url',
-  PRIMARY KEY (`topic_id`),
-  KEY `key_tab` (`tab`),
-  KEY `key_author` (`author`),
-  KEY `key_node_title` (`node_title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='帖子表';
+  PRIMARY KEY (`tag_id`),
+  KEY `key_tag_name` (`tag_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='标签表';
 
-CREATE TABLE IF NOT EXISTS `up_down` (
+CREATE TABLE `up_down` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `uid` int(11) DEFAULT NULL COMMENT '用户ID',
   `tid` int(11) DEFAULT NULL COMMENT '主题ID',
@@ -209,10 +227,10 @@ CREATE TABLE IF NOT EXISTS `up_down` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0 否 1 是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='点赞表';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COMMENT='点赞表';
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户标识',
+CREATE TABLE `user` (
+  `user_id` varchar(36) NOT NULL COMMENT '用户标识',
   `user_name` varchar(50) NOT NULL COMMENT '昵称',
   `password` varchar(250) NOT NULL COMMENT '密码',
   `user_sex` varchar(10) DEFAULT NULL COMMENT '性别',
@@ -235,13 +253,26 @@ CREATE TABLE IF NOT EXISTS `user` (
   `remark` varchar(2000) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UNIQUE_NAME` (`user_name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
-CREATE TABLE IF NOT EXISTS `visit` (
+CREATE TABLE `user_role_rel` (
+  `user_role_rel_id` varchar(36) NOT NULL,
+  `user_id` varchar(36) NOT NULL,
+  `role_id` varchar(36) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_role_rel_id`),
+  KEY `key_user_role_rel_user_id` (`user_id`),
+  KEY `key_user_role_rel_role_id` (`role_id`),
+  CONSTRAINT `fk_user_role_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
+  CONSTRAINT `fk_user_role_rel_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='用户角色关联关系表';
+
+CREATE TABLE `visit` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `uid` int(11) DEFAULT NULL COMMENT '访问者ID',
   `vid` int(11) DEFAULT NULL COMMENT '被访问者ID',
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0 否 1 是',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='访问记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COMMENT='访问记录表';

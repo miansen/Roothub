@@ -148,12 +148,12 @@ public class AdminLayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<div class=\"content-wrapper\" style=\"padding: 50px 0 40px;\">");
 		sb.append("\t\n");
-		sb.append("<iframe name=\"roothub-iframe\" style=\"width: 100%;height: 100%;\">");
-		sb.append("\t\n");
+		// sb.append("<iframe name=\"roothub-iframe\" style=\"width: 100%;height: 100%;\">");
+		// sb.append("\t\n");
 		sb.append(bodyContent);
 		sb.append("\t\n");
-		sb.append("</iframe>");
-		sb.append("\t\n");
+		// sb.append("</iframe>");
+		// sb.append("\t\n");
 		sb.append("</div>");
 		sb.append("\t\n");
 		sb.append("<footer class=\"main-footer\" style=\"position: fixed; bottom: 0; width: 100%;\">");

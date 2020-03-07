@@ -5,7 +5,9 @@
 <%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="./common/contextPath.jsp" %>
-
+<common:adminLayout>
+<!-- 内容主体区域 -->
+<div class="content-wrapper" style="margin: 0px;">
 	<section class="content-header">
 		<h1>
 			首页 <small>仪表盘</small>
@@ -131,8 +133,5 @@
 			</div>
 		</div>
 	</section>
-	<script type="text/javascript">
-  	$(function(){
-  		$(".sidebar-menu li:eq(1)").addClass("active");
-  	});
-  </script>
+  </div>
+</common:adminLayout>

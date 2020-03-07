@@ -1,6 +1,7 @@
 package wang.miansen.roothub.modules.sidebar.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import wang.miansen.roothub.common.annotation.DTO2DO;
 import wang.miansen.roothub.common.annotation.DTO2VO;
@@ -29,6 +30,8 @@ public class SidebarDTO implements BaseDTO {
 	@DTO2VO(targets = {"parentSidebarVO"}, policy = ConverPolicy.DTO_CONVER_VO)
 	private SidebarDTO parentSidebarDTO;
 	
+	private List<SidebarDTO> childrenList;
+	
 	/**
 	 * 权限
 	 */
@@ -52,6 +55,11 @@ public class SidebarDTO implements BaseDTO {
 	 * 点击侧边栏时发送的请求URL
 	 */
 	private String sidebarUrl;
+	
+	/**
+	 * 侧边栏的图标
+	 */
+	private String sidebarIcon;
 	
 	/**
 	 * 排序
@@ -84,6 +92,14 @@ public class SidebarDTO implements BaseDTO {
 
 	public void setParentSidebarDTO(SidebarDTO parentSidebarDTO) {
 		this.parentSidebarDTO = parentSidebarDTO;
+	}
+	
+	public List<SidebarDTO> getChildrenList() {
+		return childrenList;
+	}
+
+	public void setChildrenList(List<SidebarDTO> childrenList) {
+		this.childrenList = childrenList;
 	}
 
 	public PermissionDTO getPermissionDTO() {
@@ -118,6 +134,14 @@ public class SidebarDTO implements BaseDTO {
 		this.sidebarUrl = sidebarUrl;
 	}
 	
+	public String getSidebarIcon() {
+		return sidebarIcon;
+	}
+
+	public void setSidebarIcon(String sidebarIcon) {
+		this.sidebarIcon = sidebarIcon;
+	}
+
 	public Integer getSidebarSort() {
 		return sidebarSort;
 	}
@@ -144,9 +168,10 @@ public class SidebarDTO implements BaseDTO {
 
 	@Override
 	public String toString() {
-		return "SidebarDTO {sidebarId=" + sidebarId + ", parentSidebarDTO=" + parentSidebarDTO + ", permissionDTO="
-				+ permissionDTO + ", userDTO=" + userDTO + ", sidebarName=" + sidebarName + ", sidebarUrl=" + sidebarUrl
-				+ ", sidebarSort=" + sidebarSort + ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
+		return "SidebarDTO [sidebarId=" + sidebarId + ", parentSidebarDTO=" + parentSidebarDTO + ", childrenList="
+				+ childrenList + ", permissionDTO=" + permissionDTO + ", userDTO=" + userDTO + ", sidebarName="
+				+ sidebarName + ", sidebarUrl=" + sidebarUrl + ", sidebarIcon=" + sidebarIcon + ", sidebarSort="
+				+ sidebarSort + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
 	}
 
 }

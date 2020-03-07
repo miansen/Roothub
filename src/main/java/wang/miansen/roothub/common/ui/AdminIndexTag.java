@@ -1,11 +1,13 @@
 package wang.miansen.roothub.common.ui;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author miansen.wang
  * @date 2020-03-01
  */
 @SuppressWarnings("serial")
-public class AdminLayoutTag extends AbstractBaseTag {
+public class AdminIndexTag extends AbstractBaseTag {
 
 	@Override
 	protected String getBodyContentString(String bodyContent) {
@@ -80,7 +82,49 @@ public class AdminLayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<body class=\"hold-transition skin-blue sidebar-mini\" style=\"background-color: #ecf0f5;\">");
 		sb.append("\t\n");
+		sb.append("<header class=\"main-header\" style=\"position: fixed; width: 100%\">");
+		sb.append("\t\n");
+		sb.append("<a href=\""+getContextPath()+"/admin/index\" class=\"logo\">");
+		sb.append("\t\n");
+		sb.append("<span class=\"logo-mini\"><b>Roothub</b></span>");
+		sb.append("\t\n");
+		sb.append("<span class=\"logo-lg\"><b>Roothub</b>后台管理</span>");
+		sb.append("\t\n");
+		sb.append("</a>");
+		sb.append("\t\n");
+		sb.append("<nav class=\"navbar navbar-static-top\">");
+		sb.append("\t\n");
+		sb.append("<a href=\""+getContextPath()+"/admin/index\" class=\"sidebar-toggle\" data-toggle=\"offcanvas\" role=\"button\">");
+		sb.append("\t\n");
+		sb.append("<span class=\"sr-only\">Toggle navigation</span>");
+		sb.append("\t\n");
+		sb.append("</a>");
+		sb.append("\t\n");
+		sb.append("</nav>");
+		sb.append("\t\n");
+		sb.append("</header>");
+		sb.append("\t\n");
 		sb.append(bodyContent);
+		sb.append("\t\n");
+		sb.append("<div class=\"content-wrapper\" style=\"padding: 50px 0 40px;height: 100%;\">");
+		sb.append("\t\n");
+		sb.append("<iframe name=\"roothub-iframe\" src=\""+ getContextPath() + "/admin/console" +"\" width=\"100%\" height=\"100%\" frameborder=\"no\" border=\"0\">");
+		sb.append("\t\n");
+		sb.append("</iframe>");
+		sb.append("\t\n");
+		sb.append("</div>");
+		sb.append("\t\n");
+		sb.append("<footer class=\"main-footer\" style=\"position: fixed; bottom: 0; width: 100%;\">");
+		sb.append("\t\n");
+		sb.append("<div class=\"pull-right hidden-xs\">");
+		sb.append("\t\n");
+		sb.append("<b>Version</b> 2.4.8");
+		sb.append("\t\n");
+		sb.append("</div>");
+		sb.append("\t\n");
+		sb.append("<strong>Copyright © 2018-2020 <a href=\"https://github.com/miansen/Roothub\">Roothub</a>.</strong> All rights reserved.");
+		sb.append("\t\n");
+		sb.append("</footer>");
 		sb.append("\t\n");
 		sb.append("</body>");
 		sb.append("\t\n");

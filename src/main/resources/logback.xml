@@ -257,6 +257,10 @@
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>
+	<logger name="wang.miansen.roothub.modules.sidebar.dao.SidebarDao" level="DEBUG" addtivity="false">
+		<appender-ref ref="console_debug" />
+		<appender-ref ref="file_debug" />
+	</logger>
 
 	<!--
         root节点是必选节点，用来指定最基础的日志输出级别，有level和addtivity属性。

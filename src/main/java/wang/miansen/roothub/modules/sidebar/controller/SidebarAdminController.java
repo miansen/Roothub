@@ -66,7 +66,7 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 							 @RequestParam(value = "sidebarName", defaultValue = "") String sidebarName, HttpServletRequest request, HttpServletResponse response) {
 		QueryWrapper<Sidebar> queryWrapper = new QueryWrapper<>();
 		if (StringUtils.notEmpty(sidebarName)) {
-			queryWrapper.eq("sidebar_name", sidebarName);
+			queryWrapper.like("sidebar_name", sidebarName);
 		}
 		queryWrapper.orderByDesc("create_date");
 		Page<SidebarDTO> dtoPage = sidebarService.page(pageNumber, 25, queryWrapper);

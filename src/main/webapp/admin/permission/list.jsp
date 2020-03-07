@@ -8,7 +8,7 @@
 <%@ include file="../common/contextPath.jsp"%>
 
 <common:adminLayout>
-	<div class="content-wrapper" style="padding: 50px 0 40px;">
+	<div class="content-wrapper" style="margin: 0px;">
 		<section class="content-header">
 			<h1>
 				权限 <small>列表</small>
@@ -26,7 +26,7 @@
 					<h3 class="box-title">权限列表</h3>
 				</div>
 				<div class="box-body" style="padding: 0px;">
-					<permission:list page="${page}" class="table table-bordered"
+					<permission:list page="${page}" class="table table-bordered table-hover"
 						th="权限ID;权限名;权限值;权限描述;创建时间;父权限"
 						td="permissionId;permissionName;permissionValue;permissionDesc;createDate;parentPermissionVO.permissionName" />
 					<common:paginate page="${page}" class="panel-footer" style="padding: 0px 18px;" />

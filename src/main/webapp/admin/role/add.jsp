@@ -5,7 +5,9 @@
 <%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
-
+<common:adminLayout>
+<!-- 内容主体区域 -->
+<div class="content-wrapper" style="margin: 0px;">
 	<section class="content-header">
     <h1>
       角色
@@ -56,42 +58,14 @@
   </section>
   <script type="text/javascript">
   	$(function(){
-  		$(".sidebar-menu li:eq(6)").addClass("active");
-  		$(".treeview-menu li:eq(1)").addClass("active");
-  		
   		$("#form").submit(function() {
   	      var roleName = $("#roleName").val();
-  	      var permissionIds = [];
-  	      $("input[name='permissionIds']:checked").each(function(index,item){
-  	    	permissionIds.push($(this).val());
-  	      });
   	      if(!roleName) {
   	        toast('角色名称不能为空');
   	        return false;
   	      }
-  	      /* $.ajax({
-  	        url: '/admin/role/add',
-  	        async: true,
-  	        cache: false,
-  	        type: 'post',
-  	        dataType: 'json',
-  	      	traditional:true, //防止深度序列化,默认false
-  	        data: {
-  	          roleName: roleName,
-  	          permissionIds: permissionIds
-  	        },
-  	        success: function(data) {
-  	          if(data.success === true) {
-  	            toast('编辑成功','success');
-  	            setTimeout(function() {
-  	            	window.location.href = '/admin/role/list';
-  	            }, 1000);
-  	          } else {
-  	            toast(data.error,'error');
-  	          }
-  	        }
-  	      }) */
-  	      // return false;
   	    })
   	});
   </script>
+  </div>
+</common:adminLayout>

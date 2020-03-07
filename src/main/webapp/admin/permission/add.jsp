@@ -7,7 +7,7 @@
 <%@ include file="../common/contextPath.jsp" %>
 
 <common:adminLayout>
-<div class="content-wrapper" style="padding: 50px 0 40px;">
+<div class="content-wrapper" style="margin: 0px;">
 	<section class="content-header">
     <h1>权限<small>添加</small></h1>
     <ol class="breadcrumb">

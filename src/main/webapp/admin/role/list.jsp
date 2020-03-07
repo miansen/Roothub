@@ -6,7 +6,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
 
-
+<common:adminLayout>
+<!-- 内容主体区域 -->
+<div class="content-wrapper" style="margin: 0px;">
 	<section class="content-header">
     <h1>
       角色
@@ -59,19 +61,9 @@
         </table>
       </div>
       <div class="panel-footer" id="paginate" style="padding: 0px 15px;"></div>
-      <common:table page="${page}"  class="table table-bordered" />
+      <common:table page="${page}"  class="table table-bordered table-hover" />
       <common:paginate page="${page}" class="panel-footer" style="padding: 0px 18px;" />
     </div>
   </section>
-  <script type="text/javascript">
-  	$(function(){
-  		$(".sidebar-menu li:eq(6)").addClass("active");
-  		$(".treeview-menu li:eq(1)").addClass("active");
-  	   
-  	  	var count = ${page.totalRow};//数据总量
-  	 	var limit = ${page.pageSize};//每页显示的条数
-  	 	var pageNumber = ${pageNumber};//当前页数
-  	 	var url = "?pageNumber=";//路径
-  	 	paginate(count,limit,pageNumber,url);
-  	});
-  </script>
+  </div>
+</common:adminLayout>

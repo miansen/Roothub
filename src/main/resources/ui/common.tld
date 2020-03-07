@@ -97,8 +97,20 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>adminIndex</name>
+		<tag-class>wang.miansen.roothub.common.ui.AdminIndexTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
 		<name>adminLayout</name>
 		<tag-class>wang.miansen.roothub.common.ui.AdminLayoutTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+	<tag>
+		<name>sidebar</name>
+		<tag-class>wang.miansen.roothub.modules.sidebar.ui.SidebarTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>

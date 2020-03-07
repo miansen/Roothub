@@ -61,6 +61,11 @@ public class SidebarVO implements BaseVO {
 	private String sidebarUrl;
 	
 	/**
+	 * 侧边栏的图标
+	 */
+	private String sidebarIcon;
+	
+	/**
 	 * 排序
 	 */
 	private Integer sidebarSort;
@@ -159,6 +164,14 @@ public class SidebarVO implements BaseVO {
 		this.sidebarUrl = sidebarUrl;
 	}
 	
+	public String getSidebarIcon() {
+		return sidebarIcon;
+	}
+
+	public void setSidebarIcon(String sidebarIcon) {
+		this.sidebarIcon = sidebarIcon;
+	}
+
 	public Integer getSidebarSort() {
 		return sidebarSort;
 	}
@@ -185,11 +198,11 @@ public class SidebarVO implements BaseVO {
 
 	@Override
 	public String toString() {
-		return "SidebarVO {sidebarId=" + sidebarId + ", parentSidebarVO=" + parentSidebarVO + ", permissionId="
+		return "SidebarVO [sidebarId=" + sidebarId + ", parentSidebarVO=" + parentSidebarVO + ", permissionId="
 				+ permissionId + ", permissionName=" + permissionName + ", permissionValue=" + permissionValue
 				+ ", userId=" + userId + ", userName=" + userName + ", sidebarName=" + sidebarName + ", sidebarUrl="
-				+ sidebarUrl + ", sidebarSort=" + sidebarSort + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + "}";
+				+ sidebarUrl + ", sidebarIcon=" + sidebarIcon + ", sidebarSort=" + sidebarSort + ", createDate="
+				+ createDate + ", updateDate=" + updateDate + "]";
 	}
 
 }

@@ -5,9 +5,9 @@
 <%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
-
 <common:adminLayout>
-<div class="content-wrapper" style="padding: 50px 0 40px;">
+<!-- 内容主体区域 -->
+<div class="content-wrapper" style="margin: 0px;">
 	<section class="content-header">
     <h1>侧边栏<small>添加</small></h1>
     <ol class="breadcrumb">

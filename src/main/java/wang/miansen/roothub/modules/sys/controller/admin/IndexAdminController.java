@@ -79,7 +79,7 @@ public class IndexAdminController {
 	}
 	
 		// 后台首页
-		@RequestMapping(value = "/index/console", method = RequestMethod.GET)
+		@RequestMapping(value = "/console", method = RequestMethod.GET)
 		public String console(Model model) {
 			// 查询当天新增话题
 		    model.addAttribute("topic_count", topicService.countToday());

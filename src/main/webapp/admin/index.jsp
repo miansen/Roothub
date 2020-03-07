@@ -6,8 +6,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="./common/contextPath.jsp" %>
 
-<common:adminLayout>
-<script type="text/javascript">
-	document.getElementById("console").click();
-</script>
-</common:adminLayout>
+<common:adminIndex>
+	<common:sidebar />
+</common:adminIndex>

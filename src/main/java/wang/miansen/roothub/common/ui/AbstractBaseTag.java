@@ -3,6 +3,7 @@ package wang.miansen.roothub.common.ui;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.DynamicAttributes;
@@ -114,6 +115,16 @@ public abstract class AbstractBaseTag extends BodyTagSupport implements DynamicA
 	 * @return String
 	 */
 	protected abstract String getBodyContentString(String bodyContent);
+	
+	/**
+	 * 获取项目根路径
+	 * 
+	 * @return
+	 */
+	protected String getContextPath() {
+		HttpServletRequest request = (HttpServletRequest) super.pageContext.getRequest();
+		return request.getContextPath();
+	}
 
 	/**
 	 * 获取 HTML 元素的 id 属性

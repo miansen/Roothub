@@ -53,6 +53,11 @@ public class Sidebar implements BaseDO {
 	private String sidebarUrl;
 	
 	/**
+	 * 侧边栏的图标
+	 */
+	private String sidebarIcon;
+	
+	/**
 	 * 排序
 	 */
 	private Integer sidebarSort;
@@ -115,6 +120,14 @@ public class Sidebar implements BaseDO {
 		this.sidebarUrl = sidebarUrl;
 	}
 	
+	public String getSidebarIcon() {
+		return sidebarIcon;
+	}
+
+	public void setSidebarIcon(String sidebarIcon) {
+		this.sidebarIcon = sidebarIcon;
+	}
+
 	public Integer getSidebarSort() {
 		return sidebarSort;
 	}
@@ -141,9 +154,10 @@ public class Sidebar implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Sidebar {sidebarId=" + sidebarId + ", parentSidebarId=" + parentSidebarId + ", permissionId="
+		return "Sidebar [sidebarId=" + sidebarId + ", parentSidebarId=" + parentSidebarId + ", permissionId="
 				+ permissionId + ", userId=" + userId + ", sidebarName=" + sidebarName + ", sidebarUrl=" + sidebarUrl
-				+ ", sidebarSort=" + sidebarSort + ", createDate=" + createDate + ", updateDate=" + updateDate + "}";
+				+ ", sidebarIcon=" + sidebarIcon + ", sidebarSort=" + sidebarSort + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + "]";
 	}
 
 }

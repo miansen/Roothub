@@ -2,15 +2,16 @@
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
 	version="2.0">
-	<description>Roothub JSP Tag Library.</description>
+	<description>通用标签库，一般是被其他模块共同引用的标签。</description>
 	<tlib-version>2.0</tlib-version>
 	<jsp-version>2.0</jsp-version>
-	<short-name>rui</short-name>
+	<short-name>common</short-name>
 	<tag>
 		<name>table</name>
 		<tag-class>wang.miansen.roothub.common.ui.DefaultTableTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用表格标签</description>
 		<attribute>
 			<description>分页对象（不允许为空）。迭代其中的 list 对象，从而填充表格的 th 和 td。 其中
 				pageNumber、pageSize、totalPage、totalRow 属性作为分页的依据。</description>
@@ -45,6 +46,7 @@
 		</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用分页标签</description>
 		<attribute>
 			<description>数据总量</description>
 			<name>totalRow</name>
@@ -101,17 +103,20 @@
 		<tag-class>wang.miansen.roothub.common.ui.AdminIndexTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
+		<description>后台入口标签</description>
 	</tag>
 	<tag>
 		<name>adminLayout</name>
 		<tag-class>wang.miansen.roothub.common.ui.AdminLayoutTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
+		<description>后台通用布局标签</description>
 	</tag>
 	<tag>
 		<name>sidebar</name>
 		<tag-class>wang.miansen.roothub.modules.sidebar.ui.SidebarTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用侧边栏标签</description>
 	</tag>
 </taglib>

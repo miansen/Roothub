@@ -172,15 +172,16 @@ CREATE TABLE `role_permission_rel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色权限关联关系表';
 
 CREATE TABLE `sidebar` (
-  `sidebar_id` varchar(36) NOT NULL,
-  `parent_sidebar_id` varchar(36) DEFAULT NULL,
-  `permission_id` varchar(36) DEFAULT NULL,
-  `user_id` varchar(36) DEFAULT NULL,
-  `sidebar_name` varchar(50) DEFAULT NULL,
-  `sidebar_url` varchar(500) DEFAULT NULL,
-  `sidebar_sort` int(11) DEFAULT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
+  `sidebar_id` varchar(36) NOT NULL COMMENT '侧边栏ID',
+  `parent_sidebar_id` varchar(36) DEFAULT NULL COMMENT '父级侧边栏ID',
+  `permission_id` varchar(36) DEFAULT NULL COMMENT '权限ID',
+  `user_id` varchar(36) DEFAULT NULL COMMENT '创建人ID',
+  `sidebar_name` varchar(50) DEFAULT NULL COMMENT '侧边栏的名字',
+  `sidebar_url` varchar(500) DEFAULT NULL COMMENT '点击侧边栏时发送的请求URL',
+  `sidebar_icon` varchar(150) DEFAULT NULL COMMENT '侧边栏的图标',
+  `sidebar_sort` int(11) DEFAULT NULL COMMENT '排序',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`sidebar_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -2,16 +2,16 @@
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
 	version="2.0">
-	<description>权限标签库，一般是权限模块用到的标签。</description>
+	<description>应用标签库，一般是应用模块用到的标签。</description>
 	<tlib-version>2.0</tlib-version>
 	<jsp-version>2.0</jsp-version>
-	<short-name>permission</short-name>
+	<short-name>app</short-name>
 	<tag>
-		<name>list</name>
-		<tag-class>wang.miansen.roothub.modules.permission.ui.PermissionListTag</tag-class>
+		<name>categoryList</name>
+		<tag-class>wang.miansen.roothub.modules.app.ui.AppCategoryListTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
-		<description>权限后台list标签</description>
+		<description>应用类别list标签</description>
 		<attribute>
 			<description>分页对象（不允许为空）。迭代其中的 list 对象，从而填充表格的 th 和 td。 其中
 				pageNumber、pageSize、totalPage、totalRow 属性作为分页的依据。</description>

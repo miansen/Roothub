@@ -68,6 +68,8 @@ public class AdminLayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<script src=\""+getContextPath()+"/admin/resource/js/avatar.js\"></script>");
 		sb.append("\t\n");
+		sb.append("<script src=\""+getContextPath()+"/admin/resource/js/openIframeDialog.js\"></script>");
+		sb.append("\t\n");
 		sb.append("<script src=\""+getContextPath()+"/admin/resource/cropper/cropper.min.js\"></script>");
 		sb.append("\t\n");
 		sb.append("<script>");

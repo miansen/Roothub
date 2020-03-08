@@ -1,5 +1,7 @@
 package wang.miansen.roothub.modules.app.vo;
 
+import wang.miansen.roothub.common.annotation.VO2DTO;
+import wang.miansen.roothub.common.enums.ConverPolicy;
 import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
@@ -20,6 +22,7 @@ public class AppCategoryVO implements BaseVO {
 	/**
 	 * 创建人ID
 	 */
+	@VO2DTO(targets = {"userDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "userServiceImpl")
 	private String userId;
 
 	/**
@@ -40,11 +43,13 @@ public class AppCategoryVO implements BaseVO {
 	/**
 	 * 创建时间
 	 */
+	@VO2DTO(targets = {"createDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String createDate;
 
 	/**
 	 * 更新时间
 	 */
+	@VO2DTO(targets = {"createDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String updateDate;
 
 	@Override

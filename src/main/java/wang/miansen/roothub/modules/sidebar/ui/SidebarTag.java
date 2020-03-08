@@ -123,7 +123,7 @@ public class SidebarTag extends AbstractBaseTag {
 	 * @param b
 	 * @return
 	 */
-	public boolean compareSidebar(SidebarDTO a, SidebarDTO b) {
+	private boolean compareSidebar(SidebarDTO a, SidebarDTO b) {
 		if (a == b) {
 			return true;
 		}

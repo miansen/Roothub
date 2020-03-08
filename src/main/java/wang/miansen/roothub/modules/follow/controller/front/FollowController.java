@@ -15,6 +15,7 @@ import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.follow.service.FollowService;
 import wang.miansen.roothub.modules.follow.vo.FollowVO;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 
 import org.springframework.beans.BeanUtils;
@@ -62,7 +63,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	@RequestMapping(value = "/follow/isFollow", method = RequestMethod.GET)
 	@ResponseBody
 	private Result<Integer> isFollow(String fid, HttpServletRequest request) {
-		User user = getUser(request);
+		UserDTO user = getUser();
 		if (user == null) return new Result<>(201, false, "未关注");
 		if (user.getUserId() == fid) {
 			return new Result<>(201, false, "同一用户");
@@ -84,7 +85,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	@ResponseBody
 	private Result<Integer> save(String fid, HttpServletRequest request) {
 		Follow follow = new Follow();
-		follow.setSourceId(getUser(request).getUserId());
+		follow.setSourceId(getUser().getUserId());
 		follow.setTargetId(fid);
 		follow.setCreateDate(new Date());
 		int insert = followService.insert(follow);
@@ -104,7 +105,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	@RequestMapping(value = "/follow/delete", method = RequestMethod.POST)
 	@ResponseBody
 	private Result<Integer> delete(String fid, HttpServletRequest request) {
-		int delete = followService.delete(getUser(request).getUserId(), fid);
+		int delete = followService.delete(getUser().getUserId(), fid);
 		if (delete == 1) {
 			String info = "取消关注成功";
 			return new Result<Integer>(200, true, info);
@@ -146,7 +147,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	 */
 	@RequestMapping(value = "/follow/topics", method = RequestMethod.GET)
 	private String followTopics(HttpServletRequest request, @RequestParam(value = "p", defaultValue = "1") Integer p) {
-		User user = getUser(request);
+		UserDTO user = getUser();
 		if (user == null) return "error-page/404.jsp";
 		int countCollect = collectDaoService.count(user.getUserId());// 用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());// 用户发布的主题的数量

@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.exception;
 
-import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
+import wang.miansen.roothub.common.enums.BaseErrorCode;
 
 /**
  * 该类是业务异常的基础父类，定义了 {@code httpCode}、{@code errorCode}、{@code message}
@@ -43,14 +43,14 @@ public class BaseException extends RuntimeException {
 	}
 	
 	/**
-	 * 通过枚举 {@code BaseErrorCodeEnum} 创建一个新的 {@code BaseException} 对象
+	 * 通过枚举 {@code BaseErrorCode} 创建一个新的 {@code BaseException} 对象
 	 * 
-	 * @param baseErrorCodeEnum 错误的枚举对象
+	 * @param BaseErrorCode 错误的枚举对象
 	 */
-	public BaseException(BaseErrorCodeEnum baseErrorCodeEnum) {
-		this.httpCode = baseErrorCodeEnum.getHttpCode();
-		this.errorCode = baseErrorCodeEnum.getErrorCode();
-		this.message = baseErrorCodeEnum.getMessage();
+	public BaseException(BaseErrorCode baseErrorCode) {
+		this.httpCode = baseErrorCode.getHttpCode();
+		this.errorCode = baseErrorCode.getErrorCode();
+		this.message = baseErrorCode.getMessage();
 	}
 
 	public int getHttpCode() {

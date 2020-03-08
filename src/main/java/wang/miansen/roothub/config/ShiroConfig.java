@@ -27,7 +27,7 @@ public class ShiroConfig {
 		map.put("/admin/logout", "logout");
 		
 		// 所有url都必须认证通过才可以访问
-		// map.put("/admin/**", "authc");
+		map.put("/**", "authc");
 		
 		return map;
 	}

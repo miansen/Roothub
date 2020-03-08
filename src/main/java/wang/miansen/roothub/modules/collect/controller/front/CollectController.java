@@ -16,6 +16,7 @@ import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.modules.collect.dto.CollectDTO;
 import wang.miansen.roothub.modules.collect.model.Collect;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 
 import org.springframework.beans.BeanUtils;
@@ -59,7 +60,7 @@ public class CollectController extends AbstractBaseController<Collect, CollectDT
 	 */
 	@RequestMapping(value = "/collect/topics",method = RequestMethod.GET)
 	private String list(HttpServletRequest request,@RequestParam(value = "p",defaultValue = "1")Integer p) {
-		User user = getUser(request);
+		UserDTO user = getUser();
 		// int countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
 		int notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//未读通知的数量
@@ -83,7 +84,7 @@ public class CollectController extends AbstractBaseController<Collect, CollectDT
 	@RequestMapping(value = "/collect/isCollect",method = RequestMethod.GET)
 	@ResponseBody
 	private Result<Integer> isCollect(Integer tid, HttpServletRequest request){
-		User user = getUser(request);
+		UserDTO user = getUser();
 		int collect = 0;
 		/*if(user != null) {
 			collect = collectDaoService.isCollect(user.getUserId(), tid);

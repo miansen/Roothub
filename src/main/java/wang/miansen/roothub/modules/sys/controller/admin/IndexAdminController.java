@@ -121,7 +121,7 @@ public class IndexAdminController {
 		if(subject.isAuthenticated()) {
 			return "redirect:/admin/index";
 		}
-		return "/default/admin/login";
+		return "/admin/login";
 	}
 	
 	// 后台登录处理

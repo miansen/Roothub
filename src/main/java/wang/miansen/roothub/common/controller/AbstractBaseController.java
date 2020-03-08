@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,12 +19,11 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.service.BaseService;
-import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.common.vo.BaseVO;
 import wang.miansen.roothub.config.ApplicationConfig;
-import wang.miansen.roothub.modules.user.model.User;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 
 /**
  * 该类是 Controller 层的基础父类，实现了常用的业务增删改查方法，建议大部分的 Controller 层继承。
@@ -53,7 +53,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		mv.setViewName(this.getJspPrefix() + "/add");
 		return mv;
 	}
-	
+
 	@Override
 	public ModelAndView save(VO vo, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
@@ -71,7 +71,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		mv.setViewName(this.getJspPrefix() + "/delete");
 		return mv;
 	}
-	
+
 	@Override
 	public ModelAndView remove(String id, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
@@ -88,7 +88,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		mv.addObject(StringUtils.firstCharToLowerCase(vo.getClass().getSimpleName()), vo);
 		return mv;
 	}
-	
+
 	@Override
 	public ModelAndView update(VO vo, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
@@ -127,7 +127,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	protected abstract String getModuleName();
 
 	protected abstract QueryWrapper<DO> getQueryWrapper();
-	
+
 	/**
 	 * JSP 页面的路径前缀
 	 * @return
@@ -142,8 +142,8 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	 * @param request
 	 * @return
 	 */
-	public User getUser(HttpServletRequest request) {
-		return CookieAndSessionUtil.getSession(request, "user");
+	public UserDTO getUser() {
+		return (UserDTO) SecurityUtils.getSubject().getPrincipal();
 	}
 
 	/**
@@ -156,7 +156,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	protected String redirect(HttpServletRequest request, String path) {
 		return "redirect:" + path;
 	}
-	
+
 	/**
 	 * 转发
 	 * 

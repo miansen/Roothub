@@ -89,7 +89,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		if (user == null) {
 			return "error-page/404";
 		}
-		User user2 = getUser(request);// 当前用户
+		UserDTO user2 = getUser();// 当前用户
 		Page<Post> topicPage = postService.pageByAuthor(tp, 20, name);
 		Page<ReplyAndTopicByName> replyPage = null;//rootReplyService.findAllByNameAndTopic(name, rp, 20);
 		int countTopic = postService.countByUserName(user.getUserName());// 主题数量
@@ -156,7 +156,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 	@RequestMapping(value = "/user/topics", method = RequestMethod.GET)
 	private String topics(Model model, @RequestParam(value = "p", defaultValue = "1") Integer p,
 			HttpServletRequest request) {
-		User user2 = getUser(request);// 当前用户
+		UserDTO user2 = getUser();// 当前用户
 		if (user2 == null) return "error-page/404.jsp";
 		Page<Post> topicPage = postService.pageByAuthor(p, 50, user2.getUserName());
 		int countCollect = collectDaoService.count(user2.getUserId());// 用户收藏话题的数量
@@ -190,7 +190,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		if (user == null) {
 			return "error-page/404.jsp";
 		}
-		User user2 = getUser(request);// 当前用户
+		UserDTO user2 = getUser();// 当前用户
 		Page<ReplyAndTopicByName> replyPage = null;// rootReplyService.findAllByNameAndTopic(name, p, 20);
 		int countTopic = postService.countByUserName(user.getUserName());// 主题数量
 		int countCollect = collectDaoService.count(user.getUserId());// 用户收藏话题的数量
@@ -220,7 +220,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		 * request.setAttribute("user", user); return "user/profile";
 		 */
 
-		User user2 = getUser(request);
+		UserDTO user2 = getUser();
 		if (user2 == null) {
 			return "error-page/500";
 		}
@@ -243,7 +243,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 	private String updateUserInfo(String email, String url, String thirdId, String userAddr, String signature,
 			HttpServletRequest request, HttpServletResponse response) {
 		// User user = null;
-		User user = getUser(request);
+		UserDTO user = getUser();
 		// String cookie = CookieAndSessionUtil.getCookie(request, "user");
 		if (user != null) {
 			// user = rootUserService.findByName(Base64Util.decode(cookie));
@@ -252,7 +252,7 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 			user.setThirdId(thirdId);
 			user.setUserAddr(userAddr);
 			user.setSignature(signature);
-			userService.updateUser(user);
+			// userService.updateUser(user);
 			try {
 				response.sendRedirect("/user/settings/profile");
 			} catch (IOException e) {
@@ -285,10 +285,10 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 	@RequestMapping(value = "/user/setting/changeAvatar", method = RequestMethod.POST)
 	@ResponseBody
 	private Result<String> changeAvatar(String avatarBase64, String path, HttpServletRequest request) {
-		User user = getUser(request);
+		UserDTO user = getUser();
 		ApiAssert.notNull(user, "请先登录");
 		ApiAssert.notEmpty(avatarBase64, "头像不能为空");
-		userService.updateAvatar(avatarBase64, path, user, request);
+		// userService.updateAvatar(avatarBase64, path, user, request);
 		return new Result<>(200, true, "更新成功");
 	}
 
@@ -308,14 +308,14 @@ public class UserController extends AbstractBaseController<User, UserDTO, UserVO
 		if (newPassword == null) {
 			return new Result<>(201, false, "密码不能为空");
 		}
-		User user = getUser(request);
+		UserDTO user = getUser();
 		if (!user.getPassword().equals(oldPassword)) {
 			return new Result<>(201, false, "旧密码不正确");
 		}
 		// 加密保存
 		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
-		UserExecution updateUser = userService.updateUser(user);
-		return new Result<UserExecution>(200, true, updateUser);
+		//UserExecution updateUser = userService.updateUser(user);
+		return null;//new Result<UserExecution>(200, true, updateUser);
 	}
 
 	@Override

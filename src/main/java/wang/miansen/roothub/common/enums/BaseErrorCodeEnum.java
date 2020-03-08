@@ -7,7 +7,7 @@ package wang.miansen.roothub.common.enums;
  * @date 2020-01-20
  * @since 3.0
  */
-public enum BaseErrorCodeEnum {
+public enum BaseErrorCodeEnum implements BaseErrorCode {
 	
 	/**
 	 * 无权限访问对应的资源

@@ -93,6 +93,12 @@ public class StringUtils {
 		return true;
 	}
 
+	/**
+	 * 校验邮箱是否合法
+	 * 
+	 * @param email 邮箱字符串
+	 * @return boolean
+	 */
 	public static boolean isEmail(String email) {
 		if (isEmpty(email)) {
 			return false;
@@ -103,6 +109,10 @@ public class StringUtils {
 		}
 	}
 
+	/**
+	 * 获取 UUID
+	 * @return
+	 */
 	public static String getUUID() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}

@@ -20,6 +20,7 @@ import wang.miansen.roothub.common.entity.BaseDO;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
 import wang.miansen.roothub.common.util.IDGenerator;
+import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.common.vo.BaseVO;
 import wang.miansen.roothub.config.ApplicationConfig;
 import wang.miansen.roothub.modules.user.model.User;
@@ -84,7 +85,7 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 		DTO dto = this.getService().getById(id);
 		VO vo = getDTO2VO().apply(dto);
 		mv.setViewName(this.getJspPrefix() + "/edit");
-		mv.addObject(vo.getClass().getSimpleName(), vo);
+		mv.addObject(StringUtils.firstCharToLowerCase(vo.getClass().getSimpleName()), vo);
 		return mv;
 	}
 	

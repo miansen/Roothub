@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
+<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
 <common:adminLayout>
@@ -40,7 +40,7 @@
                     		</c:forEach>
                     		</tbody>
                 		</table>
-                		<common:paginate page="${page}" class="panel-footer" style="padding: 0px 18px;" />
+                		<common:paginate page="${page}" url="${contextPath}/admin/sidebar/list/parent" />
                 	 </c:when>
                      <c:otherwise>
                         <div class="empty-data">
@@ -53,10 +53,9 @@
     </section>
     <script type="text/javascript">
         function toParent(id, name) {
-        	var index = parent.layer.getFrameIndex(window.name);
             parent.$('#parentSidebarId').val(id);
             parent.$('#parentSidebarName').val(name);
-            parent.layer.close(index);
+            parent.bootbox.hideAll();
         }
     </script>
 </div>

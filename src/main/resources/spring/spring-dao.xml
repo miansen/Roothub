@@ -57,7 +57,8 @@
 				  		 wang.miansen.roothub.modules.vote.model,
 				  		 wang.miansen.roothub.modules.role.model,
 				  		 wang.miansen.roothub.modules.permission.model,
-				  		 wang.miansen.roothub.modules.sidebar.model"/>
+				  		 wang.miansen.roothub.modules.sidebar.model,
+				  		 wang.miansen.roothub.modules.app.model"/>
 		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
 		<property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
 	</bean>

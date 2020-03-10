@@ -44,12 +44,6 @@ public class AdminIndexTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/wangEditor/wangEditor.min.css\">");
 		sb.append("\t\n");
-		sb.append("<style>");
-		sb.append("\t\n");
-		sb.append("@media screen and (max-width: 768px) {.content-header {position: relative;padding: 65px 15px 0 15px;}}");
-		sb.append("\t\n");
-		sb.append("</style>");
-		sb.append("\t\n");
 		sb.append("<script src=\"" + getContextPath() + "/libs/jquery-v3.4.1/dist/jquery.min.js\"></script>");
 		sb.append("\t\n");
 		sb.append("<script src=\"" + getContextPath() + "/libs/bootstrap-v3.4.1/dist/js/bootstrap.min.js\"></script>");
@@ -70,9 +64,11 @@ public class AdminIndexTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("</head>");
 		sb.append("\t\n");
-		sb.append("<body class=\"hold-transition skin-blue sidebar-mini\" style=\"background-color: #ecf0f5;\">");
+		sb.append("<body class=\"hold-transition skin-blue sidebar-mini\">");
 		sb.append("\t\n");
-		sb.append("<header class=\"main-header\" style=\"position: fixed; width: 100%\">");
+		sb.append("<div class=\"wrapper\">");
+		sb.append("\t\n");
+		sb.append("<header class=\"main-header\">");
 		sb.append("\t\n");
 		sb.append("<a href=\""+getContextPath()+"/admin/index\" class=\"logo\">");
 		sb.append("\t\n");
@@ -96,7 +92,7 @@ public class AdminIndexTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append(bodyContent);
 		sb.append("\t\n");
-		sb.append("<div class=\"content-wrapper\" style=\"padding: 50px 0 40px;height: 100%;\">");
+		sb.append("<div class=\"content-wrapper\">");
 		sb.append("\t\n");
 		sb.append("<iframe name=\"roothub-iframe\" src=\""+ getContextPath() + "/admin/console" +"\" width=\"100%\" height=\"100%\" frameborder=\"no\" border=\"0\">");
 		sb.append("\t\n");
@@ -104,7 +100,7 @@ public class AdminIndexTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("</div>");
 		sb.append("\t\n");
-		sb.append("<footer class=\"main-footer\" style=\"position: fixed; bottom: 0; width: 100%;\">");
+		sb.append("<footer class=\"main-footer\">");
 		sb.append("\t\n");
 		sb.append("<div class=\"pull-right hidden-xs\">");
 		sb.append("\t\n");
@@ -115,6 +111,8 @@ public class AdminIndexTag extends AbstractBaseTag {
 		sb.append("<strong>Copyright © 2018-2020 <a href=\"https://github.com/miansen/Roothub\">Roothub</a>.</strong> All rights reserved.");
 		sb.append("\t\n");
 		sb.append("</footer>");
+		sb.append("\t\n");
+		sb.append("</div>");
 		sb.append("\t\n");
 		sb.append("</body>");
 		sb.append("\t\n");

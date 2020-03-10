@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
+<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
 <common:adminLayout>
@@ -14,8 +14,8 @@
       <small>添加</small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="/admin/index"><i class="fa fa-dashboard"></i> 首页</a></li>
-      <li><a href="/admin/role/list">角色</a></li>
+      <li><a href="${contextPath}/admin/index"><i class="fa fa-dashboard"></i> 首页</a></li>
+      <li><a href="${contextPath}/admin/role/list">角色</a></li>
       <li class="active">添加</li>
     </ol>
   </section>
@@ -39,18 +39,6 @@
             <label>角色描述</label>
             <input type="text" name="roleDesc" id="roleDesc" class="form-control" placeholder="角色描述">
           </div>
-          <div class="form-group">
-            <c:forEach items="${permissionMap}" var="permissions" > 
-            	<label for="">${permissions.key}</label>
-            	<p>
-					<c:forEach items="${permissions.value}" var="permission" > 
-						<input type="checkbox" name="permissionIds" id="permission_${permission.permissionId}" 
-						value="${permission.permissionId}"/>${permission.permissionName}&nbsp;&nbsp;
-					</c:forEach>
-				</p>
-				<br></br>
-			</c:forEach> 
-          </div>
           <button type="submit" class="btn btn-primary">保存</button>
         </form>
       </div>
@@ -60,8 +48,8 @@
   	$(function(){
   		$("#form").submit(function() {
   	      var roleName = $("#roleName").val();
-  	      if(!roleName) {
-  	        toast('角色名称不能为空');
+  	      if (!roleName) {
+  	        bootbox.alert("角色名称不能为空");
   	        return false;
   	      }
   	    })

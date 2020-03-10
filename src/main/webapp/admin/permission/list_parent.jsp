@@ -41,7 +41,7 @@
                     		</c:forEach>
                     		</tbody>
                 		</table>
-                		<common:paginate page="${page}" class="panel-footer" style="padding: 0px 18px;" />
+                		<common:paginate page="${page}" url="${contextPath}/admin/permission/list/parent" />
                 	 </c:when>
                      <c:otherwise>
                         <div class="empty-data">

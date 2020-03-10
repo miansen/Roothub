@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="common" uri="/WEB-INF/classes/ui/common.tld" %>
+<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
 <common:adminLayout>
@@ -33,7 +33,7 @@
             	<input type="text" name="parentSidebarVO.sidebarId" id="parentSidebarId" class="form-control" style="display: none;">
             	<input type="text" name="parentSidebarVO.sidebarName" id="parentSidebarName" class="form-control" readonly="readonly">
             	<span class="input-group-btn">
-              	<button type="button" onclick="openDialog(this)" class="btn btn-primary">选择</button>
+              	<button type="button" class="btn btn-primary">选择</button>
             	</span>
             </div>
           </div>
@@ -55,28 +55,20 @@
     </div>
   </section>
   <script type="text/javascript">
-	//打开父级侧边栏页面
-	function openDialog() {
-	    layui.use('layer', function(){
-	        var layer = layui.layer;
-	        layer.open({
-	            title: ['选择父级侧边栏', 'font-size:18px;'],
-	            type: 2,
-	            area: ['700px', '450px'],
-	            fixed: false,
-	            maxmin: true,
-	            content: "${contextPath}/admin/sidebar/list/parent"
-	        });
-	    });
-	}
   	$(function(){
   		$("#form").submit(function() {
   	      var sidebarName = $("#sidebarName").val();
   	      if (!sidebarName) {
-  	        toast('侧边栏的名字不能为空');
+  	    	bootbox.alert("侧边栏的名字不能为空");
   	        return false;
   	      }
-  	    })
+  	    });
+  		$("button[type='button']").click(function() {
+  			bootbox.dialog({
+  	  		   message: "<iframe src='${contextPath}/admin/sidebar/list/parent' width='100%' height='100%' frameborder='no' border='0'></iframe>",
+  	  		   closeButton: true
+  	  		});
+  		});
   	});
   </script>
 </div>

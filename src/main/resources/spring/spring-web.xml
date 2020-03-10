@@ -65,7 +65,8 @@
 										  wang.miansen.roothub.modules.visit.controller.**,
 										  wang.miansen.roothub.modules.vote.controller.**,
 										  wang.miansen.roothub.modules.permission.controller.**,
-										  wang.miansen.roothub.modules.sidebar.controller.**" />
+										  wang.miansen.roothub.modules.sidebar.controller.**,
+										  wang.miansen.roothub.modules.app.controller.**" />
 
 	<!-- 全局拦截器 -->
 	<mvc:interceptors>

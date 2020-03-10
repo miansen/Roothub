@@ -30,6 +30,11 @@ public class PaginateTag extends AbstractBaseTag {
 	private String pageNumber;
 	
 	/**
+	 * 总共有多少页
+	 */
+	private String totalPage;
+	
+	/**
 	 * 点击按钮时发送的请求链接，默认是 "#"
 	 */
 	private String url;
@@ -106,6 +111,15 @@ public class PaginateTag extends AbstractBaseTag {
 		this.pageNumber = pageNumber;
 		super.vars.put("pageNumber", pageNumber);
 	}
+	
+	public String getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(String totalPage) {
+		this.totalPage = totalPage;
+		super.vars.put("totalPage", totalPage);
+	}
 
 	public String getUrl() {
 		if (url == null) {
@@ -167,11 +181,13 @@ public class PaginateTag extends AbstractBaseTag {
 		String totalRow = getTotalRow();
 		String pageSize = getPageSize();
 		String pageNumber = getPageNumber();
+		String totalPage = getTotalPage();
 		String url = getUrl();
 		String size = getSize();
 		String numberOfPages = getNumberOfPages();
 		String alignment = getAlignment();
 		Page<?> page = getPage();
+		
 		if (StringUtils.isEmpty(totalRow)) {
 			if (page != null) {
 				totalRow = String.valueOf(page.getTotalRow());
@@ -193,8 +209,15 @@ public class PaginateTag extends AbstractBaseTag {
 				pageNumber = "1";
 			}
 		}
+		if (StringUtils.isEmpty(totalPage)) {
+			if (page != null) {
+				totalPage = String.valueOf(page.getTotalPage());
+			} else {
+				totalPage = "1";
+			}
+		}
 		StringBuilder sb = new StringBuilder();
-		sb.append("$('#paginate').bootstrapPaginator({currentPage: "+pageNumber+",totalPages: "+totalRow+",size:\""+size+"\",bootstrapMajorVersion: 3,alignment:\""+alignment+"\",numberOfPages:"+numberOfPages+",itemTexts: function (type, page, current) {switch (type) {case \"first\": return \"首页\";case \"prev\": return \"上一页\";case \"next\": return \"下一页\";case \"last\": return \"末页\";case \"page\": return page;}},pageUrl: function(type, page, current) {return \""+url+"?pageNumber=\"+page}});");
+		sb.append("$('#paginate').bootstrapPaginator({currentPage: "+pageNumber+",totalPages: "+totalPage+",size:\""+size+"\",bootstrapMajorVersion: 3,alignment:\""+alignment+"\",numberOfPages:"+numberOfPages+",itemTexts: function (type, page, current) {switch (type) {case \"first\": return \"首页\";case \"prev\": return \"上一页\";case \"next\": return \"下一页\";case \"last\": return \"末页\";case \"page\": return page;}},pageUrl: function(type, page, current) {return \""+url+"?pageNumber=\"+page}});");
 		return sb.toString();
 	}
 

@@ -23,7 +23,7 @@ public class SidebarTag extends AbstractBaseTag {
 	protected String getBodyContentString(String bodyContent) {
 		StringBuilder sb = new StringBuilder();
 		List<SidebarDTO> sidebarTree = buildSidebarTree(getAllSidebars(), null);
-		sb.append("<aside id=\"" + getId() + "\" class=\"main-sidebar\" style=\"position: fixed\">");
+		sb.append("<aside class=\"main-sidebar\">");
 		sb.append("\t\n");
 		sb.append("<section class=\"sidebar\">");
 		sb.append("\t\n");

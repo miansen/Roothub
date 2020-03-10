@@ -66,6 +66,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>一共有多少页，默认是第一页</description>
+			<name>totalPage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>点击按钮时发送的请求链接，默认是 "#"</description>
 			<name>url</name>
 			<required>false</required>

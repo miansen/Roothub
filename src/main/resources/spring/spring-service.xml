@@ -47,7 +47,8 @@
 										  wang.miansen.roothub.modules.vote.service.impl,
 										  wang.miansen.roothub.modules.role.service.impl,
 										  wang.miansen.roothub.modules.permission.service.impl,
-										  wang.miansen.roothub.modules.sidebar.service.impl" />
+										  wang.miansen.roothub.modules.sidebar.service.impl,
+										  wang.miansen.roothub.modules.app.service.impl" />
 
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"

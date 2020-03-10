@@ -1,6 +1,8 @@
 package wang.miansen.roothub.common.ui;
 
 /**
+ * 后台全局布局标签
+ * 
  * @author miansen.wang
  * @date 2020-03-01
  */
@@ -24,29 +26,23 @@ public class AdminLayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<title>Roothub后台管理系统</title>");
 		sb.append("\t\n");
-		sb.append("<link rel=\"icon\" href=\""+getContextPath()+"/admin/resource/images/favicon.ico\">");
+		sb.append("<link rel=\"icon\" href=\""+ getContextPath() +"/admin/resource/images/favicon.ico\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\""+getContextPath()+"/admin/resource/layui/css/layui.css\">");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/bootstrap-v3.4.1/dist/css/bootstrap.min.css\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css\" />");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/font-awesome-v4.7.0/css/font-awesome.min.css\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\"/>");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/Ionicons-v2.0.0/css/ionicons.min.css\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css\">");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/AdminLTE-v2.4.18/dist/css/AdminLTE.min.css\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css\"/>");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/AdminLTE-v2.4.18/dist/css/skins/_all-skins.min.css\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/AdminLTE.min.css\" />");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/bootstrap-datepicker-v1.9.0/dist/css/bootstrap-datepicker.min.css\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.8/css/skins/_all-skins.min.css\" />");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/cropper-v3.1.3/cropper.min.css\">");
 		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css\" />");
-		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\""+getContextPath()+"/admin/resource/css/admin.css\">");
-		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\""+getContextPath()+"/admin/resource/wangEditor/wangEditor.min.css\">");
-		sb.append("\t\n");
-		sb.append("<link rel=\"stylesheet\" href=\""+getContextPath()+"/admin/resource/cropper/cropper.css\">");
+		sb.append("<link rel=\"stylesheet\" href=\"" + getContextPath() + "/libs/wangEditor/wangEditor.min.css\">");
 		sb.append("\t\n");
 		sb.append("<style>");
 		sb.append("\t\n");
@@ -54,29 +50,23 @@ public class AdminLayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("</style>");
 		sb.append("\t\n");
-		sb.append("<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/jquery-v3.4.1/dist/jquery.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/bootstrap-v3.4.1/dist/js/bootstrap.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/AdminLTE-v2.4.18/dist/js/adminlte.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/bootstrap-datepicker-v1.9.0/dist/js/bootstrap-datepicker.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\""+getContextPath()+"/admin/resource/js/app.min.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/bootstrap-paginator-1.0.2/bootstrap-paginator.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\""+getContextPath()+"/admin/resource/layui/layui.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/bootbox-v5.3.2/bootbox.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\""+getContextPath()+"/admin/resource/js/avatar.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/cropper-v3.1.3/cropper.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\""+getContextPath()+"/admin/resource/js/openIframeDialog.js\"></script>");
+		sb.append("<script src=\"" + getContextPath() + "/libs/wangEditor/wangEditor.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\""+getContextPath()+"/admin/resource/cropper/cropper.min.js\"></script>");
-		sb.append("\t\n");
-		sb.append("<script>");
-		sb.append("\t\n");
-		sb.append("function toast(txt, icon) {$.toast({text: txt, heading: '系统提醒', icon: icon || 'error', showHideTransition: 'slide', allowToastClose: true, hideAfter: 2000, stack: false, position: 'top-right'});}");
-		sb.append("\t\n");
-		sb.append(" </script>");
+		sb.append("<script src=\"" + getContextPath() + "/admin/resource/js/avatar.js\"></script>");
 		sb.append("\t\n");
 		sb.append("</head>");
 		sb.append("\t\n");

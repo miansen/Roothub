@@ -48,7 +48,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 		<description>通用分页标签</description>
 		<attribute>
-			<description>数据总量</description>
+			<description>数据总量，默认是100条</description>
 			<name>totalRow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -60,32 +60,32 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>当前是多少页，默认是第一页</description>
+			<description>当前是第几页，默认是第一页</description>
 			<name>pageNumber</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>请求参数，默认是?pageNumber=pageNumber</description>
-			<name>requestParma</name>
+			<description>点击按钮时发送的请求链接，默认是 "#"</description>
+			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>连续显示的分页数，默认是5页</description>
-			<name>groups</name>
+			<description>显示的页码数，默认是10页</description>
+			<name>numberOfPages</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>颜色主题，默认是#337ab7</description>
-			<name>theme</name>
+			<description>分页控件的大小，允许的值：mini，small，normal，large。默认是normal</description>
+			<name>size</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>是否开启跳页，true 开启，false 不开启。默认是 false</description>
-			<name>skip</name>
+			<description>分页控件的对齐方式，允许的值用：left（左对齐），center（居中对齐），right（右对齐）。默认是left</description>
+			<name>alignment</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

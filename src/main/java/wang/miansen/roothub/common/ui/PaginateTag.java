@@ -15,39 +15,39 @@ import wang.miansen.roothub.common.util.StringUtils;
 public class PaginateTag extends AbstractBaseTag {
 	
 	/**
-	 * 数据总量
+	 * 数据总量，默认是100条
 	 */
 	private String totalRow;
 	
 	/**
-	 * 每页显示的数据量
+	 * 每页显示的数据量，默认是25条
 	 */
 	private String pageSize;
 	
 	/**
-	 * 当前是多少页
+	 * 当前是第几页，默认是第一页
 	 */
 	private String pageNumber;
 	
 	/**
-	 * 请求参数
+	 * 点击按钮时发送的请求链接，默认是 "#"
 	 */
-	private String requestParma;
+	private String url;
 	
 	/**
-	 * 连续显示的分页数
+	 * 显示的页码数，默认是10页
 	 */
-	private String groups;
+	private String numberOfPages;
 	
 	/**
-	 * 颜色主题
+	 * 分页控件的大小，允许的值：mini，small，normal，large。默认是normal
 	 */
-	private String theme;
+	private String size;
 	
 	/**
-	 * 是否开启跳页
+	 * 分页控件的对齐方式，允许的值用：left（左对齐），center（居中对齐），right（右对齐）。默认是left
 	 */
-	private String skip;
+	private String alignment;
 	
 	/**
 	 * 分页对象
@@ -56,23 +56,23 @@ public class PaginateTag extends AbstractBaseTag {
 	 */
 	private Page<?> page;
 
-	@Override
+	/*@Override
 	public void release() {
 		totalRow = null;
 		pageSize = null;
 		pageNumber = null;
-		requestParma = null;
-		groups = null;
-		theme = null;
-		skip = null;
+		url = null;
+		numberOfPages = null;
+		size = null;
+		alignment = null;
 		page = null;
 		super.release();
-	}
+	}*/
 
 	@Override
 	protected String getBodyContentString(String bodyContent) {
 		StringBuilder out = new StringBuilder();
-		String div = HtmlElementUtils.convertDiv(getId(), vars, bodyContent);
+		String div = "<div id=\""+ getId() +"\"><ul id=\"paginate\"></ul></div>";
 		String script = HtmlElementUtils.convertScript(getScriptBody());
 		out.append(div);
 		out.append("\t\n");
@@ -107,52 +107,52 @@ public class PaginateTag extends AbstractBaseTag {
 		super.vars.put("pageNumber", pageNumber);
 	}
 
-	public String geRequestParma() {
-		if (requestParma == null) {
-			requestParma = "?pageNumber=";
+	public String getUrl() {
+		if (url == null) {
+			url = "#";
 		}
-		return requestParma;
+		return url;
 	}
 
-	public void setRequestParma(String requestParma) {
-		this.requestParma = requestParma;
-		super.vars.put("requestParma", requestParma);
+	public void setUrl(String url) {
+		this.url = url;
+		super.vars.put("url", url);
+	}
+
+	public String getNumberOfPages() {
+		if (numberOfPages == null) {
+			numberOfPages = "10";
+		}
+		return numberOfPages;
+	}
+
+	public void setNumberOfPages(String numberOfPages) {
+		this.numberOfPages = numberOfPages;
+		super.vars.put("numberOfPages", numberOfPages);
 	}
 	
-	public String getGroups() {
-		if (groups == null) {
-			groups = "5";
+	public String getSize() {
+		if (size == null) {
+			size = "normal";
 		}
-		return groups;
+		return size;
 	}
 
-	public void setGroups(String groups) {
-		this.groups = groups;
-		super.vars.put("groups", groups);
+	public void setSize(String size) {
+		this.size = size;
+		super.vars.put("size", size);
 	}
 
-	public String getTheme() {
-		if (theme == null) {
-			theme = "#337ab7";
+	public String getAlignment() {
+		if (alignment == null) {
+			alignment = "left";
 		}
-		return theme;
+		return alignment;
 	}
 
-	public void setTheme(String theme) {
-		this.theme = theme;
-		super.vars.put("theme", theme);
-	}
-	
-	public String getSkip() {
-		if (skip == null) {
-			skip = "false";
-		}
-		return skip;
-	}
-
-	public void setSkip(String skip) {
-		this.skip = skip;
-		super.vars.put("skip", skip);
+	public void setAlignment(String alignment) {
+		this.alignment = alignment;
+		super.vars.put("alignment", alignment);
 	}
 
 	public Page<?> getPage() {
@@ -167,6 +167,10 @@ public class PaginateTag extends AbstractBaseTag {
 		String totalRow = getTotalRow();
 		String pageSize = getPageSize();
 		String pageNumber = getPageNumber();
+		String url = getUrl();
+		String size = getSize();
+		String numberOfPages = getNumberOfPages();
+		String alignment = getAlignment();
 		Page<?> page = getPage();
 		if (StringUtils.isEmpty(totalRow)) {
 			if (page != null) {
@@ -190,20 +194,7 @@ public class PaginateTag extends AbstractBaseTag {
 			}
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append("layui.use('laypage', function(){");
-		sb.append("var laypage = layui.laypage;");
-		sb.append("laypage.render({");
-		sb.append("elem: '"+ getId() +"',");
-		sb.append("count: "+ totalRow +",");
-		sb.append("limit:"+ pageSize +",");
-		sb.append("curr: "+ pageNumber +",");
-		sb.append("groups: "+ getGroups() +",");
-		sb.append("theme: '"+ getTheme() +"',");
-		sb.append("skip: "+ getSkip() +",");
-		sb.append("jump: function(obj, first){");
-		sb.append("if(!first){");
-		sb.append("location.href = '"+ geRequestParma() +"'+obj.curr;");
-		sb.append("}}});});");
+		sb.append("$('#paginate').bootstrapPaginator({currentPage: "+pageNumber+",totalPages: "+totalRow+",size:\""+size+"\",bootstrapMajorVersion: 3,alignment:\""+alignment+"\",numberOfPages:"+numberOfPages+",itemTexts: function (type, page, current) {switch (type) {case \"first\": return \"首页\";case \"prev\": return \"上一页\";case \"next\": return \"下一页\";case \"last\": return \"末页\";case \"page\": return page;}},pageUrl: function(type, page, current) {return \""+url+"?pageNumber=\"+page}});");
 		return sb.toString();
 	}
 

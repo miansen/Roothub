@@ -1,18 +1,18 @@
-package wang.miansen.roothub.modules.permission.ui;
+package wang.miansen.roothub.modules.role.ui;
 
 import javax.servlet.http.HttpServletRequest;
 
 import wang.miansen.roothub.common.ui.AbstractListTag;
 import wang.miansen.roothub.common.ui.support.TableTagTdSupport;
 import wang.miansen.roothub.common.ui.support.TableTagThSupport;
-import wang.miansen.roothub.modules.permission.vo.PermissionVO;
+import wang.miansen.roothub.modules.role.vo.RoleVO;
 
 /**
  * @author miansen.wang
- * @date 2020-03-03
+ * @date 2020-03-11
  */
 @SuppressWarnings("serial")
-public class PermissionListTag extends AbstractListTag {
+public class RoleListTag extends AbstractListTag {
 
 	@Override
 	protected TableTagThSupport getTableTagThSupport() {
@@ -24,10 +24,10 @@ public class PermissionListTag extends AbstractListTag {
 		HttpServletRequest request = (HttpServletRequest) super.pageContext.getRequest();
 		String contextPath = request.getContextPath();
 		return object -> {
-			PermissionVO permissionVO = (PermissionVO) object;
-			return "<a href=\"" + contextPath + "/admin/permission/edit?id=" + permissionVO.getPermissionId()
+			RoleVO roleVO = (RoleVO) object;
+			return "<a href=\"" + contextPath + "/admin/role/edit?id=" + roleVO.getRoleId()
 					+ "\" class=\"btn btn-xs btn-warning\">编辑</a>\n<a href=\"javascript:if(confirm('确定要删除吗？')) location.href='"
-					+ contextPath + "/admin/permission/remove?id=" + permissionVO.getPermissionId()
+					+ contextPath + "/admin/role/remove?id=" + roleVO.getRoleId()
 					+ "'\" class=\"btn btn-xs btn-danger\">删除</a>";
 		};
 	}

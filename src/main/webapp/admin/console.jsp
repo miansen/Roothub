@@ -6,7 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="./common/contextPath.jsp" %>
 <common:layout>
-<common:content>
+<div class="content-wrapper" style="margin: 0px;">
 	<!-- 内容主体区域 -->
 	<section class="content-header">
 		<h1>
@@ -133,5 +133,5 @@
 			</div>
 		</div>
 	</section>
-</common:content>
+</div>
 </common:layout>

@@ -77,7 +77,7 @@ public class PaginateTag extends AbstractBaseTag {
 	@Override
 	protected String getBodyContentString(String bodyContent) {
 		StringBuilder out = new StringBuilder();
-		String div = "<div id=\""+ getId() +"\"><ul id=\"paginate\"></ul></div>";
+		String div = "<div id=\""+ getId() +"\" class=\"panel-footer\"><ul id=\"paginate\" style=\"margin: 0px;\"></ul></div>";
 		String script = HtmlElementUtils.convertScript(getScriptBody());
 		out.append(div);
 		out.append("\t\n");

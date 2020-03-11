@@ -1,7 +1,9 @@
 package wang.miansen.roothub.modules.role.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.service.BaseService;
@@ -72,7 +75,22 @@ public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, R
 	@Override
 	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
 			HttpServletRequest request, HttpServletResponse response) {
-		return super.list(pageNumber, request, response);
+		String roleName = request.getParameter("roleName");
+		QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+		if (StringUtils.notEmpty(roleName)) {
+			queryWrapper.like("role_name", roleName);
+		}
+		queryWrapper.orderByDesc("create_date");
+		Page<RoleDTO> dtoPage = this.getService().page(pageNumber, 25, this.getQueryWrapper());
+		List<? extends RoleVO> voList = dtoPage.getList().stream().map(getDTO2VO()).collect(Collectors.toList());
+		Page<? extends RoleVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
+				dtoPage.getTotalRow());
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(this.getJspPrefix() + "/list");
+		mv.addObject("page", voPage);
+		mv.addObject("pageNumber", pageNumber);
+		mv.addObject("roleName", roleName);
+		return mv;
 	}
 	
 	@Override

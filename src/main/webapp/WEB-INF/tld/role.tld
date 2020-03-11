@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<description>角色标签库，一般是角色模块用到的标签。</description>
+	<tlib-version>2.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<short-name>role</short-name>
+	<tag>
+		<name>list</name>
+		<tag-class>wang.miansen.roothub.modules.role.ui.RoleListTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<description>角色后台list标签</description>
+		<attribute>
+			<description>分页对象（不允许为空）。迭代其中的 list 对象，从而填充表格的 th 和 td。 其中
+				pageNumber、pageSize、totalPage、totalRow 属性作为分页的依据。</description>
+			<name>page</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>表头的名字，多个的话用 ";" 号分割。 注意：如果为空的话，将默认使用字段名作为表头的名字。
+			</description>
+			<name>th</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>单元格的属性名，多个的话用 ";" 号分割。根据属性名从 page 中获取属性值。
+				注意：属性名必须和字段名一样，否则会抛出异常。如果为空的话，将默认使用所有字段的值作为单元格的内容。</description>
+			<name>td</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>是否显示行号，true 显示，false 不显示。默认是 false。</description>
+			<name>row</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

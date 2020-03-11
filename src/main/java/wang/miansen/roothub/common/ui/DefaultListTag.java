@@ -11,7 +11,7 @@ import wang.miansen.roothub.common.ui.support.TableTagThSupport;
  * @since 3.0
  */
 @SuppressWarnings("serial")
-public class DefaultTableTag extends AbstractTableTag {
+public class DefaultListTag extends AbstractListTag {
 
 	@Override
 	protected TableTagThSupport getTableTagThSupport() {

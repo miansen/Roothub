@@ -14,7 +14,13 @@
 	<common:header />
 	<common:sidebar />
 	<common:content>
-		<iframe name="roothub-iframe" src="${contextPath}/admin/console"" width="100%" height="100%" frameborder="no" border="0" />
+		<iframe name="roothub-iframe" id="roothub-iframe" src="${contextPath}/admin/console" onload="iframeLoad()" width="100%" height="100%" frameborder="no" border="0" ></iframe>
+		<script type="text/javascript">
+			function iframeLoad() {
+		   	 	document.getElementById("roothub-iframe").height=0;
+		    	document.getElementById("roothub-iframe").height=document.getElementById("roothub-iframe").contentWindow.document.body.scrollHeight;
+		    }
+		</script>
 	</common:content>
 	<common:footer />
 </common:layout>

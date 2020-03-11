@@ -1,6 +1,6 @@
 package wang.miansen.roothub.modules.app.ui;
 
-import wang.miansen.roothub.common.ui.AbstractTableTag;
+import wang.miansen.roothub.common.ui.AbstractListTag;
 import wang.miansen.roothub.common.ui.support.TableTagTdSupport;
 import wang.miansen.roothub.common.ui.support.TableTagThSupport;
 import wang.miansen.roothub.modules.app.vo.AppCategoryVO;
@@ -12,7 +12,7 @@ import wang.miansen.roothub.modules.app.vo.AppCategoryVO;
  * @date 2020-03-08
  */
 @SuppressWarnings("serial")
-public class AppCategoryListTag extends AbstractTableTag {
+public class AppCategoryListTag extends AbstractListTag {
 
 	@Override
 	protected TableTagThSupport getTableTagThSupport() {
@@ -27,7 +27,7 @@ public class AppCategoryListTag extends AbstractTableTag {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<a href=\"" + contextPath + "/admin/app/category/edit?id=" + appCategoryVO.getAppCategoryId() + "\" class=\"btn btn-xs btn-warning\">编辑</a>");
 			sb.append("\t\n");
-			sb.append("<a href=\"javascript:if(confirm('确定要删除吗？')) location.href='" + contextPath + "/admin/permission/delete?id=" + appCategoryVO.getAppCategoryId() + "'\" class=\"btn btn-xs btn-danger\">删除</a>");
+			sb.append("<a href=\"javascript:if(confirm('确定要删除吗？')) location.href='" + contextPath + "/admin/app/category/remove?id=" + appCategoryVO.getAppCategoryId() + "'\" class=\"btn btn-xs btn-danger\">删除</a>");
 			return sb.toString();
 		};
 	}

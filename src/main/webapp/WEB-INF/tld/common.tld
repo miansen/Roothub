@@ -7,11 +7,11 @@
 	<jsp-version>2.0</jsp-version>
 	<short-name>common</short-name>
 	<tag>
-		<name>table</name>
-		<tag-class>wang.miansen.roothub.common.ui.DefaultTableTag</tag-class>
+		<name>list</name>
+		<tag-class>wang.miansen.roothub.common.ui.DefaultListTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
-		<description>通用表格标签</description>
+		<description>通用列表标签</description>
 		<attribute>
 			<description>分页对象（不允许为空）。迭代其中的 list 对象，从而填充表格的 th 和 td。 其中
 				pageNumber、pageSize、totalPage、totalRow 属性作为分页的依据。</description>

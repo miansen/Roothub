@@ -12,6 +12,7 @@ import javax.servlet.jsp.tagext.TryCatchFinally;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import wang.miansen.roothub.common.ui.exception.BaseTagException;
 import wang.miansen.roothub.common.util.ApplicationContextUtils;
 import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
@@ -114,7 +115,7 @@ public abstract class AbstractBaseTag extends BodyTagSupport implements DynamicA
 	 * @param bodyContent 标签体中的内容
 	 * @return String
 	 */
-	protected abstract String getBodyContentString(String bodyContent);
+	protected abstract String getBodyContentString(String bodyContent) throws BaseTagException;
 	
 	/**
 	 * 获取项目根路径

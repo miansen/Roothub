@@ -7,12 +7,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ include file="../common/contextPath.jsp"%>
 
-<common:adminLayout>
+<common:layout>
 	<div class="content-wrapper" style="margin: 0px;">
 		<section class="content-header">
-			<h1>
-				权限 <small>列表</small>
-			</h1>
+			<h1>权限 <small>列表</small></h1>
 			<ol class="breadcrumb">
 				<li><a href="${contextPath}/admin/index"><i
 						class="fa fa-dashboard"></i>首页</a></li>
@@ -23,15 +21,29 @@
 		<section class="content">
 			<div class="box box-info">
 				<div class="box-header with-border">
-					<h3 class="box-title">权限列表</h3>
+					<form action="${contextPath}/admin/permission/list" method="get" class="form-inline">
+	                    <div class="form-group" style="margin-bottom: 10px;">
+	                        <input type="text" name="permissionName" value="${permissionName}" class="form-control" placeholder="权限名">
+	                        <button type="submit" class="btn btn-primary btn-sm">搜索</button>
+	                    </div>
+                	</form>
 				</div>
 				<div class="box-body" style="padding: 0px;">
-					<permission:list page="${page}" class="table table-bordered table-hover"
-						th="权限ID;权限名;权限值;权限描述;创建时间;父权限"
-						td="permissionId;permissionName;permissionValue;permissionDesc;createDate;parentPermissionVO.permissionName" />
-					<common:paginate page="${page}" url="${contextPath}/admin/permission/list" />
+                	<c:choose>
+                    	<c:when test="${page != null && fn:length(page.list) > 0}">
+                    		<permission:list page="${page}" class="table table-bordered table-hover" 
+                    		th="权限ID;权限名;权限值;权限描述;创建时间;父权限" 
+                    		td="permissionId;permissionName;permissionValue;permissionDesc;createDate;parentPermissionVO.permissionName" />
+							<common:paginate page="${page}" url="${contextPath}/admin/permission/list" />
+                	 	</c:when>
+                     	<c:otherwise>
+                        	<div class="empty-data">
+                        		<img src="${contextPath}/admin/resource/images/no-data.jpg" style="width: 100%;">
+                        	</div>
+                     	</c:otherwise>
+               		</c:choose>
 				</div>
 			</div>
 		</section>
 	</div>
-</common:adminLayout>
+</common:layout>

@@ -1,6 +1,9 @@
 package wang.miansen.roothub.common.ui;
 
+import javax.servlet.jsp.JspException;
+
 import wang.miansen.roothub.common.beans.Page;
+import wang.miansen.roothub.common.ui.exception.BaseTagException;
 import wang.miansen.roothub.common.ui.support.TableTagTdSupport;
 import wang.miansen.roothub.common.ui.support.TableTagThSupport;
 import wang.miansen.roothub.common.ui.util.HtmlElementUtils;
@@ -13,7 +16,7 @@ import wang.miansen.roothub.common.ui.util.HtmlElementUtils;
  * @since 3.0
  */
 @SuppressWarnings("serial")
-public abstract class AbstractTableTag extends AbstractBaseTag {
+public abstract class AbstractListTag extends AbstractBaseTag {
 
 	/**
 	 * 分页对象
@@ -49,7 +52,7 @@ public abstract class AbstractTableTag extends AbstractBaseTag {
 	}
 
 	@Override
-	protected String getBodyContentString(String bodyContent) {
+	protected String getBodyContentString(String bodyContent) throws BaseTagException {
 		try {
 			StringBuilder out = new StringBuilder();
 			String table = HtmlElementUtils.convertTable(getId(), page, vars, getTableTagThSupport(),
@@ -58,8 +61,8 @@ public abstract class AbstractTableTag extends AbstractBaseTag {
 			return out.toString();
 		} catch (Exception e) {
 			logger.error(getClass().getName() + " getBodyContentString error: " + e);
+			throw new BaseTagException(500, getClass().getName() + " getBodyContentString error: " + e, e.getMessage());
 		}
-		return "";
 	}
 
 	public Page<?> getPage() {

@@ -115,7 +115,23 @@ public class PermissionAdminController extends AbstractBaseController<Permission
 	@Override
 	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
 			HttpServletRequest request, HttpServletResponse response) {
-		return super.list(pageNumber, request, response);
+		String permissionName = request.getParameter("permissionName");
+		QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
+		if (StringUtils.notEmpty(permissionName)) {
+			queryWrapper.like("permission_name", permissionName);
+		}
+		queryWrapper.orderByDesc("create_date");
+		Page<PermissionDTO> dtoPage = this.getService().page(pageNumber, 25, queryWrapper);
+		List<? extends PermissionVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
+				.collect(Collectors.toList());
+		Page<? extends PermissionVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
+				dtoPage.getTotalRow());
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(this.getJspPrefix() + "/list");
+		mv.addObject("page", voPage);
+		mv.addObject("pageNumber", pageNumber);
+		mv.addObject("permissionName", permissionName);
+		return mv;
 	}
 
 	/**
@@ -132,7 +148,7 @@ public class PermissionAdminController extends AbstractBaseController<Permission
 			HttpServletRequest request, HttpServletResponse response) {
 		QueryWrapper<Permission> queryWrapper = new QueryWrapper<>();
 		if (StringUtils.notEmpty(permissionName)) {
-			queryWrapper.eq("permission_name", permissionName);
+			queryWrapper.like("permission_name", permissionName);
 		}
 		queryWrapper.isNull("parent_permission_id");
 		queryWrapper.orderByDesc("create_date");

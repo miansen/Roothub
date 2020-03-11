@@ -252,47 +252,47 @@ CREATE TABLE IF NOT EXISTS visit (
   PRIMARY KEY (id)
 );
 
-CREATE TABLE `app` (
-  `app_id` varchar(36) NOT NULL COMMENT '应用ID',
-  `app_category_id` varchar(36) DEFAULT NULL COMMENT '应用类别ID',
-  `user_id` varchar(36) DEFAULT NULL COMMENT '创建人ID',
-  `app_name` varchar(250) NOT NULL COMMENT '应用名称',
-  `app_desc` varchar(500) DEFAULT NULL COMMENT '应用描述',
-  `app_icon` varchar(250) DEFAULT NULL COMMENT '应用图标',
-  `app_index` varchar(500) NOT NULL COMMENT '应用首页',
-  `app_status` int(11) DEFAULT NULL COMMENT '应用状态(1000: "草稿", 1100: "发布", 1200: "停用")',
-  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`app_id`),
-  KEY `key_app_app_category_id` (`app_category_id`),
-  KEY `key_app_user_id` (`user_id`),
-  KEY `key_app_app_name` (`app_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用表'
+CREATE TABLE IF NOT EXISTS app (
+  app_id varchar(36) NOT NULL COMMENT '应用ID',
+  app_category_id varchar(36) DEFAULT NULL COMMENT '应用类别ID',
+  user_id varchar(36) DEFAULT NULL COMMENT '创建人ID',
+  app_name varchar(250) NOT NULL COMMENT '应用名称',
+  app_desc varchar(500) DEFAULT NULL COMMENT '应用描述',
+  app_icon varchar(250) DEFAULT NULL COMMENT '应用图标',
+  app_index varchar(500) NOT NULL COMMENT '应用首页',
+  app_status int(11) DEFAULT NULL COMMENT '应用状态(1000: "草稿", 1100: "发布", 1200: "停用")',
+  create_date datetime DEFAULT NULL COMMENT '创建时间',
+  update_date datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (app_id),
+  KEY key_app_app_category_id (app_category_id),
+  KEY key_app_user_id (user_id),
+  KEY key_app_app_name (app_name)
+);
 
-CREATE TABLE `app_category` (
-  `app_category_id` VARCHAR(36) NOT NULL COMMENT '应用类别ID',
-  `user_id` VARCHAR(36) DEFAULT NULL COMMENT '创建人ID',
-  `app_category_name` VARCHAR(250) NOT NULL COMMENT '应用类别名称',
-  `app_category_desc` VARCHAR(500) DEFAULT NULL COMMENT '应用类别描述',
-  `create_date` DATETIME DEFAULT NULL COMMENT '创建时间',
-  `update_date` DATETIME DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`app_category_id`),
-  KEY `key_app_category_user_id` (`user_id`),
-  KEY `key_app_category_app_category_name` (`app_category_name`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='应用类别表'
+CREATE TABLE IF NOT EXISTS app_category (
+  app_category_id VARCHAR(36) NOT NULL COMMENT '应用类别ID',
+  user_id VARCHAR(36) DEFAULT NULL COMMENT '创建人ID',
+  app_category_name VARCHAR(250) NOT NULL COMMENT '应用类别名称',
+  app_category_desc VARCHAR(500) DEFAULT NULL COMMENT '应用类别描述',
+  create_date DATETIME DEFAULT NULL COMMENT '创建时间',
+  update_date DATETIME DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (app_category_id),
+  KEY key_app_category_user_id (user_id),
+  KEY key_app_category_app_category_name (app_category_name)
+);
 
-CREATE TABLE `sidebar` (
-  `sidebar_id` VARCHAR(36) NOT NULL COMMENT '侧边栏ID',
-  `parent_sidebar_id` VARCHAR(36) DEFAULT NULL COMMENT '父级侧边栏ID',
-  `permission_id` VARCHAR(36) DEFAULT NULL COMMENT '权限ID',
-  `user_id` VARCHAR(36) DEFAULT NULL COMMENT '创建人ID',
-  `sidebar_name` VARCHAR(50) NOT NULL COMMENT '侧边栏的名字',
-  `sidebar_url` VARCHAR(500) DEFAULT NULL COMMENT '点击侧边栏时发送的请求URL',
-  `sidebar_sort` INT(11) DEFAULT NULL COMMENT '排序',
-  `create_date` DATETIME DEFAULT NULL COMMENT '创建时间',
-  `update_date` DATETIME DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`sidebar_id`),
-  KEY `key_sidebar_parent_sidebar_id` (`parent_sidebar_id`),
-  KEY `key_sidebar_permission_id` (`permission_id`),
-  KEY `key_sidebar_user_id` (`user_id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='侧边栏表'
+CREATE TABLE IF NOT EXISTS sidebar (
+  sidebar_id VARCHAR(36) NOT NULL COMMENT '侧边栏ID',
+  parent_sidebar_id VARCHAR(36) DEFAULT NULL COMMENT '父级侧边栏ID',
+  permission_id VARCHAR(36) DEFAULT NULL COMMENT '权限ID',
+  user_id VARCHAR(36) DEFAULT NULL COMMENT '创建人ID',
+  sidebar_name VARCHAR(50) NOT NULL COMMENT '侧边栏的名字',
+  sidebar_url VARCHAR(500) DEFAULT NULL COMMENT '点击侧边栏时发送的请求URL',
+  sidebar_sort INT(11) DEFAULT NULL COMMENT '排序',
+  create_date DATETIME DEFAULT NULL COMMENT '创建时间',
+  update_date DATETIME DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (sidebar_id),
+  KEY key_sidebar_parent_sidebar_id (parent_sidebar_id),
+  KEY key_sidebar_permission_id (permission_id),
+  KEY key_sidebar_user_id (user_id)
+);

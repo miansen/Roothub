@@ -119,10 +119,45 @@
 		<description>后台通用布局标签</description>
 	</tag>
 	<tag>
+		<name>layout</name>
+		<tag-class>wang.miansen.roothub.common.ui.LayoutTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用布局标签</description>
+	</tag>
+	<tag>
+		<name>header</name>
+		<tag-class>wang.miansen.roothub.common.ui.MainHeaderTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用头部导航标签</description>
+	</tag>
+	<tag>
+		<name>content</name>
+		<tag-class>wang.miansen.roothub.common.ui.ContentWrapperTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用内容标签</description>
+	</tag>
+	<tag>
 		<name>sidebar</name>
-		<tag-class>wang.miansen.roothub.modules.sidebar.ui.SidebarTag</tag-class>
+		<tag-class>wang.miansen.roothub.modules.sidebar.ui.MainSidebarTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
 		<description>通用侧边栏标签</description>
+	</tag>
+	<tag>
+		<name>footer</name>
+		<tag-class>wang.miansen.roothub.common.ui.MainFooterTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用页脚标签</description>
+	</tag>
+	<tag>
+		<name>controlSidebar</name>
+		<tag-class>wang.miansen.roothub.common.ui.ControlSidebarTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<description>通用控制侧边栏标签</description>
 	</tag>
 </taglib>

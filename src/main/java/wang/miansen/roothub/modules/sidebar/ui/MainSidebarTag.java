@@ -13,11 +13,13 @@ import wang.miansen.roothub.modules.sidebar.model.Sidebar;
 import wang.miansen.roothub.modules.sidebar.service.SidebarService;
 
 /**
+ * 左侧边栏标签
+ * 
  * @author miansen.wang
  * @date 2020-03-06
  */
 @SuppressWarnings("serial")
-public class SidebarTag extends AbstractBaseTag {
+public class MainSidebarTag extends AbstractBaseTag {
 
 	@Override
 	protected String getBodyContentString(String bodyContent) {
@@ -27,11 +29,53 @@ public class SidebarTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<section class=\"sidebar\">");
 		sb.append("\t\n");
-		sb.append("<ul class=\"sidebar-menu\">");
+		// 用户面板开始
+		sb.append("<div class=\"user-panel\">");
+		sb.append("\t\n");
+		sb.append("<div class=\"pull-left image\">");
+		sb.append("\t\n");
+		sb.append("<img src=\"dist/img/user2-160x160.jpg\" class=\"img-circle\" alt=\"User Image\">");
+		sb.append("\t\n");
+		sb.append("</div>");
+		sb.append("\t\n");
+		sb.append("<div class=\"pull-left info\">");
+		sb.append("\t\n");
+		sb.append("<p>Alexander Pierce</p>");
+		sb.append("\t\n");
+		sb.append("<a href=\"#\"><i class=\"fa fa-circle text-success\"></i> Online</a>");
+		sb.append("\t\n");
+		sb.append("</div>");
+		sb.append("\t\n");
+		sb.append("</div>");
+		// 用户面板结束
+		
+		// 搜索框开始
+		sb.append("\t\n");
+		sb.append("<form action=\"#\" method=\"get\" class=\"sidebar-form\">");
+		sb.append("\t\n");
+		sb.append("<div class=\"input-group\">");
+		sb.append("\t\n");
+		sb.append("<input type=\"text\" name=\"q\" class=\"form-control\" placeholder=\"Search...\">");
+		sb.append("\t\n");
+		sb.append("<span class=\"input-group-btn\">");
+		sb.append("\t\n");
+		sb.append("<button type=\"submit\" name=\"search\" id=\"search-btn\" class=\"btn btn-flat\"><i class=\"fa fa-search\"></i></button>");
+		sb.append("\t\n");
+		sb.append("</span>");
+		sb.append("\t\n");
+		sb.append("</div>");
+		sb.append("\t\n");
+		sb.append("</form>");
+		// 搜索框结束
+		
+		// 侧边栏开始
+		sb.append("<ul class=\"sidebar-menu\" data-widget=\"tree\">");
 		sb.append("\t\n");
 		sb.append(buildSidebartreeView(sidebarTree));
 		sb.append("\t\n");
 		sb.append("</ul>");
+		// 侧边栏结束
+		
 		sb.append("\t\n");
 		sb.append("</section>");
 		sb.append("\t\n");
@@ -40,7 +84,7 @@ public class SidebarTag extends AbstractBaseTag {
 	}
 
 	/**
-	 * 构建侧边栏树视图
+	 * 递归调用，构建侧边栏树视图
 	 * 
 	 * @param sidebarTree 侧边栏树
 	 * @return

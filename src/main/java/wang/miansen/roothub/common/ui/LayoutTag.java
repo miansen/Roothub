@@ -1,13 +1,13 @@
 package wang.miansen.roothub.common.ui;
 
 /**
- * 后台首页标签
+ * 布局标签
  * 
  * @author miansen.wang
- * @date 2020-03-01
+ * @date 2020-03-11
  */
 @SuppressWarnings("serial")
-public class AdminIndexTag extends AbstractBaseTag {
+public class LayoutTag extends AbstractBaseTag {
 
 	@Override
 	protected String getBodyContentString(String bodyContent) {
@@ -52,49 +52,7 @@ public class AdminIndexTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<div class=\"wrapper\">");
 		sb.append("\t\n");
-		sb.append("<header class=\"main-header\">");
-		sb.append("\t\n");
-		sb.append("<a href=\""+getContextPath()+"/admin/index\" class=\"logo\">");
-		sb.append("\t\n");
-		sb.append("<span class=\"logo-mini\"><b>Roothub</b></span>");
-		sb.append("\t\n");
-		sb.append("<span class=\"logo-lg\"><b>Roothub</b>后台管理</span>");
-		sb.append("\t\n");
-		sb.append("</a>");
-		sb.append("\t\n");
-		sb.append("<nav class=\"navbar navbar-static-top\" role=\"navigation\">");
-		sb.append("\t\n");
-		sb.append("<a href=\""+getContextPath()+"/admin/index\" class=\"sidebar-toggle\" data-toggle=\"push-menu\" role=\"button\">");
-		sb.append("\t\n");
-		sb.append("<span class=\"sr-only\">Toggle navigation</span>");
-		sb.append("\t\n");
-		sb.append("</a>");
-		sb.append("\t\n");
-		sb.append("</nav>");
-		sb.append("\t\n");
-		sb.append("</header>");
-		sb.append("\t\n");
 		sb.append(bodyContent);
-		sb.append("\t\n");
-		sb.append("<div class=\"content-wrapper\">");
-		sb.append("\t\n");
-		sb.append("<iframe name=\"roothub-iframe\" src=\""+ getContextPath() + "/admin/console" +"\" width=\"100%\" height=\"100%\" frameborder=\"no\" border=\"0\">");
-		sb.append("\t\n");
-		sb.append("</iframe>");
-		sb.append("\t\n");
-		sb.append("</div>");
-		sb.append("\t\n");
-		sb.append("<footer class=\"main-footer\">");
-		sb.append("\t\n");
-		sb.append("<div class=\"pull-right hidden-xs\">");
-		sb.append("\t\n");
-		sb.append("<b>Version</b> 2.4.8");
-		sb.append("\t\n");
-		sb.append("</div>");
-		sb.append("\t\n");
-		sb.append("<strong>Copyright © 2018-2020 <a href=\"https://github.com/miansen/Roothub\">Roothub</a>.</strong> All rights reserved.");
-		sb.append("\t\n");
-		sb.append("</footer>");
 		sb.append("\t\n");
 		sb.append("</div>");
 		sb.append("\t\n");
@@ -122,5 +80,4 @@ public class AdminIndexTag extends AbstractBaseTag {
 		return sb.toString();
 	}
 	
-
 }

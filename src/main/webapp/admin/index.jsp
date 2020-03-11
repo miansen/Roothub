@@ -6,6 +6,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="./common/contextPath.jsp" %>
 
-<common:adminIndex>
+<%-- <common:adminIndex>
 	<common:sidebar />
-</common:adminIndex>
+</common:adminIndex> --%>
+
+<common:layout>
+	<common:header />
+	<common:sidebar />
+	<common:content>
+		<iframe name="roothub-iframe" src="${contextPath}/admin/console"" width="100%" height="100%" frameborder="no" border="0" />
+	</common:content>
+	<common:footer />
+</common:layout>

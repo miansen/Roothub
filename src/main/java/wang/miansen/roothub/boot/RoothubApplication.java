@@ -3,6 +3,8 @@ package wang.miansen.roothub.boot;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.h2.server.web.WebServlet;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.HttpStatus;
@@ -83,5 +86,15 @@ public class RoothubApplication implements ErrorController {
 		}
 		return HttpStatus.INTERNAL_SERVER_ERROR;
 	}
+	
+	/**
+	 * 注册 H2 数据库访问 Servlet
+	 * @return
+	 */
+	@Bean
+    public ServletRegistrationBean createH2WebServlet(){
+        ServletRegistrationBean servlet = new ServletRegistrationBean(new WebServlet(),"/h2-console/*");
+        return servlet;
+    }
 
 }

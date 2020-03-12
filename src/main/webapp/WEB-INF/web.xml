@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" metadata-complete="true" version="3.1">
   
+  <!-- Spring的配置文件 -->
   <!-- 因为配置了spring的ContextLoderListener监听器，所以需指定spring核心文件的位置 ，
  	       否则默认加载/WEB-INF/applicationContext.xml这个文件-->
   <context-param>
@@ -13,6 +14,12 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   
+  <!-- 防止Spring内存溢出监听器 -->
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+  
+  <!-- Spring MVC servlet -->
   <servlet>
     <servlet-name>springMVC</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -27,6 +34,7 @@
     <url-pattern>/</url-pattern>
   </servlet-mapping>
   
+  <!-- 配置H2数据库访问 -->
  <servlet>
         <servlet-name>H2Console</servlet-name>
         <servlet-class>org.h2.server.web.WebServlet</servlet-class>
@@ -55,9 +63,9 @@
     <url-pattern>*.ttf</url-pattern>
   </servlet-mapping>-->
   
-  <!-- 字符集过滤器，如果不设置，表单提交 Controoler 后中文会乱码 -->
+  <!-- 编码过滤器，如果不设置，表单提交 Controoler 后中文会乱码 -->
     <filter>
-    	<description>字符集过滤器</description>
+    	<description>编码过滤器</description>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
@@ -90,6 +98,7 @@
         <url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <!-- 自定义JSP标签的配置文件路径 -->
   <jsp-config>
 		<taglib>
 			<taglib-uri>/WEB-INF/tld/common.tld</taglib-uri>

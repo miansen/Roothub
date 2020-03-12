@@ -8,15 +8,23 @@
 	
 	<!-- 配置整合 MyBatis 过程 -->
 
-	<!-- 1.数据源基本配置 -->
+	<!-- 1.数据源的配置文件-->
 	<bean id="dataSourceProperties" class="wang.miansen.roothub.common.dao.jdbc.init.DataSourceProperties">
+		<!-- 数据库驱动程序的完全限定名 -->
 		<property name="driverClassName" value="${roothub.datasource.driver-class-name}" />
+		<!-- 数据库连接池的完全限定名 -->
 		<property name="dataSourceClassName" value="${roothub.dataSource.dataSource-class-name}" />
+		<!-- 数据库的 JDBC URL -->
 		<property name="jdbcUrl" value="${roothub.datasource.url}" />
+		<!-- 数据库的登录用户名 -->
 		<property name="username" value="${roothub.datasource.username}" />
+		<!-- 数据库的登录密码 -->
 		<property name="password" value="${roothub.datasource.password}" />
+		<!-- 数据源初始化的 DDL 脚本路径 -->
 		<property name="schema" value="${roothub.datasource.schema}" />
+		<!-- 数据源初始化的 DML 脚本路径 -->
 		<property name="data" value="${roothub.datasource.data}" />
+		<!-- 数据源初始化的模式 -->
 		<property name="initializationMode" value="${roothub.datasource.initialization-mode}" />
 	</bean>
 	
@@ -40,7 +48,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- 配置MyBatis全局配置文件:mybatis-config.xml -->
 		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
-		<!-- 扫描 model 包 使用别名 -->
+		<!-- 扫描 model 包使用别名（也就是说mapper文件里可以写简单类名，可以不用写完全限定名） -->
 		<property name="typeAliasesPackage"
 				  value="wang.miansen.roothub.modules.collect.model,
 				  		 wang.miansen.roothub.modules.follow.model,
@@ -63,11 +71,21 @@
 		<property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
 	</bean>
 
-	<!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+	<!-- 4.配置Mapper扫描器，自动扫描Dao接口，动态实现Dao接口，注入到spring容器中 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- 注入sqlSessionFactory -->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<!-- 给出需要扫描Dao接口包 -->
 		<property name="basePackage" value="wang.miansen.roothub.modules.**.dao"/>
 	</bean>
+	
+	<!-- 5.配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!-- 注入数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 6.配置基于注解的声明式事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

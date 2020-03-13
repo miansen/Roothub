@@ -79,13 +79,4 @@
 		<property name="basePackage" value="wang.miansen.roothub.modules.**.dao"/>
 	</bean>
 	
-	<!-- 5.配置事务管理器 -->
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<!-- 注入数据库连接池 -->
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-
-	<!-- 6.配置基于注解的声明式事务 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
 </beans>

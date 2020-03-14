@@ -200,25 +200,25 @@ public abstract class AbstractWrapper<T, R extends AbstractWrapper<T, R, K, V>, 
 	@Override
 	public R like(K column, V value) {
 		return addCondition(() -> columnToString(column), SqlKeyword.LIKE,
-				() -> StringPool.PERCENT + formatSqlValue(value) + StringPool.PERCENT);
+				() -> formatSqlValue((V) (StringPool.PERCENT + value + StringPool.PERCENT)));
 	}
 
 	@Override
 	public R notLike(K column, V value) {
 		return addCondition(() -> columnToString(column), SqlKeyword.NOT, SqlKeyword.LIKE,
-				() -> StringPool.PERCENT + formatSqlValue(value) + StringPool.PERCENT);
+				() -> formatSqlValue((V) (StringPool.PERCENT + value + StringPool.PERCENT)));
 	}
 
 	@Override
 	public R likeLeft(K column, V value) {
 		return addCondition(() -> columnToString(column), SqlKeyword.LIKE,
-				() -> StringPool.PERCENT + formatSqlValue(value));
+				() -> formatSqlValue((V) (StringPool.PERCENT + value)));
 	}
 
 	@Override
 	public R likeRight(K column, V value) {
 		return addCondition(() -> columnToString(column), SqlKeyword.LIKE,
-				() -> formatSqlValue(value) + StringPool.PERCENT);
+				() -> formatSqlValue((V) (value + StringPool.PERCENT)));
 	}
 
 	@Override

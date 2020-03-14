@@ -20,6 +20,17 @@ public class ResourceVO implements BaseVO {
 	private String resourceId;
 
 	/**
+	 * 资源类型ID
+	 */
+	@VO2DTO(targets = {"resourceTypeDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "resourceTypeServiceImpl")
+	private String resourceTypeId;
+
+	/**
+	 * 资源类型名称
+	 */
+	private String resourceTypeName;
+
+	/**
 	 * 资源类别ID
 	 */
 	@VO2DTO(targets = {
@@ -30,6 +41,17 @@ public class ResourceVO implements BaseVO {
 	 * 资源类别名称
 	 */
 	private String resourceCategoryName;
+
+	/**
+	 * 创建人ID
+	 */
+	@VO2DTO(targets = {"userDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "userServiceImpl")
+	private String userId;
+
+	/**
+	 * 创建人名称
+	 */
+	private String userName;
 
 
 	/**
@@ -77,6 +99,22 @@ public class ResourceVO implements BaseVO {
 		this.resourceId = resourceId;
 	}
 
+	public String getResourceTypeId() {
+		return resourceTypeId;
+	}
+
+	public void setResourceTypeId(String resourceTypeId) {
+		this.resourceTypeId = resourceTypeId;
+	}
+
+	public String getResourceTypeName() {
+		return resourceTypeName;
+	}
+
+	public void setResourceTypeName(String resourceTypeName) {
+		this.resourceTypeName = resourceTypeName;
+	}
+
 	public String getResourceCategoryId() {
 		return resourceCategoryId;
 	}
@@ -91,6 +129,22 @@ public class ResourceVO implements BaseVO {
 
 	public void setResourceCategoryName(String resourceCategoryName) {
 		this.resourceCategoryName = resourceCategoryName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getResourceName() {
@@ -135,10 +189,11 @@ public class ResourceVO implements BaseVO {
 
 	@Override
 	public String toString() {
-		return "ResourceVO [resourceId=" + resourceId + ", resourceCategoryId=" + resourceCategoryId
-				+ ", resourceCategoryName=" + resourceCategoryName + ", resourceName=" + resourceName
-				+ ", resourceValue=" + resourceValue + ", resourceDesc=" + resourceDesc + ", createDate=" + createDate
-				+ ", updateDate=" + updateDate + "]";
+		return "ResourceVO [resourceId=" + resourceId + ", resourceTypeId=" + resourceTypeId + ", resourceTypeName="
+				+ resourceTypeName + ", resourceCategoryId=" + resourceCategoryId + ", resourceCategoryName="
+				+ resourceCategoryName + ", userId=" + userId + ", userName=" + userName + ", resourceName="
+				+ resourceName + ", resourceValue=" + resourceValue + ", resourceDesc=" + resourceDesc + ", createDate="
+				+ createDate + ", updateDate=" + updateDate + "]";
 	}
 
 }

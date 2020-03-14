@@ -150,7 +150,7 @@
 		</dependency>
 		
 		<!-- Spring Security -->
-		<dependency> 
+		<!-- <dependency> 
 			<groupId>org.springframework.security</groupId> 
 			<artifactId>spring-security-web</artifactId> 
 			<version>${springsecurity.version}</version> 
@@ -159,7 +159,7 @@
 			<groupId>org.springframework.security</groupId> 
 			<artifactId>spring-security-config</artifactId> 
 			<version>${springsecurity.version}</version > 
-		</dependency> 
+		</dependency>  -->
 		
 		<!-- 权限管理 Shiro -->
 		<dependency>

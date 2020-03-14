@@ -21,6 +21,6 @@ public interface ResourceService extends BaseService<Resource, ResourceDTO> {
 	 * @param resourceCategoryName 资源类别名称
 	 * @return 资源 Page
 	 */
-	Page<ResourceDTO> pageByNameOrCategoryName(Integer pageNumber, String resourceName, String resourceCategoryName);
+	Page<ResourceDTO> pageByNameAndCategoryName(Integer pageNumber, String resourceName, String resourceCategoryName);
 	
 }

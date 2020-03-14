@@ -66,7 +66,8 @@
 				  		 wang.miansen.roothub.modules.role.model,
 				  		 wang.miansen.roothub.modules.permission.model,
 				  		 wang.miansen.roothub.modules.sidebar.model,
-				  		 wang.miansen.roothub.modules.app.model"/>
+				  		 wang.miansen.roothub.modules.app.model,
+				  		 wang.miansen.roothub.modules.security.model"/>
 		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
 		<property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
 	</bean>
@@ -76,7 +77,7 @@
 		<!-- 注入sqlSessionFactory -->
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<!-- 给出需要扫描Dao接口包 -->
-		<property name="basePackage" value="wang.miansen.roothub.modules.**.dao"/>
+		<property name="basePackage" value="wang.miansen.roothub.modules.*.dao"/>
 	</bean>
 	
 </beans>

@@ -60,9 +60,11 @@ public class LayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<script src=\"" + getContextPath() + "/libs/cropper-v3.1.3/cropper.min.js\"></script>");
 		sb.append("\t\n");
-		sb.append("<script src=\"" + getContextPath() + "/admin/resource/js/avatar.js\"></script>");
-		sb.append("\t\n");
 		sb.append("<script src=\"" + getContextPath() + "/libs/wangEditor/wangEditor.min.js\"></script>");
+		sb.append("\t\n");
+		sb.append("<script src=\"" + getContextPath() + "/resources/js/dialog.js\"></script>");
+		sb.append("\t\n");
+		sb.append("<script src=\"" + getContextPath() + "/resources/js/avatar.js\"></script>");
 		sb.append("\t\n");
 		sb.append("</head>");
 		sb.append("\t\n");

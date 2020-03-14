@@ -1,7 +1,6 @@
 package wang.miansen.roothub.modules.security.service.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +51,7 @@ public class ResourceServiceImpl extends AbstractBaseServiceImpl<Resource, Resou
 	}
 
 	@Override
-	public Page<ResourceDTO> pageByNameOrCategoryName(Integer pageNumber, String resourceName,
+	public Page<ResourceDTO> pageByNameAndCategoryName(Integer pageNumber, String resourceName,
 			String resourceCategoryName) {
 		Page<ResourceDTO> page = new Page<>(new ArrayList<>(), pageNumber, 25, 0);
 		QueryWrapper<Resource> q1 = new QueryWrapper<>();

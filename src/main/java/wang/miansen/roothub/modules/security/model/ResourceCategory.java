@@ -2,10 +2,12 @@ package wang.miansen.roothub.modules.security.model;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.annotation.DO2DTO;
 import wang.miansen.roothub.common.dao.mapper.annotation.Id;
 import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.entity.BaseDO;
+import wang.miansen.roothub.common.enums.ConverPolicy;
 
 /**
  * 资源类别实体类
@@ -23,6 +25,12 @@ public class ResourceCategory implements BaseDO {
 	 */
 	@Id(value = "resource_category_id", type = IdType.UUID)
 	private String resourceCategoryId;
+	
+	/**
+	 * 创建人ID
+	 */
+	@DO2DTO(targets = {"userDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "userServiceImpl")
+	private String userId;
 
 	/**
 	 * 资源类别名称
@@ -45,6 +53,14 @@ public class ResourceCategory implements BaseDO {
 
 	public void setResourceCategoryId(String resourceCategoryId) {
 		this.resourceCategoryId = resourceCategoryId;
+	}
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getResourceCategoryName() {
@@ -73,8 +89,9 @@ public class ResourceCategory implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "ResourceCategory [resourceCategoryId=" + resourceCategoryId + ", resourceCategoryName="
-				+ resourceCategoryName + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "ResourceCategory [resourceCategoryId=" + resourceCategoryId + ", userId=" + userId
+				+ ", resourceCategoryName=" + resourceCategoryName + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
 
 }

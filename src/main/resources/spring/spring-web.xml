@@ -52,23 +52,7 @@
 	</bean>
 
 	<!-- 4.扫描web相关的bean -->
-	<context:component-scan base-package="wang.miansen.roothub.modules.collect.controller.**,
-										  wang.miansen.roothub.modules.follow.controller.**,
-										  wang.miansen.roothub.modules.integral.controller.**,
-										  wang.miansen.roothub.modules.node.controller.**,
-										  wang.miansen.roothub.modules.notice.controller.**,
-										  wang.miansen.roothub.modules.comment.controller.**,
-										  wang.miansen.roothub.modules.role.controller.**,
-										  wang.miansen.roothub.modules.sys.controller.**,
-										  wang.miansen.roothub.modules.tab.controller.**,
-										  wang.miansen.roothub.modules.tag.controller.**,
-										  wang.miansen.roothub.modules.post.controller.**,
-										  wang.miansen.roothub.modules.user.controller.**,
-										  wang.miansen.roothub.modules.visit.controller.**,
-										  wang.miansen.roothub.modules.vote.controller.**,
-										  wang.miansen.roothub.modules.permission.controller.**,
-										  wang.miansen.roothub.modules.sidebar.controller.**,
-										  wang.miansen.roothub.modules.app.controller.**" />
+	<context:component-scan base-package="wang.miansen.roothub.modules.*.controller" />
 
 	<!-- 全局拦截器 -->
 	<mvc:interceptors>

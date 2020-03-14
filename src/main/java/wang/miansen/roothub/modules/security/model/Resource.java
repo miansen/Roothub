@@ -27,11 +27,23 @@ public class Resource implements BaseDO {
 	private String resourceId;
 
 	/**
+	 * 资源类型ID
+	 */
+	@DO2DTO(targets = {"resourceTypeDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "resourceTypeServiceImpl")
+	private String resourceTypeId;
+
+	/**
 	 * 资源类别ID
 	 */
 	@DO2DTO(targets = {
 			"resourceCategoryDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "resourceCategoryServiceImpl")
 	private String resourceCategoryId;
+
+	/**
+	 * 创建人ID
+	 */
+	@DO2DTO(targets = {"userDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "userServiceImpl")
+	private String userId;
 
 	/**
 	 * 资源名称
@@ -66,12 +78,28 @@ public class Resource implements BaseDO {
 		this.resourceId = resourceId;
 	}
 
+	public String getResourceTypeId() {
+		return resourceTypeId;
+	}
+
+	public void setResourceTypeId(String resourceTypeId) {
+		this.resourceTypeId = resourceTypeId;
+	}
+
 	public String getResourceCategoryId() {
 		return resourceCategoryId;
 	}
 
 	public void setResourceCategoryId(String resourceCategoryId) {
 		this.resourceCategoryId = resourceCategoryId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getResourceName() {
@@ -116,9 +144,10 @@ public class Resource implements BaseDO {
 
 	@Override
 	public String toString() {
-		return "Resource [resourceId=" + resourceId + ", resourceCategoryId=" + resourceCategoryId + ", resourceName="
-				+ resourceName + ", resourceValue=" + resourceValue + ", resourceDesc=" + resourceDesc + ", createDate="
-				+ createDate + ", updateDate=" + updateDate + "]";
+		return "Resource [resourceId=" + resourceId + ", resourceTypeId=" + resourceTypeId + ", resourceCategoryId="
+				+ resourceCategoryId + ", userId=" + userId + ", resourceName=" + resourceName + ", resourceValue="
+				+ resourceValue + ", resourceDesc=" + resourceDesc + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
 
 }

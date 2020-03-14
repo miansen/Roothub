@@ -45,7 +45,7 @@ public class PaginateTag extends AbstractBaseTag {
 	private String numberOfPages;
 	
 	/**
-	 * 分页控件的大小，允许的值：mini，small，normal，large。默认是normal
+	 * 分页控件的大小，允许的值：mini，small，normal，large。默认是mini
 	 */
 	private String size;
 	
@@ -147,7 +147,7 @@ public class PaginateTag extends AbstractBaseTag {
 	
 	public String getSize() {
 		if (size == null) {
-			size = "normal";
+			size = "mini";
 		}
 		return size;
 	}
@@ -217,7 +217,7 @@ public class PaginateTag extends AbstractBaseTag {
 			}
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append("$('#paginate').bootstrapPaginator({currentPage: "+pageNumber+",totalPages: "+totalPage+",size:\""+size+"\",bootstrapMajorVersion: 3,alignment:\""+alignment+"\",numberOfPages:"+numberOfPages+",itemTexts: function (type, page, current) {switch (type) {case \"first\": return \"首页\";case \"prev\": return \"上一页\";case \"next\": return \"下一页\";case \"last\": return \"末页\";case \"page\": return page;}},pageUrl: function(type, page, current) {return \""+url+"?pageNumber=\"+page}});");
+		sb.append("$('#paginate').bootstrapPaginator({currentPage: "+pageNumber+",totalPages: "+totalPage+",size:\""+size+"\",bootstrapMajorVersion: 3,alignment:\""+alignment+"\",numberOfPages:"+numberOfPages+",itemTexts: function (type, page, current) {switch (type) {case \"first\": return \"首页\";case \"prev\": return \"上一页\";case \"next\": return \"下一页\";case \"last\": return \"末页\";case \"page\": return page;}},pageUrl: function(type, page, current) {return \""+url+"pageNumber=\"+page}});");
 		return sb.toString();
 	}
 

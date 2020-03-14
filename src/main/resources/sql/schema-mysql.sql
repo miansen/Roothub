@@ -308,3 +308,36 @@ CREATE TABLE `app_category` (
   KEY `key_app_category_user_id` (`user_id`),
   KEY `key_app_category_app_category_name` (`app_category_name`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='应用类别表'
+
+CREATE TABLE `resource_type` (
+  `resource_type_id` varchar(36) NOT NULL COMMENT '资源类型ID',
+  `resource_type_code` int(11) DEFAULT NULL COMMENT '资源类型编码',
+  `resource_type_name` varchar(50) NOT NULL COMMENT '资源类型名称',
+  PRIMARY KEY (`resource_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源类型表'
+
+CREATE TABLE `resource_category` (
+  `resource_category_id` varchar(36) NOT NULL COMMENT '资源类别ID',
+  `user_id` varchar(36) DEFAULT NULL COMMENT '创建人ID',
+  `resource_category_name` varchar(50) NOT NULL COMMENT '资源类别名称',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`resource_category_id`),
+  KEY `key_resource_category_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源类别表'
+
+CREATE TABLE `resource` (
+  `resource_id` varchar(36) NOT NULL COMMENT '资源ID',
+  `resource_type_id` varchar(36) DEFAULT NULL COMMENT '资源类型ID',
+  `resource_category_id` varchar(36) DEFAULT NULL COMMENT '资源类别ID',
+  `user_id` varchar(36) DEFAULT NULL COMMENT '创建人ID',
+  `resource_name` varchar(50) NOT NULL COMMENT '资源名称',
+  `resource_value` varchar(500) NOT NULL COMMENT '资源值',
+  `resource_desc` varchar(500) DEFAULT NULL COMMENT '资源描述',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`resource_id`),
+  KEY `key_r_resource_type_id` (`resource_type_id`),
+  KEY `key_r_resource_category_id` (`resource_category_id`),
+  KEY `key_r_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源表'

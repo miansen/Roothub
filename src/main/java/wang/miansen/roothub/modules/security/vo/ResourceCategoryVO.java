@@ -18,6 +18,17 @@ public class ResourceCategoryVO implements BaseVO {
 	 * 资源类别ID
 	 */
 	private String resourceCategoryId;
+	
+	/**
+	 * 创建人ID
+	 */
+	@VO2DTO(targets = {"userDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "userServiceImpl")
+	private String userId;
+	
+	/**
+	 * 创建人名称
+	 */
+	private String userName;
 
 	/**
 	 * 资源类别名称
@@ -53,6 +64,22 @@ public class ResourceCategoryVO implements BaseVO {
 	public void setResourceCategoryId(String resourceCategoryId) {
 		this.resourceCategoryId = resourceCategoryId;
 	}
+	
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public String getResourceCategoryName() {
 		return resourceCategoryName;
@@ -80,8 +107,9 @@ public class ResourceCategoryVO implements BaseVO {
 
 	@Override
 	public String toString() {
-		return "ResourceCategoryVO [resourceCategoryId=" + resourceCategoryId + ", resourceCategoryName="
-				+ resourceCategoryName + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "ResourceCategoryVO [resourceCategoryId=" + resourceCategoryId + ", userId=" + userId + ", userName="
+				+ userName + ", resourceCategoryName=" + resourceCategoryName + ", createDate=" + createDate
+				+ ", updateDate=" + updateDate + "]";
 	}
-	
+
 }

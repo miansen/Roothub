@@ -84,7 +84,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>分页控件的大小，允许的值：mini，small，normal，large。默认是normal</description>
+			<description>分页控件的大小，允许的值：mini，small，normal，large。默认是mini</description>
 			<name>size</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

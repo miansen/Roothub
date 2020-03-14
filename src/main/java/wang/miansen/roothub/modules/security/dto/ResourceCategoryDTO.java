@@ -2,9 +2,11 @@ package wang.miansen.roothub.modules.security.dto;
 
 import java.util.Date;
 
+import wang.miansen.roothub.common.annotation.DTO2DO;
 import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 
 /**
  * 资源类别 DTO
@@ -20,6 +22,14 @@ public class ResourceCategoryDTO implements BaseDTO {
 	 * 资源类别ID
 	 */
 	private String resourceCategoryId;
+
+	/**
+	 * 创建人
+	 */
+	@DTO2DO(sources = {"userDTO.userId"}, targets = {"userId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2VO(sources = {"userDTO.userId", "userDTO.userName"}, targets = {"userId",
+			"userName"}, policy = ConverPolicy.COPY_PROPERTIES)
+	private UserDTO userDTO;
 
 	/**
 	 * 资源类别名称
@@ -44,6 +54,14 @@ public class ResourceCategoryDTO implements BaseDTO {
 
 	public void setResourceCategoryId(String resourceCategoryId) {
 		this.resourceCategoryId = resourceCategoryId;
+	}
+
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 
 	public String getResourceCategoryName() {
@@ -72,8 +90,9 @@ public class ResourceCategoryDTO implements BaseDTO {
 
 	@Override
 	public String toString() {
-		return "ResourceCategoryDTO [resourceCategoryId=" + resourceCategoryId + ", resourceCategoryName="
-				+ resourceCategoryName + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "ResourceCategoryDTO [resourceCategoryId=" + resourceCategoryId + ", userDTO=" + userDTO
+				+ ", resourceCategoryName=" + resourceCategoryName + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
-	
+
 }

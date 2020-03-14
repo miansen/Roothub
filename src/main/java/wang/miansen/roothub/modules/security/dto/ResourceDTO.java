@@ -6,6 +6,7 @@ import wang.miansen.roothub.common.annotation.DTO2DO;
 import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
+import wang.miansen.roothub.modules.user.dto.UserDTO;
 
 /**
  * 资源 DTO
@@ -23,6 +24,15 @@ public class ResourceDTO implements BaseDTO {
 	private String resourceId;
 
 	/**
+	 * 资源类型 DTO
+	 */
+	@DTO2DO(sources = {"resourceTypeDTO.resourceTypeId"}, targets = {
+			"resourceTypeId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2VO(sources = {"resourceTypeDTO.resourceTypeId", "resourceTypeDTO.resourceTypeName"}, targets = {
+			"resourceTypeId", "resourceTypeName"}, policy = ConverPolicy.COPY_PROPERTIES)
+	private ResourceTypeDTO resourceTypeDTO;
+
+	/**
 	 * 资源类别DTO
 	 */
 	@DTO2DO(sources = {"resourceCategoryDTO.resourceCategoryId"}, targets = {
@@ -31,6 +41,14 @@ public class ResourceDTO implements BaseDTO {
 			"resourceCategoryDTO.resourceCategoryName"}, targets = {"resourceCategoryId",
 					"resourceCategoryName"}, policy = ConverPolicy.COPY_PROPERTIES)
 	private ResourceCategoryDTO resourceCategoryDTO;
+
+	/**
+	 * 创建人DTO
+	 */
+	@DTO2DO(sources = {"userDTO.userId"}, targets = {"userId"}, policy = ConverPolicy.COPY_PROPERTIES)
+	@DTO2VO(sources = {"userDTO.userId", "userDTO.userName"}, targets = {"userId",
+			"userName"}, policy = ConverPolicy.COPY_PROPERTIES)
+	private UserDTO userDTO;
 
 	/**
 	 * 资源名称
@@ -67,12 +85,28 @@ public class ResourceDTO implements BaseDTO {
 		this.resourceId = resourceId;
 	}
 
+	public ResourceTypeDTO getResourceTypeDTO() {
+		return resourceTypeDTO;
+	}
+
+	public void setResourceTypeDTO(ResourceTypeDTO resourceTypeDTO) {
+		this.resourceTypeDTO = resourceTypeDTO;
+	}
+
 	public ResourceCategoryDTO getResourceCategoryDTO() {
 		return resourceCategoryDTO;
 	}
 
 	public void setResourceCategoryDTO(ResourceCategoryDTO resourceCategoryDTO) {
 		this.resourceCategoryDTO = resourceCategoryDTO;
+	}
+
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 
 	public String getResourceName() {
@@ -117,9 +151,10 @@ public class ResourceDTO implements BaseDTO {
 
 	@Override
 	public String toString() {
-		return "ResourceDTO [resourceId=" + resourceId + ", resourceCategoryDTO=" + resourceCategoryDTO
-				+ ", resourceName=" + resourceName + ", resourceValue=" + resourceValue + ", resourceDesc="
-				+ resourceDesc + ", createDate=" + createDate + ", updateDate=" + updateDate + "]";
+		return "ResourceDTO [resourceId=" + resourceId + ", resourceTypeDTO=" + resourceTypeDTO
+				+ ", resourceCategoryDTO=" + resourceCategoryDTO + ", resourceName=" + resourceName + ", resourceValue="
+				+ resourceValue + ", resourceDesc=" + resourceDesc + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "]";
 	}
 
 }

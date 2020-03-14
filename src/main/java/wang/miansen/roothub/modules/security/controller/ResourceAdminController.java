@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.security.controller.admin;
+package wang.miansen.roothub.modules.security.controller;
 
 import java.util.Date;
 import java.util.List;
@@ -25,8 +25,10 @@ import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.security.dto.ResourceDTO;
+import wang.miansen.roothub.modules.security.dto.ResourceTypeDTO;
 import wang.miansen.roothub.modules.security.model.Resource;
 import wang.miansen.roothub.modules.security.service.ResourceService;
+import wang.miansen.roothub.modules.security.service.ResourceTypeService;
 import wang.miansen.roothub.modules.security.vo.ResourceVO;
 
 /**
@@ -42,13 +44,20 @@ public class ResourceAdminController extends AbstractBaseController<Resource, Re
 	@Autowired
 	private ResourceService resourceService;
 	
+	@Autowired
+	private ResourceTypeService resourceTypeService;
+	
 	/**
 	 * 返回资源添加页面
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	@Override
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
-		return super.add(request, response);
+		List<ResourceTypeDTO> resourceTypeDTOList = resourceTypeService.list();
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(getJspPrefix() + "/add");
+		mv.addObject("resourceTypeDTOList", resourceTypeDTOList);
+		return mv;
 	}
 	
 	/**
@@ -86,6 +95,29 @@ public class ResourceAdminController extends AbstractBaseController<Resource, Re
 	}
 
 	/**
+	 * 删除资源类别接口
+	 */
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	@Override
+	public ModelAndView remove(@RequestParam(value = "id", required = true) String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		resourceService.removeById(id);
+		mv.setViewName(redirect(request, "/admin/security/resource/list"));
+		return mv;
+	}
+
+	/**
+	 * 返回编辑页面
+	 */
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	@Override
+	public ModelAndView edit(@RequestParam(value = "id", required = true) String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		return super.edit(id, request, response);
+	}
+
+	/**
 	 * 返回资源列表页面
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -93,7 +125,7 @@ public class ResourceAdminController extends AbstractBaseController<Resource, Re
 	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber, HttpServletRequest request, HttpServletResponse response) {
 		String resourceName = request.getParameter("resourceName");
 		String resourceCategoryName = request.getParameter("resourceCategoryName");
-		Page<ResourceDTO> dtoPage = resourceService.pageByNameOrCategoryName(pageNumber, resourceName, resourceCategoryName);
+		Page<ResourceDTO> dtoPage = resourceService.pageByNameAndCategoryName(pageNumber, resourceName, resourceCategoryName);
 		List<ResourceVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO()).collect(Collectors.toList());
 		Page<ResourceVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(), dtoPage.getTotalRow());
 		ModelAndView mv = new ModelAndView();

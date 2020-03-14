@@ -7,8 +7,6 @@ import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.post.service.PostService;
-import wang.miansen.roothub.modules.security.model.AdminUser;
-import wang.miansen.roothub.modules.security.service.AdminUserService;
 import wang.miansen.roothub.modules.user.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -31,8 +29,8 @@ import com.sun.management.OperatingSystemMXBean;
 @RequestMapping("/admin")
 public class IndexAdminController {
 
-	@Autowired
-	private AdminUserService adminUserService;
+	//@Autowired
+	//private AdminUserService adminUserService;
 	@Autowired
 	private PostService topicService;
 	@Autowired
@@ -153,10 +151,10 @@ public class IndexAdminController {
 	 * 获取后台登录用户的信息
 	 * @return
 	 */
-	@RequestMapping(value = "/user/info",method = RequestMethod.GET)
+	/*@RequestMapping(value = "/user/info",method = RequestMethod.GET)
 	@ResponseBody
 	public Result<AdminUser> getAdminUser(){
 		AdminUser user = (AdminUser)SecurityUtils.getSubject().getPrincipal();
 		return new Result<AdminUser>(true, user);
-	}
+	}*/
 }

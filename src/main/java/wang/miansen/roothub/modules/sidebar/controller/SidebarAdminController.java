@@ -19,32 +19,43 @@ import org.springframework.web.servlet.ModelAndView;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
+import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.DateUtils;
+import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
-import wang.miansen.roothub.modules.permission.model.Permission;
-import wang.miansen.roothub.modules.permission.vo.PermissionVO;
 import wang.miansen.roothub.modules.sidebar.dto.SidebarDTO;
 import wang.miansen.roothub.modules.sidebar.model.Sidebar;
 import wang.miansen.roothub.modules.sidebar.service.SidebarService;
 import wang.miansen.roothub.modules.sidebar.vo.SidebarVO;
 
 /**
+ * 侧边栏 Admin Controller
+ * 
  * @author miansen.wang
  * @date 2020-03-06
  */
 @Controller
 @RequestMapping(value = "/admin/sidebar")
 public class SidebarAdminController extends AbstractBaseController<Sidebar, SidebarDTO, SidebarVO> {
-	
 
+	@Autowired
+	private SidebarService sidebarService;
+
+	/**
+	 * 返回添加侧边栏页面
+	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	@Override
 	public ModelAndView add(HttpServletRequest request, HttpServletResponse response) {
 		return super.add(request, response);
 	}
-	
+
+	/**
+	 * 添加侧边栏接口
+	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Override
 	public ModelAndView save(SidebarVO sidebarVO, HttpServletRequest request, HttpServletResponse response) {
@@ -55,15 +66,97 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 			mv.addObject("error", "侧边栏的名字不能为空");
 			return mv;
 		}
+		sidebarVO.setPrimaryKey(IDGenerator.generateID());
+		sidebarVO.setUserId(getUser().getUserId());
+		sidebarVO.setUserName(getUser().getUserName());
 		sidebarVO.setCreateDate(DateUtils.formatDateTime(new Date()));
-		mv = super.save(sidebarVO, request, response);
+		sidebarService.save(getVO2DTO().apply(sidebarVO));
 		mv.setViewName(redirect(request, "/admin/sidebar/list"));
 		return mv;
 	}
 
-	@RequestMapping(value = "/list/parent", method = RequestMethod.GET)
+	/**
+	 * 删除侧边栏接口
+	 */
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	@Override
+	public ModelAndView remove(@RequestParam(value = "id", required = true) String id, HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		sidebarService.removeById(id);
+		mv.setViewName(redirect(request, "/admin/sidebar/list"));
+		return mv;
+	}
+	
+	/**
+	 * 返回编辑侧边栏页面
+	 */
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	@Override
+	public ModelAndView edit(String id, HttpServletRequest request, HttpServletResponse response) {
+		return super.edit(id, request, response);
+	}
+	
+	/**
+	 * 更新侧边栏接口
+	 */
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	@Override
+	public ModelAndView update(SidebarVO sidebarVO, HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mv = new ModelAndView();
+		String sidebarId = sidebarVO.getSidebarId();
+		String sidebarName = sidebarVO.getSidebarName();
+		if (StringUtils.isEmpty(sidebarId)) {
+			mv.setViewName(getJspPrefix() + "/edit");
+			mv.addObject("error", "侧边栏的ID不能为空");
+			return mv;
+		}
+		if (StringUtils.isEmpty(sidebarName)) {
+			mv.setViewName(getJspPrefix() + "/edit");
+			mv.addObject("error", "侧边栏的名称不能为空");
+			return mv;
+		}
+		SidebarDTO sidebarDTO = sidebarService.getById(sidebarId);
+		if (sidebarDTO == null) {
+			throw new BaseException(BaseErrorCodeEnum.INTERNAL_ERROR);
+		}
+		sidebarVO.setUpdateDate(DateUtils.formatDateTime(new Date()));
+		sidebarService.updateById(getVO2DTO().apply(sidebarVO));
+		mv.setViewName(redirect(request, "/admin/sidebar/list"));
+		return mv;
+	}
+
+	/**
+	 * 侧边栏列表
+	 */
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
-							 @RequestParam(value = "sidebarName", defaultValue = "") String sidebarName, HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		String sidebarName = request.getParameter("sidebarName");
+		QueryWrapper<Sidebar> queryWrapper = new QueryWrapper<>();
+		queryWrapper.orderByAsc("parent_sidebar_id", "sidebar_sort");
+		queryWrapper.orderByDesc("create_date");
+		if (StringUtils.notEmpty(sidebarName)) {
+			queryWrapper.like("sidebar_name", sidebarName);
+		}
+		Page<SidebarDTO> dtoPage = sidebarService.page(pageNumber, 25, queryWrapper);
+		List<? extends SidebarVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
+				.collect(Collectors.toList());
+		Page<? extends SidebarVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
+				dtoPage.getTotalRow());
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName(this.getJspPrefix() + "/list");
+		mv.addObject("page", voPage);
+		mv.addObject("pageNumber", pageNumber);
+		mv.addObject("sidebarName", sidebarName);
+		return mv;
+	}
+
+	@RequestMapping(value = "/list/parent", method = RequestMethod.GET)
+	public ModelAndView listParent(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
+			@RequestParam(value = "sidebarName", defaultValue = "") String sidebarName, HttpServletRequest request,
+			HttpServletResponse response) {
 		QueryWrapper<Sidebar> queryWrapper = new QueryWrapper<>();
 		if (StringUtils.notEmpty(sidebarName)) {
 			queryWrapper.like("sidebar_name", sidebarName);
@@ -82,9 +175,6 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 		return mv;
 	}
 
-	@Autowired
-	private SidebarService sidebarService;
-	
 	@Override
 	protected Function<? super SidebarDTO, ? extends SidebarVO> getDTO2VO() {
 		return sidebarDTO -> (SidebarVO) BeanUtils.DTO2VO(sidebarDTO, SidebarVO.class);
@@ -104,7 +194,7 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 	protected String getModuleName() {
 		return "sidebar";
 	}
-	
+
 	@Override
 	protected String getJspPrefix() {
 		return "/admin/" + getModuleName();

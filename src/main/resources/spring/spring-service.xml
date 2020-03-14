@@ -31,24 +31,7 @@
 	<context:component-scan base-package="wang.miansen.roothub.third.**" />
 
 	<!-- 业务模块，扫描 service.impl 包下所有使用注解的类型 -->
-	<context:component-scan base-package="wang.miansen.roothub.modules.collect.service.impl,
-										  wang.miansen.roothub.modules.follow.service.impl,
-										  wang.miansen.roothub.modules.integral.service.impl,
-										  wang.miansen.roothub.modules.node.service.impl,
-										  wang.miansen.roothub.modules.notice.service.impl,
-										  wang.miansen.roothub.modules.comment.service.impl,
-										  wang.miansen.roothub.modules.security.service.impl,
-										  wang.miansen.roothub.modules.sys.service.impl.**,
-										  wang.miansen.roothub.modules.tab.service.impl,
-										  wang.miansen.roothub.modules.tag.service.impl,
-										  wang.miansen.roothub.modules.post.service.impl,
-										  wang.miansen.roothub.modules.user.service.impl,
-										  wang.miansen.roothub.modules.visit.service.impl,
-										  wang.miansen.roothub.modules.vote.service.impl,
-										  wang.miansen.roothub.modules.role.service.impl,
-										  wang.miansen.roothub.modules.permission.service.impl,
-										  wang.miansen.roothub.modules.sidebar.service.impl,
-										  wang.miansen.roothub.modules.app.service.impl" />
+	<context:component-scan base-package="wang.miansen.roothub.modules.*.service.impl" />
 										  
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"

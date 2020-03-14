@@ -5,11 +5,6 @@ import java.util.List;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
-import wang.miansen.roothub.modules.security.model.AdminUser;
-import wang.miansen.roothub.modules.security.model.Permission;
-import wang.miansen.roothub.modules.security.model.Role;
-import wang.miansen.roothub.modules.security.service.AdminUserService;
-import wang.miansen.roothub.modules.security.service.RoleService;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.enums.UserErrorCodeEnum;
 import wang.miansen.roothub.modules.user.exception.UserException;
@@ -31,7 +26,6 @@ import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import wang.miansen.roothub.modules.security.service.PermissionService;
 
 /**
  * <p></p>
@@ -41,15 +35,6 @@ import wang.miansen.roothub.modules.security.service.PermissionService;
 public class AccountRealm extends AuthorizingRealm {
 
 	private static final Logger logger = LoggerFactory.getLogger(AuthorizingRealm.class);
-	
-	@Autowired
-	private AdminUserService adminUserService;
-	
-	@Autowired
-	private RoleService roleService;
-	
-	@Autowired
-	private PermissionService permissionService;
 	
 	@Autowired
 	private UserService userService;

@@ -78,10 +78,21 @@ public class TableFieldInfo implements StringPool {
 	}
 
 	/**
-	 * 获取更新的表达式
-	 * @return column = #{别名.property}
+	 * 获取更新的表达式（排除 null 字段），例如：
+	 * <code>
+	 * 	<pre>
+	 * 		<if test="entity.name != null">
+	 * 			name = #{entity.name},
+	 * 		<if>
+	 * 		<if test="entity.age != null">
+	 * 			age = #{entity.age},
+	 * 		</if>
+	 * 		...
+	 * 	</pre>
+	 * <code>
 	 */
 	public String getSetSegment() {
-		return column + EQUALS + SqlScriptUtils.safeParam(ENTITY_DOT + property);
+		return SqlScriptUtils.convertIf(ENTITY_DOT + property + " != null",
+				column + EQUALS + SqlScriptUtils.safeParam(ENTITY_DOT + property) + COMMA);
 	}
 }

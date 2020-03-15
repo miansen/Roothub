@@ -153,7 +153,7 @@ public class TableInfo implements StringPool {
      */
     public String getSetSegments() {
         String allSetSegment = tableFieldInfoList.stream().filter(Objects::nonNull)
-                .map(TableFieldInfo::getSetSegment).collect(Collectors.joining(COMMA));
+                .map(TableFieldInfo::getSetSegment).collect(Collectors.joining(NEWLINE));
         return SqlScriptUtils.convertSet(allSetSegment);
     }
 }

@@ -79,7 +79,7 @@ public class SidebarVO implements BaseVO {
 	/**
 	 * 更新时间
 	 */
-	@VO2DTO(targets = {"createDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
+	@VO2DTO(targets = {"updateDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String updateDate;
 
 	

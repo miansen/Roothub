@@ -37,12 +37,11 @@ public class SidebarListTag extends AbstractListTag {
 				sb.append("\t\n");
 				sb.append(HtmlElementUtils.convertScript("function selectSidebar(){parent.$('#parentSidebarId').val(id);parent.$('#parentSidebarName').val(name);parent.bootbox.hideAll();}"));
 			} else {
-				String href = contextPath + "/admin/sidebar/remove?id= "+ sidebarVO.getSidebarId();
-				sb.append("<a href=\"" + contextPath + "/admin/sidebar/edit?id=" + sidebarVO.getSidebarId() + "\" class=\"btn btn-xs btn-warning\">编辑</a>");
+				String editPath = contextPath + "/admin/sidebar/edit?id=" + sidebarVO.getSidebarId();
+				String removePath = contextPath + "/admin/sidebar/remove?id="+ sidebarVO.getSidebarId();
+				sb.append("<a href=\"javascript:void(0);\" onclick=\"dialog.href('"+ editPath +"', 'roothub-iframe')\" class=\"btn btn-xs btn-warning\">编辑</a>");
 				sb.append("\t\n");
-				sb.append("<a href=\"javascript:void(0);\" onclick=\"deleteSidebar('"+ href +"')\" class=\"btn btn-xs btn-danger\">删除</a>");
-				sb.append("\t\n");
-				sb.append(HtmlElementUtils.convertScript("function deleteSidebar(href){new dialog().deleteConfirm(href)}"));
+				sb.append("<a href=\"javascript:void(0);\" onclick=\"dialog.deleteConfirm('"+ removePath +"')\" class=\"btn btn-xs btn-danger\">删除</a>");
 			}
 			return sb.toString();
 		};

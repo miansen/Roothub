@@ -63,6 +63,7 @@
   	    	bootbox.alert("侧边栏的名称不能为空");
   	        return false;
   	      }
+  	      dialog.loading();
   	    });
   		$("button[type='button']").click(function() {
   			bootbox.dialog({

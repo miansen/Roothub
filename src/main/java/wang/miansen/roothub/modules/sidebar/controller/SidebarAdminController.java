@@ -61,10 +61,14 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 	public ModelAndView save(SidebarVO sidebarVO, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
 		String sidebarName = sidebarVO.getSidebarName();
+		SidebarVO parentSidebarVO = sidebarVO.getParentSidebarVO();
 		if (StringUtils.isEmpty(sidebarName)) {
 			mv.setViewName(this.getJspPrefix() + "/add");
 			mv.addObject("error", "侧边栏的名字不能为空");
 			return mv;
+		}
+		if (StringUtils.isEmpty(parentSidebarVO.getSidebarId())) {
+			parentSidebarVO.setSidebarId(null);
 		}
 		sidebarVO.setPrimaryKey(IDGenerator.generateID());
 		sidebarVO.setUserId(getUser().getUserId());
@@ -106,6 +110,7 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 		ModelAndView mv = new ModelAndView();
 		String sidebarId = sidebarVO.getSidebarId();
 		String sidebarName = sidebarVO.getSidebarName();
+		SidebarVO parentSidebarVO = sidebarVO.getParentSidebarVO();
 		if (StringUtils.isEmpty(sidebarId)) {
 			mv.setViewName(getJspPrefix() + "/edit");
 			mv.addObject("error", "侧边栏的ID不能为空");
@@ -115,6 +120,9 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 			mv.setViewName(getJspPrefix() + "/edit");
 			mv.addObject("error", "侧边栏的名称不能为空");
 			return mv;
+		}
+		if (StringUtils.isEmpty(parentSidebarVO.getSidebarId())) {
+			parentSidebarVO.setSidebarId(null);
 		}
 		SidebarDTO sidebarDTO = sidebarService.getById(sidebarId);
 		if (sidebarDTO == null) {
@@ -140,7 +148,7 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 		if (StringUtils.notEmpty(sidebarName)) {
 			queryWrapper.like("sidebar_name", sidebarName);
 		}
-		Page<SidebarDTO> dtoPage = sidebarService.page(pageNumber, 25, queryWrapper);
+		Page<SidebarDTO> dtoPage = sidebarService.page(pageNumber, 10, queryWrapper);
 		List<? extends SidebarVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
 				.collect(Collectors.toList());
 		Page<? extends SidebarVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),

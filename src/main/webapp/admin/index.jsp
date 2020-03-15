@@ -6,19 +6,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="./common/contextPath.jsp" %>
 
-<%-- <common:adminIndex>
-	<common:sidebar />
-</common:adminIndex> --%>
-
 <common:layout>
 	<common:header />
 	<common:sidebar />
 	<common:content>
-		<iframe name="roothub-iframe" id="roothub-iframe" src="${contextPath}/admin/console" onload="iframeLoad()" width="100%" height="100%" frameborder="no" border="0" ></iframe>
+		<iframe name="roothub-iframe" id="roothub-iframe" src="${contextPath}/admin/console" style="overflow:visible;" scrolling="auto" onload="iframeLoad()" width="100%" height="100%" frameborder="no" border="0" ></iframe>
 		<script type="text/javascript">
 			function iframeLoad() {
-		   	 	document.getElementById("roothub-iframe").height=0;
-		    	document.getElementById("roothub-iframe").height=document.getElementById("roothub-iframe").contentWindow.document.body.scrollHeight;
+				$("#roothub-iframe").height(window.innerHeight);
 		    }
 		</script>
 	</common:content>

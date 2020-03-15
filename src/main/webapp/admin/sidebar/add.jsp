@@ -63,9 +63,11 @@
   	    	bootbox.alert("侧边栏的名字不能为空");
   	        return false;
   	      }
+  	      dialog.loading();
   	    });
   		$("button[type='button']").click(function() {
   			bootbox.dialog({
+  			   size: 'xl',
   	  		   message: "<iframe src='${contextPath}/admin/sidebar/list?dialog=true' width='100%' height='100%' frameborder='no' border='0'></iframe>",
   	  		   closeButton: true
   	  		});

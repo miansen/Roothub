@@ -22,9 +22,9 @@
     </bean> -->
 
     <!-- security="none"：对指定的 URL 放行，不拦截。如一些静态文件。另外放行登录 URL 避免拦截，造成无法登录 -->
-    <security:http security="none" pattern="/admin/login" />
+    <!-- <security:http security="none" pattern="/admin/login" /> -->
 
-    <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="">
+    <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="" entry-point-ref="myLoginUrlAuthenticationEntryPoint">
         <!--
             login-page：表示自定义登录页面
             login-processing-url：表示登录时提交的地址
@@ -50,8 +50,10 @@
          -->
         <security:form-login login-page="/admin/login"
                             login-processing-url="/admin/login"
-                            username-parameter="userName"
-                            password-parameter="password" />
+                            username-parameter="username"
+                            password-parameter="password" 
+                            authentication-failure-url="/admin/login"
+                            authentication-failure-handler-ref="simpleUrlAuthenticationFailureHandler" />
 
         <security:logout logout-success-url="/admin/login"
                         logout-url="/logout" 
@@ -59,7 +61,7 @@
                         delete-cookies="JSESSIONID" />
 		
 		 <!-- 放行登录 URL 避免拦截，造成无法登录 -->
-		<!-- <security:intercept-url pattern="/admin/login" access="hasRole('ROLE_ANONYMOUS')" /> -->
+		<security:intercept-url pattern="/admin/login" access="isAnonymous()" />
         <!-- 设置访问所有的 URL 都必须登录 -->
         <security:intercept-url pattern="/**" access="isAuthenticated()" />
 
@@ -109,5 +111,16 @@
     </bean> -->
 
     <!-- <bean id="userDetailsServiceImpl" class="diary.security.UserDetailsServiceImpl"></bean> -->
+    <!-- 被认证请求向登录界面跳转采用forward方式 -->
+    <bean id="myLoginUrlAuthenticationEntryPoint" 
+    	class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    	<constructor-arg name="loginFormUrl" value="/admin/login"></constructor-arg>
+    	<property name="useForward" value="true"/>
+    </bean>
+    
+    <bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+    	<constructor-arg name="defaultFailureUrl" value="/admin/login"></constructor-arg>
+    	<property name="useForward" value="true" />
+	</bean>
 
 </beans>

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
@@ -43,12 +44,17 @@ public class RoothubUserDetailsServiceImpl implements RoothubUserDetailsService 
 		}
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		List<RoleDTO> roles = userDTO.getRoleDTOs();
-		roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName())));
-		roles.forEach(role -> {
-			List<PermissionDTO> permissions = role.getPermissionDTOs();
-			permissions
-					.forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission.getPermissionName())));
-		});
+		if (CollectionUtils.isNotEmpty(roles)) {
+			roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName())));
+			roles.forEach(role -> {
+				List<PermissionDTO> permissions = role.getPermissionDTOs();
+				if (CollectionUtils.isNotEmpty(permissions)) {
+					permissions.forEach(
+							permission -> authorities.add(new SimpleGrantedAuthority(permission.getPermissionName())));
+				}
+
+			});
+		}
 		return new org.springframework.security.core.userdetails.User(username, userDTO.getPassword(), true, true, true,
 				true, authorities);
 	}

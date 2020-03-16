@@ -115,10 +115,10 @@ public class IndexAdminController {
 	// 后台登录页面
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login() {
-		Subject subject = SecurityUtils.getSubject();
+		/*Subject subject = SecurityUtils.getSubject();
 		if(subject.isAuthenticated()) {
 			return "redirect:/admin/index";
-		}
+		}*/
 		return "/admin/login";
 	}
 	

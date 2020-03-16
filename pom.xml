@@ -14,7 +14,7 @@
 		<java.version>1.8</java.version>
 		<web.xml.version>3.1</web.xml.version>
 		<springframework.version>4.1.7.RELEASE</springframework.version>
-		<springsecurity.version>4.2.14.RELEASE</springsecurity.version>
+		<springsecurity.version>4.0.4.RELEASE</springsecurity.version>
 		<spring-boot-starter.version>1.2.0.RELEASE</spring-boot-starter.version>
 		<mybatis.version>3.3.0</mybatis.version>
 		<mybatis-spring.version>1.2.3</mybatis-spring.version>
@@ -150,7 +150,7 @@
 		</dependency>
 		
 		<!-- Spring Security -->
-		<!-- <dependency> 
+		<dependency> 
 			<groupId>org.springframework.security</groupId> 
 			<artifactId>spring-security-web</artifactId> 
 			<version>${springsecurity.version}</version> 
@@ -159,7 +159,7 @@
 			<groupId>org.springframework.security</groupId> 
 			<artifactId>spring-security-config</artifactId> 
 			<version>${springsecurity.version}</version > 
-		</dependency>  -->
+		</dependency>
 		
 		<!-- 权限管理 Shiro -->
 		<dependency>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+    <!-- 注意要在 web.xml 中扫描此配置文件 -->
+
+    <!-- 读取错误提示属性文件，实现自定义提示。原文件位置 spring-security-core-4.2.3.RELEASE.jar 包中 org/springframework/security/messages_zh_CN.properties 
+         可以将其内容拷贝到自定义的属性文件中，修改相关的提示信息，将 basenames 属性值指向自定义属性文件
+    -->
+    <!-- <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="classpath:org/springframework/security/messages_zh_CN"></property>
+    </bean> -->
+
+    <!-- security="none"：对指定的 URL 放行，不拦截。如一些静态文件。另外放行登录 URL 避免拦截，造成无法登录 -->
+    <security:http security="none" pattern="/admin/login" />
+
+    <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="">
+        <!--
+            login-page：表示自定义登录页面
+            login-processing-url：表示登录时提交的地址
+            username-parameter：表示登录时用户名使用的是哪个参数
+            password-parameter：表示登录时密码使用的是哪个参数
+            default-target-url：
+                默认情况下，在登录成功后会返回到原本受限制的页面
+                如果用户是直接请求登录页面，登录成功后默认情况下会跳转到当前应用的根路径，即欢迎页面
+                default-target-url 属性可以指定，用户直接访问登录页面并登陆成功后跳转的页面
+                如果想让用户不管是直接请求登录页面，还是通过 Spring Security 引导过来的，登录之后都跳转到指定的页面，可以使用 always-use-default-target 属性为 true 来达到这一效果
+            authentication-success-handler-ref：
+                对应一个 AuthencticationSuccessHandler 实现类的引用
+                登录认证成功后会调用指定 AuthenticationSuccessHandler 的 onAuthenticationSuccess 方法，在此方法中进行登陆成功后的处理
+                此时 default-target-url 失效
+            authentication-failure-url：
+                指定登录认证失败后跳转的页面
+                默认情况下登录失败后会返回登录页面
+                登录失败后跳转的页面，也需放行，否则又会被重定向到登录页面。
+            authentication-failure-handler-ref：
+                对应一个用于处理认证失败的 AuthenticationFailureHandler 实现类。
+                指定了该属性，Spring Security 在认证失败后会调用指定 AuthenticationFailureHandler 的 onAuthenticationFailure 方法对认证失败进行处理
+                此时 authentication-failure-url 属性将不再发生作用。
+         -->
+        <security:form-login login-page="/admin/login"
+                            login-processing-url="/admin/login"
+                            username-parameter="userName"
+                            password-parameter="password" />
+
+        <security:logout logout-success-url="/admin/login"
+                        logout-url="/logout" 
+                        invalidate-session="true" 
+                        delete-cookies="JSESSIONID" />
+		
+		 <!-- 放行登录 URL 避免拦截，造成无法登录 -->
+		<!-- <security:intercept-url pattern="/admin/login" access="hasRole('ROLE_ANONYMOUS')" /> -->
+        <!-- 设置访问所有的 URL 都必须登录 -->
+        <security:intercept-url pattern="/**" access="isAuthenticated()" />
+
+        <!-- 
+            access="hasRole('ROLE_ADMIN')"：表示拥有 ADMIN 角色的用户可以访问，否则 403。
+                hasRole('ROLE_ADMIN') 为 SpEL 表达式，必须以 ROLE_ 开头
+         -->
+        <!-- <security:intercept-url pattern="/user/**" access="hasRole('ROLE_0')"/> -->
+
+        <!-- 指定登陆认证成功后，用户访问未授权的 URL 将跳转的 URL -->
+        <security:access-denied-handler error-page="/error"/>
+
+        <security:session-management session-fixation-protection="none">
+            <!-- 
+                max-sessions="1"：同一用户只能在一个浏览器登录，当尝试在其他浏览器登陆时将被拒绝
+                error-if-maximum-exceeded="true"：当设置了此属性，尝试在其他浏览器登录时，则原会话将被终止，将在新窗口建立新会话
+            -->
+            <security:concurrency-control max-sessions="1"/>
+        </security:session-management>
+
+        <security:csrf disabled="true" />
+    </security:http>
+
+    <!-- 认证成功后的处理类 -->
+    <!-- <bean id="authenticationSuccessHandlerImpl" class="diary.security.AuthenticationSuccessHandlerImpl"/> -->
+    <!-- 认证失败后的处理类 -->
+    <!-- <bean id="authenticationFailureHandlerImpl" class="diary.security.AuthenticationFailureHandlerImpl"/> -->
+
+    <!-- 登录认证 -->
+    <security:authentication-manager>
+        <!-- 直接将用户名密码卸载配置文件中
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="user" authorities="ROLE_USER" />
+                <security:user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
+            </security:user-service> 
+        </security:authentication-provider>
+        -->
+        <!-- 使用自定义的类对用户提交的密码进行加密操作，实现 AuthenticationSuccessHandler 接口 -->
+        <security:authentication-provider user-service-ref="roothubUserDetailsServiceImpl">
+            <security:password-encoder ref="roothubMd5PasswordEncoderImpl"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <!-- <bean id="myMessageDigestPasswordEncoder" class="diary.security.MyMessageDigestPasswordEncoder">
+        <constructor-arg name="algorithm" value="md5"/> 
+    </bean> -->
+
+    <!-- <bean id="userDetailsServiceImpl" class="diary.security.UserDetailsServiceImpl"></bean> -->
+
+</beans>

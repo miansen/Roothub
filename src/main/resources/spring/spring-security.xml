@@ -24,35 +24,31 @@
     <!-- security="none"：对指定的 URL 放行，不拦截。如一些静态文件。另外放行登录 URL 避免拦截，造成无法登录 -->
     <!-- <security:http security="none" pattern="/admin/login" /> -->
 
+	<!-- 1.auto-config：是否自动配置过滤器，默认是 false -->
     <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="" entry-point-ref="myLoginUrlAuthenticationEntryPoint">
         <!--
-            login-page：表示自定义登录页面
-            login-processing-url：表示登录时提交的地址
-            username-parameter：表示登录时用户名使用的是哪个参数
-            password-parameter：表示登录时密码使用的是哪个参数
-            default-target-url：
-                默认情况下，在登录成功后会返回到原本受限制的页面
-                如果用户是直接请求登录页面，登录成功后默认情况下会跳转到当前应用的根路径，即欢迎页面
-                default-target-url 属性可以指定，用户直接访问登录页面并登陆成功后跳转的页面
-                如果想让用户不管是直接请求登录页面，还是通过 Spring Security 引导过来的，登录之后都跳转到指定的页面，可以使用 always-use-default-target 属性为 true 来达到这一效果
-            authentication-success-handler-ref：
-                对应一个 AuthencticationSuccessHandler 实现类的引用
-                登录认证成功后会调用指定 AuthenticationSuccessHandler 的 onAuthenticationSuccess 方法，在此方法中进行登陆成功后的处理
-                此时 default-target-url 失效
-            authentication-failure-url：
-                指定登录认证失败后跳转的页面
-                默认情况下登录失败后会返回登录页面
-                登录失败后跳转的页面，也需放行，否则又会被重定向到登录页面。
-            authentication-failure-handler-ref：
-                对应一个用于处理认证失败的 AuthenticationFailureHandler 实现类。
-                指定了该属性，Spring Security 在认证失败后会调用指定 AuthenticationFailureHandler 的 onAuthenticationFailure 方法对认证失败进行处理
-                此时 authentication-failure-url 属性将不再发生作用。
+            1.login-page：表示自定义登录页面
+            2.login-processing-url：表示登录时提交的地址
+            3.username-parameter：表示登录时用户名使用的是哪个参数
+            4.password-parameter：表示登录时密码使用的是哪个参数
+            5.default-target-url：默认情况下，在登录成功后会返回到原本受限制的页面，
+            					如果用户是直接请求登录页面，登录成功后默认情况下会跳转到当前应用的根路径，即欢迎页面。
+            					default-target-url 属性可以指定，用户直接访问登录页面并登陆成功后跳转的页面。
+            					如果想让用户不管是直接请求登录页面，还是通过 Spring Security 引导过来的，登录之后都跳转到指定的页面，
+            					可以使用 always-use-default-target 属性为 true 来达到这一效果。
+            6.authentication-success-handler-ref：对应一个 AuthencticationSuccessHandler 实现类的引用。
+            					登录认证成功后会调用指定 AuthenticationSuccessHandler 的 onAuthenticationSuccess 方法，
+            					在此方法中进行登陆成功后的处理，此时 default-target-url 属性失效。
+            7.authentication-failure-url：指定登录认证失败后跳转的页面，默认情况下登录失败后会以重定向的方式返回登录页面。
+            					请注意登录失败后跳转的页面，也需放行，否则又会被重定向到登录页面。
+            8.authentication-failure-handler-ref：对应一个用于处理认证失败的 AuthenticationFailureHandler 实现类。
+                				指定了该属性，Spring Security 在认证失败后会调用指定 AuthenticationFailureHandler 的 
+                				onAuthenticationFailure 方法对认证失败进行处理。此时 authentication-failure-url 属性将不再发生作用。
          -->
         <security:form-login login-page="/admin/login"
                             login-processing-url="/admin/login"
                             username-parameter="username"
                             password-parameter="password" 
-                            authentication-failure-url="/admin/login"
                             authentication-failure-handler-ref="simpleUrlAuthenticationFailureHandler" />
 
         <security:logout logout-success-url="/admin/login"
@@ -61,7 +57,7 @@
                         delete-cookies="JSESSIONID" />
 		
 		 <!-- 放行登录 URL 避免拦截，造成无法登录 -->
-		<security:intercept-url pattern="/admin/login" access="isAnonymous()" />
+		<security:intercept-url pattern="/admin/login.jsp" access="permitAll" />
         <!-- 设置访问所有的 URL 都必须登录 -->
         <security:intercept-url pattern="/**" access="isAuthenticated()" />
 
@@ -119,7 +115,7 @@
     </bean>
     
     <bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-    	<constructor-arg name="defaultFailureUrl" value="/admin/login"></constructor-arg>
+    	<constructor-arg name="defaultFailureUrl" value="/admin/login.jsp"></constructor-arg>
     	<property name="useForward" value="true" />
 	</bean>
 

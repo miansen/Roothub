@@ -1,3 +1,6 @@
+/**
+ * 此文件封装了一个全局的 dialog 对象，可以使用此对象来操作一些跟弹窗有关的方法。
+ */
 $(function() {
 	function dialog() {
 		

@@ -64,6 +64,8 @@ public class LayoutTag extends AbstractBaseTag {
 		sb.append("\t\n");
 		sb.append("<script src=\"" + getContextPath() + "/resources/js/dialog.js\"></script>");
 		sb.append("\t\n");
+		sb.append("<script src=\"" + getContextPath() + "/resources/js/list.js\"></script>");
+		sb.append("\t\n");
 		sb.append("<script src=\"" + getContextPath() + "/resources/js/avatar.js\"></script>");
 		sb.append("\t\n");
 		sb.append("</head>");

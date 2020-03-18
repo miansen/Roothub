@@ -10,11 +10,11 @@
 <common:layout>
 	<div class="content-wrapper" style="margin: 0px;">
 		<section class="content-header">
-			<h1>侧边栏 <small>列表</small></h1>
+			<h1>菜单<small>列表</small></h1>
 			<ol class="breadcrumb">
 				<li>首页</li>
-				<li>侧边栏管理</li>
-				<li class="active">侧边栏列表</li>
+				<li>菜单管理</li>
+				<li class="active">菜单列表</li>
 			</ol>
 		</section>
 		<section class="content">
@@ -22,7 +22,7 @@
 				<div class="box-header with-border">
 					<form action="${contextPath}/admin/sidebar/list?dialog=${param.dialog}" method="get" class="form-inline">
 	                    <div class="form-group" style="margin-bottom: 10px;">
-	                        <input type="text" name="sidebarName" value="${sidebarName}" class="form-control" placeholder="侧边栏名称">
+	                        <input type="text" name="sidebarName" value="${sidebarName}" class="form-control" placeholder="菜单名称">
 	                        <button type="submit" class="btn btn-primary">搜索</button>
 	                    </div>
                 	</form>
@@ -31,8 +31,8 @@
                 	<c:choose>
                     	<c:when test="${page != null && fn:length(page.list) > 0}">
                     		<sidebar:list page="${page}" class="table table-bordered table-hover" 
-                    		th="侧边栏ID;侧边栏名称;侧边栏URL;父级侧边栏;创建人;创建时间" 
-                    		td="sidebarId;sidebarName;sidebarUrl;parentSidebarVO.sidebarName;userName;createDate" />
+                    		th="菜单ID;菜单名称;菜单URL;父级菜单;创建人;创建时间" 
+                    		td="sidebarId;sidebarName;sidebarUrl;parentSidebarVO.sidebarName;userName;createDate" checkbox="true"/>
 							<common:paginate page="${page}" url="${contextPath}/admin/sidebar/list?dialog=${param.dialog}&" />
                 	 	</c:when>
                      	<c:otherwise>

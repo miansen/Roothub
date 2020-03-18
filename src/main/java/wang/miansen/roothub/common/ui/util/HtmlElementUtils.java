@@ -1,7 +1,6 @@
 package wang.miansen.roothub.common.ui.util;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +66,7 @@ public abstract class HtmlElementUtils {
 		String[] ths = StringUtils.notEmpty(vars.get("th")) ? vars.get("th").split(";") : null;
 		String[] tds = StringUtils.notEmpty(vars.get("td")) ? vars.get("td").split(";") : null;
 		String row = vars.get("row");
+		String checkbox = vars.get("checkbox");
 		List<?> list = page.getList();
 		StringBuilder sb = new StringBuilder();
 		sb.append("<table");
@@ -95,6 +95,10 @@ public abstract class HtmlElementUtils {
 		sb.append("\t\n");
 		sb.append("<tr>");
 		sb.append("\t\n");
+		if (StringUtils.notEmpty(checkbox) && Objects.equals(checkbox, "true")) {
+			sb.append("<th><div style=\"text-align: center;\"><input type=\"checkbox\" name=\"checkedAll\"></div></th>");
+			sb.append("\t\n");
+		}
 		if (StringUtils.notEmpty(row) && Objects.equals(row, "true")) {
 			sb.append("<th>#</th>");
 			sb.append("\t\n");
@@ -126,6 +130,10 @@ public abstract class HtmlElementUtils {
 		for (int j = 0; j < list.size(); j++) {
 			sb.append("<tr>");
 			sb.append("\t\n");
+			if (StringUtils.notEmpty(checkbox) && Objects.equals(checkbox, "true")) {
+				sb.append("<td><div style=\"text-align: center;\"><input type=\"checkbox\" name=\"checked\"></div></td>");
+				sb.append("\t\n");
+			}
 			if (StringUtils.notEmpty(row) && Objects.equals(row, "true")) {
 				int rowNum = j + 1;
 				sb.append("<td>" + rowNum + "</td>");

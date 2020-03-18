@@ -1,7 +1,5 @@
 package wang.miansen.roothub.common.ui;
 
-import javax.servlet.jsp.JspException;
-
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.ui.exception.BaseTagException;
 import wang.miansen.roothub.common.ui.support.TableTagTdSupport;
@@ -41,6 +39,11 @@ public abstract class AbstractListTag extends AbstractBaseTag {
 	 * 是否显示行号，默认是 false。
 	 */
 	private String row;
+	
+	/**
+	 * 是否显示复选框，默认是 false。
+	 */
+	private String checkbox;
 
 	@Override
 	public void release() {
@@ -48,6 +51,7 @@ public abstract class AbstractListTag extends AbstractBaseTag {
 		th = null;
 		td = null;
 		row = null;
+		checkbox = null;
 		super.release();
 	}
 
@@ -102,10 +106,33 @@ public abstract class AbstractListTag extends AbstractBaseTag {
 		this.row = row;
 		super.vars.put("row", row);
 	}
+	
+	public String getCheckbox() {
+		if (checkbox == null) {
+			checkbox = "false";
+		}
+		return checkbox;
+	}
 
+	public void setCheckbox(String checkbox) {
+		this.checkbox = checkbox;
+		super.vars.put("checkbox", checkbox);
+	}
+
+	/**
+	 * 当默认的 list 标签无法满足业务要求时，需要额外的增加一条或者多条 th，那么子类可以
+	 * 实现该方法
+	 * 
+	 * @return TableTagThSupport
+	 */
 	protected abstract TableTagThSupport getTableTagThSupport();
 
-
+	/**
+	 * 当默认的 list 标签无法满足业务要求时，需要额外的增加一条或者多条 td，那么子类可以
+	 * 实现该方法
+	 * 
+	 * @return TableTagTdSupport
+	 */
 	protected abstract TableTagTdSupport getTableTagTdSupport();
 
 

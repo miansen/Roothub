@@ -16,17 +16,20 @@ import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
-import wang.miansen.roothub.modules.security.service.RoothubUserDetailsService;
+import wang.miansen.roothub.modules.security.model.AuthenticationUser;
+import wang.miansen.roothub.modules.security.service.AuthenticationUserDetailsService;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 
 /**
+ * 认证 Service Impl
+ * 
  * @author miansen.wang
  * @date 2020-03-16
  */
 @Service
-public class RoothubUserDetailsServiceImpl implements RoothubUserDetailsService {
+public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserDetailsService {
 
 	@Autowired
 	private UserService userService;
@@ -55,8 +58,7 @@ public class RoothubUserDetailsServiceImpl implements RoothubUserDetailsService 
 
 			});
 		}
-		return new org.springframework.security.core.userdetails.User(username, userDTO.getPassword(), true, true, true,
-				true, authorities);
+		return new AuthenticationUser(userDTO, authorities);
 	}
 
 }

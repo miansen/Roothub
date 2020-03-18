@@ -72,7 +72,7 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 		}
 		sidebarVO.setPrimaryKey(IDGenerator.generateID());
 		sidebarVO.setUserId(getUser().getUserId());
-		sidebarVO.setUserName(getUser().getUserName());
+		sidebarVO.setUserName(getUser().getUsername());
 		sidebarVO.setCreateDate(DateUtils.formatDateTime(new Date()));
 		sidebarService.save(getVO2DTO().apply(sidebarVO));
 		mv.setViewName(redirect(request, "/admin/sidebar/list"));

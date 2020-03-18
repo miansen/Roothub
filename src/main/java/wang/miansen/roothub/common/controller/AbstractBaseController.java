@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import wang.miansen.roothub.common.beans.Page;
@@ -23,7 +23,7 @@ import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.common.vo.BaseVO;
 import wang.miansen.roothub.config.ApplicationConfig;
-import wang.miansen.roothub.modules.user.dto.UserDTO;
+import wang.miansen.roothub.modules.security.model.AuthenticationUser;
 
 /**
  * 该类是 Controller 层的基础父类，实现了常用的业务增删改查方法，建议大部分的 Controller 层继承。
@@ -142,8 +142,8 @@ public abstract class AbstractBaseController<DO extends BaseDO, DTO extends Base
 	 * @param request
 	 * @return
 	 */
-	public UserDTO getUser() {
-		return (UserDTO) SecurityUtils.getSubject().getPrincipal();
+	public AuthenticationUser getUser() {
+		return (AuthenticationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	}
 
 	/**

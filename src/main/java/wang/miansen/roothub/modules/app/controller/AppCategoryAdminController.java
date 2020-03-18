@@ -81,7 +81,7 @@ public class AppCategoryAdminController extends AbstractBaseController<AppCatego
 		}
 		appCategoryVO.setAppCategoryId(IDGenerator.generateID());
 		appCategoryVO.setUserId(getUser().getUserId());
-		appCategoryVO.setUserName(getUser().getUserName());
+		appCategoryVO.setUserName(getUser().getUsername());
 		appCategoryVO.setCreateDate(DateUtils.formatDateTime(new Date()));
 		appCategoryService.save(getVO2DTO().apply(appCategoryVO));
 		mv.setViewName(redirect(request, "/admin/app/category/list"));

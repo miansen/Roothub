@@ -1,11 +1,13 @@
 package wang.miansen.roothub.modules.security.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import wang.miansen.roothub.common.annotation.DTO2DO;
 import wang.miansen.roothub.common.annotation.DTO2VO;
 import wang.miansen.roothub.common.dto.BaseDTO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
+import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 
 /**
@@ -64,6 +66,11 @@ public class ResourceDTO implements BaseDTO {
 	 * 资源描述
 	 */
 	private String resourceDesc;
+	
+	/**
+	 * 资源所属的权限
+	 */
+	private List<PermissionDTO> permissionDTOList;
 
 	/**
 	 * 创建时间
@@ -133,6 +140,14 @@ public class ResourceDTO implements BaseDTO {
 		this.resourceDesc = resourceDesc;
 	}
 
+	public List<PermissionDTO> getPermissionDTOList() {
+		return permissionDTOList;
+	}
+
+	public void setPermissionDTOList(List<PermissionDTO> permissionDTOList) {
+		this.permissionDTOList = permissionDTOList;
+	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -151,10 +166,11 @@ public class ResourceDTO implements BaseDTO {
 
 	@Override
 	public String toString() {
-		return "ResourceDTO [resourceId=" + resourceId + ", resourceTypeDTO=" + resourceTypeDTO
-				+ ", resourceCategoryDTO=" + resourceCategoryDTO + ", resourceName=" + resourceName + ", resourceValue="
-				+ resourceValue + ", resourceDesc=" + resourceDesc + ", createDate=" + createDate + ", updateDate="
-				+ updateDate + "]";
+		return "ResourceDTO {resourceId=" + resourceId + ", resourceTypeDTO=" + resourceTypeDTO
+				+ ", resourceCategoryDTO=" + resourceCategoryDTO + ", userDTO=" + userDTO + ", resourceName="
+				+ resourceName + ", resourceValue=" + resourceValue + ", resourceDesc=" + resourceDesc
+				+ ", permissionDTOList=" + permissionDTOList + ", createDate=" + createDate + ", updateDate="
+				+ updateDate + "}";
 	}
 
 }

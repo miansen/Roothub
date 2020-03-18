@@ -76,7 +76,7 @@ public class ResourceCategoryAdminController
 		}
 		resourceCategoryVO.setResourceCategoryId(IDGenerator.generateID());
 		resourceCategoryVO.setUserId(getUser().getUserId());
-		resourceCategoryVO.setUserName(getUser().getUserName());
+		resourceCategoryVO.setUserName(getUser().getUsername());
 		resourceCategoryVO.setCreateDate(DateUtils.formatDateTime(new Date()));
 		resourceCategoryService.save(getVO2DTO().apply(resourceCategoryVO));
 		mv.setViewName(redirect(request, "/admin/security/resource/category/list"));

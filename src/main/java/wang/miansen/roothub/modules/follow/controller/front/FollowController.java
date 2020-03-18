@@ -63,7 +63,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	@RequestMapping(value = "/follow/isFollow", method = RequestMethod.GET)
 	@ResponseBody
 	private Result<Integer> isFollow(String fid, HttpServletRequest request) {
-		UserDTO user = getUser();
+		UserDTO user = null;
 		if (user == null) return new Result<>(201, false, "未关注");
 		if (user.getUserId() == fid) {
 			return new Result<>(201, false, "同一用户");
@@ -147,7 +147,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	 */
 	@RequestMapping(value = "/follow/topics", method = RequestMethod.GET)
 	private String followTopics(HttpServletRequest request, @RequestParam(value = "p", defaultValue = "1") Integer p) {
-		UserDTO user = getUser();
+		UserDTO user = null;
 		if (user == null) return "error-page/404.jsp";
 		int countCollect = collectDaoService.count(user.getUserId());// 用户收藏话题的数量
 		int countTopicByUserName = rootTopicService.countByUserName(user.getUserName());// 用户发布的主题的数量

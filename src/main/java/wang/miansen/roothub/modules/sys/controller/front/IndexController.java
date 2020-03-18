@@ -164,10 +164,10 @@ public class IndexController extends SessionController {
 	/**
 	 * 登录页面
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/login", method = RequestMethod.GET)
 	private String login(HttpServletRequest request) {
 		return "/default/front/login";
-	}
+	}*/
 
 	/**
 	 * 登录接口
@@ -178,7 +178,7 @@ public class IndexController extends SessionController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	private Result<User> login(@RequestParam("username") String username, @RequestParam("password") String password,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -186,9 +186,9 @@ public class IndexController extends SessionController {
 		ApiAssert.notNull(user, "用户不存在");
 		// ApiAssert.isTrue(new BCryptPasswordEncoder().matches(password, user.getPassword()), "密码不正确");
 		// 设置cookie
-		/*CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(),
+		CookieAndSessionUtil.setCookie(siteConfig.getCookieConfig().getName(),
 				Base64Util.encode(user.getThirdAccessToken()), siteConfig.getCookieConfig().getMaxAge(),
-				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);*/
+				siteConfig.getCookieConfig().getPath(), siteConfig.getCookieConfig().isHttpOnly(), response);
 		// 设置session
 		CookieAndSessionUtil.setSession(request, "user", user);
 		Subject subject = SecurityUtils.getSubject();
@@ -198,7 +198,7 @@ public class IndexController extends SessionController {
 			subject.login(token);
 		}
 		return new Result<User>(true, user);
-	}
+	}*/
 
 	/**
 	 * 退出

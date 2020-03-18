@@ -4,7 +4,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 /**
- * 处理认证失败的 Service
+ * 处理认证失败的接口
  * 
  * @author miansen.wang
  * @date 2020-03-16

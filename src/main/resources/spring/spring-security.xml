@@ -24,8 +24,9 @@
     <!-- security="none"：对指定的 URL 放行，不拦截。如一些静态文件。另外放行登录 URL 避免拦截，造成无法登录 -->
     <!-- <security:http security="none" pattern="/admin/login" /> -->
 
-	<!-- 1.auto-config：是否自动配置过滤器，默认是 false -->
-    <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="" entry-point-ref="myLoginUrlAuthenticationEntryPoint">
+	<!-- 1.auto-config：是否自动配置过滤器，默认是 false
+		 2.entry-point-ref：自定义认证切入点 -->
+    <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="">
         <!--
             1.login-page：表示自定义登录页面
             2.login-processing-url：表示登录时提交的地址
@@ -45,19 +46,19 @@
                 				指定了该属性，Spring Security 在认证失败后会调用指定 AuthenticationFailureHandler 的 
                 				onAuthenticationFailure 方法对认证失败进行处理。此时 authentication-failure-url 属性将不再发生作用。
          -->
-        <security:form-login login-page="/admin/login"
-                            login-processing-url="/admin/login"
+        <security:form-login login-page="/login.jsp"
+                            login-processing-url="/login"
                             username-parameter="username"
                             password-parameter="password" 
-                            authentication-failure-handler-ref="simpleUrlAuthenticationFailureHandler" />
+                            authentication-failure-handler-ref="authenticationFailureServiceImpl" />
 
-        <security:logout logout-success-url="/admin/login"
+        <security:logout logout-success-url="/login.jsp"
                         logout-url="/logout" 
                         invalidate-session="true" 
                         delete-cookies="JSESSIONID" />
 		
-		 <!-- 放行登录 URL 避免拦截，造成无法登录 -->
-		<security:intercept-url pattern="/admin/login.jsp" access="permitAll" />
+		<!-- 放行登录 URL 避免拦截，造成无法登录 -->
+		<security:intercept-url pattern="/login.jsp" access="permitAll()" />
         <!-- 设置访问所有的 URL 都必须登录 -->
         <security:intercept-url pattern="/**" access="isAuthenticated()" />
 
@@ -79,6 +80,13 @@
         </security:session-management>
 
         <security:csrf disabled="true" />
+        
+        <security:headers>
+        	<!-- 允许同源域名嵌套 ifname 页面 -->
+        	<security:frame-options policy="SAMEORIGIN"/>
+        	<!-- 允许所有域名嵌套 ifname 页面 -->
+        	<!-- <security:frame-options disabled="true"/> -->
+    	</security:headers>
     </security:http>
 
     <!-- 认证成功后的处理类 -->
@@ -86,37 +94,31 @@
     <!-- 认证失败后的处理类 -->
     <!-- <bean id="authenticationFailureHandlerImpl" class="diary.security.AuthenticationFailureHandlerImpl"/> -->
 
-    <!-- 登录认证 -->
+    <!-- 配置认证管理器，当 UsernamePasswordAuthenticationFilter 拦截器拦截到用户的认证请求后，
+   		  会调用认证管理器进行认证 -->
     <security:authentication-manager>
-        <!-- 直接将用户名密码卸载配置文件中
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="user" password="user" authorities="ROLE_USER" />
-                <security:user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
-            </security:user-service> 
-        </security:authentication-provider>
-        -->
-        <!-- 使用自定义的类对用户提交的密码进行加密操作，实现 AuthenticationSuccessHandler 接口 -->
-        <security:authentication-provider user-service-ref="roothubUserDetailsServiceImpl">
-            <security:password-encoder ref="roothubMd5PasswordEncoderImpl"/>
+        <!-- 认证管理器会委托给认证提供者进行认证，所以还需要配置认证提供者，其中要指定用户服务接口 -->
+        <security:authentication-provider user-service-ref="authenticationUserDetailsServiceImpl">
+        	<!-- 使用自定义的对象对用户提交的密码进行加密操作 -->
+            <security:password-encoder ref="authenticationMd5PasswordEncoderServiceImpl"/>
         </security:authentication-provider>
     </security:authentication-manager>
 
-    <!-- <bean id="myMessageDigestPasswordEncoder" class="diary.security.MyMessageDigestPasswordEncoder">
-        <constructor-arg name="algorithm" value="md5"/> 
-    </bean> -->
-
     <!-- <bean id="userDetailsServiceImpl" class="diary.security.UserDetailsServiceImpl"></bean> -->
-    <!-- 被认证请求向登录界面跳转采用forward方式 -->
-    <bean id="myLoginUrlAuthenticationEntryPoint" 
-    	class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
-    	<constructor-arg name="loginFormUrl" value="/admin/login"></constructor-arg>
-    	<property name="useForward" value="true"/>
-    </bean>
     
-    <bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+    <!-- 自定义被认证请求向登录界面跳转采用forward方式 -->
+   <!--  <bean id="myLoginUrlAuthenticationEntryPoint" 
+    	class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+    	登录页的地址，注意放行登录页，否则会造成无限循环
+    	<constructor-arg name="loginFormUrl" value="/admin/login"></constructor-arg>
+    	采用forward方式跳转，默认是重定向
+    	<property name="useForward" value="true"/>
+    </bean> -->
+    
+    <!-- 自定义认证失败的处理类 -->
+    <!-- <bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
     	<constructor-arg name="defaultFailureUrl" value="/admin/login.jsp"></constructor-arg>
     	<property name="useForward" value="true" />
-	</bean>
+	</bean> -->
 
 </beans>

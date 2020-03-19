@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.sidebar.ui;
+package wang.miansen.roothub.modules.menu.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.ui.AbstractBaseTag;
 import wang.miansen.roothub.common.util.ApplicationContextUtils;
 import wang.miansen.roothub.common.util.CollectionUtils;
-import wang.miansen.roothub.modules.sidebar.dto.SidebarDTO;
-import wang.miansen.roothub.modules.sidebar.model.Sidebar;
-import wang.miansen.roothub.modules.sidebar.service.SidebarService;
+import wang.miansen.roothub.modules.menu.dto.MenuDTO;
+import wang.miansen.roothub.modules.menu.model.Menu;
+import wang.miansen.roothub.modules.menu.service.MenuService;
 
 /**
  * 左侧边栏标签
@@ -24,7 +24,7 @@ public class MainSidebarTag extends AbstractBaseTag {
 	@Override
 	protected String getBodyContentString(String bodyContent) {
 		StringBuilder sb = new StringBuilder();
-		List<SidebarDTO> sidebarTree = buildSidebarTree(getAllSidebars(), null);
+		List<MenuDTO> sidebarTree = buildMenuTree(getAllMenuList(), null);
 		sb.append("<aside class=\"main-sidebar\">");
 		sb.append("\t\n");
 		sb.append("<section class=\"sidebar\">");
@@ -68,13 +68,13 @@ public class MainSidebarTag extends AbstractBaseTag {
 		sb.append("</form>");
 		// 搜索框结束
 		
-		// 侧边栏开始
+		// 菜单开始
 		sb.append("<ul class=\"sidebar-menu\" data-widget=\"tree\">");
 		sb.append("\t\n");
-		sb.append(buildSidebartreeView(sidebarTree));
+		sb.append(buildMenutreeView(sidebarTree));
 		sb.append("\t\n");
 		sb.append("</ul>");
-		// 侧边栏结束
+		// 菜单结束
 		
 		sb.append("\t\n");
 		sb.append("</section>");
@@ -84,29 +84,29 @@ public class MainSidebarTag extends AbstractBaseTag {
 	}
 
 	/**
-	 * 递归调用，构建侧边栏树视图
+	 * 递归调用，构建菜单树视图
 	 * 
-	 * @param sidebarTree 侧边栏树
+	 * @param menuTree 菜单树
 	 * @return
 	 */
-	private String buildSidebartreeView(List<SidebarDTO> sidebarTree) {
+	private String buildMenutreeView(List<MenuDTO> menuTree) {
 		StringBuilder sb = new StringBuilder();
-		// 第一次获得的是一级侧边栏集合，后面传入的是下一级侧边栏的集合
-		List<SidebarDTO> nextSidebars = sidebarTree;
-		for (SidebarDTO sidebarDTO : nextSidebars) {
-			if (CollectionUtils.isNotEmpty(sidebarDTO.getChildrenList())) {
-				sb.append("<li id=\"" + sidebarDTO.getSidebarId() + "\" class=\"treeview\">");
+		// 第一次获得的是一级菜单集合，后面传入的是下一级菜单集合
+		List<MenuDTO> nextMenuList = menuTree;
+		for (MenuDTO menuDTO : nextMenuList) {
+			if (CollectionUtils.isNotEmpty(menuDTO.getChildrenMenuDTOList())) {
+				sb.append("<li id=\"" + menuDTO.getMenuId() + "\" class=\"treeview\">");
 			} else {
-				sb.append("<li id=\"" + sidebarDTO.getSidebarId() + "\">");
+				sb.append("<li id=\"" + menuDTO.getMenuId() + "\">");
 			}
 			sb.append("\t\n");
-			sb.append("<a href=\"" + getContextPath() + sidebarDTO.getSidebarUrl() + "\" target=\"roothub-iframe\">");
+			sb.append("<a href=\"" + getContextPath() + menuDTO.getMenuUrl() + "\" target=\"roothub-iframe\">");
 			sb.append("\t\n");
-			sb.append("<i class=\"" + sidebarDTO.getSidebarIcon() + "\"></i>");
+			sb.append("<i class=\"" + menuDTO.getMenuIcon() + "\"></i>");
 			sb.append("\t\n");
-			sb.append("<span>" + sidebarDTO.getSidebarName() + "</span>");
+			sb.append("<span>" + menuDTO.getMenuName() + "</span>");
 			sb.append("\t\n");
-			if (CollectionUtils.isNotEmpty(sidebarDTO.getChildrenList())) {
+			if (CollectionUtils.isNotEmpty(menuDTO.getChildrenMenuDTOList())) {
 				sb.append("<span class=\"pull-right-container\">");
 				sb.append("\t\n");
 				sb.append("<i class=\"fa fa-angle-left pull-right\"></i>");
@@ -116,10 +116,10 @@ public class MainSidebarTag extends AbstractBaseTag {
 			}
 			sb.append("</a>");
 			sb.append("\t\n");
-			if (CollectionUtils.isNotEmpty(sidebarDTO.getChildrenList())) {
+			if (CollectionUtils.isNotEmpty(menuDTO.getChildrenMenuDTOList())) {
 				sb.append("<ul class=\"treeview-menu\">");
 				sb.append("\t\n");
-				sb.append(buildSidebartreeView(sidebarDTO.getChildrenList()));
+				sb.append(buildMenutreeView(menuDTO.getChildrenMenuDTOList()));
 				sb.append("\t\n");
 				sb.append("</ul>");
 			}
@@ -130,49 +130,49 @@ public class MainSidebarTag extends AbstractBaseTag {
 	}
 
 	/**
-	 * 获取所有的侧边栏集合
+	 * 获取所有的菜单
 	 * 
 	 * @return
 	 */
-	private List<SidebarDTO> getAllSidebars() {
-		SidebarService sidebarService = ApplicationContextUtils.getBean(SidebarService.class);
-		QueryWrapper<Sidebar> queryWrapper = new QueryWrapper<>();
-		queryWrapper.orderByAsc("sidebar_sort");
-		return sidebarService.list(queryWrapper);
+	private List<MenuDTO> getAllMenuList() {
+		MenuService menuService = ApplicationContextUtils.getBean(MenuService.class);
+		QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+		queryWrapper.orderByAsc("menu_sort");
+		return menuService.list(queryWrapper);
 	}
 
 	/**
-	 * 递归调用，构建侧边栏树
+	 * 递归调用，构建菜单树
 	 * 
-	 * @param list 所有的侧边栏集合
-	 * @param parent 父级侧边栏
+	 * @param list 所有的菜单集合
+	 * @param parent 父级菜单
 	 * @return
 	 */
-	private List<SidebarDTO> buildSidebarTree(List<SidebarDTO> list, SidebarDTO parent) {
-		List<SidebarDTO> result = new ArrayList<>();
-		for (SidebarDTO sidebarDTO : list) {
-			if (compareSidebar(sidebarDTO.getParentSidebarDTO(), parent)) {
-				// 递归查找下一级侧边栏
-				sidebarDTO.setChildrenList(buildSidebarTree(list, sidebarDTO));
-				result.add(sidebarDTO);
+	private List<MenuDTO> buildMenuTree(List<MenuDTO> list, MenuDTO parent) {
+		List<MenuDTO> result = new ArrayList<>();
+		for (MenuDTO menuDTO : list) {
+			if (compareMenu(menuDTO.getParentMenuDTO(), parent)) {
+				// 递归查找下一级菜单
+				menuDTO.setChildrenMenuDTOList(buildMenuTree(list, menuDTO));
+				result.add(menuDTO);
 			}
 		}
 		return result;
 	}
 
 	/**
-	 * 比较两个 SidebarDTO 对象是否相等
+	 * 比较两个菜单对象是否相等
 	 * 
 	 * @param a
 	 * @param b
 	 * @return
 	 */
-	private boolean compareSidebar(SidebarDTO a, SidebarDTO b) {
+	private boolean compareMenu(MenuDTO a, MenuDTO b) {
 		if (a == b) {
 			return true;
 		}
 		if (a != null && b != null) {
-			return Objects.equals(a.getSidebarId(), b.getSidebarId());
+			return Objects.equals(a.getMenuId(), b.getMenuId());
 		}
 		return false;
 	}

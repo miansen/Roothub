@@ -1,34 +1,36 @@
-package wang.miansen.roothub.modules.sidebar.vo;
+package wang.miansen.roothub.modules.menu.vo;
 
 import wang.miansen.roothub.common.annotation.VO2DTO;
 import wang.miansen.roothub.common.enums.ConverPolicy;
 import wang.miansen.roothub.common.vo.BaseVO;
 
 /**
+ * 菜单 VO
+ * 
  * @author miansen.wang
  * @date 2020-03-06
  */
-public class SidebarVO implements BaseVO {
-	
+public class MenuVO implements BaseVO {
+
 	private static final long serialVersionUID = 5736009149025063660L;
 
 	/**
-	 * 侧边栏ID
+	 * 菜单ID
 	 */
-	private String sidebarId;
-	
+	private String menuId;
+
 	/**
-	 * 父级侧边栏
+	 * 父级菜单
 	 */
-	@VO2DTO(targets = {"parentSidebarDTO"}, policy = ConverPolicy.VO_CONVER_DTO)
-	private SidebarVO parentSidebarVO;
-	
+	@VO2DTO(targets = {"parentMenuDTO"}, policy = ConverPolicy.VO_CONVER_DTO)
+	private MenuVO parentMenuVO;
+
 	/**
 	 * 权限ID
 	 */
 	@VO2DTO(targets = {"permissionDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "permissionServiceImpl")
 	private String permissionId;
-	
+
 	/**
 	 * 权限名
 	 */
@@ -38,74 +40,64 @@ public class SidebarVO implements BaseVO {
 	 * 权限值
 	 */
 	private String permissionValue;
-	
+
 	/**
 	 * 创建人ID
 	 */
 	@VO2DTO(targets = {"userDTO"}, policy = ConverPolicy.ID_CONVER_DTO, service = "userServiceImpl")
 	private String userId;
-	
+
 	/**
 	 * 创建人名称
 	 */
 	private String userName;
-	
+
 	/**
-	 * 侧边栏的名字
+	 * 菜单的名称
 	 */
-	private String sidebarName;
-	
+	private String menuName;
+
 	/**
-	 * 点击侧边栏时发送的请求URL
+	 * 点击菜单时发送的请求URL
 	 */
-	private String sidebarUrl;
-	
+	private String menuUrl;
+
 	/**
-	 * 侧边栏的图标
+	 * 菜单的图标
 	 */
-	private String sidebarIcon;
-	
+	private String menuIcon;
+
 	/**
 	 * 排序
 	 */
-	private Integer sidebarSort;
-	
+	private Integer menuSort;
+
 	/**
 	 * 创建时间
 	 */
 	@VO2DTO(targets = {"createDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String createDate;
-	
+
 	/**
 	 * 更新时间
 	 */
 	@VO2DTO(targets = {"updateDate"}, policy = ConverPolicy.STRING_CONVER_DATE)
 	private String updateDate;
 
-	
-	@Override
-	public String getPrimaryKey() {
-		return sidebarId;
+	public String getMenuId() {
+		return menuId;
 	}
 
-	public void setPrimaryKey(String primaryKey) {
-		this.sidebarId = primaryKey;
+	public void setMenuId(String menuId) {
+		this.menuId = menuId;
 	}
 
-	public String getSidebarId() {
-		return sidebarId;
+	public MenuVO getParentMenuVO() {
+		return parentMenuVO;
 	}
 
-	public void setSidebarId(String sidebarId) {
-		this.sidebarId = sidebarId;
-	}
-
-	public SidebarVO getParentSidebarVO() {
-		return parentSidebarVO;
-	}
-
-	public void setParentSidebarVO(SidebarVO parentSidebarVO) {
-		this.parentSidebarVO = parentSidebarVO;
+	public void setParentMenuVO(MenuVO parentMenuVO) {
+		this.parentMenuVO = parentMenuVO;
 	}
 
 	public String getPermissionId() {
@@ -148,36 +140,36 @@ public class SidebarVO implements BaseVO {
 		this.userName = userName;
 	}
 
-	public String getSidebarName() {
-		return sidebarName;
+	public String getMenuName() {
+		return menuName;
 	}
 
-	public void setSidebarName(String sidebarName) {
-		this.sidebarName = sidebarName;
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
 
-	public String getSidebarUrl() {
-		return sidebarUrl;
+	public String getMenuUrl() {
+		return menuUrl;
 	}
 
-	public void setSidebarUrl(String sidebarUrl) {
-		this.sidebarUrl = sidebarUrl;
-	}
-	
-	public String getSidebarIcon() {
-		return sidebarIcon;
+	public void setMenuUrl(String menuUrl) {
+		this.menuUrl = menuUrl;
 	}
 
-	public void setSidebarIcon(String sidebarIcon) {
-		this.sidebarIcon = sidebarIcon;
+	public String getMenuIcon() {
+		return menuIcon;
 	}
 
-	public Integer getSidebarSort() {
-		return sidebarSort;
+	public void setMenuIcon(String menuIcon) {
+		this.menuIcon = menuIcon;
 	}
 
-	public void setSidebarSort(Integer sidebarSort) {
-		this.sidebarSort = sidebarSort;
+	public Integer getMenuSort() {
+		return menuSort;
+	}
+
+	public void setMenuSort(Integer menuSort) {
+		this.menuSort = menuSort;
 	}
 
 	public String getCreateDate() {
@@ -197,12 +189,22 @@ public class SidebarVO implements BaseVO {
 	}
 
 	@Override
+	public String getPrimaryKey() {
+		return menuId;
+	}
+
+	@Override
+	public void setPrimaryKey(String primaryKey) {
+		this.menuId = primaryKey;
+	}
+
+	@Override
 	public String toString() {
-		return "SidebarVO [sidebarId=" + sidebarId + ", parentSidebarVO=" + parentSidebarVO + ", permissionId="
-				+ permissionId + ", permissionName=" + permissionName + ", permissionValue=" + permissionValue
-				+ ", userId=" + userId + ", userName=" + userName + ", sidebarName=" + sidebarName + ", sidebarUrl="
-				+ sidebarUrl + ", sidebarIcon=" + sidebarIcon + ", sidebarSort=" + sidebarSort + ", createDate="
-				+ createDate + ", updateDate=" + updateDate + "]";
+		return "MenuVO {menuId=" + menuId + ", parentMenuVO=" + parentMenuVO + ", permissionId=" + permissionId
+				+ ", permissionName=" + permissionName + ", permissionValue=" + permissionValue + ", userId=" + userId
+				+ ", userName=" + userName + ", menuName=" + menuName + ", menuUrl=" + menuUrl + ", menuIcon="
+				+ menuIcon + ", menuSort=" + menuSort + ", createDate=" + createDate + ", updateDate=" + updateDate
+				+ "}";
 	}
 
 }

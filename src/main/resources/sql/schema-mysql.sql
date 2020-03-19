@@ -1,27 +1,3 @@
-CREATE TABLE `admin_user` (
-  `admin_user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL DEFAULT '',
-  `password` varchar(255) NOT NULL DEFAULT '',
-  `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
-  `create_date` datetime NOT NULL,
-  `update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`admin_user_id`),
-  UNIQUE KEY `uk_admin_user_username` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='管理员表';
-
-CREATE TABLE `admin_user_role_rel` (
-  `admin_user_role_rel_id` int(11) NOT NULL AUTO_INCREMENT,
-  `admin_user_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`admin_user_role_rel_id`),
-  KEY `key_admin_user_role_rel_role_id` (`role_id`) USING BTREE,
-  KEY `key_admin_user_role_rel_admin_user_id` (`admin_user_id`) USING BTREE,
-  CONSTRAINT `fk_admin_user_role_rel_admin_user_id` FOREIGN KEY (`admin_user_id`) REFERENCES `admin_user` (`admin_user_id`),
-  CONSTRAINT `fk_admin_user_role_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role_bak` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色用户关系表';
-
 CREATE TABLE `collect` (
   `collect_id` varchar(36) NOT NULL COMMENT '收藏ID',
   `user_id` varchar(36) NOT NULL COMMENT '用户ID',
@@ -77,18 +53,6 @@ CREATE TABLE `node` (
   UNIQUE KEY `uk_node_name` (`node_name`),
   KEY `key_parent_node_id` (`parent_node_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='节点表';
-
-CREATE TABLE `node_tab` (
-  `node_tab_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '节点板块id',
-  `node_tab_code` varchar(45) DEFAULT NULL COMMENT '节点板块编码',
-  `node_tab_title` varchar(45) DEFAULT NULL COMMENT '节点板块名称',
-  `node_tab_desc` varchar(300) DEFAULT NULL COMMENT '板块描述',
-  `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除，0:否 1:是',
-  `node_tab_order` int(11) DEFAULT NULL COMMENT '节点板块排序',
-  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
-  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`node_tab_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='节点板块表';
 
 CREATE TABLE `notice` (
   `notice_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '消息通知标识',
@@ -199,16 +163,6 @@ CREATE TABLE `system_config` (
   `is_delete` tinyint(1) DEFAULT '0' COMMENT '是否删除 0: 否 1: 是',
   PRIMARY KEY (`system_config_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
-
-CREATE TABLE `tab` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
-  `tab_name` varchar(50) CHARACTER SET utf8 DEFAULT NULL COMMENT '名称',
-  `tab_desc` varchar(250) CHARACTER SET utf8 DEFAULT NULL COMMENT '描述',
-  `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0：否 1：是',
-  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
-  `tab_order` int(2) DEFAULT NULL COMMENT '排列顺序',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COMMENT='父板块表';
 
 CREATE TABLE `tag` (
   `tag_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '标签主键',

@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.sidebar.ui;
+package wang.miansen.roothub.modules.menu.ui;
 
 import java.util.Objects;
 
@@ -8,7 +8,7 @@ import wang.miansen.roothub.common.ui.AbstractListTag;
 import wang.miansen.roothub.common.ui.support.TableTagTdSupport;
 import wang.miansen.roothub.common.ui.support.TableTagThSupport;
 import wang.miansen.roothub.common.ui.util.HtmlElementUtils;
-import wang.miansen.roothub.modules.sidebar.vo.SidebarVO;
+import wang.miansen.roothub.modules.menu.vo.MenuVO;
 
 /**
  * 侧边栏 List 标签
@@ -31,14 +31,14 @@ public class SidebarListTag extends AbstractListTag {
 		String dialog = request.getParameter("dialog");
 		return object -> {
 			StringBuilder sb = new StringBuilder();
-			SidebarVO sidebarVO = (SidebarVO) object;
+			MenuVO menuVO = (MenuVO) object;
 			if (Objects.equals(dialog, "true")) {
-				sb.append("<a href=\"javascript:void(0);\" onclick=\"selectSidebar(\""+sidebarVO.getSidebarId()+"\",\""+sidebarVO.getSidebarName()+"\")\" class=\"btn btn-xs btn-primary\">选择</a>");
+				sb.append("<a href=\"javascript:void(0);\" onclick=\"selectSidebar(\""+menuVO.getMenuId()+"\",\""+menuVO.getMenuName()+"\")\" class=\"btn btn-xs btn-primary\">选择</a>");
 				sb.append("\t\n");
 				sb.append(HtmlElementUtils.convertScript("function selectSidebar(){parent.$('#parentSidebarId').val(id);parent.$('#parentSidebarName').val(name);parent.bootbox.hideAll();}"));
 			} else {
-				String editPath = contextPath + "/admin/sidebar/edit?id=" + sidebarVO.getSidebarId();
-				String removePath = contextPath + "/admin/sidebar/remove?id="+ sidebarVO.getSidebarId();
+				String editPath = contextPath + "/admin/sidebar/edit?id=" + menuVO.getMenuId();
+				String removePath = contextPath + "/admin/sidebar/remove?id="+ menuVO.getMenuId();
 				sb.append("<a href=\"javascript:void(0);\" onclick=\"dialog.href('"+ editPath +"', 'roothub-iframe')\" class=\"btn btn-xs btn-warning\">编辑</a>");
 				sb.append("\t\n");
 				sb.append("<a href=\"javascript:void(0);\" onclick=\"dialog.deleteConfirm('"+ removePath +"')\" class=\"btn btn-xs btn-danger\">删除</a>");

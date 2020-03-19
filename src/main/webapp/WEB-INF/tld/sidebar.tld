@@ -2,13 +2,13 @@
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
 	version="2.0">
-	<description>侧边栏标签库，一般是侧边栏模块用到的标签。</description>
+	<description>菜单标签库，一般是菜单模块用到的标签。</description>
 	<tlib-version>2.0</tlib-version>
 	<jsp-version>2.0</jsp-version>
 	<short-name>sidebar</short-name>
 	<tag>
 		<name>list</name>
-		<tag-class>wang.miansen.roothub.modules.sidebar.ui.SidebarListTag</tag-class>
+		<tag-class>wang.miansen.roothub.modules.menu.ui.SidebarListTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
 		<description>资源后台list标签</description>

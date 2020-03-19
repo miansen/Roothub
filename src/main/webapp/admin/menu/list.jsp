@@ -20,9 +20,9 @@
 		<section class="content">
 			<div class="box box-info">
 				<div class="box-header with-border">
-					<form action="${contextPath}/admin/sidebar/list?dialog=${param.dialog}" method="get" class="form-inline">
+					<form action="${contextPath}/admin/menu/list?dialog=${param.dialog}" method="get" class="form-inline">
 	                    <div class="form-group" style="margin-bottom: 10px;">
-	                        <input type="text" name="sidebarName" value="${sidebarName}" class="form-control" placeholder="菜单名称">
+	                        <input type="text" name="menuName" value="${menuName}" class="form-control" placeholder="菜单名称">
 	                        <button type="submit" class="btn btn-primary">搜索</button>
 	                    </div>
                 	</form>
@@ -32,8 +32,8 @@
                     	<c:when test="${page != null && fn:length(page.list) > 0}">
                     		<sidebar:list page="${page}" class="table table-bordered table-hover" 
                     		th="菜单ID;菜单名称;菜单URL;父级菜单;创建人;创建时间" 
-                    		td="sidebarId;sidebarName;sidebarUrl;parentSidebarVO.sidebarName;userName;createDate" checkbox="true"/>
-							<common:paginate page="${page}" url="${contextPath}/admin/sidebar/list?dialog=${param.dialog}&" />
+                    		td="menuId;menuName;menuUrl;parentMenuVO.menuName;userName;createDate" checkbox="true"/>
+							<common:paginate page="${page}" url="${contextPath}/admin/menu/list?dialog=${param.dialog}&" />
                 	 	</c:when>
                      	<c:otherwise>
                         	<div class="empty-data" style="text-align: center;">

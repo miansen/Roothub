@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.sidebar.controller;
+package wang.miansen.roothub.modules.menu.controller;
 
 import java.util.Date;
 import java.util.List;
@@ -26,26 +26,26 @@ import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
-import wang.miansen.roothub.modules.sidebar.dto.SidebarDTO;
-import wang.miansen.roothub.modules.sidebar.model.Sidebar;
-import wang.miansen.roothub.modules.sidebar.service.SidebarService;
-import wang.miansen.roothub.modules.sidebar.vo.SidebarVO;
+import wang.miansen.roothub.modules.menu.dto.MenuDTO;
+import wang.miansen.roothub.modules.menu.model.Menu;
+import wang.miansen.roothub.modules.menu.service.MenuService;
+import wang.miansen.roothub.modules.menu.vo.MenuVO;
 
 /**
- * 侧边栏 Admin Controller
+ * 菜单 Admin Controller
  * 
  * @author miansen.wang
  * @date 2020-03-06
  */
 @Controller
-@RequestMapping(value = "/admin/sidebar")
-public class SidebarAdminController extends AbstractBaseController<Sidebar, SidebarDTO, SidebarVO> {
+@RequestMapping(value = "/admin/menu")
+public class MenuAdminController extends AbstractBaseController<Menu, MenuDTO, MenuVO> {
 
 	@Autowired
-	private SidebarService sidebarService;
+	private MenuService menuService;
 
 	/**
-	 * 返回添加侧边栏页面
+	 * 添加菜单页面
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	@Override
@@ -54,46 +54,46 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 	}
 
 	/**
-	 * 添加侧边栏接口
+	 * 添加菜单接口
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@Override
-	public ModelAndView save(SidebarVO sidebarVO, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView save(MenuVO menuVO, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		String sidebarName = sidebarVO.getSidebarName();
-		SidebarVO parentSidebarVO = sidebarVO.getParentSidebarVO();
-		if (StringUtils.isEmpty(sidebarName)) {
+		String menuName = menuVO.getMenuName();
+		MenuVO parentMenuVO = menuVO.getParentMenuVO();
+		if (StringUtils.isEmpty(menuName)) {
 			mv.setViewName(this.getJspPrefix() + "/add");
-			mv.addObject("error", "侧边栏的名字不能为空");
+			mv.addObject("error", "菜单的名称不能为空");
 			return mv;
 		}
-		if (StringUtils.isEmpty(parentSidebarVO.getSidebarId())) {
-			parentSidebarVO.setSidebarId(null);
+		if (StringUtils.isEmpty(parentMenuVO.getMenuId())) {
+			parentMenuVO.setMenuId(null);
 		}
-		sidebarVO.setPrimaryKey(IDGenerator.generateID());
-		sidebarVO.setUserId(getUser().getUserId());
-		sidebarVO.setUserName(getUser().getUsername());
-		sidebarVO.setCreateDate(DateUtils.formatDateTime(new Date()));
-		sidebarService.save(getVO2DTO().apply(sidebarVO));
-		mv.setViewName(redirect(request, "/admin/sidebar/list"));
+		menuVO.setMenuId(IDGenerator.generateID());
+		menuVO.setUserId(getUser().getUserId());
+		menuVO.setUserName(getUser().getUsername());
+		menuVO.setCreateDate(DateUtils.formatDateTime(new Date()));
+		menuService.save(getVO2DTO().apply(menuVO));
+		mv.setViewName(redirect(request, "/admin/menu/list"));
 		return mv;
 	}
 
 	/**
-	 * 删除侧边栏接口
+	 * 删除菜单接口
 	 */
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
 	@Override
 	public ModelAndView remove(@RequestParam(value = "id", required = true) String id, HttpServletRequest request,
 			HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		sidebarService.removeById(id);
-		mv.setViewName(redirect(request, "/admin/sidebar/list"));
+		menuService.removeById(id);
+		mv.setViewName(redirect(request, "/admin/menu/list"));
 		return mv;
 	}
 	
 	/**
-	 * 返回编辑侧边栏页面
+	 * 编辑菜单页面
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	@Override
@@ -102,62 +102,62 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 	}
 	
 	/**
-	 * 更新侧边栏接口
+	 * 更新菜单接口
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@Override
-	public ModelAndView update(SidebarVO sidebarVO, HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView update(MenuVO menuVO, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		String sidebarId = sidebarVO.getSidebarId();
-		String sidebarName = sidebarVO.getSidebarName();
-		SidebarVO parentSidebarVO = sidebarVO.getParentSidebarVO();
-		if (StringUtils.isEmpty(sidebarId)) {
+		String menuId = menuVO.getMenuId();
+		String menuName = menuVO.getMenuName();
+		MenuVO parentMenuVO = menuVO.getParentMenuVO();
+		if (StringUtils.isEmpty(menuId)) {
 			mv.setViewName(getJspPrefix() + "/edit");
-			mv.addObject("error", "侧边栏的ID不能为空");
+			mv.addObject("error", "菜单的ID不能为空");
 			return mv;
 		}
-		if (StringUtils.isEmpty(sidebarName)) {
+		if (StringUtils.isEmpty(menuName)) {
 			mv.setViewName(getJspPrefix() + "/edit");
-			mv.addObject("error", "侧边栏的名称不能为空");
+			mv.addObject("error", "菜单的名称不能为空");
 			return mv;
 		}
-		if (StringUtils.isEmpty(parentSidebarVO.getSidebarId())) {
-			parentSidebarVO.setSidebarId(null);
+		if (StringUtils.isEmpty(parentMenuVO.getMenuId())) {
+			parentMenuVO.setMenuId(null);
 		}
-		SidebarDTO sidebarDTO = sidebarService.getById(sidebarId);
-		if (sidebarDTO == null) {
+		MenuDTO menuDTO = menuService.getById(menuId);
+		if (menuDTO == null) {
 			throw new BaseException(BaseErrorCodeEnum.INTERNAL_ERROR);
 		}
-		sidebarVO.setUpdateDate(DateUtils.formatDateTime(new Date()));
-		sidebarService.updateById(getVO2DTO().apply(sidebarVO));
-		mv.setViewName(redirect(request, "/admin/sidebar/list"));
+		menuVO.setUpdateDate(DateUtils.formatDateTime(new Date()));
+		menuService.updateById(getVO2DTO().apply(menuVO));
+		mv.setViewName(redirect(request, "/admin/menu/list"));
 		return mv;
 	}
 
 	/**
-	 * 侧边栏列表
+	 * 菜单列表
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
 			HttpServletRequest request,
 			HttpServletResponse response) {
-		String sidebarName = request.getParameter("sidebarName");
-		QueryWrapper<Sidebar> queryWrapper = new QueryWrapper<>();
-		queryWrapper.orderByAsc("parent_sidebar_id", "sidebar_sort");
+		String menuName = request.getParameter("menuName");
+		QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+		queryWrapper.orderByAsc("parent_menu_id", "menu_sort");
 		queryWrapper.orderByDesc("create_date");
-		if (StringUtils.notEmpty(sidebarName)) {
-			queryWrapper.like("sidebar_name", sidebarName);
+		if (StringUtils.notEmpty(menuName)) {
+			queryWrapper.like("menu_name", menuName);
 		}
-		Page<SidebarDTO> dtoPage = sidebarService.page(pageNumber, 10, queryWrapper);
-		List<? extends SidebarVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
+		Page<MenuDTO> dtoPage = menuService.page(pageNumber, 10, queryWrapper);
+		List<? extends MenuVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
 				.collect(Collectors.toList());
-		Page<? extends SidebarVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
+		Page<? extends MenuVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
 				dtoPage.getTotalRow());
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(this.getJspPrefix() + "/list");
 		mv.addObject("page", voPage);
 		mv.addObject("pageNumber", pageNumber);
-		mv.addObject("sidebarName", sidebarName);
+		mv.addObject("menuName", menuName);
 		return mv;
 	}
 
@@ -165,15 +165,15 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 	public ModelAndView listParent(@RequestParam(value = "pageNumber", defaultValue = "1") Integer pageNumber,
 			@RequestParam(value = "sidebarName", defaultValue = "") String sidebarName, HttpServletRequest request,
 			HttpServletResponse response) {
-		QueryWrapper<Sidebar> queryWrapper = new QueryWrapper<>();
+		QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
 		if (StringUtils.notEmpty(sidebarName)) {
 			queryWrapper.like("sidebar_name", sidebarName);
 		}
 		queryWrapper.orderByDesc("create_date");
-		Page<SidebarDTO> dtoPage = sidebarService.page(pageNumber, 25, queryWrapper);
-		List<? extends SidebarVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
+		Page<MenuDTO> dtoPage = menuService.page(pageNumber, 25, queryWrapper);
+		List<? extends MenuVO> voList = dtoPage.getList().stream().filter(Objects::nonNull).map(getDTO2VO())
 				.collect(Collectors.toList());
-		Page<? extends SidebarVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
+		Page<? extends MenuVO> voPage = new Page<>(voList, dtoPage.getPageNumber(), dtoPage.getPageSize(),
 				dtoPage.getTotalRow());
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName(this.getJspPrefix() + "/list_parent");
@@ -184,23 +184,23 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 	}
 
 	@Override
-	protected Function<? super SidebarDTO, ? extends SidebarVO> getDTO2VO() {
-		return sidebarDTO -> (SidebarVO) BeanUtils.DTO2VO(sidebarDTO, SidebarVO.class);
+	protected Function<? super MenuDTO, ? extends MenuVO> getDTO2VO() {
+		return sidebarDTO -> (MenuVO) BeanUtils.DTO2VO(sidebarDTO, MenuVO.class);
 	}
 
 	@Override
-	protected Function<? super SidebarVO, ? extends SidebarDTO> getVO2DTO() {
-		return sidebarVO -> (SidebarDTO) BeanUtils.VO2DTO(sidebarVO, SidebarDTO.class);
+	protected Function<? super MenuVO, ? extends MenuDTO> getVO2DTO() {
+		return sidebarVO -> (MenuDTO) BeanUtils.VO2DTO(sidebarVO, MenuDTO.class);
 	}
 
 	@Override
-	protected BaseService<Sidebar, SidebarDTO> getService() {
-		return sidebarService;
+	protected BaseService<Menu, MenuDTO> getService() {
+		return menuService;
 	}
 
 	@Override
 	protected String getModuleName() {
-		return "sidebar";
+		return "menu";
 	}
 
 	@Override
@@ -209,8 +209,8 @@ public class SidebarAdminController extends AbstractBaseController<Sidebar, Side
 	}
 
 	@Override
-	protected QueryWrapper<Sidebar> getQueryWrapper() {
-		QueryWrapper<Sidebar> queryWrapper = new QueryWrapper<>();
+	protected QueryWrapper<Menu> getQueryWrapper() {
+		QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
 		queryWrapper.orderByDesc("create_date");
 		return queryWrapper;
 	}

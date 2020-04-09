@@ -106,6 +106,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		request.setAttribute("tabList", tabList);
 		request.setAttribute("nodeList", nodeList);
 		request.setAttribute("node", n);
+		request.setAttribute("statusCd", request.getParameter("statusCd"));
+		request.setAttribute("statusName", request.getParameter("statusName"));
 		return "topic/create";
 	}
 	
@@ -120,7 +122,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	 */
 	@RequestMapping(value = "/topic/save", method = RequestMethod.POST)
 	@ResponseBody
-	private Result<TopicExecution> save(String title, String content, /*String tab,*/ /*String nodeCode,*/String nodeTitle, String tag, HttpServletRequest request){
+	private Result<TopicExecution> save(String title, String content, String statusCd, /*String nodeCode,*/String nodeTitle, String tag, HttpServletRequest request){
 		User user = getUser(request);
 		ApiAssert.notNull(user, "请先登录");
 		ApiAssert.notNull(title, "标题不能为空");
@@ -129,7 +131,7 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		// ApiAssert.notNull(tag, "标签不能为空");
 		//TopicExecution saveTopic = rootTopicService.saveTopic(topic);
 		if(StringUtils.isEmpty(tag)) tag = null;
-		TopicExecution saveTopic = rootTopicService.createTopic(title, content, null, null, nodeTitle, tag ,user);
+		TopicExecution saveTopic = rootTopicService.createTopic(title, content, statusCd, null, nodeTitle, tag ,user);
 		//logger.debug(saveTopic.toString());
 		return new Result<TopicExecution>(true, saveTopic);
 	}

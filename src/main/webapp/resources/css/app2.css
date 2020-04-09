@@ -1,0 +1,7 @@
+.wrapper{
+overflow-y: hidden;
+height: auto;
+}
+.layui-laypage {
+    margin: 0 0;
+}

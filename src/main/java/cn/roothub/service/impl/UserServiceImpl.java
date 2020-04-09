@@ -207,7 +207,7 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
-	public UserExecution createUser(String username,String password,String email) {
+	public UserExecution createUser(String username,String password,String email, String userType) {
 		User user = new User();
 		user.setUserName(username);
 		// 密码加密处理
@@ -225,6 +225,7 @@ public class UserServiceImpl implements UserService{
 		user.setUserType("2");
 		user.setAvatar("/resources/images/default-avatar.jpg");
 		user.setSignature("这家伙很懒，什么都没留下");
+		user.setUserType(userType);
 		return save(user);
 	}
 	/**

@@ -78,6 +78,10 @@ public class CookieAndSessionUtil {
 		request.getSession().setAttribute(sessionName, user);
 	}
 	
+	public static void setSession (HttpServletRequest request,String sessionName,Object object) {
+		request.getSession().setAttribute(sessionName, object);
+	}
+	
 	/**
 	 * removeSession
 	 * @param request

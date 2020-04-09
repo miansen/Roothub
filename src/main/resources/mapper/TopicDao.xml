@@ -56,15 +56,15 @@
         status_cd,node_slug,node_title,remark,avatar,url
     </sql>
 	<!-- 根据板块查询所有话题 -->
-	<select id="selectAllByTab" resultType="Topic">
+	<select id="selectAllByTabAndStatusCd" resultType="Topic">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
 			topic
 		WHERE is_delete = '0'
-		<!-- <if test="tab != null">
-		AND tab = #{tab}
-		</if> -->
+		<if test="statusCd != null">
+		AND status_cd = #{statusCd}
+		</if>
 		<!-- order by top desc,create_date desc,last_reply_time desc -->
 		<if test="tab != null">
 			<if test='tab == "all"'>
@@ -517,13 +517,13 @@
         </if>
     </select>
     <!-- 根据板块统计话题 -->
-    <select id="countTopicByTab" resultType="java.lang.Integer">
+    <select id="countTopicByTabAndStatusCd" resultType="java.lang.Integer">
         select count(topic_id)
         from topic t
         where t.is_delete = 0
-        <!-- <if test="tab != null">
-        	and t.tab = #{tab,jdbcType=VARCHAR}
-        </if> -->
+        <if test="tab != null">
+        	and t.status_cd = #{statusCd,jdbcType=VARCHAR}
+        </if>
     </select>
     <!-- 根据节点统计无人评论的话题 -->
     <select id="countTopicNoReplyByNode" resultType="java.lang.Integer">

@@ -45,35 +45,13 @@ public class BaseController {
 	private RedisService redisService;
 
 	/**
-	 * 获取登录用户的信息，先从 Redis 里面取，如果取不到，再从 seesion 里面取
-	 * 
+	 * 获取登录用户的信息
+	 *
 	 * @param request
 	 * @return
 	 */
 	public User getUser(HttpServletRequest request) {
-
-		String token = CookieAndSessionUtil.getCookie(request, siteConfig.getCookieConfig().getName());
-		// ValueOperations<String, String> opsForValue =
-		// stringRedisTemplate.opsForValue();
-
-		// User sessionUser = CookieAndSessionUtil.getSession(request, "user");
-		try {
-			if (token != null) {
-				token = Base64Util.decode(token);
-				// String redisUser = opsForValue.get(token);
-				String redisUser = redisService.getString(token);
-				if (redisUser != null) {
-					return JsonUtil.jsonToObject(redisUser, User.class);
-				} else {
-					return CookieAndSessionUtil.getSession(request, "user");
-				}
-			} else {
-				return CookieAndSessionUtil.getSession(request, "user");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return CookieAndSessionUtil.getSession(request, "user");
 	}
 
 	public String isLogin(HttpServletRequest request, String errorPage, String suesscePage) {

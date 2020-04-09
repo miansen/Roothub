@@ -38,7 +38,7 @@ public interface TopicService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> pageAllByTab(Integer pageNumber, Integer pageSize,String tab);
+	PageDataBody<Topic> pageAllByTabAndStatusCd(Integer pageNumber, Integer pageSize,String tab, String statusCd);
 	
 	/**
 	 * 根据节点查询所有话题
@@ -168,7 +168,7 @@ public interface TopicService {
 	 */
 	TopicExecution saveTopic(Topic topic);
 	
-	TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle,String tag,User user);
+	TopicExecution createTopic(String title, String content, String statusCd, String nodeCode,String nodeTitle,String tag,User user);
 	
 	/**
 	 * 更新话题
@@ -233,7 +233,7 @@ public interface TopicService {
      * 根据板块统计所有话题
      * @return
      */
-    int countAllTopic(String tab);
+    int countAllTopic(String tab, String statusCd);
     
     /**
      * 根据节点统计所有话题

@@ -109,7 +109,7 @@ public interface UserService {
 	 */
 	UserExecution save(User user);
 	
-	UserExecution createUser(String username,String password,String email);
+	UserExecution createUser(String username,String password,String email, String userType);
 	
 	/**
 	 * 统计所有注册会员的数量

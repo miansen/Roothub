@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>发布话题</title>
+  <title>Roothub-发布${statusName}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
@@ -19,7 +19,7 @@
       <div class="col-md-9">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <a href="/">主页</a> / 发布话题
+            <a href="/">主页</a> / 发布${statusName}
           </div>
           <div class="panel-body">
             <form id="form">
@@ -43,9 +43,9 @@
              </c:forEach>
            </select>
          </div> --%>
-         <c:if test="${fn:length(node) == 0}">
+         <c:if test="${statusCd == 1000}">
          	<div class="form-group">
-          <label for="node">节点</label>
+          <label for="node">板块</label>
           <select id="node" class="form-control" name="node">
           	<c:forEach var="item" items="${nodeList}" varStatus="status">
                  <option value="${item.nodeTitle}">${item.nodeTitle}</option>
@@ -53,21 +53,22 @@
           </select>
         </div>
         </c:if>
-        <div class="form-group">
+        <div class="form-group" style="display: none;">
           <div class="form-group">
             <label for="title">标签</label>
             <input type="text" class="form-control" id="tag" name="title" placeholder="请为你的主题选择一个标签。恰当的归类会让你发布的信息更加有用">
           </div>
         </div>
-        <button type="button" id="btn" class="btn btn-default">发布</button>
+        <button type="button" id="btn" class="btn btn-primary">发布</button>
       </form>
     </div>
   </div>
 </div>
+<c:if test="${statusCd == 1000}">
 <div class="col-md-3 hidden-sm hidden-xs">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <b>话题发布指南</b>
+      <b>帖子发布指南</b>
     </div>
     <div class="panel-body">
       <p>• 在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。</p>
@@ -77,6 +78,7 @@
     </div>
   </div>
 </div>
+</c:if>
 </div>
 </div>
 </div>
@@ -134,6 +136,7 @@
           // alert(contentHtml);
           
           var node = "${node}";
+          var statusCd= "${statusCd}";
           
        	  // 节点
           var nodeTitle = node ? node : $("#node option:selected").val();
@@ -143,10 +146,7 @@
           if(!title || title.length > 120) {
             alert('请输入标题，且最大长度在120个字符以内');
             return false;
-          }else if(!nodeTitle){
-          alert('请选择一个节点');
-          return false;
-        }else {
+          }else {
         $.ajax({
           url: '/topic/save',
           type: 'post',
@@ -156,7 +156,7 @@
           data: {
             title: title,
             content: contentHtml,
-            //tab:tab,
+            statusCd: statusCd,
             // nodeCode:nodeCode,
             nodeTitle: nodeTitle,
             tag: tag

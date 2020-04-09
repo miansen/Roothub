@@ -1,7 +1,7 @@
 /*var tab = "${tab}";
 var url = "/?tab="+tab+"&"*/
 $(function(){
-  $("#shouye").addClass("active");
+  // $("#shouye").addClass("active");
    /*  function session(){
       $.ajax({
         type:"get",

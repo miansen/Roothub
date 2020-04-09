@@ -21,7 +21,7 @@ public interface TopicDao {
 	 * @param limit
 	 * @return
 	 */
-    List<Topic> selectAllByTab(@Param("start") Integer start, @Param("limit") Integer limit,@Param("tab") String tab);
+    List<Topic> selectAllByTabAndStatusCd(@Param("start") Integer start, @Param("limit") Integer limit,@Param("tab") String tab,@Param("statusCd") String statusCd);
     
     /**
      * 根据节点查询所有话题
@@ -211,7 +211,7 @@ public interface TopicDao {
      * @param tab
      * @return
      */
-    int countTopicByTab(@Param("tab") String tab);
+    int countTopicByTabAndStatusCd(@Param("tab") String tab, @Param("statusCd") String statusCd);
 
     /**
      * 根据节点统计无人评论的话题

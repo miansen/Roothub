@@ -108,18 +108,15 @@
 		<body>
 		</body>
 		<div id="editor" style="margin-bottom: 10px;"></div>
-		<button id="btn" class="btn btn-sm btn-default">
+		<button id="btn" class="btn btn-primary">
 			<!-- <span class="glyphicon glyphicon-send"></span> -->
 			评论
 		</button>
-		<div class="fr">
-			<a href="/">← Roothub</a>
-		</div>
 	</div>
 </div>
 </div>
 <div class="col-md-3 hidden-sm hidden-xs">
-	<div class="panel panel-default" id="session"></div>
+	<jsp:include page="../components/seesion.jsp"></jsp:include>
 </div>
 </div>
 </div>
@@ -136,10 +133,10 @@
 <script src="/resources/js/goTop.js"></script>
 <script src="/resources/layui/layui.js"></script>
 <script src="/resources/layui/layui-paginate.js"></script>
-<script src="/resources/js/login_info.js"></script>
+<!-- <script src="/resources/js/login_info.js"></script> -->
 <script src="/resources/js/formatDate.js"></script>
 <script src="/resources/js/topic/detail.js"></script>
-<script src="/resources/js/topic/other-topic.js"></script>
+<!-- <script src="/resources/js/topic/other-topic.js"></script> -->
 <script type="text/javascript">
 	/* 获取登录信息 */
 	$.ajax({

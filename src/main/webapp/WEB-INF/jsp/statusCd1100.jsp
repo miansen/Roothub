@@ -1,7 +1,64 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="col-md-3 hidden-sm hidden-xs">
+<html>
+<head>
+  <title>Roothub-学习动态</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 引入 Bootstrap -->
+  <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="/resources/images/favicon.ico">
+  <!-- <script src="/resources/js/logout.js"></script> -->
+  <!-- 引入layui.css -->
+  <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
+</head>
+<body>
+ <div class="wrapper">
+  <jsp:include page="components/head.jsp"></jsp:include>
+    <div class="row">
+      <div class="col-md-9">
+      <c:forEach var="item" items="${page.list}">
+        <div class="panel panel-default">
+        <div class="panel-body paginate-bot">
+          <div class="media">
+          	<div class="ui feed tweet-item" id="tweet-21265736" data-tweet-id="21265736" data-tweet-owner-id="3896169" data-repost-content="">
+                <div class="event">
+                    <div class="tweet-item-content">
+                        <div class="ui items tweet-user-info">
+                            <div class="item">
+                                <a href="/user/${item.author}" target="_blank">
+                                <div class="osc-avatar small-portrait _35x35 avatar" title="${item.author}" data-user-id="3896169">
+            <img src="${item.avatar}" alt="${item.author}" title="${item.author}">
+        </div>
+            </a>
+                                <div class="item-content">
+                                    <a class="user __user" href="/user/${item.author}" target="_blank">${item.author}</a>
+                                                                        
+                                    <div class="extra">
+                                        <div class="date"><fmt:formatDate type="date" value="${item.createDate}" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="extra text" data-emoji-render="">
+                        	${item.content}
+                        </div>
+                            <a class="reply" href="/topic/${item.topicId}" target="_blank">
+                                <i class="comment outline icon"></i> <span>${item.replyCount}</span> 评论
+                            </a>
+                            <a class="view" href="/topic/${item.topicId}" target="_blank">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      </c:forEach>
+          <div class="panel-footer" id="paginate"></div>
+    </div>
+    <div class="col-md-3 hidden-sm hidden-xs">
   	<c:if test="${sessionScope.user != null}">
 					<div class="panel panel-default" id="session">
 						<div class="panel-body">
@@ -20,10 +77,12 @@
 										</div>
 									</div>
 								</div>
+								<c:if test="${sessionScope.user.userType == '1'}">
 								<div style="margin-top: 15px;">
-									<a href="/topic/create?statusCd=1000" style="font-size: 14px;"><button
-											class="btn btn-success">发布帖子</button></a>
+									<a href="/topic/create?statusCd=1100&statusName=学习动态" style="font-size: 14px;"><button
+											class="btn btn-success">发布学习动态</button></a>
 								</div>
+								</c:if>
 							</div>
 							<div class="sep10" style="height: 10px;"></div>
 							<table cellpadding="0" cellspacing="0" border="0" width="100%"
@@ -118,7 +177,7 @@
   </div>
     <!-- 最热标签 -->
     <div class="panel panel-default">
-    <div class="panel-heading"><span style="color: #ccc;">热门节点</span></div>
+    <div class="panel-heading"><span style="color: #ccc;">热门板块</span></div>
     <div class="panel-body">
       <div class="row">
       <c:forEach var="item" items="${nodeList2}">
@@ -156,4 +215,40 @@
         </table>
       </div>
   </div>
+  </div>
+  </div>
 </div>
+</div>
+<div id="back2Top" class="backTop___6Q-ki" style="display:none">
+<div class="line___F1WY0"></div>
+<div class="arrow___3UCwo"></div>
+</div>
+</div>
+<jsp:include page="components/foot.jsp"></jsp:include>
+<script src="/resources/js/jquery.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/index.js"></script>
+<script src="/resources/layui/layui.js"></script>
+<script src="/resources/layui/layui-paginate.js"></script>
+<!-- <script src="/resources/js/login_info.js"></script> -->
+<script src="/resources/js/formatDate.js"></script>
+<script type="text/javascript">
+//var tab = "${tab}";//板块
+var tab = "${tab}";//父板块
+//var url = "/?tab="+tab+"&ptab="+ptab+"&"
+//$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
+ var count = ${page.totalRow};//数据总量
+ var limit = ${page.pageSize};//每页显示的条数
+ var url = "?tab="+tab+"&p=";//url
+ function page(){
+     var page = location.search.match(/p=(\d+)/);  
+     return page ? page[1] : 1;  
+ }
+ var p = page();//当前页数
+ //console.log("p:"+p);
+ //console.log(count);
+ //console.log(url);
+ paginate(count,limit,p,url);
+</script>
+</body>
+</html>

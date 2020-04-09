@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>节点-roothub</title>
+  <title>Roothub-板块</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +17,7 @@
 <jsp:include page="../components/head.jsp"></jsp:include>
 <div class="row">
   <div class="panel panel-default">
-  <div class="panel-heading">全部节点</div>
+  <div class="panel-heading">全部板块</div>
     <div class="panel-body">
       <div class="row">
       <c:forEach var="item" items="${nodeList}">

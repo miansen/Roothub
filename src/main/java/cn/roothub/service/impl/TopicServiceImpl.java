@@ -58,9 +58,9 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据板块查询所有话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllByTab(Integer pageNumber, Integer pageSize,String tab) {
-		List<Topic> list = rootTopicDao.selectAllByTab((pageNumber - 1) * pageSize, pageSize,tab);
-		int total = rootTopicDao.countTopicByTab(tab);
+	public PageDataBody<Topic> pageAllByTabAndStatusCd(Integer pageNumber, Integer pageSize,String tab, String statusCd) {
+		List<Topic> list = rootTopicDao.selectAllByTabAndStatusCd((pageNumber - 1) * pageSize, pageSize,tab, statusCd);
+		int total = rootTopicDao.countTopicByTabAndStatusCd(tab, statusCd);
 		return new PageDataBody<>(list, pageNumber, pageSize, total);
 	}
 	
@@ -203,10 +203,10 @@ public class TopicServiceImpl implements TopicService{
 	}
 	
 	@Override
-	public TopicExecution createTopic(String title, String content, String tab, String nodeCode,String nodeTitle, String tag,User user) {
+	public TopicExecution createTopic(String title, String content, String statusCd, String nodeCode,String nodeTitle, String tag,User user) {
 		Topic topic = new Topic();
 		topic.setPtab(null);
-		topic.setTab(tab);
+		topic.setTab(null);
 		topic.setTitle(title);
 		topic.setTag(tag);
 		topic.setContent(content);
@@ -224,7 +224,7 @@ public class TopicServiceImpl implements TopicService{
 		topic.setTagIsCount(true);
 		topic.setPostGoodCount(null);
 		topic.setPostBadCount(null);
-		topic.setStatusCd("1000");
+		topic.setStatusCd(statusCd);
 		topic.setNodeSlug(nodeCode);
 		topic.setNodeTitle(nodeTitle);
 		topic.setRemark(null);
@@ -316,8 +316,8 @@ public class TopicServiceImpl implements TopicService{
 	 * 统计所有话题
 	 */
 	@Override
-	public int countAllTopic(String tab) {
-		return rootTopicDao.countTopicByTab(tab);
+	public int countAllTopic(String tab, String statusCd) {
+		return rootTopicDao.countTopicByTabAndStatusCd(tab, statusCd);
 	}
 
 	/**

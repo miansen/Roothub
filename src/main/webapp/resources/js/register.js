@@ -4,6 +4,7 @@
           var username = $("#username").val();
           var password = $("#password").val();
           var email = $("#email").val();
+          var userType = $("input[name='userType']:checked").val();
           var pattern=/^\w+$/;
           var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
           if (!username) {
@@ -38,6 +39,10 @@
         	  alert('邮箱格式不正确');
               return false;
           }
+            if (!userType) {
+                alert('类型不能为空哦');
+                return false;
+            }
           $.ajax({
               type:"post",
               url:"/register",
@@ -45,7 +50,8 @@
               data: {
               username: $("#username").val(),
               password: $("#password").val(),
-              email: $("#email").val(),
+              email: $("#email").val(), 
+              userType: userType
             },
             success:function(data){
             	console.log(data);
@@ -53,8 +59,8 @@
                 alert(data.error);
                 return false;
               }else{
-            	  alert('注册成功，点击去登录');
-                  location.href = "/login";
+            	  // alert('注册成功，点击去登录');
+                  location.href = "/";
               }
             },
             error:function(data){

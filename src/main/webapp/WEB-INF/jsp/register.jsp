@@ -34,6 +34,14 @@
 								<label for="email">邮箱</label> <input type="email"
 									class="form-control" id="email" name="email" placeholder="邮箱">
 							</div>
+							<div class="form-group">
+								<label for="email">类型</label>
+								<br>
+								<span style="padding-right: 5px;">学生</span>
+								<input type="radio" name="userType" value="1" checked="checked">
+								<span style="padding-right: 5px;">教师</span>
+								<input type="radio" name="userType" value="2">
+							</div>
 							<button type="button" class="btn btn-primary" id="reg_btn">注册</button>
 						</form>
 					</div>

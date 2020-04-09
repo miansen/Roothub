@@ -785,8 +785,6 @@ li {
 }
 .tweet-item {
     position: relative;
-    margin: 1.25em 0;
-    padding-bottom: 1.25em;
 }
 .ui.feed>.event {
     display: -webkit-box;

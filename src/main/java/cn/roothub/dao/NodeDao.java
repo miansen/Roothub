@@ -116,4 +116,9 @@ public interface NodeDao {
 	 * @return
 	 */
 	int countToday();
+
+	/**
+	 * @param node
+	 */
+	void insert(Node node);
 }

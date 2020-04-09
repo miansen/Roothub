@@ -8,25 +8,28 @@
 <div class="content-wrapper" style="padding: 50px 0 40px;">
 	<section class="content-header">
     <h1>
-     节点
+     板块
       <small>列表</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="/admin/index"><i class="fa fa-dashboard"></i> 首页</a></li>
-      <li><a href="/admin/node/list"> 节点</a></li>
+      <li><a href="/admin/node/list">板块</a></li>
       <li class="active">列表</li>
     </ol>
   </section>
   <section class="content">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">节点列表</h3>
-      </div>
+        <h3 class="box-title">板块列表</h3>
+      <shiro:hasPermission name="node:add">
+          <a href="/admin/node/add" class="btn btn-xs btn-primary pull-right">添加</a>
+        </shiro:hasPermission>
+        </div>
       <!-- /.box-header -->
       <div class="box-body">
         <form action="/admin/node/list" method="get" class="form-inline">
           <div class="form-group" style="margin-bottom: 10px;">
-            <input type="text" name="nodeTitle" value="${nodeTitle}" class="form-control" placeholder="节点名">
+            <input type="text" name="nodeTitle" value="${nodeTitle}" class="form-control" placeholder="板块名">
             <button type="submit" class="btn btn-primary btn-sm">搜索</button>
           </div>
         </form>
@@ -88,11 +91,11 @@
   	 	paginate(count,limit,p,url);
   	});
   	
-  	// 删除节点
+  	// 删除板块
   	function actionBtn(id){
-  		if(confirm("确定要删除这个节点吗？对应的话题节点也会一起删除")){
+  		if(confirm("确定要删除这个板块吗？对应的话题板块也会一起删除")){
   			if(!id){
-  				toast("节点ID不能为空", "error");
+  				toast("板块ID不能为空", "error");
   			}
   			$.post("/admin/node/delete",{id: id},function(data){
   				if(data.success === true){

@@ -224,10 +224,6 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping(value = "/user/settings/changeAvatar", method = RequestMethod.GET)
 	private String changeAvatar(HttpServletRequest request) {
-		String cookie = CookieAndSessionUtil.getCookie(request, "user");
-		if(cookie == null) {
-			return "error-page/500";
-		}
 		return "user/changeAvatar";
 	}
 	

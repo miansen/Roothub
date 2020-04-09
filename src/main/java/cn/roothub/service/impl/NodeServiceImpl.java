@@ -113,4 +113,17 @@ public class NodeServiceImpl implements NodeService{
 	public int countToday() {
 		return nodeDao.countToday();
 	}
+
+	@Override
+	public void save(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+		Node node = new Node();
+		node.setNodeTitle(nodeTitle);
+		node.setAvatarNormal(avatarNormal);
+		node.setAvatarLarge(avatarLarge);
+		node.setNodeDesc(nodeDesc);
+		node.setNodeCode(nodeTitle);
+		node.setUrl("/n/" + nodeTitle);
+		node.setUpdateDate(new Date());
+		nodeDao.insert(node);
+	}
 }

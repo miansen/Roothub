@@ -1,10 +1,13 @@
 package cn.roothub.web.admin;
 
+import java.util.Date;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -60,6 +63,29 @@ public class NodeAdminController {
 		nodeService.update(nodeId, nodeTitle, avatarNormal, avatarLarge, nodeDesc);
 		return new Result<>(true, "更新成功");
 	}
+	
+	/**
+	 * 添加节点页面
+	 * @return
+	 */
+	@RequiresPermissions("node:add")
+	@RequestMapping(value = "/add",method = RequestMethod.GET)
+	public String add() {
+		return "admin/node/add";
+	}
+
+	@RequiresPermissions("node:add")
+	@RequestMapping(value = "/add",method = RequestMethod.POST)
+	@ResponseBody
+	public Result<String> add(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+		ApiAssert.notEmpty(nodeTitle, "节点名称不能为空");
+		if(StringUtils.isEmpty(avatarNormal)) avatarNormal = null;
+		if(StringUtils.isEmpty(avatarLarge)) avatarLarge = null;
+		if(StringUtils.isEmpty(nodeDesc)) nodeDesc = null;
+		nodeService.save(nodeId, nodeTitle, avatarNormal, avatarLarge, nodeDesc);
+		return new Result<>(true, "添加成功");
+	}
+
 	
 	@RequiresPermissions("node:delete")
 	@RequestMapping(value = "/delete",method = RequestMethod.POST)

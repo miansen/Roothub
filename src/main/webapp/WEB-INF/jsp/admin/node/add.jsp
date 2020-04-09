@@ -14,13 +14,13 @@
     <ol class="breadcrumb">
       <li><a href="/admin/index"><i class="fa fa-dashboard"></i> 首页</a></li>
       <li><a href="/admin/node/list">板块</a></li>
-      <li class="active">编辑</li>
+      <li class="active">添加</li>
     </ol>
   </section>
   <section class="content">
     <div class="box box-info">
       <div class="box-header with-border">
-        <h3 class="box-title">板块编辑</h3>
+        <h3 class="box-title">板块添加</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -93,7 +93,7 @@
   	    });
   		$("#form").submit(function(){
   			// ID
-  			var nodeId = $(".node-id").val();
+  			// var nodeId = $(".node-id").val();
   			// 名称
   			var nodeTitle = $(".node-name").val();
   			// 图标
@@ -102,21 +102,21 @@
   			var avatarLarge = $(".avatarLarge").val();
   			// 描述
   			var nodeDesc = $(".node-desc").val();
-  			var data = {nodeId, nodeTitle, avatarNormal, avatarLarge, nodeDesc};
-  			if(confirm("确定要编辑此板块吗？")){
-  				if(!nodeId){
+  			var data = {nodeTitle, avatarNormal, avatarLarge, nodeDesc};
+  			if(confirm("确定要添加此板块吗？")){
+  				if(!nodeTitle){
   					toast('板块名称不能为空');
   					return false;
   				}
   				console.log(data);
   				$.ajax({
-  					url: "/admin/node/edit",
+  					url: "/admin/node/add",
   					type: "post",
   					dataType: "json",
   					data: data,
   					success: function(data){
   						if(data.success == true){
-  							toast('编辑成功','success');
+  							toast('添加成功','success');
   	  						setTimeout(function(){
   	  							window.location.href = "/admin/node/list";
   	  						},1000);

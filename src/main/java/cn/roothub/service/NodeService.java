@@ -97,4 +97,13 @@ public interface NodeService {
 	 * @return
 	 */
 	int countToday();
+
+	/**
+	 * @param nodeId
+	 * @param nodeTitle
+	 * @param avatarNormal
+	 * @param avatarLarge
+	 * @param nodeDesc
+	 */
+	void save(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc);
 }

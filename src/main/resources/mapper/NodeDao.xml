@@ -196,6 +196,37 @@
         WHERE 
         	node_id = #{nodeId}
     </update>
+    
+    <insert id="insert" parameterType="cn.roothub.entity.Node">
+        insert into 
+        node 
+        (node_code,
+        node_title,
+        avatar_normal,
+        avatar_mini,
+        avatar_large,
+        node_desc,
+        tab_id,
+        url,
+        parent_node_code,
+        create_date,
+        update_date,
+        is_delete
+        ) 
+        values 
+        (#{nodeCode},
+        #{nodeTitle},
+        #{avatarNormal},
+        #{avatarMini},
+        #{avatarLarge},
+        #{nodeDesc},
+        #{tabId},
+        #{url},
+        #{parentNodeCode},
+        #{createDate},
+        #{updateDate},
+        #{isDelete}) 
+    </insert>
     <!-- 删除节点 -->
     <update id="deleteById" parameterType="java.lang.Integer">
     	UPDATE

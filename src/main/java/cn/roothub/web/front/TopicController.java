@@ -23,6 +23,7 @@ import cn.roothub.entity.User;
 import cn.roothub.exception.ApiAssert;
 import cn.roothub.entity.Tab;
 import cn.roothub.service.CollectService;
+import cn.roothub.service.FollowService;
 import cn.roothub.service.NodeService;
 import cn.roothub.service.NoticeService;
 import cn.roothub.service.ReplyService;
@@ -52,6 +53,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 	private TabService tabService;
 	@Autowired
 	private NodeService nodeService;
+	@Autowired
+	private FollowService followService;
 	
 	/**
 	 * 话题详情
@@ -74,13 +77,18 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		//分页查询回复
 		PageDataBody<Reply> replyPage = rootReplyService.page(p, 50, id);
 		int countByTid = collectDaoService.countByTid(id);//话题被收藏的数量
-		int countTopicByUserName = 0;
-		int countCollect = 0;
-		int notReadNotice = 0;
-		if(user != null) {
-			countTopicByUserName = rootTopicService.countByUserName(user.getUserName());//用户发布的主题的数量
-			countCollect = collectDaoService.count(user.getUserId());//用户收藏话题的数量
-			notReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());//统计未读通知的数量
+		if (user != null) {
+			int countTopic = rootTopicService.countByUserName(user.getUserName());
+			int countCollect = collectDaoService.count(user.getUserId());
+			int countFollow = followService.countByUid(user.getUserId());
+			int countNotReadNotice = rootNoticeService.countNotReadNotice(user.getUserName());
+			int countScore = rootUserService.countScore(user.getUserId());
+
+			request.setAttribute("countTopic", countTopic);
+			request.setAttribute("countCollect", countCollect);
+			request.setAttribute("countFollow", countFollow);
+			request.setAttribute("countNotReadNotice", countNotReadNotice);
+			request.setAttribute("countScore", countScore);
 		}
 		//BaseEntity baseEntity = new BaseEntity();
 		//model.addAttribute("baseEntity", baseEntity);
@@ -88,9 +96,6 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		model.addAttribute("replyPage", replyPage);
 		model.addAttribute("user", user);
 		model.addAttribute("countByTid", countByTid);
-		request.setAttribute("countTopicByUserName", countTopicByUserName);
-		request.setAttribute("countCollect", countCollect);
-		request.setAttribute("notReadNotice", notReadNotice);
 		return "topic/detail";
 	}
 	

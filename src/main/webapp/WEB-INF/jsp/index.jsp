@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Roothub</title>
+<title>学习互助系统</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- 引入 Bootstrap -->
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -161,7 +161,7 @@
 			<div class="col-lg-6">
 				<div class="box box-info">
 					<div class="box-header with-border">
-						<h3 class="box-title">学习动态</h3>
+						<h3 class="box-title">热门板块</h3>
 
 						<div class="box-tools pull-right">
 							<button type="button" class="btn btn-box-tool"
@@ -175,27 +175,13 @@
 						<div class="table-responsive">
 							<table class="table" style="font-size: 14px;">
 								<tbody>
-								<c:if test="${page1100 != null}">
-									<c:forEach var="item" items="${page1100}">
-										<tr>
-											<c:if test="${fn:length(item.avatar) > 0}">
-												<td width="24" valign="middle" align="center">
-													<img src="${item.avatar}" class="avatar img-circle"
-													border="0" align="default"
-													style="max-width: 24px; max-height: 24px;">
-												<!-- </a> -->
-												</td>
-											</c:if>
-											<td><c:choose>
-													<c:when test="${item.url != null}">
-														<a href="${item.url}">${item.title}</a>
-													</c:when>
-													<c:otherwise>
-														<a href="/topic/${item.topicId}">${item.title}</a>
-													</c:otherwise>
-												</c:choose></td>
-										</tr>
-									</c:forEach>
+								<c:if test="${nodeList2 != null}">
+									<c:forEach var="item" items="${nodeList2}">
+          								<div class="col-md-6" style="margin-bottom: 10px; padding-left: 10px;">
+            								<a href="${item.url}"><span class="label label-primary text-muted">${item.nodeTitle}</span></a>
+            								<small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
+          								</div>
+          							</c:forEach>
 									</c:if>
 								</tbody>
 							</table>

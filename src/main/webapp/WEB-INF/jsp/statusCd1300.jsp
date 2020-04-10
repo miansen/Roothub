@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Roothub-招募管理</title>
+  <title>学习互助系统-招募管理</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -25,10 +25,10 @@
         	<%-- <c:forEach var="item" items="${tabList}" varStatus="status">
         		<li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
         	</c:forEach> --%>
-        	<li class="all"><a href="/?tab=all">全部</a></li>
-        	<li class="hot"><a href="/?tab=hot">最热</a></li>
-        	<li class="new"><a href="/?tab=new">最新</a></li>
-        	<li class="lonely"><a href="/?tab=lonely">无人问津</a></li>
+        	<li class="all"><a href="/?tab=all&statusCd=1300">全部</a></li>
+        	<li class="hot"><a href="/?tab=hot&statusCd=1300">最热</a></li>
+        	<li class="new"><a href="/?tab=new&statusCd=1300">最新</a></li>
+        	<li class="lonely"><a href="/?tab=lonely&statusCd=1300">无人问津</a></li>
         	<!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
         	</ul>
     		</div>
@@ -144,15 +144,15 @@
 								<tbody>
 									<tr>
 										<td width="33%" align="center"><a href="/user/topics"
-											class="dark" style="display: block;"><span class="bigger">${sessionScope.countTopic}</span>
+											class="dark" style="display: block;"><span class="bigger">${countTopic}</span>
 												<div class="sep3"></div> <span class="fade">我的主题</span></a></td>
 										<td width="34%"
 											style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);"
 											align="center"><a href="/collect/topics" class="dark"
-											style="display: block;"><span class="bigger">${sessionScope.countCollect}</span>
+											style="display: block;"><span class="bigger">${countCollect}</span>
 												<div class="sep3"></div> <span class="fade">我的收藏</span></a></td>
 										<td width="33%" align="center"><a href="/follow/topics"
-											class="dark" style="display: block;"><span class="bigger">${sessionScope.countFollow}</span>
+											class="dark" style="display: block;"><span class="bigger">${countFollow}</span>
 												<div class="sep3"></div> <span class="fade">特别关注</span></a></td>
 									</tr>
 								</tbody>
@@ -161,8 +161,8 @@
 						<div class="panel-footer" style="background-color: white">
 							<div class="row">
 								<span class="col-md-6"><a href="/notification/list"><span
-										id="n_count">${sessionScope.countNotReadNotice}</span> 条未读消息</a></span> <span class="col-md-6 text-right">积分：<a
-									href="/top100">${sessionScope.countScore}</a></span>
+										id="n_count">${countNotReadNotice}</span> 条未读消息</a></span> <span class="col-md-6 text-right">积分：<a
+									href="/top100">${countScore}</a></span>
 							</div>
 						</div>
 					</div>

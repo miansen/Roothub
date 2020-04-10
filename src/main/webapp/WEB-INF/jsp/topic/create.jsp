@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Roothub-发布${statusName}</title>
+  <title>学习互助系统-发布${statusName}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">

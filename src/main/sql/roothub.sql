@@ -232,6 +232,7 @@ INSERT INTO `permission` VALUES ('43', '角色创建', 'role:add', '11', '2019-0
 INSERT INTO `permission` VALUES ('44', '角色删除', 'role:delete', '11', '2019-03-03 14:33:06', null);
 INSERT INTO `permission` VALUES ('45', '日志列表', 'log:list', '12', '2019-03-03 14:33:54', null);
 INSERT INTO `permission` VALUES ('47', '权限创建', 'permission:add', '8', '2019-03-05 16:11:20', null);
+INSERT INTO `permission` VALUES ('48', '节点添加', 'node:add', '6', '2019-03-03 14:25:12', null);
 
 -- ----------------------------
 -- Table structure for `reply`

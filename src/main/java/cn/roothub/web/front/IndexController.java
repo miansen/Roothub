@@ -85,20 +85,20 @@ public class IndexController extends BaseController {
 			@RequestParam(value = "tab", defaultValue = "all") String tab,
 			@RequestParam(value = "statusCd", required = false) String statusCd) {
 		PageDataBody<Topic> page = topicService.pageAllByTabAndStatusCd(p, 25, tab, statusCd);
-		
-		PageDataBody<Topic> page1100 = topicService.pageAllByTabAndStatusCd(1, 10, null, "1100");
-		PageDataBody<Topic> page1200 = topicService.pageAllByTabAndStatusCd(1, 10, null, "1200");
-		PageDataBody<Topic> page1300 = topicService.pageAllByTabAndStatusCd(1, 10, null, "1300");
-		PageDataBody<Topic> page1400 = topicService.pageAllByTabAndStatusCd(1, 10, null, "1400");
-		PageDataBody<Topic> pageNew = topicService.pageAllByTabAndStatusCd(1, 10, "new", null);
-				
+
+		PageDataBody<Topic> page1100 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1100");
+		PageDataBody<Topic> page1200 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1200");
+		PageDataBody<Topic> page1300 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1300");
+		PageDataBody<Topic> page1400 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1400");
+		PageDataBody<Topic> pageNew = topicService.pageAllByTabAndStatusCd(1, 5, "new", null);
+
 		List<Tab> tabList = tabService.selectAll();
 		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
 		// 热门话题榜
-		List<Topic> findHot = topicService.findHot(0, 10);
+		List<Topic> findHot = topicService.findHot(0, 5);
 		// 今日等待回复的话题
-		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 10);
-		
+		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 5);
+
 		// 最热标签
 		PageDataBody<Tag> tag = topicService.findByTag(1, 10);
 		List<Node> nodeList2 = nodeService.findAll(0, 10);
@@ -108,6 +108,22 @@ public class IndexController extends BaseController {
 		int countAllTopic = topicService.countAllTopic(null, null);
 		// 所有评论的数量
 		int countAllReply = replyService.countAll();
+
+		User user = getUser(request);
+		if (user != null) {
+			int countTopic = topicService.countByUserName(user.getUserName());
+			int countCollect = collectDaoService.count(user.getUserId());
+			int countFollow = followService.countByUid(user.getUserId());
+			int countNotReadNotice = noticeService.countNotReadNotice(user.getUserName());
+			int countScore = userService.countScore(user.getUserId());
+
+			request.setAttribute("countTopic", countTopic);
+			request.setAttribute("countCollect", countCollect);
+			request.setAttribute("countFollow", countFollow);
+			request.setAttribute("countNotReadNotice", countNotReadNotice);
+			request.setAttribute("countScore", countScore);
+		}
+
 		request.setAttribute("page", page);
 		request.setAttribute("findHot", findHot);
 		request.setAttribute("findTodayNoReply", findTodayNoReply);
@@ -119,7 +135,7 @@ public class IndexController extends BaseController {
 		request.setAttribute("countUserAll", countUserAll);
 		request.setAttribute("countAllTopic", countAllTopic);
 		request.setAttribute("countAllReply", countAllReply);
-		request.setAttribute("statusCd", statusCd);
+		request.setAttribute("statusCd", statusCd == null ? "9999" : statusCd);
 		request.setAttribute("statusName", request.getParameter("statusName"));
 		request.setAttribute("page1100", page1100.getList());
 		request.setAttribute("page1200", page1200.getList());
@@ -162,19 +178,8 @@ public class IndexController extends BaseController {
 		user = userService.findByEmail(email);
 		ApiAssert.isNull(user, "邮箱已存在");
 		UserExecution save = userService.createUser(username, password, email, userType);
-		user = save.getUser();
-		int countTopic = topicService.countByUserName(user.getUserName());
-		int countCollect = collectDaoService.count(user.getUserId());
-		int countFollow = followService.countByUid(user.getUserId());
-		int countNotReadNotice = noticeService.countNotReadNotice(user.getUserName());
-		int countScore = userService.countScore(user.getUserId());
 		// 设置session
-		CookieAndSessionUtil.setSession(request, "user", user);
-		CookieAndSessionUtil.setSession(request, "countTopic", countTopic);
-		CookieAndSessionUtil.setSession(request, "countCollect", countCollect);
-		CookieAndSessionUtil.setSession(request, "countFollow", countFollow);
-		CookieAndSessionUtil.setSession(request, "countNotReadNotice", countNotReadNotice);
-		CookieAndSessionUtil.setSession(request, "countScore", countScore);
+		CookieAndSessionUtil.setSession(request, "user", save.getUser());
 		return new Result<UserExecution>(true, save);
 	}
 
@@ -202,18 +207,8 @@ public class IndexController extends BaseController {
 		User user = userService.findByName(username);
 		ApiAssert.notNull(user, "用户不存在");
 		ApiAssert.isTrue(new BCryptPasswordEncoder().matches(password, user.getPassword()), "密码不正确");
-		int countTopic = topicService.countByUserName(user.getUserName());
-		int countCollect = collectDaoService.count(user.getUserId());
-		int countFollow = followService.countByUid(user.getUserId());
-		int countNotReadNotice = noticeService.countNotReadNotice(user.getUserName());
-		int countScore = userService.countScore(user.getUserId());
 		// 设置session
 		CookieAndSessionUtil.setSession(request, "user", user);
-		CookieAndSessionUtil.setSession(request, "countTopic", countTopic);
-		CookieAndSessionUtil.setSession(request, "countCollect", countCollect);
-		CookieAndSessionUtil.setSession(request, "countFollow", countFollow);
-		CookieAndSessionUtil.setSession(request, "countNotReadNotice", countNotReadNotice);
-		CookieAndSessionUtil.setSession(request, "countScore", countScore);
 		return new Result<User>(true, user);
 	}
 
@@ -228,11 +223,6 @@ public class IndexController extends BaseController {
 	private String logout(HttpServletRequest request, HttpServletResponse response) {
 		// stringRedisTemplate.delete("user");
 		CookieAndSessionUtil.removeSession(request, "user");
-		CookieAndSessionUtil.removeSession(request, "countTopic");
-		CookieAndSessionUtil.removeSession(request, "countCollect");
-		CookieAndSessionUtil.removeSession(request, "countFollow");
-		CookieAndSessionUtil.removeSession(request, "countNotReadNotice");
-		CookieAndSessionUtil.removeSession(request, "countScore");
 		return "redirect:/";
 	}
 

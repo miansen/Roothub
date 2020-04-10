@@ -27,7 +27,7 @@
         <li>
           <a href="/admin/topic/list">
             <i class="fa fa-list"></i>
-            <span>话题</span>
+            <span>帖子管理</span>
           </a>
         </li>
       </shiro:hasPermission>
@@ -35,7 +35,7 @@
         <li>
           <a href="/admin/reply/list">
             <i class="fa fa-comment"></i>
-            <span>评论</span>
+            <span>评论管理</span>
           </a>
         </li>
       </shiro:hasPermission>
@@ -43,7 +43,7 @@
         <li>
           <a href="/admin/node/list">
             <i class="fa fa-tags"></i>
-            <span>板块</span>
+            <span>板块管理</span>
           </a>
         </li>
       </shiro:hasPermission>
@@ -51,7 +51,7 @@
         <li>
           <a href="/admin/user/list">
             <i class="fa fa-user"></i>
-            <span>用户</span>
+            <span>用户管理</span>
           </a>
         </li>
       </shiro:hasPermission>

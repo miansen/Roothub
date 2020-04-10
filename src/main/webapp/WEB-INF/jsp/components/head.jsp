@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" style="font-weight: 700; font-size: 27px;"
-					href="/">Roothub</a>
+					href="/">学习互助系统</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse header-navbar">
 				<form class="navbar-form navbar-left hidden-xs hidden-sm"
@@ -74,7 +74,7 @@ var _hmt = _hmt || [];
 	<div id="tab-nav">
 		<div class="container" style="height: 45px;">
 			<ul style="padding-left: 0px">
-				<li id="nvabar-item-index" class="on"><a href="/">首页</a></li>
+				<li class="li-cate"><a href="/" class="${statusCd eq 9999 ? "li-cate-active" : "li-cate-a"}">首页</a></li>
 				<li class="li-cate"><a href="/?statusCd=1000" class="${statusCd eq 1000 ? "li-cate-active" : "li-cate-a"}">帖子管理</a></li>
 				<li class="li-cate"><a href="/?statusCd=1100" class="${statusCd eq 1100 ? "li-cate-active" : "li-cate-a"}">学习动态</a></li>
 				<li class="li-cate"><a href="/?statusCd=1200" class="${statusCd eq 1200 ? "li-cate-active" : "li-cate-a"}">教学动态</a></li>

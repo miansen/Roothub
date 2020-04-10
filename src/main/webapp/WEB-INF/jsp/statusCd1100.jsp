@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>Roothub-学习动态</title>
+  <title>学习互助系统-学习动态</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
       <div class="col-md-9">
       <c:forEach var="item" items="${page.list}">
         <div class="panel panel-default">
-        <div class="panel-body paginate-bot">
+        <div class="panel-body paginate-bot" style="padding-top: 0px;">
           <div class="media">
           	<div class="ui feed tweet-item" id="tweet-21265736" data-tweet-id="21265736" data-tweet-owner-id="3896169" data-repost-content="">
                 <div class="event">
@@ -90,15 +90,15 @@
 								<tbody>
 									<tr>
 										<td width="33%" align="center"><a href="/user/topics"
-											class="dark" style="display: block;"><span class="bigger">${sessionScope.countTopic}</span>
+											class="dark" style="display: block;"><span class="bigger">${countTopic}</span>
 												<div class="sep3"></div> <span class="fade">我的主题</span></a></td>
 										<td width="34%"
 											style="border-left: 1px solid rgba(100, 100, 100, 0.4); border-right: 1px solid rgba(100, 100, 100, 0.4);"
 											align="center"><a href="/collect/topics" class="dark"
-											style="display: block;"><span class="bigger">${sessionScope.countCollect}</span>
+											style="display: block;"><span class="bigger">${countCollect}</span>
 												<div class="sep3"></div> <span class="fade">我的收藏</span></a></td>
 										<td width="33%" align="center"><a href="/follow/topics"
-											class="dark" style="display: block;"><span class="bigger">${sessionScope.countFollow}</span>
+											class="dark" style="display: block;"><span class="bigger">${countFollow}</span>
 												<div class="sep3"></div> <span class="fade">特别关注</span></a></td>
 									</tr>
 								</tbody>
@@ -107,8 +107,8 @@
 						<div class="panel-footer" style="background-color: white">
 							<div class="row">
 								<span class="col-md-6"><a href="/notification/list"><span
-										id="n_count">${sessionScope.countNotReadNotice}</span> 条未读消息</a></span> <span class="col-md-6 text-right">积分：<a
-									href="/top100">${sessionScope.countScore}</a></span>
+										id="n_count">${countNotReadNotice}</span> 条未读消息</a></span> <span class="col-md-6 text-right">积分：<a
+									href="/top100">${countScore}</a></span>
 							</div>
 						</div>
 					</div>

@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>学习互助系统-资讯管理</title>
+  <title>学习互助系统-共同兴趣</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -22,32 +22,18 @@
         <div class="panel panel-default">
         	<div class="tab panel-heading">
         	<ul class="nav nav-pills" id="tab">
-        	<%-- <c:forEach var="item" items="${tabList}" varStatus="status">
-        		<li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
-        	</c:forEach> --%>
         	<li class="all"><a href="/?tab=all&statusCd=1400">全部</a></li>
         	<li class="hot"><a href="/?tab=hot&statusCd=1400">最热</a></li>
         	<li class="new"><a href="/?tab=new&statusCd=1400">最新</a></li>
         	<li class="lonely"><a href="/?tab=lonely&statusCd=1400">无人问津</a></li>
-        	<!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
         	</ul>
     		</div>
-    		<!-- 节点列表 -->
-    		<%-- <c:if test="${fn:length(nodeList) > 0}">
-          <div class="section node">
-            <ul class="nav nav-pills" id="node">
-              <c:forEach var="item" items="${nodeList}" varStatus="status">
-              <li class="active"><a href="${item.url}">${item.nodeTitle}</a></li>
-            </c:forEach>
-          </ul>
-        </div>
-        </c:if> --%>
         <div class="panel-body paginate-bot">
           <c:forEach var="item" items="${page.list}">
           <div class="media">
           <c:if test="${fn:length(item.avatar) > 0}">
             <div class="media-left">
-              <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
+              <img src="${item.avatar}" class="avatar img-circle" alt="">
             </div>
             </c:if>
             <div class="media-body">
@@ -61,7 +47,6 @@
                 	</c:otherwise>
                 </c:choose>
               </div>
-              <%-- <div class="excerpt"><span>${item.excerpt}</span></div> --%>
               <div class="tip">
               <p class="gray">
               <c:if test="${item.top}">
@@ -70,8 +55,11 @@
 			  <c:if test="${item.good}">
 			  <span class="label label-success">精华</span> <span>•</span>
 			  </c:if>
-			    <span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
+			    <c:if test="${not empty item.nodeTitle}">
+			  	<span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
 			    <span>•</span>
+			  </c:if>
+			    
                 <a href="/user/${item.author}">${item.author}</a>
                 <c:if test="${item.viewCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>
@@ -85,22 +73,7 @@
                 </c:if>
                 
                 <span>•</span>
-                <span><fmt:formatDate type="date" 
-                  value="${item.createDate}" /></span>
-                  <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
-                  <%-- <span class="formate-date">${item.createDate}</span> --%>
-                  
-                  <!-- 最后回复用户 -->
-                  <%-- <c:if test="${fn:length(item.lastReplyAuthor) > 0}">
-                  <span>•</span>
-                  <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
-                  </c:if> --%>
-                  
-                  <!-- 标签 -->
-                  <%-- <c:if test="${item.tag != null}">
-                  <span>•</span>
-                  <a href="/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
-                  </c:if> --%>
+                <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
                 </p>
                 </div>
               </div>
@@ -133,7 +106,7 @@
 								</div>
 								<div style="margin-top: 15px;">
 									<a href="/topic/create?statusCd=1400&statusName资讯管理" style="font-size: 14px;"><button
-											class="btn btn-success">发布资讯</button></a>
+											class="btn btn-success">发布兴趣</button></a>
 								</div>
 							</div>
 							<div class="sep10" style="height: 10px;"></div>

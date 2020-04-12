@@ -10,8 +10,6 @@
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
-  <!-- <script src="/resources/js/logout.js"></script> -->
-  <!-- 引入layui.css -->
   <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 </head>
 <body>
@@ -22,9 +20,6 @@
         <div class="panel panel-default">
         	<div class="tab panel-heading">
         	<ul class="nav nav-pills" id="tab">
-        	<%-- <c:forEach var="item" items="${tabList}" varStatus="status">
-        		<li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
-        	</c:forEach> --%>
         	<li class="all"><a href="/?tab=all&statusCd=1300">全部</a></li>
         	<li class="hot"><a href="/?tab=hot&statusCd=1300">最热</a></li>
         	<li class="new"><a href="/?tab=new&statusCd=1300">最新</a></li>
@@ -32,22 +27,12 @@
         	<!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
         	</ul>
     		</div>
-    		<!-- 节点列表 -->
-    		<%-- <c:if test="${fn:length(nodeList) > 0}">
-          <div class="section node">
-            <ul class="nav nav-pills" id="node">
-              <c:forEach var="item" items="${nodeList}" varStatus="status">
-              <li class="active"><a href="${item.url}">${item.nodeTitle}</a></li>
-            </c:forEach>
-          </ul>
-        </div>
-        </c:if> --%>
         <div class="panel-body paginate-bot">
           <c:forEach var="item" items="${page.list}">
           <div class="media">
           <c:if test="${fn:length(item.avatar) > 0}">
             <div class="media-left">
-              <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
+              <img src="${item.avatar}" class="avatar img-circle" alt="">
             </div>
             </c:if>
             <div class="media-body">
@@ -70,8 +55,11 @@
 			  <c:if test="${item.good}">
 			  <span class="label label-success">精华</span> <span>•</span>
 			  </c:if>
-			    <span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
+			    
+			    <c:if test="${not empty item.nodeTitle}">
+			  	<span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
 			    <span>•</span>
+			  </c:if>
                 <a href="/user/${item.author}">${item.author}</a>
                 <c:if test="${item.viewCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>

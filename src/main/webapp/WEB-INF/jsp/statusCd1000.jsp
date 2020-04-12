@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>学习互助系统-帖子</title>
+  <title>学习互助系统-理智讨论区</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -70,8 +70,10 @@
 			  <c:if test="${item.good}">
 			  <span class="label label-success">精华</span> <span>•</span>
 			  </c:if>
-			    <span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
+			    <c:if test="${not empty item.nodeTitle}">
+			  	<span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
 			    <span>•</span>
+			  </c:if>
                 <a href="/user/${item.author}">${item.author}</a>
                 <c:if test="${item.viewCount > 0}">
                 	<span class="hidden-sm hidden-xs">•</span>

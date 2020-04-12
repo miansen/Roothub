@@ -39,7 +39,7 @@ public class UploadConfig extends AbstractUploadConfig {
 	
 	@Override
 	public Map<String, Object> getUploadConfig() {
-		if(uploadConfig != null) {
+		/*if(uploadConfig != null) {
 			return uploadConfig;
 		}
 		// 先从redis里面取
@@ -61,7 +61,17 @@ public class UploadConfig extends AbstractUploadConfig {
 			
 			// 将数据存进redis
 			redisService.setString(RedisConstants.UPLOAD_CONFIG, JsonUtil.objectToJson(uploadConfig));
-		}
+		}*/
+		
+		uploadConfig = new HashMap<>();
+		SystemConfig systemConfig = systemConfigDao.selectByKey("upload_type");
+		List<SystemConfig> list = systemConfigDao.selectByPid(new Integer(systemConfig.getValue()));
+		uploadConfig.put(systemConfig.getKey(), systemConfig.getValue());
+		list.forEach(systemConfig2 -> {
+			uploadConfig.put(systemConfig2.getKey(), systemConfig2.getValue());
+		});
+		
+		
 		return uploadConfig;
 	}
 

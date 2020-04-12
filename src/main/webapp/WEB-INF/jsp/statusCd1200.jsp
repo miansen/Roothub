@@ -19,45 +19,72 @@
   <jsp:include page="components/head.jsp"></jsp:include>
     <div class="row">
       <div class="col-md-9">
-      <c:forEach var="item" items="${page.list}">
         <div class="panel panel-default">
-        <div class="panel-body paginate-bot" style="padding-top: 0px;">
+        	<div class="tab panel-heading">
+        	<ul class="nav nav-pills" id="tab">
+        	<li class="all"><a href="/?tab=all&statusCd=1300">全部</a></li>
+        	<li class="hot"><a href="/?tab=hot&statusCd=1300">最热</a></li>
+        	<li class="new"><a href="/?tab=new&statusCd=1300">最新</a></li>
+        	<li class="lonely"><a href="/?tab=lonely&statusCd=1300">无人问津</a></li>
+        	</ul>
+    		</div>
+        <div class="panel-body paginate-bot">
+          <c:forEach var="item" items="${page.list}">
           <div class="media">
-          	<div class="ui feed tweet-item" id="tweet-21265736" data-tweet-id="21265736" data-tweet-owner-id="3896169" data-repost-content="">
-                <div class="event">
-                    <div class="tweet-item-content">
-                        <div class="ui items tweet-user-info">
-                            <div class="item">
-                                <a href="/user/${item.author}" target="_blank">
-                                <div class="osc-avatar small-portrait _35x35 avatar" title="${item.author}" data-user-id="3896169">
-            <img src="${item.avatar}" alt="${item.author}" title="${item.author}">
-        </div>
-            </a>
-                                <div class="item-content">
-                                    <a class="user __user" href="/user/${item.author}" target="_blank">${item.author}</a>
-                                                                        
-                                    <div class="extra">
-                                        <div class="date"><fmt:formatDate type="date" value="${item.createDate}" /></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="extra text" data-emoji-render="">
-                        	${item.content}
-                        </div>
-                            <a class="reply" href="/topic/${item.topicId}" target="_blank">
-                                <i class="comment outline icon"></i> <span>${item.replyCount}</span> 评论
-                            </a>
-                            <a class="view" href="/topic/${item.topicId}" target="_blank">查看详情</a>
-                        </div>
-                    </div>
-                </div>
+          <c:if test="${fn:length(item.avatar) > 0}">
+            <div class="media-left">
+            	<img src="${item.avatar}" class="avatar img-circle" alt="">
             </div>
+            </c:if>
+            <div class="media-body">
+              <div class="title">
+                <c:choose>
+                	<c:when test="${item.url != null}">
+                		<a href="${item.url}" target="_blank">${item.title}</a>
+                	</c:when>
+                	<c:otherwise>
+                		<a href="/topic/${item.topicId}">${item.title}</a>
+                	</c:otherwise>
+                </c:choose>
+              </div>
+              <div class="tip">
+              <p class="gray">
+              <c:if test="${item.top}">
+			  <span class="label label-primary">置顶</span> <span>•</span>
+			  </c:if>
+			  <c:if test="${item.good}">
+			  <span class="label label-success">精华</span> <span>•</span>
+			  </c:if>
+			    <c:if test="${not empty item.nodeTitle}">
+			  	<span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
+			    <span>•</span>
+			  </c:if>
+			   
+                <a href="/user/${item.author}">${item.author}</a>
+                <c:if test="${item.viewCount > 0}">
+                	<span class="hidden-sm hidden-xs">•</span>
+                	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
+                </c:if>
+                
+                <!-- 评论数量 -->
+                <c:if test="${item.replyCount > 0}">
+                	<span class="hidden-sm hidden-xs">•</span>
+                	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+                </c:if>
+                
+                <span>•</span>
+                <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
+                </p>
+                </div>
+              </div>
+            <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
+            <div class="divide mar-top-5"></div>
           </div>
+          </c:forEach>
       </div>
-      </c:forEach>
           <div class="panel-footer" id="paginate"></div>
     </div>
+  </div>
     <div class="col-md-3 hidden-sm hidden-xs">
   	<c:if test="${sessionScope.user != null}">
 					<div class="panel panel-default" id="session">

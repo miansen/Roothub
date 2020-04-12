@@ -261,11 +261,12 @@ public class UserController extends BaseController{
 			return new Result<>(false,"密码不能为空");
 		}
 		User user = getUser(request);
-		if(!user.getPassword().equals(oldPassword)) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if(!encoder.matches(oldPassword, user.getPassword())) {
 			return new Result<>(false,"旧密码不正确");
 		}
 		//加密保存
-		user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+		user.setPassword(encoder.encode(newPassword));
 		UserExecution updateUser = rootUserService.updateUser(user);
 		return new Result<UserExecution>(true,updateUser);
 	}

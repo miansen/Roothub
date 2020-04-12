@@ -39,7 +39,7 @@
             <label for="email">邮箱</label>
             <input type="text" class="form-control" id="email" name="email" value="${user.email}">
           </div>
-          <div class="form-group">
+          <%-- <div class="form-group">
             <label for="url">个人网站</label>
             <input type="text" class="form-control" id="url" name="url" value="${user.url}">
           </div>
@@ -50,7 +50,7 @@
           <div class="form-group">
             <label for="userAddr">所在地</label>
             <input type="text" class="form-control" id="userAddr" name="userAddr" value="${user.userAddr}">
-          </div>
+          </div> --%>
           <div class="form-group">
             <label for="signature">个性签名</label>
             <textarea class="form-control" name="signature" id="signature">${user.signature}</textarea>

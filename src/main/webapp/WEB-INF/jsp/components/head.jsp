@@ -75,11 +75,11 @@ var _hmt = _hmt || [];
 		<div class="container" style="height: 45px;">
 			<ul style="padding-left: 0px">
 				<li class="li-cate"><a href="/" class="${statusCd eq 9999 ? "li-cate-active" : "li-cate-a"}">首页</a></li>
-				<li class="li-cate"><a href="/?statusCd=1000" class="${statusCd eq 1000 ? "li-cate-active" : "li-cate-a"}">帖子管理</a></li>
+				<li class="li-cate"><a href="/?statusCd=1000" class="${statusCd eq 1000 ? "li-cate-active" : "li-cate-a"}">理智讨论区</a></li>
 				<li class="li-cate"><a href="/?statusCd=1100" class="${statusCd eq 1100 ? "li-cate-active" : "li-cate-a"}">学习动态</a></li>
 				<li class="li-cate"><a href="/?statusCd=1200" class="${statusCd eq 1200 ? "li-cate-active" : "li-cate-a"}">教学动态</a></li>
 				<li class="li-cate"><a href="/?statusCd=1300" class="${statusCd eq 1300 ? "li-cate-active" : "li-cate-a"}">招募管理</a></li>
-				<li class="li-cate"><a href="/?statusCd=1400" class="${statusCd eq 1400 ? "li-cate-active" : "li-cate-a"}">资讯管理</a></li>
+				<li class="li-cate"><a href="/?statusCd=1400" class="${statusCd eq 1400 ? "li-cate-active" : "li-cate-a"}">共同兴趣</a></li>
 			    <div class="clear"></div>
 			</ul>
 		</div>

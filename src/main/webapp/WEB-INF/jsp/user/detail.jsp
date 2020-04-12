@@ -101,12 +101,12 @@
             <c:if test="${user2 != null && user2.userId != user.userId}">
             	<div class="fr">
                     <button class="btn btn-follow" onclick="save()" id="follow">加入特别关注</button>   
-                    <div class="sep10"></div>
-                    <button class="btn btn-warning">Block</button>
+                    <div class="sep10" style="display: none;"></div>
+                    <button class="btn btn-warning" style="display: none;">Block</button>
                 </div>
             </c:if>
                 <h1 title="${user.userId}" id="user_id" class= "user_id">${user.userName}</h1>
-                <span class="gray" style="font-size: 14px;">Roothub 第 ${user.userId} 号会员，加入于 <fmt:formatDate type="both" value="${user.createDate}" /><div class="sep5"></div>
+                <span class="gray" style="font-size: 14px;">学习互助系统 ${user.userId} 号会员，加入于 <fmt:formatDate type="both" value="${user.createDate}" /><div class="sep5"></div>
                 </span> 
             </td>
         </tr>
@@ -114,7 +114,9 @@
     <div class="sep5"></div>
 </div>
 </div>
-<div class="sep20"></div>
+
+				<c:if test="${sessionScope.user.userId eq user.userId}">
+				<div class="sep20"></div>
 				<div class="panel panel-default">
 					<%-- <div class="panel-heading">${user.userName}创建的话题</div> --%>
 					<div class="cell_tabs"><div class="fl"><img src="${user.avatar}" width="24" style="border-radius: 24px; margin-top: -2px;" border="0"></div>
@@ -127,6 +129,8 @@
 					<a href="javascript:void(0);" onclick="topicQnaList()" class="cell_tab">提问</a></div>
 					<div class="itemList"></div>	
 				</div>
+				</c:if>
+				
 				<button id="toggleBigImageBtn" data-toggle="modal" class="hidden"
 					data-target="#showBigImageModal"></button>
 				<div class="modal fade" tabindex="-1" role="dialog"

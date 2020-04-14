@@ -22,6 +22,9 @@ public class Node {
 	private Date updateDate;
 	private boolean isDelete;
 	private Integer countTopic;
+	private boolean addIndex;
+	private boolean addNav;
+	private Integer sort;
 
 	public Integer getNodeId() {
 		return nodeId;
@@ -135,13 +138,38 @@ public class Node {
 		this.countTopic = countTopic;
 	}
 
+	public boolean isAddIndex() {
+		return addIndex;
+	}
+
+	public void setAddIndex(boolean addIndex) {
+		this.addIndex = addIndex;
+	}
+
+	public boolean isAddNav() {
+		return addNav;
+	}
+
+	public void setAddNav(boolean addNav) {
+		this.addNav = addNav;
+	}
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
+
 	@Override
 	public String toString() {
-		return "Node [nodeId=" + nodeId + ", nodeCode=" + nodeCode + ", nodeTitle=" + nodeTitle + ", avatarNormal="
+		return "Node {nodeId=" + nodeId + ", nodeCode=" + nodeCode + ", nodeTitle=" + nodeTitle + ", avatarNormal="
 				+ avatarNormal + ", avatarMini=" + avatarMini + ", avatarLarge=" + avatarLarge + ", nodeDesc="
 				+ nodeDesc + ", tabId=" + tabId + ", url=" + url + ", parentNodeCode=" + parentNodeCode
 				+ ", createDate=" + createDate + ", updateDate=" + updateDate + ", isDelete=" + isDelete
-				+ ", countTopic=" + countTopic + "]";
+				+ ", countTopic=" + countTopic + ", addIndex=" + addIndex + ", addNav=" + addNav + ", sort=" + sort
+				+ "}";
 	}
 
 }

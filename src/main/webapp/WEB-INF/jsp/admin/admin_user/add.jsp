@@ -61,7 +61,7 @@
               		</c:forEach>
                 </p>
               </div>
-              <button type="submit" class="btn btn-xs btn-primary">保存</button>
+              <button type="submit" class="btn btn-primary">保存</button>
             </form>
           </div>
         </div>

@@ -22,7 +22,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">角色列表</h3>
         <shiro:hasPermission name="role:add">
-          <a href="/admin/role/add" class="btn btn-xs btn-primary pull-right">添加</a>
+          <a href="/admin/role/add" class="btn btn-xs btn-primary">添加</a>
         </shiro:hasPermission>
       </div>
       <!-- /.box-header -->

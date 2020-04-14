@@ -2,9 +2,11 @@ package cn.roothub.service.impl;
 
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import cn.roothub.dao.NodeDao;
 import cn.roothub.dto.PageDataBody;
 import cn.roothub.entity.Node;
@@ -77,7 +79,7 @@ public class NodeServiceImpl implements NodeService{
 
 	@Transactional
 	@Override
-	public void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+	public void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc, Integer sort) {
 		Node node = findById(nodeId);
 		// 先更新话题的节点名称
 		if(!nodeTitle.equals(node.getNodeTitle())) {
@@ -89,6 +91,7 @@ public class NodeServiceImpl implements NodeService{
 		node.setNodeDesc(nodeDesc);
 		node.setUrl("/n/" + nodeTitle);
 		node.setUpdateDate(new Date());
+		node.setSort(sort);
 		// 最后在更新节点
 		nodeDao.update(node);
 	}
@@ -115,7 +118,7 @@ public class NodeServiceImpl implements NodeService{
 	}
 
 	@Override
-	public void save(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc) {
+	public void save(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc, Integer sort) {
 		Node node = new Node();
 		node.setNodeTitle(nodeTitle);
 		node.setAvatarNormal(avatarNormal);
@@ -123,7 +126,24 @@ public class NodeServiceImpl implements NodeService{
 		node.setNodeDesc(nodeDesc);
 		node.setNodeCode(nodeTitle);
 		node.setUrl("/n/" + nodeTitle);
-		node.setUpdateDate(new Date());
+		node.setCreateDate(new Date());
+		node.setSort(sort);
 		nodeDao.insert(node);
 	}
+
+	@Override
+	public void update(Node node) {
+		nodeDao.update(node);
+	}
+
+	@Override
+	public List<Node> listForIndex() {
+		return nodeDao.listForIndex();
+	}
+
+	@Override
+	public List<Node> listForNav() {
+		return nodeDao.listForNav();
+	}
+	
 }

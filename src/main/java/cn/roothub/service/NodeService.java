@@ -60,6 +60,10 @@ public interface NodeService {
 	 */
 	List<Node> adjacencyNode(Node node);
 	
+	List<Node> listForIndex();
+	
+	List<Node> listForNav();
+	
 	/**
 	 * 后台节点列表
 	 * @param nodeTitle:节点名称
@@ -84,7 +88,9 @@ public interface NodeService {
 	 * @param avatarLarge:背景图
 	 * @param nodeDesc:节点描述
 	 */
-	void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc);
+	void update(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc, Integer sort);
+	
+	void update(Node node);
 	
 	/**
 	 * 删除节点
@@ -105,5 +111,5 @@ public interface NodeService {
 	 * @param avatarLarge
 	 * @param nodeDesc
 	 */
-	void save(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc);
+	void save(Integer nodeId, String nodeTitle, String avatarNormal, String avatarLarge, String nodeDesc, Integer sort);
 }

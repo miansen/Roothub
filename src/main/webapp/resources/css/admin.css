@@ -20,3 +20,62 @@
 .layui-laypage {
     margin: 0 0;
 }
+.switch{display:inline-block;}
+
+.bootstrap-switch{border-radius:22px;    
+
+width: 52px !important;height: 22px !important;
+
+    }   
+
+.bootstrap-switch .bootstrap-switch-handle-off, .bootstrap-switch .bootstrap-switch-handle-on, .bootstrap-switch .bootstrap-switch-label
+
+{
+
+padding:0px;
+
+    font-size: 12px;
+
+    display: inline-block;
+
+}
+
+.bootstrap-switch .bootstrap-switch-label
+
+{
+
+width:42px !important;
+
+height: 22px;
+
+border-radius:11px !important;
+
+position:relative;
+
+}
+
+.bootstrap-switch .bootstrap-switch-handle-on{
+
+width: 52px !important;
+
+    margin-right: -22px;
+
+    padding-right: 22px;
+
+    }
+
+.bootstrap-switch .bootstrap-switch-handle-off{
+
+width: 52px !important;
+
+    border-radius: 11px;
+
+    margin-left: -11px;
+
+    padding-right: 2px;
+
+    position:relative;
+
+    color:#fff !important;
+
+}

@@ -43,6 +43,10 @@
             <a href="${node.avatarLarge}" target="_blank" id="background-href"><img src="${node.avatarLarge}" width="50" alt="" id="background-img"></a>
           </div>
           <div class="form-group">
+            <label>排序</label>
+            <input type="text" name="sort" value="${node.sort}" class="form-control node-sort">
+          </div>
+          <div class="form-group">
             <label for="">描述</label>
             <textarea name="description" rows="7" class="form-control node-desc">${node.nodeDesc}</textarea>
           </div>
@@ -102,7 +106,10 @@
   			var avatarLarge = $(".avatarLarge").val();
   			// 描述
   			var nodeDesc = $(".node-desc").val();
-  			var data = {nodeTitle, avatarNormal, avatarLarge, nodeDesc};
+  			// 排序
+  			var sort = $(".node-sort").val();
+  			
+  			var data = {nodeTitle, avatarNormal, avatarLarge, nodeDesc, sort};
   			if(confirm("确定要添加此板块吗？")){
   				if(!nodeTitle){
   					toast('板块名称不能为空');

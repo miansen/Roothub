@@ -17,9 +17,12 @@
         <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
         <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
         <result column="is_delete" jdbcType="BIT" property="isDelete"/>
+        <result column="add_index" jdbcType="BIT" property="addIndex"/>
+        <result column="add_nav" jdbcType="BIT" property="addNav"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
     </resultMap>
     <sql id="Base_Column_List">
-        node_id, node_code, node_title, avatar_normal, avatar_mini, avatar_large,node_desc,tab_id,url,parent_node_code,create_date,update_date,is_delete
+        node_id, node_code, node_title, avatar_normal, avatar_mini, avatar_large,node_desc,tab_id,url,parent_node_code,create_date,update_date,is_delete,add_index,add_nav,sort
     </sql>
     <!-- 查询全部节点 -->
     <select id="selectAll" resultType="Node">
@@ -148,6 +151,9 @@
         	a.avatar_large,
         	a.node_desc,
         	a.create_date,
+        	a.add_index,
+        	a.add_nav,
+        	a.sort,
         	(SELECT COUNT(1) FROM topic b WHERE b.is_delete = 0 AND a.node_title = b.node_title) count_topic
         FROM
         	node a
@@ -162,6 +168,50 @@
                 ,#{limit,jdbcType=INTEGER}
             </if>
         </if>
+    </select>
+    
+    <select id="listForIndex" resultType="Node">
+        SELECT
+        	a.node_id,
+        	a.node_title,
+        	a.avatar_normal,
+        	a.avatar_large,
+        	a.node_desc,
+        	a.create_date,
+        	a.add_index,
+        	a.add_nav,
+        	a.sort
+        FROM
+        	node a
+        WHERE 
+        	a.is_delete = 0
+        AND 
+        	a.add_index = 1
+        ORDER BY 
+        	a.sort 
+        ASC
+    </select>
+    
+    <select id="listForNav" resultType="Node">
+        SELECT
+        	a.node_id,
+        	a.node_title,
+        	a.avatar_normal,
+        	a.avatar_large,
+        	a.node_desc,
+        	a.create_date,
+        	a.add_index,
+        	a.add_nav,
+        	a.sort
+        FROM
+        	node a
+        WHERE 
+        	a.is_delete = 0
+        AND 
+        	a.add_nav = 1
+        ORDER BY 
+        	a.sort 
+        ASC
     </select>
     
     <!-- 统计后台节点列表 -->
@@ -192,7 +242,10 @@
         	parent_node_code = #{parentNodeCode},
         	create_date = #{createDate},
         	update_date = #{updateDate},
-        	is_delete = #{isDelete}
+        	is_delete = #{isDelete},
+        	add_index = #{addIndex},
+        	add_nav = #{addNav},
+        	sort = #{sort}
         WHERE 
         	node_id = #{nodeId}
     </update>
@@ -211,7 +264,10 @@
         parent_node_code,
         create_date,
         update_date,
-        is_delete
+        is_delete,
+        add_index,
+        add_nav,
+        sort
         ) 
         values 
         (#{nodeCode},
@@ -225,7 +281,10 @@
         #{parentNodeCode},
         #{createDate},
         #{updateDate},
-        #{isDelete}) 
+        #{isDelete},
+        #{addIndex},
+        #{addNav},
+        #{sort}) 
     </insert>
     <!-- 删除节点 -->
     <update id="deleteById" parameterType="java.lang.Integer">

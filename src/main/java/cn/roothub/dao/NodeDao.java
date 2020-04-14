@@ -90,6 +90,10 @@ public interface NodeDao {
 	 */
 	List<Node> listForAdmin(@Param("nodeTitle") String nodeTitle, @Param("start") Integer start, @Param("limit") Integer limit);
 	
+	List<Node> listForIndex();
+	
+	List<Node> listForNav();
+	
 	/**
 	 * 统计节点列表
 	 * @param nodeTitle:节点名称

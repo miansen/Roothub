@@ -292,7 +292,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void updateAdmin(User user) {
 		// 删除Redis里面的缓存
-		stringRedisTemplate.delete(findById(user.getUserId()).getThirdAccessToken());
+		// stringRedisTemplate.delete(findById(user.getUserId()).getThirdAccessToken());
 		// 如果密码不为空，则加密在保存
 		if(!StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));

@@ -1,5 +1,6 @@
 package cn.roothub.web.front;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,6 @@ import cn.roothub.entity.Node;
 import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
 import cn.roothub.exception.ApiAssert;
-import cn.roothub.entity.Tab;
 import cn.roothub.entity.Tag;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.FollowService;
@@ -83,29 +83,35 @@ public class IndexController extends BaseController {
 	private String index(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(value = "p", defaultValue = "1") Integer p,
 			@RequestParam(value = "tab", defaultValue = "all") String tab,
-			@RequestParam(value = "statusCd", required = false) String statusCd) {
-		PageDataBody<Topic> page = topicService.pageAllByTabAndStatusCd(p, 25, tab, statusCd);
-
-		PageDataBody<Topic> page1100 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1100");
-		PageDataBody<Topic> page1200 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1200");
-		PageDataBody<Topic> page1300 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1300");
-		PageDataBody<Topic> page1400 = topicService.pageAllByTabAndStatusCd(1, 5, null, "1400");
-		PageDataBody<Topic> pageNew = topicService.pageAllByTabAndStatusCd(1, 5, "new", null);
-
-		List<Tab> tabList = tabService.selectAll();
-		List<Node> nodeList = nodeService.findAllByTab(tab, 0, 5);
-		// 热门话题榜
-		List<Topic> findHot = topicService.findHot(0, 5);
-		// 今日等待回复的话题
-		List<Topic> findTodayNoReply = topicService.findTodayNoReply(0, 5);
-
-		// 最热标签
-		PageDataBody<Tag> tag = topicService.findByTag(1, 10);
-		List<Node> nodeList2 = nodeService.findAll(0, 10);
+			@RequestParam(value = "node", required = false) String node) {
+		
+		PageDataBody<Topic> page = topicService.pageAllByTabAndNode(p, 25, tab, node);
+		
+		Map<String, List<Topic>> map = new LinkedHashMap<>();
+		map.put("精华帖子", topicService.findIndexHot(1, 5, "good").getList());
+		map.put("热门帖子", topicService.findIndexHot(1, 5, "hot").getList());
+		map.put("最新帖子", topicService.findIndexHot(1, 5, "newest").getList());
+		map.put("等待回复的帖子", topicService.findIndexHot(1, 5, "noReply").getList());
+		List<Node> nodeListForIndex = nodeService.listForIndex();
+		nodeListForIndex.stream().forEach(n -> {
+			map.put(n.getNodeTitle(), topicService.pageAllByTabAndNode(p, 25, tab, n.getNodeTitle()).getList());
+		});
+		
+		// 今日热门帖子
+		List<Topic> hotTopicList = topicService.findHot(0, 5);
+				
+		// 今日等待回复的帖子
+		List<Topic> noReplyTopicList = topicService.findTodayNoReply(0, 5);
+		
+		// 热门板块
+		List<Node> hotNodeList = nodeService.findAll(0, 10);
+		
 		// 注册会员的数量
 		int countUserAll = userService.countUserAll();
-		// 所有话题的数量
+		
+		// 所有帖子的数量
 		int countAllTopic = topicService.countAllTopic(null, null);
+		
 		// 所有评论的数量
 		int countAllReply = replyService.countAll();
 
@@ -125,27 +131,20 @@ public class IndexController extends BaseController {
 		}
 
 		request.setAttribute("page", page);
-		request.setAttribute("findHot", findHot);
-		request.setAttribute("findTodayNoReply", findTodayNoReply);
-		request.setAttribute("tabList", tabList);
-		request.setAttribute("nodeList", nodeList);
-		request.setAttribute("nodeList2", nodeList2);
+		request.setAttribute("hotTopicList", hotTopicList);
+		request.setAttribute("noReplyTopicList", noReplyTopicList);
+		request.setAttribute("hotNodeList", hotNodeList);
 		request.setAttribute("tab", tab);
-		request.setAttribute("tag", tag);
 		request.setAttribute("countUserAll", countUserAll);
 		request.setAttribute("countAllTopic", countAllTopic);
 		request.setAttribute("countAllReply", countAllReply);
-		request.setAttribute("statusCd", statusCd == null ? "9999" : statusCd);
-		request.setAttribute("statusName", request.getParameter("statusName"));
-		request.setAttribute("page1100", page1100.getList());
-		request.setAttribute("page1200", page1200.getList());
-		request.setAttribute("page1300", page1300.getList());
-		request.setAttribute("page1400", page1400.getList());
-		request.setAttribute("pageNew", pageNew.getList());
-		if (!StringUtils.isEmpty(statusCd)) {
-			return "statusCd" + statusCd;
-		} else {
+		request.setAttribute("map", map);
+		if (StringUtils.isEmpty(node)) {
+			request.setAttribute("nodeName", "index");
 			return "index";
+		} else {
+			request.setAttribute("nodeName", node);
+			return "node";
 		}
 	}
 

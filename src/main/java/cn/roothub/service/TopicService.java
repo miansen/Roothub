@@ -38,7 +38,7 @@ public interface TopicService {
 	 * @param tab
 	 * @return
 	 */
-	PageDataBody<Topic> pageAllByTabAndStatusCd(Integer pageNumber, Integer pageSize,String tab, String statusCd);
+	PageDataBody<Topic> pageAllByTabAndNode(Integer pageNumber, Integer pageSize,String tab, String node);
 	
 	/**
 	 * 根据节点查询所有话题

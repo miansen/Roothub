@@ -95,10 +95,5 @@
   </div>
 </div>
 <jsp:include page="../components/foot.jsp"></jsp:include>
-<script type="text/javascript">
-  $(function(){
-    $("#shezhili").addClass("active");
-  });
-</script>
 </body>
 </html>

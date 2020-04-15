@@ -9,7 +9,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>学习互助系统-后台管理</title>
+    <title>Roothub-后台管理</title>
     <link rel="icon" href="/resources/images/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -50,10 +50,10 @@
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <a href="javascript:;"><b>学习互助系统</b>管理平台</a>
+      <a href="javascript:;"><b>Roothub</b>管理平台</a>
     </div>
     <div class="login-box-body">
-      <!-- <p class="login-box-msg">学习互助系统 管理平台登录</p> -->
+      <!-- <p class="login-box-msg">Roothub 管理平台登录</p> -->
       <c:if test="${error != null}">
         <div class="text-red">${error}</div>
       </c:if>

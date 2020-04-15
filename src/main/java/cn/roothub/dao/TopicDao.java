@@ -21,7 +21,7 @@ public interface TopicDao {
 	 * @param limit
 	 * @return
 	 */
-    List<Topic> selectAllByTabAndStatusCd(@Param("start") Integer start, @Param("limit") Integer limit,@Param("tab") String tab,@Param("statusCd") String statusCd);
+    List<Topic> selectAllByTabAndNode(@Param("start") Integer start, @Param("limit") Integer limit,@Param("tab") String tab,@Param("node") String node);
     
     /**
      * 根据节点查询所有话题

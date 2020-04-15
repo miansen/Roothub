@@ -39,6 +39,7 @@
             <th>邮箱</th>
             <th>积分</th>
             <th>时间</th>
+            <th>禁用</th>
             <th>操作</th>
           </tr>
           </thead>
@@ -50,6 +51,14 @@
               <td>${user.email}</td>
               <td>${user.score}</td>
               <td><fmt:formatDate type="both" value="${user.createDate}" /></td>
+              <c:choose>
+                	<c:when test="${user.isBlock == true}">
+                		<td><input name="userBlock" type="checkbox" value="${user.userId}" checked="checked"></td>
+                	</c:when>
+                	<c:otherwise>
+                		<td><input name="userBlock" type="checkbox" value="${user.userId}"></td>
+                	</c:otherwise>
+              </c:choose>
               <td>
                   <shiro:hasPermission name="user:edit">
                   	<a href="/admin/user/edit?id=${user.userId}" class="btn btn-xs btn-warning">编辑</a>
@@ -76,6 +85,21 @@
   	 	var limit = ${page.pageSize};//每页显示的条数
   	 	var url = "?username="+username+"&email="+email+"&p=";//url 	 	
   	 	paginate(count,limit,p,url);
+  	 	
+  	 	$('[name="userBlock"]').bootstrapSwitch({
+  	       onColor:"success",
+  	       offColor:"danger",
+  	       onSwitchChange:function(event,status){
+  	    	 var id = $(this).val();
+ 	    	   $.get("/admin/user/block?id=" + id + "&status=" + status, function(data){
+				if(data.success === true){
+					toast(data.error, "success");
+				}else{
+					toast(data.error);
+				}
+			})
+  	      }
+  	    });
   	});
   	
   	// 删除用户

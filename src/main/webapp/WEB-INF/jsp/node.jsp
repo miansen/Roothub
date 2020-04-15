@@ -4,14 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>学习互助系统-帖子</title>
+  <title>Roothub-${nodeName}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="/resources/images/favicon.ico">
-  <!-- <script src="/resources/js/logout.js"></script> -->
-  <!-- 引入layui.css -->
   <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all">
 </head>
 <body>
@@ -22,32 +19,19 @@
         <div class="panel panel-default">
         	<div class="tab panel-heading">
         	<ul class="nav nav-pills" id="tab">
-        	<%-- <c:forEach var="item" items="${tabList}" varStatus="status">
-        		<li class="${item.tabName}"><a href="/?tab=${item.tabName}" class="tab">${item.tabDesc}</a></li>
-        	</c:forEach> --%>
-        	<li class="all"><a href="/?tab=all&statusCd=1000">全部</a></li>
-        	<li class="hot"><a href="/?tab=hot&statusCd=1000">最热</a></li>
-        	<li class="new"><a href="/?tab=new&statusCd=1000">最新</a></li>
-        	<li class="lonely"><a href="/?tab=lonely&statusCd=1000">无人问津</a></li>
+        	<li class="all"><a href="/?tab=all&node=${nodeName}">全部</a></li>
+        	<li class="hot"><a href="/?tab=hot&node=${nodeName}">最热</a></li>
+        	<li class="new"><a href="/?tab=new&node=${nodeName}">最新</a></li>
+        	<li class="lonely"><a href="/?tab=lonely&node=${nodeName}">无人问津</a></li>
         	<!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
         	</ul>
     		</div>
-    		<!-- 节点列表 -->
-    		<%-- <c:if test="${fn:length(nodeList) > 0}">
-          <div class="section node">
-            <ul class="nav nav-pills" id="node">
-              <c:forEach var="item" items="${nodeList}" varStatus="status">
-              <li class="active"><a href="${item.url}">${item.nodeTitle}</a></li>
-            </c:forEach>
-          </ul>
-        </div>
-        </c:if> --%>
         <div class="panel-body paginate-bot">
           <c:forEach var="item" items="${page.list}">
           <div class="media">
           <c:if test="${fn:length(item.avatar) > 0}">
             <div class="media-left">
-              <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
+              <img src="${item.avatar}" class="avatar img-circle" alt="">
             </div>
             </c:if>
             <div class="media-body">
@@ -61,7 +45,6 @@
                 	</c:otherwise>
                 </c:choose>
               </div>
-              <%-- <div class="excerpt"><span>${item.excerpt}</span></div> --%>
               <div class="tip">
               <p class="gray">
               <c:if test="${item.top}">
@@ -85,22 +68,7 @@
                 </c:if>
                 
                 <span>•</span>
-                <span><fmt:formatDate type="date" 
-                  value="${item.createDate}" /></span>
-                  <%-- <span>${baseEntity.formatDate(item.createDate)}</span> --%>
-                  <%-- <span class="formate-date">${item.createDate}</span> --%>
-                  
-                  <!-- 最后回复用户 -->
-                  <%-- <c:if test="${fn:length(item.lastReplyAuthor) > 0}">
-                  <span>•</span>
-                  <span>最后回复来自 <a href="/user/${item.lastReplyAuthor}">${item.lastReplyAuthor}</a></span>
-                  </c:if> --%>
-                  
-                  <!-- 标签 -->
-                  <%-- <c:if test="${item.tag != null}">
-                  <span>•</span>
-                  <a href="/tag/${item.tag}"><span class="label label-success">${item.tag}</span></a>
-                  </c:if> --%>
+                <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
                 </p>
                 </div>
               </div>
@@ -171,11 +139,11 @@
       <div class="panel-heading"><span style="color: #ccc;">今日热议主题</span></div>
       <table class="table" style="font-size: 14px;">
         <tbody>
-        <c:forEach var="item" items="${findHot}">
+        <c:forEach var="item" items="${hotTopicList}">
           <tr>
           <c:if test="${fn:length(item.avatar) > 0}">
           <td width="24" valign="middle" align="center">
-                <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"><!-- </a> -->
+                <img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
             </td>
             </c:if>
             <td>
@@ -198,7 +166,7 @@
       <div class="panel-heading"><span style="color: #ccc;">今日等待回复主题</span></div>
       <table class="table" style="font-size: 14px;">
         <tbody>
-        <c:forEach var="item" items="${findTodayNoReply}">
+        <c:forEach var="item" items="${noReplyTopicList}">
           <tr>
           <td width="24" valign="middle" align="center">
                 <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
@@ -227,17 +195,12 @@
       </div>
     </div>
   </div>
-    <!-- 最热标签 -->
     <div class="panel panel-default">
     <div class="panel-heading"><span style="color: #ccc;">热门板块</span></div>
     <div class="panel-body">
       <div class="row">
-      <c:forEach var="item" items="${nodeList2}">
+      <c:forEach var="item" items="${hotNodeList}">
           <div class="col-md-6" style="margin-bottom: 10px; padding-left: 10px;">
-            <%-- <a href="${item.url}">
-              <span>n/${item.nodeTitle}</span>
-            </a> --%>
-            <%-- <span class="text-muted">x ${item.number}</span> --%>
             <a href="${item.url}"><span class="label label-primary text-muted">${item.nodeTitle}</span></a>
             <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
           </div>
@@ -256,7 +219,7 @@
                 <td width="auto" align="left"><strong>${countUserAll}</strong></td>
             </tr>
             <tr>
-                <td width="80" align="right" style="font-size: 14px;"><span class="gray">主题：</span></td>
+                <td width="80" align="right" style="font-size: 14px;"><span class="gray">帖子：</span></td>
                 <td width="auto" align="left"><strong>${countAllTopic}</strong></td>
             </tr>
             <tr>

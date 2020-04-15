@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="roothub" uri="/WEB-INF/tld/roothub.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -21,8 +22,7 @@ var _hmt = _hmt || [];
 </script>
 </head>
 <body>
-	<nav class="navbar navbar-default"
-		style="border-radius: 0; margin-bottom: 10px;">
+	<nav class="navbar navbar-default" style="border-radius: 0; margin-bottom: 10px;background-color: #ffff;border-color: #fff;">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -33,7 +33,7 @@ var _hmt = _hmt || [];
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" style="font-weight: 700; font-size: 27px;"
-					href="/">学习互助系统</a>
+					href="/">Roothub</a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse header-navbar">
 				<form class="navbar-form navbar-left hidden-xs hidden-sm"
@@ -47,6 +47,7 @@ var _hmt = _hmt || [];
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hidden-xs" id="shouye"><a href="/">首页</a></li>
 					<li id="nodes"><a href="/nodes">板块</a></li>
+					<li class="hidden-xs"><a href="/topic/create">发布帖子</a></li>
 					<!-- <li id="biaoqian"><a href="/tags">标签</a></li> -->
 					<c:choose>
                 	<c:when test="${sessionScope.user != null}">
@@ -63,7 +64,6 @@ var _hmt = _hmt || [];
                 	<c:otherwise>
                 		<li id="loginli"><a href="/login">登录</a></li>
 						<li id="zhuceli"><a href="/register">注册</a></li>		
-						<!-- <li class="hidden-md hidden-lg"><a href="/topic/create">发布话题</a></li> -->
                 	</c:otherwise>
                 </c:choose>
 				</ul>
@@ -71,19 +71,7 @@ var _hmt = _hmt || [];
 		</div>
 	</nav>
 	
-	<div id="tab-nav">
-		<div class="container" style="height: 45px;">
-			<ul style="padding-left: 0px">
-				<li class="li-cate"><a href="/" class="${statusCd eq 9999 ? "li-cate-active" : "li-cate-a"}">首页</a></li>
-				<li class="li-cate"><a href="/?statusCd=1000" class="${statusCd eq 1000 ? "li-cate-active" : "li-cate-a"}">帖子管理</a></li>
-				<li class="li-cate"><a href="/?statusCd=1100" class="${statusCd eq 1100 ? "li-cate-active" : "li-cate-a"}">学习动态</a></li>
-				<li class="li-cate"><a href="/?statusCd=1200" class="${statusCd eq 1200 ? "li-cate-active" : "li-cate-a"}">教学动态</a></li>
-				<li class="li-cate"><a href="/?statusCd=1300" class="${statusCd eq 1300 ? "li-cate-active" : "li-cate-a"}">招募管理</a></li>
-				<li class="li-cate"><a href="/?statusCd=1400" class="${statusCd eq 1400 ? "li-cate-active" : "li-cate-a"}">资讯管理</a></li>
-			    <div class="clear"></div>
-			</ul>
-		</div>
-		</div>
+	<roothub:nav />
 		
 	<div class="container" style="padding: 0 25px;">
 		<form class="hidden-lg hidden-md" style="margin: 0 -10px;"

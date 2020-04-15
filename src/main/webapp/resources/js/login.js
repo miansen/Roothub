@@ -1,5 +1,5 @@
 $(function(){
-          $("#loginli").addClass("active");
+          // $("#loginli").addClass("active");
           $("#form").on("click","#btn",function(){
             var username = $("#username").val();
             var password = $("#password").val();

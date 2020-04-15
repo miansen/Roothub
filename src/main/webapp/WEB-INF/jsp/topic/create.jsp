@@ -43,7 +43,7 @@
              </c:forEach>
            </select>
          </div> --%>
-         <c:if test="${statusCd == 1000}">
+         
          	<div class="form-group">
           <label for="node">板块</label>
           <select id="node" class="form-control" name="node">
@@ -52,7 +52,6 @@
              </c:forEach>
           </select>
         </div>
-        </c:if>
         <div class="form-group" style="display: none;">
           <div class="form-group">
             <label for="title">标签</label>
@@ -64,7 +63,6 @@
     </div>
   </div>
 </div>
-<c:if test="${statusCd == 1000}">
 <div class="col-md-3 hidden-sm hidden-xs">
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -74,11 +72,10 @@
       <p>• 在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。</p>
       <p>• 保持对陌生人的友善。用知识去帮助别人。</p>
       <p>• 如果是转载的文章，请务必只填上原文的URL，内容就不用复制过来了。</p>
-      <p>• 请为你的主题选择一个节点。恰当的归类会让你发布的信息更加有用。</p>
+      <p>• 请为你的帖子选择一个板块。恰当的归类会让你发布的信息更加有用。</p>
     </div>
   </div>
 </div>
-</c:if>
 </div>
 </div>
 </div>
@@ -86,6 +83,7 @@
 <script src="/resources/js/jquery.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/wangEditor/wangEditor.min.js"></script>
+<script src="/resources/js/emotions.js"></script>
 <!-- <script src="/resources/js/topic/node.js"></script> -->
 <script type="text/javascript">
   $(function () {
@@ -94,29 +92,52 @@
     editor.customConfig.uploadFileName = 'file';
     editor.customConfig.uploadImgServer = '/common/upload';
     editor.customConfig.menus = [
-    	  'head',  // 标题
-    	  'bold',  // 粗体
-    	  'italic',  // 斜体
-    	  'underline',  // 下划线
-    	  'strikeThrough',  // 删除线
-    	  'link',  // 插入链接
-    	  'list',  // 列表
-    	  'quote',  // 引用
-    	  'emoticon',  // 表情
-    	  'image',  // 插入图片
-    	  'table',  // 表格
-    	  'code',  // 插入代码
-    	  'undo',  // 撤销
-    	  'redo'  // 重复
-        ];
+									'head',  // 标题
+									'bold',  // 粗体
+									'fontSize',  // 字号
+									'fontName',  // 字体
+									'italic',  // 斜体
+									'underline',  // 下划线
+									'strikeThrough',  // 删除线
+									'foreColor',  // 文字颜色
+									'backColor',  // 背景颜色
+									'link',  // 插入链接
+									'list',  // 列表
+									'justify',  // 对齐方式
+									'quote',  // 引用
+									'emoticon',  // 表情
+									'image',  // 插入图片
+									'table',  // 表格
+									'video',  // 插入视频
+									'code',  // 插入代码
+									'undo',  // 撤销
+									'redo'  // 重复
+						        ];
+    editor.customConfig.emotions = [
+                                    	{
+                                    		title: '默认',
+                                    		type: 'image',
+                                    		content: defaultEmotions
+                                    	},
+                                    	{
+                                    		title: '动漫',
+                                    		type: 'image',
+                                    		content: animeEmotions
+                                    	},
+                                    	{
+                                    		title: 'GIF',
+                                    		type: 'image',
+                                    		content: gifEmotions
+                                    	},
+                                    	{
+                                    		title: '其他',
+                                    		type: 'image',
+                                    		content: otherEmotions
+                                    	}
+                                    ];
         editor.create();
 
-        function commentThis(username, commentId) {
-          $("#replyAuthor").text(username);
-          $("#commentId").val(commentId);
-          $("#replyP").removeClass("hidden");
-        }
-
+        
         function cancelReply() {
           $("#replyAuthor").text("");
           $("#commentId").val("");

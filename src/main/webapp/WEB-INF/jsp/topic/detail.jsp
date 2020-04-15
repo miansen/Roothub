@@ -136,6 +136,7 @@
 <!-- <script src="/resources/js/login_info.js"></script> -->
 <script src="/resources/js/formatDate.js"></script>
 <script src="/resources/js/topic/detail.js"></script>
+<script src="/resources/js/emotions.js"></script>
 <!-- <script src="/resources/js/topic/other-topic.js"></script> -->
 <script type="text/javascript">
 	/* 获取登录信息 */
@@ -163,21 +164,49 @@
 	editor.customConfig.uploadFileName = 'file';
 	editor.customConfig.uploadImgServer = '/common/wangEditorUpload';
 	editor.customConfig.menus = [
-	  'head',  // 标题
-	  'bold',  // 粗体
-	  'italic',  // 斜体
-	  'underline',  // 下划线
-	  'strikeThrough',  // 删除线
-	  'link',  // 插入链接
-	  'list',  // 列表
-	  'quote',  // 引用
-	  'emoticon',  // 表情
-	  'image',  // 插入图片
-	  'table',  // 表格
-	  'code',  // 插入代码
-	  'undo',  // 撤销
-	  'redo'  // 重复
-	  ];
+	                 			'head',  // 标题
+	                			'bold',  // 粗体
+	                			'fontSize',  // 字号
+	                			'fontName',  // 字体
+	                			'italic',  // 斜体
+	                			'underline',  // 下划线
+	                			'strikeThrough',  // 删除线
+	                			'foreColor',  // 文字颜色
+	                			'backColor',  // 背景颜色
+	                			'link',  // 插入链接
+	                			'list',  // 列表
+	                			'justify',  // 对齐方式
+	                			'quote',  // 引用
+	                			'emoticon',  // 表情
+	                			'image',  // 插入图片
+	                			'table',  // 表格
+	                			'video',  // 插入视频
+	                			'code',  // 插入代码
+	                			'undo',  // 撤销
+	                			'redo'  // 重复
+	                        ];
+	editor.customConfig.emotions = [
+                                	{
+                                		title: '默认',
+                                		type: 'image',
+                                		content: defaultEmotions
+                                	},
+                                	{
+                                		title: '动漫',
+                                		type: 'image',
+                                		content: animeEmotions
+                                	},
+                                	{
+                                		title: 'GIF',
+                                		type: 'image',
+                                		content: gifEmotions
+                                	},
+                                	{
+                                		title: '其他',
+                                		type: 'image',
+                                		content: otherEmotions
+                                	}
+                                ];
 	  editor.create();
 
 	  function commentThis(username, commentId) {

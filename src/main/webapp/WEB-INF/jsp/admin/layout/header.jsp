@@ -9,7 +9,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>学习互助系统-后台管理</title>
+    <title>Roothub-后台管理</title>
     <link rel="icon" href="/resources/images/favicon.ico">
     <link rel="stylesheet" href="/resources/layui/css/layui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -62,8 +62,8 @@
     <header class="main-header" style="position: fixed; width: 100%">
   <!-- Logo -->
   <a href="/admin/index" class="logo">
-    <span class="logo-mini"><b>学习互助系统</b></span>
-    <span class="logo-lg"><b>学习互助系统</b>后台管理</span>
+    <span class="logo-mini"><b>Roothub</b></span>
+    <span class="logo-lg"><b>Roothub</b>后台管理</span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">

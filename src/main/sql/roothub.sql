@@ -107,6 +107,9 @@ CREATE TABLE `node` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   `update_date` datetime DEFAULT NULL COMMENT '修改时间',
   `is_delete` tinyint(1) DEFAULT NULL COMMENT '是否删除 0:否 1:是',
+  `add_index` tinyint(1) DEFAULT NULL COMMENT '添加到首页',
+  `add_nav` tinyint(1) DEFAULT NULL COMMENT '添加到导航栏',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
   PRIMARY KEY (`node_id`),
   KEY `key_node_code` (`node_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='节点表';

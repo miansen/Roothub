@@ -1,4 +1,4 @@
-$("#loginuser").addClass("active");
+// $("#loginuser").addClass("active");
 var userId = $("#user_id").attr("title");//当前主页用户的ID
 var authorName = $("#user_id").text();//当前主页用户的昵称
 var userName = $(".navbar .container ul #loginuser").text();//当前登录用户的昵称
@@ -318,7 +318,7 @@ function fansList(pageNumber) {
 			p : pageNumber
 		},
 		success : function(data) {
-			$(".itemList").html('<ul class="fans-ul"></ul>');
+			$(".itemList").html('<ul class="fans-ul" style="margin-bottom: 0px;"></ul>');
 			for(var i = 0;i < data.data.list.length; i++){
 				
 				$.ajax({
@@ -337,17 +337,17 @@ function fansList(pageNumber) {
 							//$("#follow-btn").text("已关注");
 							//$(".itemList ul .item").eq(data.data.list[i]).(".follow-btn").text("已关注");
 							$(".fans-ul").append("\
-								<li data-v-dc1504f6=\"\" class=\"item\">\
+								<li data-v-dc1504f6=\"\" class=\"item\" style=\"border-bottom: 1px solid #e2e2e2;\">\
 								<div data-v-dc1504f6=\"\" itemscope=\"itemscope\" itemtype=\"http://schema.org/Person\" class=\"user\">\
 								<a data-v-dc1504f6=\"\" href=\"/user/"+data.data.list[i].userName+"\" \
 								class=\"link\">\
 								<div class=\"media-left\">\
 								<img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
 								</div>\
-								<div data-v-dc1504f6=\"\" class=\"info-box\">\
+								<div data-v-dc1504f6=\"\" class=\"info-box\" style=\"padding-top: 25px;margin-bottom: 0px;box-shadow:0 0px\">\
 								<div data-v-dc1504f6=\"\" class=\"username\" title=\""+data.data.list[i].userId+"\">"+data.data.list[i].userName+"</div>\
 								<div data-v-dc1504f6=\"\" class=\"detail\">"+data.data.list[i].signature+"</div>\
-								</div><button data-v-dc1504f6=\"\" class=\"follow-btn\">已关注</button>\
+								</div><button data-v-dc1504f6=\"\" class=\"follow-btn\" style=\"display: none\">已关注</button>\
 								</a>\
 								</div>\
 								</li>");
@@ -355,14 +355,14 @@ function fansList(pageNumber) {
 							//$(".follow-btn").text("关注");
 							//$(".itemList ul .item").eq(data.data.list[i]).(".follow-btn").text("已关注");
 							$(".fans-ul").append("\
-								<li data-v-dc1504f6=\"\" class=\"item\">\
+								<li data-v-dc1504f6=\"\" class=\"item\" style=\"border-bottom: 1px solid #e2e2e2;\">\
 								<div data-v-dc1504f6=\"\" itemscope=\"itemscope\" itemtype=\"http://schema.org/Person\" class=\"user\">\
 								<a data-v-dc1504f6=\"\" href=\"/user/"+data.data.list[i].userName+"\" \
 								class=\"link\">\
 								<div class=\"media-left\">\
 								<img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
 								</div>\
-								<div data-v-dc1504f6=\"\" class=\"info-box\">\
+								<div data-v-dc1504f6=\"\" class=\"info-box\" style=\"padding-top: 25px;margin-bottom: 0px;box-shadow:0 0px\">\
 								<div data-v-dc1504f6=\"\" class=\"username\" title=\""+data.data.list[i].userId+"\">"+data.data.list[i].userName+"</div>\
 								<div data-v-dc1504f6=\"\" class=\"detail\">"+data.data.list[i].signature+"</div>\
 								</div>\
@@ -371,17 +371,17 @@ function fansList(pageNumber) {
 								</li>");
 						}else{
 							$(".fans-ul").append("\
-								<li data-v-dc1504f6=\"\" class=\"item\">\
+								<li data-v-dc1504f6=\"\" class=\"item\" style=\"border-bottom: 1px solid #e2e2e2;\">\
 								<div data-v-dc1504f6=\"\" itemscope=\"itemscope\" itemtype=\"http://schema.org/Person\" class=\"user\">\
 								<a data-v-dc1504f6=\"\" href=\"/user/"+data.data.list[i].userName+"\" \
 								class=\"link\">\
 								<div class=\"media-left\">\
 								<img src=\""+data.data.list[i].avatar+"\" class=\"avatar img-circle\" alt=\"\">\
 								</div>\
-								<div data-v-dc1504f6=\"\" class=\"info-box\">\
+								<div data-v-dc1504f6=\"\" class=\"info-box\" style=\"padding-top: 25px;margin-bottom: 0px;box-shadow:0 0px\">\
 								<div data-v-dc1504f6=\"\" class=\"username\" title=\""+data.data.list[i].userId+"\">"+data.data.list[i].userName+"</div>\
 								<div data-v-dc1504f6=\"\" class=\"detail\">"+data.data.list[i].signature+"</div>\
-								</div><button data-v-dc1504f6=\"\" class=\"follow-btn\">关注</button>\
+								</div><button data-v-dc1504f6=\"\" class=\"follow-btn\" style=\"display: none\">关注</button>\
 								</a>\
 								</div>\
 								</li>");

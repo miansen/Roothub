@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import cn.roothub.dto.Result;
+import cn.roothub.entity.Node;
 import cn.roothub.entity.User;
 import cn.roothub.service.UserService;
 import cn.roothub.util.StringUtil;
@@ -115,4 +116,24 @@ public class UserAdminController {
         // CustomDateEditor为自定义日期编辑器
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
+	
+	/**
+	 * 锁定用户
+	 * 
+	 * @param id
+	 * @param status
+	 * @return
+	 */
+	@RequiresPermissions("user:edit")
+	@RequestMapping(value = "/block",method = RequestMethod.GET)
+	@ResponseBody
+	public Result<String> block(@RequestParam(value = "id") Integer id, @RequestParam(value = "status") boolean status){
+		User user = userService.findById(id);
+		if (user == null) {
+			return new Result<>(false, "用户不存在");
+		}
+		user.setIsBlock(status);
+		userService.updateUser(user);
+		return new Result<>(true, "操作成功");
+	}
 }

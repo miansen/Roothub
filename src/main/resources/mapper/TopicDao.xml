@@ -56,14 +56,14 @@
         status_cd,node_slug,node_title,remark,avatar,url
     </sql>
 	<!-- 根据板块查询所有话题 -->
-	<select id="selectAllByTabAndStatusCd" resultType="Topic">
+	<select id="selectAllByTabAndNode" resultType="Topic">
 		SELECT
         <include refid="Base_Column_List"/>
 		FROM
 			topic
 		WHERE is_delete = '0'
-		<if test="statusCd != null">
-		AND status_cd = #{statusCd}
+		<if test="node != null">
+		AND node_title = #{node}
 		</if>
 		<!-- order by top desc,create_date desc,last_reply_time desc -->
 		<if test="tab != null">
@@ -246,7 +246,8 @@
             </if>
         </if>
      </select>
-      <!-- 首页-热门话题 -->
+     
+      <!-- 首页-帖子 -->
 	<select id="selectIndexHot" resultType="Topic">
 		SELECT
         <include refid="Base_Column_List"/>
@@ -258,21 +259,31 @@
 			and
 				good = 1
 			order by
+				create_date desc
+		</if>
+		<if test='tab == "top"'>
+			and
+				top = 1
+			order by
+				create_date desc
+		</if>
+		<if test='tab == "hot"'>
+			order by
 				reply_count desc,view_count desc,create_date desc
 		</if>
 		<if test='tab == "newest"'>
 			order by
-				create_date desc,reply_count desc,view_count desc
+				create_date desc
 		</if>
 		<if test='tab == "noReply"'>
 			and
 				reply_count = 0
 			order by 
-				view_count desc,create_date desc
+				create_date desc
 		</if>
 		<if test='tab == null or tab == "all"'>
 			order by
-				reply_count desc,view_count desc,create_date desc
+				create_date desc
 		</if>
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
@@ -281,6 +292,7 @@
             </if>
         </if>
      </select>
+     
      <!-- 根据作者昵称分页查询所有话题 -->
 	<select id="selectByAuthor" resultType="Topic">
 		SELECT
@@ -564,7 +576,8 @@
         from topic t
         where t.is_delete = 0 and t.tag = #{tag}
     </select>
-    <!-- 首页-热门话题 -->
+    
+    <!-- 首页-帖子 -->
     <select id="countIndexHot" resultType="java.lang.Integer">
         SELECT
         	COUNT(1)
@@ -576,23 +589,30 @@
 			and
 				good = 1
 			order by
-				reply_count desc,view_count desc,create_date desc
+				create_date desc
+		</if>
+		<if test='tab == "top"'>
+			and
+				top = 1
+			order by
+				create_date desc
 		</if>
 		<if test='tab == "newest"'>
 			order by
-				create_date desc,reply_count desc,view_count desc
+				create_date desc
 		</if>
 		<if test='tab == "noReply"'>
 			and
 				reply_count = 0
 			order by 
-				view_count desc,create_date desc
+				create_date desc
 		</if>
 		<if test='tab == null or tab == "all"'>
 			order by
 				reply_count desc,view_count desc,create_date desc
 		</if>
     </select>
+    
     <!-- 分页查询所有标签 -->
   <select id="selectAllTag" resultType="Tag">
     SELECT

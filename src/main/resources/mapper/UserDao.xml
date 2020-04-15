@@ -34,7 +34,7 @@
     </resultMap>
     <sql id="Base_Column_List">
         user_id, user_name, password, user_sex, score, avatar, email, url, signature, receive_msg,
-        create_date, update_date,user_addr,third_id,third_access_token,user_type
+        create_date, update_date,user_addr,third_id,third_access_token,user_type,is_block
     </sql>
 	<!-- 查询所有用户 -->
 	<select id="selectAll" resultType="User">
@@ -42,6 +42,8 @@
         <include refid="Base_Column_List"/>
 		FROM
 			user
+		ORDER BY
+			create_date
 		<if test="start != null">
             limit #{start,jdbcType=INTEGER}
             <if test="limit != null">

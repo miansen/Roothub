@@ -124,7 +124,7 @@ hr{border-bottom-color:#eee}
 body{font-family:"Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB","Microsoft Yahei",sans-serif}
 .wrapper{
 	width:100%;
-	background-color: #e5e5e5;
+	background-color: #ecf0f5;
 	background-position-x: 50%;
 	background-position-y: 0px;
 	background-size: initial;
@@ -208,11 +208,10 @@ form textarea{resize:vertical}
   justify-content: center;
 }
 .cell {
-    padding: 10px;
+    padding: 0 10px;
     font-size: 14px;
     line-height: 120%;
     text-align: left;
-    border-bottom: 1px solid #e2e2e2;
 }
 .cell[id^=r_]>table, .inner[id^=r_]>table {
     table-layout: fixed;
@@ -544,13 +543,9 @@ a.tab:active, a.tab:link, a.tab:visited {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    padding: .5rem 2.4rem;
     min-height: 7rem;
 }
-.itemList ul li {
-    list-style: none;
-    border-bottom: 1px solid hsla(240,2%,90%,.5);
-}
+
 /* 个人主页信息字体颜色 */
 /* .data-info dl a {
     color:#778087;
@@ -763,7 +758,7 @@ a.node:active, a.node:link, a.node:visited {
 
 #tab-nav {
     line-height: 45px;
-    background-color: #337ab7;
+    background-color: #3c8dbc;
     margin-top: 10px;
     margin-bottom: 10px;
 }

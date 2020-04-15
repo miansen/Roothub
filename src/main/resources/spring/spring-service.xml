@@ -35,4 +35,6 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 	<bean id="baseEntity" class="cn.roothub.base.BaseEntity"></bean>
+	
+	<bean id="applicationContextUtil" class="cn.roothub.util.ApplicationContextUtil" />
 </beans>

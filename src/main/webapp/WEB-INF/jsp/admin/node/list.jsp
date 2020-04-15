@@ -112,11 +112,8 @@
   	 	
   		// 初始化按钮
   	 	$('[name="addIndexStatus"]').bootstrapSwitch({
-  	       onText:"Yes",
-  	       offText:"No",
   	       onColor:"success",
   	       offColor:"danger",
-  	       size:"small",
   	       onSwitchChange:function(event,status){
   	    	 var id = $(this).val();
  	    	   $.get("/admin/node/add/index?id=" + id + "&status=" + status, function(data){
@@ -130,12 +127,9 @@
   	    });
   		
   	 	$('[name="addNavStatus"]').bootstrapSwitch({
-   	       onText:"Yes",
-   	       offText:"No",
-   	       onColor:"success",
-   	       offColor:"danger",
-   	       size:"small",
-   	       onSwitchChange:function(event, status){
+  	 	 	onColor:"success",
+	        offColor:"danger",
+  	 		onSwitchChange:function(event, status){
    	    	   var id = $(this).val();
    	    	   $.get("/admin/node/add/nav?id=" + id + "&status=" + status, function(data){
   				if(data.success === true){

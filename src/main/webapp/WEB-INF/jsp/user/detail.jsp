@@ -88,8 +88,8 @@
         </div> --%>
         <!-- 小屏幕显示 -->
 			<div class="col-md-9">
-			<div class="box">
-    <div class="cell">
+			<div class="box" style="border-top: 0px">
+    <div class="cell" style="padding: 10px;">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tbody><tr>
             <td width="73" valign="top" align="center">

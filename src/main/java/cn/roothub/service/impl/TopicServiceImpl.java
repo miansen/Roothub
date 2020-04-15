@@ -58,9 +58,9 @@ public class TopicServiceImpl implements TopicService{
 	 * 根据板块查询所有话题
 	 */
 	@Override
-	public PageDataBody<Topic> pageAllByTabAndStatusCd(Integer pageNumber, Integer pageSize,String tab, String statusCd) {
-		List<Topic> list = rootTopicDao.selectAllByTabAndStatusCd((pageNumber - 1) * pageSize, pageSize,tab, statusCd);
-		int total = rootTopicDao.countTopicByTabAndStatusCd(tab, statusCd);
+	public PageDataBody<Topic> pageAllByTabAndNode(Integer pageNumber, Integer pageSize,String tab, String node) {
+		List<Topic> list = rootTopicDao.selectAllByTabAndNode((pageNumber - 1) * pageSize, pageSize,tab, node);
+		int total = rootTopicDao.countTopicByNode(node);
 		return new PageDataBody<>(list, pageNumber, pageSize, total);
 	}
 	

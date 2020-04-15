@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	/**
-	 * 分页查询所有用户，倒叙
+	 * 分页查询所有用户
 	 */
 	@Override
 	public PageDataBody<User> page(Integer pageNumber, Integer pageSize) {

@@ -59,7 +59,7 @@
 					<div class="icon">
 						<i class="ion ion-chatboxes"></i>
 					</div>
-					<a href="/admin/comment/list" class="small-box-footer">更多 <i
+					<a href="/admin/reply/list" class="small-box-footer">更多 <i
 						class="fa fa-arrow-circle-right"></i></a>
 				</div>
 			</div>

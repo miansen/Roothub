@@ -26,6 +26,10 @@ public class NodeServiceImpl implements NodeService{
 	@Autowired
 	private TopicService topicService;
 	
+	private List<Node> nodeIndexCache;
+	
+	private List<Node> nodeNavCache;
+	
 	//根据板块查询节点
 	@Override
 	public List<Node> findAllByTab(String tabName, Integer pageNumber, Integer pageSize) {
@@ -133,17 +137,27 @@ public class NodeServiceImpl implements NodeService{
 
 	@Override
 	public void update(Node node) {
+		nodeIndexCache = null;
+		nodeNavCache = null;
 		nodeDao.update(node);
 	}
 
 	@Override
 	public List<Node> listForIndex() {
-		return nodeDao.listForIndex();
+		if (nodeIndexCache != null) {
+			return nodeIndexCache;
+		}
+		nodeIndexCache = nodeDao.listForIndex();
+		return nodeIndexCache;
 	}
 
 	@Override
 	public List<Node> listForNav() {
-		return nodeDao.listForNav();
+		if (nodeNavCache != null) {
+			return nodeNavCache;
+		}
+		nodeNavCache = nodeDao.listForNav();
+		return nodeNavCache;
 	}
 	
 }

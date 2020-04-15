@@ -91,10 +91,9 @@ public class IndexController extends BaseController {
 		map.put("精华帖子", topicService.findIndexHot(1, 5, "good").getList());
 		map.put("热门帖子", topicService.findIndexHot(1, 5, "hot").getList());
 		map.put("最新帖子", topicService.findIndexHot(1, 5, "newest").getList());
-		map.put("等待回复的帖子", topicService.findIndexHot(1, 5, "noReply").getList());
 		List<Node> nodeListForIndex = nodeService.listForIndex();
 		nodeListForIndex.stream().forEach(n -> {
-			map.put(n.getNodeTitle(), topicService.pageAllByTabAndNode(p, 25, tab, n.getNodeTitle()).getList());
+			map.put(n.getNodeTitle(), topicService.pageAllByTabAndNode(p, 5, tab, n.getNodeTitle()).getList());
 		});
 		
 		// 今日热门帖子

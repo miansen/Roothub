@@ -98,6 +98,8 @@ public class NodeServiceImpl implements NodeService{
 		node.setSort(sort);
 		// 最后在更新节点
 		nodeDao.update(node);
+		nodeIndexCache = null;
+		nodeNavCache = null;
 	}
 
 	/**

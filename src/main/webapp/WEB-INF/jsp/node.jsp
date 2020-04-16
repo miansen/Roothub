@@ -16,79 +16,83 @@
   <jsp:include page="components/head.jsp"></jsp:include>
     <div class="row">
       <div class="col-md-9">
-        <div class="panel panel-default">
-        	<div class="tab panel-heading">
-        	<ul class="nav nav-pills" id="tab">
-        	<li class="all"><a href="/?tab=all&node=${nodeName}">全部</a></li>
-        	<li class="hot"><a href="/?tab=hot&node=${nodeName}">最热</a></li>
-        	<li class="new"><a href="/?tab=new&node=${nodeName}">最新</a></li>
-        	<li class="lonely"><a href="/?tab=lonely&node=${nodeName}">无人问津</a></li>
-        	<!-- <li class="member"><a href="/?tab=member" class="tab">关注</a></li> -->
-        	</ul>
+        <div class="box box-primary">
+        	<div class="box-header with-border">
+	        	<ul class="nav nav-pills" id="tab">
+		        	<li class="${tab eq 'all' ? 'all active' : 'all'}"><a href="/?tab=all&node=${nodeName}">全部</a></li>
+		        	<li class="${tab eq 'hot' ? 'hot active' : 'hot'}"><a href="/?tab=hot&node=${nodeName}">最热</a></li>
+		        	<li class="${tab eq 'new' ? 'new active' : 'new'}"><a href="/?tab=new&node=${nodeName}">最新</a></li>
+		        	<li class="${tab eq 'lonely' ? 'lonely active' : 'lonely'}"><a href="/?tab=lonely&node=${nodeName}">无人问津</a></li>
+	        	</ul>
     		</div>
-        <div class="panel-body paginate-bot">
-          <c:forEach var="item" items="${page.list}">
-          <div class="media">
-          <c:if test="${fn:length(item.avatar) > 0}">
-            <div class="media-left">
-              <img src="${item.avatar}" class="avatar img-circle" alt="">
-            </div>
-            </c:if>
-            <div class="media-body">
-              <div class="title">
-                <c:choose>
-                	<c:when test="${item.url != null}">
-                		<a href="${item.url}" target="_blank">${item.title}</a>
-                	</c:when>
-                	<c:otherwise>
-                		<a href="/topic/${item.topicId}">${item.title}</a>
-                	</c:otherwise>
-                </c:choose>
-              </div>
-              <div class="tip">
-              <p class="gray">
-              <c:if test="${item.top}">
-			  <span class="label label-primary">置顶</span> <span>•</span>
-			  </c:if>
-			  <c:if test="${item.good}">
-			  <span class="label label-success">精华</span> <span>•</span>
-			  </c:if>
-			    <span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
-			    <span>•</span>
-                <a href="/user/${item.author}">${item.author}</a>
-                <c:if test="${item.viewCount > 0}">
-                	<span class="hidden-sm hidden-xs">•</span>
-                	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
-                </c:if>
-                
-                <!-- 评论数量 -->
-                <c:if test="${item.replyCount > 0}">
-                	<span class="hidden-sm hidden-xs">•</span>
-                	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
-                </c:if>
-                
-                <span>•</span>
-                <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
-                </p>
-                </div>
-              </div>
-            <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
-            <div class="divide mar-top-5"></div>
-          </div>
-          </c:forEach>
+	        <div class="box-body">
+	          <c:forEach var="item" items="${page.list}" varStatus="status">
+		          <div class="media">
+			          <c:if test="${fn:length(item.avatar) > 0}">
+			            <div class="media-left">
+			              <img src="${item.avatar}" class="avatar img-circle" alt="">
+			            </div>
+			           </c:if>
+		            <div class="media-body">
+		              <div class="title">
+		                <c:choose>
+		                	<c:when test="${item.url != null}">
+		                		<a href="${item.url}" target="_blank">${item.title}</a>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<a href="/topic/${item.topicId}">${item.title}</a>
+		                	</c:otherwise>
+		                </c:choose>
+		              </div>
+		              <div class="tip">
+		              <p class="gray">
+		              <c:if test="${item.top}">
+					  <span class="label label-primary">置顶</span> <span>•</span>
+					  </c:if>
+					  <c:if test="${item.good}">
+					  <span class="label label-success">精华</span> <span>•</span>
+					  </c:if>
+					  
+					  <c:if test="${not empty item.nodeTitle}">
+					  	<span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
+					    <span>•</span>
+					  </c:if>
+					    
+		                <a href="/user/${item.author}">${item.author}</a>
+		                <c:if test="${item.viewCount > 0}">
+		                	<span class="hidden-sm hidden-xs">•</span>
+		                	<span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
+		                </c:if>
+		                
+		                <!-- 评论数量 -->
+		                <c:if test="${item.replyCount > 0}">
+		                	<span class="hidden-sm hidden-xs">•</span>
+		                	<span class="hidden-sm hidden-xs"><a href="/topic/${item.topicId}">${item.replyCount}个评论</a></span>
+		                </c:if>
+		                
+		                <span>•</span>
+		                <span><fmt:formatDate type="date" value="${item.createDate}" /></span>
+		                </p>
+		                </div>
+		              </div>
+		            <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
+		            <c:if test="${!status.last}">
+		            	<div class="divide mar-top-5"></div>
+		            </c:if>
+		          </div>
+	          </c:forEach>
+	      </div>
+      	    <div class="box-footer panel-footer" id="paginate"></div>
+        </div>
       </div>
-          <div class="panel-footer" id="paginate"></div>
-    </div>
-  </div>
-  <div class="col-md-3 hidden-sm hidden-xs">
+   <div class="col-md-3 hidden-sm hidden-xs">
   	<c:if test="${sessionScope.user != null}">
-					<div class="panel panel-default" id="session">
-						<div class="panel-body">
+					<div class="box box-primary" id="session">
+						<div class="box-body">
 							<div class="media">
 								<div class="media-left">
-									<a href="/user/${sessionScope.user.userName}"> <img
-										src="${sessionScope.user.avatar}" title=""
-										class="user-avatar img-circle">
+									<a href="/user/${sessionScope.user.userName}">
+										<img src="${sessionScope.user.avatar}" title="" class="user-avatar img-circle">
 									</a>
 								</div>
 								<div class="media-body">
@@ -100,8 +104,9 @@
 									</div>
 								</div>
 								<div style="margin-top: 15px;">
-									<a href="/topic/create?statusCd=1000" style="font-size: 14px;"><button
-											class="btn btn-success">发布帖子</button></a>
+									<a href="/topic/create" style="font-size: 14px;">
+										<button class="btn btn-primary">发布帖子</button>
+									</a>
 								</div>
 							</div>
 							<div class="sep10" style="height: 10px;"></div>
@@ -134,109 +139,116 @@
 					</div>
 				</c:if>
 				
-				<!-- 今日热议主题 -->
-    <div class="panel panel-default">
-      <div class="panel-heading"><span style="color: #ccc;">今日热议主题</span></div>
-      <table class="table" style="font-size: 14px;">
+	<!-- 今日热议帖子 -->
+    <div class="box box-primary">
+      <div class="box-header with-border"><b>今日热议主题</b></div>
+      <div class="box-body">
+      	<table class="table" style="font-size: 14px;">
         <tbody>
-        <c:forEach var="item" items="${hotTopicList}">
-          <tr>
-          <c:if test="${fn:length(item.avatar) > 0}">
-          <td width="24" valign="middle" align="center">
-                <img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
-            </td>
-            </c:if>
-            <td>
-            	<c:choose>
-                	<c:when test="${item.url != null}">
-                		<a href="${item.url}">${item.title}</a>
-                	</c:when>
-                	<c:otherwise>
-                		<a href="/topic/${item.topicId}">${item.title}</a>
-                	</c:otherwise>
-                </c:choose>
-            </td>
-          </tr>
-          </c:forEach>
-        </tbody>
-      </table>
+	        <c:forEach var="item" items="${hotTopicList}">
+	          <tr>
+	          <c:if test="${fn:length(item.avatar) > 0}">
+		         <td width="24" valign="middle" align="center">
+		              <img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
+		          </td>
+              </c:if>
+	            <td>
+	            	<c:choose>
+	                	<c:when test="${item.url != null}">
+	                		<a href="${item.url}">${item.title}</a>
+	                	</c:when>
+	                	<c:otherwise>
+	                		<a href="/topic/${item.topicId}">${item.title}</a>
+	                	</c:otherwise>
+	                </c:choose>
+	            </td>
+	          </tr>
+	          </c:forEach>
+          </tbody>
+      	</table>
+      </div>
     </div>
+    
     <!-- 今日等待回复的主题 -->
-    <div class="panel panel-default">
-      <div class="panel-heading"><span style="color: #ccc;">今日等待回复主题</span></div>
-      <table class="table" style="font-size: 14px;">
-        <tbody>
-        <c:forEach var="item" items="${noReplyTopicList}">
-          <tr>
-          <td width="24" valign="middle" align="center">
-                <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
-            </td>
-            <td>
-            	<c:choose>
-                	<c:when test="${item.url != null}">
-                		<a href="${item.url}">${item.title}</a>
-                	</c:when>
-                	<c:otherwise>
-                		<a href="/topic/${item.topicId}">${item.title}</a>
-                	</c:otherwise>
-                </c:choose>
-            </td>
-          </tr>
-          </c:forEach>
-        </tbody>
-      </table>
+    <div class="box box-primary">
+      <div class="box-header with-border"><b>今日等待回复帖子</b></div>
+      <div class="box-body">
+      	<table class="table" style="font-size: 14px;">
+        	<tbody>
+		        <c:forEach var="item" items="${noReplyTopicList}">
+		          <tr>
+		          <td width="24" valign="middle" align="center">
+		                <a href="/user/${item.author}"><img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;"></a>
+		            </td>
+		            <td>
+		            	<c:choose>
+		                	<c:when test="${item.url != null}">
+		                		<a href="${item.url}">${item.title}</a>
+		                	</c:when>
+		                	<c:otherwise>
+		                		<a href="/topic/${item.topicId}">${item.title}</a>
+		                	</c:otherwise>
+		                </c:choose>
+		            </td>
+		          </tr>
+		         </c:forEach>
+        	</tbody>
+      	</table>
+      </div>
     </div>
+    
     <!-- 积分榜 -->
-    <div class="panel panel-default">
-    <div class="panel-heading"><span style="color: #ccc;">积分榜  <a class="dark" href="/top100">TOP 100 &gt;&gt;</a></span></div>
-    <div class="panel-body">
+    <div class="box box-primary">
+    <div class="box-header with-border"><b>积分榜  <a class="dark" href="/top100">TOP 100 &gt;&gt;</a></b></div>
+    <div class="box-body">
       <div class="row">
-      <div class="inner top100"></div>
+      	<div class="inner top100">
+      		<ol>
+      			<c:forEach var="item" items="${scoreList}">
+      				<li>
+      					<span class="top_score">${item.score}</span>
+      					<span class="user_name">
+      						<a href="/user/${item.userName}">${item.userName}</a>
+      					</span>
+      				</li>
+      			</c:forEach>
+      		</ol>
+      	</div>
       </div>
     </div>
   </div>
-    <div class="panel panel-default">
-    <div class="panel-heading"><span style="color: #ccc;">热门板块</span></div>
-    <div class="panel-body">
-      <div class="row">
-      <c:forEach var="item" items="${hotNodeList}">
-          <div class="col-md-6" style="margin-bottom: 10px; padding-left: 10px;">
-            <a href="${item.url}"><span class="label label-primary text-muted">${item.nodeTitle}</span></a>
-            <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
-          </div>
-          </c:forEach>
-      </div>
-    </div>
-  </div>
+  
+  	<!-- 热门板块 -->
+    <div class="box box-primary">
+    	<div class="box-header with-border"><b>热门板块</b></div>
+	    <div class="box-body">
+	      <div class="row">
+	      	 <c:forEach var="item" items="${hotNodeList}">
+		          <div class="col-md-4" style="margin-bottom: 10px; padding-left: 10px;">
+		            <a href="${item.url}"><span class="label label-primary text-muted">${item.nodeTitle}</span></a>
+		            <small class="excerpt text-muted" style="display: block; margin-top: 10px;"></small>
+		          </div>
+	          </c:forEach>
+	      </div>
+	    </div>
+   	 </div>
+  
     <!-- 社区运行状况 -->
-    <div class="panel panel-default">
-    <div class="panel-heading"><span style="color: #ccc;">社区运行状况</span></div>
-    <div class="cell">
-    	<table cellpadding="5" cellspacing="0" border="0" width="100%">
-            <tbody style="font-size: 14px;">
-            <tr>
-                <td width="80" align="right"><span class="gray">注册会员：</span></td>
-                <td width="auto" align="left"><strong>${countUserAll}</strong></td>
-            </tr>
-            <tr>
-                <td width="80" align="right" style="font-size: 14px;"><span class="gray">帖子：</span></td>
-                <td width="auto" align="left"><strong>${countAllTopic}</strong></td>
-            </tr>
-            <tr>
-                <td width="80" align="right"><span class="gray">回复：</span></td>
-                <td width="auto" align="left"><strong>${countAllReply}</strong></td>
-            </tr>
-           </tbody>
-        </table>
-      </div>
+    <div class="box box-primary">
+    	<div class="box-header with-border"><b>社区运行状况</b></div>
+	    <div class="box-body">
+	    	<p>注册会员：${countUserAll}</p>
+	    	<p>帖子：${countAllTopic}</p>
+	    	<p>回复：${countAllReply}</p>
+	    </div>
+  	</div>
   </div>
-  </div>
-</div>
+    </div>
+    </div>
 </div>
 <div id="back2Top" class="backTop___6Q-ki" style="display:none">
-<div class="line___F1WY0"></div>
-<div class="arrow___3UCwo"></div>
-</div>
+	<div class="line___F1WY0"></div>
+	<div class="arrow___3UCwo"></div>
 </div>
 <jsp:include page="components/foot.jsp"></jsp:include>
 <script src="/resources/js/jquery.js"></script>

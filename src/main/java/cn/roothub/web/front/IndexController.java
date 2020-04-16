@@ -30,6 +30,7 @@ import cn.roothub.entity.Topic;
 import cn.roothub.entity.User;
 import cn.roothub.exception.ApiAssert;
 import cn.roothub.entity.Tag;
+import cn.roothub.entity.Top100;
 import cn.roothub.service.CollectService;
 import cn.roothub.service.FollowService;
 import cn.roothub.service.NodeService;
@@ -85,36 +86,10 @@ public class IndexController extends BaseController {
 			@RequestParam(value = "tab", defaultValue = "all") String tab,
 			@RequestParam(value = "node", required = false) String node) {
 		
-		PageDataBody<Topic> page = topicService.pageAllByTabAndNode(p, 25, tab, node);
+		request.setAttribute("tab", tab);
 		
-		Map<String, List<Topic>> map = new LinkedHashMap<>();
-		map.put("精华帖子", topicService.findIndexHot(1, 5, "good").getList());
-		map.put("热门帖子", topicService.findIndexHot(1, 5, "hot").getList());
-		map.put("最新帖子", topicService.findIndexHot(1, 5, "newest").getList());
-		List<Node> nodeListForIndex = nodeService.listForIndex();
-		nodeListForIndex.stream().forEach(n -> {
-			map.put(n.getNodeTitle(), topicService.pageAllByTabAndNode(p, 5, tab, n.getNodeTitle()).getList());
-		});
-		
-		// 今日热门帖子
-		List<Topic> hotTopicList = topicService.findHot(0, 5);
-				
-		// 今日等待回复的帖子
-		List<Topic> noReplyTopicList = topicService.findTodayNoReply(0, 5);
-		
-		// 热门板块
-		List<Node> hotNodeList = nodeService.findAll(0, 10);
-		
-		// 注册会员的数量
-		int countUserAll = userService.countUserAll();
-		
-		// 所有帖子的数量
-		int countAllTopic = topicService.countAllTopic(null, null);
-		
-		// 所有评论的数量
-		int countAllReply = replyService.countAll();
-
 		User user = getUser(request);
+		
 		if (user != null) {
 			int countTopic = topicService.countByUserName(user.getUserName());
 			int countCollect = collectDaoService.count(user.getUserId());
@@ -128,20 +103,45 @@ public class IndexController extends BaseController {
 			request.setAttribute("countNotReadNotice", countNotReadNotice);
 			request.setAttribute("countScore", countScore);
 		}
-
-		request.setAttribute("page", page);
-		request.setAttribute("hotTopicList", hotTopicList);
-		request.setAttribute("noReplyTopicList", noReplyTopicList);
-		request.setAttribute("hotNodeList", hotNodeList);
-		request.setAttribute("tab", tab);
-		request.setAttribute("countUserAll", countUserAll);
-		request.setAttribute("countAllTopic", countAllTopic);
-		request.setAttribute("countAllReply", countAllReply);
-		request.setAttribute("map", map);
+		
 		if (StringUtils.isEmpty(node)) {
+			Map<String, List<Topic>> map = new LinkedHashMap<>();
+			map.put("精华帖子", topicService.findIndexHot(1, 5, "good").getList());
+			map.put("热门帖子", topicService.findIndexHot(1, 5, "hot").getList());
+			map.put("最新帖子", topicService.findIndexHot(1, 5, "newest").getList());
+			List<Node> nodeListForIndex = nodeService.listForIndex();
+			nodeListForIndex.stream().forEach(n -> {
+				map.put(n.getNodeTitle(), topicService.pageAllByTabAndNode(p, 5, tab, n.getNodeTitle()).getList());
+			});
+			request.setAttribute("map", map);
 			request.setAttribute("nodeName", "index");
 			return "index";
 		} else {
+			List<Topic> hotTopicList = topicService.findHot(0, 5); // 今日热门帖子
+			List<Topic> noReplyTopicList = topicService.findTodayNoReply(0, 5); // 今日等待回复的帖子
+			List<Top100> scoreList = userService.scores(10); // 积分榜
+			List<Node> hotNodeList = nodeService.findAll(0, 10); // 热门板块
+			int countUserAll = userService.countUserAll(); // 注册会员的数量
+			int countAllTopic = topicService.countAllTopic(null, null); // 帖子的数量
+			int countAllReply = replyService.countAll(); // 评论的数量
+			
+			request.setAttribute("hotTopicList", hotTopicList);
+			request.setAttribute("noReplyTopicList", noReplyTopicList);
+			request.setAttribute("scoreList", scoreList);
+			request.setAttribute("hotNodeList", hotNodeList);
+			request.setAttribute("countUserAll", countUserAll);
+			request.setAttribute("countAllTopic", countAllTopic);
+			request.setAttribute("countAllReply", countAllReply);
+			
+			PageDataBody<Topic> page;
+			
+			if ("全部".equals(node)) {
+				page = topicService.pageAllByTabAndNode(p, 25, tab, null);
+			} else {
+				page = topicService.pageAllByTabAndNode(p, 25, tab, node);
+			}
+			
+			request.setAttribute("page", page);
 			request.setAttribute("nodeName", node);
 			return "node";
 		}

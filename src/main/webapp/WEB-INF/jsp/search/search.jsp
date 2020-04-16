@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>搜索结果</title>
+  <title>Roothub-搜索结果</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- 引入 Bootstrap -->
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -18,15 +18,15 @@
 <jsp:include page="../components/head.jsp"></jsp:include>
 <div class="row">
   <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">搜索结果</div>
-        <div class="panel-body paginate-bot">
+    <div class="box box-primary">
+      <div class="box-header with-border">搜索结果</div>
+        <div class="box-body">
 
   <c:forEach var="item" items="${pageLike.list}">
           <div class="media" id="topic">
             <c:if test="${fn:length(item.avatar) > 0}">
             <div class="media-left">
-            <%-- <a href="/user/${item.author}"> --%><img src="${item.avatar}" class="avatar img-circle" alt=""><!-- </a> -->
+            <img src="${item.avatar}" class="avatar img-circle" alt="">
             </div>
         	</c:if>
             <div class="media-body">
@@ -48,8 +48,12 @@
 			  <c:if test="${item.good}">
 			  <span class="label label-primary">精华</span> <span>•</span>
 			  </c:if>
-			  	<a href="/node/${item.nodeSlug}" class="node">${item.nodeTitle}</a>
+			  
+			  <c:if test="${not empty item.nodeTitle}">
+			  	<a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a>
 			  	<span>•</span>
+			  </c:if>
+			  	
                 <strong><a href="/user/${item.author}">${item.author}</a></strong>
                 <span class="hidden-sm hidden-xs">•</span>
                 <span class="hidden-sm hidden-xs">${item.viewCount}次点击</span>
@@ -75,7 +79,9 @@
                 </div>
               </div>
               <div class="media-right"><span class="badge badge-default"><a href="/topic/${item.topicId}">${item.replyCount}</a></span></div>
-              <div class="divide mar-top-5"></div>
+              <c:if test="${!status.last}">
+		            	<div class="divide mar-top-5"></div>
+		            </c:if>
             </div>
           </c:forEach>
       </div>

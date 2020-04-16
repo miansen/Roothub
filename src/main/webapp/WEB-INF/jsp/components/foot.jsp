@@ -36,7 +36,8 @@
 		<!-- <p style="color: #ccc;">兴趣使然的无名小站</p> -->
 		<!-- <p><script type="text/javascript" src="https://api.uixsj.cn/hitokoto/w.php?code=js"></script><div id="xsjhitokoto" style="color: #ccc;"><script>xsjhitokoto()</script></div></p> -->
 		
-		<p><a data-v-2b9fe4cd="">©2018 Roothub</a>&nbsp;&nbsp;Version 2.6</p>
+		<p>Copyright © 2018-2020 Roothub. All rights reserved.</p>
+		<p>Version 2.6</p>
 		<p style="color: #ccc;">♥ Follow your heart and the world will light your path</p>
 		<p><a href="http://www.miibeian.gov.cn/" target="_blank" rel="nofollow" text-decoration: none;word-break: break-all;">琼ICP备18002390号</a></p>
 		<!-- <script async=""

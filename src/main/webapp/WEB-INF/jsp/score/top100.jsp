@@ -13,11 +13,11 @@
 		<jsp:include page="../components/head.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-9">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<a href="/">主页</a> / Top100积分榜
+				<div class="panel panel-default box box-primary">
+					<div class="panel-heading box-header with-border">
+						<a href="/">首页</a> / Top100积分榜
 					</div>
-					<div class="panel-body" style="color: #333;">
+					<div class="panel-body box-body" style="color: #333;">
 						<div class="panel">
 							<div class="inner"></div>
 						</div>
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			<div class="col-md-3 hidden-sm hidden-xs">
-				<div class="panel panel-default" id="session"></div>
+				<jsp:include page="../components/seesion.jsp"></jsp:include>
 			</div>
 		</div>
 	</div>
@@ -37,7 +37,7 @@
 	</div>
 	<jsp:include page="../components/foot.jsp"></jsp:include>
 	<script src="/resources/js/score/top100.js"></script>
-	<script src="/resources/js/login_info.js"></script>
+	<!-- <script src="/resources/js/login_info.js"></script> -->
 	<script src="/resources/js/goTop.js"></script>
 </body>
 </html>

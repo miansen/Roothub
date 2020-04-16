@@ -19,7 +19,7 @@
 		<div class="row">
 		</c:if>
 			<div class="col-md-4">
-				<div class="box box-info">
+				<div class="box box-primary">
 					<div class="box-header with-border">
 						<h3 class="box-title">${entry.key}</h3>
 						<div class="box-tools pull-right">

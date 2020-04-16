@@ -8,8 +8,6 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
-import org.springframework.util.StringUtils;
-
 import cn.roothub.entity.Node;
 import cn.roothub.service.NodeService;
 import cn.roothub.util.ApplicationContextUtil;
@@ -30,16 +28,21 @@ public class NavTag extends SimpleTagSupport {
 		NodeService nodeService = ApplicationContextUtil.getBean(NodeService.class);
 		List<Node> nodes = nodeService.listForNav();
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div id=\"tab-nav\">");
+		sb.append("<div id=\"tab-nav\" style=\"overflow-x: auto;\">");
 		sb.append("\t\n");
 		sb.append("<div class=\"container\" style=\"height: 45px;\">");
 		sb.append("\t\n");
 		sb.append("<ul style=\"padding-left: 0px\">");
 		sb.append("\t\n");
 		if ("index".equals(nodeName)) {
-			sb.append("<li class=\"li-cate\"><a href=\"/\" class=\"li-cate-active\">首页</a></li>");
+			sb.append("<li class=\"li-cate\"><a href=\"/\" class=\"li-cate-active\" style=\"padding-left: 0px;\">首页</a></li>");
 		} else {
-			sb.append("<li class=\"li-cate\"><a href=\"/\" class=\"li-cate-a\">首页</a></li>");
+			sb.append("<li class=\"li-cate\"><a href=\"/\" class=\"li-cate-a\" style=\"padding-left: 0px;\">首页</a></li>");
+		}
+		if ("全部".equals(nodeName)) {
+			sb.append("<li class=\"li-cate\"><a href=\"/?node=全部\" class=\"li-cate-active\">全部</a></li>");
+		} else {
+			sb.append("<li class=\"li-cate\"><a href=\"/?node=全部\" class=\"li-cate-a\">全部</a></li>");
 		}
 		sb.append("\t\n");
 		for (Node node : nodes) {

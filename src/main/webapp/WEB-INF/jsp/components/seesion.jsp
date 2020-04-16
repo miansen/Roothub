@@ -2,8 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <c:if test="${sessionScope.user != null}">
-	<div class="panel panel-default" id="session">
-		<div class="panel-body">
+	<div class="box box-primary" id="session">
+		<div class="box-body">
 			<div class="media">
 				<div class="media-left">
 					<a href="/user/${sessionScope.user.userName}"> <img
@@ -19,10 +19,11 @@
 						</div>
 					</div>
 				</div>
-				<!-- <div style="margin-top: 15px;">
-					<a href="/topic/create?statusCd=1000" style="font-size: 14px;"><button
-							class="btn btn-success">发布帖子</button></a>
-				</div> -->
+				<div style="margin-top: 15px;">
+					<a href="/topic/create" style="font-size: 14px;">
+						<button class="btn btn-primary">发布帖子</button>
+					</a>
+				</div>
 			</div>
 			<div class="sep10" style="height: 10px;"></div>
 			<table cellpadding="0" cellspacing="0" border="0" width="100%"

@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-	<title>学习互助系统-${topic.title}</title>
+	<title>Roothub-${topic.title}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/resources/css/app.css" rel="stylesheet" type="text/css">
@@ -18,11 +18,11 @@
 		<jsp:include page="../components/head.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-9">
-				<div class="panel panel-default">
-					<div class="panel-body topic-detail-header">
+				<div class="box box-primary">
+					<div class="box-body topic-detail-header">
 						<div class="media">
 							<div class="media-body">
-								<a href="/">主页</a>
+								<a href="/">首页</a>
 								<c:if test="${topic.nodeTitle != null}">
 									<span class="chevron">&nbsp;›&nbsp;</span>
 									<a href="/n/${topic.nodeTitle}" class="topic-detail-node">${topic.nodeTitle}</a>
@@ -79,8 +79,7 @@
 			</div>
 		</div>
 		<div class="panel-footer" style="display: none" id="collect">
-			<a
-			href="javascript:window.open('http://service.weibo.com/share/share.php?url=https://roothub.cn//topic/${topic.topicId}?r=${topic.author}&amp;title=${topic.title}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');">分享微博</a>&nbsp;
+			<a href="javascript:window.open('http://service.weibo.com/share/share.php?url=https://roothub.cn/topic/${topic.topicId}?r=${topic.author}&title=${topic.title}', '_blank', 'width=550,height=370'); recordOutboundLink(this, 'Share', 'weibo.com');">分享微博</a>&nbsp;
 			<a href="javascript:void(0);" class="collectTopic"
 			onclick="save()"></a> <span class="pull-right"><span
 			id="collectCount">${countByTid}</span>个收藏</span>
@@ -162,7 +161,13 @@
 	var editor = new E('#editor');
 	editor.customConfig.debug = true;
 	editor.customConfig.uploadFileName = 'file';
-	editor.customConfig.uploadImgServer = '/common/wangEditorUpload';
+	editor.customConfig.uploadImgServer = '/common/upload';
+	// 将图片大小限制为 5MB
+	editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024;
+	// 限制一次最多上传 5 张图片
+	editor.customConfig.uploadImgMaxLength = 10;
+	// 将 timeout 时间改为 10s
+	editor.customConfig.uploadImgTimeout = 10000;
 	editor.customConfig.menus = [
 	                 			'head',  // 标题
 	                			'bold',  // 粗体

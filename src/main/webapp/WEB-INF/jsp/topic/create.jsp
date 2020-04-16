@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>学习互助系统-发布${statusName}</title>
+  <title>Roothub-发布帖子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
   <link href="/resources/css/app.css" rel="stylesheet" type="text/css">
@@ -17,11 +17,11 @@
     <jsp:include page="../components/head.jsp"></jsp:include>
     <div class="row">
       <div class="col-md-9">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <a href="/">主页</a> / 发布${statusName}
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <a href="/">首页</a> / 发布帖子
           </div>
-          <div class="panel-body">
+          <div class="box-body">
             <form id="form">
               <div class="form-group">
                 <label for="title">标题</label>
@@ -64,11 +64,11 @@
   </div>
 </div>
 <div class="col-md-3 hidden-sm hidden-xs">
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="box box-primary">
+    <div class="box-header with-border">
       <b>帖子发布指南</b>
     </div>
-    <div class="panel-body">
+    <div class="box-body">
       <p>• 在标题中描述内容要点。如果一件事情在标题的长度内就已经可以说清楚，那就没有必要写正文了。</p>
       <p>• 保持对陌生人的友善。用知识去帮助别人。</p>
       <p>• 如果是转载的文章，请务必只填上原文的URL，内容就不用复制过来了。</p>
@@ -91,6 +91,12 @@
     var editor = new E('#editor');
     editor.customConfig.uploadFileName = 'file';
     editor.customConfig.uploadImgServer = '/common/upload';
+ 	// 将图片大小限制为 5MB
+	editor.customConfig.uploadImgMaxSize = 5 * 1024 * 1024;
+	// 限制一次最多上传 5 张图片
+	editor.customConfig.uploadImgMaxLength = 10;
+	// 将 timeout 时间改为 10s
+	editor.customConfig.uploadImgTimeout = 10000;
     editor.customConfig.menus = [
 									'head',  // 标题
 									'bold',  // 粗体
@@ -167,7 +173,10 @@
           if(!title || title.length > 120) {
             alert('请输入标题，且最大长度在120个字符以内');
             return false;
-          }else {
+          } else if (!nodeTitle) {
+        	  alert('请选择一个合适的板块');
+              return false;
+          } else {
         $.ajax({
           url: '/topic/save',
           type: 'post',

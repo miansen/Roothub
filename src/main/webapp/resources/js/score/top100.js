@@ -7,7 +7,7 @@ $(function(){
 			data:{limit:100},
 			success:function(data){
 				if(data.success == true){
-					$(".panel-body .inner").append('\
+					$(".box-body .inner").append('\
 						<table class="table table-condensed table-striped">\
 						<thead>\
 						<tr>\
@@ -24,7 +24,7 @@ $(function(){
 						</table>\
 						');
 					for(var i = 0;i < data.data.length;i++){
-						$(".panel-body .inner table tbody").append('\
+						$(".box-body .inner table tbody").append('\
 							<tr>\
 							<td><b>'+(i+1)+'</b></td>\
 							<td>\

@@ -96,29 +96,21 @@
 </div>
 </div>
 <div class="col-md-3 hidden-sm hidden-xs">
-  <div class="panel panel-default" id="session">
-  	<div class="panel-body" id="nologin">
-  	<h5>n/${node.nodeTitle}</h5>
-  	<p>${node.nodeDesc}</p>
-  	<p><a href="/topic/create?n=${node.nodeTitle}" style="font-size: 14px;">
-  	<button class="btn btn-success">发布帖子</button></a>
-  	</p>
-  	</div>
-  </div>
+  <jsp:include page="../components/seesion.jsp"></jsp:include>
   <!-- 相邻节点 -->
   <div class="panel panel-default">
     <!-- <div class="panel-heading"><span style="color: #ccc;">相关节点</span></div> -->
     <div class="panel-body">
       <div class="row">
       <c:if	test="${parentNode != null}">
-      	<div class="cell" style="border-bottom: 0px solid #e2e2e2;">
+      	<div class="cell" style="padding: 0 10px;border-bottom: 0px solid #eee;">
         	<strong class="gray">父板块</strong>
         	<div class="sep10"></div>
         	<img src="${parentNode.avatarMini}" border="0" align="absmiddle" width="24">&nbsp; <a href="${parentNode.url}">${parentNode.nodeTitle}</a>
     	</div>
       </c:if>
       <c:if test="${fn:length(adjacencyNode) > 0}">
-        <div class="cell">
+        <div class="cell" style="padding: 0 10px;border-bottom: 0px solid #eee;">
           <strong class="gray">相关板块</strong>
           <c:forEach var="item" items="${adjacencyNode}" varStatus="status">
           <div class="sep10"></div>
@@ -128,7 +120,7 @@
       </div>
     </c:if>
     <c:if test="${fn:length(childrenNode) > 0}">
-    	<div class="cell" style="border-bottom: 0px solid #e2e2e2;border-top: 1px solid #e2e2e2;">
+    	<div class="cell" style="padding: 0 10px;border-bottom: 0px solid #e2e2e2;border-top: 1px solid #e2e2e2;">
           <strong class="gray">子板块</strong>
           <c:forEach var="item" items="${childrenNode}" varStatus="status">
           <div class="sep10"></div>

@@ -16,13 +16,13 @@
 <div class="wrapper">
 <jsp:include page="../components/head.jsp"></jsp:include>
 <div class="row">
-  <div class="panel panel-default">
-  <div class="panel-heading">全部板块</div>
-    <div class="panel-body">
+  <div class="box box-primary">
+  <div class="box-header with-border">全部板块</div>
+    <div class="box-body">
       <div class="row">
       <c:forEach var="item" items="${nodeList}">
         <%-- <c:if test="${item.tabId == 15}"> --%>
-            <div class="col-md-2" style="margin-bottom: 10px; padding-left: 10px;">
+            <div class="col-md-1" style="margin-bottom: 10px; padding-left: 10px;">
               <a href="${item.url}">
                 <span class="label label-primary">${item.nodeTitle}</span>
               </a>

@@ -106,12 +106,12 @@ public class IndexController extends BaseController {
 		
 		if (StringUtils.isEmpty(node)) {
 			Map<String, List<Topic>> map = new LinkedHashMap<>();
-			map.put("精华帖子", topicService.findIndexHot(1, 5, "good").getList());
-			map.put("热门帖子", topicService.findIndexHot(1, 5, "hot").getList());
-			map.put("最新帖子", topicService.findIndexHot(1, 5, "newest").getList());
+			map.put("热门帖子", topicService.findIndexHot(1, 10, "hot").getList());
+			map.put("最新帖子", topicService.findIndexHot(1, 10, "newest").getList());
+			map.put("等待回复", topicService.findIndexHot(1, 10, "noReply").getList());
 			List<Node> nodeListForIndex = nodeService.listForIndex();
 			nodeListForIndex.stream().forEach(n -> {
-				map.put(n.getNodeTitle(), topicService.pageAllByTabAndNode(p, 5, tab, n.getNodeTitle()).getList());
+				map.put(n.getNodeTitle(), topicService.pageAllByTabAndNode(p, 10, tab, n.getNodeTitle()).getList());
 			});
 			request.setAttribute("map", map);
 			request.setAttribute("nodeName", "index");

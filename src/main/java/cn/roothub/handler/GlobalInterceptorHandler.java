@@ -35,7 +35,7 @@ public class GlobalInterceptorHandler implements HandlerInterceptor{
 		}
 		
 		//抛出异常，交给全局异常处理（这样会跳转到错误页面）
-		if(user.getIsBlock()) {
+		if(user!= null && user.getIsBlock()) {
 			throw new RuntimeException("您的账户已被锁定，无法继续操作，请联系系统管理员解决。返回<a href='/' style=\"color: #4078c0;text-decoration: underline;\">首页</a>");
 		}
 		return true;

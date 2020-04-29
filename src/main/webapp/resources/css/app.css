@@ -825,3 +825,11 @@ li {
 #tab-nav .li-cate-active {
 	color: #FFEB3B;
 }
+.topic-detail-content iframe {
+	width: 100%;
+    height: 100%;
+}
+.reply_content iframe {
+	width: 100%;
+	height: 500px;
+}

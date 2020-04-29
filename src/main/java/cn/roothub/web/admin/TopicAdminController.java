@@ -101,10 +101,7 @@ public class TopicAdminController {
 	@RequestMapping(value = "/delete",method = RequestMethod.GET)
 	@ResponseBody
 	public Result<String> delete(@RequestParam("id") Integer id){
-		Topic topic = topicService.findById(id);
-		topic.setIsDelete(!topic.getIsDelete());
-		topic.setUpdateDate(new Date());
-		topicService.updateTopic(topic);
+		topicService.deleteByTopicId(id);
 		// 删除关联的评论
 		replyService.deleteByTopicId(id);
 		return new Result<>(true, "删除成功！");

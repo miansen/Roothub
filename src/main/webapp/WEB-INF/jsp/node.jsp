@@ -141,7 +141,7 @@
 				
 	<!-- 今日热议帖子 -->
     <div class="box box-primary">
-      <div class="box-header with-border"><b>今日热议主题</b></div>
+      <div class="box-header with-border"><b>今日热门</b></div>
       <div class="box-body">
       	<table class="table" style="font-size: 14px;">
         <tbody>
@@ -171,7 +171,7 @@
     
     <!-- 今日等待回复的主题 -->
     <div class="box box-primary">
-      <div class="box-header with-border"><b>今日等待回复帖子</b></div>
+      <div class="box-header with-border"><b>等待回复</b></div>
       <div class="box-body">
       	<table class="table" style="font-size: 14px;">
         	<tbody>
@@ -261,11 +261,12 @@
 <script type="text/javascript">
 //var tab = "${tab}";//板块
 var tab = "${tab}";//父板块
+var nodeName = "${nodeName}";
 //var url = "/?tab="+tab+"&ptab="+ptab+"&"
 //$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
  var count = ${page.totalRow};//数据总量
  var limit = ${page.pageSize};//每页显示的条数
- var url = "?tab="+tab+"&p=";//url
+ var url = "?node="+nodeName+"&tab="+tab+"&p=";//url
  function page(){
      var page = location.search.match(/p=(\d+)/);  
      return page ? page[1] : 1;  

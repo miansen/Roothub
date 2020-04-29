@@ -16,10 +16,10 @@
 		<jsp:include page="components/head.jsp" />
 		<c:forEach var="entry" items="${map}" varStatus="status">
 		<c:if test="${status.index % 3 == 0}">
-		<div class="row">
+		<div class="row" style="background-color: #fff;">
 		</c:if>
-			<div class="col-md-4">
-				<div class="box box-primary">
+			<div class="col-md-4" style="padding-right: 0px;padding-left: 0px;">
+				<div class="box box-primary" style="border-top-color: #fff;border-bottom: 0px solid #e2e2e2;margin-bottom: 0px;box-shadow: 0 0px 0px rgba(0,0,0,0.1);">
 					<div class="box-header with-border">
 						<h3 class="box-title">${entry.key}</h3>
 						<div class="box-tools pull-right">
@@ -35,18 +35,24 @@
 											<tr>
 												<c:if test="${fn:length(item.avatar) > 0}">
 													<td width="24" valign="middle" align="center" style="border-top: 0px">
-														<img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
+														<a href="/user/${item.author}">
+															<img src="${item.avatar}" class="avatar img-circle" border="0" align="default" style="max-width: 24px; max-height: 24px;">
+														</a>
 													</td>
 												</c:if>
 												<td style="border-top: 0px">
+													<c:if test="${not empty item.nodeTitle}">
+					  									<span><a href="/n/${item.nodeTitle}" class="node">${item.nodeTitle}</a></span>
+					  								</c:if>
 													<c:choose>
 														<c:when test="${item.url != null}">
-															<a href="${item.url}">${item.title}</a>
+															<span><a href="${item.url}">${item.title}</a></span>
 														</c:when>
 														<c:otherwise>
-															<a href="/topic/${item.topicId}">${item.title}</a>
+															<span><a href="/topic/${item.topicId}">${item.title}</a></span>
 														</c:otherwise>
 													</c:choose>
+													<span style="float: right;"><fmt:formatDate type="date" value="${item.createDate}" /></span>
 												</td>
 											</tr>
 										</c:forEach>
@@ -60,8 +66,9 @@
 			<c:if test="${status.index % 3 == 2}">
 			</div>
 			</c:if>
-		</c:forEach>				
+		</c:forEach>	
 </div>
+<div class="divide mar-top-20" style="margin-top: 20px;"></div>
 <div id="back2Top" class="backTop___6Q-ki" style="display: none">
 	<div class="line___F1WY0"></div>
 	<div class="arrow___3UCwo"></div>
@@ -73,26 +80,8 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/index.js"></script>
 <script src="/resources/layui/layui.js"></script>
-<script src="/resources/layui/layui-paginate.js"></script>
+<!-- <script src="/resources/layui/layui-paginate.js"></script> -->
 <!-- <script src="/resources/js/login_info.js"></script> -->
 <script src="/resources/js/formatDate.js"></script>
-<script type="text/javascript">
-//var tab = "${tab}";//板块
-var tab = "${tab}";//父板块
-//var url = "/?tab="+tab+"&ptab="+ptab+"&"
-//$(".pagination2").pagination("${page.pageNumber}","${page.totalPage}",10);
- var count = ${page.totalRow};//数据总量
- var limit = ${page.pageSize};//每页显示的条数
- var url = "?tab="+tab+"&p=";//url
- function page(){
-     var page = location.search.match(/p=(\d+)/);  
-     return page ? page[1] : 1;  
- }
- var p = page();//当前页数
- //console.log("p:"+p);
- //console.log(count);
- //console.log(url);
- paginate(count,limit,p,url);
-</script>
 </body>
 </html>

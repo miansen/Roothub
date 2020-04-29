@@ -230,8 +230,8 @@
 	  	var contentHtml = editor.txt.html();
 	  	var contentText = editor.txt.text();
 	  	var topicId = ${topic.topicId};
-	  	if(!contentText) {
-	  		alert('请输入回复内容哦');
+	  	if(!contentHtml) {
+	  		alert('请输入回复内容');
 	  		return false;
 	  	} else {
 	  		$.ajax({
@@ -239,7 +239,7 @@
 	  			type: 'post',
 	  			dataType: 'json',
 	  			data: {
-	  				content: contentText ? contentHtml : '',
+	  				content: contentHtml,
 	  				topicId: topicId
 	  			},
 	  			success: function(data){

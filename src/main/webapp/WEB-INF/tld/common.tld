@@ -147,7 +147,7 @@
 	</tag>
 	<tag>
 		<name>sidebar</name>
-		<tag-class>wang.miansen.roothub.modules.sidebar.ui.MainSidebarTag</tag-class>
+		<tag-class>wang.miansen.roothub.modules.menu.ui.MainSidebarTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
 		<description>通用侧边栏标签</description>

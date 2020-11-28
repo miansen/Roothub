@@ -135,21 +135,22 @@ CREATE TABLE `role_permission_rel` (
   CONSTRAINT `fk_role_permission_rel_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='角色权限关联关系表';
 
-CREATE TABLE `sidebar` (
-  `sidebar_id` VARCHAR(36) NOT NULL COMMENT '侧边栏ID',
-  `parent_sidebar_id` VARCHAR(36) DEFAULT NULL COMMENT '父级侧边栏ID',
-  `permission_id` VARCHAR(36) DEFAULT NULL COMMENT '权限ID',
-  `user_id` VARCHAR(36) DEFAULT NULL COMMENT '创建人ID',
-  `sidebar_name` VARCHAR(50) NOT NULL COMMENT '侧边栏的名字',
-  `sidebar_url` VARCHAR(500) DEFAULT NULL COMMENT '点击侧边栏时发送的请求URL',
-  `sidebar_sort` INT(11) DEFAULT NULL COMMENT '排序',
-  `create_date` DATETIME DEFAULT NULL COMMENT '创建时间',
-  `update_date` DATETIME DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`sidebar_id`),
-  KEY `key_sidebar_parent_sidebar_id` (`parent_sidebar_id`),
-  KEY `key_sidebar_permission_id` (`permission_id`),
-  KEY `key_sidebar_user_id` (`user_id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='侧边栏表'
+CREATE TABLE `menu` (
+  `menu_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单 ID',
+  `parent_menu_id` int(11) DEFAULT NULL COMMENT '父级菜单 ID',
+  `permission_id` int(11) DEFAULT NULL COMMENT '权限 ID',
+  `user_id` int(11) DEFAULT NULL COMMENT '创建人 ID',
+  `menu_name` varchar(50) NOT NULL COMMENT '菜单名称',
+  `menu_url` varchar(500) DEFAULT NULL COMMENT '点击菜单时的请求 URL',
+  `menu_icon` varchar(50) DEFAULT NULL COMMENT '菜单图标',
+  `menu_sort` int(11) DEFAULT NULL COMMENT '菜单排序',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_date` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`menu_id`),
+  KEY `key_menu_parent_menu_id` (`parent_menu_id`),
+  KEY `key_menu_permission_id` (`permission_id`),
+  KEY `key_menu_user_id` (`user_id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COMMENT='菜单表'
 
 CREATE TABLE `system_config` (
   `system_config_id` int(11) unsigned NOT NULL AUTO_INCREMENT,

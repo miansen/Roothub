@@ -19,6 +19,7 @@ import wang.miansen.roothub.modules.security.service.AuthenticationFailureServic
  * 
  * @author miansen.wang
  * @date 2020-03-16
+ * @since 3.0
  */
 @Service
 public class AuthenticationFailureServiceImpl implements AuthenticationFailureService {
@@ -28,14 +29,14 @@ public class AuthenticationFailureServiceImpl implements AuthenticationFailureSe
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		logger.error("登录失败，原因是：" + exception);
-		request.setAttribute("error", "登录名或者密码错误");
+		saveAuthenticationFailure(request, response, exception);
+		request.setAttribute("error", "用户名或者密码错误");
 		request.getRequestDispatcher("/login.jsp").forward(request, response);
 	}
 
 	@Override
-	public void saveAuthenticationFailure(AuthenticationException exception) {
-		logger.error("登录失败，原因是：" + exception);
+	public void saveAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
+		logger.error("认证失败", exception);
 	}
 
 }

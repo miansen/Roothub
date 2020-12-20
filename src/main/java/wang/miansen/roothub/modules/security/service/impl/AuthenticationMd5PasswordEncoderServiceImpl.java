@@ -10,6 +10,7 @@ import wang.miansen.roothub.modules.security.service.AuthenticationMd5PasswordEn
  * 
  * @author miansen.wang
  * @date 2020-03-16
+ * @since 3.0
  */
 @Service
 public class AuthenticationMd5PasswordEncoderServiceImpl extends Md5PasswordEncoder

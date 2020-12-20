@@ -47,10 +47,11 @@
                 				onAuthenticationFailure 方法对认证失败进行处理。此时 authentication-failure-url 属性将不再发生作用。
          -->
         <security:form-login login-page="/login.jsp"
-                            login-processing-url="/login"
-                            username-parameter="username"
-                            password-parameter="password" 
-                            authentication-failure-handler-ref="authenticationFailureServiceImpl" />
+                             login-processing-url="/login"
+                             username-parameter="username"
+                             password-parameter="password"
+                             authentication-failure-handler-ref="authenticationFailureServiceImpl"
+                             authentication-success-handler-ref="authenticationSuccessServiceImpl" />
 
         <security:logout logout-success-url="/login.jsp"
                         logout-url="/logout" 

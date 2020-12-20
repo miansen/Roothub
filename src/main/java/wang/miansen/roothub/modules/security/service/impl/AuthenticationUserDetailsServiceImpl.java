@@ -23,10 +23,11 @@ import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
 
 /**
- * 认证 Service Impl
- * 
+ * 认证过程 Service 接口实现。这里处理真正的认证逻辑。
+ *
  * @author miansen.wang
  * @date 2020-03-16
+ * @since 3.0
  */
 @Service
 public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserDetailsService {
@@ -37,7 +38,7 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		if (StringUtils.isEmpty(username)) {
-			throw new BadCredentialsException("登录名不能为空");
+			throw new BadCredentialsException("登录名为空");
 		}
 		QueryWrapper<User> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("user_name", username);
@@ -48,11 +49,13 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		List<RoleDTO> roles = userDTO.getRoleDTOs();
 		if (CollectionUtils.isNotEmpty(roles)) {
+			// 添加角色。角色名需已“ROLE_”作为前缀。
 			roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName())));
 			roles.forEach(role -> {
 				List<PermissionDTO> permissions = role.getPermissionDTOs();
 				if (CollectionUtils.isNotEmpty(permissions)) {
 					permissions.forEach(
+							// 添加权限
 							permission -> authorities.add(new SimpleGrantedAuthority(permission.getPermissionName())));
 				}
 

@@ -5,6 +5,7 @@ package wang.miansen.roothub.modules.security.service;
  * 
  * @author miansen.wang
  * @date 2020-03-16
+ * @since 3.0
  */
 public interface AuthenticationMd5PasswordEncoderService {
 

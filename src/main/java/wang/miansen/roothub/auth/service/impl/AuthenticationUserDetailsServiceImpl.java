@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.security.service.impl;
+package wang.miansen.roothub.auth.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,15 +9,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
-import wang.miansen.roothub.modules.security.model.AuthenticationUser;
-import wang.miansen.roothub.modules.security.service.AuthenticationUserDetailsService;
+import wang.miansen.roothub.auth.entity.AuthenticationUser;
+import wang.miansen.roothub.auth.service.AuthenticationUserDetailsService;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.model.User;
 import wang.miansen.roothub.modules.user.service.UserService;
@@ -29,7 +28,6 @@ import wang.miansen.roothub.modules.user.service.UserService;
  * @date 2020-03-16
  * @since 3.0
  */
-@Service
 public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserDetailsService {
 
 	@Autowired

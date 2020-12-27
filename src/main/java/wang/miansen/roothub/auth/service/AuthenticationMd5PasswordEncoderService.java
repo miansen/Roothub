@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.security.service;
+package wang.miansen.roothub.auth.service;
 
 /**
  * 认证密码处理器接口

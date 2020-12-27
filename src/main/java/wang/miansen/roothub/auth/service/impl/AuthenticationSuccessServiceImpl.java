@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.security.service.impl;
+package wang.miansen.roothub.auth.service.impl;
 
 import java.io.IOException;
 
@@ -10,10 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.stereotype.Service;
 
-import wang.miansen.roothub.modules.security.model.AuthenticationUser;
-import wang.miansen.roothub.modules.security.service.AuthenticationSuccessService;
+import wang.miansen.roothub.auth.entity.AuthenticationUser;
+import wang.miansen.roothub.auth.service.AuthenticationSuccessService;
 
 /**
  * 处理认证成功的接口实现类。
@@ -28,7 +27,6 @@ import wang.miansen.roothub.modules.security.service.AuthenticationSuccessServic
  * @date 2020-12-20 10:48
  * @since 3.0
  */
-@Service
 public class AuthenticationSuccessServiceImpl extends SavedRequestAwareAuthenticationSuccessHandler
         implements AuthenticationSuccessService {
 

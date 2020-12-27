@@ -1,9 +1,8 @@
-package wang.miansen.roothub.modules.security.service.impl;
+package wang.miansen.roothub.auth.service.impl;
 
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-import wang.miansen.roothub.modules.security.service.AuthenticationMd5PasswordEncoderService;
+import wang.miansen.roothub.auth.service.AuthenticationMd5PasswordEncoderService;
 
 /**
  * 认证密码处理器实现类
@@ -12,7 +11,6 @@ import wang.miansen.roothub.modules.security.service.AuthenticationMd5PasswordEn
  * @date 2020-03-16
  * @since 3.0
  */
-@Service
 public class AuthenticationMd5PasswordEncoderServiceImpl extends Md5PasswordEncoder
 		implements AuthenticationMd5PasswordEncoderService {
 

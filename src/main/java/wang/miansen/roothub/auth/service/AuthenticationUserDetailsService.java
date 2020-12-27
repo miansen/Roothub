@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.security.service;
+package wang.miansen.roothub.auth.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

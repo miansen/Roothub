@@ -1,4 +1,4 @@
-package wang.miansen.roothub.modules.security.model;
+package wang.miansen.roothub.auth.entity;
 
 import java.util.Collection;
 

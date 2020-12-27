@@ -23,7 +23,7 @@ import wang.miansen.roothub.common.util.IDGenerator;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.common.vo.BaseVO;
 import wang.miansen.roothub.config.ApplicationConfig;
-import wang.miansen.roothub.modules.security.model.AuthenticationUser;
+import wang.miansen.roothub.auth.entity.AuthenticationUser;
 
 /**
  * 该类是 Controller 层的基础父类，实现了常用的业务增删改查方法，建议大部分的 Controller 层继承。

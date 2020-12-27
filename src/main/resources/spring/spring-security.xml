@@ -90,11 +90,6 @@
     	</security:headers>
     </security:http>
 
-    <!-- 认证成功后的处理类 -->
-    <!-- <bean id="authenticationSuccessHandlerImpl" class="diary.security.AuthenticationSuccessHandlerImpl"/> -->
-    <!-- 认证失败后的处理类 -->
-    <!-- <bean id="authenticationFailureHandlerImpl" class="diary.security.AuthenticationFailureHandlerImpl"/> -->
-
     <!-- 配置认证管理器，当 UsernamePasswordAuthenticationFilter 拦截器拦截到用户的认证请求后，
    		  会调用认证管理器进行认证 -->
     <security:authentication-manager>
@@ -105,8 +100,6 @@
         </security:authentication-provider>
     </security:authentication-manager>
 
-    <!-- <bean id="userDetailsServiceImpl" class="diary.security.UserDetailsServiceImpl"></bean> -->
-    
     <!-- 自定义被认证请求向登录界面跳转采用forward方式 -->
    <!--  <bean id="myLoginUrlAuthenticationEntryPoint" 
     	class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
@@ -115,11 +108,17 @@
     	采用forward方式跳转，默认是重定向
     	<property name="useForward" value="true"/>
     </bean> -->
-    
-    <!-- 自定义认证失败的处理类 -->
-    <!-- <bean id="simpleUrlAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
-    	<constructor-arg name="defaultFailureUrl" value="/admin/login.jsp"></constructor-arg>
-    	<property name="useForward" value="true" />
-	</bean> -->
+
+    <!-- 自定义认证成功处理类（可以不指定，spring security 有默认的实现） -->
+    <bean id="authenticationSuccessServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationSuccessServiceImpl"/>
+
+    <!-- 自定义认证失败处理类（可以不指定，spring security 有默认的实现） -->
+    <bean id="authenticationFailureServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationFailureServiceImpl"/>
+
+    <!-- 认证过程处理类（这个必须要指定） -->
+    <bean id="authenticationUserDetailsServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationUserDetailsServiceImpl"/>
+
+    <!-- 使用自定义的对象对用户提交的密码进行加密操作 -->
+    <bean id="authenticationMd5PasswordEncoderServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationMd5PasswordEncoderServiceImpl"/>
 
 </beans>

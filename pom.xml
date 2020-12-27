@@ -39,6 +39,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<lombok.version>1.18.10</lombok.version>
 		<mapstruct.version>1.3.0.Final</mapstruct.version>
+		<hutool.version>5.4.3</hutool.version>
 	</properties>
 
 	<dependencies>
@@ -286,6 +287,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!--hutool 工具类-->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<version>${hutool.version}</version>
+		</dependency>
 
 	</dependencies>
 	<build>

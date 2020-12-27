@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +24,7 @@ import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
 import wang.miansen.roothub.modules.role.model.Role;
-import wang.miansen.roothub.modules.role.service.RoleService;
+import wang.miansen.roothub.modules.role.service.RoleService2;
 import wang.miansen.roothub.modules.role.vo.RoleVO;
 
 /**
@@ -39,7 +38,7 @@ import wang.miansen.roothub.modules.role.vo.RoleVO;
 public class RoleAdminController extends AbstractBaseController<Role, RoleDTO, RoleVO> {
 
 	@Autowired
-	private RoleService roleService;
+	private RoleService2 roleService;
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	@Override

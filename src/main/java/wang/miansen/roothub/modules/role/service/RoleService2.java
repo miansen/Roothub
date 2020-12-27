@@ -9,6 +9,6 @@ import wang.miansen.roothub.modules.role.model.Role;
  * @author miansen.wang
  * @date 2020-02-23
  */
-public interface RoleService extends BaseService<Role, RoleDTO> {
+public interface RoleService2 extends BaseService<Role, RoleDTO> {
 
 }

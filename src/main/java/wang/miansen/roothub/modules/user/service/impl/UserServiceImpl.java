@@ -1,6 +1,5 @@
 package wang.miansen.roothub.modules.user.service.impl;
 
-import java.io.Serializable;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.modules.user.dao.UserDao;
 import wang.miansen.roothub.modules.user.dto.UserDTO;
 import wang.miansen.roothub.modules.user.dto.UserRoleRelDTO;
-import wang.miansen.roothub.modules.user.exception.UserException;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.dao.BaseDao;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
@@ -35,7 +33,6 @@ import wang.miansen.roothub.common.dto.UserExecution;
 import wang.miansen.roothub.modules.integral.model.Top100;
 import wang.miansen.roothub.common.enums.InsertUserEnum;
 import wang.miansen.roothub.common.enums.UpdateUserEnum;
-import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.exception.OperationFailedException;
 import wang.miansen.roothub.common.exception.OperationRepeaException;
 import wang.miansen.roothub.common.exception.OperationSystemException;
@@ -44,10 +41,8 @@ import wang.miansen.roothub.modules.collect.service.CollectService;
 import wang.miansen.roothub.modules.comment.model.Comment;
 import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.notice.service.NoticeService;
-import wang.miansen.roothub.modules.post.model.Post;
-import wang.miansen.roothub.modules.post.service.PostService;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
-import wang.miansen.roothub.modules.role.service.RoleService;
+import wang.miansen.roothub.modules.role.service.RoleService2;
 import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.common.util.CookieAndSessionUtil;
@@ -83,7 +78,7 @@ public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> impl
 	private RedisService redisService;
 
 	@Autowired
-	private RoleService roleService;
+	private RoleService2 roleService;
 
 	@Autowired
 	private UserRoleRelService userRoleRelService;

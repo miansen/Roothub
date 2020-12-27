@@ -21,7 +21,7 @@ import wang.miansen.roothub.modules.role.dto.RolePermissionRelDTO;
 import wang.miansen.roothub.modules.role.model.Role;
 import wang.miansen.roothub.modules.role.model.RolePermissionRel;
 import wang.miansen.roothub.modules.role.service.RolePermissionRelService;
-import wang.miansen.roothub.modules.role.service.RoleService;
+import wang.miansen.roothub.modules.role.service.RoleService2;
 
 /**
  * Role Service Impl
@@ -30,7 +30,7 @@ import wang.miansen.roothub.modules.role.service.RoleService;
  * @date 2020-02-23
  */
 @Service
-public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, RoleDTO> implements RoleService {
+public class RoleServiceImpl2 extends AbstractBaseServiceImpl<Role, RoleDTO> implements RoleService2 {
 
 	@Autowired
 	private RoleDao roleDao;

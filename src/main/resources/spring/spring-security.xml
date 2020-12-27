@@ -58,8 +58,9 @@
                         invalidate-session="true" 
                         delete-cookies="JSESSIONID" />
 		
-		<!-- 放行登录 URL 避免拦截，造成无法登录 -->
+		<!-- 放行登录 URL，避免拦截，造成无法登录 -->
 		<security:intercept-url pattern="/login.jsp" access="permitAll()" />
+
         <!-- 设置访问所有的 URL 都必须登录 -->
         <security:intercept-url pattern="/**" access="isAuthenticated()" />
 
@@ -69,8 +70,11 @@
          -->
         <!-- <security:intercept-url pattern="/user/**" access="hasRole('ROLE_0')"/> -->
 
-        <!-- 指定登陆认证成功后，用户访问未授权的 URL 将跳转的 URL -->
-        <security:access-denied-handler error-page="/error"/>
+        <!-- 添加拒绝访问处理类 -->
+        <security:access-denied-handler ref="accessDeniedServiceImpl"/>
+
+        <!-- 添加动态权限校验过滤器 -->
+        <security:custom-filter ref="dynamicSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
 
         <security:session-management session-fixation-protection="none">
             <!-- 
@@ -120,5 +124,20 @@
 
     <!-- 使用自定义的对象对用户提交的密码进行加密操作 -->
     <bean id="authenticationMd5PasswordEncoderServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationMd5PasswordEncoderServiceImpl"/>
+
+    <!-- 自定义拒绝访问（没有权限）处理类 -->
+    <bean id="accessDeniedServiceImpl" class="wang.miansen.roothub.gateway.service.impl.AccessDeniedServiceImpl"/>
+
+    <!-- 动态权限提供者 -->
+    <bean id="dynamicSecurityProviderServiceImpl" class="wang.miansen.roothub.gateway.service.impl.DynamicSecurityProviderServiceImpl"/>
+
+    <!-- 动态权限数据源 -->
+    <bean id="dynamicSecurityMetadataSource" class="wang.miansen.roothub.gateway.DynamicSecurityMetadataSource"/>
+
+    <!-- 动态权限决策管理器，用于判断用户是否有访问权限。 -->
+    <bean id="dynamicAccessDecisionManager" class="wang.miansen.roothub.gateway.DynamicAccessDecisionManager"/>
+
+    <!-- 动态权限过滤器，用于实现基于 URL 的动态权限过滤。 -->
+    <bean id="dynamicSecurityFilter" class="wang.miansen.roothub.gateway.filter.DynamicSecurityFilter"/>
 
 </beans>

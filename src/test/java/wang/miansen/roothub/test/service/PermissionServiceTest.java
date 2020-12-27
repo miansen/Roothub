@@ -12,7 +12,7 @@ import wang.miansen.roothub.test.BaseTest;
 /**
  * TODO 添加类的描述
  *
- * @author 龙德
+ * @author miansen.wang
  * @date 2020-12-27 15:41
  */
 public class PermissionServiceTest extends BaseTest {

@@ -11,7 +11,7 @@ import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.modules.security.dao.PermissionResourceRelDao;
 import wang.miansen.roothub.modules.security.dto.PermissionResourceRelDTO;
 import wang.miansen.roothub.modules.security.model.PermissionResourceRel;
-import wang.miansen.roothub.modules.security.service.PermissionResourceRelService;
+import wang.miansen.roothub.modules.security.service.PermissionResourceRelService2;
 
 /**
  * 权限与资源多对多关联关系实现类
@@ -20,9 +20,9 @@ import wang.miansen.roothub.modules.security.service.PermissionResourceRelServic
  * @date 2020-03-18
  */
 @Service
-public class PermissionResourceRelServiceImpl
+public class PermissionResourceRelServiceImpl2
 		extends AbstractBaseServiceImpl<PermissionResourceRel, PermissionResourceRelDTO>
-		implements PermissionResourceRelService {
+		implements PermissionResourceRelService2 {
 
 	@Autowired
 	private PermissionResourceRelDao permissionResourceRelDao;

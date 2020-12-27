@@ -25,7 +25,7 @@ import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.permission.model.Permission;
-import wang.miansen.roothub.modules.permission.service.PermissionService;
+import wang.miansen.roothub.modules.permission.service.PermissionBakService;
 import wang.miansen.roothub.modules.permission.vo.PermissionVO;
 
 /**
@@ -40,7 +40,7 @@ import wang.miansen.roothub.modules.permission.vo.PermissionVO;
 public class PermissionAdminController extends AbstractBaseController<Permission, PermissionDTO, PermissionVO> {
 
 	@Autowired
-	private PermissionService permissionService;
+	private PermissionBakService permissionService;
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	@Override

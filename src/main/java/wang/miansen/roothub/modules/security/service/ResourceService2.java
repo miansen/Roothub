@@ -11,7 +11,7 @@ import wang.miansen.roothub.modules.security.model.Resource;
  * @author miansen.wang
  * @date 2020-03-13
  */
-public interface ResourceService extends BaseService<Resource, ResourceDTO> {
+public interface ResourceService2 extends BaseService<Resource, ResourceDTO> {
 
 	/**
 	 * 根据资源名称或者资源类别名称查找资源

@@ -10,6 +10,6 @@ import wang.miansen.roothub.modules.security.model.PermissionResourceRel;
  * @author miansen.wang
  * @date 2020-03-18
  */
-public interface PermissionResourceRelService extends BaseService<PermissionResourceRel, PermissionResourceRelDTO> {
+public interface PermissionResourceRelService2 extends BaseService<PermissionResourceRel, PermissionResourceRelDTO> {
 
 }

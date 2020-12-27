@@ -16,22 +16,25 @@
 		 作为 bean 注入到 IOC 容器 -->
 
 	<!--通用模块-->
-	<context:component-scan base-package="wang.miansen.roothub.common.**" />
+	<context:component-scan base-package="wang.miansen.roothub.common" />
 
-	<!--系统配置模块-->
-	<context:component-scan base-package="wang.miansen.roothub.config.**" />
+	<!--配置模块-->
+	<context:component-scan base-package="wang.miansen.roothub.config" />
 
 	<!--核心模块-->
-	<context:component-scan base-package="wang.miansen.roothub.core.**" />
+	<context:component-scan base-package="wang.miansen.roothub.core" />
 
 	<!--存储模块-->
 	<context:component-scan base-package="wang.miansen.roothub.store" />
 
 	<!--第三方集成模块-->
-	<context:component-scan base-package="wang.miansen.roothub.third.**" />
+	<context:component-scan base-package="wang.miansen.roothub.third" />
 
 	<!-- 业务模块，扫描 service.impl 包下所有使用注解的类型 -->
 	<context:component-scan base-package="wang.miansen.roothub.modules.*.service.impl" />
+
+	<!-- RBAC 模块-->
+	<context:component-scan base-package="wang.miansen.roothub.rbac" />
 										  
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"

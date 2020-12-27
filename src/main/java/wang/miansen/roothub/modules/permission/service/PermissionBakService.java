@@ -10,6 +10,6 @@ import wang.miansen.roothub.modules.permission.model.Permission;
  * @author miansen.wang
  * @date 2020-02-23
  */
-public interface PermissionService extends BaseService<Permission, PermissionDTO> {
+public interface PermissionBakService extends BaseService<Permission, PermissionDTO> {
 
 }

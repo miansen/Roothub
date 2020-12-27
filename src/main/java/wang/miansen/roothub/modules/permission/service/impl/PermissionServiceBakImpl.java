@@ -11,7 +11,7 @@ import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.modules.permission.dao.PermissionDao;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
 import wang.miansen.roothub.modules.permission.model.Permission;
-import wang.miansen.roothub.modules.permission.service.PermissionService;
+import wang.miansen.roothub.modules.permission.service.PermissionBakService;
 
 /**
  * 权限 Service Impl
@@ -20,8 +20,8 @@ import wang.miansen.roothub.modules.permission.service.PermissionService;
  * @date 2020-02-23
  */
 @Service
-public class PermissionServiceImpl extends AbstractBaseServiceImpl<Permission, PermissionDTO>
-		implements PermissionService {
+public class PermissionServiceBakImpl extends AbstractBaseServiceImpl<Permission, PermissionDTO>
+		implements PermissionBakService {
 
 	@Autowired
 	private PermissionDao permissionDao;

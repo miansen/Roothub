@@ -17,7 +17,7 @@ import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
-import wang.miansen.roothub.modules.permission.service.PermissionService;
+import wang.miansen.roothub.modules.permission.service.PermissionBakService;
 import wang.miansen.roothub.modules.security.dao.ResourceDao;
 import wang.miansen.roothub.modules.security.dto.PermissionResourceRelDTO;
 import wang.miansen.roothub.modules.security.dto.ResourceCategoryDTO;
@@ -25,9 +25,9 @@ import wang.miansen.roothub.modules.security.dto.ResourceDTO;
 import wang.miansen.roothub.modules.security.model.Resource;
 import wang.miansen.roothub.modules.security.model.ResourceCategory;
 import wang.miansen.roothub.modules.security.model.PermissionResourceRel;
-import wang.miansen.roothub.modules.security.service.PermissionResourceRelService;
+import wang.miansen.roothub.modules.security.service.PermissionResourceRelService2;
 import wang.miansen.roothub.modules.security.service.ResourceCategoryService;
-import wang.miansen.roothub.modules.security.service.ResourceService;
+import wang.miansen.roothub.modules.security.service.ResourceService2;
 
 /**
  * 资源 Service Impl
@@ -36,7 +36,7 @@ import wang.miansen.roothub.modules.security.service.ResourceService;
  * @date 2020-03-13
  */
 @Service
-public class ResourceServiceImpl extends AbstractBaseServiceImpl<Resource, ResourceDTO> implements ResourceService {
+public class ResourceServiceImpl2 extends AbstractBaseServiceImpl<Resource, ResourceDTO> implements ResourceService2 {
 
 	@Autowired
 	private ResourceDao resourceDao;
@@ -45,10 +45,10 @@ public class ResourceServiceImpl extends AbstractBaseServiceImpl<Resource, Resou
 	private ResourceCategoryService resourceCategoryService;
 
 	@Autowired
-	private PermissionService permissionService;
+	private PermissionBakService permissionService;
 
 	@Autowired
-	private PermissionResourceRelService permissionResourceRelService;
+	private PermissionResourceRelService2 permissionResourceRelService;
 
 	@Override
 	public Function<? super ResourceDTO, ? extends Resource> getDTO2DOMapper() {

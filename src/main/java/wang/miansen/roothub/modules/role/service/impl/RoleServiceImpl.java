@@ -14,7 +14,7 @@ import wang.miansen.roothub.common.service.impl.AbstractBaseServiceImpl;
 import wang.miansen.roothub.common.util.BeanUtils;
 import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.modules.permission.dto.PermissionDTO;
-import wang.miansen.roothub.modules.permission.service.PermissionService;
+import wang.miansen.roothub.modules.permission.service.PermissionBakService;
 import wang.miansen.roothub.modules.role.dao.RoleDao;
 import wang.miansen.roothub.modules.role.dto.RoleDTO;
 import wang.miansen.roothub.modules.role.dto.RolePermissionRelDTO;
@@ -36,7 +36,7 @@ public class RoleServiceImpl extends AbstractBaseServiceImpl<Role, RoleDTO> impl
 	private RoleDao roleDao;
 
 	@Autowired
-	private PermissionService permissionService;
+	private PermissionBakService permissionService;
 
 	@Autowired
 	private RolePermissionRelService rolePermissionRelService;

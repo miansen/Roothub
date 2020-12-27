@@ -27,7 +27,7 @@ import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.security.dto.ResourceDTO;
 import wang.miansen.roothub.modules.security.dto.ResourceTypeDTO;
 import wang.miansen.roothub.modules.security.model.Resource;
-import wang.miansen.roothub.modules.security.service.ResourceService;
+import wang.miansen.roothub.modules.security.service.ResourceService2;
 import wang.miansen.roothub.modules.security.service.ResourceTypeService;
 import wang.miansen.roothub.modules.security.vo.ResourceVO;
 
@@ -42,7 +42,7 @@ import wang.miansen.roothub.modules.security.vo.ResourceVO;
 public class ResourceAdminController extends AbstractBaseController<Resource, ResourceDTO, ResourceVO> {
 
 	@Autowired
-	private ResourceService resourceService;
+	private ResourceService2 resourceService;
 	
 	@Autowired
 	private ResourceTypeService resourceTypeService;

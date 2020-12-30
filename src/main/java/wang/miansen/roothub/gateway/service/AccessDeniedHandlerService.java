@@ -7,12 +7,12 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 /**
- * 没有权限访问返回结果处理接口
+ * 自定义拒绝访问（用户没有权限并且是登录状态）处理接口
  *
  * @author miansen.wang
  * @date 2020-12-27 17:09
  */
-public interface AccessDeniedService extends AccessDeniedHandler {
+public interface AccessDeniedHandlerService extends AccessDeniedHandler {
 
     /**
      * 保存拒绝访问的信息

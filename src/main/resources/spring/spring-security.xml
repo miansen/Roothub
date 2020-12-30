@@ -26,7 +26,7 @@
 
 	<!-- 1.auto-config：是否自动配置过滤器，默认是 false
 		 2.entry-point-ref：自定义认证切入点 -->
-    <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="">
+    <security:http auto-config="false" use-expressions="true" entry-point-ref="authenticationEntryPointServiceImpl">
         <!--
             1.login-page：表示自定义登录页面
             2.login-processing-url：表示登录时提交的地址
@@ -62,7 +62,7 @@
 		<security:intercept-url pattern="/login.jsp" access="permitAll()" />
 
         <!-- 设置访问所有的 URL 都必须登录 -->
-        <security:intercept-url pattern="/**" access="isAuthenticated()" />
+        <!--<security:intercept-url pattern="/**" access="isAuthenticated()" />-->
 
         <!-- 
             access="hasRole('ROLE_ADMIN')"：表示拥有 ADMIN 角色的用户可以访问，否则 403。
@@ -70,10 +70,10 @@
          -->
         <!-- <security:intercept-url pattern="/user/**" access="hasRole('ROLE_0')"/> -->
 
-        <!-- 添加拒绝访问处理类 -->
-        <security:access-denied-handler ref="accessDeniedServiceImpl"/>
+        <!-- 添加一个自定义的 handler，用来处理没有权限的请求。 -->
+        <security:access-denied-handler ref="accessDeniedHandlerServiceImpl"/>
 
-        <!-- 添加动态权限校验过滤器 -->
+        <!-- 添加一个自定义的 filter，放在 FILTER_SECURITY_INTERCEPTOR 之前，实现用户、角色、权限、资源的动态管理。 -->
         <security:custom-filter ref="dynamicSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
 
         <security:session-management session-fixation-protection="none">
@@ -113,23 +113,29 @@
     	<property name="useForward" value="true"/>
     </bean> -->
 
+    <!-- ============================================ 认证相关 start ============================================ -->
     <!-- 自定义认证成功处理类（可以不指定，spring security 有默认的实现） -->
     <bean id="authenticationSuccessServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationSuccessServiceImpl"/>
 
     <!-- 自定义认证失败处理类（可以不指定，spring security 有默认的实现） -->
     <bean id="authenticationFailureServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationFailureServiceImpl"/>
 
+    <!-- 自定义身份验证入口点（可以不指定，spring security 有默认的实现） -->
+    <bean id="authenticationEntryPointServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationEntryPointServiceImpl"/>
+
     <!-- 认证过程处理类（这个必须要指定） -->
     <bean id="authenticationUserDetailsServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationUserDetailsServiceImpl"/>
 
     <!-- 使用自定义的对象对用户提交的密码进行加密操作 -->
     <bean id="authenticationMd5PasswordEncoderServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationMd5PasswordEncoderServiceImpl"/>
+    <!-- ============================================ 认证相关 end ============================================ -->
 
+    <!-- ============================================ 鉴权相关 start ============================================ -->
     <!-- 自定义拒绝访问（没有权限）处理类 -->
-    <bean id="accessDeniedServiceImpl" class="wang.miansen.roothub.gateway.service.impl.AccessDeniedServiceImpl"/>
+    <bean id="accessDeniedHandlerServiceImpl" class="wang.miansen.roothub.gateway.service.impl.AccessDeniedHandlerServiceImpl"/>
 
-    <!-- 动态权限提供者 -->
-    <bean id="dynamicSecurityProviderServiceImpl" class="wang.miansen.roothub.gateway.service.impl.DynamicSecurityProviderServiceImpl"/>
+    <!-- 权限数据提供者 -->
+    <bean id="securityMetadataProviderServiceImpl" class="wang.miansen.roothub.gateway.service.impl.SecurityMetadataProviderServiceImpl"/>
 
     <!-- 动态权限数据源 -->
     <bean id="dynamicSecurityMetadataSource" class="wang.miansen.roothub.gateway.DynamicSecurityMetadataSource"/>
@@ -139,5 +145,6 @@
 
     <!-- 动态权限过滤器，用于实现基于 URL 的动态权限过滤。 -->
     <bean id="dynamicSecurityFilter" class="wang.miansen.roothub.gateway.filter.DynamicSecurityFilter"/>
+    <!-- ============================================ 鉴权相关 end ============================================ -->
 
 </beans>

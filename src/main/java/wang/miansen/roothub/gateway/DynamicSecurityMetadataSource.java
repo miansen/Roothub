@@ -2,8 +2,6 @@ package wang.miansen.roothub.gateway;
 
 import java.util.*;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
@@ -14,7 +12,7 @@ import org.springframework.util.PathMatcher;
 import cn.hutool.core.util.URLUtil;
 
 import wang.miansen.roothub.common.util.CollectionUtils;
-import wang.miansen.roothub.gateway.service.DynamicSecurityProviderService;
+import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
 
 /**
  * 动态权限数据源，用于获取动态权限规则。
@@ -27,14 +25,14 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
     private static Map<String, List<ConfigAttribute>> configAttributeMap;
 
     @Autowired
-    private DynamicSecurityProviderService dynamicSecurityProviderService;
+    private SecurityMetadataProviderService securityMetadataProviderService;
 
     /**
      * 加载权限数据源
      */
     // @PostConstruct
     public void loadSecurityMetadataSource() {
-        configAttributeMap = dynamicSecurityProviderService.getSecurityMetadataSource();
+        configAttributeMap = securityMetadataProviderService.getSecurityMetadataSource();
     }
 
     /**

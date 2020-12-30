@@ -10,19 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 
-import wang.miansen.roothub.gateway.service.DynamicSecurityProviderService;
+import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
 import wang.miansen.roothub.rbac.bo.PermissionBO;
 import wang.miansen.roothub.rbac.bo.ResourceBO;
 import wang.miansen.roothub.rbac.service.PermissionService;
 import wang.miansen.roothub.rbac.service.ResourceService;
 
 /**
- * 动态权限提供者实现类
+ * 权限数据提供者实现类
  *
  * @author miansen.wang
  * @date 2020-12-27 15:06
  */
-public class DynamicSecurityProviderServiceImpl implements DynamicSecurityProviderService {
+public class SecurityMetadataProviderServiceImpl implements SecurityMetadataProviderService {
 
     @Autowired
     private ResourceService resourceService;

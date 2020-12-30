@@ -6,12 +6,12 @@ import java.util.Map;
 import org.springframework.security.access.ConfigAttribute;
 
 /**
- * 动态权限提供者接口
+ * 权限数据提供者接口
  *
  * @author miansen.wang
  * @date 2020-12-27 14:59
  */
-public interface DynamicSecurityProviderService {
+public interface SecurityMetadataProviderService {
 
     /**
      * 获取资源和权限的映射。

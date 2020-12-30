@@ -120,9 +120,6 @@
     <!-- 自定义认证失败处理类（可以不指定，spring security 有默认的实现） -->
     <bean id="authenticationFailureServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationFailureServiceImpl"/>
 
-    <!-- 自定义身份验证入口点（可以不指定，spring security 有默认的实现） -->
-    <bean id="authenticationEntryPointServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationEntryPointServiceImpl"/>
-
     <!-- 认证过程处理类（这个必须要指定） -->
     <bean id="authenticationUserDetailsServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationUserDetailsServiceImpl"/>
 
@@ -131,7 +128,10 @@
     <!-- ============================================ 认证相关 end ============================================ -->
 
     <!-- ============================================ 鉴权相关 start ============================================ -->
-    <!-- 自定义拒绝访问（没有权限）处理类 -->
+    <!-- 自定义身份验证入口点（用户没有权限并且是未认证状态） -->
+    <bean id="authenticationEntryPointServiceImpl" class="wang.miansen.roothub.gateway.service.impl.AuthenticationEntryPointServiceImpl"/>
+
+    <!-- 自定义拒绝访问处理类（用户没有权限并且是已认证状态） -->
     <bean id="accessDeniedHandlerServiceImpl" class="wang.miansen.roothub.gateway.service.impl.AccessDeniedHandlerServiceImpl"/>
 
     <!-- 权限数据提供者 -->

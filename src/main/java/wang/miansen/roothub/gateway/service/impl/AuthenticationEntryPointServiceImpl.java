@@ -1,4 +1,4 @@
-package wang.miansen.roothub.auth.service.impl;
+package wang.miansen.roothub.gateway.service.impl;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.AuthenticationException;
 
-import wang.miansen.roothub.auth.service.AuthenticationEntryPointService;
+import wang.miansen.roothub.gateway.service.AuthenticationEntryPointService;
 
 /**
  * 自定义身份验证入口点接口实现类。

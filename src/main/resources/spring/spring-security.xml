@@ -74,7 +74,7 @@
         <security:access-denied-handler ref="accessDeniedHandlerServiceImpl"/>
 
         <!-- 添加一个自定义的 filter，放在 FILTER_SECURITY_INTERCEPTOR 之前，实现用户、角色、权限、资源的动态管理。 -->
-        <security:custom-filter ref="dynamicSecurityFilter" before="FILTER_SECURITY_INTERCEPTOR" />
+        <security:custom-filter ref="dynamicSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
 
         <security:session-management session-fixation-protection="none">
             <!-- 
@@ -143,8 +143,8 @@
     <!-- 动态权限决策管理器，用于判断用户是否有访问权限。 -->
     <bean id="dynamicAccessDecisionManager" class="wang.miansen.roothub.gateway.DynamicAccessDecisionManager"/>
 
-    <!-- 动态权限过滤器，用于实现基于 URL 的动态权限过滤。 -->
-    <bean id="dynamicSecurityFilter" class="wang.miansen.roothub.gateway.filter.DynamicSecurityFilter"/>
+    <!-- 动态权限拦截器，用于实现基于 URL 的动态权限过滤。 -->
+    <bean id="dynamicSecurityInterceptor" class="wang.miansen.roothub.gateway.filter.DynamicSecurityInterceptor"/>
     <!-- ============================================ 鉴权相关 end ============================================ -->
 
 </beans>

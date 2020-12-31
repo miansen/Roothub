@@ -21,7 +21,7 @@ import wang.miansen.roothub.gateway.DynamicSecurityMetadataSource;
  * @author miansen.wang
  * @date 2020-12-27 17:41
  */
-public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
+public class DynamicSecurityInterceptor extends AbstractSecurityInterceptor implements Filter {
 
     @Autowired
     private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;

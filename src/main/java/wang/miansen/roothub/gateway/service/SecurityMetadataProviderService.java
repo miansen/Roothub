@@ -15,10 +15,18 @@ public interface SecurityMetadataProviderService {
 
     /**
      * 获取资源和权限的映射。
+     *
      * <p>K: 资源（可以是 ANT 风格的通配符）</p>
      * <p>V: 权限列表</p>
      *
      * @return 资源和权限映射 Map
      */
-    Map<String, List<ConfigAttribute>> getSecurityMetadataSource();
+    Map<String, List<ConfigAttribute>> mapSecurityMetadata();
+
+    /**
+     * 获取匿名用户的权限
+     *
+     * @return 匿名用户的权限
+     */
+    List<String> listAnonymousPermissions();
 }

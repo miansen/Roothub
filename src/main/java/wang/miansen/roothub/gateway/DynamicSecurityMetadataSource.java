@@ -32,7 +32,7 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
      */
     // @PostConstruct
     public void loadSecurityMetadataSource() {
-        configAttributeMap = securityMetadataProviderService.getSecurityMetadataSource();
+        configAttributeMap = securityMetadataProviderService.mapSecurityMetadata();
     }
 
     /**

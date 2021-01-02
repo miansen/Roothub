@@ -145,6 +145,8 @@
 
     <!-- 动态权限拦截器，用于实现基于 URL 的动态权限过滤。 -->
     <bean id="dynamicSecurityInterceptor" class="wang.miansen.roothub.gateway.filter.DynamicSecurityInterceptor"/>
+
+    <bean id="anonymousAuthenticationFilterInitializer" class="wang.miansen.roothub.gateway.AnonymousAuthenticationFilterInitializer"/>
     <!-- ============================================ 鉴权相关 end ============================================ -->
 
 </beans>

@@ -13,8 +13,10 @@ import org.springframework.security.access.SecurityConfig;
 import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
 import wang.miansen.roothub.rbac.bo.PermissionBO;
 import wang.miansen.roothub.rbac.bo.ResourceBO;
+import wang.miansen.roothub.rbac.bo.RoleBO;
 import wang.miansen.roothub.rbac.service.PermissionService;
 import wang.miansen.roothub.rbac.service.ResourceService;
+import wang.miansen.roothub.rbac.service.RoleService;
 
 /**
  * 权限数据提供者实现类
@@ -24,6 +26,14 @@ import wang.miansen.roothub.rbac.service.ResourceService;
  */
 public class SecurityMetadataProviderServiceImpl implements SecurityMetadataProviderService {
 
+    /**
+     * 匿名用户默认拥有的角色
+     */
+    private static final String ANONYMOUS_ROLE_CODE = "ROLE_ANONYMOUS";
+
+    @Autowired
+    private RoleService roleService;
+
     @Autowired
     private ResourceService resourceService;
 
@@ -31,7 +41,7 @@ public class SecurityMetadataProviderServiceImpl implements SecurityMetadataProv
     private PermissionService permissionService;
 
     @Override
-    public Map<String, List<ConfigAttribute>> getSecurityMetadataSource() {
+    public Map<String, List<ConfigAttribute>> mapSecurityMetadata() {
         Map<String, List<ConfigAttribute>> map = new ConcurrentHashMap<>(16);
         List<ResourceBO> resources = resourceService.list();
         for (ResourceBO resource : resources) {
@@ -45,6 +55,13 @@ public class SecurityMetadataProviderServiceImpl implements SecurityMetadataProv
             map.put(resource.getResourceValue(), configAttributes);
         }
         return map;
+    }
+
+    @Override
+    public List<String> listAnonymousPermissions() {
+        RoleBO roleBO = roleService.getByRoleCode(ANONYMOUS_ROLE_CODE);
+        List<PermissionBO> permissions = permissionService.listByRoleId(roleBO.getRoleId());
+        return permissions.stream().map(PermissionBO::getPermissionCode).collect(Collectors.toList());
     }
 
 }

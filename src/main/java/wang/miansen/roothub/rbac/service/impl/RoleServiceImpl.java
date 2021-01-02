@@ -49,4 +49,14 @@ public class RoleServiceImpl implements RoleService {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public RoleBO getByRoleCode(String roleCode) {
+        QueryWrapper<RoleDO> wrapper = new QueryWrapper<>();
+        wrapper.eq("role_code", roleCode);
+        wrapper.eq("is_disabled", "0");
+        wrapper.eq("is_deleted", "0");
+        RoleDO roleDO = roleDAO.selectOne(wrapper);
+        return do2BoMapper.roleDo2Bo(roleDO);
+    }
 }

@@ -19,4 +19,12 @@ public interface RoleService {
      * @return 角色列表
      */
     List<RoleBO> listByUserId(Long userId);
+
+    /**
+     * 根据角色编码查询角色
+     *
+     * @param roleCode 角色编码
+     * @return 角色 BO 对象
+     */
+    RoleBO getByRoleCode(String roleCode);
 }

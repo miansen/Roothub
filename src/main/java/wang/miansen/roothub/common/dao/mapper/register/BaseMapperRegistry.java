@@ -25,17 +25,23 @@ public class BaseMapperRegistry {
 
     /**
      * 注册 Mapper
+     * @param mapper
+     */
+    public void addMapper(Class<?> mapper) {
+        // mapper 必须是接口且继承 BaseMapper，才能注入
+        if (!mapper.isInterface() || !BaseDao.class.isAssignableFrom(mapper)){
+            return;
+        }
+        BaseMapperBuilder myBatisMapperAnnotationBuilder = new BaseMapperBuilder(configuration, mapper);
+        myBatisMapperAnnotationBuilder.parse();
+    }
+
+    /**
+     * 注册 Mapper
      * @param mappers
      */
     public void addMappers(List<Class<?>> mappers) {
-        mappers.forEach(m -> {
-            // mapper 必须是接口且继承 BaseMapper，才能注入
-            if (!m.isInterface() || !BaseDao.class.isAssignableFrom(m)){
-                return;
-            }
-            BaseMapperBuilder myBatisMapperAnnotationBuilder = new BaseMapperBuilder(configuration, m);
-            myBatisMapperAnnotationBuilder.parse();
-        });
+        mappers.forEach(this::addMapper);
     }
 
 }

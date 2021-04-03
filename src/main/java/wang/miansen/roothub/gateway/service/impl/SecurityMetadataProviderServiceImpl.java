@@ -1,6 +1,7 @@
 package wang.miansen.roothub.gateway.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,9 +60,12 @@ public class SecurityMetadataProviderServiceImpl implements SecurityMetadataProv
 
     @Override
     public List<String> listAnonymousPermissions() {
-        RoleBO roleBO = roleService.getByRoleCode(ANONYMOUS_ROLE_CODE);
-        List<PermissionBO> permissions = permissionService.listByRoleId(roleBO.getRoleId());
-        return permissions.stream().map(PermissionBO::getPermissionCode).collect(Collectors.toList());
+        RoleBO role = roleService.getByRoleCode(ANONYMOUS_ROLE_CODE);
+        if (role != null) {
+            List<PermissionBO> permissions = permissionService.listByRoleId(role.getRoleId());
+            return permissions.stream().map(PermissionBO::getPermissionCode).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 
 }

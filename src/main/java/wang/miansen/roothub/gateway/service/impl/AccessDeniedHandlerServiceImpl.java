@@ -13,7 +13,7 @@ import org.springframework.security.access.AccessDeniedException;
 import wang.miansen.roothub.gateway.service.AccessDeniedHandlerService;
 
 /**
- * 自定义拒绝访问（用户没有权限并且是登录状态）处理接口实现类
+ * 自定义拒绝访问处理接口实现类。（用户没有权限并且是已认证状态）
  *
  * @author miansen.wang
  * @date 2020-12-27 17:12
@@ -28,8 +28,9 @@ public class AccessDeniedHandlerServiceImpl implements AccessDeniedHandlerServic
         // 设置 403 状态码
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         // 采用跳转的方式跳转到登录页，携带提示信息，给用户友好的提示。
-        request.setAttribute("error", "抱歉，您没有权限访问。");
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        request.setAttribute("errorCode", HttpServletResponse.SC_FORBIDDEN);
+        request.setAttribute("errorMsg", "抱歉，您没有权限访问。");
+        request.getRequestDispatcher("/error.jsp").forward(request, response);
     }
 
     @Override

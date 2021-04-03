@@ -28,8 +28,8 @@ public class BaseMapperRegistry {
      * @param mapper
      */
     public void addMapper(Class<?> mapper) {
-        // mapper 必须是接口且继承 BaseMapper，才能注入
-        if (!mapper.isInterface() || !BaseDao.class.isAssignableFrom(mapper)){
+        // mapper 必须实现 BaseDao 接口，才能注入。
+        if (!BaseDao.class.isAssignableFrom(mapper)){
             return;
         }
         BaseMapperBuilder myBatisMapperAnnotationBuilder = new BaseMapperBuilder(configuration, mapper);

@@ -11,7 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import wang.miansen.roothub.gateway.service.AuthenticationEntryPointService;
 
 /**
- * 自定义身份验证入口点接口实现类。
+ * 自定义身份验证入口点接口实现类。（用户没有权限并且是未认证状态）
  *
  * @author miansen.wang
  * @date 2020-12-30 15:54

@@ -14,7 +14,7 @@ import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
 /**
  * 匿名认证拦截器初始化器
  *
- * @author 龙德
+ * @author miansen.wang
  * @date 2021-01-02 12:02
  */
 public class AnonymousAuthenticationFilterInitializer implements BeanPostProcessor {
@@ -32,7 +32,7 @@ public class AnonymousAuthenticationFilterInitializer implements BeanPostProcess
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof AnonymousAuthenticationFilter) {
-//            List<String> permissions = securityMetadataProviderService.listAnonymousPermissions();
+            // List<String> permissions = securityMetadataProviderService.listAnonymousPermissions();
             logger.debug(bean.toString());
         }
         return bean;

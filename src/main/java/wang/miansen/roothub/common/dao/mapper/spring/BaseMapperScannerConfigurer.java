@@ -5,12 +5,14 @@ import wang.miansen.roothub.common.dao.mapper.register.BaseMapperRegistry;
 import org.apache.ibatis.binding.MapperRegistry;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,8 @@ public class BaseMapperScannerConfigurer implements InitializingBean, BeanPostPr
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
+    private BaseMapperRegistry baseMapperRegistry;
+
     @Override
     public void afterPropertiesSet() throws Exception {
         org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
@@ -53,10 +57,28 @@ public class BaseMapperScannerConfigurer implements InitializingBean, BeanPostPr
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof BaseDao) {
+            Class<?> clazz = bean.getClass();
+            // 如果 class 是代理对象，则需要获取原来的 class
+            if (AopUtils.isAopProxy(bean) || AopUtils.isJdkDynamicProxy(bean) || AopUtils.isCglibProxy(bean)) {
+                clazz = AopUtils.getTargetClass(clazz);
+            }
+            if (Proxy.isProxyClass(clazz)) {
+                Class<?> proxyClass = Proxy.getProxyClass(Thread.currentThread().getContextClassLoader(), BaseDao.class);
+                System.out.println(proxyClass);
+            }
             org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
-            BaseMapperRegistry baseMapperRegistry = new BaseMapperRegistry(configuration);
-            baseMapperRegistry.addMapper(bean.getClass());
+            MapperRegistry mapperRegistry = configuration.getMapperRegistry();
+            List<Class<?>> mappers = new ArrayList<>(mapperRegistry.getMappers());
+            for (Class<?> mapper : mappers) {
+                if (mapper == clazz) {
+                    if (baseMapperRegistry == null) {
+                        baseMapperRegistry = new BaseMapperRegistry(configuration);
+                    }
+                    baseMapperRegistry.addMapper(mapper);
+                }
+            }
         }
         return bean;
     }
+
 }

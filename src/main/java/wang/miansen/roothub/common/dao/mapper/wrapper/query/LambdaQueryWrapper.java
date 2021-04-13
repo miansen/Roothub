@@ -1,16 +1,25 @@
 package wang.miansen.roothub.common.dao.mapper.wrapper.query;
 
+import wang.miansen.roothub.common.dao.mapper.builder.TableInfoBuilder;
+import wang.miansen.roothub.common.dao.mapper.exceptions.BaseMapperException;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableFieldInfo;
-import wang.miansen.roothub.common.dao.mapper.wrapper.AbstractWrapper;
+import wang.miansen.roothub.common.dao.mapper.util.ArrayUtils;
+import wang.miansen.roothub.common.dao.mapper.util.StringPool;
+import wang.miansen.roothub.common.dao.mapper.wrapper.AbstractLambdaWrapper;
+import wang.miansen.roothub.common.dao.mapper.wrapper.SFunction;
 
-import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
+ * Lambda 查询条件包装器
+ *
+ * @param <T> 实体类的类型
  * @Author: miansen.wang
  * @Date: 2019/10/8 21:50
  */
-public class LambdaQueryWrapper<T> extends AbstractWrapper<T, LambdaQueryWrapper<T>, Function<T, ?>, Function<T, ?>> implements Query<T, LambdaQueryWrapper<T>, Function<T, ?>>{
+public class LambdaQueryWrapper<T> extends AbstractLambdaWrapper<T, LambdaQueryWrapper<T>> implements
+    Query<T, LambdaQueryWrapper<T>, SFunction<T, ?>> {
 
     private String selectColumns;
 
@@ -22,38 +31,37 @@ public class LambdaQueryWrapper<T> extends AbstractWrapper<T, LambdaQueryWrapper
         super.modelClass = modelClass;
     }
 
-    public LambdaQueryWrapper(Function<T, ?> columns) {
+    public LambdaQueryWrapper(SFunction<T, ?> columns) {
         this.select(columns);
     }
 
-    public LambdaQueryWrapper(Class<T> modelClass, Function<T, ?> columns) {
+    public LambdaQueryWrapper(Class<T> modelClass, SFunction<T, ?> columns) {
         super.modelClass = modelClass;
         this.select(columns);
     }
 
     @Override
-    protected String formatSqlValue(Function<T, ?> value) {
-        return super.formatSqlValue(value);
-    }
-
-    @Override
-    protected String columnToString(Function<T, ?> column) {
-        return super.columnToString(column);
-    }
-
-    @Override
-    public LambdaQueryWrapper<T> select(Function<T, ?>... columns) {
-        return null;
+    public LambdaQueryWrapper<T> select(SFunction<T, ?>... columns) {
+        if (ArrayUtils.isNotEmpty(columns)) {
+            this.selectColumns = columnsToString(columns);
+        }
+        return typedThis;
     }
 
     @Override
     public LambdaQueryWrapper<T> select(Predicate<TableFieldInfo> predicate) {
-        return null;
+        if (super.modelClass == null) {
+            throw new BaseMapperException("modelClass must be not null,please set modelClass before use this method!");
+        }
+        return select(super.modelClass, predicate);
     }
 
     @Override
     public LambdaQueryWrapper<T> select(Class<T> modelClass, Predicate<TableFieldInfo> predicate) {
-        return null;
+        super.modelClass = modelClass;
+        this.selectColumns = TableInfoBuilder.getTableInfo(modelClass).getTableFieldInfoList().stream().filter(predicate)
+            .map(TableFieldInfo::getColumn).collect(Collectors.joining(StringPool.SPACE_COMMA_SPACE));
+        return super.typedThis;
     }
 
     public String getSelectColumns() {

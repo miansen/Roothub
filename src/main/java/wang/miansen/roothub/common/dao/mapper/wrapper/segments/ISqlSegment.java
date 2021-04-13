@@ -19,8 +19,13 @@ import java.io.Serializable;
  * @Date: 2019/9/13 18:44
  */
 @FunctionalInterface
-public interface ISqlSegment extends Serializable{
+public interface ISqlSegment extends Serializable {
 
+    /**
+     * 获取 SQL 片段
+     *
+     * @return SQL 片段
+     */
     String getSqlSegment();
 
 }

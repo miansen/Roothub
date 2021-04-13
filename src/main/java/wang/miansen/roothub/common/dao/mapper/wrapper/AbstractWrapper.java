@@ -316,8 +316,9 @@ public abstract class AbstractWrapper<T, R extends AbstractWrapper<T, R, K, V>, 
 
 	/**
 	 * 将 column 转化成 String
-	 * @param column 数据库表字段名称
-	 * @return String
+     *
+	 * @param column 输入的字段
+	 * @return 数据库表字段名称
 	 */
 	protected String columnToString(K column) {
 		if (column instanceof String) {
@@ -326,6 +327,16 @@ public abstract class AbstractWrapper<T, R extends AbstractWrapper<T, R, K, V>, 
 			throw new BaseMapperException("not support this column !");
 		}
 	}
+
+    /**
+     * 将多个 column 转化为 String，并用 ',' 分割。
+     *
+     * @param columns 可以输入多个字段
+     * @return
+     */
+	protected String columnsToString(K... columns) {
+	    return Arrays.stream(columns).map(this::columnToString).collect(Collectors.joining(StringPool.COMMA));
+    }
 
 	/**
 	 * 生成 IN 的表达式

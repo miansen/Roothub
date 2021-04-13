@@ -30,7 +30,7 @@ public class SerializedLambda implements Serializable {
     }
 
     public String getFunctionalInterfaceClass() {
-        return functionalInterfaceClass;
+        return normalizedName(functionalInterfaceClass);
     }
 
     public String getFunctionalInterfaceMethodName() {
@@ -42,7 +42,7 @@ public class SerializedLambda implements Serializable {
     }
 
     public String getImplClass() {
-        return implClass;
+        return normalizedName(implClass);
     }
 
     public String getImplMethodName() {
@@ -67,6 +67,16 @@ public class SerializedLambda implements Serializable {
 
     public Object getCapturedArg(int i) {
         return capturedArgs[i];
+    }
+
+    /**
+     * 正常化类名称，将类名称中的 / 替换为 .
+     *
+     * @param name 类名称
+     * @return 正常的类名
+     */
+    private String normalizedName(String name) {
+        return name.replace('/', '.');
     }
 
     @Override

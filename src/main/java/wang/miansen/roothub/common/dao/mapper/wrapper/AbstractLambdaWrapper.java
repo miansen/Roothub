@@ -3,6 +3,8 @@ package wang.miansen.roothub.common.dao.mapper.wrapper;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.reflection.property.PropertyNamer;
+
 import wang.miansen.roothub.common.dao.mapper.util.StringPool;
 import wang.miansen.roothub.common.util.LambdaUtils;
 import wang.miansen.roothub.common.util.StringUtils;
@@ -20,7 +22,7 @@ public abstract class AbstractLambdaWrapper<T, R extends AbstractLambdaWrapper<T
 
     @Override
     protected String columnToString(SFunction<T, ?> column) {
-        return StringUtils.camelToUnderline(LambdaUtils.resolve(column).getImplMethodName());
+        return StringUtils.camelToUnderline(PropertyNamer.methodToProperty(LambdaUtils.resolve(column).getImplMethodName()));
     }
 
     @Override

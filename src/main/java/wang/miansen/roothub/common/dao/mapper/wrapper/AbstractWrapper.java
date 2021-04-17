@@ -78,7 +78,7 @@ public abstract class AbstractWrapper<T, R extends AbstractWrapper<T, R, K, V>, 
 	/**
 	 * SQL 片段生成器
 	 */
-	private SqlSegmentBuilder sqlSegmentBuilder = new SqlSegmentBuilder();
+	protected SqlSegmentBuilder sqlSegmentBuilder = new SqlSegmentBuilder();
 
 	public T getModel() {
 		return model;

@@ -29,13 +29,13 @@ import wang.miansen.roothub.rbac.service.PermissionService;
 public class PermissionServiceImpl implements PermissionService {
 
     @Autowired
-    private PermissionDAO permissionDAO;
+    private PermissionDAO permissionDao;
 
     @Autowired
-    private RolePermissionRelDAO rolePermissionRelDAO;
+    private RolePermissionRelDAO rolePermissionRelDao;
 
     @Autowired
-    private PermissionResourceRelDAO permissionResourceRelDAO;
+    private PermissionResourceRelDAO permissionResourceRelDao;
 
     @Autowired
     private Do2BoMapper do2BoMapper;
@@ -43,7 +43,7 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<PermissionBO> listByIds(List<Long> ids) {
         if (CollectionUtils.isNotEmpty(ids)) {
-            List<PermissionDO> permissionDOList = permissionDAO.selectBatchIds(ids);
+            List<PermissionDO> permissionDOList = permissionDao.selectBatchIds(ids);
             return do2BoMapper.permissionDoList2BoList(permissionDOList);
         }
         return Collections.emptyList();
@@ -52,10 +52,11 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<PermissionBO> listByRoleId(Long roleId) {
         QueryWrapper<RolePermissionRelDO> wrapper = new QueryWrapper<>();
-        wrapper.eq("role_id", roleId);
-        wrapper.eq("is_disabled", "0");
-        wrapper.eq("is_deleted", "0");
-        List<RolePermissionRelDO> rolePermissionRelList = rolePermissionRelDAO.selectList(wrapper);
+        wrapper.lambda()
+            .eq(RolePermissionRelDO::getRoleId, roleId)
+            .eq(RolePermissionRelDO::getIsDisabled, Boolean.FALSE)
+            .eq(RolePermissionRelDO::getIsDeleted, Boolean.FALSE);
+        List<RolePermissionRelDO> rolePermissionRelList = rolePermissionRelDao.selectList(wrapper);
         List<Long> permissionIds = rolePermissionRelList.stream().map(RolePermissionRelDO::getPermissionId).collect(Collectors.toList());
         return listByIds(permissionIds);
     }
@@ -63,10 +64,11 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public List<PermissionBO> listByResourceId(Long resourceId) {
         QueryWrapper<PermissionResourceRelDO> wrapper = new QueryWrapper<>();
-        wrapper.eq("resource_id", resourceId);
-        wrapper.eq("is_disabled", "0");
-        wrapper.eq("is_deleted", "0");
-        List<PermissionResourceRelDO> permissionResourceRelList = permissionResourceRelDAO.selectList(wrapper);
+        wrapper.lambda()
+            .eq(PermissionResourceRelDO::getResourceId, resourceId)
+            .eq(PermissionResourceRelDO::getIsDisabled, Boolean.FALSE)
+            .eq(PermissionResourceRelDO::getIsDeleted, Boolean.FALSE);
+        List<PermissionResourceRelDO> permissionResourceRelList = permissionResourceRelDao.selectList(wrapper);
         List<Long> permissionIds = permissionResourceRelList.stream().map(PermissionResourceRelDO::getPermissionId).collect(Collectors.toList());
         return listByIds(permissionIds);
     }

@@ -4,42 +4,66 @@ import wang.miansen.roothub.common.enums.BaseErrorCode;
 
 /**
  * 应用类别错误枚举类
- * 
+ *
  * @author miansen.wang
  * @date 2020-03-08
  */
 public enum AppCategoryErrorCodeEnum implements BaseErrorCode {
 
-	ID_MISSING(400, "AppCategory.IdMissing", "应用类名的 ID 不能为空"),
+    /**
+     * 应用类名的 ID 不能为空
+     */
+    ID_MISSING(400, "AppCategory.IdMissing", "应用类名的 ID 不能为空"),
 
-	NAME_MISSING(400, "AppCategory.NameMissing", "应用类名的名称不能为空"),
-	
-	INVALIDATE_ID(400, "AppCategory.InvalidateName", "无效的ID"),
+    /**
+     * "应用类名的名称不能为空
+     */
+    NAME_MISSING(400, "AppCategory.NameMissing", "应用类名的名称不能为空"),
 
-	INVALIDATE_NAME(400, "AppCategory.InvalidateName", "无效的名称");
+    /**
+     * 无效的ID
+     */
+    INVALIDATE_ID(400, "AppCategory.InvalidateName", "无效的ID"),
 
-	private int httpCode;
+    /**
+     * 无效的名称
+     */
+    INVALIDATE_NAME(400, "AppCategory.InvalidateName", "无效的名称");
 
-	private String errorCode;
+    /**
+     * http 错误码，可以通过调用 {@code response.setStatus()} 设置服务器响应的 {@code Status Code}。
+     */
+    private final int httpCode;
 
-	private String message;
+    /**
+     * 服务器错误码，可以通过 json 或者页面的形式返回给客户端，以便客户端能够清楚发生错误的原因。
+     */
+    private final String errorCode;
 
-	private AppCategoryErrorCodeEnum(int httpCode, String errorCode, String message) {
-		this.httpCode = httpCode;
-		this.errorCode = errorCode;
-		this.message = message;
-	}
+    /**
+     * 发生错误的详细信息，可以通过 json 或者页面的形式返回给客户端，以便客户端能够清楚发生错误的详细信息。
+     */
+    private final String message;
 
-	public int getHttpCode() {
-		return httpCode;
-	}
+    AppCategoryErrorCodeEnum(int httpCode, String errorCode, String message) {
+        this.httpCode = httpCode;
+        this.errorCode = errorCode;
+        this.message = message;
+    }
 
-	public String getErrorCode() {
-		return errorCode;
-	}
+    @Override
+    public int getHttpCode() {
+        return httpCode;
+    }
 
-	public String getMessage() {
-		return message;
-	}
+    @Override
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 
 }

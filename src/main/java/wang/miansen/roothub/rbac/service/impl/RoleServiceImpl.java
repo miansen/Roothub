@@ -27,10 +27,10 @@ import wang.miansen.roothub.rbac.service.RoleService;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    private RoleDAO roleDAO;
+    private RoleDAO roleDao;
 
     @Autowired
-    private RoleUserRelDAO roleUserRelDAO;
+    private RoleUserRelDAO roleUserRelDao;
 
     @Autowired
     private Do2BoMapper do2BoMapper;
@@ -38,13 +38,14 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<RoleBO> listByUserId(Long userId) {
         QueryWrapper<RoleUserRelDO> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id", userId);
-        wrapper.eq("is_disabled", "0");
-        wrapper.eq("is_deleted", "0");
-        List<RoleUserRelDO> roleUserRelList = roleUserRelDAO.selectList(wrapper);
+        wrapper.lambda()
+            .eq(RoleUserRelDO::getUserId, userId)
+            .eq(RoleUserRelDO::getIsDisabled, Boolean.FALSE)
+            .eq(RoleUserRelDO::getIsDeleted, Boolean.FALSE);
+        List<RoleUserRelDO> roleUserRelList = roleUserRelDao.selectList(wrapper);
         List<Long> roleIds = roleUserRelList.stream().map(RoleUserRelDO::getRoleId).collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(roleIds)) {
-            List<RoleDO> roleDOList = roleDAO.selectBatchIds(roleIds);
+            List<RoleDO> roleDOList = roleDao.selectBatchIds(roleIds);
             return do2BoMapper.roleDoList2BoList(roleDOList);
         }
         return Collections.emptyList();
@@ -53,10 +54,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleBO getByRoleCode(String roleCode) {
         QueryWrapper<RoleDO> wrapper = new QueryWrapper<>();
-        wrapper.eq("role_code", roleCode);
-        wrapper.eq("is_disabled", "0");
-        wrapper.eq("is_deleted", "0");
-        RoleDO roleDO = roleDAO.selectOne(wrapper);
+        wrapper.lambda()
+            .eq(RoleDO::getRoleCode, roleCode)
+            .eq(RoleDO::getIsDisabled, Boolean.FALSE)
+            .eq(RoleDO::getIsDeleted, Boolean.FALSE);
+        RoleDO roleDO = roleDao.selectOne(wrapper);
         return do2BoMapper.roleDo2Bo(roleDO);
     }
 }

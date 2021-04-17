@@ -84,32 +84,35 @@ public enum BaseErrorCodeEnum implements BaseErrorCode {
 	/**
 	 * http 错误码，可以通过调用 {@code response.setStatus()} 设置服务器响应的 {@code Status Code}。
 	 */
-	private int httpCode;
+	private final int httpCode;
 	
 	/**
 	 * 服务器错误码，可以通过 json 或者页面的形式返回给客户端，以便客户端能够清楚发生错误的原因。
 	 */
-	private String errorCode;
+	private final String errorCode;
 	
 	/**
 	 * 发生错误的详细信息，可以通过 json 或者页面的形式返回给客户端，以便客户端能够清楚发生错误的详细信息。
 	 */
-	private String message;
+	private final String message;
 
-	private BaseErrorCodeEnum(int httpCode, String errorCode, String message) {
+	BaseErrorCodeEnum(int httpCode, String errorCode, String message) {
 		this.httpCode = httpCode;
 		this.errorCode = errorCode;
 		this.message = message;
 	}
 
+	@Override
 	public int getHttpCode() {
 		return httpCode;
 	}
 
+	@Override
 	public String getErrorCode() {
 		return errorCode;
 	}
 
+	@Override
 	public String getMessage() {
 		return message;
 	}

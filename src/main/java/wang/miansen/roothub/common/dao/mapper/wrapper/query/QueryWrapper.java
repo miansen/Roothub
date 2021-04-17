@@ -1,7 +1,5 @@
 package wang.miansen.roothub.common.dao.mapper.wrapper.query;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -11,7 +9,6 @@ import wang.miansen.roothub.common.dao.mapper.metadata.TableFieldInfo;
 import wang.miansen.roothub.common.dao.mapper.wrapper.AbstractWrapper;
 import wang.miansen.roothub.common.dao.mapper.util.ArrayUtils;
 import wang.miansen.roothub.common.dao.mapper.util.StringPool;
-import wang.miansen.roothub.modules.tag.model.Tag;
 
 /**
  * 查询条件包装器
@@ -45,6 +42,10 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
     public QueryWrapper(Class<T> modelClass, String... columns) {
         super.modelClass = modelClass;
         this.select(columns);
+    }
+
+    public LambdaQueryWrapper<T> lambda() {
+        return new LambdaQueryWrapper<>(model, modelClass, selectColumns, paramNameValuePairs, paramNameSeq, sqlSegmentBuilder);
     }
 
     /**

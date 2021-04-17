@@ -7,7 +7,10 @@ import wang.miansen.roothub.common.dao.mapper.util.ArrayUtils;
 import wang.miansen.roothub.common.dao.mapper.util.StringPool;
 import wang.miansen.roothub.common.dao.mapper.wrapper.AbstractLambdaWrapper;
 import wang.miansen.roothub.common.dao.mapper.wrapper.SFunction;
+import wang.miansen.roothub.common.dao.mapper.wrapper.segments.SqlSegmentBuilder;
 
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -31,11 +34,21 @@ public class LambdaQueryWrapper<T> extends AbstractLambdaWrapper<T, LambdaQueryW
         super.modelClass = modelClass;
     }
 
-    public LambdaQueryWrapper(SFunction<T, ?> columns) {
+    public LambdaQueryWrapper(SFunction<T, ?>... columns) {
         this.select(columns);
     }
 
-    public LambdaQueryWrapper(Class<T> modelClass, SFunction<T, ?> columns) {
+    public LambdaQueryWrapper(T model, Class<T> modelClass, String selectColumns, Map<String, Object> paramNameValuePairs,
+        AtomicInteger paramNameSeq, SqlSegmentBuilder sqlSegmentBuilder) {
+        super.model = model;
+        super.modelClass = modelClass;
+        super.paramNameValuePairs = paramNameValuePairs;
+        super.paramNameSeq = paramNameSeq;
+        super.sqlSegmentBuilder = sqlSegmentBuilder;
+        this.selectColumns = selectColumns;
+    }
+
+    public LambdaQueryWrapper(Class<T> modelClass, SFunction<T, ?>... columns) {
         super.modelClass = modelClass;
         this.select(columns);
     }

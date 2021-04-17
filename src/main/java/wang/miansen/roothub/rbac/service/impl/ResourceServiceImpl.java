@@ -20,13 +20,13 @@ import wang.miansen.roothub.rbac.service.ResourceService;
 public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
-    private ResourceDAO resourceDAO;
+    private ResourceDAO resourceDao;
 
     @Autowired
     private Do2BoMapper do2BoMapper;
 
     @Override
     public List<ResourceBO> list() {
-        return do2BoMapper.resourceDoList2BoList(resourceDAO.selectList(null));
+        return do2BoMapper.resourceDoList2BoList(resourceDao.selectList(null));
     }
 }

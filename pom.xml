@@ -16,7 +16,7 @@
 		<springframework.version>4.1.7.RELEASE</springframework.version>
 		<springsecurity.version>4.0.4.RELEASE</springsecurity.version>
 		<spring-boot-starter.version>1.2.0.RELEASE</spring-boot-starter.version>
-		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis.version>3.5.6</mybatis.version>
 		<mybatis-spring.version>1.2.3</mybatis-spring.version>
 		<shiro.version>1.4.0</shiro.version>
 		<mysql-connector-java.version>5.1.37</mysql-connector-java.version>

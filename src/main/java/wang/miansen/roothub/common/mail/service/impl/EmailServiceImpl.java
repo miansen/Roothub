@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.mail.service.EmailService;
+import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.system.service.SystemConfigService;
 
 /**
@@ -40,7 +41,7 @@ public class EmailServiceImpl implements EmailService, InitializingBean {
     public void send(String recipient, String title, String content) {
         try {
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(systemConfigService.getProperties().getProperty("mail_address")));
+            message.setFrom(new InternetAddress(systemConfigService.getValue("mail_address")));
             message.setRecipient(RecipientType.TO, new InternetAddress(recipient));
             message.setSubject(title);
             message.setContent(content, "text/html;charset=UTF-8");
@@ -53,14 +54,26 @@ public class EmailServiceImpl implements EmailService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        String host = systemConfigService.getValue("mail_host");
+        if (StringUtils.isEmpty(host)) {
+            throw new IllegalArgumentException("mail_host is empty.");
+        }
+        String address = systemConfigService.getValue("mail_address");
+        if (StringUtils.isEmpty(address)) {
+            throw new IllegalArgumentException("mail_address is empty.");
+        }
+        String password = systemConfigService.getValue("mail_password");
+        if (StringUtils.isEmpty(password)) {
+            throw new IllegalArgumentException("mail_password is empty.");
+        }
+
         Properties props = new Properties();
-        props.setProperty("mail.host", systemConfigService.getProperties().getProperty("mail.host"));
+        props.setProperty("mail.host", host);
         props.setProperty("mail.smtp.auth", "true");
         this.session = Session.getDefaultInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(systemConfigService.getProperties().getProperty("mail_address"),
-                    systemConfigService.getProperties().getProperty("mail_password"));
+                return new PasswordAuthentication(address, password);
             }
         });
     }

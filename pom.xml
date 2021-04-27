@@ -41,6 +41,7 @@
 		<mapstruct.version>1.3.0.Final</mapstruct.version>
 		<hutool.version>5.4.3</hutool.version>
 		<javax.mail.version>1.6.2</javax.mail.version>
+		<aliyun-java-sdk-core.version>4.0.3</aliyun-java-sdk-core.version>
 	</properties>
 
 	<dependencies>
@@ -302,6 +303,14 @@
 			<version>${javax.mail.version}</version>
 		</dependency>
 		<!--java mail end-->
+
+		<!-- aliyun sms start -->
+		<dependency>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-core</artifactId>
+			<version>${aliyun-java-sdk-core.version}</version>
+		</dependency>
+		<!-- aliyun sms end -->
 
 	</dependencies>
 	<build>

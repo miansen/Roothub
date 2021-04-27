@@ -66,13 +66,23 @@ public class SystemConfigServiceImpl implements SystemConfigService, Initializin
         return properties;
     }
 
-    private void initProperties() {
+    @Override
+    public void initProperties() {
+        if (properties == null) {
+            properties = new Properties();
+        }
         List<SystemConfigDO> systemConfigs = systemConfigDao.selectList(null);
         systemConfigs.forEach(v -> properties.setProperty(v.getKey(), v.getValue()));
     }
 
-    private void clearProperties() {
-        properties = null;
+    @Override
+    public void clearProperties() {
+        properties.clear();
+    }
+
+    @Override
+    public String getValue(String key) {
+        return properties.getProperty(key);
     }
 
     @Override

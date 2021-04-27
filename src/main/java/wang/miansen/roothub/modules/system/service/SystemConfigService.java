@@ -32,4 +32,22 @@ public interface SystemConfigService {
      * @return 所有的系统配置（键值对的形式）
      */
     Properties getProperties();
+
+    /**
+     * 初始化所有的系统配置（键值对的形式）
+     */
+    void initProperties();
+
+    /**
+     * 清除所有的系统配置（键值对的形式）
+     */
+    void clearProperties();
+
+    /**
+     * 根据 key 获取 value
+     *
+     * @param key key
+     * @return value
+     */
+    String getValue(String key);
 }

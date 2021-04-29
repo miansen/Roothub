@@ -16,7 +16,7 @@ import wang.miansen.roothub.rbac.dao.RolePermissionRelDAO;
 import wang.miansen.roothub.rbac.entity.PermissionDO;
 import wang.miansen.roothub.rbac.entity.PermissionResourceRelDO;
 import wang.miansen.roothub.rbac.entity.RolePermissionRelDO;
-import wang.miansen.roothub.rbac.mapper.Do2BoMapper;
+import wang.miansen.roothub.rbac.mapper.RbacDo2BoMapper;
 import wang.miansen.roothub.rbac.service.PermissionService;
 
 /**
@@ -38,7 +38,7 @@ public class PermissionServiceImpl implements PermissionService {
     private PermissionResourceRelDAO permissionResourceRelDao;
 
     @Autowired
-    private Do2BoMapper do2BoMapper;
+    private RbacDo2BoMapper do2BoMapper;
 
     @Override
     public List<PermissionBO> listByIds(List<Long> ids) {

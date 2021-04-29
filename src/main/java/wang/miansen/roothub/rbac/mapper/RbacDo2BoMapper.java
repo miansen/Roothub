@@ -18,7 +18,7 @@ import wang.miansen.roothub.rbac.entity.RoleDO;
  * @date 2020-12-27 15:21
  */
 @Mapper(componentModel = "spring")
-public interface Do2BoMapper {
+public interface RbacDo2BoMapper {
 
     /**
      * RoleDO 转 RoleBO

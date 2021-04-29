@@ -7,7 +7,7 @@ import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.dao.UserDAO;
 import wang.miansen.roothub.user.entity.UserDO;
-import wang.miansen.roothub.user.mapper.Do2BoMapper;
+import wang.miansen.roothub.user.mapper.UserDo2BoMapper;
 import wang.miansen.roothub.user.service.UserService;
 
 /**
@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDao;
 
     @Autowired
-    private Do2BoMapper do2BoMapper;
+    private UserDo2BoMapper do2BoMapper;
 
     @Override
     public UserBO getById(Long userId) {

@@ -13,8 +13,8 @@ import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.system.bo.SystemConfigBO;
 import wang.miansen.roothub.modules.system.dao.SystemConfigDAO;
 import wang.miansen.roothub.modules.system.entity.SystemConfigDO;
-import wang.miansen.roothub.modules.system.mapper.Bo2DoMapper;
-import wang.miansen.roothub.modules.system.mapper.Do2BoMapper;
+import wang.miansen.roothub.modules.system.mapper.SystemConfigBo2DoMapper;
+import wang.miansen.roothub.modules.system.mapper.SystemConfigDo2BoMapper;
 import wang.miansen.roothub.modules.system.service.SystemConfigService;
 
 /**
@@ -23,7 +23,7 @@ import wang.miansen.roothub.modules.system.service.SystemConfigService;
  * @author miansen.wang
  * @since 2021-04-18 17:07
  */
-@Service
+@Service(value = "systemConfigServiceImpl2")
 @Slf4j
 public class SystemConfigServiceImpl implements SystemConfigService, InitializingBean {
 
@@ -31,10 +31,10 @@ public class SystemConfigServiceImpl implements SystemConfigService, Initializin
     private SystemConfigDAO systemConfigDao;
 
     @Autowired
-    private Do2BoMapper do2BoMapper;
+    private SystemConfigDo2BoMapper do2BoMapper;
 
     @Autowired
-    private Bo2DoMapper bo2DoMapper;
+    private SystemConfigBo2DoMapper bo2DoMapper;
 
     private Properties properties;
 
@@ -72,7 +72,7 @@ public class SystemConfigServiceImpl implements SystemConfigService, Initializin
             properties = new Properties();
         }
         List<SystemConfigDO> systemConfigs = systemConfigDao.selectList(null);
-        systemConfigs.forEach(v -> properties.setProperty(v.getKey(), v.getValue()));
+        systemConfigs.forEach(v -> properties.setProperty(v.getSystemConfigKey(), v.getSystemConfigValue()));
     }
 
     @Override

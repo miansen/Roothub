@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
@@ -53,7 +54,8 @@ public class SmsServiceImpl implements SmsService, InitializingBean {
             request.putQueryParameter("SignName", systemConfigService.getValue("sms_sign_name"));
             request.putQueryParameter("TemplateCode", systemConfigService.getValue("sms_template_code"));
             request.putQueryParameter("TemplateParam", String.format("{\"code\": \"%s\"}", code));
-            client.getCommonResponse(request);
+            CommonResponse response = client.getCommonResponse(request);
+            log.info("sendCode response: {}", response.getData());
         } catch (ClientException e) {
             log.error("Exception in SmsService.sendCode", e);
             throw new BaseException("Exception in SmsService.sendCode", e);

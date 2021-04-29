@@ -14,7 +14,7 @@ import wang.miansen.roothub.modules.system.entity.SystemConfigDO;
  * @since 2021-04-18 17:02
  */
 @Mapper(componentModel = "spring")
-public interface Do2BoMapper {
+public interface SystemConfigDo2BoMapper {
 
     /**
      * SystemConfigDO 转 SystemConfigBO

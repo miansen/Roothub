@@ -2,6 +2,8 @@ package wang.miansen.roothub.modules.system.mapper;
 
 import java.util.List;
 
+import org.mapstruct.Mapper;
+
 import wang.miansen.roothub.modules.system.bo.SystemConfigBO;
 import wang.miansen.roothub.modules.system.entity.SystemConfigDO;
 
@@ -11,7 +13,8 @@ import wang.miansen.roothub.modules.system.entity.SystemConfigDO;
  * @author miansen.wang
  * @since 2021-04-18 17:10
  */
-public interface Bo2DoMapper {
+@Mapper(componentModel = "spring")
+public interface SystemConfigBo2DoMapper {
 
     /**
      * SystemConfigBO 转 SystemConfigDO

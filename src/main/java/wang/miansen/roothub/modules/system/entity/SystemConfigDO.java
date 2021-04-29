@@ -27,17 +27,17 @@ public class SystemConfigDO {
     /**
      * 系统配置 key
      */
-    private String key;
+    private String systemConfigKey;
 
     /**
      * 系统配置 value
      */
-    private String value;
+    private String systemConfigValue;
 
     /**
      * 系统配置描述
      */
-    private String desc;
+    private String systemConfigDesc;
 
     /**
      * 创建时间

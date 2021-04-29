@@ -14,7 +14,7 @@ import wang.miansen.roothub.user.entity.UserDO;
  * @since 2021-04-17 17:08
  */
 @Mapper(componentModel = "spring")
-public interface Do2BoMapper {
+public interface UserDo2BoMapper {
 
     /**
      * 用户 DO 转 BO

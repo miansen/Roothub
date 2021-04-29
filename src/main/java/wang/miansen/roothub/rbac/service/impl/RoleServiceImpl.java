@@ -14,7 +14,7 @@ import wang.miansen.roothub.rbac.dao.RoleDAO;
 import wang.miansen.roothub.rbac.dao.RoleUserRelDAO;
 import wang.miansen.roothub.rbac.entity.RoleDO;
 import wang.miansen.roothub.rbac.entity.RoleUserRelDO;
-import wang.miansen.roothub.rbac.mapper.Do2BoMapper;
+import wang.miansen.roothub.rbac.mapper.RbacDo2BoMapper;
 import wang.miansen.roothub.rbac.service.RoleService;
 
 /**
@@ -33,7 +33,7 @@ public class RoleServiceImpl implements RoleService {
     private RoleUserRelDAO roleUserRelDao;
 
     @Autowired
-    private Do2BoMapper do2BoMapper;
+    private RbacDo2BoMapper do2BoMapper;
 
     @Override
     public List<RoleBO> listByUserId(Long userId) {

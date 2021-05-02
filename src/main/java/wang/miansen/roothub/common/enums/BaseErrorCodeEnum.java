@@ -79,7 +79,12 @@ public enum BaseErrorCodeEnum implements BaseErrorCode {
 	/**
 	 * Authorization 头域中附带的签名和服务端验证不一致
 	 */
-	SIGNATURE_DOES_NOT_MATCH(400, "SignatureDoesNotMatch", "The request signature we calculated does not match the signature you provided. Check yourSecret Access Key and signing method. Consultthe service documentation for details.");
+	SIGNATURE_DOES_NOT_MATCH(400, "SignatureDoesNotMatch", "The request signature we calculated does not match the signature you provided. Check yourSecret Access Key and signing method. Consultthe service documentation for details."),
+
+	/**
+	 * 外部接口调用异常
+	 */
+	INTERFACE_SYSTEM_ERROR(500, "InterfaceSystemError", "External interface call exception.");
 	
 	/**
 	 * http 错误码，可以通过调用 {@code response.setStatus()} 设置服务器响应的 {@code Status Code}。

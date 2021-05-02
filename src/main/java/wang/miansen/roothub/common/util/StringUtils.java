@@ -118,7 +118,7 @@ public class StringUtils {
 	}
 
 	public static String randomString(int length) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int loop = 0; loop < length; ++loop) {
 			sb.append(hexDigits[rand.nextInt(hexDigits.length)]);
 		}
@@ -126,7 +126,7 @@ public class StringUtils {
 	}
 
 	public static String randomNumber(int length) {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int loop = 0; loop < length; ++loop) {
 			sb.append(digits[rand.nextInt(digits.length)]);
 		}

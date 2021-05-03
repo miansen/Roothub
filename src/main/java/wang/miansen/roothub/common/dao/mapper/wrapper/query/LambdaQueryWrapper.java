@@ -70,10 +70,10 @@ public class LambdaQueryWrapper<T> extends AbstractLambdaWrapper<T, LambdaQueryW
     }
 
     @Override
-    public LambdaQueryWrapper<T> select(Class<T> modelClass, Predicate<TableFieldInfo> predicate) {
-        super.modelClass = modelClass;
-        this.selectColumns = TableInfoBuilder.getTableInfo(modelClass).getTableFieldInfoList().stream().filter(predicate)
-            .map(TableFieldInfo::getColumn).collect(Collectors.joining(StringPool.SPACE_COMMA_SPACE));
+    public LambdaQueryWrapper<T> select(Class<T> entityClass, Predicate<TableFieldInfo> predicate) {
+        super.modelClass = entityClass;
+        this.selectColumns = TableInfoBuilder.getTableInfo(modelClass).getTableFieldInfos().stream().filter(predicate)
+            .map(TableFieldInfo::getColumnName).collect(Collectors.joining(StringPool.SPACE_COMMA_SPACE));
         return super.typedThis;
     }
 

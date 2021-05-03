@@ -15,6 +15,7 @@ public class DefaultSqlInjector extends AbstractSqlInjector {
     public List<AbstractMethod> getMethodList() {
         return Stream.of(
                 new Insert(),
+                new InsertNotNull(),
                 new Delete(),
                 new DeleteById(),
                 new DeleteBatchIds(),

@@ -1,11 +1,16 @@
 package wang.miansen.roothub.common.dao.mapper.injector.methods;
 
+import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableInfo;
 import wang.miansen.roothub.common.dao.mapper.builder.TableInfoBuilder;
 
 import wang.miansen.roothub.common.dao.mapper.util.SqlScriptUtils;
+import wang.miansen.roothub.common.dao.mapper.util.StringUtils;
+
 import org.apache.ibatis.builder.MapperBuilderAssistant;
+import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
+import org.apache.ibatis.executor.keygen.NoKeyGenerator;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.mapping.SqlSource;
@@ -121,5 +126,19 @@ public abstract class AbstractMethod {
      */
     protected String getIdsScript() {
         return SqlScriptUtils.convertForeach("${item}", "ids", "index", "item", ",", "(", ")");
+    }
+
+    protected KeyGenerator getKeyGenerator(TableInfo tableInfo) {
+        KeyGenerator keyGenerator = new NoKeyGenerator();
+        // 如果表含有主键，如果不包含主键当普通字段处理
+        if (StringUtils.notBlank(tableInfo.getPrimaryKeyPropertyName())) {
+            if (tableInfo.getIdType() == IdType.AUTO) {
+                // 如果是自增长主键
+                keyGenerator = new Jdbc3KeyGenerator();
+            } else {
+                // TODO 不是自增长主键该如何处理？
+            }
+        }
+        return keyGenerator;
     }
 }

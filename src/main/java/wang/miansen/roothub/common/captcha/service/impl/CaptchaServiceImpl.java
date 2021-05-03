@@ -58,7 +58,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         captchaDo.setCaptchaCode(code);
         captchaDo.setCaptchaCodeType(captchaCodeType.getCaptchaCodeTypeId().byteValue());
         captchaDo.setExpireTime(DateUtils.getMinuteAfter(new Date(), 5));
-        captchaDao.insert(captchaDo);
+        captchaDao.insertNotNull(captchaDo);
         return code;
     }
 

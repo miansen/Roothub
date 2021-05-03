@@ -3,7 +3,7 @@ package wang.miansen.roothub.common.captcha.enums;
 import java.util.Objects;
 
 /**
- * 验证码关联的对象的类型枚举
+ * 验证码关联的对象类型枚举
  *
  * @author miansen.wang
  * @date 2021-05-02 15:14

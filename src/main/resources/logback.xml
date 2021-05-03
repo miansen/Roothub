@@ -19,8 +19,10 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 		<encoder>
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
 			<charset>UTF-8</charset>
 		</encoder>
@@ -35,8 +37,10 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 		<encoder>
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
 			<charset>UTF-8</charset>
 		</encoder>
@@ -51,8 +55,10 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 		<encoder>
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
 			<charset>UTF-8</charset>
 		</encoder>
@@ -67,8 +73,10 @@
 			<onMismatch>DENY</onMismatch>
 		</filter>
 		<encoder>
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
-			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
 			<charset>UTF-8</charset>
 		</encoder>
@@ -86,6 +94,8 @@
 		</filter>
 		<!--日志文件输出格式-->
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
@@ -116,6 +126,8 @@
 		</filter>
 		<!--日志文件输出格式-->
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
@@ -146,6 +158,8 @@
 		</filter>
 		<!--日志文件输出格式-->
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
@@ -176,6 +190,8 @@
 		</filter>
 		<!--日志文件输出格式-->
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<!--字符集编码 utf-8-->
+			<charset>utf-8</charset>
 			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%file：文件名，%line：行号，%msg：日志消息，%n是换行符-->
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} [%file:%line] - %msg%n</pattern>
 			<!-- 设置字符集 -->
@@ -258,6 +274,10 @@
 		<appender-ref ref="file_debug" />
 	</logger>
 	<logger name="wang.miansen.roothub.modules.sidebar.dao.SidebarDao" level="DEBUG" addtivity="false">
+		<appender-ref ref="console_debug" />
+		<appender-ref ref="file_debug" />
+	</logger>
+	<logger name="wang.miansen.roothub.common.captcha.dao.CaptchaDAO" level="DEBUG" addtivity="false">
 		<appender-ref ref="console_debug" />
 		<appender-ref ref="file_debug" />
 	</logger>

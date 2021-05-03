@@ -1,81 +1,87 @@
 package wang.miansen.roothub.common.dao.mapper.builder;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.ibatis.builder.MapperBuilderAssistant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import wang.miansen.roothub.common.dao.mapper.annotation.Id;
 import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableFieldInfo;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableInfo;
-import wang.miansen.roothub.common.util.StringUtils;
-
-import org.apache.ibatis.builder.MapperBuilderAssistant;
-import org.springframework.aop.support.AopUtils;
-import org.springframework.util.CollectionUtils;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.Objects;
-import java.util.Collections;
+import wang.miansen.roothub.common.dao.mapper.util.CollectionUtils;
+import wang.miansen.roothub.common.dao.mapper.util.ReflectionUtils;
+import wang.miansen.roothub.common.dao.mapper.util.StringUtils;
 
 /**
  * TableInfo 构建器
- * @Author: miansen.wang
- * @Date: 2019/8/31 11:56
+ *
+ * @author miansen.wang
+ * @date 2019-8-31 11:56
  */
 public class TableInfoBuilder {
+
+    private static final Logger log = LoggerFactory.getLogger(TableInfoBuilder.class);
 
     /**
      * TableInfo 缓存池
      */
-    private static final Map<Class<?>, TableInfo> TABLE_INFO_CACHE = new ConcurrentHashMap();
+    private static final Map<Class<?>, TableInfo> TABLE_INFO_CACHE = new ConcurrentHashMap<>();
 
     /**
      * Field 缓存池
      */
-    private static final Map<Class<?>, List<Field>> FIELD_CACHE = new ConcurrentHashMap();
+    private static final Map<Class<?>, List<Field>> FIELD_CACHE = new ConcurrentHashMap<>();
 
-    public static TableInfo getTableInfo(Class<?> modelClass) {
-        if (modelClass == null) {
+    /**
+     * 获取 TableInfo
+     *
+     * @param entityClass entityClass
+     * @return TableInfo
+     */
+    public static TableInfo getTableInfo(Class<?> entityClass) {
+        if (entityClass == null) {
             return null;
         } else {
-            return TABLE_INFO_CACHE.get(modelClass);
+            return TABLE_INFO_CACHE.get(entityClass);
         }
     }
 
     /**
      * 初始化 TableInfo
-     * @param builderAssistant
-     * @param modelClass
-     * @return
+     *
+     * @param builderAssistant builderAssistant
+     * @param entityClass 实体类 Class
+     * @return TableInfo
      */
-    public static synchronized TableInfo initTableInfo (MapperBuilderAssistant builderAssistant, Class<?> modelClass) {
-        TableInfo tableInfo = TABLE_INFO_CACHE.get(modelClass);
-        if (tableInfo != null) {
-            return tableInfo;
-        } else {
-            tableInfo = new TableInfo(modelClass);
-            initTableName(modelClass, tableInfo);
-            initTableFields(modelClass, tableInfo);
-            TABLE_INFO_CACHE.put(modelClass, tableInfo);
-            return tableInfo;
+    public static synchronized TableInfo initTableInfo(MapperBuilderAssistant builderAssistant, Class<?> entityClass) {
+        TableInfo tableInfo = TABLE_INFO_CACHE.get(entityClass);
+        if (tableInfo == null) {
+            tableInfo = new TableInfo(entityClass);
+            // 初始化表名
+            initTableName(entityClass, tableInfo);
+            // 初始化字段
+            initTableFieldInfos(entityClass, tableInfo);
+            TABLE_INFO_CACHE.put(entityClass, tableInfo);
         }
+        return tableInfo;
     }
 
     /**
      * 初始化 TableName
-     * @param modelClass
-     * @param tableInfo
+     *
+     * @param entityClass 实体类 Class
+     * @param tableInfo tableInfo
      */
-    public static void initTableName(Class<?> modelClass, TableInfo tableInfo) {
-        String tableName = modelClass.getSimpleName();
+    public static void initTableName(Class<?> entityClass, TableInfo tableInfo) {
+        String tableName = entityClass.getSimpleName();
         // 获取类上的 TableName 注解
-        Table tableNameAnnotation = modelClass.getAnnotation(Table.class);
+        Table tableNameAnnotation = entityClass.getAnnotation(Table.class);
         if (tableNameAnnotation != null && !"".equals(tableNameAnnotation.value())) {
             tableName = tableNameAnnotation.value();
         } else {
@@ -86,79 +92,57 @@ public class TableInfoBuilder {
 
     /**
      * 初始化主键
-     * @param field
+     *
+     * @param tableInfo tableInfo
+     * @param field field
      */
     public static void initTableId(TableInfo tableInfo, Field field) {
-        // 获取字段上的 TableId 注解
+        String primaryKeyColumnName;
         Id fieldAnnotation = field.getAnnotation(Id.class);
         if (fieldAnnotation != null) {
-            String keyColumn = field.getName();
             if (!"".equals(fieldAnnotation.value())) {
-                keyColumn = fieldAnnotation.value();
+                primaryKeyColumnName = fieldAnnotation.value();
             } else {
-                keyColumn = StringUtils.camelToUnderline(keyColumn);
+                primaryKeyColumnName = StringUtils.camelToUnderline(field.getName());
             }
-            tableInfo.setKeyColumn(keyColumn);
-            tableInfo.setKeyProperty(field.getName());
+            log.info("Find table primary key: \"{}\" in Class: \"{}\".", primaryKeyColumnName,
+                field.getDeclaringClass().getName());
+            tableInfo.setPrimaryKeyColumnName(primaryKeyColumnName);
+            tableInfo.setPrimaryKeyPropertyName(field.getName());
+            tableInfo.setPrimaryKeyClass(field.getDeclaringClass());
             tableInfo.setIdType(fieldAnnotation.type());
         }
     }
 
     /**
-     * 初始化 TableFieldInfo 和 主键
-     * @param modelClass
-     * @param tableInfo
+     * 根据给定的实体类 Class 对象，通过反射获取实体类的信息，最后初始化 TableFieldInfo 和 主键。
+     *
+     * @param entityClass 实体类的 Class 对象
+     * @param tableInfo 存储数据库表对应的实体类所有的信息
      */
-    public static void initTableFields(Class<?> modelClass, TableInfo tableInfo) {
-        List<Field> fieldList = getAllFields(modelClass);
-        List<TableFieldInfo> tableFieldInfoList = new ArrayList<>();
-        for (Iterator<Field> iterator = fieldList.iterator(); iterator.hasNext();) {
-            Field field = iterator.next();
-            tableFieldInfoList.add(new TableFieldInfo(field));
-            // 初始化主键
-            initTableId(tableInfo, field);
+    public static void initTableFieldInfos(Class<?> entityClass, TableInfo tableInfo) {
+        List<Field> fields = FIELD_CACHE.get(entityClass);
+        if (CollectionUtils.isEmpty(fields)) {
+            fields = ReflectionUtils.getFieldList(entityClass);
+            FIELD_CACHE.put(entityClass, fields);
+        }
+        List<TableFieldInfo> tableFieldInfos = new ArrayList<>(fields.size());
+        // 标记是否读取到主键
+        boolean isReadPK = false;
+        for (Field field : fields) {
+            Id fieldAnnotation = field.getAnnotation(Id.class);
+            if (fieldAnnotation != null) {
+                // 初始化主键
+                initTableId(tableInfo, field);
+                isReadPK = true;
+                continue;
+            }
+            tableFieldInfos.add(new TableFieldInfo(field));
         }
         // 初始化 TableFieldInfo
-        tableInfo.setTableFieldInfoList(tableFieldInfoList);
-    }
-
-    /**
-     * 获取 Model 所有的字段
-     * @param modelClass
-     * @return
-     */
-    public static List<Field> getAllFields(Class<?> modelClass) {
-        // 如果 modelClass 是代理对象，则需要获取原来的 modelClass
-        if (AopUtils.isAopProxy(modelClass)
-                || AopUtils.isJdkDynamicProxy(modelClass)
-                || AopUtils.isCglibProxy(modelClass)) {
-            modelClass = AopUtils.getTargetClass(modelClass);
-        }
-        List<Field> fieldList = getFieldList(modelClass);
-        return fieldList;
-    }
-
-    /**
-     * 根据 modelClass 获取 Field
-     * @param modelClass
-     * @return
-     */
-    public static List<Field> getFieldList (Class<?> modelClass) {
-        if (Objects.isNull(modelClass) || Object.class.equals(modelClass)) {
-            return Collections.emptyList();
-        } else {
-            List<Field> fieldList = FIELD_CACHE.get(modelClass);
-            if (CollectionUtils.isEmpty(fieldList)) {
-                fieldList = Stream.of(modelClass.getDeclaredFields()).filter(field -> {
-                    // 排除被 static 修饰的字段（Field 的 getModifiers() 方法返回 int 类型值表示该字段的修饰符）
-                    return !Modifier.isStatic(field.getModifiers());
-                }).filter(field -> {
-                    // 排除被 Transient 修饰的字段
-                    return !Modifier.isTransient(field.getModifiers());
-                }).collect(Collectors.toCollection(LinkedList::new));
-            }
-            FIELD_CACHE.put(modelClass,fieldList);
-            return fieldList;
+        tableInfo.setTableFieldInfos(tableFieldInfos);
+        if (!isReadPK) {
+            log.warn("Can not find table primary key in Class: \"{}\".", entityClass.getName());
         }
     }
 }

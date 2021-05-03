@@ -73,8 +73,8 @@ public class QueryWrapper<T> extends AbstractWrapper<T, QueryWrapper<T>, String,
     @Override
     public QueryWrapper<T> select(Class<T> modelClass, Predicate<TableFieldInfo> predicate) {
         super.modelClass = modelClass;
-        this.selectColumns = TableInfoBuilder.getTableInfo(modelClass).getTableFieldInfoList().stream().filter(predicate)
-                .map(TableFieldInfo::getColumn).collect(Collectors.joining(StringPool.SPACE_COMMA_SPACE));
+        this.selectColumns = TableInfoBuilder.getTableInfo(modelClass).getTableFieldInfos().stream().filter(predicate)
+                .map(TableFieldInfo::getColumnName).collect(Collectors.joining(StringPool.SPACE_COMMA_SPACE));
         return super.typedThis;
     }
 

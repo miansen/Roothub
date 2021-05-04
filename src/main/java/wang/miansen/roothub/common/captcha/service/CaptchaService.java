@@ -15,8 +15,8 @@ public interface CaptchaService {
      * 生成数字验证码
      *
      * @param captchaRel 验证码关联的对象，可以是用户ID、手机号码或者邮箱
-     * @param captchaRelType 验证码关联的对象的类型
-     * @param captchaCodeType 验证码的类型
+     * @param captchaRelType 验证码关联的对象的类型，{@link CaptchaRelTypeEnum}
+     * @param captchaCodeType 验证码的类型，{@link CaptchaCodeTypeEnum}
      * @param length 要生成多少位的数字验证码
      * @return 数字验证码
      */
@@ -27,9 +27,9 @@ public interface CaptchaService {
      * 验证验证码
      *
      * @param captchaRel 验证码关联的对象，可以是用户ID、手机号码或者邮箱
-     * @param captchaRelType 验证码关联的对象的类型
+     * @param captchaRelType 验证码关联的对象的类型，{@link CaptchaRelTypeEnum}
      * @param captchaCode 需要验证的验证码
-     * @param captchaCodeType 验证码的类型
+     * @param captchaCodeType 验证码的类型，{@link CaptchaCodeTypeEnum}
      * @return true: 验证成功，false: 验证失败
      */
     boolean verifyCode(String captchaRel, CaptchaRelTypeEnum captchaRelType, String captchaCode,

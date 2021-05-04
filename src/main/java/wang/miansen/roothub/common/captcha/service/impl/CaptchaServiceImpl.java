@@ -46,6 +46,11 @@ public class CaptchaServiceImpl implements CaptchaService {
      */
     private static final String VERIFY_URI = "https://ssl.captcha.qq.com/ticket/verify";
 
+    /**
+     * 验证码 5 分钟后失效
+     */
+    private static final int EXPIRE_TIME = 5;
+
     @Override
     public String generateNumberCode(String captchaRel, CaptchaRelTypeEnum captchaRelType, CaptchaCodeTypeEnum captchaCodeType,
         int length) {
@@ -57,7 +62,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         captchaDo.setCaptchaRelType(captchaRelType.getCaptchaRelTypeId().byteValue());
         captchaDo.setCaptchaCode(code);
         captchaDo.setCaptchaCodeType(captchaCodeType.getCaptchaCodeTypeId().byteValue());
-        captchaDo.setExpireTime(DateUtils.getMinuteAfter(new Date(), 5));
+        captchaDo.setExpireTime(DateUtils.getMinuteAfter(new Date(), EXPIRE_TIME));
         captchaDao.insertNotNull(captchaDo);
         return code;
     }
@@ -70,9 +75,9 @@ public class CaptchaServiceImpl implements CaptchaService {
         QueryWrapper<CaptchaDO> wrapper = new QueryWrapper<>();
         wrapper.lambda()
             .eq(CaptchaDO::getCaptchaRel, captchaRel)
-            .eq(CaptchaDO::getCaptchaRelType, captchaRelType)
+            .eq(CaptchaDO::getCaptchaRelType, captchaRelType.getCaptchaRelTypeId())
             .eq(CaptchaDO::getCaptchaCode, captchaCode)
-            .eq(CaptchaDO::getCaptchaCodeType, captchaCodeType)
+            .eq(CaptchaDO::getCaptchaCodeType, captchaCodeType.getCaptchaCodeTypeId())
             .eq(CaptchaDO::getIsUsed, Boolean.FALSE)
             .eq(CaptchaDO::getIsDeleted, Boolean.FALSE)
             .gt(CaptchaDO::getExpireTime, new Date());
@@ -80,6 +85,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         log.info("captchaDo: {}", captchaDo);
         if (captchaDo != null) {
             captchaDo.setIsUsed(Boolean.TRUE);
+            captchaDo.setUpdateTime(new Date());
             captchaDao.updateById(captchaDo);
             log.info("Update captcha used. id: {}", captchaDo.getCaptchaId());
             return true;

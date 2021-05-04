@@ -21,8 +21,9 @@ public class Insert extends AbstractMethod {
         String sqlScript = String.format(insert.getSql(), tableInfo.getTableName(), tableInfo.getInsertColumnSegment(),
             tableInfo.getInsertValueSegment());
         SqlSource sqlSource = this.languageDriver.createSqlSource(this.configuration, sqlScript, entityClass);
+        // 这里的主键应该用 EL 表达式，因为 insert 方法使用了别名。否则获取主键时会报错，提示无法找到主键字段
         return this.addMappedStatement(mapperClass, insert.getMethod(), sqlSource, SqlCommandType.INSERT, String.class, null,
-            Integer.class, getKeyGenerator(tableInfo), tableInfo.getPrimaryKeyPropertyName(),
+            Integer.class, getKeyGenerator(tableInfo), tableInfo.getPrimaryKeyPropertyEl(),
             tableInfo.getPrimaryKeyColumnName());
     }
 }

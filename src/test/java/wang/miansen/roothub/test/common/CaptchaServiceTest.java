@@ -24,4 +24,10 @@ public class CaptchaServiceTest extends BaseTest {
         String code = captchaService.generateNumberCode("18390800450", CaptchaRelTypeEnum.MOBILE, CaptchaCodeTypeEnum.SIGN_UP, 4);
         logger.info("code: {}", code);
     }
+
+    @Test
+    public void verifyCodeTest() {
+        boolean b = captchaService.verifyCode("18390800450", CaptchaRelTypeEnum.MOBILE, "9620", CaptchaCodeTypeEnum.SIGN_UP);
+        logger.info("{}", b);
+    }
 }

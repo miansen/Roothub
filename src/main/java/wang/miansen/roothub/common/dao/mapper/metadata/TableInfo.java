@@ -41,6 +41,11 @@ public class TableInfo implements StringPool {
     private String primaryKeyPropertyName;
 
     /**
+     * 主键 EL 表达式：StringPool.ENTITY_DOT.primaryKeyPropertyName
+     */
+    private String primaryKeyPropertyEl;
+
+    /**
      * 主键属性 Class
      */
     private Class<?> primaryKeyClass;
@@ -70,11 +75,11 @@ public class TableInfo implements StringPool {
      * @return #{别名.primaryKeyPropertyName}
      */
     public String getPrimaryKeyPropertySegment() {
-        return SqlScriptUtils.safeParam(ENTITY_DOT + primaryKeyPropertyName);
+        return SqlScriptUtils.safeParam(primaryKeyPropertyEl);
     }
 
     /**
-     * 获取查询字段
+     * 获取查询 select sql 片段
      * <p>select (字段) from table where ...</p>
      * <p>位于 "字段" 部位</p>
      *
@@ -82,10 +87,12 @@ public class TableInfo implements StringPool {
      * @return sql 脚本片段
      */
     public String getSelectColumnSegment(boolean queryWrapper) {
-        String selectColumns = tableFieldInfos.stream().filter(TableFieldInfo::isSelect)
+        String selectColumnSegment = tableFieldInfos.stream().filter(TableFieldInfo::isSelect)
             .map(TableFieldInfo::getColumnName).collect(Collectors.joining(COMMA));
-        return queryWrapper ? SqlScriptUtils.convertChoose("wrapper != null and wrapper.selectColumns != null",
-            "${wrapper.selectColumns}", selectColumns) : selectColumns;
+        selectColumnSegment = primaryKeyColumnName + COMMA + selectColumnSegment;
+        return queryWrapper ? SqlScriptUtils
+            .convertChoose(String.format("%s != null and %s != null", WRAPPER, WRAPPER_DOT_SELECT),
+                SqlScriptUtils.safeParam(WRAPPER_DOT_SELECT), selectColumnSegment) : selectColumnSegment;
     }
 
     /**
@@ -120,7 +127,6 @@ public class TableInfo implements StringPool {
             .collect(Collectors.joining(NEWLINE));
         // 处理主键字段
         if (StringUtils.notBlank(primaryKeyColumnName)) {
-            String el = ENTITY_DOT + this.primaryKeyPropertyName;
             // 如果主键不是自增长类型的，那么 insert 时要加上主键字段。
             if (idType != IdType.AUTO) {
                 // 主键是基本类型
@@ -129,11 +135,14 @@ public class TableInfo implements StringPool {
                     // 主键是 CharSequence 类型
                 } else if (StringUtils.isCharSequence(this.primaryKeyClass)) {
                     insertNotNullColumnSegment =
-                        SqlScriptUtils.convertIf(String.format("%s != null and %s != ''", el, el), this.primaryKeyColumnName)
+                        SqlScriptUtils
+                            .convertIf(String.format("%s != null and %s != ''", primaryKeyPropertyEl, primaryKeyPropertyEl),
+                                primaryKeyColumnName)
                             + COMMA + NEWLINE + insertNotNullColumnSegment + NEWLINE;
                 } else {
                     insertNotNullColumnSegment =
-                        SqlScriptUtils.convertIf(String.format("%s != null", el), this.primaryKeyColumnName) + COMMA
+                        SqlScriptUtils.convertIf(String.format("%s != null", primaryKeyPropertyEl), primaryKeyColumnName)
+                            + COMMA
                             + NEWLINE + insertNotNullColumnSegment + NEWLINE;
                 }
             }
@@ -173,7 +182,6 @@ public class TableInfo implements StringPool {
             .collect(Collectors.joining(NEWLINE));
         // 处理主键字段
         if (StringUtils.notBlank(primaryKeyColumnName)) {
-            String el = ENTITY_DOT + this.primaryKeyPropertyName;
             // 如果主键不是自增长类型的，那么 insert 时要加上主键字段。
             if (idType != IdType.AUTO) {
                 // 主键是基本类型
@@ -182,11 +190,13 @@ public class TableInfo implements StringPool {
                     // 主键是 CharSequence 类型
                 } else if (StringUtils.isCharSequence(this.primaryKeyClass)) {
                     insertNotNullValueSegment = SqlScriptUtils
-                        .convertIf(String.format("%s != null and %s != ''", el, el), SqlScriptUtils.safeParam(el) + COMMA)
+                        .convertIf(String.format("%s != null and %s != ''", primaryKeyPropertyEl, primaryKeyPropertyEl),
+                            SqlScriptUtils.safeParam(primaryKeyPropertyEl) + COMMA)
                         + NEWLINE + insertNotNullValueSegment + NEWLINE;
                 } else {
                     insertNotNullValueSegment =
-                        SqlScriptUtils.convertIf(String.format("%s != null", el), SqlScriptUtils.safeParam(el) + COMMA)
+                        SqlScriptUtils.convertIf(String.format("%s != null", primaryKeyPropertyEl),
+                            SqlScriptUtils.safeParam(primaryKeyPropertyEl) + COMMA)
                             + NEWLINE + insertNotNullValueSegment + NEWLINE;
                 }
             }

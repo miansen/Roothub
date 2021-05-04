@@ -16,6 +16,7 @@ import wang.miansen.roothub.common.dao.mapper.metadata.TableFieldInfo;
 import wang.miansen.roothub.common.dao.mapper.metadata.TableInfo;
 import wang.miansen.roothub.common.dao.mapper.util.CollectionUtils;
 import wang.miansen.roothub.common.dao.mapper.util.ReflectionUtils;
+import wang.miansen.roothub.common.dao.mapper.util.StringPool;
 import wang.miansen.roothub.common.dao.mapper.util.StringUtils;
 
 /**
@@ -110,6 +111,7 @@ public class TableInfoBuilder {
             tableInfo.setPrimaryKeyColumnName(primaryKeyColumnName);
             tableInfo.setPrimaryKeyPropertyName(field.getName());
             tableInfo.setPrimaryKeyClass(field.getDeclaringClass());
+            tableInfo.setPrimaryKeyPropertyEl(StringPool.ENTITY_DOT + field.getName());
             tableInfo.setIdType(fieldAnnotation.type());
         }
     }

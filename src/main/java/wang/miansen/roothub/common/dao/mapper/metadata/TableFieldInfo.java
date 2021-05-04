@@ -38,7 +38,7 @@ public class TableFieldInfo implements StringPool {
     private final Class<?> entityClass;
 
     /**
-     * EL 属性表达式：别名.propertyName
+     * EL 属性表达式：StringPool.ENTITY_DOT.propertyName
      */
     private final String el;
 

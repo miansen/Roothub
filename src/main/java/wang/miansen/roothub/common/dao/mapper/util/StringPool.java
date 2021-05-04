@@ -86,6 +86,8 @@ public interface StringPool {
     String WRAPPER = "wrapper";
     
     String WRAPPER_DOT = WRAPPER + StringPool.DOT;
+
+    String WRAPPER_DOT_SELECT = WRAPPER_DOT + "selectColumns";
     
     String COLLECTION = "ids";
 

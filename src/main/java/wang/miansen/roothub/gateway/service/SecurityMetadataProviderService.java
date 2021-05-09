@@ -5,6 +5,10 @@ import java.util.Map;
 
 import org.springframework.security.access.ConfigAttribute;
 
+import wang.miansen.roothub.rbac.bo.PermissionBO;
+import wang.miansen.roothub.rbac.bo.RoleBO;
+import wang.miansen.roothub.user.bo.UserBO;
+
 /**
  * 权限数据提供者接口
  *
@@ -24,9 +28,23 @@ public interface SecurityMetadataProviderService {
     Map<String, List<ConfigAttribute>> mapSecurityMetadata();
 
     /**
-     * 获取匿名用户的权限
+     * 获取匿名用户的角色列表
      *
-     * @return 匿名用户的权限
+     * @return 匿名用户的角色列表
      */
-    List<String> listAnonymousPermissions();
+    List<RoleBO> listAnonymousRoles();
+
+    /**
+     * 获取匿名用户的权限列表
+     *
+     * @return 匿名用户的权限列表
+     */
+    List<PermissionBO> listAnonymousPermissions();
+
+    /**
+     * 获取匿名用户信息
+     *
+     * @return 匿名用户信息
+     */
+    UserBO getAnonymousUser();
 }

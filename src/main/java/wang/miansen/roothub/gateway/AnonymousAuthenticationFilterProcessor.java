@@ -16,8 +16,9 @@ import org.springframework.util.ReflectionUtils;
 import wang.miansen.roothub.auth.entity.AuthenticationUser;
 import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
-import wang.miansen.roothub.modules.user.dto.UserDTO;
-import wang.miansen.roothub.modules.user.service.UserService;
+import wang.miansen.roothub.rbac.bo.PermissionBO;
+import wang.miansen.roothub.rbac.bo.RoleBO;
+import wang.miansen.roothub.user.bo.UserBO;
 
 /**
  * {@link AnonymousAuthenticationFilter} bean 初始化后，在这里连接数据库，初始化匿名用户的主体信息和角色权限信息。
@@ -35,9 +36,6 @@ public class AnonymousAuthenticationFilterProcessor implements BeanPostProcessor
     @Autowired
     private SecurityMetadataProviderService securityMetadataProviderService;
 
-    @Autowired
-    private UserService userService;
-
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         return bean;
@@ -52,10 +50,15 @@ public class AnonymousAuthenticationFilterProcessor implements BeanPostProcessor
             principalField.setAccessible(true);
             try {
                 List<GrantedAuthority> authorities = (List<GrantedAuthority>) authoritiesField.get(bean);
-                List<String> permissions = securityMetadataProviderService.listAnonymousPermissions();
-                permissions.forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission)));
+                // 角色
+                List<RoleBO> roles = securityMetadataProviderService.listAnonymousRoles();
+                roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleCode())));
+                // 权限
+                List<PermissionBO> permissions = securityMetadataProviderService.listAnonymousPermissions();
+                permissions.forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission.getPermissionCode())));
                 logger.info("初始化匿名用户的 authorities 成功。{}", authorities);
-                UserDTO user = userService.getById(1);
+
+                UserBO user = securityMetadataProviderService.getAnonymousUser();
                 AuthenticationUser authenticationUser = new AuthenticationUser(user, authorities);
                 principalField.set(bean, authenticationUser);
                 logger.info("初始化匿名用户的 principal 成功。{}", authenticationUser);

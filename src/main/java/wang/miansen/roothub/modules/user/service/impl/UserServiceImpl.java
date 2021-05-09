@@ -51,7 +51,7 @@ import wang.miansen.roothub.common.util.JsonUtil;
 import wang.miansen.roothub.common.util.SimpleHashUtil;
 import wang.miansen.roothub.common.util.bcrypt.BCryptPasswordEncoder;
 
-@Service
+@Service(value = "userServiceImpl2")
 public class UserServiceImpl extends AbstractBaseServiceImpl<User, UserDTO> implements UserService {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());

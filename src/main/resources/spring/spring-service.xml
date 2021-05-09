@@ -36,8 +36,11 @@
   <!-- 业务模块，扫描 mapper 包下所有使用注解的类型 -->
   <context:component-scan base-package="wang.miansen.roothub.modules.*.mapper" />
 
-	<!-- RBAC 模块-->
+	<!-- RBAC 模块 -->
 	<context:component-scan base-package="wang.miansen.roothub.rbac" />
+
+	<!-- 用户模块 -->
+	<context:component-scan base-package="wang.miansen.roothub.user" />
 										  
 	<!-- 配置事务管理器 -->
 	<bean id="transactionManager"

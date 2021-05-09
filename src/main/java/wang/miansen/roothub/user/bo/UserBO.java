@@ -24,14 +24,9 @@ public class UserBO {
     private String username;
 
     /**
-     * 用户昵称
+     * 密码
      */
-    private String nickname;
-
-    /**
-     * 头像
-     */
-    private String avatar;
+    private String password;
 
     /**
      * 邮箱
@@ -42,6 +37,26 @@ public class UserBO {
      * 手机号码
      */
     private String mobile;
+
+    /**
+     * 性别，1：男，2：女
+     */
+    private Byte gender;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 个人简介
+     */
+    private String bio;
+
+    /**
+     * 地点
+     */
+    private String location;
 
     /**
      * 是否禁用（0：启用，1：禁用）

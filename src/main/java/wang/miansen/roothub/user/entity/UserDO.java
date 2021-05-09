@@ -30,14 +30,9 @@ public class UserDO {
     private String username;
 
     /**
-     * 用户昵称
+     * 密码
      */
-    private String nickname;
-
-    /**
-     * 头像
-     */
-    private String avatar;
+    private String password;
 
     /**
      * 邮箱
@@ -50,9 +45,24 @@ public class UserDO {
     private String mobile;
 
     /**
-     * 是否激活（false: 未激活，true：激活）
+     * 性别，1：男，2：女
      */
-    private Boolean isActivated;
+    private Byte gender;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 个人简介
+     */
+    private String bio;
+
+    /**
+     * 地点
+     */
+    private String location;
 
     /**
      * 是否禁用（false：启用，true：禁用）

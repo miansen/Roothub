@@ -75,7 +75,7 @@ public class ResourceCategoryAdminController
 			return mv;
 		}
 		resourceCategoryVO.setResourceCategoryId(IDGenerator.generateID());
-		resourceCategoryVO.setUserId(getUser().getUserId());
+		resourceCategoryVO.setUserId(getUser().getUserId().toString());
 		resourceCategoryVO.setUserName(getUser().getUsername());
 		resourceCategoryVO.setCreateDate(DateUtils.formatDateTime(new Date()));
 		resourceCategoryService.save(getVO2DTO().apply(resourceCategoryVO));

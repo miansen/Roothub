@@ -85,7 +85,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	@ResponseBody
 	private Result<Integer> save(String fid, HttpServletRequest request) {
 		Follow follow = new Follow();
-		follow.setSourceId(getUser().getUserId());
+		follow.setSourceId(getUser().getUserId().toString());
 		follow.setTargetId(fid);
 		follow.setCreateDate(new Date());
 		int insert = followService.insert(follow);
@@ -105,7 +105,7 @@ public class FollowController extends AbstractBaseController<Follow, FollowDTO, 
 	@RequestMapping(value = "/follow/delete", method = RequestMethod.POST)
 	@ResponseBody
 	private Result<Integer> delete(String fid, HttpServletRequest request) {
-		int delete = followService.delete(getUser().getUserId(), fid);
+		int delete = followService.delete(getUser().getUserId().toString(), fid);
 		if (delete == 1) {
 			String info = "取消关注成功";
 			return new Result<Integer>(200, true, info);

@@ -71,7 +71,7 @@ public class MenuAdminController extends AbstractBaseController<Menu, MenuDTO, M
 			parentMenuVO.setMenuId(null);
 		}
 		menuVO.setMenuId(IDGenerator.generateID());
-		menuVO.setUserId(getUser().getUserId());
+		menuVO.setUserId(getUser().getUserId().toString());
 		menuVO.setUserName(getUser().getUsername());
 		menuVO.setCreateDate(DateUtils.formatDateTime(new Date()));
 		menuService.save(getVO2DTO().apply(menuVO));

@@ -80,7 +80,7 @@ public class AppCategoryAdminController extends AbstractBaseController<AppCatego
 			return mv;
 		}
 		appCategoryVO.setAppCategoryId(IDGenerator.generateID());
-		appCategoryVO.setUserId(getUser().getUserId());
+		appCategoryVO.setUserId(getUser().getUserId().toString());
 		appCategoryVO.setUserName(getUser().getUsername());
 		appCategoryVO.setCreateDate(DateUtils.formatDateTime(new Date()));
 		appCategoryService.save(getVO2DTO().apply(appCategoryVO));

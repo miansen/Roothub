@@ -31,6 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <script src="/default/admin/common/js/app.min.js"></script>
+    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
 
     <script>
       function toast(txt, icon) {
@@ -49,39 +50,97 @@
   </head>
 <body class="hold-transition login-page">
   <div class="login-box">
-    <div class="login-logo">
+    <%--<div class="login-logo">
       <a href="javascript:;"><b>Roothub</b>管理平台</a>
-    </div>
-    <div class="login-box-body">
-      <c:if test="${error != null}">
-        <p class="login-box-msg text-red">${error}</p>
-      </c:if>
-      <form id="form" action="/login" method="post">
-        <div class="form-group has-feedback">
-          <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
-          <span class="glyphicon glyphicon-user form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-          <input type="password" class="form-control" id="password" name="password" placeholder="密码">
-          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <!-- <div class="form-group">
-          <div class="input-group">
-            <input type="text" class="form-control" id="code" name="code" placeholder="验证码"/>
-            <span class="input-group-btn">
-            <img style="border: 1px solid #ccc;" src="/common/captcha" id="changeCode"/>
-          </span>
+    </div>--%>
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#login" data-toggle="tab">密码登录</a></li>
+      <li><a href="#sms-login" data-toggle="tab">短信登录/注册</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="login-box-body tab-pane active" id="login">
+        <c:if test="${error != null}">
+          <p class="login-box-msg text-red">${error}</p>
+        </c:if>
+        <form id="form" action="/login" method="post">
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
           </div>
-        </div> -->
-        <div class="row">
-          <div class="col-xs-8">
-            <input type="checkbox" name="rememberMe" checked id="rememberMe" value="1"> <label for="rememberMe">记住我</label>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
-          <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-adminUser"></i> 登录</button>
+          <!-- <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" id="code" name="code" placeholder="验证码"/>
+              <span class="input-group-btn">
+              <img style="border: 1px solid #ccc;" src="/common/captcha" id="changeCode"/>
+            </span>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-xs-8">
+              <input type="checkbox" name="rememberMe" checked id="rememberMe" value="1"> <label for="rememberMe">记住我</label>
+            </div>
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-adminUser"></i> 登录</button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
+
+      <div class="login-box-body tab-pane" id="sms-login">
+        <c:if test="${error != null}">
+          <p class="login-box-msg text-red">${error}</p>
+        </c:if>
+        <form id="form" action="/sms/login" method="post">
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control required" id="mobile" name="mobile" placeholder="手机号码">
+          </div>
+          <%--<div class="form-group has-feedback">
+            <input type="password" class="form-control" id="code" name="code" placeholder="验证码">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>--%>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control required" id="code" name="code" placeholder="验证码"/>
+              <!--防水墙票据、字符串 begin-->
+              <input type="hidden" value="" name="ticket" id="ticket">
+              <input type="hidden" value="" name="randstr" id="randstr">
+              <!--防水墙票据、字符串 end-->
+              <span class="input-group-btn">
+              <button id="TencentCaptcha" data-appid="2004316301" data-cbfn="callback" type="button" class="btn btn-primary">获取验证码</button>
+                <script>
+                 window.callback = function(res) {
+                   // 验证失败
+                   if (res.ret === 1) {
+                     return;
+                   }
+                   // 验证成功
+                   if (res.ret === 0) {
+                     // 回调的票据
+                     $('#ticket').attr('value', res.ticket);
+                     // 回调的字符串
+                     $('#randstr').attr('value', res.randstr);
+                   }
+                 }
+              </script>
+            </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <input type="checkbox" name="rememberMe" checked id="rememberMe" value="1"> <label for="rememberMe">记住我</label>
+            </div>
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-adminUser"></i> 登录</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
   </body>

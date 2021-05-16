@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
+import wang.miansen.roothub.common.enums.BaseResultCodeEnum;
 import wang.miansen.roothub.common.exception.BaseException;
 
 /**
@@ -49,9 +49,9 @@ public class GlobalExceptionHandler {
 				mv.addObject(new Result<>(be.getErrorCode(), be.getMessage()));
 				return mv;
 			} else {
-				response.setStatus(BaseErrorCodeEnum.INTERNAL_ERROR.getHttpCode());
-				mv.addObject(new Result<>(BaseErrorCodeEnum.INTERNAL_ERROR.getErrorCode(),
-						BaseErrorCodeEnum.INTERNAL_ERROR.getMessage()));
+				response.setStatus(BaseResultCodeEnum.INTERNAL_ERROR.getHttpCode());
+				mv.addObject(new Result<>(BaseResultCodeEnum.INTERNAL_ERROR.getCode(),
+						BaseResultCodeEnum.INTERNAL_ERROR.getMessage()));
 				return mv;
 			}
 		} else {
@@ -64,9 +64,9 @@ public class GlobalExceptionHandler {
 				mv.setViewName(""+contextPath+"/default/front/error/error");
 				return mv;
 			} else {
-				response.setStatus(BaseErrorCodeEnum.INTERNAL_ERROR.getHttpCode());
-				mv.addObject("exception", BaseErrorCodeEnum.INTERNAL_ERROR.getMessage());
-				mv.addObject("errorCode", BaseErrorCodeEnum.INTERNAL_ERROR.getErrorCode());
+				response.setStatus(BaseResultCodeEnum.INTERNAL_ERROR.getHttpCode());
+				mv.addObject("exception", BaseResultCodeEnum.INTERNAL_ERROR.getMessage());
+				mv.addObject("errorCode", BaseResultCodeEnum.INTERNAL_ERROR.getCode());
 				mv.setViewName(""+contextPath+"/default/front/error/error");
 				return mv;
 			}

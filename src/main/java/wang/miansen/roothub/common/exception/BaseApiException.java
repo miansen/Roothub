@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.exception;
 
-import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
+import wang.miansen.roothub.common.enums.BaseResultCodeEnum;
 
 /**
  * @author miansen.wang
@@ -10,7 +10,7 @@ public class BaseApiException extends BaseException {
 
 	private static final long serialVersionUID = -8502351057054395297L;
 
-	public BaseApiException(BaseErrorCodeEnum baseErrorCodeEnum) {
+	public BaseApiException(BaseResultCodeEnum baseErrorCodeEnum) {
 		super(baseErrorCodeEnum);
 	}
 

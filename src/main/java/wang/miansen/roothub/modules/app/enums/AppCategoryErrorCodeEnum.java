@@ -1,6 +1,6 @@
 package wang.miansen.roothub.modules.app.enums;
 
-import wang.miansen.roothub.common.enums.BaseErrorCode;
+import wang.miansen.roothub.common.enums.BaseResultCode;
 
 /**
  * 应用类别错误枚举类
@@ -8,7 +8,7 @@ import wang.miansen.roothub.common.enums.BaseErrorCode;
  * @author miansen.wang
  * @date 2020-03-08
  */
-public enum AppCategoryErrorCodeEnum implements BaseErrorCode {
+public enum AppCategoryErrorCodeEnum implements BaseResultCode {
 
     /**
      * 应用类名的 ID 不能为空
@@ -57,7 +57,7 @@ public enum AppCategoryErrorCodeEnum implements BaseErrorCode {
     }
 
     @Override
-    public String getErrorCode() {
+    public String getCode() {
         return errorCode;
     }
 

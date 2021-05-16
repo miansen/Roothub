@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import wang.miansen.roothub.common.beans.Page;
 import wang.miansen.roothub.common.controller.AbstractBaseController;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
-import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
+import wang.miansen.roothub.common.enums.BaseResultCodeEnum;
 import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.service.BaseService;
 import wang.miansen.roothub.common.util.BeanUtils;
@@ -126,7 +126,7 @@ public class MenuAdminController extends AbstractBaseController<Menu, MenuDTO, M
 		}
 		MenuDTO menuDTO = menuService.getById(menuId);
 		if (menuDTO == null) {
-			throw new BaseException(BaseErrorCodeEnum.INTERNAL_ERROR);
+			throw new BaseException(BaseResultCodeEnum.INTERNAL_ERROR);
 		}
 		menuVO.setUpdateDate(DateUtils.formatDateTime(new Date()));
 		menuService.updateById(getVO2DTO().apply(menuVO));

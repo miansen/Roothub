@@ -12,7 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.alibaba.fastjson.JSONObject;
 
-import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
+import wang.miansen.roothub.common.enums.BaseResultCodeEnum;
 import wang.miansen.roothub.common.exception.BaseException;
 
 /**
@@ -39,7 +39,7 @@ public abstract class HttpClientUtils {
         url = UriComponentsBuilder.fromUriString(url).queryParams(queryParams).build().toUriString();
         ResponseEntity<JSONObject> exchange = restTemplate.exchange(url, HttpMethod.GET, entity, JSONObject.class);
         if (!HttpStatus.OK.equals(exchange.getStatusCode())) {
-            throw new BaseException(BaseErrorCodeEnum.INTERFACE_SYSTEM_ERROR);
+            throw new BaseException(BaseResultCodeEnum.INTERFACE_SYSTEM_ERROR);
         }
         return exchange.getBody();
     }

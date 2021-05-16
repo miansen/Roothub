@@ -1,6 +1,6 @@
 package wang.miansen.roothub.common.exception;
 
-import wang.miansen.roothub.common.enums.BaseErrorCode;
+import wang.miansen.roothub.common.enums.BaseResultCode;
 
 /**
  * 该类是业务异常的基础父类，定义了 {@code httpCode}、{@code errorCode}、{@code message} 这三属性以及构造方法，建议大部分的业务异常继承。
@@ -76,8 +76,8 @@ public class BaseException extends RuntimeException {
      *
      * @param baseErrorCode 错误的枚举对象
      */
-    public BaseException(BaseErrorCode baseErrorCode) {
-        this(baseErrorCode.getHttpCode(), baseErrorCode.getErrorCode(), baseErrorCode.getMessage());
+    public BaseException(BaseResultCode baseErrorCode) {
+        this(baseErrorCode.getHttpCode(), baseErrorCode.getCode(), baseErrorCode.getMessage());
     }
 
     /**
@@ -86,8 +86,8 @@ public class BaseException extends RuntimeException {
      * @param baseErrorCode 错误的枚举对象
      * @param httpCode http 错误码
      */
-    public BaseException(BaseErrorCode baseErrorCode, int httpCode) {
-        this(httpCode, baseErrorCode.getErrorCode(), baseErrorCode.getMessage());
+    public BaseException(BaseResultCode baseErrorCode, int httpCode) {
+        this(httpCode, baseErrorCode.getCode(), baseErrorCode.getMessage());
     }
 
     /**
@@ -96,8 +96,8 @@ public class BaseException extends RuntimeException {
      * @param baseErrorCode 错误的枚举对象
      * @param message 发生错误的详细信息
      */
-    public BaseException(BaseErrorCode baseErrorCode, String message) {
-        this(baseErrorCode.getHttpCode(), baseErrorCode.getErrorCode(), message);
+    public BaseException(BaseResultCode baseErrorCode, String message) {
+        this(baseErrorCode.getHttpCode(), baseErrorCode.getCode(), message);
     }
 
     /**
@@ -154,8 +154,8 @@ public class BaseException extends RuntimeException {
      * @param baseErrorCode 错误的枚举对象
      * @param cause 异常栈
      */
-    public BaseException(BaseErrorCode baseErrorCode, Throwable cause) {
-        this(baseErrorCode.getHttpCode(), baseErrorCode.getErrorCode(), baseErrorCode.getMessage(), cause);
+    public BaseException(BaseResultCode baseErrorCode, Throwable cause) {
+        this(baseErrorCode.getHttpCode(), baseErrorCode.getCode(), baseErrorCode.getMessage(), cause);
     }
 
     public int getHttpCode() {

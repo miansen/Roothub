@@ -24,7 +24,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.ModelAndView;
 
 import wang.miansen.roothub.common.beans.Result;
-import wang.miansen.roothub.common.enums.BaseErrorCodeEnum;
+import wang.miansen.roothub.common.enums.BaseResultCodeEnum;
 
 /**
  * 以 SpringBoot 的方式启动项目
@@ -62,7 +62,7 @@ public class RoothubApplication implements ErrorController {
 	@RequestMapping(value = "/error", produces = "text/html")
 	public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("exception", BaseErrorCodeEnum.INTERNAL_ERROR.getMessage());
+		mv.addObject("exception", BaseResultCodeEnum.INTERNAL_ERROR.getMessage());
 		mv.addObject("errorCode", getStatus(request).value());
 		mv.setViewName("/default/front/error/error");
 		return mv;
@@ -72,8 +72,8 @@ public class RoothubApplication implements ErrorController {
 	@ResponseBody
 	public ResponseEntity<Result<String>> error(HttpServletRequest request, HttpServletResponse response) {
 		HttpStatus status = getStatus(request);
-		return new ResponseEntity<Result<String>>(new Result<>(BaseErrorCodeEnum.INTERNAL_ERROR.getErrorCode(),
-				BaseErrorCodeEnum.INTERNAL_ERROR.getMessage()), status);
+		return new ResponseEntity<Result<String>>(new Result<>(BaseResultCodeEnum.INTERNAL_ERROR.getCode(),
+				BaseResultCodeEnum.INTERNAL_ERROR.getMessage()), status);
 	}
 
 	private HttpStatus getStatus(HttpServletRequest request) {

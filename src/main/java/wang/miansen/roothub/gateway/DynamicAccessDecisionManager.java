@@ -22,13 +22,11 @@ public class DynamicAccessDecisionManager implements AccessDecisionManager {
 
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
-        // 当接口未被配置资源时直接放行
+        // 如果 URL 没有配置权限，则直接放行
         if (CollectionUtils.isEmpty(configAttributes)) {
             return;
         }
-        Iterator<ConfigAttribute> iterator = configAttributes.iterator();
-        while (iterator.hasNext()) {
-            ConfigAttribute configAttribute = iterator.next();
+        for (ConfigAttribute configAttribute : configAttributes) {
             // 必须要有这个权限
             String needAuthority = configAttribute.getAttribute();
             // 当前用户所拥有的权限

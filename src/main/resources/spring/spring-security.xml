@@ -163,6 +163,9 @@
 
     <!-- 初始化匿名用户的主体信息和角色权限信息 -->
     <bean id="anonymousAuthenticationFilterProcessor" class="wang.miansen.roothub.gateway.AnonymousAuthenticationFilterProcessor"/>
+
+    <!-- Web 过滤器，增加 logger 的 traceId -->
+    <bean id="webRequestTraceFilter" class="wang.miansen.roothub.gateway.filter.WebRequestTraceFilter"/>
     <!-- ============================================ 鉴权相关 end ============================================ -->
 
 </beans>

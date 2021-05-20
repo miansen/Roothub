@@ -26,9 +26,34 @@ public class ResourceDO {
     private Long resourceId;
 
     /**
+     * 系统ID
+     */
+    private Long systemId;
+
+    /**
+     * 系统名称
+     */
+    private String systemName;
+
+    /**
+     * 系统编码
+     */
+    private String systemCode;
+
+    /**
      * 模块ID
      */
     private Long moduleId;
+
+    /**
+     * 模块名称
+     */
+    private String moduleName;
+
+    /**
+     * 模块编码
+     */
+    private String moduleCode;
 
     /**
      * 资源名称
@@ -36,9 +61,9 @@ public class ResourceDO {
     private String resourceName;
 
     /**
-     * 资源值
+     * 资源编码
      */
-    private String resourceValue;
+    private String resourceCode;
 
     /**
      * 资源描述

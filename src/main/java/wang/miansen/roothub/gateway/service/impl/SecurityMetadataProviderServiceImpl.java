@@ -58,7 +58,7 @@ public class SecurityMetadataProviderServiceImpl implements SecurityMetadataProv
                 SecurityConfig securityConfig = new SecurityConfig(permissionCode);
                 configAttributes.add(securityConfig);
             }
-            map.put(resource.getResourceValue(), configAttributes);
+            map.put(resource.getResourceCode(), configAttributes);
         }
         return map;
     }

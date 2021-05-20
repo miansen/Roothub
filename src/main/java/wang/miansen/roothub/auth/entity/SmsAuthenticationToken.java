@@ -52,6 +52,7 @@ public class SmsAuthenticationToken extends AbstractAuthenticationToken {
         super(authorities);
         this.principal = principal;
         this.credentials = credentials;
+        // 因为重写了 setAuthenticated 方法，会抛异常，所以只能调用父类的方法设置
         super.setAuthenticated(true);
     }
 

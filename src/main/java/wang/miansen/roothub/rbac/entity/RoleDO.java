@@ -25,9 +25,34 @@ public class RoleDO {
     private Long roleId;
 
     /**
+     * 系统ID
+     */
+    private Long systemId;
+
+    /**
+     * 系统名称
+     */
+    private String systemName;
+
+    /**
+     * 系统编码
+     */
+    private String systemCode;
+
+    /**
      * 模块ID
      */
     private Long moduleId;
+
+    /**
+     * 模块名称
+     */
+    private String moduleName;
+
+    /**
+     * 模块编码
+     */
+    private String moduleCode;
 
     /**
      * 角色名称

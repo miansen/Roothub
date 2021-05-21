@@ -41,4 +41,11 @@ public interface UserService {
      * @return UserBO
      */
     UserBO getByMobile(String mobile);
+
+    /**
+     * 根据手机号码注册用户
+     *
+     * @param mobile 手机号码
+     */
+    void registerByMobile(String mobile);
 }

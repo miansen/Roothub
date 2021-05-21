@@ -109,7 +109,7 @@
               <input type="text" class="form-control required" id="code" name="code" placeholder="验证码"/>
               <!--防水墙票据、字符串 begin-->
               <input type="hidden" value="" name="ticket" id="ticket">
-              <input type="hidden" value="" name="randstr" id="randstr">
+              <input type="hidden" value="" name="randStr" id="randstr">
               <!--防水墙票据、字符串 end-->
               <span class="input-group-btn">
               <button id="TencentCaptcha" data-appid="2004316301" data-cbfn="callback" type="button" class="btn btn-primary">获取验证码</button>
@@ -124,7 +124,7 @@
                      // 回调的票据
                      $('#ticket').attr('value', res.ticket);
                      // 回调的字符串
-                     $('#randstr').attr('value', res.randstr);
+                     $('#randStr').attr('value', res.randStr);
                    }
                  }
               </script>

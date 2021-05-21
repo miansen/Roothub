@@ -61,4 +61,12 @@ public class RoleServiceImpl implements RoleService {
         RoleDO roleDO = roleDao.selectOne(wrapper);
         return do2BoMapper.roleDo2Bo(roleDO);
     }
+
+    @Override
+    public void add(Long roleId, Long userId) {
+        RoleUserRelDO roleUserRel = new RoleUserRelDO();
+        roleUserRel.setRoleId(roleId);
+        roleUserRel.setUserId(userId);
+        roleUserRelDao.insert(roleUserRel);
+    }
 }

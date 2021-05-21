@@ -27,4 +27,12 @@ public interface RoleService {
      * @return 角色 BO 对象
      */
     RoleBO getByRoleCode(String roleCode);
+
+    /**
+     * 给用户添加角色
+     *
+     * @param roleId 角色 ID
+     * @param userId 用户 ID
+     */
+    void add(Long roleId, Long userId);
 }

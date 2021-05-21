@@ -12,4 +12,9 @@ public interface BaseConstants {
      * trace log MDC key
      */
     String TRACE_LOG_MDC_KEY = "traceId";
+
+    /**
+     * 普通用户默认拥有的角色 ID
+     */
+    Long GENERAL_ROLE_ID = 2L;
 }

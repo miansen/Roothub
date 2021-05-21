@@ -25,10 +25,12 @@ public class SmsAuthenticationProviderServiceImpl implements SmsAuthenticationPr
 
         String mobile = (String) authenticationToken.getPrincipal();
         String code = (String) authenticationToken.getCredentials();
-        UserDetails userDetails = authenticationUserDetailsService.loadUserByMobile(mobile);
 
-        if (userDetails == null) {
-            throw new MobileNotFoundException("无法根据手机号码获取用户信息");
+        UserDetails userDetails = null;
+        try {
+            userDetails = authenticationUserDetailsService.loadUserByMobile(mobile);
+        } catch (MobileNotFoundException e) {
+            // 根据手机号码找不到用户
         }
 
         SmsAuthenticationToken smsAuthenticationToken = new SmsAuthenticationToken(mobile, code, userDetails.getAuthorities());

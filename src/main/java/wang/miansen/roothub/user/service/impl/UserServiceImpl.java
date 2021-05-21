@@ -2,8 +2,12 @@ package wang.miansen.roothub.user.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import wang.miansen.roothub.common.constant.BaseConstants;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.util.UserNameUtils;
+import wang.miansen.roothub.rbac.service.RoleService;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.dao.UserDAO;
 import wang.miansen.roothub.user.entity.UserDO;
@@ -24,6 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDo2BoMapper do2BoMapper;
+
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public UserBO getById(Long userId) {
@@ -55,5 +62,15 @@ public class UserServiceImpl implements UserService {
             .eq(UserDO::getMobile, mobile)
             .eq(UserDO::getIsDeleted, Boolean.FALSE);
         return do2BoMapper.userDo2Bo(userDao.selectOne(wrapper));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void registerByMobile(String mobile) {
+        UserDO user = new UserDO();
+        user.setUsername(UserNameUtils.generateUserName());
+        user.setMobile(mobile);
+        userDao.insert(user);
+        roleService.add(BaseConstants.GENERAL_ROLE_ID, user.getUserId());
     }
 }

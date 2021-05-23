@@ -29,21 +29,6 @@ public class SmsAuthenticationToken extends AbstractAuthenticationToken {
     private Object credentials;
 
     /**
-     * 腾讯防水墙票据
-     */
-    private String ticket;
-
-    /**
-     * 腾讯防水墙随机字符串
-     */
-    private String randStr;
-
-    /**
-     * 提交认证的用户的 IP 地址
-     */
-    private String ip;
-
-    /**
      * 创建一个没有鉴权的 MobileAuthenticationToken
      *
      * @param principal principal

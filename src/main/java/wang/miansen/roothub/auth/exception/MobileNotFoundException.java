@@ -10,6 +10,8 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class MobileNotFoundException extends AuthenticationException {
 
+    private static final long serialVersionUID = 1382053359209580307L;
+
     /**
      * 构造一个具有详细信息的 {@code MobileNotFoundException}
      *

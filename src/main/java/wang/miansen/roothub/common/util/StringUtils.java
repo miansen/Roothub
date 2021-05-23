@@ -13,6 +13,11 @@ public class StringUtils {
 	private static final String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
 	/**
+	 * 校验是否为手机号码的正则表达式
+	 */
+	public static final String CHECK_PHONE_NUMBER = "^((13[0-9])|(15[^4])|(166)|(18[0,1,2,3,5-9])|(17[0-8])|(147))\\d{8}$";
+
+	/**
 	 * 首字母变小写
 	 */
 	public static String firstCharToLowerCase(String str) {
@@ -207,4 +212,29 @@ public class StringUtils {
 		return (str == null || "".equals(str));
 	}
 
+	/**
+	 * 正则表达式整个匹配
+	 *
+	 * @param pattern 正则
+	 * @param mather 需要匹配的内容
+	 * @return 匹配返回 true，否则返回 false
+	 */
+	public static boolean check(String pattern, String mather) {
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(mather);
+		return m.matches();
+	}
+
+	/**
+	 * 校验是否为手机号码
+	 *
+	 * @param phoneNumber 手机号码
+	 * @return 如果是合法的手机号码返回 true，否则返回 false。
+	 */
+	public static boolean checkPhoneNumber(String phoneNumber){
+		if (StringUtils.isEmpty(phoneNumber)) {
+			return false;
+		}
+		return check(CHECK_PHONE_NUMBER,phoneNumber);
+	}
 }

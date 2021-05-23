@@ -133,6 +133,8 @@
     <!-- 短信身份认证（spring security 默认只支持用户名密码的认证方式，要想支持短信的认证方式，需自行扩展）-->
     <bean id="smsAuthenticationProviderServiceImpl" class="wang.miansen.roothub.auth.service.impl.SmsAuthenticationProviderServiceImpl">
         <property name="authenticationUserDetailsService" ref="authenticationUserDetailsServiceImpl" />
+        <property name="captchaService" ref="captchaServiceImpl" />
+        <property name="userService" ref="userServiceImpl" />
     </bean>
     <!-- 短信身份认证拦截器 -->
     <bean id="smsAuthenticationFilter" class="wang.miansen.roothub.auth.filter.SmsAuthenticationFilter">

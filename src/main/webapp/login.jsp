@@ -107,10 +107,9 @@
           <div class="form-group">
             <div class="input-group">
               <input type="text" class="form-control required" id="code" name="code" placeholder="验证码"/>
-              <!--防水墙票据、字符串 begin-->
               <input type="hidden" value="" name="ticket" id="ticket">
-              <input type="hidden" value="" name="randStr" id="randstr">
-              <!--防水墙票据、字符串 end-->
+              <input type="hidden" value="" name="randStr" id="randStr">
+              <input type="hidden" value="" name="verifyTime" id="verifyTime"/>
               <span class="input-group-btn">
               <button id="TencentCaptcha" data-appid="2004316301" data-cbfn="callback" type="button" class="btn btn-primary">获取验证码</button>
                 <script>
@@ -125,6 +124,7 @@
                      $('#ticket').attr('value', res.ticket);
                      // 回调的字符串
                      $('#randStr').attr('value', res.randStr);
+                     smsSend();
                    }
                  }
               </script>
@@ -136,12 +136,53 @@
               <input type="checkbox" name="rememberMe" checked id="rememberMe" value="1"> <label for="rememberMe">记住我</label>
             </div>
             <div class="col-xs-4">
-              <button type="submit" class="btn btn-primary btn-block btn-flat"><i class="fa fa-adminUser"></i> 登录</button>
+              <button type="submit" class="btn btn-primary btn-block btn-flat" id="smsBtn"><i class="fa fa-adminUser"></i> 登录</button>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    function smsSend() {
+      const mobile = $("#mobile").val();
+      const ticket = $("#ticket").val();
+      const randStr = $("#randStr").val();
+
+      const data = {
+        mobile: mobile,
+        type: 1,
+        ticket: ticket,
+        randStr: randStr
+      };
+
+      $.ajax({
+        url: "/api/captcha/sms/send",
+        type: "post",
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data) {
+          if (data.code === 'SUCCESS') {
+            let count = 60;
+            const countdown = setInterval(countdownFnc, 1000);
+            function countdownFnc() {
+              $('#smsBtn').prop('disabled', true);
+              $("#verifyTime").val(count);
+              $("#TencentCaptcha").text(count + " 秒后重新发送");
+              if (count === 0) {
+                $("#TencentCaptcha").text("重新发送");
+                clearInterval(countdown);
+              }
+              count--;
+            }
+          }
+        },
+        error: function (data) {
+
+        }
+      });
+    }
+  </script>
   </body>
 </html>

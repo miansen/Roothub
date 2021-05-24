@@ -24,6 +24,25 @@ public interface CaptchaService {
         int length);
 
     /**
+     * 此接口可以给指定的手机号码发送数字验证码。
+     * <p>
+     *     此接口最终是调用这个接口 {@link wang.miansen.roothub.common.sms.service.SmsService}
+     *     的 {@code send()} 方法将验证码发送给指定的手机号码上的。
+     * </p>
+     * <p>
+     *     为了防止恶意发送，造成短信资源的浪费。在此基础上增加腾讯防水墙验证码功能，
+     *     只有通过了腾讯验证码的校验，才能发送短信。
+     * </p>
+     *
+     * @param numberCode 数字验证码
+     * @param mobile 手机号码
+     * @param ticket 腾讯防水墙票据
+     * @param randStr 腾讯防水墙随机字符串
+     * @param ip 提交请求的 IP 地址
+     */
+    void sendNumberCode(String numberCode, String mobile, String ticket, String randStr, String ip);
+
+    /**
      * 验证验证码
      *
      * @param captchaRel 验证码关联的对象，可以是用户ID、手机号码或者邮箱
@@ -40,7 +59,7 @@ public interface CaptchaService {
      *
      * @param ticket 验证码客户端验证回调的票据
      * @param rand 验证码客户端验证回调的随机串
-     * @param userIp 提交验证的用户的IP地址
+     * @param userIp 提交验证的用户的 IP 地址
      * @return true: 验证成功，false: 验证失败
      */
     boolean verifyTicket(String ticket, String rand, String userIp);

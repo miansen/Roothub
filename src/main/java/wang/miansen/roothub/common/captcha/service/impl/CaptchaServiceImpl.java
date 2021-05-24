@@ -19,6 +19,7 @@ import wang.miansen.roothub.common.captcha.enums.CaptchaCodeTypeEnum;
 import wang.miansen.roothub.common.captcha.enums.CaptchaRelTypeEnum;
 import wang.miansen.roothub.common.captcha.service.CaptchaService;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
+import wang.miansen.roothub.common.sms.service.SmsService;
 import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.HttpClientUtils;
 import wang.miansen.roothub.common.util.StringUtils;
@@ -40,6 +41,9 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Autowired
     private SystemConfigService systemConfigService;
+
+    @Autowired
+    private SmsService smsService;
 
     /**
      * 腾讯云验证码票据校验接口地址，参考文档：https://007.qq.com/java-access.html?ADTAG=acces.start
@@ -65,6 +69,14 @@ public class CaptchaServiceImpl implements CaptchaService {
         captchaDo.setExpireTime(DateUtils.getMinuteAfter(new Date(), EXPIRE_TIME));
         captchaDao.insertNotNull(captchaDo);
         return code;
+    }
+
+    @Override
+    public void sendNumberCode(String numberCode, String mobile, String ticket, String randStr, String ip) {
+        if (!verifyTicket(ticket, randStr, ip)) {
+            throw new IllegalArgumentException("验证码错误");
+        }
+        smsService.sendCode(mobile, numberCode);
     }
 
     @Override

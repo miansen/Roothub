@@ -24,7 +24,7 @@
 		<tomcat-embed-jasper.version>8.0.15</tomcat-embed-jasper.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
 		<junit.version>4.11</junit.version>
-		<logback.version>1.1.1</logback.version>
+		<logback.version>1.2.0</logback.version>
 		<standard.version>1.1.2</standard.version>
 		<jstl.version>1.2</jstl.version>
 		<jedis.version>2.9.0</jedis.version>

@@ -5,7 +5,7 @@ import org.springframework.security.core.AuthenticationException;
 /**
  * 如果短信认证失败，则抛出此异常。
  *
- * @author 龙德
+ * @author miansen.wang
  * @date 2021-05-23 15:14
  */
 public class SmsAuthenticationException extends AuthenticationException {

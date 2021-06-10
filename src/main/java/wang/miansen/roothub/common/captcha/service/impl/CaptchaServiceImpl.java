@@ -4,11 +4,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Date;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +27,7 @@ import wang.miansen.roothub.common.captcha.enums.CaptchaRelTypeEnum;
 import wang.miansen.roothub.common.captcha.service.CaptchaService;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.sms.service.SmsService;
+import wang.miansen.roothub.common.util.Assert;
 import wang.miansen.roothub.common.util.DateUtils;
 import wang.miansen.roothub.common.util.HttpClientUtils;
 import wang.miansen.roothub.common.util.StringUtils;
@@ -108,16 +116,19 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public boolean verifyTicket(String ticket, String rand, String userIp) {
         log.info("invoke method CaptchaServiceImpl#verifyTicket. ticket: {}, rand: {}, userIp: {}", ticket, rand, userIp);
+
         String appId = systemConfigService.getValue("captcha_app_id");
-        if (StringUtils.isEmpty(appId)) {
-            throw new IllegalArgumentException("captcha_app_id is empty.");
-        }
         String appSecretKey = systemConfigService.getValue("captcha_app_secret_key");
-        if (StringUtils.isEmpty(appSecretKey)) {
-            throw new IllegalArgumentException("captcha_app_secret_key is empty.");
-        }
+
+        Assert.notEmpty(appId, "'captcha_app_id' is empty.");
+        Assert.notEmpty(appSecretKey, "'captcha_app_secret_key' is empty.");
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpGet httpGet;
+        CloseableHttpResponse response;
+
         try {
-            MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+            /*MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
             queryParams.add("aid", appId);
             queryParams.add("AppSecretKey", appSecretKey);
             queryParams.add("Ticket", URLEncoder.encode(ticket, "UTF-8"));
@@ -126,7 +137,34 @@ public class CaptchaServiceImpl implements CaptchaService {
             JSONObject response = HttpClientUtils.get(VERIFY_URI, queryParams);
             log.info("response: {}", response);
             Integer code = response.getInteger("response");
-            return code == 1;
+            return code == 1;*/
+
+            final String uri = "https://ssl.captcha.qq.com/ticket/verify?aid=%s&AppSecretKey=%s&Ticket=%s&Randstr=%s&UserIP=%s";
+
+            httpGet = new HttpGet(String.format(uri,
+                appId,
+                appSecretKey,
+                URLEncoder.encode(ticket, "UTF-8"),
+                URLEncoder.encode(rand, "UTF-8"),
+                URLEncoder.encode(userIp, "UTF-8")
+            ));
+            response = httpclient.execute(httpGet);
+            HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                String res = EntityUtils.toString(entity);
+                log.info("res: {}", res);
+
+                JSONObject result = JSON.parseObject(res);
+                // 返回码
+                int code = result.getInteger("response");
+                // 恶意等级
+                int evilLevel = result.getInteger("evil_level");
+
+                if (code == 1) {
+                    // 验证成功
+                    return true;
+                }
+            }
         } catch (UnsupportedEncodingException e) {
             log.error("UnsupportedEncodingException in CaptchaService.verifyTicket", e);
         } catch (Exception e) {

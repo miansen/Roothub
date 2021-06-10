@@ -4,25 +4,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.Assert;
 
 import wang.miansen.roothub.auth.entity.SmsAuthenticationToken;
+import wang.miansen.roothub.auth.exception.SmsAuthenticationException;
 import wang.miansen.roothub.common.util.StringUtils;
 
 /**
- * 此拦截器用于处理短信身份验证。
+ * 此拦截器处理短信身份认证。
  * <p>
  *     登录表单必须向此拦截器提供两个参数：手机号码和验证码。
  *     参数名包含在静态字段 {@link #ROOTHUB_FORM_MOBILE_KEY} 和 {@link #ROOTHUB_FORM_CODE_KEY} 中。
  *     还可以通过设置 {@code mobileParameter} 和 {@code codeParameter} 属性来更改参数名。
  * </p>
- * 默认情况下，此拦截器响应 URL {@code /sms/login}。
  * <p>
- *     这个拦截器需放在 {@link org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter} 后面
+ *     默认情况下，此拦截器响应 URL: {@code /sms/login}。
+ * </p>
+ * <p>
+ *     请注意，这个拦截器需放在 {@link UsernamePasswordAuthenticationFilter} 后面。
+ * </p>
+ * <p>
+ *     此拦截器可以做一些校验工作，比如参数校验。如果校验不通过，应该抛出 {@link AuthenticationException} 类型的异常，
+ *     或者是 {@link InternalAuthenticationServiceException} 类型的异常，然后被父类捕获，
+ *     交给 {@link AuthenticationFailureHandler} 处理。
+ *      如果抛出其他异常，比如 {@link IllegalArgumentException}，则父类不会捕获，直接抛给 Tomcat。
  * </p>
  *
  * @author miansen.wang
@@ -72,13 +84,16 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
         String mobile = obtainMobile(request);
         String code = obtainCode(request);
 
-        // 必要的参数校验
+        // 必要的参数校验。
+        // 这个方法是处理认证的逻辑，如果认证失败，应该抛出 AuthenticationException 类型的异常，然后被父类捕获，
+        // 交给 AuthenticationFailureHandler 处理。
+        // 如果抛出其他异常，比如 IllegalArgumentException，则父类不会捕获，直接抛给 Tomcat。
         if (!StringUtils.checkPhoneNumber(mobile)) {
-            throw new IllegalArgumentException("The mobile phone number is empty or illegal");
+            throw new SmsAuthenticationException("The mobile parameter is empty or illegal");
         }
 
         if (StringUtils.isEmpty(code)) {
-            throw new IllegalArgumentException("The Verification Code is empty or null");
+            throw new SmsAuthenticationException("The code parameter is empty");
         }
 
         mobile = mobile.trim();

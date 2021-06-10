@@ -123,7 +123,7 @@
                      // 回调的票据
                      $('#ticket').attr('value', res.ticket);
                      // 回调的字符串
-                     $('#randStr').attr('value', res.randStr);
+                     $('#randStr').attr('value', res.randstr);
                      smsSend();
                    }
                  }
@@ -159,20 +159,23 @@
       $.ajax({
         url: "/api/captcha/sms/send",
         type: "post",
-        dataType: "json",
+        dataType: "application/json",
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function (data) {
           if (data.code === 'SUCCESS') {
+
+            $("#TencentCaptcha").prop('disabled', true);
+
             let count = 60;
             const countdown = setInterval(countdownFnc, 1000);
             function countdownFnc() {
-              $('#smsBtn').prop('disabled', true);
               $("#verifyTime").val(count);
               $("#TencentCaptcha").text(count + " 秒后重新发送");
               if (count === 0) {
-                $("#TencentCaptcha").text("重新发送");
                 clearInterval(countdown);
+                $("#TencentCaptcha").text("重新发送");
+                $("#TencentCaptcha").prop('disabled', false);
               }
               count--;
             }

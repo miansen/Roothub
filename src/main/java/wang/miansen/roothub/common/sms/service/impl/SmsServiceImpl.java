@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.common.sms.service.SmsService;
+import wang.miansen.roothub.common.util.Assert;
 import wang.miansen.roothub.common.util.StringUtils;
 import wang.miansen.roothub.modules.system.service.SystemConfigService;
 
@@ -36,12 +37,8 @@ public class SmsServiceImpl implements SmsService, InitializingBean {
 
     @Override
     public void sendCode(String mobile, String code) {
-        if (StringUtils.isEmpty(mobile)) {
-            throw new IllegalArgumentException("mobile is empty.");
-        }
-        if (StringUtils.isEmpty(code)) {
-            throw new IllegalArgumentException("code is empty.");
-        }
+        Assert.notEmpty(mobile, "The mobile is empty");
+        Assert.notEmpty(code, "The code is empty");
 
         try {
             CommonRequest request = new CommonRequest();
@@ -65,25 +62,16 @@ public class SmsServiceImpl implements SmsService, InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         String accessKeyId = systemConfigService.getValue("sms_access_key_id");
-        if (StringUtils.isEmpty(accessKeyId)) {
-            throw new IllegalArgumentException("sms_access_key_id is empty.");
-        }
         String secret = systemConfigService.getValue("sms_access_key_secret");
-        if (StringUtils.isEmpty(secret)) {
-            throw new IllegalArgumentException("sms_access_key_secret is empty.");
-        }
         String regionId = systemConfigService.getValue("sms_region_id");
-        if (StringUtils.isEmpty(regionId)) {
-            throw new IllegalArgumentException("sms_region_id is empty.");
-        }
         String signName = systemConfigService.getValue("sms_sign_name");
-        if (StringUtils.isEmpty(signName)) {
-            throw new IllegalArgumentException("sms_sign_name is empty.");
-        }
         String templateCode = systemConfigService.getValue("sms_template_code");
-        if (StringUtils.isEmpty(templateCode)) {
-            throw new IllegalArgumentException("sms_template_code is empty.");
-        }
+
+        Assert.notEmpty(accessKeyId, "sms_access_key_id is empty");
+        Assert.notEmpty(secret, "sms_access_key_secret is empty");
+        Assert.notEmpty(regionId, "sms_region_id is empty");
+        Assert.notEmpty(signName, "sms_sign_name is empty");
+        Assert.notEmpty(templateCode, "sms_template_code is empty");
 
         DefaultProfile profile = DefaultProfile.getProfile(regionId, accessKeyId, secret);
         client = new DefaultAcsClient(profile);

@@ -89,11 +89,11 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
         // 交给 AuthenticationFailureHandler 处理。
         // 如果抛出其他异常，比如 IllegalArgumentException，则父类不会捕获，直接抛给 Tomcat。
         if (!StringUtils.checkPhoneNumber(mobile)) {
-            throw new SmsAuthenticationException("The mobile parameter is empty or illegal");
+            throw new SmsAuthenticationException("请输入手机号码");
         }
 
         if (StringUtils.isEmpty(code)) {
-            throw new SmsAuthenticationException("The code parameter is empty");
+            throw new SmsAuthenticationException("请输入验证码");
         }
 
         mobile = mobile.trim();

@@ -93,10 +93,8 @@
       </div>
 
       <div class="login-box-body tab-pane" id="sms-login">
-        <c:if test="${error != null}">
           <p class="login-box-msg text-red">${error}</p>
-        </c:if>
-        <form id="form" action="/sms/login" method="post">
+        <form id="sms-form" action="/sms/login" method="post">
           <div class="form-group has-feedback">
             <input type="text" class="form-control required" id="mobile" name="mobile" placeholder="手机号码">
           </div>
@@ -111,7 +109,7 @@
               <input type="hidden" value="" name="randStr" id="randStr">
               <input type="hidden" value="" name="verifyTime" id="verifyTime"/>
               <span class="input-group-btn">
-              <button id="TencentCaptcha" data-appid="2004316301" data-cbfn="callback" type="button" class="btn btn-primary">获取验证码</button>
+              <button id="sms-btn" data-appid="2004316301" data-cbfn="callback" type="button" class="btn btn-primary">获取验证码</button>
                 <script>
                  window.callback = function(res) {
                    // 验证失败
@@ -165,17 +163,18 @@
         success: function (data) {
           if (data.code === 'SUCCESS') {
 
-            $("#TencentCaptcha").prop('disabled', true);
+            $("#sms-btn").prop('disabled', true);
 
             let count = 60;
             const countdown = setInterval(countdownFnc, 1000);
+
             function countdownFnc() {
               $("#verifyTime").val(count);
-              $("#TencentCaptcha").text(count + " 秒后重新发送");
+              $("#sms-btn").text(count + " 秒后重新发送");
               if (count === 0) {
                 clearInterval(countdown);
-                $("#TencentCaptcha").text("重新发送");
-                $("#TencentCaptcha").prop('disabled', false);
+                $("#sms-btn").text("重新发送");
+                $("#sms-btn").prop('disabled', false);
               }
               count--;
             }
@@ -186,6 +185,39 @@
         }
       });
     }
+
+    $(function () {
+      $("#sms-form").submit(function () {
+        const mobile = $("#mobile").val();
+        if (!mobile) {
+          $(".login-box-msg").text("请输入手机号码");
+          return false;
+        }
+        const code = $("#code").val();
+        if (!code) {
+          $(".login-box-msg").text("请输入验证码");
+          return false;
+        }
+      });
+
+      $("#sms-btn").click(function () {
+        const mobile = $("#mobile").val();
+        if (!mobile) {
+          $(".login-box-msg").text("请输入手机号码");
+          return false;
+        }
+        var captcha1 = new TencentCaptcha('appId', function(res) {/* callback */});
+        captcha1.show();
+      });
+
+      $("#mobile").focus(function(){
+        $(".login-box-msg").text("");
+      });
+
+      $("#code").focus(function(){
+        $(".login-box-msg").text("");
+      });
+    });
   </script>
   </body>
 </html>

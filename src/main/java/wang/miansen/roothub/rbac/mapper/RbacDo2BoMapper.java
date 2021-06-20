@@ -7,9 +7,11 @@ import org.mapstruct.Mapper;
 import wang.miansen.roothub.rbac.bo.PermissionBO;
 import wang.miansen.roothub.rbac.bo.ResourceBO;
 import wang.miansen.roothub.rbac.bo.RoleBO;
+import wang.miansen.roothub.rbac.bo.SystemBO;
 import wang.miansen.roothub.rbac.entity.PermissionDO;
 import wang.miansen.roothub.rbac.entity.ResourceDO;
 import wang.miansen.roothub.rbac.entity.RoleDO;
+import wang.miansen.roothub.rbac.entity.SystemDO;
 
 /**
  * DO 转 BO
@@ -22,48 +24,64 @@ public interface RbacDo2BoMapper {
 
     /**
      * RoleDO 转 RoleBO
-     * @param roleDO
-     * @return
+     * @param roleDo roleDo
+     * @return RoleBO
      */
-    RoleBO roleDo2Bo(RoleDO roleDO);
+    RoleBO roleDo2Bo(RoleDO roleDo);
 
     /**
      * PermissionDO 转 PermissionBO
      *
-     * @param permissionDO
-     * @return
+     * @param permissionDo permissionDo
+     * @return PermissionBO
      */
-    PermissionBO permissionDo2Bo(PermissionDO permissionDO);
+    PermissionBO permissionDo2Bo(PermissionDO permissionDo);
 
     /**
      * ResourceDO 转 ResourceBO
      *
-     * @param resourceDO
-     * @return
+     * @param resourceDo resourceDo
+     * @return ResourceBO
      */
-    ResourceBO resourceDo2Bo(ResourceDO resourceDO);
+    ResourceBO resourceDo2Bo(ResourceDO resourceDo);
+
+    /**
+     * SystemDO 转 SystemBO
+     *
+     * @param systemDo systemDo
+     * @return SystemBO
+     */
+    SystemBO systemDo2Bo(SystemDO systemDo);
 
     /**
      * List<RoleDO> 转 List<RoleBO>
      *
-     * @param roleDOList
-     * @return
+     * @param roleDoList roleDo List
+     * @return roleBo List
      */
-    List<RoleBO> roleDoList2BoList(List<RoleDO> roleDOList);
+    List<RoleBO> roleDoList2BoList(List<RoleDO> roleDoList);
 
     /**
      * List<ResourceDO> 转 List<ResourceBO>
      *
-     * @param resourceDOList
-     * @return
+     * @param resourceDoList resourceDo List
+     * @return resourceBo List
      */
-    List<ResourceBO> resourceDoList2BoList(List<ResourceDO> resourceDOList);
+    List<ResourceBO> resourceDoList2BoList(List<ResourceDO> resourceDoList);
 
     /**
-     * List<PermissionDO> 转 List<PermissionBO>
+     * PermissionDO List 转 PermissionBO List
      *
-     * @param permissionDOList
-     * @return
+     * @param permissionDoList permissionDo List
+     * @return permissionBo List
      */
-    List<PermissionBO> permissionDoList2BoList(List<PermissionDO> permissionDOList);
+    List<PermissionBO> permissionDoList2BoList(List<PermissionDO> permissionDoList);
+
+    /**
+     * SystemDO List 转 SystemBO List
+     *
+     * @param systemDoList SystemDO List
+     * @return SystemBO List
+     */
+    List<SystemBO> systemDoList2BoList(List<SystemDO> systemDoList);
 }

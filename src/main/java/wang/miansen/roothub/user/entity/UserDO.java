@@ -30,6 +30,11 @@ public class UserDO {
     private String username;
 
     /**
+     * 用户昵称
+     */
+    private String nickname;
+
+    /**
      * 密码
      */
     private String password;

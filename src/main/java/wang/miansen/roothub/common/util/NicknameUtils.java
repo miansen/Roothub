@@ -8,12 +8,12 @@ import java.util.Random;
  * @author 龙德
  * @date 2021-05-21 20:55
  */
-public class UserNameUtils {
+public class NicknameUtils {
 
     /**
      * 随机的用户名
      */
-    private static final String[] USER_NAME = {
+    private static final String[] NICKNAME = {
         "空城", "阔妖", "蓝瑟", "浪庄", "嫘山", "冷面", "离兮", "离织", "莲畔", "良木", "凉簟", "烈火", "灵凰", "聆聆", "零凌", "清流", "流风", "琉璃", "柳下", "龙度",
         "龙若", "龙纹", "泷影", "绿柳", "绿笙", "洛桦", "洛神", "麦灵", "桂平", "竹君", "梦寻", "独淡舞", "荣轩", "名雅", "浩宇", "鸣若", "越泽", "瑾瑜", "墨染", "怡伶",
         "木木", "木子", "皓轩", "南蝶", "南风", "南殇", "倪尔", "玮伦", "坏脾滊", "柠檬", "小茵", "蓬莱", "飘雪", "蒲吾", "普罗旺斯", "七淳", "柒柒", "欣然", "千叶",
@@ -146,9 +146,9 @@ public class UserNameUtils {
      *
      * @return 用户名
      */
-    public static String generateUserName() {
-        int nLen = USER_NAME.length;
+    public static String generateNickname() {
+        int nLen = NICKNAME.length;
         Random random = new Random();
-        return USER_NAME[random.nextInt(nLen)];
+        return NICKNAME[random.nextInt(nLen)];
     }
 }

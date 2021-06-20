@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import wang.miansen.roothub.common.constant.BaseConstants;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
-import wang.miansen.roothub.common.util.UserNameUtils;
+import wang.miansen.roothub.common.util.NicknameUtils;
 import wang.miansen.roothub.rbac.service.RoleService;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.dao.UserDAO;
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerByMobile(String mobile) {
         UserDO user = new UserDO();
-        user.setUsername(UserNameUtils.generateUserName());
+        user.setNickname(NicknameUtils.generateNickname());
         user.setMobile(mobile);
         userDao.insert(user);
         roleService.add(BaseConstants.GENERAL_ROLE_ID, user.getUserId());

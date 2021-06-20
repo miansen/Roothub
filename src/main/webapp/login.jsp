@@ -109,23 +109,7 @@
               <input type="hidden" value="" name="randStr" id="randStr">
               <input type="hidden" value="" name="verifyTime" id="verifyTime"/>
               <span class="input-group-btn">
-              <button id="sms-btn" data-appid="2004316301" data-cbfn="callback" type="button" class="btn btn-primary">获取验证码</button>
-                <script>
-                 window.callback = function(res) {
-                   // 验证失败
-                   if (res.ret === 1) {
-                     return;
-                   }
-                   // 验证成功
-                   if (res.ret === 0) {
-                     // 回调的票据
-                     $('#ticket').attr('value', res.ticket);
-                     // 回调的字符串
-                     $('#randStr').attr('value', res.randstr);
-                     smsSend();
-                   }
-                 }
-              </script>
+              <button id="sms-btn" type="button" class="btn btn-primary">获取验证码</button>
             </span>
             </div>
           </div>
@@ -157,12 +141,11 @@
       $.ajax({
         url: "/api/captcha/sms/send",
         type: "post",
-        dataType: "application/json",
-        contentType: "application/json",
+        contentType:"application/json;charset=utf-8",
+        dataType: "json",
         data: JSON.stringify(data),
         success: function (data) {
           if (data.code === 'SUCCESS') {
-
             $("#sms-btn").prop('disabled', true);
 
             let count = 60;
@@ -181,7 +164,7 @@
           }
         },
         error: function (data) {
-
+          console.log("smsSend error");
         }
       });
     }
@@ -206,15 +189,28 @@
           $(".login-box-msg").text("请输入手机号码");
           return false;
         }
-        var captcha1 = new TencentCaptcha('appId', function(res) {/* callback */});
+        var captcha1 = new TencentCaptcha('2004316301', function (res) {
+          // 验证失败
+          if (res.ret === 1) {
+            return;
+          }
+          // 验证成功
+          if (res.ret === 0) {
+            // 回调的票据
+            $('#ticket').attr('value', res.ticket);
+            // 回调的字符串
+            $('#randStr').attr('value', res.randstr);
+            smsSend();
+          }
+        });
         captcha1.show();
       });
 
-      $("#mobile").focus(function(){
+      $("#mobile").focus(function () {
         $(".login-box-msg").text("");
       });
 
-      $("#code").focus(function(){
+      $("#code").focus(function () {
         $(".login-box-msg").text("");
       });
     });

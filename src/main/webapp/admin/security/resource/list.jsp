@@ -2,12 +2,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
-<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld"%>
+<%@ taglib prefix="Roothub" uri="/WEB-INF/tld/roothub.tld"%>
 <%@ taglib prefix="security" uri="/WEB-INF/tld/security.tld"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ include file="../common/contextPath.jsp"%>
+<%@ include file="../../common/contextPath.jsp"%>
 
-<common:layout>
+<Roothub:layout>
 	<div class="content-wrapper" style="margin: 0px;">
 		<section class="content-header">
 			<h1>资源 <small>列表</small></h1>
@@ -37,7 +37,7 @@
                     		<security:resourceList page="${page}" class="table table-bordered table-hover" 
                     		th="资源ID;资源名称;资源值;资源描述;资源类型;资源类别;创建人;创建时间" 
                     		td="resourceId;resourceName;resourceValue;resourceDesc;resourceTypeName;resourceCategoryName;userName;createDate" />
-							<common:paginate page="${page}" url="${contextPath}/admin/security/resource/list" />
+							<Roothub:paginate page="${page}" url="${contextPath}/admin/security/resource/list" />
                 	 	</c:when>
                      	<c:otherwise>
                         	<div class="empty-data">
@@ -49,4 +49,4 @@
 			</div>
 		</section>
 	</div>
-</common:layout>
+</Roothub:layout>

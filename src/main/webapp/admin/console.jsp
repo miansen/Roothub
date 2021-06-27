@@ -2,11 +2,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="r" uri="/WEB-INF/tld/common.tld" %>
+<%@ taglib prefix="Roothub" uri="/WEB-INF/tld/roothub.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="./common/contextPath.jsp" %>
-<r:layout>
-    <r:header/>
+<Roothub:layout useTopNav="true">
+    <Roothub:header/>
     <div class="content-wrapper" style="margin: 0px;">
         <section class="content">
             <div class="row">
@@ -74,56 +74,7 @@
                 </div>
                 <!-- ./col -->
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="box box-info">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">系统状态</h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool"
-                                        data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <div class="table-responsive">
-                                <table class="table no-margin">
-                                    <tbody>
-                                    <tr>
-                                        <th width="140">内存</th>
-                                        <td>
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-info progress-bar-striped"
-                                                     style="width: ${usedMemory * 100 / totalMemorySize}%">
-                                                        ${usedMemory}GB/${totalMemorySize}GB
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>系统</th>
-                                        <td>${os_name}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>CPU使用率</th>
-                                        <td>${(systemCpuLoad * 100)}%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>JVM CPU使用率</th>
-                                        <td>${(processCpuLoad * 100)}%</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
     </div>
-    <r:footer/>
-</r:layout>
+    <Roothub:footer/>
+</Roothub:layout>

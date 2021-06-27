@@ -2,12 +2,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
-<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld"%>
+<%@ taglib prefix="Roothub" uri="/WEB-INF/tld/roothub.tld"%>
 <%@ taglib prefix="security" uri="/WEB-INF/tld/security.tld"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ include file="../common/contextPath.jsp"%>
+<%@ include file="../../../common/contextPath.jsp"%>
 
-<common:layout>
+<Roothub:layout>
 	<div class="content-wrapper" style="margin: 0px;">
 		<section class="content-header">
 			<h1>资源类别<small>列表</small></h1>
@@ -35,7 +35,7 @@
                     		<security:resourceCategoryList page="${page}" class="table table-bordered table-hover" 
                     		th="资源类别ID;资源类别名称;创建人;创建时间" 
                     		td="resourceCategoryId;resourceCategoryName;userName;createDate" />
-							<common:paginate page="${page}" url="${contextPath}/admin/security/resource/category/list" />
+							<Roothub:paginate page="${page}" url="${contextPath}/admin/security/resource/category/list" />
                 	 	</c:when>
                      	<c:otherwise>
                         	<div class="empty-data">
@@ -47,4 +47,4 @@
 			</div>
 		</section>
 	</div>
-</common:layout>
+</Roothub:layout>

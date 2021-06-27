@@ -2,12 +2,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
-<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld"%>
+<%@ taglib prefix="Roothub" uri="/WEB-INF/tld/roothub.tld"%>
 <%@ taglib prefix="app" uri="/WEB-INF/tld/app.tld"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ include file="../common/contextPath.jsp"%>
+<%@ include file="../../common/contextPath.jsp"%>
 
-<common:adminLayout>
+<Roothub:adminLayout>
 	<div class="content-wrapper" style="margin: 0px;">
 		<c:if test="${empty param.dialog}">
 			<section class="content-header">
@@ -38,7 +38,7 @@
                     	<c:when test="${page != null && fn:length(page.list) > 0}">
                     		<app:categoryList page="${page}" class="table table-bordered table-hover" 
                     		th="应用类别名称;应用类别描述" td="appCategoryId;appCategoryName" />
-							<common:paginate page="${page}" class="panel-footer" style="padding: 0px 18px;" />
+							<Roothub:paginate page="${page}" class="panel-footer" style="padding: 0px 18px;" />
                 	 	</c:when>
                      <c:otherwise>
                         <div class="empty-data">
@@ -50,4 +50,4 @@
 			</div>
 		</section>
 	</div>
-</common:adminLayout>
+</Roothub:adminLayout>

@@ -5,7 +5,7 @@
 	<description>通用标签库，一般是被其他模块共同引用的标签。</description>
 	<tlib-version>2.0</tlib-version>
 	<jsp-version>2.0</jsp-version>
-	<short-name>common</short-name>
+	<short-name>roothub</short-name>
 	<tag>
 		<name>list</name>
 		<tag-class>wang.miansen.roothub.common.ui.DefaultListTag</tag-class>
@@ -130,6 +130,24 @@
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
 		<description>通用布局标签</description>
+		<attribute>
+			<description>页面的标题，默认是 Roothub。</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+    <attribute>
+      <description>皮肤样式，默认是 skin-blue。</description>
+      <name>skin</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+      <description>是否使用顶部导航栏（true：使用，false，不使用。默认是 false）</description>
+      <name>useTopNav</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+    </attribute>
 	</tag>
 	<tag>
 		<name>header</name>

@@ -101,8 +101,8 @@
   <!-- 自定义JSP标签的配置文件路径 -->
   <jsp-config>
 		<taglib>
-			<taglib-uri>/WEB-INF/tld/common.tld</taglib-uri>
-			<taglib-location>/WEB-INF/tld/common.tld</taglib-location>
+			<taglib-uri>/WEB-INF/tld/roothub.tld</taglib-uri>
+			<taglib-location>/WEB-INF/tld/roothub.tld</taglib-location>
 		</taglib>
 		<taglib>
 			<taglib-uri>/WEB-INF/tld/permission.tld</taglib-uri>

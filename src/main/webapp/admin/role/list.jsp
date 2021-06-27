@@ -2,12 +2,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld" %>
+<%@ taglib prefix="Roothub" uri="/WEB-INF/tld/roothub.tld" %>
 <%@ taglib prefix="role" uri="/WEB-INF/tld/role.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
 
-<common:layout>
+<Roothub:layout>
 <div class="content-wrapper" style="margin: 0px;">
 	<section class="content-header">
     <h1>角色<small>列表</small></h1>
@@ -30,10 +30,10 @@
       <div class="box-body" style="padding: 0px;">
         <c:choose>
         	<c:when test="${page != null && fn:length(page.list) > 0}">
-            	<role:list page="${page}" class="table table-bordered table-hover" 
+            	<role:list page="${page}" class="table table-bordered table-hover"
               		th="角色ID;角色名;角色描述;创建时间" 
               		td="roleId;roleName;roleDesc;createDate" />
-				<common:paginate page="${page}" url="${contextPath}/admin/role/list" />
+				<Roothub:paginate page="${page}" url="${contextPath}/admin/role/list" />
         	 </c:when>
              <c:otherwise>
                 <div class="panel panel-default">
@@ -48,4 +48,4 @@
     </div>
   </section>
   </div>
-</common:layout>
+</Roothub:layout>

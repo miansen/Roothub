@@ -2,11 +2,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="common" uri="/WEB-INF/tld/common.tld" %>
+<%@ taglib prefix="Roothub" uri="/WEB-INF/tld/roothub.tld" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../common/contextPath.jsp" %>
 
-<common:adminLayout>
+<Roothub:adminLayout>
 <div class="content-wrapper" style="margin: 0px;">
     <section class="content">
         <div class="box box-info">
@@ -41,7 +41,7 @@
                     		</c:forEach>
                     		</tbody>
                 		</table>
-                		<common:paginate page="${page}" url="${contextPath}/admin/permission/list/parent" />
+                		<Roothub:paginate page="${page}" url="${contextPath}/admin/permission/list/parent" />
                 	 </c:when>
                      <c:otherwise>
                         <div class="empty-data">
@@ -61,4 +61,4 @@
         }
     </script>
 </div>
-</common:adminLayout>
+</Roothub:adminLayout>

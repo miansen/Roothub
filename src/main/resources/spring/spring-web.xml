@@ -53,6 +53,7 @@
 
 	<!-- 4.扫描web相关的bean -->
 	<context:component-scan base-package="wang.miansen.roothub.modules.*.controller" />
+	<context:component-scan base-package="wang.miansen.roothub.sys.*.controller" />
 
 	<!-- 全局拦截器 -->
 	<mvc:interceptors>

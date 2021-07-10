@@ -6,7 +6,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="./common/contextPath.jsp" %>
 
-<Roothub:layout title="Roothub 后台管理">
+<Roothub:sidebarLayout title="Roothub 后台管理">
 	<div class="container">
 		<!-- Content Header (Page header) -->
 		<section class="content-header">
@@ -49,4 +49,4 @@
 		</section>
 		<!-- /.content -->
 	</div>
-</Roothub:layout>
+</Roothub:sidebarLayout>

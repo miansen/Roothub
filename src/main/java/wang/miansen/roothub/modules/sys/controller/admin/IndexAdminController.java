@@ -3,7 +3,6 @@ package wang.miansen.roothub.modules.sys.controller.admin;
 import java.lang.management.ManagementFactory;
 import java.text.DecimalFormat;
 
-import wang.miansen.roothub.common.beans.Result;
 import wang.miansen.roothub.modules.comment.service.CommentService;
 import wang.miansen.roothub.modules.node.service.NodeService;
 import wang.miansen.roothub.modules.post.service.PostService;
@@ -18,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import com.sun.management.OperatingSystemMXBean;
 
 /**
@@ -73,7 +71,7 @@ public class IndexAdminController {
 	    model.addAttribute("systemCpuLoad", df.format(systemCpuLoad));
 	    model.addAttribute("processCpuLoad", df.format(processCpuLoad));
 
-		return "/admin/index";
+		return "index2";
 	}
 	
 		// 后台首页
@@ -138,7 +136,7 @@ public class IndexAdminController {
 			model.addAttribute("username", username);
 	        return "/admin/login";
 		}
-		return "redirect:/admin/index";
+		return "/admin/index2";
 	}
 
 	// 出错页面

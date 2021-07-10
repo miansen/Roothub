@@ -126,7 +126,7 @@
 	</tag>
 	<tag>
 		<name>layout</name>
-		<tag-class>wang.miansen.roothub.common.ui.LayoutTag</tag-class>
+		<tag-class>wang.miansen.roothub.sys.portal.ui.LayoutTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
 		<description>通用布局标签</description>
@@ -136,18 +136,19 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-    <attribute>
-      <description>皮肤样式，默认是 skin-blue。</description>
-      <name>skin</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
-    <attribute>
-      <description>是否使用顶部导航栏（true：使用，false，不使用。默认是 false）</description>
-      <name>useTopNav</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-    </attribute>
+	</tag>
+	<tag>
+		<name>sidebarLayout</name>
+		<tag-class>wang.miansen.roothub.sys.portal.ui.SidebarLayoutTag</tag-class>
+		<body-content>JSP</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<description>侧边栏布局标签</description>
+		<attribute>
+			<description>页面的标题，默认是 Roothub。</description>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>header</name>

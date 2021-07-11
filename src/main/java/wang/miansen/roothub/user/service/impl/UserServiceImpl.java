@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wang.miansen.roothub.common.constant.BaseConstants;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.util.NicknameUtils;
-import wang.miansen.roothub.rbac.service.RoleService;
+import wang.miansen.roothub.security.service.RoleService;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.dao.UserDAO;
 import wang.miansen.roothub.user.entity.UserDO;

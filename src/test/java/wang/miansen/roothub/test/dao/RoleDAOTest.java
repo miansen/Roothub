@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import wang.miansen.roothub.rbac.dao.RoleDAO;
-import wang.miansen.roothub.rbac.entity.RoleDO;
+import wang.miansen.roothub.security.dao.RoleDAO;
+import wang.miansen.roothub.security.entity.RoleDO;
 import wang.miansen.roothub.test.BaseTest;
 
 /**

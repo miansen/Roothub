@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.security.access.ConfigAttribute;
 
-import wang.miansen.roothub.rbac.bo.PermissionBO;
-import wang.miansen.roothub.rbac.bo.RoleBO;
+import wang.miansen.roothub.security.bo.PermissionBO;
+import wang.miansen.roothub.security.bo.RoleBO;
 import wang.miansen.roothub.user.bo.UserBO;
 
 /**

@@ -36,8 +36,8 @@
   <!-- 业务模块，扫描 mapper 包下所有使用注解的类型 -->
   <context:component-scan base-package="wang.miansen.roothub.modules.*.mapper" />
 
-	<!-- RBAC 模块 -->
-	<context:component-scan base-package="wang.miansen.roothub.rbac" />
+	<!-- security 模块 -->
+	<context:component-scan base-package="wang.miansen.roothub.security" />
 
 	<!-- 用户模块 -->
 	<context:component-scan base-package="wang.miansen.roothub.user" />

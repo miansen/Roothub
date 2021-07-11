@@ -16,8 +16,8 @@ import org.springframework.util.ReflectionUtils;
 import wang.miansen.roothub.auth.entity.AuthenticationUser;
 import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
-import wang.miansen.roothub.rbac.bo.PermissionBO;
-import wang.miansen.roothub.rbac.bo.RoleBO;
+import wang.miansen.roothub.security.bo.PermissionBO;
+import wang.miansen.roothub.security.bo.RoleBO;
 import wang.miansen.roothub.user.bo.UserBO;
 
 /**

@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import wang.miansen.roothub.rbac.bo.ResourceBO;
-import wang.miansen.roothub.rbac.service.ResourceService;
+import wang.miansen.roothub.security.bo.ResourceBO;
+import wang.miansen.roothub.security.service.ResourceService;
 import wang.miansen.roothub.test.BaseTest;
 
 /**

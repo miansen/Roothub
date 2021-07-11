@@ -12,12 +12,12 @@ import org.springframework.security.access.SecurityConfig;
 
 import wang.miansen.roothub.common.util.CollectionUtils;
 import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
-import wang.miansen.roothub.rbac.bo.PermissionBO;
-import wang.miansen.roothub.rbac.bo.ResourceBO;
-import wang.miansen.roothub.rbac.bo.RoleBO;
-import wang.miansen.roothub.rbac.service.PermissionService;
-import wang.miansen.roothub.rbac.service.ResourceService;
-import wang.miansen.roothub.rbac.service.RoleService;
+import wang.miansen.roothub.security.bo.PermissionBO;
+import wang.miansen.roothub.security.bo.ResourceBO;
+import wang.miansen.roothub.security.bo.RoleBO;
+import wang.miansen.roothub.security.service.PermissionService;
+import wang.miansen.roothub.security.service.ResourceService;
+import wang.miansen.roothub.security.service.RoleService;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.service.UserService;
 

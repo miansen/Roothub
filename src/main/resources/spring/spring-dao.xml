@@ -68,7 +68,7 @@
 				  		 wang.miansen.roothub.modules.sidebar.model,
 				  		 wang.miansen.roothub.modules.app.model,
 				  		 wang.miansen.roothub.modules.security.model,
-				  		 wang.miansen.roothub.rbac.entity,
+				  		 wang.miansen.roothub.security.entity,
 				  		 wang.miansen.roothub.common.*.entity,
 				  		 wang.miansen.roothub.user.*.entity"/>
 		<!-- 扫描sql配置文件:mapper需要的xml文件 -->
@@ -81,7 +81,7 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 		<!-- 给出需要扫描Dao接口包 -->
 		<property name="basePackage" value="wang.miansen.roothub.modules.*.dao,
-		                                    wang.miansen.roothub.rbac.dao,
+		                                    wang.miansen.roothub.security.dao,
 		                                    wang.miansen.roothub.common.*.dao,
 		                                    wang.miansen.roothub.user.dao"/>
 	</bean>

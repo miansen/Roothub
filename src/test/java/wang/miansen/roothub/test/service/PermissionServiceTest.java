@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import wang.miansen.roothub.rbac.bo.PermissionBO;
-import wang.miansen.roothub.rbac.service.PermissionService;
+import wang.miansen.roothub.security.bo.PermissionBO;
+import wang.miansen.roothub.security.service.PermissionService;
 import wang.miansen.roothub.test.BaseTest;
 
 /**

@@ -14,10 +14,10 @@ import wang.miansen.roothub.auth.exception.AuthenticationMobileNotFoundException
 import wang.miansen.roothub.auth.entity.AuthenticationUser;
 import wang.miansen.roothub.auth.service.AuthenticationUserDetailsService;
 import wang.miansen.roothub.common.util.StringUtils;
-import wang.miansen.roothub.rbac.bo.PermissionBO;
-import wang.miansen.roothub.rbac.bo.RoleBO;
-import wang.miansen.roothub.rbac.service.PermissionService;
-import wang.miansen.roothub.rbac.service.RoleService;
+import wang.miansen.roothub.security.bo.PermissionBO;
+import wang.miansen.roothub.security.bo.RoleBO;
+import wang.miansen.roothub.security.service.PermissionService;
+import wang.miansen.roothub.security.service.RoleService;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.service.UserService;
 

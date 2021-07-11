@@ -13,8 +13,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.Assert;
 
-import wang.miansen.roothub.auth.entity.SmsAuthenticationToken;
-import wang.miansen.roothub.auth.exception.SmsAuthenticationException;
+import wang.miansen.roothub.auth.entity.AuthenticationSmsToken;
+import wang.miansen.roothub.auth.exception.AuthenticationSmsException;
 import wang.miansen.roothub.common.util.StringUtils;
 
 /**
@@ -40,12 +40,16 @@ import wang.miansen.roothub.common.util.StringUtils;
  * @author miansen.wang
  * @date 2021-05-08 16:54
  */
-public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class AuthenticationSmsProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
     /**
      * 前端 FORM 表单的 key
      */
     public static final String ROOTHUB_FORM_MOBILE_KEY = "mobile";
+
+    /**
+     * 前端 FORM 表单的 key
+     */
     public static final String ROOTHUB_FORM_CODE_KEY = "code";
 
     /**
@@ -58,7 +62,14 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
      */
     private static final String HTTP_METHOD = "POST";
 
+    /**
+     * 用来获取 FORM 表单的 value
+     */
     private String mobileParameter = ROOTHUB_FORM_MOBILE_KEY;
+
+    /**
+     * 用来获取 FORM 表单的 value
+     */
     private String codeParameter = ROOTHUB_FORM_CODE_KEY;
 
     /**
@@ -69,7 +80,7 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
     /**
      * 构造函数
      */
-    public SmsAuthenticationFilter() {
+    public AuthenticationSmsProcessingFilter() {
         super(new AntPathRequestMatcher(URL, HTTP_METHOD));
     }
 
@@ -89,18 +100,18 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
         // 交给 AuthenticationFailureHandler 处理。
         // 如果抛出其他异常，比如 IllegalArgumentException，则父类不会捕获，直接抛给 Tomcat。
         if (!StringUtils.checkPhoneNumber(mobile)) {
-            throw new SmsAuthenticationException("请输入手机号码");
+            throw new AuthenticationSmsException("请输入手机号码");
         }
 
         if (StringUtils.isEmpty(code)) {
-            throw new SmsAuthenticationException("请输入验证码");
+            throw new AuthenticationSmsException("请输入验证码");
         }
 
         mobile = mobile.trim();
         code = code.trim();
 
         // 构建一个没有认证的 token
-        SmsAuthenticationToken authRequest = new SmsAuthenticationToken(mobile, code);
+        AuthenticationSmsToken authRequest = new AuthenticationSmsToken(mobile, code);
 
         setDetails(request, authRequest);
 
@@ -108,7 +119,7 @@ public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFil
         return this.getAuthenticationManager().authenticate(authRequest);
     }
 
-    protected void setDetails(HttpServletRequest request, SmsAuthenticationToken authRequest) {
+    protected void setDetails(HttpServletRequest request, AuthenticationSmsToken authRequest) {
         authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
     }
 

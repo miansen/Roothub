@@ -76,7 +76,7 @@
         <!-- 添加一个自定义的 filter，放在 FILTER_SECURITY_INTERCEPTOR 之前，实现用户、角色、权限、资源的动态管理。 -->
         <security:custom-filter ref="dynamicSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR" />
         <!-- 添加短信认证拦截器，放在 UsernamePasswordAuthenticationFilter 后面 -->
-        <security:custom-filter ref="smsAuthenticationFilter" after="FORM_LOGIN_FILTER" />
+        <security:custom-filter ref="authenticationSmsProcessingFilter" after="FORM_LOGIN_FILTER" />
 
         <security:session-management session-fixation-protection="none">
             <!-- 
@@ -105,7 +105,7 @@
             <security:password-encoder ref="authenticationMd5PasswordEncoderServiceImpl"/>
         </security:authentication-provider>
         <!-- 这个认证器用来处理短信认证 -->
-        <security:authentication-provider ref="smsAuthenticationProviderServiceImpl" />
+        <security:authentication-provider ref="authenticationSmsProviderServiceImpl" />
     </security:authentication-manager>
 
     <!-- 自定义被认证请求向登录界面跳转采用forward方式 -->
@@ -131,13 +131,13 @@
     <bean id="authenticationMd5PasswordEncoderServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationMd5PasswordEncoderServiceImpl"/>
 
     <!-- 短信身份认证（spring security 默认只支持用户名密码的认证方式，要想支持短信的认证方式，需自行扩展）-->
-    <bean id="smsAuthenticationProviderServiceImpl" class="wang.miansen.roothub.auth.service.impl.SmsAuthenticationProviderServiceImpl">
+    <bean id="authenticationSmsProviderServiceImpl" class="wang.miansen.roothub.auth.service.impl.AuthenticationSmsProviderServiceImpl">
         <property name="authenticationUserDetailsService" ref="authenticationUserDetailsServiceImpl" />
         <property name="captchaService" ref="captchaServiceImpl" />
         <property name="userService" ref="userServiceImpl" />
     </bean>
     <!-- 短信身份认证拦截器 -->
-    <bean id="smsAuthenticationFilter" class="wang.miansen.roothub.auth.filter.SmsAuthenticationFilter">
+    <bean id="authenticationSmsProcessingFilter" class="wang.miansen.roothub.auth.filter.AuthenticationSmsProcessingFilter">
         <property name="authenticationManager" ref="authenticationManager" />
         <property name="authenticationSuccessHandler" ref="authenticationSuccessServiceImpl" />
         <property name="authenticationFailureHandler" ref="authenticationFailureServiceImpl" />

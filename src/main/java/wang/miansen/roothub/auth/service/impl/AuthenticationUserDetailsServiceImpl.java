@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import wang.miansen.roothub.auth.exception.MobileNotFoundException;
+import wang.miansen.roothub.auth.exception.AuthenticationMobileNotFoundException;
 import wang.miansen.roothub.auth.entity.AuthenticationUser;
 import wang.miansen.roothub.auth.service.AuthenticationUserDetailsService;
 import wang.miansen.roothub.common.util.StringUtils;
@@ -52,13 +52,13 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
     }
 
     @Override
-    public UserDetails loadUserByMobile(String mobile) throws MobileNotFoundException {
+    public UserDetails loadUserByMobile(String mobile) throws AuthenticationMobileNotFoundException {
         if (StringUtils.isEmpty(mobile)) {
             throw new BadCredentialsException("手机号码为空");
         }
         UserBO user = userService.getByMobile(mobile);
         if (user == null) {
-            throw new MobileNotFoundException("根据手机号码找不到用户");
+            throw new AuthenticationMobileNotFoundException("根据手机号码找不到用户");
         }
         return getAuthenticationUser(user);
     }

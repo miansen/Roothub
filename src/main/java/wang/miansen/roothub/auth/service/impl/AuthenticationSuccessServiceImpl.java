@@ -39,7 +39,6 @@ public class AuthenticationSuccessServiceImpl extends SavedRequestAwareAuthentic
     @Override
     public void saveAuthenticationSuccess(HttpServletRequest request,
         HttpServletResponse response, Authentication authentication) {
-        AuthenticationUser user = (AuthenticationUser) authentication.getPrincipal();
-        logger.info("用户[" + user.getUsername() + "]认证成功");
+        logger.info("用户[" + authentication.getPrincipal() + "]认证成功");
     }
 }

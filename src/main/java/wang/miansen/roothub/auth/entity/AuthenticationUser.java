@@ -38,6 +38,20 @@ public class AuthenticationUser extends User {
     }
 
     /**
+     * 构造函数
+     *
+     * @param userId 用户ID
+     * @param username 用户名
+     * @param password 密码
+     * @param authorities 认证信息
+     */
+    public AuthenticationUser(Long userId, String username, String password,
+        Collection<? extends GrantedAuthority> authorities) {
+        super(username, password, true, true, true, true, authorities);
+        this.userId = userId;
+    }
+
+    /**
      * 获取 user id
      *
      * @return user id

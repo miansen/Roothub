@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import wang.miansen.roothub.auth.service.AuthenticationMd5PasswordEncoderService;
 import wang.miansen.roothub.common.constant.BaseConstants;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.util.NicknameUtils;
@@ -31,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private AuthenticationMd5PasswordEncoderService authenticationMd5PasswordEncoderService;
 
     @Override
     public UserBO getById(Long userId) {
@@ -68,9 +72,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void registerByMobile(String mobile) {
         UserDO user = new UserDO();
-        user.setNickname(NicknameUtils.generateNickname());
+        user.setUsername(NicknameUtils.generateNickname());
+        user.setPassword(authenticationMd5PasswordEncoderService.encodePassword("123456", null));
         user.setMobile(mobile);
-        userDao.insert(user);
+        userDao.insertNotNull(user);
         roleService.add(BaseConstants.GENERAL_ROLE_ID, user.getUserId());
     }
 }

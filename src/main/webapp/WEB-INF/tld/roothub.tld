@@ -125,11 +125,11 @@
 		<description>后台通用布局标签</description>
 	</tag>
 	<tag>
-		<name>layout</name>
-		<tag-class>wang.miansen.roothub.sys.portal.ui.LayoutTag</tag-class>
+		<name>simpleLayout</name>
+		<tag-class>wang.miansen.roothub.sys.portal.ui.SimpleLayoutTag</tag-class>
 		<body-content>JSP</body-content>
 		<dynamic-attributes>true</dynamic-attributes>
-		<description>通用布局标签</description>
+		<description>简单布局标签</description>
 		<attribute>
 			<description>页面的标题，默认是 Roothub。</description>
 			<name>title</name>

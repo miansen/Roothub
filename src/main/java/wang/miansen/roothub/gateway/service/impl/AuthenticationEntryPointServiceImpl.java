@@ -20,7 +20,7 @@ public class AuthenticationEntryPointServiceImpl implements AuthenticationEntryP
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        request.setAttribute("error", "请先登录");
+        request.setAttribute("errorMsg", "请先登录");
         // 采用跳转的方式跳转到登录页（默认是重定向），携带提示信息，给用户友好的提示。
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }

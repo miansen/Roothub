@@ -31,7 +31,7 @@ public class AuthenticationFailureServiceImpl implements AuthenticationFailureSe
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
         AuthenticationException exception) throws IOException, ServletException {
         saveAuthenticationFailure(request, response, exception);
-        request.setAttribute("error", exception.getMessage());
+        request.setAttribute("errorMsg", exception.getMessage());
         // 认证失败采用跳转的方式跳转到登录页（默认是重定向），携带提示信息，给用户友好的提示。
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }

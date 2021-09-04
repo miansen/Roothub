@@ -62,9 +62,9 @@ public class RoothubApplication implements ErrorController {
 	@RequestMapping(value = "/error", produces = "text/html")
 	public ModelAndView errorHtml(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("exception", BaseResultCodeEnum.INTERNAL_ERROR.getMessage());
 		mv.addObject("errorCode", getStatus(request).value());
-		mv.setViewName("/default/front/error/error");
+        mv.addObject("errorMsg", getStatus(request).getReasonPhrase());
+        mv.setViewName("/error");
 		return mv;
 	}
 
@@ -82,6 +82,7 @@ public class RoothubApplication implements ErrorController {
 			try {
 				return HttpStatus.valueOf(statusCode);
 			} catch (Exception ex) {
+			    logger.warn("Exception in RoothubApplication#getStatus", ex);
 			}
 		}
 		return HttpStatus.INTERNAL_SERVER_ERROR;

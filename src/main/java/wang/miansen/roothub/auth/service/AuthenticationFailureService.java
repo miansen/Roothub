@@ -8,6 +8,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 /**
  * 处理认证失败的接口。
+ * <p>用户认证失败将使用此接口。</p>
  * <p>
  *     典型的行为可能是将用户重定向到身份验证页面（在表单登录的情况下）以允许他们重试。根据异常的类型，可以实现更复杂的逻辑。
  *     例如，CredentialsExpiredException 可能会导致重定向到允许用户更改其密码的 web 控制器。

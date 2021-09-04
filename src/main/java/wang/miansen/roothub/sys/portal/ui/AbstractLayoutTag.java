@@ -3,7 +3,10 @@ package wang.miansen.roothub.sys.portal.ui;
 import wang.miansen.roothub.common.ui.AbstractBaseTag;
 
 /**
- * 抽象的父类布局标签
+ * 抽象的父类布局标签。
+ * <p>
+ *     这个抽象父类定义了头部、脚部、导航栏、JS脚本等通用的标签，子类可按需获取。
+ * </p>
  *
  * @author miansen.wang
  * @date 2021-07-10 18:49
@@ -278,7 +281,7 @@ public abstract class AbstractLayoutTag extends AbstractBaseTag {
         sb.append("<a href=\"https://adminlte.io/themes/AdminLTE/pages/layout/top-nav.html#\">Sales</a>").append("\t\n");
         sb.append("</div>").append("\t\n");
         sb.append("<div class=\"col-xs-4 text-center\">").append("\t\n");
-        sb.append("<a href=\"https://adminlte.io/themes/AdminLTE/pages/layout/top-nav.html#\">Friends</a>").append("\t\n");
+        sb.append("<a href=\"").append(contextPath).append("/admin/sys/portal/index\" target=\"_blank\">管理后台</a>").append("\t\n");
         sb.append("</div>").append("\t\n");
         sb.append("</div>").append("\t\n");
         sb.append("</li>").append("\t\n");
@@ -287,7 +290,7 @@ public abstract class AbstractLayoutTag extends AbstractBaseTag {
         sb.append("<a href=\"https://adminlte.io/themes/AdminLTE/pages/layout/top-nav.html#\" class=\"btn btn-default btn-flat\">Profile</a>").append("\t\n");
         sb.append("</div>").append("\t\n");
         sb.append("<div class=\"pull-right\">").append("\t\n");
-        sb.append("<a href=\"https://adminlte.io/themes/AdminLTE/pages/layout/top-nav.html#\" class=\"btn btn-default btn-flat\">Sign out</a>").append("\t\n");
+        sb.append("<a href=\"").append(contextPath).append("/logout\" class=\"btn btn-default btn-flat\">登出</a>").append("\t\n");
         sb.append("</div>").append("\t\n");
         sb.append("</li>").append("\t\n");
         sb.append("</ul>").append("\t\n");

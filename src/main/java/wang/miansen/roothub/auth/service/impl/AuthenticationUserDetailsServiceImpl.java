@@ -48,7 +48,7 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
         if (user == null) {
             throw new UsernameNotFoundException("根据用户名找不到用户");
         }
-        return getAuthenticationUser(user);
+        return buildAuthenticationUserByUsername(user);
     }
 
     @Override
@@ -60,10 +60,10 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
         if (user == null) {
             throw new AuthenticationMobileNotFoundException("根据手机号码找不到用户");
         }
-        return getAuthenticationUser(user);
+        return buildAuthenticationUserByUsername(user);
     }
 
-    private AuthenticationUser getAuthenticationUser(UserBO user) {
+    private AuthenticationUser buildAuthenticationUserByUsername(UserBO user) {
         List<GrantedAuthority> authorities = getAuthorities(user);
         return new AuthenticationUser(user, authorities);
     }

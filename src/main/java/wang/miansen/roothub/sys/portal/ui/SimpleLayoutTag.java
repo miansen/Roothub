@@ -1,12 +1,12 @@
 package wang.miansen.roothub.sys.portal.ui;
 
 /**
- * 布局标签
+ * 简单布局标签
  *
  * @author miansen.wang
  * @date 2020-03-11
  */
-public class LayoutTag extends AbstractLayoutTag {
+public class SimpleLayoutTag extends AbstractLayoutTag {
 
     /**
      * serialVersionUID

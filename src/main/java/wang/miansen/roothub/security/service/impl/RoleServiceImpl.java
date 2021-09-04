@@ -67,6 +67,6 @@ public class RoleServiceImpl implements RoleService {
         RoleUserRelDO roleUserRel = new RoleUserRelDO();
         roleUserRel.setRoleId(roleId);
         roleUserRel.setUserId(userId);
-        roleUserRelDao.insert(roleUserRel);
+        roleUserRelDao.insertNotNull(roleUserRel);
     }
 }

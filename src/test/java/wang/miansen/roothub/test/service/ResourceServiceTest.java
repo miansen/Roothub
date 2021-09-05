@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import wang.miansen.roothub.security.bo.ResourceBO;
-import wang.miansen.roothub.security.service.ResourceService;
+import wang.miansen.roothub.security.bo.SecResourceBO;
+import wang.miansen.roothub.security.service.SecResourceService;
 import wang.miansen.roothub.test.BaseTest;
 
 /**
@@ -18,11 +18,11 @@ import wang.miansen.roothub.test.BaseTest;
 public class ResourceServiceTest extends BaseTest {
 
     @Autowired
-    private ResourceService resourceService;
+    private SecResourceService resourceService;
 
     @Test
     public void listTest() {
-        List<ResourceBO> list = resourceService.list();
+        List<SecResourceBO> list = resourceService.list();
         logger.debug(list.toString());
     }
 }

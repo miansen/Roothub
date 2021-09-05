@@ -1,7 +1,7 @@
 package wang.miansen.roothub.security.dao;
 
 import wang.miansen.roothub.common.dao.BaseDao;
-import wang.miansen.roothub.security.entity.PermissionResourceRelDO;
+import wang.miansen.roothub.security.entity.SecPermissionResourceRelDO;
 
 /**
  * 权限资源关联关系 DAO
@@ -9,5 +9,5 @@ import wang.miansen.roothub.security.entity.PermissionResourceRelDO;
  * @author miansen.wang
  * @date 2020-12-27 10:17
  */
-public interface PermissionResourceRelDAO extends BaseDao<PermissionResourceRelDO> {
+public interface SecPermissionResourceRelDAO extends BaseDao<SecPermissionResourceRelDO> {
 }

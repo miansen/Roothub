@@ -5,18 +5,18 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 权限 BO
+ * 角色 BO
  *
  * @author miansen.wang
- * @date 2020-12-27 15:20
+ * @date 2020-12-27 16:05
  */
 @Data
-public class PermissionBO {
+public class SecRoleBO {
 
     /**
-     * 权限ID
+     * 角色ID
      */
-    private Long permissionId;
+    private Long roleId;
 
     /**
      * 系统ID
@@ -49,19 +49,39 @@ public class PermissionBO {
     private String moduleCode;
 
     /**
-     * 权限名称
+     * 角色名称
      */
-    private String permissionName;
+    private String roleName;
 
     /**
-     * 权限编码
+     * 角色编码
      */
-    private String permissionCode;
+    private String roleCode;
 
     /**
-     * 权限描述
+     * 角色描述
      */
-    private String permissionDesc;
+    private String roleDesc;
+
+    /**
+     * 创建人ID
+     */
+    private Long createUserId;
+
+    /**
+     * 创建人名称
+     */
+    private String createUserName;
+
+    /**
+     * 更新人ID
+     */
+    private Long updateUserId;
+
+    /**
+     * 更新人名称
+     */
+    private String updateUserName;
 
     /**
      * 是否禁用（0：启用，1：禁用）

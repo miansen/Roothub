@@ -9,30 +9,50 @@ import wang.miansen.roothub.common.dao.mapper.annotation.Table;
 import wang.miansen.roothub.common.dao.mapper.enums.IdType;
 
 /**
- * 角色用户关联关系
+ * 权限资源关联关系
  *
- * @author miansen.wang
- * @date 2020-12-27 10:11
+ * @author 龙德
+ * @date 2020-12-27 10:04
  */
 @Data
-@Table(value = "role_user_rel")
-public class RoleUserRelDO {
+@Table(value = "sec_permission_resource_rel")
+public class SecPermissionResourceRelDO {
 
     /**
      * 主键ID
      */
-    @Id(value = "role_user_rel_id", type = IdType.AUTO)
-    private Long roleUserRelId;
+    @Id(value = "permission_resource_rel_id", type = IdType.AUTO)
+    private Long permissionResourceRelId;
 
     /**
-     * 角色ID
+     * 权限ID
      */
-    private Long roleId;
+    private Long permissionId;
 
     /**
-     * 用户ID
+     * 资源ID
      */
-    private Long userId;
+    private Long resourceId;
+
+    /**
+     * 创建人ID
+     */
+    private Long createUserId;
+
+    /**
+     * 创建人名称
+     */
+    private String createUserName;
+
+    /**
+     * 更新人ID
+     */
+    private Long updateUserId;
+
+    /**
+     * 更新人名称
+     */
+    private String updateUserName;
 
     /**
      * 是否禁用（0：启用，1：禁用）

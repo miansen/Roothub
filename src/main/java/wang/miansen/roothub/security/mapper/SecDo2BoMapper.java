@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import wang.miansen.roothub.security.bo.PermissionBO;
-import wang.miansen.roothub.security.bo.ResourceBO;
-import wang.miansen.roothub.security.bo.RoleBO;
-import wang.miansen.roothub.security.bo.SystemBO;
-import wang.miansen.roothub.security.entity.PermissionDO;
-import wang.miansen.roothub.security.entity.ResourceDO;
-import wang.miansen.roothub.security.entity.RoleDO;
-import wang.miansen.roothub.security.entity.SystemDO;
+import wang.miansen.roothub.security.bo.SecPermissionBO;
+import wang.miansen.roothub.security.bo.SecResourceBO;
+import wang.miansen.roothub.security.bo.SecRoleBO;
+import wang.miansen.roothub.security.bo.SecSystemBO;
+import wang.miansen.roothub.security.entity.SecPermissionDO;
+import wang.miansen.roothub.security.entity.SecResourceDO;
+import wang.miansen.roothub.security.entity.SecRoleDO;
+import wang.miansen.roothub.security.entity.SecSystemDO;
 
 /**
  * DO 转 BO
@@ -20,14 +20,14 @@ import wang.miansen.roothub.security.entity.SystemDO;
  * @date 2020-12-27 15:21
  */
 @Mapper(componentModel = "spring")
-public interface RbacDo2BoMapper {
+public interface SecDo2BoMapper {
 
     /**
      * RoleDO 转 RoleBO
      * @param roleDo roleDo
      * @return RoleBO
      */
-    RoleBO roleDo2Bo(RoleDO roleDo);
+    SecRoleBO roleDo2Bo(SecRoleDO roleDo);
 
     /**
      * PermissionDO 转 PermissionBO
@@ -35,7 +35,7 @@ public interface RbacDo2BoMapper {
      * @param permissionDo permissionDo
      * @return PermissionBO
      */
-    PermissionBO permissionDo2Bo(PermissionDO permissionDo);
+    SecPermissionBO permissionDo2Bo(SecPermissionDO permissionDo);
 
     /**
      * ResourceDO 转 ResourceBO
@@ -43,7 +43,7 @@ public interface RbacDo2BoMapper {
      * @param resourceDo resourceDo
      * @return ResourceBO
      */
-    ResourceBO resourceDo2Bo(ResourceDO resourceDo);
+    SecResourceBO resourceDo2Bo(SecResourceDO resourceDo);
 
     /**
      * SystemDO 转 SystemBO
@@ -51,7 +51,7 @@ public interface RbacDo2BoMapper {
      * @param systemDo systemDo
      * @return SystemBO
      */
-    SystemBO systemDo2Bo(SystemDO systemDo);
+    SecSystemBO systemDo2Bo(SecSystemDO systemDo);
 
     /**
      * List<RoleDO> 转 List<RoleBO>
@@ -59,7 +59,7 @@ public interface RbacDo2BoMapper {
      * @param roleDoList roleDo List
      * @return roleBo List
      */
-    List<RoleBO> roleDoList2BoList(List<RoleDO> roleDoList);
+    List<SecRoleBO> roleDoList2BoList(List<SecRoleDO> roleDoList);
 
     /**
      * List<ResourceDO> 转 List<ResourceBO>
@@ -67,7 +67,7 @@ public interface RbacDo2BoMapper {
      * @param resourceDoList resourceDo List
      * @return resourceBo List
      */
-    List<ResourceBO> resourceDoList2BoList(List<ResourceDO> resourceDoList);
+    List<SecResourceBO> resourceDoList2BoList(List<SecResourceDO> resourceDoList);
 
     /**
      * PermissionDO List 转 PermissionBO List
@@ -75,7 +75,7 @@ public interface RbacDo2BoMapper {
      * @param permissionDoList permissionDo List
      * @return permissionBo List
      */
-    List<PermissionBO> permissionDoList2BoList(List<PermissionDO> permissionDoList);
+    List<SecPermissionBO> permissionDoList2BoList(List<SecPermissionDO> permissionDoList);
 
     /**
      * SystemDO List 转 SystemBO List
@@ -83,5 +83,5 @@ public interface RbacDo2BoMapper {
      * @param systemDoList SystemDO List
      * @return SystemBO List
      */
-    List<SystemBO> systemDoList2BoList(List<SystemDO> systemDoList);
+    List<SecSystemBO> systemDoList2BoList(List<SecSystemDO> systemDoList);
 }

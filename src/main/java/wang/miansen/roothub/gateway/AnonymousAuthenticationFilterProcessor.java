@@ -16,8 +16,8 @@ import org.springframework.util.ReflectionUtils;
 import wang.miansen.roothub.auth.entity.AuthenticationUser;
 import wang.miansen.roothub.common.exception.BaseException;
 import wang.miansen.roothub.gateway.service.SecurityMetadataProviderService;
-import wang.miansen.roothub.security.bo.PermissionBO;
-import wang.miansen.roothub.security.bo.RoleBO;
+import wang.miansen.roothub.security.bo.SecPermissionBO;
+import wang.miansen.roothub.security.bo.SecRoleBO;
 import wang.miansen.roothub.user.bo.UserBO;
 
 /**
@@ -51,10 +51,10 @@ public class AnonymousAuthenticationFilterProcessor implements BeanPostProcessor
             try {
                 List<GrantedAuthority> authorities = (List<GrantedAuthority>) authoritiesField.get(bean);
                 // 角色
-                List<RoleBO> roles = securityMetadataProviderService.listAnonymousRoles();
+                List<SecRoleBO> roles = securityMetadataProviderService.listAnonymousRoles();
                 roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleCode())));
                 // 权限
-                List<PermissionBO> permissions = securityMetadataProviderService.listAnonymousPermissions();
+                List<SecPermissionBO> permissions = securityMetadataProviderService.listAnonymousPermissions();
                 permissions.forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission.getPermissionCode())));
                 logger.info("初始化匿名用户的 authorities 成功。{}", authorities);
 

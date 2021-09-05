@@ -1,7 +1,7 @@
 package wang.miansen.roothub.security.dao;
 
 import wang.miansen.roothub.common.dao.BaseDao;
-import wang.miansen.roothub.security.entity.SystemDO;
+import wang.miansen.roothub.security.entity.SecSystemDO;
 
 /**
  * 系统 DAO
@@ -9,6 +9,6 @@ import wang.miansen.roothub.security.entity.SystemDO;
  * @author miansen.wang
  * @date 2021-06-20 21:28
  */
-public interface SystemDAO extends BaseDao<SystemDO> {
+public interface SecSystemDAO extends BaseDao<SecSystemDO> {
 
 }

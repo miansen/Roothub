@@ -14,8 +14,8 @@ import wang.miansen.roothub.common.dao.mapper.enums.IdType;
  * @date 2021-06-20 21:20
  */
 @Data
-@Table(value = "system")
-public class SystemDO {
+@Table(value = "sec_system")
+public class SecSystemDO {
 
     /**
      * 主键ID
@@ -47,6 +47,31 @@ public class SystemDO {
      * 系统排序
      */
     private Integer systemSort;
+
+    /**
+     * 系统描述
+     */
+    private String systemDesc;
+
+    /**
+     * 创建人ID
+     */
+    private Long createUserId;
+
+    /**
+     * 创建人名称
+     */
+    private String createUserName;
+
+    /**
+     * 更新人ID
+     */
+    private Long updateUserId;
+
+    /**
+     * 更新人名称
+     */
+    private String updateUserName;
 
     /**
      * 是否禁用（0：启用，1：禁用）

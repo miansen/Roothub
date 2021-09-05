@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import wang.miansen.roothub.security.dao.ResourceDAO;
-import wang.miansen.roothub.security.entity.ResourceDO;
+import wang.miansen.roothub.security.dao.SecResourceDAO;
+import wang.miansen.roothub.security.entity.SecResourceDO;
 import wang.miansen.roothub.test.BaseTest;
 
 /**
@@ -18,11 +18,11 @@ import wang.miansen.roothub.test.BaseTest;
 public class ResourceDAOTest extends BaseTest {
 
     @Autowired
-    private ResourceDAO resourceDAO;
+    private SecResourceDAO resourceDAO;
 
     @Test
     public void selectListTest() {
-        List<ResourceDO> list = resourceDAO.selectList(null);
+        List<SecResourceDO> list = resourceDAO.selectList(null);
         logger.info(list.toString());
     }
 }

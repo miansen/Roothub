@@ -1,7 +1,7 @@
 package wang.miansen.roothub.security.dao;
 
 import wang.miansen.roothub.common.dao.BaseDao;
-import wang.miansen.roothub.security.entity.RoleUserRelDO;
+import wang.miansen.roothub.security.entity.SecRoleUserRelDO;
 
 /**
  * 角色用户关联关系 DAO
@@ -9,5 +9,5 @@ import wang.miansen.roothub.security.entity.RoleUserRelDO;
  * @author miansen.wang
  * @date 2020-12-27 10:20
  */
-public interface RoleUserRelDAO extends BaseDao<RoleUserRelDO> {
+public interface SecRoleUserRelDAO extends BaseDao<SecRoleUserRelDO> {
 }

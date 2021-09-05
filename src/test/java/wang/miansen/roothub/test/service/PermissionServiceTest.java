@@ -5,8 +5,8 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import wang.miansen.roothub.security.bo.PermissionBO;
-import wang.miansen.roothub.security.service.PermissionService;
+import wang.miansen.roothub.security.bo.SecPermissionBO;
+import wang.miansen.roothub.security.service.SecPermissionService;
 import wang.miansen.roothub.test.BaseTest;
 
 /**
@@ -18,11 +18,11 @@ import wang.miansen.roothub.test.BaseTest;
 public class PermissionServiceTest extends BaseTest {
 
     @Autowired
-    private PermissionService permissionService;
+    private SecPermissionService permissionService;
 
     @Test
     public void listByResourceIdTest() {
-        List<PermissionBO> list = permissionService.listByResourceId(1L);
+        List<SecPermissionBO> list = permissionService.listByResourceId(1L);
         logger.info(list.toString());
     }
 }

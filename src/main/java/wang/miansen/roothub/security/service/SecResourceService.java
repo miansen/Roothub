@@ -2,7 +2,7 @@ package wang.miansen.roothub.security.service;
 
 import java.util.List;
 
-import wang.miansen.roothub.security.bo.ResourceBO;
+import wang.miansen.roothub.security.bo.SecResourceBO;
 
 /**
  * 资源 Service 接口
@@ -10,12 +10,12 @@ import wang.miansen.roothub.security.bo.ResourceBO;
  * @author miansen.wang
  * @date 2020-12-27 15:09
  */
-public interface ResourceService {
+public interface SecResourceService {
 
     /**
      * 查询所有的资源
      *
      * @return 资源列表
      */
-    List<ResourceBO> list();
+    List<SecResourceBO> list();
 }

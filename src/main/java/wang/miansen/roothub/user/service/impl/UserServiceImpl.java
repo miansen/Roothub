@@ -8,7 +8,7 @@ import wang.miansen.roothub.auth.service.AuthenticationMd5PasswordEncoderService
 import wang.miansen.roothub.common.constant.BaseConstants;
 import wang.miansen.roothub.common.dao.mapper.wrapper.query.QueryWrapper;
 import wang.miansen.roothub.common.util.NicknameUtils;
-import wang.miansen.roothub.security.service.RoleService;
+import wang.miansen.roothub.security.service.SecRoleService;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.dao.UserDAO;
 import wang.miansen.roothub.user.entity.UserDO;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     private UserDo2BoMapper do2BoMapper;
 
     @Autowired
-    private RoleService roleService;
+    private SecRoleService roleService;
 
     @Autowired
     private AuthenticationMd5PasswordEncoderService authenticationMd5PasswordEncoderService;

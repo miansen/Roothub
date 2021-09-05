@@ -5,8 +5,8 @@ import java.util.Map;
 
 import org.springframework.security.access.ConfigAttribute;
 
-import wang.miansen.roothub.security.bo.PermissionBO;
-import wang.miansen.roothub.security.bo.RoleBO;
+import wang.miansen.roothub.security.bo.SecPermissionBO;
+import wang.miansen.roothub.security.bo.SecRoleBO;
 import wang.miansen.roothub.user.bo.UserBO;
 
 /**
@@ -32,14 +32,14 @@ public interface SecurityMetadataProviderService {
      *
      * @return 匿名用户的角色列表
      */
-    List<RoleBO> listAnonymousRoles();
+    List<SecRoleBO> listAnonymousRoles();
 
     /**
      * 获取匿名用户的权限列表
      *
      * @return 匿名用户的权限列表
      */
-    List<PermissionBO> listAnonymousPermissions();
+    List<SecPermissionBO> listAnonymousPermissions();
 
     /**
      * 获取匿名用户信息

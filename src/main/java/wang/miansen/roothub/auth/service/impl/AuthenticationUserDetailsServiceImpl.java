@@ -14,10 +14,10 @@ import wang.miansen.roothub.auth.exception.AuthenticationMobileNotFoundException
 import wang.miansen.roothub.auth.entity.AuthenticationUser;
 import wang.miansen.roothub.auth.service.AuthenticationUserDetailsService;
 import wang.miansen.roothub.common.util.StringUtils;
-import wang.miansen.roothub.security.bo.PermissionBO;
-import wang.miansen.roothub.security.bo.RoleBO;
-import wang.miansen.roothub.security.service.PermissionService;
-import wang.miansen.roothub.security.service.RoleService;
+import wang.miansen.roothub.security.bo.SecPermissionBO;
+import wang.miansen.roothub.security.bo.SecRoleBO;
+import wang.miansen.roothub.security.service.SecPermissionService;
+import wang.miansen.roothub.security.service.SecRoleService;
 import wang.miansen.roothub.user.bo.UserBO;
 import wang.miansen.roothub.user.service.UserService;
 
@@ -34,10 +34,10 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
     private UserService userService;
 
     @Autowired
-    private RoleService roleService;
+    private SecRoleService roleService;
 
     @Autowired
-    private PermissionService permissionService;
+    private SecPermissionService permissionService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -70,11 +70,11 @@ public class AuthenticationUserDetailsServiceImpl implements AuthenticationUserD
 
     private List<GrantedAuthority> getAuthorities(UserBO user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        List<RoleBO> roles = roleService.listByUserId(user.getUserId());
+        List<SecRoleBO> roles = roleService.listByUserId(user.getUserId());
         roles.forEach(role -> {
             // 添加角色。角色名需已 “ROLE_” 作为前缀。
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleCode()));
-            List<PermissionBO> permissions = permissionService.listByRoleId(role.getRoleId());
+            List<SecPermissionBO> permissions = permissionService.listByRoleId(role.getRoleId());
             // 添加权限
             permissions.forEach(permission -> authorities.add(new SimpleGrantedAuthority(permission.getPermissionCode())));
         });

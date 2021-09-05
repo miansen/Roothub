@@ -15,8 +15,8 @@ import wang.miansen.roothub.common.dao.mapper.enums.IdType;
  * @date 2020-12-27 10:00
  */
 @Data
-@Table(value = "permission")
-public class PermissionDO {
+@Table(value = "sec_permission")
+public class SecPermissionDO {
 
     /**
      * 权限ID
@@ -68,6 +68,26 @@ public class PermissionDO {
      * 权限描述
      */
     private String permissionDesc;
+
+    /**
+     * 创建人ID
+     */
+    private Long createUserId;
+
+    /**
+     * 创建人名称
+     */
+    private String createUserName;
+
+    /**
+     * 更新人ID
+     */
+    private Long updateUserId;
+
+    /**
+     * 更新人名称
+     */
+    private String updateUserName;
 
     /**
      * 是否禁用（0：启用，1：禁用）

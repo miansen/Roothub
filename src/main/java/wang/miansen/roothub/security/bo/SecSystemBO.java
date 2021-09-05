@@ -5,22 +5,16 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 资源 BO
+ * 系统 BO
  *
  * @author miansen.wang
- * @date 2020-12-27 15:18:56
- * @since 3.0
+ * @date 2021-06-20 21:20
  */
 @Data
-public class ResourceBO {
+public class SecSystemBO {
 
     /**
-     * 资源ID
-     */
-    private Long resourceId;
-
-    /**
-     * 系统ID
+     * 主键ID
      */
     private Long systemId;
 
@@ -35,34 +29,44 @@ public class ResourceBO {
     private String systemCode;
 
     /**
-     * 模块ID
+     * 系统URL
      */
-    private Long moduleId;
+    private String systemUrl;
 
     /**
-     * 模块名称
+     * 系统图标
      */
-    private String moduleName;
+    private String systemIcon;
 
     /**
-     * 模块编码
+     * 系统排序
      */
-    private String moduleCode;
+    private Integer systemSort;
 
     /**
-     * 资源名称
+     * 系统描述
      */
-    private String resourceName;
+    private String systemDesc;
 
     /**
-     * 资源编码
+     * 创建人ID
      */
-    private String resourceCode;
+    private Long createUserId;
 
     /**
-     * 资源描述
+     * 创建人名称
      */
-    private String resourceDesc;
+    private String createUserName;
+
+    /**
+     * 更新人ID
+     */
+    private Long updateUserId;
+
+    /**
+     * 更新人名称
+     */
+    private String updateUserName;
 
     /**
      * 是否禁用（0：启用，1：禁用）

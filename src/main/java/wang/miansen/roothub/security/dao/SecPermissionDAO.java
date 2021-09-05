@@ -1,7 +1,7 @@
 package wang.miansen.roothub.security.dao;
 
 import wang.miansen.roothub.common.dao.BaseDao;
-import wang.miansen.roothub.security.entity.PermissionDO;
+import wang.miansen.roothub.security.entity.SecPermissionDO;
 
 /**
  * 权限 DAO
@@ -9,5 +9,5 @@ import wang.miansen.roothub.security.entity.PermissionDO;
  * @author miansen.wang
  * @date 2020-12-27 10:15
  */
-public interface PermissionDAO extends BaseDao<PermissionDO> {
+public interface SecPermissionDAO extends BaseDao<SecPermissionDO> {
 }

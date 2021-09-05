@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import wang.miansen.roothub.security.bo.SystemBO;
-import wang.miansen.roothub.security.service.SystemService;
+import wang.miansen.roothub.security.bo.SecSystemBO;
+import wang.miansen.roothub.security.service.SecSystemService;
 
 /**
  * Portal Admin Controller
@@ -24,12 +24,12 @@ import wang.miansen.roothub.security.service.SystemService;
 public class PortalAdminController {
 
     @Autowired
-    private SystemService systemService;
+    private SecSystemService systemService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
-        List<SystemBO> systems = systemService.list();
+        List<SecSystemBO> systems = systemService.list();
         mv.addObject("systems", systems);
         mv.setViewName("/admin/index");
         return mv;
@@ -38,7 +38,7 @@ public class PortalAdminController {
     @RequestMapping(value = "/index3", method = RequestMethod.GET)
     public ModelAndView index3(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
-        List<SystemBO> systems = systemService.list();
+        List<SecSystemBO> systems = systemService.list();
         mv.addObject("systems", systems);
         mv.setViewName("/admin/index3");
         return mv;

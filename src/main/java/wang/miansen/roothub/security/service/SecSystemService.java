@@ -2,7 +2,7 @@ package wang.miansen.roothub.security.service;
 
 import java.util.List;
 
-import wang.miansen.roothub.security.bo.SystemBO;
+import wang.miansen.roothub.security.bo.SecSystemBO;
 
 /**
  * 系统 Service 接口
@@ -10,12 +10,12 @@ import wang.miansen.roothub.security.bo.SystemBO;
  * @author miansen.wang
  * @version  2021-06-20 21:29
  */
-public interface SystemService {
+public interface SecSystemService {
 
     /**
      * 查询所有系统
      *
      * @return 所有系统
      */
-    List<SystemBO> list();
+    List<SecSystemBO> list();
 }

@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import wang.miansen.roothub.auth.entity.AuthenticationUser;
 import wang.miansen.roothub.gateway.service.AccessDeniedHandlerService;
 
 /**
@@ -35,7 +38,9 @@ public class AccessDeniedHandlerServiceImpl implements AccessDeniedHandlerServic
 
     @Override
     public void saveAccessDenied(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) {
-        logger.error("拒绝访问", accessDeniedException);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        AuthenticationUser authenticationUser = (AuthenticationUser) authentication.getPrincipal();
+        logger.warn("拒绝访问, url: {}, userId: {}", request.getRequestURI(), authenticationUser.getUserId(), accessDeniedException);
     }
 
 }

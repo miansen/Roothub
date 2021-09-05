@@ -58,11 +58,19 @@
                         invalidate-session="true" 
                         delete-cookies="JSESSIONID" />
 		
-		<!-- 放行登录 URL，避免拦截，造成无法登录 -->
-		<security:intercept-url pattern="/login.jsp" access="permitAll()" />
+		    <!-- 放行登录 URL，避免拦截，造成无法登录 -->
+		    <security:intercept-url pattern="/login.jsp" access="permitAll()" />
+
+        <!-- 放行获取验证码 URL，避免拦截，造成无法登录 -->
+        <security:intercept-url pattern="/api/captcha/sms/send" access="permitAll()" />
+
+        <!-- 放行静态资源，避免拦截 -->
+        <security:intercept-url pattern="/**/*.js" access="permitAll()" />
+        <security:intercept-url pattern="/**/*.css" access="permitAll()" />
+        <security:intercept-url pattern="/**/*.ico" access="permitAll()" />
 
         <!-- 设置访问所有的 URL 都必须登录 -->
-        <!--<security:intercept-url pattern="/**" access="isAuthenticated()" />-->
+        <security:intercept-url pattern="/**" access="isAuthenticated()" />
 
         <!-- 
             access="hasRole('ROLE_ADMIN')"：表示拥有 ADMIN 角色的用户可以访问，否则 403。

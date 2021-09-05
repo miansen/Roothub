@@ -12,7 +12,7 @@
     <title>Roothub-登录</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
+    <!-- Bootstrap 3.4.1 -->
     <link rel="stylesheet" href="${contextPath}/resources/libs/bootstrap-v3.4.1/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="${contextPath}/resources/libs/font-awesome-v4.7.0/css/font-awesome.min.css">
@@ -73,7 +73,7 @@
 
 <!-- jQuery 3 -->
 <script src="${contextPath}/resources/libs/jquery-v3.4.1/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
+<!-- Bootstrap 3.4.1 -->
 <script src="${contextPath}/resources/libs/bootstrap-v3.4.1/dist/js/bootstrap.min.js"></script>
 <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
 <script src="${contextPath}/login.js"></script>

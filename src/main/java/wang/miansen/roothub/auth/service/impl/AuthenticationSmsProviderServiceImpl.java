@@ -39,10 +39,10 @@ public class AuthenticationSmsProviderServiceImpl implements AuthenticationSmsPr
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        AuthenticationSmsToken authenticationToken = (AuthenticationSmsToken) authentication;
-
-        String mobile = (String) authenticationToken.getPrincipal();
-        String code = (String) authenticationToken.getCredentials();
+        // authRequest 代表本次认证请求的主体
+        AuthenticationSmsToken authRequest = (AuthenticationSmsToken) authentication;
+        String mobile = (String) authRequest.getPrincipal();
+        String code = (String) authRequest.getCredentials();
 
         // 在这里处理短信认证的逻辑
 
@@ -63,8 +63,8 @@ public class AuthenticationSmsProviderServiceImpl implements AuthenticationSmsPr
         }
 
         // 构建一个通过认证的 token
-        AuthenticationSmsToken smsAuthenticationToken = new AuthenticationSmsToken(mobile, code, userDetails.getAuthorities());
-        smsAuthenticationToken.setDetails(authenticationToken.getDetails());
+        AuthenticationSmsToken smsAuthenticationToken = new AuthenticationSmsToken(userDetails, null, userDetails.getAuthorities());
+        smsAuthenticationToken.setDetails(authRequest.getDetails());
         return smsAuthenticationToken;
     }
 

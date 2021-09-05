@@ -32,10 +32,10 @@ public class AuthenticationSmsToken extends AbstractAuthenticationToken {
     private Object credentials;
 
     /**
-     * 创建一个没有鉴权的 AuthenticationSmsToken
+     * 创建一个没有认证的 AuthenticationSmsToken。
      *
-     * @param principal principal
-     * @param credentials credentials
+     * @param principal principal 对于短信身份认证请求，这将是手机号码。
+     * @param credentials credentials 对于短信身份认证请求，这将是验证码。
      */
     public AuthenticationSmsToken(Object principal, Object credentials) {
         super(null);
@@ -45,11 +45,11 @@ public class AuthenticationSmsToken extends AbstractAuthenticationToken {
     }
 
     /**
-     * 创建一个拥有鉴权的 AuthenticationSmsToken
+     * 创建一个已经通过认证的 AuthenticationSmsToken。
      *
-     * @param principal principal
-     * @param credentials credentials
-     * @param authorities authorities
+     * @param principal principal 由于已经通过认证，这将是 {@code UserDetails} 对象作为主体，供应用程序使用。
+     * @param credentials credentials 由于已经通过认证，可以为 null。
+     * @param authorities authorities 通过认证的主体的权限，可以是空集合。不能为 null。
      */
     public AuthenticationSmsToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);

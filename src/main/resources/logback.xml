@@ -46,11 +46,11 @@
 		</encoder>
 	</appender>
 	
-	<!-- 控制台输出（WRAN级别） -->
+	<!-- 控制台输出（WARN级别） -->
 	<appender name="console_warn" class="ch.qos.logback.core.ConsoleAppender">
 		<!--此日志appender是为生产环境使用，配置 INFO 级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>WRAN</level>
+			<level>WARN</level>
 			<onMatch>ACCEPT</onMatch>
 			<onMismatch>DENY</onMismatch>
 		</filter>
